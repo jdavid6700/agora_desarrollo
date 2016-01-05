@@ -87,8 +87,7 @@ class listarDatos {
 				echo "<td class='text-center'>";
 					$variable = "pagina=" . $miPaginaActual;
 					$variable.="&opcion=nuevo";
-					$variable.="&mensaje=confirma";	
-					$variable .= "&idObjeto=".$dato["id_objeto"];	
+					$variable .= "&idObjeto=".$dato["id_objeto"];
 		
 					$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 					$url = $directorio . '=' . $variable;

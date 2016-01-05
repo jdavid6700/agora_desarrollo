@@ -20,7 +20,7 @@ class registrarForm {
 		$this->miSql = $sql;
 	}
 	function miForm() {
-		
+
 		/**
 		 * IMPORTANTE: Este formulario está utilizando jquery.
 		 * Por tanto en el archivo ready.php se delaran algunas funciones js
@@ -69,6 +69,17 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
+		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
+		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
+		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar</span><hr>"; 
+		echo '<table style="width:100%">';
+		echo '<tr><td style="width:20%"><span class="textoAzul">Objeto a Contratar</td><td><span class="textoGris">' . $objetoEspecifico[0][0] . "</span></td></tr>";
+		echo '<tr><td style="width:20%"><span class="textoAzul">Actividad econ&oacute;mica</td><td><span class="textoGris">' . $objetoEspecifico[0][1] . "</span></td></tr>";
+		echo '<tr><td style="width:20%"><span class="textoAzul">Descripci&oacute;</td><td><span class="textoGris">' . $objetoEspecifico[0][2] . "</span></td></tr>";	
+		echo '</table>';
+		//FIN OBJETO A CONTRATAR
 		
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
@@ -206,7 +217,37 @@ class registrarForm {
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 			// ----------------FIN CONTROL: Lista SUPERVISOR--------------------------------------------------------
-			
+
+			// ---------------- CONTROL: Lista PROVEEDOR --------------------------------------------------------
+				$esteCampo = "proveedor";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'supervisor' );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+			// ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
+						
 			// ----------------INICIO CONTROL: Campo de Texto NUMERO ACTO ADMINISTRARIVO--------------------------------------------------------					
 				$esteCampo = 'numActoAdmin';
 				$atributos ['id'] = $esteCampo;
@@ -408,66 +449,6 @@ class registrarForm {
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 			// ----------------FIN CONTROL: Lista TIPO ACTO ADMINISTRATIVO--------------------------------------------------------
-
-			// ---------------- CONTROL: Lista PROVEEDOR --------------------------------------------------------
-				$esteCampo = "proveedor";
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['id'] = $esteCampo;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['tab'] = $tab ++;
-				$atributos ['anchoEtiqueta'] = 200;
-				$atributos ['evento'] = '';
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['seleccion'] = -1;
-				}
-				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['tamanno'] = 1;
-				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = false;
-				$atributos ['anchoCaja'] = 60;
-				$atributos ['miEvento'] = '';
-				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'supervisor' );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				$atributos ['matrizItems'] = $matrizItems;
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
-				unset ( $atributos );
-			// ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
-
-			// ---------------- CONTROL: Lista PROVEEDOR --------------------------------------------------------
-				$esteCampo = "objeto";
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['id'] = $esteCampo;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['tab'] = $tab ++;
-				$atributos ['anchoEtiqueta'] = 200;
-				$atributos ['evento'] = '';
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['seleccion'] = -1;
-				}
-				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['tamanno'] = 1;
-				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = false;
-				$atributos ['anchoCaja'] = 60;
-				$atributos ['miEvento'] = '';
-				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar' );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				$atributos ['matrizItems'] = $matrizItems;
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
-				unset ( $atributos );
-			// ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
 				
 			// ----------------INICIO CONTROL: Campo de Texto VALOR--------------------------------------------------------					
 				$esteCampo = 'valor';
@@ -607,7 +588,7 @@ class registrarForm {
 	
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 	
-		$esteCampo = 'id_contratista';
+		$esteCampo = 'idObjeto';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";
 		$atributos ['estilo'] = '';

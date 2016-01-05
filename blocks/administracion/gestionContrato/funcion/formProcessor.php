@@ -17,7 +17,7 @@ $resultado = '';
 $fechaActual = date ( 'Y-m-d' );
 
 $arreglo = array (
-		$_REQUEST ['objeto'],
+		$_REQUEST ['idObjeto'],
 		$_REQUEST ['num_contrato'],
 		$_REQUEST ['fecha_inicio_c'],
 		$_REQUEST ['fecha_final_c'],
@@ -33,22 +33,30 @@ $arreglo = array (
 		$_REQUEST ['valor'],
 		$_REQUEST ['rubro'],
 		$_REQUEST ['poliza'],		
-		$_REQUEST ['formaPago']
+		$_REQUEST ['formaPago'],
+		1
 );
-
+//Guardar datos del nuevo contrato
 $cadenaSql = $this->sql->getCadenaSql ( "registroContrato", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"registroContrato" );
 
 // Crear Variables necesarias en los métodos
-
-
 $variable = '';
 
+
 if ($resultado) {
-    //$this->miConfigurador->setVariableConfiguracion("cache",true);
-	$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['usuario'] );
-	exit();
+	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
+		$parametros = array (
+				'idObjeto' => $_REQUEST ['idObjeto'],
+				'estado' => 2  //asignado
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( "actualizarObjeto", $parametros );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
+				
+		$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['usuario'] );
+		exit();
 } else {
-	$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
-	exit();
+		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
+		exit();
 }

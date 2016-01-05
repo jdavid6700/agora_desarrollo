@@ -27,8 +27,16 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
+			case 'actualizarObjeto' :
+				$cadenaSql = "UPDATE prov_objeto_contratar SET ";
+				$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+				$cadenaSql .= " WHERE id_objeto=";
+				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
+				break;
 
-			/* LISTA - SUPERVISORES */
+			/* LISTA - OBJETO A CONTRATAR  */
 				case "listaObjetoContratar" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " id_objeto,";
@@ -56,16 +64,17 @@ class Sql extends \Sql {
 					$cadenaSql .= " order by nombre_supervisor";
 					break;
 		
-			/* LISTA - OBJETO A CONTRATAR */
+			/* LISTA - OBJETO A CONTRATAR - ESPECIFICO */
 				case "objetoContratar" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_objeto,";
-					$cadenaSql .= "	objetocontratar";
+					$cadenaSql .= " objetocontratar,";
+					$cadenaSql .= "	codigociiu,";
+					$cadenaSql .= "	descripcion";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " prov_objeto_contratar";
-					$cadenaSql .= " order by objetocontratar";
+					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
 					break;		
-			/* GUARDAR NUEVO CONTRATO */
+			/* GUARDAR - NUEVO CONTRATO */
 				case 'registroContrato' :
 					$cadenaSql = 'INSERT INTO ';
 					$cadenaSql .= 'prov_contrato';
@@ -86,7 +95,8 @@ class Sql extends \Sql {
 					$cadenaSql .= 'valor,';
 					$cadenaSql .= 'rubro,';
 					$cadenaSql .= 'poliza,';
-					$cadenaSql .= 'forma_pago';
+					$cadenaSql .= 'forma_pago,';
+					$cadenaSql .= 'estado';
 					$cadenaSql .= ') ';
 					$cadenaSql .= 'VALUES ';
 					$cadenaSql .= '( ';
@@ -106,7 +116,8 @@ class Sql extends \Sql {
 					$cadenaSql .= '\'' . $variable [13] . '\', ';
 					$cadenaSql .= '\'' . $variable [14] . '\', ';					
 					$cadenaSql .= '\'' . $variable [15] . '\', ';					
-					$cadenaSql .= '\'' . $variable [16] . '\'';
+					$cadenaSql .= '\'' . $variable [16] . '\', ';
+					$cadenaSql .= '\'' . $variable [17] . '\'';
 					$cadenaSql .= ');';
 					break;					
 		
