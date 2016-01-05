@@ -29,6 +29,23 @@ class Sql extends \Sql {
 		switch ($tipo) {
 
 			/* LISTA - SUPERVISORES */
+				case "listaObjetoContratar" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_objeto,";
+					$cadenaSql .= " objetocontratar,";
+					$cadenaSql .= " codigociiu,";
+					$cadenaSql .= " fecharegistro,";
+					$cadenaSql .= " unidad,";
+					$cadenaSql .= " cantidad,";
+					$cadenaSql .= "	descripcion,";
+					$cadenaSql .= "	estado";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
+					$cadenaSql .= " order by fechaRegistro";
+					break;		
+		
+			/* LISTA - SUPERVISORES */
 				case "supervisor" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " id_supervisor,";
