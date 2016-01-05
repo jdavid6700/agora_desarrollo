@@ -1,0 +1,54 @@
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// FUNCIONES AJAX
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ 
+function nuevoAjax(){ 
+	var xmlhttp=false; 
+	try{ 
+		// Creacion del objeto AJAX para navegadores no IE
+		xmlhttp=new ActiveXObject("Msxml2.XMLHTTP"); 
+	}
+	catch(e){ 
+		try{ 
+			// Creacion del objet AJAX para IE 
+			xmlhttp=new ActiveXObject("Microsoft.XMLHTTP"); 
+		} 
+		catch(E) { 
+			xmlhttp=false; 
+			}
+	}
+	if (!xmlhttp && typeof XMLHttpRequest!='undefined') { xmlhttp=new XMLHttpRequest(); } 
+
+	return xmlhttp; 
+}
+
+
+
+function buscarSubsede(){
+	objetoTerritorial = eval("document.getElementById('territorial')");
+	objetoCiudadAct = document.getElementById('ciudadAct');
+	
+	var idTerritorial = objetoTerritorial.value;
+	var idCiudadAct = objetoCiudadAct.value;
+	
+	
+	
+	try{
+		celda 	= eval("document.getElementById('idSubsede')");
+		ajax=nuevoAjax();
+		ajax.open("GET", "http://danenet/gestion_humana/ajax_response.php?idTerritorial="+idTerritorial+"&idCiudadAct="+idCiudadAct, true);
+		ajax.onreadystatechange=function(){ 
+			if (ajax.readyState==1){
+				// Mientras carga pongo el texto que dice "Cargando"
+				celda.cells[0].innerHTML = 'Actualizando';
+			}
+			if (ajax.readyState==4){
+				celda.cells[0].innerHTML = ajax.responseText;
+			}
+		}
+		ajax.send(null);
+		}catch(ex){
+			alert(ex);
+		}
+
+}
