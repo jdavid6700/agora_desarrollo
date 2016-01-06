@@ -52,8 +52,6 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 
 		echo "<li><a href='" . $redireccion . "'>Objeto a contratar</a></li>";
 
-		
-		
 		//CONTRATO
 		$desenlace = 'pagina=contrato';
 		$enlace = $miConfigurador->configuracion ['enlace'];
@@ -64,8 +62,16 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 		
 		echo "<li><a href='" . $redireccion . "'>Contrato</a></li>";
 
-
-
+		//CONSULTAR CONTRATO
+		$variable = 'pagina=contrato';
+		$variable.="&opcion=consultar";
+		$enlace = $miConfigurador->configuracion ['enlace'];
+		$variable = $miConfigurador->fabricaConexiones->crypto->codificar($variable);
+		
+        $_REQUEST [$enlace] = $enlace . '=' . $variable;
+        $redireccion = $url . $_REQUEST [$enlace];		
+		
+		echo "<li><a href='" . $redireccion . "'>Consultar Contrato</a></li>";
 
 		
 		$desenlace = 'pagina=desenlace';
