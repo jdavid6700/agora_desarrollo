@@ -94,12 +94,12 @@ class listarDatos {
 	
 					if( $dato['estado']==1){
 						$valor = 'Activo';
-						$clase = "btn btn-success";
+						$clase = "btn btn-default";
 					}else{
 						$valor = 'Inactivo';
 						$clase = "btn btn-danger";
 					}
-				echo '<a class="' . $clase . '" href="' . $url . '">' .  $valor . ' <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>';
+				echo '<a class="' . $clase . '" href="' . $url . '">' .  $valor . ' </span></a>';
 				echo "</td>";			
 				echo "</tr>";
 			endforeach; 

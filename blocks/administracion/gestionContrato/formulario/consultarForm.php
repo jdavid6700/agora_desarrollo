@@ -19,7 +19,7 @@ $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 
 $nombreFormulario = $esteBloque ["nombre"];
 
-$conexion = "inventarios";
+$conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 // validamos los datos que llegan
@@ -208,7 +208,7 @@ $arreglo = array (
 		$fechaFin_R 
 );
 unset($resultadoContratos);
-$cadena_sql = $this->sql->cadena_sql ( "consultarContrato", $arreglo );
+$cadena_sql = $this->sql->getCadenaSql ( "consultarContrato", $arreglo );
 
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 

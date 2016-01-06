@@ -27,7 +27,42 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-			
+
+			/* CONSULTAR - CONTRATO */					
+			case "consultarContrato" :			
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " numero_contrato, ";
+				$cadenaSql .= " fecha_inicio, ";
+				$cadenaSql .= " fecha_finalizacion, ";
+				$cadenaSql .= " sup.nombre_supervisor, ";
+				$cadenaSql .= " prov.nombre_supervisor proveedor, ";
+				$cadenaSql .= " numero_acto_admin, ";
+				$cadenaSql .= " tipo_acto_admin, ";
+				$cadenaSql .= " numero_cdp, ";
+				$cadenaSql .= " numero_rp, ";
+				$cadenaSql .= " fecha_registro, ";
+				$cadenaSql .= " modalidad  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " prov_contrato C";
+				$cadenaSql .= " JOIN param_supervisor sup ON sup.id_supervisor = C.id_supervisor ";
+				$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+				$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
+				if ($variable [0] != '') {
+					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
+				}
+				
+			/*	if ($variable [1] != '') {
+					$cadenaSql .= " AND fecha_contrato BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
+				}
+				
+				if ($variable [3] != '') {
+					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [3] . "' AS DATE) ";
+					$cadenaSql .= " AND  CAST ( '" . $variable [4] . "' AS DATE)  ";
+				}*/
+				
+				break;
+		
 			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
 			case 'actualizarObjeto' :
 				$cadenaSql = "UPDATE prov_objeto_contratar SET ";
@@ -64,7 +99,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " order by nombre_supervisor";
 					break;
 		
-			/* LISTA - OBJETO A CONTRATAR - ESPECIFICO */
+			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
 				case "objetoContratar" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " objetocontratar,";
@@ -186,39 +221,7 @@ class Sql extends \Sql {
 				$cadenaSql .= ') RETURNING documento_id;';
 				break;
 			
-			case "consultarContrato" :
-				
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " documento_nombre, ";
-				$cadenaSql .= " documento_fechar, ";
-				$cadenaSql .= " documento_ruta, ";
-				$cadenaSql .= " documento_estado, ";
-				$cadenaSql .= " documento_idunico, ";
-				
-				$cadenaSql .= " nombre_contratista, ";
-				$cadenaSql .= " numero_contrato, ";
-				$cadenaSql .= " fecha_contrato, ";
-				$cadenaSql .= " fecha_registro, ";
-				$cadenaSql .= " id_contrato  ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " contratos ";
-				$cadenaSql .= " JOIN registro_documento ON documento_id= id_documento_soporte ";
-				$cadenaSql .= " WHERE 1=1 AND contratos.estado='TRUE' ";
-				if ($variable [0] != '') {
-					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
-				}
-				
-				if ($variable [1] != '') {
-					$cadenaSql .= " AND fecha_contrato BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
-				}
-				
-				if ($variable [3] != '') {
-					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [3] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable [4] . "' AS DATE)  ";
-				}
-				
-				break;
+
 			
 			case 'actualizarDocumento' :
 				$cadenaSql = 'UPDATE arka_inventarios.registro_documento SET ';
