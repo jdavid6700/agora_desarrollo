@@ -79,7 +79,7 @@ class Frontera {
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";
-            include_once($this->ruta . "/formulario/listarDatos.php");
+            include_once($this->ruta . "/formulario/seleccionar.php");
         }
     }
 

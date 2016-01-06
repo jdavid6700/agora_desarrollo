@@ -92,6 +92,7 @@ $this->idioma["fechaRegistroTitulo"] = "Seleccione la fecha de consulta";
 $this->idioma["noEncontroProcesos"] = "No se encontraron Registro de Contrato";
 $this->idioma["CuadroModificarRegistros"] = "Modificar Registro de Contrato ";
 $this->idioma["mensajeGeneral"] = "Si no se selecciona ningun filtro en la busqueda el sistema realizara una consulta general.";
+$this->idioma["tabSelectObjeto"] = "Seleccionar Objeto a Contratar ";
 $this->idioma["tabContratoCrear"] = "Ingresar Contrato ";
 $this->idioma["tabContratoConsultar"] = "Consultar Contrato ";
 $this->idioma["continuar"] = "Continuar";
