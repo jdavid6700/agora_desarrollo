@@ -64,7 +64,15 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 		
 		echo "<li><a href='" . $redireccion . "'>Contrato</a></li>";
 
-
+		//EVALUACION
+		$evaluacion = 'pagina=evaluacion';
+		$enlace = $miConfigurador->configuracion ['enlace'];
+		$evaluacion = $miConfigurador->fabricaConexiones->crypto->codificar($evaluacion);
+		
+        $_REQUEST [$enlace] = $enlace . '=' . $evaluacion;
+        $redireccion = $url . $_REQUEST [$enlace];		
+		
+		echo "<li><a href='" . $redireccion . "'>Evaluación</a></li>";
 
 
 		
