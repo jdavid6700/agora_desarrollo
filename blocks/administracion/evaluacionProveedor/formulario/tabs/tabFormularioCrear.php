@@ -270,8 +270,8 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				// Valores a mostrar en el control
 				$matrizItems = array (
-						array ( 12, 'Si' ),
-						array ( 0, 'No' )
+						array ( 0, 'Si' ),
+						array ( 12, 'No' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -336,7 +336,7 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				// Valores a mostrar en el control
 				$matrizItems = array (
-						array ( 12, 'Si' ),
+						array ( 10, 'Si' ),
 						array ( 0, 'No' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;
@@ -378,8 +378,10 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				// Valores a mostrar en el control
 				$matrizItems = array (
-						array ( 20, 'Si' ),
-						array ( 0, 'No' )
+						array ( 9, 'Excelente' ),
+						array ( 6, 'Bueno' ),
+						array ( 3, 'Regular' ),
+						array ( 0, 'Malo' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -411,8 +413,8 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				// Valores a mostrar en el control
 				$matrizItems = array (
-						array ( 10, 'Si' ),
-						array ( 0, 'No' )
+						array ( 0, 'Si' ),
+						array ( 15, 'No' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -444,7 +446,7 @@ class registrarForm {
 				$atributos ['miEvento'] = '';
 				// Valores a mostrar en el control
 				$matrizItems = array (
-						array ( 10, 'Si' ),
+						array ( 15, 'Si' ),
 						array ( 0, 'No' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;

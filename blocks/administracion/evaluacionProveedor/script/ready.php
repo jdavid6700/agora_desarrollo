@@ -4,7 +4,7 @@
 
 ?>
 // Asociar el widget de validación al formulario
-$("#gestionContrato").validationEngine({
+$("#evaluacionProveedor").validationEngine({
     promptPosition : "centerRight", 
     scroll: false,
     autoHidePrompt: true,
