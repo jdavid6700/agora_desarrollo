@@ -459,7 +459,7 @@ class registrarForm {
 			
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 	
-		$esteCampo = 'idObjeto';
+		$esteCampo = 'idContrato';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";
 		$atributos ['estilo'] = '';
@@ -524,7 +524,7 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=nuevoContrato";
+		$valorCodificado .= "&opcion=nuevaEaluacion";
 		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

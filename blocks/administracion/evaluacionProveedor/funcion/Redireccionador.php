@@ -14,7 +14,7 @@ if (!isset($GLOBALS ["autorizado"])) {
 
         switch ($opcion) {
 
-            case "registroContrato":
+            case "registroExitoso":
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";

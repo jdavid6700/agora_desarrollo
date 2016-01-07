@@ -78,7 +78,7 @@ class Funcion {
 					$this->consultarContrato ();
 					break;
 				
-				case 'nuevoContrato' :
+				case 'nuevaEaluacion' :
 					$this->formProcessor ();
 					break;
 				

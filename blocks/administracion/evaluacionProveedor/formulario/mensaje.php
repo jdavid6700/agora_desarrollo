@@ -73,7 +73,7 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
 
         $tipo = 'success';
-        $mensaje = "Se registro el Contrato correctamente.";
+        $mensaje = "Se registro la evaluaciòn del Contrato.";
         $boton = "continuar";
 
         $valorCodificado = "pagina=contrato";

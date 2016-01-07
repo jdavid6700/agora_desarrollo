@@ -15,46 +15,48 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 $resultado = '';
 
 $fechaActual = date ( 'Y-m-d' );
+//INICIO Calculo puntaje total
+$puntajeTotal = 0;
+$puntajeTotal = $_REQUEST ['tiempoEntrega'] + $_REQUEST ['cantidades'] + $_REQUEST ['conformidad'] + $_REQUEST ['funcionalidadAdicional'];
+$_REQUEST ['reclamaciones'] = $_REQUEST ['relcamacionSolucion']==12?0:$_REQUEST ['reclamaciones'];
+$puntajeTotal = $puntajeTotal + $_REQUEST ['reclamaciones'] + $_REQUEST ['relcamacionSolucion'] + $_REQUEST ['servicioVenta'] + $_REQUEST ['procedimientos'];
+$_REQUEST ['garantia'] = $_REQUEST ['garantiaSatisfaccion']==15?0:$_REQUEST ['garantia'];
+$puntajeTotal =  $puntajeTotal + $_REQUEST ['garantia'] + $_REQUEST ['garantiaSatisfaccion'];
+//FIN Calculo puntaje total
 
+//Cargo array con los datos para insertar en la table evaluacionProveedor
 $arreglo = array (
-		$_REQUEST ['idObjeto'],
-		$_REQUEST ['num_contrato'],
-		$_REQUEST ['fecha_inicio_c'],
-		$_REQUEST ['fecha_final_c'],
-		$_REQUEST ['supervisor'],
-		$_REQUEST ['numActoAdmin'],
-		$_REQUEST ['tipoActoAdmin'],
-		$_REQUEST ['numCDP'],		
-		$_REQUEST ['numRP'],
-		$_REQUEST ['fecha_RP'],
+		$_REQUEST ['idContrato'],
 		$fechaActual,
-		$_REQUEST ['modalidad'],
-		$_REQUEST ['proveedor'],
-		$_REQUEST ['valor'],
-		$_REQUEST ['rubro'],
-		$_REQUEST ['poliza'],		
-		$_REQUEST ['formaPago'],
+		$_REQUEST ['tiempoEntrega'],
+		$_REQUEST ['cantidades'],
+		$_REQUEST ['conformidad'],
+		$_REQUEST ['funcionalidadAdicional'],
+		$_REQUEST ['reclamaciones'],
+		$_REQUEST ['relcamacionSolucion'],
+		$_REQUEST ['servicioVenta'],		
+		$_REQUEST ['procedimientos'],
+		$_REQUEST ['garantia'],		
+		$_REQUEST ['garantiaSatisfaccion'],
+		$puntajeTotal,
 		1
-);
-//Guardar datos del nuevo contrato
-$cadenaSql = $this->sql->getCadenaSql ( "registroContrato", $arreglo );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"registroContrato" );
+);//FALTA EL ID DEL SUPERVISOR
 
-// Crear Variables necesarias en los métodos
-$variable = '';
-
+//Guardar datos de la evaluacion
+$cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 if ($resultado) {
-	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
+	//Actualizar estado del CONTRATO A EVALUADO
 		$parametros = array (
-				'idObjeto' => $_REQUEST ['idObjeto'],
-				'estado' => 2  //asignado
+				'idContrato' => $_REQUEST ['idContrato'],
+				'estado' => 2  //evaluado
 		);
 		
-		$cadenaSql = $this->sql->getCadenaSql ( "actualizarObjeto", $parametros );
+		$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $parametros );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
 				
-		$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['usuario'] );
+		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['usuario'] );
 		exit();
 } else {
 		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
