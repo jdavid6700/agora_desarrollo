@@ -18,8 +18,8 @@ $fechaActual = date ( 'Y-m-d' );
 //INICIO Calculo puntaje total
 $puntajeTotal = 0;
 $puntajeTotal = $_REQUEST ['tiempoEntrega'] + $_REQUEST ['cantidades'] + $_REQUEST ['conformidad'] + $_REQUEST ['funcionalidadAdicional'];
-$_REQUEST ['reclamaciones'] = $_REQUEST ['relcamacionSolucion']==12?0:$_REQUEST ['reclamaciones'];
-$puntajeTotal = $puntajeTotal + $_REQUEST ['reclamaciones'] + $_REQUEST ['relcamacionSolucion'] + $_REQUEST ['servicioVenta'] + $_REQUEST ['procedimientos'];
+$_REQUEST ['reclamaciones'] = $_REQUEST ['reclamacionSolucion']==12?0:$_REQUEST ['reclamaciones'];
+$puntajeTotal = $puntajeTotal + $_REQUEST ['reclamaciones'] + $_REQUEST ['reclamacionSolucion'] + $_REQUEST ['servicioVenta'] + $_REQUEST ['procedimientos'];
 $_REQUEST ['garantia'] = $_REQUEST ['garantiaSatisfaccion']==15?0:$_REQUEST ['garantia'];
 $puntajeTotal =  $puntajeTotal + $_REQUEST ['garantia'] + $_REQUEST ['garantiaSatisfaccion'];
 //FIN Calculo puntaje total
@@ -33,7 +33,7 @@ $arreglo = array (
 		$_REQUEST ['conformidad'],
 		$_REQUEST ['funcionalidadAdicional'],
 		$_REQUEST ['reclamaciones'],
-		$_REQUEST ['relcamacionSolucion'],
+		$_REQUEST ['reclamacionSolucion'],
 		$_REQUEST ['servicioVenta'],		
 		$_REQUEST ['procedimientos'],
 		$_REQUEST ['garantia'],		
@@ -41,7 +41,7 @@ $arreglo = array (
 		$puntajeTotal,
 		1
 );//FALTA EL ID DEL SUPERVISOR
-
+ 
 //Guardar datos de la evaluacion
 $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );

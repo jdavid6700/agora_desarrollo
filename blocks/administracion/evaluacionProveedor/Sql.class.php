@@ -28,7 +28,7 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 
-			/* CONSULTAR - CONTRATO - ESPECIFICO */
+			/* CONSULTAR - CONTRATO - POR ID */
 				case "contratoByID" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " numero_contrato,";
@@ -39,7 +39,34 @@ class Sql extends \Sql {
 					$cadenaSql .= " prov_contrato C";
 					$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
 					$cadenaSql .= " WHERE  id_contrato=" . $variable;  //Activo
-					break;			
+					break;
+
+			/* CONSULTAR - CONTRATO - NO. CONTRATO */
+				case "contratoByNumero" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_contrato,";
+					$cadenaSql .= " numero_contrato,";
+					$cadenaSql .= "	fecha_inicio,";
+					$cadenaSql .= "	fecha_finalizacion,";
+					$cadenaSql .= " nombre_supervisor,";
+					$cadenaSql .= " C.estado";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_contrato C";
+					$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+					$cadenaSql .= " WHERE 1=1 ";
+					if ($variable [0] != '') {
+						$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
+					}
+					break;
+
+			/* CONSULTAR - EVALUACION - ID CONTRATO */
+				case "evalaucionByIdContrato" :
+					$cadenaSql = "SELECT *";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_evaluacion C";
+					$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
+					break;
+					
 			/* LISTAR - CONTRATO */					
 				case "listaContato" :			
 					$cadenaSql = "SELECT  ";

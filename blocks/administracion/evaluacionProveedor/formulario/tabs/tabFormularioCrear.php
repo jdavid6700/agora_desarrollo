@@ -280,7 +280,7 @@ class registrarForm {
 			// ----------------FIN CONTROL: Lista RECLAMACIONES--------------------------------------------------------
 
 			// ---------------- CONTROL: Lista RECLAMACIONES SOLUCION --------------------------------------------------------
-				$esteCampo = "relcamacionSolucion";
+				$esteCampo = "reclamacionSolucion";
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );

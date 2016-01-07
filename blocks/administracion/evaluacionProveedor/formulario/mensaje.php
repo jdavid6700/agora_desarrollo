@@ -73,11 +73,10 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
 
         $tipo = 'success';
-        $mensaje = "Se registro la evaluaciòn del Contrato.";
+        $mensaje = "Se registro la Evaluaciòn del Contrato.";
         $boton = "continuar";
 
-        $valorCodificado = "pagina=contrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado = "pagina=" . $miPaginaActual;
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         

@@ -24,10 +24,6 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 // validamos los datos que llegan
 
-
-
-// $variable_fecha = $_REQUEST ['fechaRegistro'];
-
 {
 	$tab = 1;
 	
@@ -49,33 +45,14 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 	$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 	$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-		
-	$variable = "pagina=" . $miPaginaActual;
-	$variable .= "&usuario=".$_REQUEST['usuario'];
-	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-	$esteCampo = 'botonRegresar';
-	$atributos ['id'] = $esteCampo;
-	$atributos ['enlace'] = $variable;
-	$atributos ['tabIndex'] = 1;
-	$atributos ['estilo'] = 'textoSubtitulo';
-	$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-	$atributos ['ancho'] = '10%';
-	$atributos ['alto'] = '10%';
-	$atributos ['redirLugar'] = true;
-	echo $this->miFormulario->enlace ( $atributos );
-		
-	unset ( $atributos );
+
 	
 	
 	
-	$esteCampo = "Agrupacion";
-	$atributos ['id'] = $esteCampo;
-	$atributos ["estilo"] = "jqueryui";
-	$atributos ['tipoEtiqueta'] = 'inicio';
-	$atributos ['leyenda'] = "Registro Contratos";
-	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+
 	
 
 	
@@ -208,75 +185,153 @@ $arreglo = array (
 		$fechaFin_R 
 );
 unset($resultadoContratos);
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContrato", $arreglo );
 
+//datos del contrtato
+$cadena_sql = $this->sql->getCadenaSql ( "contratoByNumero", $arreglo );
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
 
 if ($resultadoContratos) {
 	
+		echo "<span class='textoElegante textoEnorme textoAzul'>Contrato</span><hr>"; 
+		echo '<table style="width:100%">';
+		echo '<tr><td style="width:20%"><span class="textoAzul">No. Contrato</td><td><span class="textoGris">' . $resultadoContratos[0][1] . "</span></td></tr>";
+		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Inicial</td><td><span class="textoGris">' . $resultadoContratos[0][2] . "</span></td></tr>";
+		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Final</td><td><span class="textoGris">' . $resultadoContratos[0][3] . "</span></td></tr>";	
+		echo '<tr><td style="width:20%"><span class="textoAzul">Proveedor</td><td><span class="textoGris">' . $resultadoContratos[0][4] . "</span></td></tr>";	
+		echo '</table>';
+		//FIN OBJETO A CONTRATAR	
 	
-	
-	
-	// -----------------Inicio de Conjunto de Controles----------------------------------------
-	$esteCampo = "marcoDatosResultadoParametrizar";
-	$atributos ["estilo"] = "jqueryui";
-// 	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-	echo $this->miFormulario->marcoAgrupacion("inicio", $atributos);
-	unset ( $atributos );
-	
-	echo "<table id='tablaContratos'>";
-	
-	echo "<thead>
-                <tr>
-		     <th>Número Contrato</th>
-			 <th>Identificación<br>Contratista</th>
-             <th>Fecha Contrato</th>
-			 <th>Fecha Registro</th>
-             <th>Documento</th>
-             <th>Modificar</th>
-        	 </tr>
-            </thead>
-            <tbody>";
-	
-	for($i = 0; $i < count ( $resultadoContratos ); $i ++) {
+	if ($resultadoContratos[0]["estado"] == 1 ){
 		
-		$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-		$variable .= "&opcion=modificar";
-		$variable .= "&contrato=" . $resultadoContratos [$i] [4];
-		$variable .= "&nombre_contrato=" . $resultadoContratos [$i] [0];
-		$variable .= "&identificador_contrato=" . $resultadoContratos [$i] [9];
-		$variable .= "&usuario=".$_REQUEST['usuario'];
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		//MOSTRAT MENSAJE QUE NO SE HA EVALUADO EL CONTRATO
 		
-		$mostrarHtml = "<tr>
-					
-				    <td><center>" . $resultadoContratos [$i] [6] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [5] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [7] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [8] . "</center></td>
-                    <td><center><A HREF=\"" . $resultadoContratos [$i] [2] . "\" target=\"_blank\">" . $resultadoContratos [$i] [0] . "</A></center></td>
-                    <td><center>
-                        <a href='" . $variable . "'>                        
-                            <img src='" . $rutaBloque . "/images/edit.png' width='15px'> 
-                        </a>
-                   </center></td>
-                </tr>";
-		echo $mostrarHtml;
-		unset ( $mostrarHtml );
-		unset ( $variable );
+		echo "NO SE HA EVALUADO EL CONTATO"; exit;
+		
+	}else{
+		//datos de la evaluacion
+		$idContrato = $resultadoContratos[0]["id_contrato"];
+		$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $idContrato );
+		$resultadoEvaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );	
+	?>
+		<table class="table table-bordered table-condensed">
+			<tr class="info">
+						<td align="center"><strong>CRITERIO</strong></td>	
+						<td align="center"><strong>SUBCRITERIO </strong></td>
+						<td align="center"><strong>ÍTEM </strong></td>
+						<td align="center"><strong>RESPUESTA </strong></td>
+						<td align="center"><strong>VALOR</strong></td>
+						<td align="center"><strong>PUNTAJE TOTAL</strong></td>
+			</tr>
+			<!-- CUMPLIMIENTO -->
+			<tr >
+						<td rowspan="2" align="center"><small><br>CUMPLIMIENTO</small></td>	
+						<td align="center"><small>Tiempos de entrega </small></td>
+						<td align="center"><small>¿Se cumplieron los tiempos de entrega de bienes o la prestación de los servicios ofertados por el proveedor? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["tiemo_entrega"] == 12 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["tiemo_entrega"]; ?></small></td>
+						<td rowspan="2" align="center"><small><br><?php echo $resultadoEvaluacion[0]["tiemo_entrega"] + $resultadoEvaluacion[0]["cantidades"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td align="center"><small>Cantidades </small></td>
+						<td align="center"><small>¿Se entregan las cantidades solicitadas? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["cantidades"] == 12 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["cantidades"]; ?></small></td>
+			</tr>
+			<!-- CALIDAD -->
+			<tr >
+						<td rowspan="2" align="center"><small><br>CALIDAD</small></td>	
+						<td align="center"><small>Conformidad </small></td>
+						<td align="center"><small>¿El bien o servicio cumplió con las especificaciones y requisitos pactados en el momento de entrega? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["conformidad"] == 20 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["conformidad"]; ?></small></td>
+						<td rowspan="2" align="center"><small><br><?php echo $resultadoEvaluacion[0]["conformidad"] + $resultadoEvaluacion[0]["funcionalidad_adicional"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td align="center"><small>Funcionalidad adicional </small></td>
+						<td align="center"><small>¿El producto comprado o servicio prestado proporcionó más herramientas o funciones de las solicitadas originalmente? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["funcionalidad_adicional"] == 10 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["funcionalidad_adicional"]; ?></small></td>
+			</tr>
+			<!-- POS CONTRACTUAL -->
+			<tr >
+						<td rowspan="3" align="center"><small><br>POS CONTRACTUAL</small></td>	
+						<td rowspan="2" align="center"><small>Reclamaciones </small></td>
+						<td align="center"><small>¿Se han presentado reclamaciones al proveedor en calidad o gestión? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["reclamaciones"] == 12 ) echo "No"; else echo "Si"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["reclamaciones"]; ?></small></td>
+						<td rowspan="3" align="center"><small><br><?php echo $resultadoEvaluacion[0]["reclamaciones"] + $resultadoEvaluacion[0]["relcamacion_solucion"] + $resultadoEvaluacion[0]["servicio_venta"]; ?></small></td>
+			</tr>
+			<tr >
+						<td align="center"><small>¿El proveedor soluciona oportunamente las no conformidades de calidad y gestión de los bienes o servicios recibidos? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["relcamacion_solucion"] == 12 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["relcamacion_solucion"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td align="center"><small>Servicio pos venta </small></td>
+						<td align="center"><small>¿El proveedor cumple con los compromisos pactados dentro del contrato u orden de servicio o compra?
+(aplicación de garantías, mantenimiento, cambios, reparaciones, capacitaciones, entre otras) </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["servicio_venta"] == 10 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["servicio_venta"]; ?></small></td>
+			</tr>
+			<!-- GESTION -->
+			<tr >
+						<td rowspan="3" align="center"><small><br>GESTIÒN</small></td>	
+						<td align="center"><small>Procedimientos </small></td>
+						<td align="center"><small>¿El contrato es suscrito en el tiempo pactado, entrega las pólizas a tiempo y las facturas son radicadas en el tiempo indicado
+con las condiciones y soportes requeridos para su trámite contractual? </small></td>
+						<td align="center"><small>
+						<?php 
+							switch ( $resultadoEvaluacion[0]["procedimientos"] ) {
+								case 9:
+									echo "Excelente";
+									break;
+								case 6:
+									echo "Bueno";
+									break;
+								case 3:
+									echo "Regular";
+									break;
+								case 0:
+									echo "Malo";
+									break;
+							}
+						?>
+						</small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["procedimientos"]; ?></small></td>
+						<td rowspan="3" align="center"><small><br><?php echo $resultadoEvaluacion[0]["procedimientos"] + $resultadoEvaluacion[0]["garantia"] + $resultadoEvaluacion[0]["garantia_satisfaccion"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td rowspan="2" align="center"><small>Garantìa </small></td>
+						<td align="center"><small>¿Se requirió hacer uso de la garantía del producto o servicio? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["garantia"] == 15 ) echo "No"; else echo "Si"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["garantia"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td align="center"><small>¿El proveedor cumplió a satisfacción con la garantía pactada? </small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["garantia_satisfaccion"] == 15 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["garantia_satisfaccion"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td colspan="3"></td>
+						<td colspan="2" align="center"><strong>TOTAL</strong></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["puntaje_total"]; ?></small></td>
+			</tr>
+			<tr >	
+						<td colspan="3"></td>
+						<td colspan="3" align="center"><strong>CLASIFICACIÒN TIPO
+						<?php 
+						if( $resultadoEvaluacion[0]["puntaje_total"] > 79 )
+							echo "A";
+						elseif( $resultadoEvaluacion[0]["puntaje_total"] > 45 )
+							echo "B";
+						else echo "C";
+						?>						
+						</strong></td>
+			</tr>
+		</table>
+<?php	
 	}
-	
-	echo "</tbody>";
-	
-	echo "</table>";
-	
-	echo $this->miFormulario->agrupacion ( 'fin' );
-	unset ( $atributos );
-	
-	
-	// Fin de Conjunto de Controles
-	// echo $this->miFormulario->marcoAgrupacion("fin");
+
 } else {
 	$nombreFormulario = $esteBloque ["nombre"];
 	include_once ("core/crypto/Encriptador.class.php");

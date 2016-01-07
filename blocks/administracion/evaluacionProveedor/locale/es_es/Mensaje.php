@@ -2,13 +2,20 @@
 
 $this->idioma["tabSelectContrato"] = "Seleccionar Contrato para Evaluar ";
 $this->idioma["tabEvaluar"] = "Evaluar Contrato ";
-$this->idioma["tabConsultar"] = "Consultar Evaluación";
+$this->idioma["tabConsultar"] = "Consultar Evaluación por Contrato";
+$this->idioma["tabConsultarProveedor"] = "Consultar Evaluación por Proveedor";
 
 $this->idioma["marcoDatos"]="Evaluar";
 $this->idioma["marcoCumplimiento"]="Cumplimiento";
 $this->idioma["marcoCalidad"]="Calidad";
 $this->idioma["marcoContractual"]="Pos Contractual";
 $this->idioma["marcoGestion"]="Gestión";
+$this->idioma["marcoSearch"]="Ingesar No. de Contrato para ver Evaluaciòn";
+
+
+
+$this->idioma["num_contrato"] =  "No. de Contrato";
+$this->idioma["num_contratoTitulo"] = "Indicar No. de Contrato";
 
 $this->idioma["tiempoEntrega"] =  "¿Se cumplieron los tiempos de entrega de bienes o la prestación de los servicios ofertados por el proveedor?";
 $this->idioma["tiempoEntregaTitulo"] = "Seleccionar ";
