@@ -86,8 +86,18 @@ class Sql extends \Sql {
 					$cadenaSql .= " prov_objeto_contratar";
 					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
 					$cadenaSql .= " order by fechaRegistro";
-					break;		
-		
+					break;
+					
+			/* LISTA - PROVEEDORS */
+				case "proveedores" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_proveedor,";
+					$cadenaSql .= "	nombre_proveedor";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_proveedor";
+					$cadenaSql .= " order by nombre_proveedor";
+					break;
+					
 			/* LISTA - SUPERVISORES */
 				case "supervisor" :
 					$cadenaSql = "SELECT";

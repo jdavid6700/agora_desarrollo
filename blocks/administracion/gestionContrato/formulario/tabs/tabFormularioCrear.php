@@ -240,7 +240,7 @@ class registrarForm {
 				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
-				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'supervisor' );
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'proveedores' );
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
