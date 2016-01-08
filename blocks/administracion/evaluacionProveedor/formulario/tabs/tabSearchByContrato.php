@@ -178,7 +178,7 @@ class Formulario {
 
         // Paso 1: crear el listado de variables
 
-        $valorCodificado .= "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+        $valorCodificado = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
         $valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
         $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
         $valorCodificado .= "&opcion=consultar";

@@ -28,6 +28,19 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 
+			/* CONSULTAR - PROVEEDOR POR NIT */
+				case "consultarProveedor" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_proveedor,";
+					$cadenaSql .= " nit,";
+					$cadenaSql .= "	nombre_proveedor,";
+					$cadenaSql .= "	puntaje_evaluacion,";
+					$cadenaSql .= "	clasificacion_evaluacion";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_proveedor";
+					$cadenaSql .= " WHERE  NIT=" . $variable;  
+					break;
+					
 			/* CONSULTAR - CONTRATO - POR ID */
 				case "contratoByID" :
 					$cadenaSql = "SELECT";

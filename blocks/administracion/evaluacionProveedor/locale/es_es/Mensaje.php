@@ -11,11 +11,16 @@ $this->idioma["marcoCalidad"]="Calidad";
 $this->idioma["marcoContractual"]="Pos Contractual";
 $this->idioma["marcoGestion"]="Gestión";
 $this->idioma["marcoSearch"]="Ingesar No. de Contrato para ver Evaluaciòn";
+$this->idioma["marcoSearchProveedor"]="Ingesar NIT o Cèdula del proveedor";
+
 
 
 
 $this->idioma["num_contrato"] =  "No. de Contrato";
 $this->idioma["num_contratoTitulo"] = "Indicar No. de Contrato";
+
+$this->idioma["nit_proveedor"] =  "NIT o Cèdula";
+$this->idioma["nit_proveedorTitulo"] = "Indicar NIT o Cèdula del proveedor";
 
 $this->idioma["tiempoEntrega"] =  "¿Se cumplieron los tiempos de entrega de bienes o la prestación de los servicios ofertados por el proveedor?";
 $this->idioma["tiempoEntregaTitulo"] = "Seleccionar ";

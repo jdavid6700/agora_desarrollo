@@ -78,7 +78,7 @@ unset ( $atributos );
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
-			include ($this->ruta . "formulario/tabs/tabFormularioConsultarProveedorRRRR.php");
+			include ($this->ruta . "formulario/tabs/tabSearchByproveedor.php");
 		}
 		echo $this->miFormulario->agrupacion ( 'fin' );	
 	// -----------------FIN Division para la pestaña 3-------------------------
