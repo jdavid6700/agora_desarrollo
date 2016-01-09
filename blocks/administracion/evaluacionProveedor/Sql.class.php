@@ -86,12 +86,29 @@ class Sql extends \Sql {
 					}
 					break;
 
-			/* CONSULTAR - EVALUACION - ID CONTRATO */
+			/* CONSULTAR - EVALUACION POR ID CONTRATO */
 				case "evalaucionByIdContrato" :
 					$cadenaSql = "SELECT *";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_evaluacion C";
+					$cadenaSql .= " prov_evaluacion ";
 					$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
+					break;
+					
+			/* CONSULTAR - EVALUACIONES POR ID PROVEEDOR */
+				case "evalaucionByIdProveedor" :
+					$cadenaSql = "SELECT ";
+					$cadenaSql .= " E.fecha_registro,";
+					$cadenaSql .= " E.puntaje_total,";
+					$cadenaSql .= "	E.clasificacion,";
+					$cadenaSql .= "	C.numero_contrato,";
+					$cadenaSql .= " S.nombre_supervisor,";
+					$cadenaSql .= " O.objetocontratar";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_evaluacion E";
+					$cadenaSql .= " JOIN prov_contrato C ON C.id_contrato = E.id_contrato ";
+					$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN prov_objeto_contratar O ON O.id_objeto = C.id_objeto ";
+					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
 					break;
 					
 			/* LISTAR - CONTRATO */					

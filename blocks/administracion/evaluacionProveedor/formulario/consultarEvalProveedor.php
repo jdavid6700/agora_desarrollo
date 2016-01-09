@@ -110,24 +110,26 @@ if ($resultadoProveedor) {
 		echo '<tr><td style="width:20%"><span class="textoAzul">NIT</td><td><span class="textoGris">' . $resultadoProveedor[0][1] . "</span></td></tr>";
 		echo '<tr><td style="width:20%"><span class="textoAzul">NOMBRE</td><td><span class="textoGris">' . $resultadoProveedor[0][2] . "</span></td></tr>";
 		echo '<tr><td style="width:20%"><span class="textoAzul">PUNTAJE TOTAL</td><td><span class="textoGris">' . $resultadoProveedor[0][3] . "</span></td></tr>";
-		if( $resultadoProveedor[0][4]==0 || $resultadoProveedor[0][4] == '' )
-			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">NO SE ENCUENTRA EVALUADO</span></td></tr>';
+
+		$claseficacionActual = $resultadoProveedor[0]["clasificacion_evaluacion"];	
+		if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' )
+			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">' . $claseficacionActual . "</span></td></tr>";
 		else
-			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">' . $resultadoProveedor[0][4] . "</span></td></tr>";
+			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">NO SE ENCUENTRA EVALUADO</span></td></tr>';
 		echo '</table>';
 		//FIN OBJETO A CONTRATAR		
-echo "<pre>";
-var_dump ($resultadoProveedor);
-echo "</pre>"; exit;	
-if( $resultadoProveedor[0][4]!=0 && $resultadoProveedor[0][4] != '' ){
-//CONSULTAR EVALUACIONES DEL PROVEEDOR
-$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $_REQUEST ['nit_proveedor'] );
-$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );	
+
+//Si se encuentra evaluado muestro las evaluaciones
+if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' ){
+	
+	$idProveedor = $resultadoProveedor[0]["id_proveedor"];	
+	//CONSULTAR EVALUACIONES DEL PROVEEDOR
+	$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdProveedor", $idProveedor  );
+	$resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );	
+
 	
 	
-	
-	
-}
+
 	// -----------------Inicio de Conjunto de Controles----------------------------------------
 	$esteCampo = "marcoDatosResultadoParametrizar";
 	$atributos ["estilo"] = "jqueryui";
@@ -155,17 +157,17 @@ $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" )
 		$variable .= "&opcion=modificar";
 		$variable .= "&contrato=" . $resultadoContratos [$i] [4];
 		$variable .= "&nombre_contrato=" . $resultadoContratos [$i] [0];
-		$variable .= "&identificador_contrato=" . $resultadoContratos [$i] [9];
+		$variable .= "&identificador_contrato=" . $resultadoContratos [$i] [2];
 		$variable .= "&usuario=".$_REQUEST['usuario'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$mostrarHtml = "<tr>
 					
-				    <td><center>" . $resultadoContratos [$i] [6] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [5] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [7] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [8] . "</center></td>
-                    <td><center><A HREF=\"" . $resultadoContratos [$i] [2] . "\" target=\"_blank\">" . $resultadoContratos [$i] [0] . "</A></center></td>
+				    <td><center>" . $resultadoContratos [$i] [0] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] [1] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] [2] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] [3] . "</center></td>
+                    <td><center><A HREF=\"" . $resultadoContratos [$i] [4] . "\" target=\"_blank\">" . $resultadoContratos [$i] [0] . "</A></center></td>
                     <td><center>
                         <a href='" . $variable . "'>                        
                             <img src='" . $rutaBloque . "/images/edit.png' width='15px'> 
@@ -187,7 +189,7 @@ $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" )
 	
 	// Fin de Conjunto de Controles
 	// echo $this->miFormulario->marcoAgrupacion("fin");
-} else {
+}} else {
 	$nombreFormulario = $esteBloque ["nombre"];
 	include_once ("core/crypto/Encriptador.class.php");
 	$cripto = Encriptador::singleton ();

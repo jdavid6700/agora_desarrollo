@@ -314,7 +314,7 @@ con las condiciones y soportes requeridos para su trámite contractual? </small>
 			<tr >	
 						<td colspan="3"></td>
 						<td colspan="2" align="center"><strong>TOTAL</strong></td>
-						<td align="center"><small><?php echo $resultadoEvaluacion[0]["puntaje_total"]; ?></small></td>
+						<td align="center"><strong><?php echo $resultadoEvaluacion[0]["puntaje_total"]; ?></strong></td>
 			</tr>
 			<tr >	
 						<td colspan="3"></td>
