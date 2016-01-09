@@ -51,7 +51,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
 	$variable = "pagina=" . $miPaginaActual;
-	$variable .= "&usuario=".$_REQUEST['usuario'];
+	//$variable .= "&usuario=".$_REQUEST['usuario'];
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -142,11 +142,12 @@ if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacio
 	echo "<thead>
                 <tr>
 		     <th>Número Contrato</th>
-			 <th>Identificación<br>Contratista</th>
-             <th>Fecha Contrato</th>
-			 <th>Fecha Registro</th>
-             <th>Documento</th>
-             <th>Modificar</th>
+			 <th>Objeto</th>
+             <th>Supervisor</th>
+			 <th>Fecha Evaluaciòn</th>
+             <th>Puntaje total</th>
+             <th>Clasificaciòn</th>
+			 <th>Ver Evaluaciòn</th>
         	 </tr>
             </thead>
             <tbody>";
@@ -154,20 +155,18 @@ if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacio
 	for($i = 0; $i < count ( $resultadoContratos ); $i ++) {
 		
 		$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-		$variable .= "&opcion=modificar";
-		$variable .= "&contrato=" . $resultadoContratos [$i] [4];
-		$variable .= "&nombre_contrato=" . $resultadoContratos [$i] [0];
-		$variable .= "&identificador_contrato=" . $resultadoContratos [$i] [2];
-		$variable .= "&usuario=".$_REQUEST['usuario'];
+		$variable .= "&opcion=consultar";
+		$variable .= "&num_contrato=" . $resultadoContratos [$i] ["numero_contrato"];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$mostrarHtml = "<tr>
 					
-				    <td><center>" . $resultadoContratos [$i] [0] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [1] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [2] . "</center></td>
-                    <td><center>" . $resultadoContratos [$i] [3] . "</center></td>
-                    <td><center><A HREF=\"" . $resultadoContratos [$i] [4] . "\" target=\"_blank\">" . $resultadoContratos [$i] [0] . "</A></center></td>
+				    <td><center>" . $resultadoContratos [$i] ["numero_contrato"] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] ["objetocontratar"] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] ["nombre_supervisor"] . "</center></td>
+                    <td><center>" . $resultadoContratos [$i] ["fecha_registro"] . "</center></td>
+					<td><center>" . $resultadoContratos [$i] ["puntaje_total"] . "</center></td>
+					<td><center>" . $resultadoContratos [$i] ["clasificacion"] . "</center></td>
                     <td><center>
                         <a href='" . $variable . "'>                        
                             <img src='" . $rutaBloque . "/images/edit.png' width='15px'> 
