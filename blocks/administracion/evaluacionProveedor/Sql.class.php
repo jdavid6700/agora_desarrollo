@@ -41,16 +41,30 @@ class Sql extends \Sql {
 					$cadenaSql .= " WHERE  NIT=" . $variable;  
 					break;
 					
+			/* CONSULTAR - PROVEEDOR POR ID */
+				case "consultarProveedorByID" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_proveedor,";
+					$cadenaSql .= " nit,";
+					$cadenaSql .= "	nombre_proveedor,";
+					$cadenaSql .= "	puntaje_evaluacion,";
+					$cadenaSql .= "	clasificacion_evaluacion";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_proveedor";
+					$cadenaSql .= " WHERE  id_proveedor=" . $variable;  
+					break;
+					
 			/* CONSULTAR - CONTRATO - POR ID */
 				case "contratoByID" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " numero_contrato,";
 					$cadenaSql .= "	fecha_inicio,";
 					$cadenaSql .= "	fecha_finalizacion,";
-					$cadenaSql .= " nombre_supervisor";
+					$cadenaSql .= " nombre_proveedor,";
+					$cadenaSql .= " C.id_proveedor";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+					$cadenaSql .= " JOIN prov_proveedor prov ON prov.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE  id_contrato=" . $variable;  //Activo
 					break;
 
@@ -61,11 +75,11 @@ class Sql extends \Sql {
 					$cadenaSql .= " numero_contrato,";
 					$cadenaSql .= "	fecha_inicio,";
 					$cadenaSql .= "	fecha_finalizacion,";
-					$cadenaSql .= " nombre_supervisor,";
+					$cadenaSql .= " nombre_proveedor,";
 					$cadenaSql .= " C.estado";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+					$cadenaSql .= " JOIN prov_proveedor prov ON prov.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE 1=1 ";
 					if ($variable [0] != '') {
 						$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
@@ -88,7 +102,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " fecha_inicio, ";
 					$cadenaSql .= " fecha_finalizacion, ";
 					$cadenaSql .= " sup.nombre_supervisor, ";
-					$cadenaSql .= " prov.nombre_supervisor proveedor, ";
+					$cadenaSql .= " prov.nombre_proveedor, ";
 					$cadenaSql .= " numero_acto_admin, ";
 					$cadenaSql .= " tipo_acto_admin, ";
 					$cadenaSql .= " numero_cdp, ";
@@ -100,7 +114,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " prov_contrato C";
 					$cadenaSql .= " JOIN param_supervisor sup ON sup.id_supervisor = C.id_supervisor ";
-					$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+					$cadenaSql .= " JOIN prov_proveedor prov ON prov.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
 					break;
 
@@ -116,12 +130,13 @@ class Sql extends \Sql {
 					$cadenaSql .= 'conformidad,';
 					$cadenaSql .= 'funcionalidad_adicional,';
 					$cadenaSql .= 'reclamaciones,';
-					$cadenaSql .= 'relcamacion_solucion,';
+					$cadenaSql .= 'reclamacion_solucion,';
 					$cadenaSql .= 'servicio_venta,';
 					$cadenaSql .= 'procedimientos,';
 					$cadenaSql .= 'garantia,';
 					$cadenaSql .= 'garantia_satisfaccion,';
 					$cadenaSql .= 'puntaje_total,';
+					$cadenaSql .= 'clasificacion,';
 					$cadenaSql .= 'id_usuario'; //FALTA EL ID DEL SUPERVISOR
 					$cadenaSql .= ') ';
 					$cadenaSql .= 'VALUES ';
@@ -139,7 +154,8 @@ class Sql extends \Sql {
 					$cadenaSql .= '\'' . $variable [10] . '\', ';
 					$cadenaSql .= '\'' . $variable [11] . '\', ';
 					$cadenaSql .= '\'' . $variable [12] . '\', ';
-					$cadenaSql .= '\'' . $variable [13] . '\'';
+					$cadenaSql .= '\'' . $variable [13] . '\', ';
+					$cadenaSql .= '\'' . $variable [14] . '\'';
 					$cadenaSql .= ');';
 					break;					
 
@@ -149,6 +165,15 @@ class Sql extends \Sql {
 					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
 					$cadenaSql .= " WHERE id_contrato=";
 					$cadenaSql .= "'" . $variable ['idContrato'] . "' ";
+					break;
+					
+			/* ACTUALIZAR - PROVEEEDOR PUNTAJE Y CLASIFICACION */			
+				case 'actualizarProveedor' :
+					$cadenaSql = "UPDATE prov_proveedor SET ";
+					$cadenaSql .= "puntaje_evaluacion='" . $variable ['puntajeNuevo'] . "', ";
+					$cadenaSql .= "clasificacion_evaluacion='" . $variable ['clasificacion'] . "'";
+					$cadenaSql .= " WHERE id_proveedor=";
+					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
 					break;
 
 

@@ -21,7 +21,7 @@ if (!isset($GLOBALS ["autorizado"])) {
                 break;
 
             case "noregistroDocumento":
-                $variable = "pagina=gestionContrato";
+                $variable = "pagina=" . $miPaginaActual;;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=error";
                 break;

@@ -24,6 +24,19 @@ $_REQUEST ['garantia'] = $_REQUEST ['garantiaSatisfaccion']==15?0:$_REQUEST ['ga
 $puntajeTotal =  $puntajeTotal + $_REQUEST ['garantia'] + $_REQUEST ['garantiaSatisfaccion'];
 //FIN Calculo puntaje total
 
+//INICIO CALCULO CLASIFICACION
+    function clasificacion($puntajeTotal = '') {
+		if( $puntajeTotal > 79 )
+			$valor = "A";
+		elseif( $puntajeTotal > 45 )
+			$valor = "B";
+		else $valor = "C";
+        return $valor;
+    }
+	$clasificacion = clasificacion($puntajeTotal); 
+	
+//FIN CALCULO CLASIFICACION
+						
 //Cargo array con los datos para insertar en la table evaluacionProveedor
 $arreglo = array (
 		$_REQUEST ['idContrato'],
@@ -39,9 +52,11 @@ $arreglo = array (
 		$_REQUEST ['garantia'],		
 		$_REQUEST ['garantiaSatisfaccion'],
 		$puntajeTotal,
+		$clasificacion,
 		1
 );//FALTA EL ID DEL SUPERVISOR
- 
+
+
 //Guardar datos de la evaluacion
 $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
@@ -52,10 +67,34 @@ if ($resultado) {
 				'idContrato' => $_REQUEST ['idContrato'],
 				'estado' => 2  //evaluado
 		);
-		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $parametros );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
-				
+	
+	//Actualizar PUNTAJE TOTAL DEL PROVEEDOR Y SU CLASIFICACION
+ 		//Consulto puntaje total del Evaluado
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedorByID', $_REQUEST["idProveedor"] );
+		$proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$puntajeActual = $proveedor[0]["puntaje_evaluacion"];
+		$claseficacionActual = $proveedor[0]["clasificacion_evaluacion"];
+	
+		if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' ){
+			$puntajeNuevo = ( $puntajeActual + $puntajeTotal )/2;
+			$clasficacionNueva = clasificacion($puntajeNuevo); 
+		}else{
+			$puntajeNuevo = $puntajeTotal;
+			$clasficacionNueva = $clasificacion;
+		}
+
+		$valores = array (
+				'idProveedor' => $_REQUEST ['idProveedor'],
+				'puntajeNuevo' => $puntajeNuevo,
+				'clasificacion' => $clasficacionNueva
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
+			
 		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['usuario'] );
 		exit();
 } else {

@@ -37,8 +37,8 @@ $this->idioma["funcionalidadAdicionalTitulo"] = "Seleccionar ";
 $this->idioma["reclamaciones"] =  "¿Se han presentado reclamaciones al proveedor en calidad o gestión?";
 $this->idioma["reclamacionesTitulo"] = "Seleccionar ";
 
-$this->idioma["relcamacionSolucion"] =  "¿El proveedor soluciona oportunamente las no conformidades de calidad y gestión de los bienes o servicios recibidos?";
-$this->idioma["relcamacionSolucionTitulo"] = "Seleccionar ";
+$this->idioma["reclamacionSolucion"] =  "¿El proveedor soluciona oportunamente las no conformidades de calidad y gestión de los bienes o servicios recibidos?";
+$this->idioma["reclamacionSolucionTitulo"] = "Seleccionar ";
 
 $this->idioma["servicioVenta"] =  " ¿El proveedor cumple con los compromisos pactados dentro del contrato u orden de servicio o compra?<br>  (aplicación de garantías, mantenimiento, cambios,  reparaciones, capacitaciones, entre otras)";
 $this->idioma["servicioVentaTitulo"] = "Seleccionar ";

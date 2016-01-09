@@ -259,12 +259,12 @@ if ($resultadoContratos) {
 						<td align="center"><small>¿Se han presentado reclamaciones al proveedor en calidad o gestión? </small></td>
 						<td align="center"><small><?php if( $resultadoEvaluacion[0]["reclamaciones"] == 12 ) echo "No"; else echo "Si"; ; ?> </small></td>
 						<td align="center"><small><?php echo $resultadoEvaluacion[0]["reclamaciones"]; ?></small></td>
-						<td rowspan="3" align="center"><small><br><?php echo $resultadoEvaluacion[0]["reclamaciones"] + $resultadoEvaluacion[0]["relcamacion_solucion"] + $resultadoEvaluacion[0]["servicio_venta"]; ?></small></td>
+						<td rowspan="3" align="center"><small><br><?php echo $resultadoEvaluacion[0]["reclamaciones"] + $resultadoEvaluacion[0]["reclamacion_solucion"] + $resultadoEvaluacion[0]["servicio_venta"]; ?></small></td>
 			</tr>
 			<tr >
 						<td align="center"><small>¿El proveedor soluciona oportunamente las no conformidades de calidad y gestión de los bienes o servicios recibidos? </small></td>
-						<td align="center"><small><?php if( $resultadoEvaluacion[0]["relcamacion_solucion"] == 12 ) echo "Si"; else echo "No"; ; ?> </small></td>
-						<td align="center"><small><?php echo $resultadoEvaluacion[0]["relcamacion_solucion"]; ?></small></td>
+						<td align="center"><small><?php if( $resultadoEvaluacion[0]["reclamacion_solucion"] == 12 ) echo "Si"; else echo "No"; ; ?> </small></td>
+						<td align="center"><small><?php echo $resultadoEvaluacion[0]["reclamacion_solucion"]; ?></small></td>
 			</tr>
 			<tr >	
 						<td align="center"><small>Servicio pos venta </small></td>

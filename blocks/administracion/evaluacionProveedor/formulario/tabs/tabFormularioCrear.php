@@ -72,6 +72,8 @@ class registrarForm {
 		//DATOS DEL CONTRATO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
 		$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$_REQUEST["idProveedor"] = $consulta[0]["id_proveedor"];
 	
 		echo "<span class='textoElegante textoEnorme textoAzul'>Contrato</span><hr>"; 
 		echo '<table style="width:100%">';
@@ -475,7 +477,17 @@ class registrarForm {
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		
-
+		$esteCampo = 'idProveedor';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ['valor'] = $_REQUEST [$esteCampo];
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );	
 		
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "botones";

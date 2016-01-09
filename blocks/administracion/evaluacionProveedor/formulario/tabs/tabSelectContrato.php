@@ -49,7 +49,7 @@ class listarDatos {
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
         $this->cadena_sql = $this->miSql->getCadenaSql("listaContato", self::CONTRATOCREADO);
-        $resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
+		$resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
 
 	?>
 		<br>
@@ -83,7 +83,7 @@ class listarDatos {
 				echo "<td align='right'>" . $dato['numero_contrato']. "</td>";
 				echo "<td align='center'>" . $dato['fecha_inicio'] . "</td>";
 				echo "<td align='center'>" . $dato['fecha_finalizacion'] . "</td>";
-				echo "<td align='right'>" . $dato['proveedor'] . "</td>";
+				echo "<td align='right'>" . $dato['nombre_proveedor'] . "</td>";
 				echo "<td align='right'>" . $dato['numero_acto_admin'] . "</td>";
 				echo "<td align='right'>" . $dato['numero_cdp'] . "</td>";
 				echo "<td align='right'>" . $dato['numero_rp'] . "</td>";
