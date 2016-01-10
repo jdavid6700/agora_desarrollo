@@ -73,9 +73,18 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
         $redireccion = $url . $_REQUEST [$enlace];		
 		
 		echo "<li><a href='" . $redireccion . "'>Evaluación</a></li>";
-
-
 		
+		//INDICADORES
+		$evaluacion = 'pagina=indicadores';
+		$enlace = $miConfigurador->configuracion ['enlace'];
+		$evaluacion = $miConfigurador->fabricaConexiones->crypto->codificar($evaluacion);
+		
+        $_REQUEST [$enlace] = $enlace . '=' . $evaluacion;
+        $redireccion = $url . $_REQUEST [$enlace];		
+		
+		echo "<li><a href='" . $redireccion . "'>Indicadores</a></li>";
+
+		//OTROS
 		$desenlace = 'pagina=desenlace';
 		$enlace = $miConfigurador->configuracion ['enlace'];
 		$desenlace = $miConfigurador->fabricaConexiones->crypto->codificar($desenlace);
