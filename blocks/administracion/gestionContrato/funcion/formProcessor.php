@@ -15,6 +15,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 $resultado = '';
 
 $fechaActual = date ( 'Y-m-d' );
+$annnoActual = date ( 'Y' );
 
 $arreglo = array (
 		$_REQUEST ['idObjeto'],
@@ -34,6 +35,7 @@ $arreglo = array (
 		$_REQUEST ['rubro'],
 		$_REQUEST ['poliza'],		
 		$_REQUEST ['formaPago'],
+		$annnoActual,
 		1
 );
 //Guardar datos del nuevo contrato

@@ -141,6 +141,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'rubro,';
 					$cadenaSql .= 'poliza,';
 					$cadenaSql .= 'forma_pago,';
+					$cadenaSql .= 'vigencia,';
 					$cadenaSql .= 'estado';
 					$cadenaSql .= ') ';
 					$cadenaSql .= 'VALUES ';
@@ -162,7 +163,8 @@ class Sql extends \Sql {
 					$cadenaSql .= '\'' . $variable [14] . '\', ';					
 					$cadenaSql .= '\'' . $variable [15] . '\', ';					
 					$cadenaSql .= '\'' . $variable [16] . '\', ';
-					$cadenaSql .= '\'' . $variable [17] . '\'';
+					$cadenaSql .= '\'' . $variable [17] . '\', ';
+					$cadenaSql .= '\'' . $variable [18] . '\'';
 					$cadenaSql .= ');';
 					break;					
 		
