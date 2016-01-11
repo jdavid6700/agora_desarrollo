@@ -188,7 +188,7 @@ if ($resultadoContratos) {
 					<th><center>Número Contrato</center></th>
 					<th><center>Fecha Inicio</center></th>
 					<th><center>Fecha Final</center></th>
-					<th><center>Proveedor</center></th>
+					<th><center>Empresa Proveedor</center></th>
 					<th><center>No. Acto Admininistrativo</center></th>
 					<th><center>No. CDP</center></th>
 					<th><center>No. RP</center></th>
@@ -209,7 +209,7 @@ if ($resultadoContratos) {
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
 						<td><center>" . $dato['fecha_inicio'] . "</center></td>
 						<td><center>" . $dato['fecha_finalizacion'] . "</center></td>
-						<td>" . $dato['nombre_proveedor'] . "</td>
+						<td><center>" . $dato['nomempresa'] . "</center></td>
 						<td><center>" . $dato['numero_acto_admin'] . "</center></td>
 						<td><center>" . $dato['numero_cdp'] . "</center></td>
 						<td><center>" . $dato['numero_rp'] . "</center></td>

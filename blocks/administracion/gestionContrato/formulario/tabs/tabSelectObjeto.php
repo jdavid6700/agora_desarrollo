@@ -79,12 +79,12 @@ class listarDatos {
 				foreach ($resultado as $dato):
 		
 					echo "<tr>";
-					echo "<td align='right'>" . $dato['objetocontratar']. "</td>";
+					echo "<td >" . $dato['objetocontratar']. "</td>";
 					echo "<td align='center'>" . $dato['codigociiu'] . "</td>";
 					echo "<td align='center'>" . $dato['fecharegistro'] . "</td>";
 					echo "<td align='right'>" . $dato['unidad'] . "</td>";
 					echo "<td align='right'>" . $dato['cantidad'] . "</td>";
-					echo "<td align='right'>" . $dato['descripcion'] . "</td>";
+					echo "<td >" . $dato['descripcion'] . "</td>";
 					echo "<td class='text-center'>";
 						$variable = "pagina=" . $miPaginaActual;
 						$variable.="&opcion=nuevo";

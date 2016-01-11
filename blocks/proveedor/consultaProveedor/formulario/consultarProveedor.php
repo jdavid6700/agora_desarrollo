@@ -65,108 +65,15 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 	$NIT = '';
 }
 
-if (isset ( $_REQUEST ['fecha_inicio_c'] ) && $_REQUEST ['fecha_inicio_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_final_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaInicio_C = $_REQUEST ['fecha_inicio_c'];
-	}
+if (isset ( $_REQUEST ['nombreEmpresa'] ) && $_REQUEST ['nombreEmpresa'] != '') {
+	$nombreEmpresa = $_REQUEST ['nombreEmpresa'];
 } else {
-	
-	$fechaInicio_C = '';
-}
-
-if (isset ( $_REQUEST ['fecha_final_c'] ) && $_REQUEST ['fecha_final_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_inicio_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaFin_C = $_REQUEST ['fecha_final_c'];
-	}
-} else {
-	
-	$fechaFin_C = '';
-}
-
-if (isset ( $_REQUEST ['fecha_inicio_r'] ) && $_REQUEST ['fecha_inicio_r'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_final_r'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaInicio_R = $_REQUEST ['fecha_inicio_r'];
-	}
-} else {
-	
-	$fechaInicio_R = '';
-}
-
-if (isset ( $_REQUEST ['fecha_final_r'] ) && $_REQUEST ['fecha_final_r'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_inicio_r'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaFin_R = $_REQUEST ['fecha_final_r'];
-	}
-} else {
-	
-	$fechaFin_R = '';
+	$nombreEmpresa = '';
 }
 
 $arreglo = array (
 		$NIT,
-		$fechaInicio_C,
-		$fechaFin_C,
-		$fechaInicio_R,
-		$fechaFin_R 
+		$nombreEmpresa 
 );
 unset($resultado);
 $cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $arreglo );

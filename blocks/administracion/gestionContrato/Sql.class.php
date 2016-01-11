@@ -36,7 +36,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " fecha_inicio, ";
 				$cadenaSql .= " fecha_finalizacion, ";
 				$cadenaSql .= " S.nombre_supervisor, ";
-				$cadenaSql .= " P.nombre_proveedor, ";
+				$cadenaSql .= " P.nomempresa, ";
 				$cadenaSql .= " numero_acto_admin, ";
 				$cadenaSql .= " tipo_acto_admin, ";
 				$cadenaSql .= " numero_cdp, ";
@@ -46,7 +46,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " prov_contrato C";
 				$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-				$cadenaSql .= " JOIN prov_proveedor P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+				$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
 				$cadenaSql .= " WHERE 1=1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
@@ -92,10 +92,10 @@ class Sql extends \Sql {
 				case "proveedores" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " id_proveedor,";
-					$cadenaSql .= "	nombre_proveedor";
+					$cadenaSql .= "	nomempresa";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_proveedor";
-					$cadenaSql .= " order by nombre_proveedor";
+					$cadenaSql .= " prov_proveedor_info";
+					$cadenaSql .= " order by nomempresa";
 					break;
 					
 			/* LISTA - SUPERVISORES */

@@ -66,7 +66,7 @@ class Formulario {
         echo $this->miFormulario->formulario ( $atributos );
 
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
-			$esteCampo = "marcoSearchProveedor";
+			$esteCampo = "marcoSearchByNIT";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
@@ -75,6 +75,49 @@ class Formulario {
 
 				// ----------------INICIO CONTROL: Campo de Texto NUMERO CONTRATO--------------------------------------------------------
 					$esteCampo = 'nit_proveedor';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['tipo'] = 'text';
+					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['marco'] = true;
+					$atributos ['estiloMarco'] = '';
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['columnas'] = 2;
+					$atributos ['dobleLinea'] = 0;
+					$atributos ['tabIndex'] = $tab;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['validar'] = 'required, minSize[1],maxSize[6],custom[onlyNumberSp]';
+					
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+					$atributos ['deshabilitado'] = false;
+					$atributos ['tamanno'] = 40;
+					$atributos ['maximoTamanno'] = '30';
+					$atributos ['anchoEtiqueta'] = 200;
+					$tab ++;
+					
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+					unset ( $atributos );
+				// ----------------FIN CONTROL: Campo de Texto UNIDAD--------------------------------------------------------
+
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+        // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+			$esteCampo = "marcoSearchByName";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+
+				// ----------------INICIO CONTROL: Campo de Texto NUMERO CONTRATO--------------------------------------------------------
+					$esteCampo = 'nombreEmpresa';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['tipo'] = 'text';
@@ -134,26 +177,6 @@ class Formulario {
         echo $this->miFormulario->campoBoton ( $atributos );
         // -----------------FIN CONTROL: Botón -----------------------------------------------------------
 
-        // -----------------CONTROL: Botón ----------------------------------------------------------------
-        $esteCampo = 'botonCancelar';
-        $atributos ["id"] = $esteCampo;
-        $atributos ["tabIndex"] = $tab;
-        $atributos ["tipo"] = 'boton';
-        // submit: no se coloca si se desea un tipo button genérico
-        $atributos ['submit'] = true;
-        $atributos ["estiloMarco"] = '';
-        $atributos ["estiloBoton"] = 'jqueryui';
-        // verificar: true para verificar el formulario antes de pasarlo al servidor.
-        $atributos ["verificar"] = '';
-        $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-        $atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-        $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-        $tab ++;
-
-        // Aplica atributos globales al control
-        $atributos = array_merge ( $atributos, $atributosGlobales );
-        echo $this->miFormulario->campoBoton ( $atributos );
-        // -----------------FIN CONTROL: Botón -----------------------------------------------------------
 
         // ------------------Fin Division para los botones-------------------------
         echo $this->miFormulario->division ( "fin" );
