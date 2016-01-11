@@ -70,6 +70,14 @@ $this->idioma["formaPago"] = "Forma de pago :";
 $this->idioma["formaPagoTitulo"] = "Indicar forma de pago";
 
 
+//************ MENSAJES *********
+$this->idioma["mensajeObjeto"] =  "Actualmente no hay Objetos a Contratar </br> Ingresa por la pestaña Objeto a Contratar para crear uno nuevo. <br>";
+
+
+
+
+
+
 
 $this->idioma ["botonRegresar"] ="< < Regresar";
 
