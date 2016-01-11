@@ -186,7 +186,7 @@ class Sql extends \Sql {
 					
 			/* ACTUALIZAR - PROVEEEDOR PUNTAJE Y CLASIFICACION */			
 				case 'actualizarProveedor' :
-					$cadenaSql = "UPDATE prov_proveedor SET ";
+					$cadenaSql = "UPDATE prov_proveedor_info SET ";
 					$cadenaSql .= "puntaje_evaluacion='" . $variable ['puntajeNuevo'] . "', ";
 					$cadenaSql .= "clasificacion_evaluacion='" . $variable ['clasificacion'] . "'";
 					$cadenaSql .= " WHERE id_proveedor=";

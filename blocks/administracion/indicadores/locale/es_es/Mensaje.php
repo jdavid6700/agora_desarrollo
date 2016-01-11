@@ -8,7 +8,12 @@ $this->idioma["tabTotalProveedores"] = "Proveedores por Tipo";
 
 $this->idioma["marcoDatos"]="Indicador histórico anual";
 
+//***************** SECCIÓN BOTONES ******************//
+$this->idioma["noDefinido"] = "No definido";
+///////////////////////////////////////////////////////
 
+//************ MENSAJES *********
+$this->idioma["mensajeNoEncontroDatos"] =  "No hay datos </br> Verificar la consulta.<br>";
 
 
 ?>

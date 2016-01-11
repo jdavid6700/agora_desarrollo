@@ -32,42 +32,64 @@ unset ( $atributos );
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
 	$items = array (
-			
 			"tabEvaluar" => $this->lenguaje->getCadena ( "tabEvaluar" ),
-			"tabConsultar" => $this->lenguaje->getCadena ( "tabConsultar" ) 
+			"tabConsultar" => $this->lenguaje->getCadena ( "tabConsultar" ),
+			"tabConsultarProveedor" => $this->lenguaje->getCadena ( "tabConsultarProveedor" )			
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
+
+	// -----------------INICIO Division para la pestaña 1-------------------------
+		$esteCampo = "tabEvaluar";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabFormularioCrear.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+	// -----------------FIN Division para la pestaña 1-------------------------
 	
-	$esteCampo = "tabEvaluar";
-	$atributos ['id'] = $esteCampo;
-	$atributos ["estilo"] = "jqueryui";
-	$atributos ['tipoEtiqueta'] = 'inicio';
-	// $atributos ["leyenda"] = "Contratos ViceRectoria";
-	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-	unset ( $atributos );
-	{
-		
-		include ($this->ruta . "formulario/tabs/tabFormularioCrear.php");
-		// -----------------Fin Division para la pestaña 2-------------------------
-	}
-	echo $this->miFormulario->agrupacion ( 'fin' );
+	// -----------------INICIO Division para la pestaña 2-------------------------
+		$esteCampo = "tabConsultar";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabSearchByContrato.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+	// -----------------Fin Division para la pestaña 2-------------------------
+
+	// -----------------INICIO Division para la pestaña 3-------------------------
+		$esteCampo = "tabConsultarProveedor";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabSearchByproveedor.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );	
+	// -----------------FIN Division para la pestaña 3-------------------------	
 	
-	$esteCampo = "tabConsultar";
-	$atributos ['id'] = $esteCampo;
-	$atributos ["estilo"] = "jqueryui";
-	$atributos ['tipoEtiqueta'] = 'inicio';
-	// $atributos ["leyenda"] = "Contratos ViceRectoria";
-	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-	unset ( $atributos );
-	{
-		
-		include ($this->ruta . "formulario/tabs/tabFormularioConsultar.php");
-		// -----------------Fin Division para la pestaña 1-------------------------
-	}
-	echo $this->miFormulario->agrupacion ( 'fin' );
+	
+	
+	
+	
+	
+	
+	
 }
 echo $this->miFormulario->division ( "fin" );
 

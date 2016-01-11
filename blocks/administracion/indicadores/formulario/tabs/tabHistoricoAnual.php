@@ -72,16 +72,16 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				echo "<table id='tablaContratos'>";
 				echo "<thead>
 						<tr>
-							<th>NIT</th>
-							<th>Proveedor</th>
-							<th>No. Contrato</th>
-							<th>Fecha Inicial</th>
-							<th>Fecha Final</th>
-							<th>Fecha Registro <br>Contrato</th>
-							<th>Supervisor</th>
-							<th>Puntaje Total</th>
-							<th>Clasificaciòn</th>
-							<th>Estado</th>
+							<th><center>NIT</center></th>
+							<th><center>Proveedor</center></th>
+							<th><center>No. Contrato</center></th>
+							<th><center>Fecha Inicial</center></th>
+							<th><center>Fecha Final</center></th>
+							<th><center>Fecha Registro <br>Contrato</center></th>
+							<th><center>Supervisor</center></th>
+							<th><center>Puntaje Total</center></th>
+							<th><center>Clasificaciòn</center></th>
+							<th><center>Estado</center></th>
 						</tr>
 						</thead>
 						<tbody>";
@@ -91,7 +91,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 					
 					$mostrarHtml = "<tr>
 								<td><right>" . $dato['nit'] . "</center></td>
-								<td><center>" . $dato['nombre_proveedor'] . "</center></td>
+								<td><center>" . $dato['nomempresa'] . "</center></td>
 								<td><center>" . $dato['numero_contrato'] . "</center></td>
 								<td><center>" . $dato['fecha_inicio'] . "</center></td>
 								<td><center>" . $dato['fecha_finalizacion'] . "</center></td>
@@ -109,31 +109,12 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				echo "</tbody>";
 				echo "</table>";
 		} else {
-				$nombreFormulario = $esteBloque ["nombre"];
-				include_once ("core/crypto/Encriptador.class.php");
-				$cripto = Encriptador::singleton ();
-				$directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" ) . "/imagen/";
-				
-				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
-				
-				$tab = 1;
-				// ---------------Inicio Formulario (<form>)--------------------------------
-				$atributos ["id"] = $nombreFormulario;
-				$atributos ["tipoFormulario"] = "multipart/form-data";
-				$atributos ["metodo"] = "POST";
-				$atributos ["nombreFormulario"] = $nombreFormulario;
-				$verificarFormulario = "1";
-				$atributos ['marco'] = true;
-				$atributos ['tipoEtiqueta'] = 'inicio';
-				echo $this->miFormulario->formulario ( $atributos );
-				
-				$atributos ["id"] = "divNoEncontroEgresado";
+				// ------------------INICIO Division para los botones-------------------------
+				$atributos ["id"] = "divNoEncontroDatos";
 				$atributos ["estilo"] = "marcoBotones";
-				// $atributos["estiloEnLinea"]="display:none";
 				echo $this->miFormulario->division ( "inicio", $atributos );
-				
-				// -------------Control Boton-----------------------
-				$esteCampo = "noEncontroProcesos";
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeNoEncontroDatos";
 				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
 				$atributos ["etiqueta"] = "";
 				$atributos ["estilo"] = "centrar";
@@ -142,29 +123,10 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				
 				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
-				
-				$valorCodificado = "pagina=" . $miPaginaActual;
-				$valorCodificado .= "&bloque=" . $esteBloque ["id_bloque"];
-				$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-				$valorCodificado = $cripto->codificar ( $valorCodificado );
-				// -------------Fin Control Boton----------------------
-				// ------------------Fin Division para los botones-------------------------
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
 				echo $this->miFormulario->division ( "fin" );
-				
-				
-				echo $this->miFormulario->agrupacion ( 'fin' );
 				unset ( $atributos );
-				// -------------Control cuadroTexto con campos ocultos-----------------------
-				// Para pasar variables entre formularios o enviar datos para validar sesiones
-				$atributos ["id"] = "formSaraData"; // No cambiar este nombre
-				$atributos ["tipo"] = "hidden";
-				$atributos ["obligatorio"] = false;
-				$atributos ["etiqueta"] = "";
-				$atributos ["valor"] = $valorCodificado;
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				unset ( $atributos );
-				
-			
 		}
 
 
