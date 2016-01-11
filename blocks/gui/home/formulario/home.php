@@ -39,62 +39,51 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
           <ul class="nav navbar-nav">
 <?php
 		$miConfigurador = \Configurador::singleton();
-		
-		$objeto = 'pagina=objeto';
-						
-        $url = $miConfigurador->configuracion ["host"] . $miConfigurador->configuracion ["site"] . "/index.php?";
-        $enlace = $miConfigurador->configuracion ['enlace'];
-		
-        $objeto = $miConfigurador->fabricaConexiones->crypto->codificar($objeto);
-		
-        $_REQUEST [$enlace] = $enlace . '=' . $objeto;
-        $redireccion = $url . $_REQUEST [$enlace];
 
-		echo "<li><a href='" . $redireccion . "'>Objeto a contratar</a></li>";
 
+		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 		
+		$url = $miConfigurador->configuracion ["host"] . $miConfigurador->configuracion ["site"] . "/index.php?";
+		$url .= $miConfigurador->configuracion ['enlace'];
+		
+		//PROVEEDOR
+		$pagina = 'pagina=proveedor';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Proveedor</a></li>";
+
+		//OBJETO
+		$pagina = 'pagina=objeto';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Objeto a contratar</a></li>";
 		
 		//CONTRATO
-		$desenlace = 'pagina=contrato';
-		$enlace = $miConfigurador->configuracion ['enlace'];
-		$desenlace = $miConfigurador->fabricaConexiones->crypto->codificar($desenlace);
-		
-        $_REQUEST [$enlace] = $enlace . '=' . $desenlace;
-        $redireccion = $url . $_REQUEST [$enlace];		
-		
-		echo "<li><a href='" . $redireccion . "'>Contrato</a></li>";
+		$pagina = 'pagina=contrato';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Contrato</a></li>";
 
 		//EVALUACION
-		$evaluacion = 'pagina=evaluacion';
-		$enlace = $miConfigurador->configuracion ['enlace'];
-		$evaluacion = $miConfigurador->fabricaConexiones->crypto->codificar($evaluacion);
-		
-        $_REQUEST [$enlace] = $enlace . '=' . $evaluacion;
-        $redireccion = $url . $_REQUEST [$enlace];		
-		
-		echo "<li><a href='" . $redireccion . "'>Evaluación</a></li>";
+		$pagina = 'pagina=evaluacion';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Evaluación</a></li>";
 		
 		//INDICADORES
-		$evaluacion = 'pagina=indicadores';
-		$enlace = $miConfigurador->configuracion ['enlace'];
-		$evaluacion = $miConfigurador->fabricaConexiones->crypto->codificar($evaluacion);
-		
-        $_REQUEST [$enlace] = $enlace . '=' . $evaluacion;
-        $redireccion = $url . $_REQUEST [$enlace];		
-		
-		echo "<li><a href='" . $redireccion . "'>Indicadores</a></li>";
+		$pagina = 'pagina=indicadores';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Indicadores</a></li>";
 
 		//OTROS
-		$desenlace = 'pagina=desenlace';
-		$enlace = $miConfigurador->configuracion ['enlace'];
-		$desenlace = $miConfigurador->fabricaConexiones->crypto->codificar($desenlace);
-		
-        $_REQUEST [$enlace] = $enlace . '=' . $desenlace;
-        $redireccion = $url . $_REQUEST [$enlace];		
-		
-		echo "<li><a href='" . $redireccion . "'>Desenlace</a></li>";
-		
-		echo "<li><a href='" . $redireccion . "'>Consultar proveedor</a></li>";
+		$pagina = 'pagina=desenlace';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Desenlace</a></li>";
+
 ?>			
           </ul>		
     <!--      <form class="navbar-form navbar-right">
