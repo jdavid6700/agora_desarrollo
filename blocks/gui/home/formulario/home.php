@@ -49,10 +49,10 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 		$url .= $miConfigurador->configuracion ['enlace'];
 		
 		//PROVEEDOR
-		$pagina = 'pagina=proveedor';
+		$pagina = 'pagina=consultaProveedor';
 		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
 		$url = $directorio . '=' . $pagina;
-		echo "<li><a href='" . $url . "'>Proveedor</a></li>";
+		echo "<li><a href='" . $url . "'>Consultar Proveedor</a></li>";
 
 		//OBJETO
 		$pagina = 'pagina=objeto';
