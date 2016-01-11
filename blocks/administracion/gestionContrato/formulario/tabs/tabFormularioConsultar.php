@@ -102,7 +102,7 @@ class Formulario {
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroTexto ( $atributos );
 			unset ( $atributos );
-			
+			/*
 			$esteCampo = "AgrupacionPr";
 			$atributos ['id'] = $esteCampo;
 			$atributos ['leyenda'] = "Por Fecha de Contrato";
@@ -173,7 +173,7 @@ class Formulario {
 			}
 			
 			echo $this->miFormulario->agrupacion ( 'fin' );
-			unset ( $atributos );
+			unset ( $atributos );*/
 			
 			$esteCampo = "AgrupacionProveedor";
 			$atributos ['id'] = $esteCampo;

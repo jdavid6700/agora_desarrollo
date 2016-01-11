@@ -31,11 +31,12 @@ class Sql extends \Sql {
 			/* CONSULTAR - CONTRATO */					
 			case "consultarContrato" :			
 				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_contrato, ";
 				$cadenaSql .= " numero_contrato, ";
 				$cadenaSql .= " fecha_inicio, ";
 				$cadenaSql .= " fecha_finalizacion, ";
-				$cadenaSql .= " sup.nombre_supervisor, ";
-				$cadenaSql .= " prov.nombre_supervisor proveedor, ";
+				$cadenaSql .= " S.nombre_supervisor, ";
+				$cadenaSql .= " P.nombre_proveedor, ";
 				$cadenaSql .= " numero_acto_admin, ";
 				$cadenaSql .= " tipo_acto_admin, ";
 				$cadenaSql .= " numero_cdp, ";
@@ -44,9 +45,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " modalidad  ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " prov_contrato C";
-				$cadenaSql .= " JOIN param_supervisor sup ON sup.id_supervisor = C.id_supervisor ";
-				$cadenaSql .= " JOIN param_supervisor prov ON prov.id_supervisor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
-				$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
+				$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+				$cadenaSql .= " JOIN prov_proveedor P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+				$cadenaSql .= " WHERE 1=1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
 				}
@@ -54,12 +55,11 @@ class Sql extends \Sql {
 			/*	if ($variable [1] != '') {
 					$cadenaSql .= " AND fecha_contrato BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
 					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
-				}
+				}*/
 				
 				if ($variable [3] != '') {
-					$cadenaSql .= " AND fecha_registro BETWEEN CAST ( '" . $variable [3] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable [4] . "' AS DATE)  ";
-				}*/
+					$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [3] . "' AND '" . $variable [4] . "'" ;
+				}
 				
 				break;
 		
