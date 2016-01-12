@@ -27,7 +27,49 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			case "proveedoresByClasificacion" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_proveedor,";
+				$cadenaSql .= " nit,";
+				$cadenaSql .= "	nomempresa,";
+				$cadenaSql .= "	puntaje_evaluacion,";
+				$cadenaSql .= "	clasificacion_evaluacion";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " prov_proveedor_info";
+				//$cadenaSql .= " WHERE  NIT=" . $variable;  
+				$cadenaSql .= "  ORDER BY puntaje_evaluacion DESC";
+				$cadenaSql .= " LIMIT 5; ";
+				break;			
 
+			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
+				case "objetoContratar" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " objetocontratar,";
+					$cadenaSql .= "	codigociiu,";
+					$cadenaSql .= "	descripcion";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
+					break;			
+		
+			/* LISTA - OBJETO A CONTRATAR  */
+				case "listaObjetoContratar" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_objeto,";
+					$cadenaSql .= " objetocontratar,";
+					$cadenaSql .= " codigociiu,";
+					$cadenaSql .= " fecharegistro,";
+					$cadenaSql .= " unidad,";
+					$cadenaSql .= " cantidad,";
+					$cadenaSql .= "	descripcion,";
+					$cadenaSql .= "	estado";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
+					$cadenaSql .= " order by fechaRegistro";
+					break;
+					
 			/* CIIU */				
 				case "ciiuDivision" :
 					$cadenaSql = "SELECT";

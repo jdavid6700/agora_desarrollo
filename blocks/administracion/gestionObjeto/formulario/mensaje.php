@@ -62,11 +62,20 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje =  $this->lenguaje->getCadena('mensajeRegistro') . $_REQUEST ['docente'] . ".";
         $boton = "continuar";
 		
-        $valorCodificado = "pagina=".$esteBloque['nombre'];
+        $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        
+ 
+    } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {
+        $tipo = 'success';
+        $mensaje =  $this->lenguaje->getCadena('mensajeCotizacion');
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=".$miPaginaActual;
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';

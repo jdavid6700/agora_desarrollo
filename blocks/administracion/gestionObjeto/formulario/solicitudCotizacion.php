@@ -1,6 +1,4 @@
 <?php
-
-
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
@@ -32,42 +30,31 @@ echo $this->miFormulario->division ( "inicio", $atributos );
 unset ( $atributos );
 {
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
-
+	
 	$items = array (
-			"tabIngresar" => $this->lenguaje->getCadena ( 'tabIngresar' ),
- 			"tabConsultar" => $this->lenguaje->getCadena ( 'tabConsultar' )	
+			
+			"tabConsultar" => $this->lenguaje->getCadena ( "tabConsultar" )
 	);
 	$atributos ["items"] = $items;
-	$atributos ["estilo"] = "";
+	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
 	
- 	$esteCampo = "tabConsultar";
- 	$atributos ['id'] = $esteCampo;
- 	$atributos ["estilo"] = "";
- 	$atributos ['tipoEtiqueta'] = 'inicio';
- 	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
- 	unset ( $atributos );
- 	{
-		
- 		include ($this->ruta . "formulario/tabs/tabConsultar.php");
-		
- 		// -----------------Fin Division para la pestaña 2-------------------------
- 	}
-	echo $this->miFormulario->agrupacion ( 'fin' );
-	
-	$esteCampo = "tabIngresar";
+	$esteCampo = "tabContratoCrear";
 	$atributos ['id'] = $esteCampo;
-	$atributos ["estilo"] = "";
+	$atributos ["estilo"] = "jqueryui";
 	$atributos ['tipoEtiqueta'] = 'inicio';
+	// $atributos ["leyenda"] = "Contratos ViceRectoria";
 	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 	unset ( $atributos );
 	{
 		
-		include ($this->ruta . "formulario/tabs/tabRegistrar.php");
-		// -----------------Fin Division para la pestaña 1-------------------------
+		include ($this->ruta . "formulario/tabs/tabFormularioCrear.php");
+		// -----------------Fin Division para la pestaña 2-------------------------
 	}
 	echo $this->miFormulario->agrupacion ( 'fin' );
+	
+
 }
 echo $this->miFormulario->division ( "fin" );
 

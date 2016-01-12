@@ -5,7 +5,7 @@ $this->idioma["objetoContrato"] = "Objeto a contratar";
 $this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
 
 $this->idioma["marcoCIIU"]="Actividad econòmica";
-$this->idioma["marcoDatos"]="Información general";
+$this->idioma["marcoDatos"]="Proveedores con mejor Clasificaciòn";
 
 $this->idioma["divisionCIIU"] = "División";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
@@ -37,7 +37,9 @@ $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
 
 
 
-$this->idioma["tabIngresar"] = "Crear Docentes - Datos Básicos";
+$this->idioma["tabIngresar"] = "Objeto a Contratar";
+$this->idioma["tabConsultar"] = "Solicitar Cotizaciòn";
+
 $this->idioma["tipoDocumento"] = "Tipo de Documento";
 $this->idioma["identificacionDocente"] = "Número de Identificación del Docente:";
 $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primero debe realizar la validación del funcionario.<br> Por favor seleccione el tipo documento y digite el número de documento y <br> de click en 'Validar'.</center>"; 
@@ -61,6 +63,7 @@ $this->idioma["paso3"] = "Información Adicional";
 //************ MENSAJES *********
 $this->idioma["mensajeActualizar"] =  "Actualización Exitosa </br> Han sido actualizados los datos de la Título Académico para el docente <br>";
 $this->idioma["mensajeRegistro"] =  "Registro Exitoso.<br> Se guardaron los datos del Objeto a contratar <br>" ;
+$this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se evio la solicitud de Cotizaciòn a los proveedores <br>" ;
 $this->idioma["mensajeError"] =  "Error al tratar de registrar la Título Académico.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";

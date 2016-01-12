@@ -1,12 +1,9 @@
 <?php
-namespace hojaDeVida\crearDocente\formulario;
-
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
-	
 	exit ();
 }
-class Formulario {
+class listarDatos {
 	var $miConfigurador;
 	var $lenguaje;
 	var $miFormulario;
@@ -18,12 +15,12 @@ class Formulario {
 		
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		$this->lenguaje = $lenguaje;
+		$this->lenguaje = $lenguaje;		
 		$this->miFormulario = $formulario;
-		$this->miSql = $sql;		
+		$this->miSql = $sql;
 	}
-	
-	function formulario() {
+	function miLista() 
+	{	
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -62,7 +59,7 @@ class Formulario {
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h4 class="list-group-item-heading">
-								Seleccione Objeto a Contratar para solicitar cotizaciòn
+								Seleccione Objeto a Contratar para asignar Contrato
 							</h4>
 						</div>
 					</div>
@@ -90,14 +87,14 @@ class Formulario {
 					echo "<td >" . $dato['descripcion'] . "</td>";
 					echo "<td class='text-center'>";
 						$variable = "pagina=" . $miPaginaActual;
-						$variable.="&opcion=cotizacion";
+						$variable.="&opcion=nuevo";
 						$variable .= "&idObjeto=".$dato["id_objeto"];
 			
 						$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 						$url = $directorio . '=' . $variable;
 		
 						if( $dato['estado']==1){
-							$valor = 'Seleccionar';
+							$valor = 'Activo';
 							$clase = "btn btn-default";
 						}else{
 							$valor = 'Inactivo';
@@ -130,43 +127,10 @@ class Formulario {
 				echo $this->miFormulario->division ( "fin" );
 				unset ( $atributos );
 		}
-		
-	}
-	function mensaje() {
-		
-		// Si existe algun tipo de error en el login aparece el siguiente mensaje
-		$mensaje = $this->miConfigurador->getVariableConfiguracion ( 'mostrarMensaje' );
-		$this->miConfigurador->setVariableConfiguracion ( 'mostrarMensaje', null );
-		
-		if ($mensaje) {
-			
-			$tipoMensaje = $this->miConfigurador->getVariableConfiguracion ( 'tipoMensaje' );
-			
-			if ($tipoMensaje == 'json') {
-				
-				$atributos ['mensaje'] = $mensaje;
-				$atributos ['json'] = true;
-			} else {
-				$atributos ['mensaje'] = $this->lenguaje->getCadena ( $mensaje );
-			}
-			// -------------Control texto-----------------------
-			$esteCampo = 'divMensaje';
-			$atributos ['id'] = $esteCampo;
-			$atributos ["tamanno"] = '';
-			$atributos ["estilo"] = 'information';
-			$atributos ["etiqueta"] = '';
-			$atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
-			echo $this->miFormulario->campoMensaje ( $atributos );
-			unset ( $atributos );
-		}
-		
-		return true;
+
 	}
 }
 
-
-$miFormulario = new Formulario ( $this->lenguaje, $this->miFormulario, $this->sql  );
-
-$miFormulario->formulario ();
-$miFormulario->mensaje ();
+$miSeleccionador = new listarDatos ( $this->lenguaje, $this->miFormulario, $this->sql );
+$miSeleccionador->miLista ();
 ?>
