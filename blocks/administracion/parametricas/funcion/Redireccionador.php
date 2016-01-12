@@ -14,14 +14,14 @@ if (!isset($GLOBALS ["autorizado"])) {
 
         switch ($opcion) {
 
-            case "registroContrato":
+            case "registroSupervisor":
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";
                 break;
 
-            case "noregistroDocumento":
-                $variable = "pagina=gestionContrato";
+            case "noregistro":
+                $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=error";
                 break;

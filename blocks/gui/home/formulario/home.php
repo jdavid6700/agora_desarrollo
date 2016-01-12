@@ -77,6 +77,12 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
 		$url = $directorio . '=' . $pagina;
 		echo "<li><a href='" . $url . "'>Indicadores</a></li>";
+		
+		//PARAMETRICAS
+		$pagina = 'pagina=parametricas';
+		$pagina = $this->miConfigurador->fabricaConexiones->crypto->codificar($pagina);
+		$url = $directorio . '=' . $pagina;
+		echo "<li><a href='" . $url . "'>Parametricas</a></li>";
 
 		//OTROS
 		$pagina = 'pagina=desenlace';
