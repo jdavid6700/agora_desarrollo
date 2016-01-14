@@ -63,8 +63,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " nomempresa,";
 					$cadenaSql .= " C.id_proveedor";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE  id_contrato=" . $variable;  //Activo
 					break;
 
@@ -129,9 +129,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " modalidad, ";
 					$cadenaSql .= " C.estado ";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-					$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
 					break;
 

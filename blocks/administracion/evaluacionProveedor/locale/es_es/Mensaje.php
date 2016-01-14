@@ -52,7 +52,7 @@ $this->idioma["garantiaTitulo"] = "Seleccionar ";
 $this->idioma["garantiaSatisfaccion"] =  "¿El proveedor cumplió a satisfacción con la garantía pactada?";
 $this->idioma["garantiaSatisfaccionTitulo"] = "Seleccionar ";
 
-$this->idioma["mensajeNoEncontroContrato"] = "Actualmente no hay Contratos asignados sin evaluar.";
+$this->idioma["mensajeNoEncontroContrato"] = "Actualmente no hay Contratos sin evaluar.";
 $this->idioma["mensajeNoEncontroContratoByNoContrato"] = "No existe ningùn contrato con ese nùmero.";
 
 $this->idioma ["botonRegresar"] ="< < Regresar";

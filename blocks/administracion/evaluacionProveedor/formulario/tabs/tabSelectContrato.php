@@ -75,7 +75,7 @@ class listarDatos {
 								<td align="center"><strong>No. CDP</strong></td>
 								<td align="center"><strong>No. RP</strong></td>
 								<td align="center"><strong>Valor</strong></td>
-								<td align="center"><strong>Asignar contrato</strong></td>
+								<td align="center"><strong>Evaluar</strong></td>
 					</tr>	
 				<?php 
 					foreach ($resultado as $dato):
@@ -98,7 +98,7 @@ class listarDatos {
 							$url = $directorio . '=' . $variable;
 			
 							if( $dato['estado']==1){
-								$valor = 'Activo';
+								$valor = 'Seleccionar';
 								$clase = "btn btn-default";
 							}else{
 								$valor = 'Inactivo';

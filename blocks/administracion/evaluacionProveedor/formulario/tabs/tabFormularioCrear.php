@@ -72,6 +72,24 @@ class registrarForm {
 		//DATOS DEL CONTRATO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
 		$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                
+		$esteCampo = "marcoObjeto";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
+                
+                
+		echo "<span class='textoElegante textoEnorme textoAzul'>Número Contrato : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . " - " . $objetoEspecifico[0][2] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
+
+		//FIN OBJETO A CONTRATAR
+                echo $this->miFormulario->marcoAgrupacion ( 'fin' );                 
 		
 		$_REQUEST["idProveedor"] = $consulta[0]["id_proveedor"];
 	
