@@ -40,7 +40,7 @@ unset ( $atributos );
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
 	
-	$esteCampo = "tabContratoCrear";
+	$esteCampo = "tabConsultar";
 	$atributos ['id'] = $esteCampo;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ['tipoEtiqueta'] = 'inicio';

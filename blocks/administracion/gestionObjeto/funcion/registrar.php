@@ -36,11 +36,22 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+                //Guardar datos del Objeto a contratar
 		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 		
 		if ($resultado) {
-			redireccion::redireccionar ( 'inserto',  $_REQUEST['docenteRegistrar']);
+			//Conusltar el ultimo ID del objeto
+			$cadenaSql = $this->miSql->getCadenaSql ( 'lastId' );
+			$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );                        
+			
+			$datos = array (
+					$lastId[0][0],
+					$_REQUEST ['cotizaciones'],
+			);			
+			
+                    
+			redireccion::redireccionar ( 'inserto',  $datos);
 			exit ();
 		} else {
 			redireccion::redireccionar ( 'noInserto' );

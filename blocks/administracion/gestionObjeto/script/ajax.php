@@ -195,7 +195,7 @@ function consultarClase(elem, request, response){
 				$("#<?php echo $this->campoSeguro('claseCIIU')?>").html("");
 				$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('claseCIIU')?>");
 				$.each(data , function(indice,valor){
-					$("<option value='"+data[ indice ].id_clase+"'>"+data[ indice ].clase+"</option>").appendTo("#<?php echo $this->campoSeguro('claseCIIU')?>");
+					$("<option value='"+data[ indice ].id+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('claseCIIU')?>");
 				});
 			}
 		}
@@ -237,7 +237,7 @@ function consultarCiudad(elem, request, response){
 				$("#<?php echo $this->campoSeguro('grupoCIIU')?>").html("");
 				$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('grupoCIIU')?>");
 				$.each(data , function(indice,valor){
-					$("<option value='"+data[ indice ].id_grupo+"'>"+data[ indice ].grupo+"</option>").appendTo("#<?php echo $this->campoSeguro('grupoCIIU')?>");
+					$("<option value='"+data[ indice ].id+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('grupoCIIU')?>");
 				});
 			}
 		}

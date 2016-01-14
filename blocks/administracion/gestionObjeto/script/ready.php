@@ -1,4 +1,4 @@
-$("#crearDocente").validationEngine({
+$("#gestionObjetoRegistrar").validationEngine({
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,
@@ -77,13 +77,6 @@ $('#<?php echo $this->campoSeguro('ordenador')?>').width(250);
 $('#<?php echo $this->campoSeguro('dependencia')?>').width(250);
 $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
 
-      
-$('#<?php echo $this->campoSeguro('facultad')?>').width(450);      
-$('#<?php echo $this->campoSeguro('proyectoCurricular')?>').width(450);      
-$('#<?php echo $this->campoSeguro('dedicacion')?>').width(450);      
-$('#<?php echo $this->campoSeguro('docenteRegistrar')?>').width(465);
-$('#<?php echo $this->campoSeguro('tipoDocumento')?>').width(450);
-$('#<?php echo $this->campoSeguro('categoriaActualDocente')?>').width(450);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////

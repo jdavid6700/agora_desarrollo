@@ -59,13 +59,13 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
 
         $tipo = 'success';
-        $mensaje =  $this->lenguaje->getCadena('mensajeRegistro') . $_REQUEST ['docente'] . ".";
+        $mensaje =  $this->lenguaje->getCadena('mensajeRegistro') . ".";
         $boton = "continuar";
 		
         $valorCodificado = "pagina=".$miPaginaActual;
-        $valorCodificado.="&opcion=nuevo";
-        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $valorCodificado.="&opcion=cotizacion";
+        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        
  
     } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {
         $tipo = 'success';

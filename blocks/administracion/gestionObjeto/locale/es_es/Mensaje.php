@@ -1,37 +1,43 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
-$this->idioma["objetoContrato"] = "Objeto a contratar";
+$this->idioma["objetoContrato"] = "Objeto a contratar : ";
 $this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
 
 $this->idioma["marcoCIIU"]="Actividad econòmica";
-$this->idioma["marcoDatos"]="Proveedores con mejor Clasificaciòn";
+$this->idioma["marcoDatos"]="Datos generales";
+$this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
+$this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
-$this->idioma["divisionCIIU"] = "División";
+$this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 
-$this->idioma["grupoCIIU"] = "Grupo";
+$this->idioma["grupoCIIU"] = "Grupo :";
 $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 
-$this->idioma["claseCIIU"] = "Clase";
+$this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
-$this->idioma["ordenador"] = "Ordenador";
+$this->idioma["ordenador"] = "Ordenador del Gasto :";
 $this->idioma["ordenadorTitulo"]="Seleccionar ordenador";
 
-$this->idioma["dependencia"] = "Dependencia";
+$this->idioma["dependencia"] = "Dependencia :";
 $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
 
-$this->idioma["unidad"] = "Unidad";
+$this->idioma["unidad"] = "Unidad :";
 $this->idioma["unidadTitulo"]="Seleccionar unidad";
 
-$this->idioma["cantidad"] = "Cantidad";
+$this->idioma["cantidad"] = "Cantidad :";
 $this->idioma["cantidadTitulo"]="Digite cantidad";
 
-$this->idioma["descripcion"] = "Descripción";
+$this->idioma["cotizaciones"] = "No. de Cotizaciones :";
+$this->idioma["cotizacionesTitulo"]="Digite el número de cotizaciones a solicitar";
+
+
+$this->idioma["descripcion"] = "Descripci&oacuten del Art&iacuteculo";
 $this->idioma["descripcionTitulo"]="Digite la descripción";
 
-$this->idioma["caracteristicas"] = "Caracterìsticas";
+$this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
 
 
@@ -63,6 +69,11 @@ $this->idioma["paso3"] = "Información Adicional";
 //************ MENSAJES *********
 $this->idioma["mensajeActualizar"] =  "Actualización Exitosa </br> Han sido actualizados los datos de la Título Académico para el docente <br>";
 $this->idioma["mensajeRegistro"] =  "Registro Exitoso.<br> Se guardaron los datos del Objeto a contratar <br>" ;
+
+$this->idioma["mensajeObjeto"] =  "Actualmente no hay Objetos a Contratar </br> Ingresa por la pestaña Objeto a Contratar para crear uno nuevo. <br>";
+$this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Actividad Económica.<br>";
+
+
 $this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se evio la solicitud de Cotizaciòn a los proveedores <br>" ;
 $this->idioma["mensajeError"] =  "Error al tratar de registrar la Título Académico.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";

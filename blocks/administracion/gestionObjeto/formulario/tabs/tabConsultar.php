@@ -76,7 +76,7 @@ class Formulario {
 							<td align="center"><strong>Unidad</strong></td>
 							<td align="center"><strong>Cantidad</strong></td>
 							<td align="center"><strong>Descripciòn</strong></td>
-							<td align="center"><strong>Asignar contrato</strong></td>
+							<td align="center"><strong>Seleccionar</strong></td>
 				</tr>	
 			<?php 
 				foreach ($resultado as $dato):
@@ -92,6 +92,7 @@ class Formulario {
 						$variable = "pagina=" . $miPaginaActual;
 						$variable.="&opcion=cotizacion";
 						$variable .= "&idObjeto=".$dato["id_objeto"];
+						$variable .= "&numCotizaciones=".$dato["numero_cotizaciones"];
 			
 						$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 						$url = $directorio . '=' . $variable;

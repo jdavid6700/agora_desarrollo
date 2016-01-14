@@ -27,7 +27,17 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-			
+
+			/* verificar si existe proveedores con la actividad economica */				
+			case "verificarActividad" :
+				$cadenaSql = "SELECT *";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.prov_ciiu_actividad";	
+				$cadenaSql .= " WHERE  actividad='" . $variable . "'"; 
+				$cadenaSql .= " LIMIT 5; ";
+				break;
+
+		
 			case "proveedoresByClasificacion" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " id_proveedor,";
@@ -36,20 +46,31 @@ class Sql extends \Sql {
 				$cadenaSql .= "	puntaje_evaluacion,";
 				$cadenaSql .= "	clasificacion_evaluacion";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " prov_proveedor_info";
+				$cadenaSql .= " proveedor.prov_proveedor_info P";
+				//$cadenaSql .= " JOIN proveedor.prov_ciiu_actividad A ON A.id_registro = P.nit";
 				//$cadenaSql .= " WHERE  NIT=" . $variable;  
 				$cadenaSql .= "  ORDER BY puntaje_evaluacion DESC";
 				$cadenaSql .= " LIMIT 5; ";
 				break;			
 
+			/* ULTIMO NUMERO DE SECUENCIA */				
+				case "lastId" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " last_value";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_objeto_contratar_id_objeto_seq";	
+					break;                            
+                            
 			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
 				case "objetoContratar" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= "	codigociiu,";
+					//$cadenaSql .= "	S.nombre,";
 					$cadenaSql .= "	descripcion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar C";
+					//$cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = C.codigociiu";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
 					break;			
 		
@@ -63,41 +84,42 @@ class Sql extends \Sql {
 					$cadenaSql .= " unidad,";
 					$cadenaSql .= " cantidad,";
 					$cadenaSql .= "	descripcion,";
+					$cadenaSql .= "	numero_cotizaciones,";
 					$cadenaSql .= "	estado";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar";
 					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
-					$cadenaSql .= " order by fechaRegistro";
+					$cadenaSql .= " ORDER BY fechaRegistro";
 					break;
 					
 			/* CIIU */				
 				case "ciiuDivision" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_division,";
-					$cadenaSql .= "	division";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " ciiu_division";	
-					$cadenaSql .= " order by division";
+					$cadenaSql .= " proveedor.prov_ciiu_division";	
+					$cadenaSql .= " ORDER BY nombre";
 					break;
 				
 				case "ciiuGrupo" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_grupo,";
-					$cadenaSql .= "	grupo";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " ciiu_grupo";
-					$cadenaSql .= " WHERE id_seccion ='" . $variable ."'";
-					$cadenaSql .= " order by grupo";
+					$cadenaSql .= " proveedor.prov_ciiu_clase";
+					$cadenaSql .= " WHERE division ='" . $variable ."'";
+					$cadenaSql .= " ORDER BY nombre";
 					break;
 
 				case "ciiuClase" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_clase,";
-					$cadenaSql .= "	clase";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " ciiu_clase";
-					$cadenaSql .= " WHERE id_grupo ='" . $variable ."'";
-					$cadenaSql .= " order by clase";
+					$cadenaSql .= " proveedor.prov_ciiu_subclase";
+					$cadenaSql .= " WHERE clase ='" . $variable ."'";
+					$cadenaSql .= " ORDER BY nombre";
 					break;
 			/* LISTA - ORDENAR DEL GASTO */
 				case "ordenador" :
@@ -105,7 +127,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_ordenador,";
 					$cadenaSql .= "	nombre_ordenador";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " param_ordenador_gasto";
+					$cadenaSql .= " proveedor.param_ordenador_gasto";
 					$cadenaSql .= " order by nombre_ordenador";
 					break;
 			/* LISTA - DEPENDENCIA */
@@ -114,23 +136,24 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_dependencia,";
 					$cadenaSql .= "	dependencia";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_dependencia";
-					$cadenaSql .= " order by dependencia";
+					$cadenaSql .= " proveedor.param_dependencia";
+					$cadenaSql .= " ORDER BY dependencia";
 					break;
+                                    
 			/* LISTA - UNIDAD */
 				case "unidad" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_dependencia,";
-					$cadenaSql .= "	dependencia";
+					$cadenaSql .= " id_unidad,";
+					$cadenaSql .= "	(tipo || '-' || unidad) AS unidad";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_dependencia";
-					$cadenaSql .= " order by dependencia";
+					$cadenaSql .= " proveedor.param_unidades";
+					$cadenaSql .= " ORDER BY tipo";
 					break;
 			/* REGISTRAR DATOS DEL OBJETO A CONTRATAR */
 				case "registrar" :
 					$hoy = date("Y-m-d");  
 					
-					$cadenaSql=" INSERT INTO prov_objeto_contratar";
+					$cadenaSql=" INSERT INTO proveedor.prov_objeto_contratar";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" objetocontratar,";
 					$cadenaSql.=" id_ordenador,";
@@ -140,6 +163,8 @@ class Sql extends \Sql {
 					$cadenaSql.=" cantidad,";
 					$cadenaSql.=" descripcion,";
 					$cadenaSql.=" caracteristicas,";
+                                        $cadenaSql.=" numero_cotizaciones,";
+                                        $cadenaSql.=" estado,";
 					$cadenaSql.=" fecharegistro";
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
@@ -152,6 +177,8 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['cantidad']. "',";
 					$cadenaSql.=" '" . $variable['descripcion']. "',";
 					$cadenaSql.=" '" . $variable['caracteristicas']. "',";
+					$cadenaSql.=" '" . $variable['cotizaciones']. "',";
+					$cadenaSql.=" '1',";
 					$cadenaSql.=" '" . $hoy. "'";
 					$cadenaSql.=" );";
 					break;
