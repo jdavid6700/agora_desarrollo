@@ -37,7 +37,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " LIMIT 5; ";
 				break;
 
-		
+                        /** 
+                         * Lista proveedores
+                         * Que cumlen con la actividad economica
+                         * Que Tienen puntaje mayor a 45
+                         * El limite de registros lo establece el objeto a contratar
+                         */
 			case "proveedoresByClasificacion" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " id_proveedor,";
@@ -47,10 +52,11 @@ class Sql extends \Sql {
 				$cadenaSql .= "	clasificacion_evaluacion";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " proveedor.prov_proveedor_info P";
-				//$cadenaSql .= " JOIN proveedor.prov_ciiu_actividad A ON A.id_registro = P.nit";
-				//$cadenaSql .= " WHERE  NIT=" . $variable;  
-				$cadenaSql .= "  ORDER BY puntaje_evaluacion DESC";
-				$cadenaSql .= " LIMIT 5; ";
+				$cadenaSql .= " JOIN proveedor.prov_ciiu_actividad A ON A.id_registro = P.nit::text";
+				$cadenaSql .= " WHERE  A.actividad='" . $variable[0] . "'";  
+                                //$cadenaSql .= " AND P.puntaje_evaluacion > 45"; 
+				$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
+				$cadenaSql .= " LIMIT " . $variable[1];
 				break;			
 
 			/* ULTIMO NUMERO DE SECUENCIA */				

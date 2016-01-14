@@ -36,7 +36,18 @@ class SolicitudCotizacion {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
-		//$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
+		
+        $proveedores = unserialize(stripslashes($_REQUEST['idProveedor']));
+        var_dump($proveedores);
+        
+        
+$count = count($proveedores);    
+for ($i = 0; $i < $count; $i++) {
+   echo $proveedores[$i] . "<br>";
+}
+
+exit;
+                //$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
 		//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 		$resultado = true;
 		if ($resultado) {
