@@ -1,15 +1,11 @@
 <?php
-
 namespace inventarios\gestionContrato;
-
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-
 include_once ("core/manager/Configurador.class.php");
 include_once ("core/connection/Sql.class.php");
-
 // Para evitar redefiniciones de clases el nombre de la clase del archivo sqle debe corresponder al nombre del bloque
 // en camel case precedida por la palabra sql
 class Sql extends \Sql {
@@ -18,7 +14,6 @@ class Sql extends \Sql {
 		$this->miConfigurador = \Configurador::singleton ();
 	}
 	function getCadenaSql($tipo, $variable = "") {
-
 		/**
 		 * 1.
 		 * Revisar las variables para evitar SQL Injection
@@ -27,7 +22,6 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-
 			/* CONSULTAR - CONTRATO */					
 			case "consultarContrato" :			
 				$cadenaSql = "SELECT  ";
@@ -44,9 +38,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " fecha_registro, ";
 				$cadenaSql .= " modalidad  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " prov_contrato C";
-				$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-				$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+				$cadenaSql .= " proveedor.prov_contrato C";
+				$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+				$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
 				$cadenaSql .= " WHERE 1=1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
@@ -57,20 +51,19 @@ class Sql extends \Sql {
 					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
 				}*/
 				
-				if ($variable [3] != '') {
-					$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [3] . "' AND '" . $variable [4] . "'" ;
+				if ($variable [1] != '') {
+					$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [1] . "' AND '" . $variable [2] . "'" ;
 				}
 				
 				break;
 		
 			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
 			case 'actualizarObjeto' :
-				$cadenaSql = "UPDATE prov_objeto_contratar SET ";
+				$cadenaSql = "UPDATE proveedor.prov_objeto_contratar SET ";
 				$cadenaSql .= "estado='" . $variable ['estado'] . "'";
 				$cadenaSql .= " WHERE id_objeto=";
 				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
 				break;
-
 			/* LISTA - OBJETO A CONTRATAR  */
 				case "listaObjetoContratar" :
 					$cadenaSql = "SELECT";
@@ -83,7 +76,7 @@ class Sql extends \Sql {
 					$cadenaSql .= "	descripcion,";
 					$cadenaSql .= "	estado";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar";
 					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
 					$cadenaSql .= " order by fechaRegistro";
 					break;
@@ -94,8 +87,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_proveedor,";
 					$cadenaSql .= "	nomempresa";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_proveedor_info";
-					$cadenaSql .= " order by nomempresa";
+					$cadenaSql .= " proveedor.prov_proveedor_info";
+					$cadenaSql .= " ORDER BY nomempresa";
 					break;
 					
 			/* LISTA - SUPERVISORES */
@@ -104,9 +97,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_supervisor,";
 					$cadenaSql .= "	nombre_supervisor";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " param_supervisor";
+					$cadenaSql .= " proveedor.param_supervisor";
 					$cadenaSql .= " WHERE  estado=1";  //Activo
-					$cadenaSql .= " order by nombre_supervisor";
+					$cadenaSql .= " ORDER BY nombre_supervisor";
 					break;
 		
 			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
@@ -116,13 +109,13 @@ class Sql extends \Sql {
 					$cadenaSql .= "	codigociiu,";
 					$cadenaSql .= "	descripcion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
 					break;		
 			/* GUARDAR - NUEVO CONTRATO */
 				case 'registroContrato' :
 					$cadenaSql = 'INSERT INTO ';
-					$cadenaSql .= 'prov_contrato';
+					$cadenaSql .= 'proveedor.prov_contrato';
 					$cadenaSql .= '( ';
 					$cadenaSql .= 'id_objeto,';
 					$cadenaSql .= 'numero_contrato,';
@@ -233,7 +226,6 @@ class Sql extends \Sql {
 				$cadenaSql .= ') RETURNING documento_id;';
 				break;
 			
-
 			
 			case 'actualizarDocumento' :
 				$cadenaSql = 'UPDATE arka_inventarios.registro_documento SET ';
@@ -375,5 +367,4 @@ class Sql extends \Sql {
 		return $cadenaSql;
 	}
 }
-
 ?>

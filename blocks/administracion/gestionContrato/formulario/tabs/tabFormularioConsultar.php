@@ -71,6 +71,13 @@ class Formulario {
 		echo $this->miFormulario->formulario ( $atributos );
 		unset($atributos);
 		{
+                    
+			$esteCampo = "marcoSearch";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                    
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'num_contrato';
 			$atributos ['id'] = $esteCampo;
@@ -102,85 +109,19 @@ class Formulario {
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroTexto ( $atributos );
 			unset ( $atributos );
-			/*
-			$esteCampo = "AgrupacionPr";
+                        
+echo $this->miFormulario->marcoAgrupacion ( 'fin' );                        
+                        
+                        
+
+
+			$esteCampo = "marcoSearchFecha";
 			$atributos ['id'] = $esteCampo;
-			$atributos ['leyenda'] = "Por Fecha de Contrato";
-			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-			{
-				
-				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-				$esteCampo = 'fecha_inicio_c';
-				$atributos ['id'] = $esteCampo;
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['dobleLinea'] = 0;
-				$atributos ['tabIndex'] = $tab;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = '';
-				
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['valor'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['valor'] = '';
-				}
-				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 8;
-				$atributos ['maximoTamanno'] = '';
-				$atributos ['anchoEtiqueta'] = 235;
-				$tab ++;
-				
-				// Aplica atributos globales al control
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				
-				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-				$esteCampo = 'fecha_final_c';
-				$atributos ['id'] = $esteCampo;
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['dobleLinea'] = 0;
-				$atributos ['tabIndex'] = $tab;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = '';
-				
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['valor'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['valor'] = '';
-				}
-				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 8;
-				$atributos ['maximoTamanno'] = '';
-				$atributos ['anchoEtiqueta'] = 220;
-				$tab ++;
-				
-				// Aplica atributos globales al control
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-			}
-			
-			echo $this->miFormulario->agrupacion ( 'fin' );
-			unset ( $atributos );*/
-			
-			$esteCampo = "AgrupacionProveedor";
-			$atributos ['id'] = $esteCampo;
-			$atributos ['leyenda'] = "Por Fecha de Registro";
-			echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-			{
-				
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos ); 
+						
 				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 				$esteCampo = 'fecha_inicio_r';
 				$atributos ['id'] = $esteCampo;
@@ -242,12 +183,12 @@ class Formulario {
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-			}
 			
-			echo $this->miFormulario->agrupacion ( 'fin' );
+			
+                        echo $this->miFormulario->marcoAgrupacion ( 'fin' );  
 			unset ( $atributos );
 			
-			echo "<br><br><br>";
+			//echo "<br><br><br>";
 			
 			// ------------------Division para los botones-------------------------
 			$atributos ["id"] = "botones";
@@ -298,7 +239,7 @@ class Formulario {
 			$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 			$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 			$valorCodificado .= "&opcion=consultar";
-			$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+			//$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 			/**
 			 * SARA permite que los nombres de los campos sean dinámicos.
 			 * Para ello utiliza la hora en que es creado el formulario para

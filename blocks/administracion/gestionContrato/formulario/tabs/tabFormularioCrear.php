@@ -72,14 +72,24 @@ class registrarForm {
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar</span><hr>"; 
-		echo '<table style="width:100%">';
-		echo '<tr><td style="width:20%"><span class="textoAzul">Objeto a Contratar</td><td><span class="textoGris">' . $objetoEspecifico[0][0] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Actividad econ&oacute;mica</td><td><span class="textoGris">' . $objetoEspecifico[0][1] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Descripci&oacute;</td><td><span class="textoGris">' . $objetoEspecifico[0][2] . "</span></td></tr>";	
-		echo '</table>';
+                
+		$esteCampo = "marcoObjeto";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
+                
+                
+		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][2] . "</span></br>";                 
+
 		//FIN OBJETO A CONTRATAR
+                echo $this->miFormulario->marcoAgrupacion ( 'fin' );                
 		
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
@@ -187,7 +197,80 @@ class registrarForm {
 				
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
-		
+
+		$esteCampo = "marcoSupervisor";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos ); 
+			// ---------------- CONTROL: Lista TIPO ACTO ADMINISTRATIVO --------------------------------------------------------
+				$esteCampo = "tipoActoAdmin";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 3;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 70;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				$matrizItems = array (
+						array ( 1, 'Resolución' ),
+						array ( 2, 'Acta' ),
+						array ( 3, 'Oficio' ) 
+				);
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+			// ----------------FIN CONTROL: Lista TIPO ACTO ADMINISTRATIVO--------------------------------------------------------                                
+
+                        // ----------------INICIO CONTROL: Campo de Texto NUMERO ACTO ADMINISTRARIVO--------------------------------------------------------					
+				$esteCampo = 'numActoAdmin';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 3;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required, minSize[2],maxSize[10],custom[onlyNumberSp]';
+				
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 20;
+				$atributos ['maximoTamanno'] = '30';
+				$atributos ['anchoEtiqueta'] = 200;
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+			// ----------------FIN CONTROL: Campo de Texto NUMERO ACTO ADMINISTRARIVO--------------------------------------------------------
+
 			// ---------------- CONTROL: Lista SUPERVISOR--------------------------------------------------------
 				$esteCampo = "supervisor";
 				$atributos ['nombre'] = $esteCampo;
@@ -203,7 +286,7 @@ class registrarForm {
 					$atributos ['seleccion'] = -1;
 				}
 				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 1;
+				$atributos ['columnas'] = 3;
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = "jqueryui";
 				$atributos ['validar'] = "required";
@@ -217,7 +300,7 @@ class registrarForm {
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 			// ----------------FIN CONTROL: Lista SUPERVISOR--------------------------------------------------------
-
+                echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			// ---------------- CONTROL: Lista PROVEEDOR --------------------------------------------------------
 				$esteCampo = "proveedor";
 				$atributos ['nombre'] = $esteCampo;
@@ -247,73 +330,6 @@ class registrarForm {
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
 			// ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
-						
-			// ----------------INICIO CONTROL: Campo de Texto NUMERO ACTO ADMINISTRARIVO--------------------------------------------------------					
-				$esteCampo = 'numActoAdmin';
-				$atributos ['id'] = $esteCampo;
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['columnas'] = 2;
-				$atributos ['dobleLinea'] = 0;
-				$atributos ['tabIndex'] = $tab;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[2],maxSize[10],custom[onlyNumberSp]';
-				
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['valor'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['valor'] = '';
-				}
-				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 15;
-				$atributos ['maximoTamanno'] = '30';
-				$atributos ['anchoEtiqueta'] = 200;
-				$tab ++;
-				
-				// Aplica atributos globales al control
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				unset ( $atributos );
-			// ----------------FIN CONTROL: Campo de Texto NUMERO ACTO ADMINISTRARIVO--------------------------------------------------------
-
-			// ---------------- CONTROL: Lista TIPO ACTO ADMINISTRATIVO --------------------------------------------------------
-				$esteCampo = "tipoActoAdmin";
-				$atributos ['nombre'] = $esteCampo;
-				$atributos ['id'] = $esteCampo;
-				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ["etiquetaObligatorio"] = true;
-				$atributos ['tab'] = $tab ++;
-				$atributos ['anchoEtiqueta'] = 200;
-				$atributos ['evento'] = '';
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['seleccion'] = -1;
-				}
-				$atributos ['deshabilitado'] = false;
-				$atributos ['columnas'] = 2;
-				$atributos ['tamanno'] = 1;
-				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = false;
-				$atributos ['anchoCaja'] = 60;
-				$atributos ['miEvento'] = '';
-				// Valores a mostrar en el control
-				$matrizItems = array (
-						array ( 1, 'Resolución' ),
-						array ( 2, 'Acta' ),
-						array ( 3, 'Oficio' ) 
-				);
-				$atributos ['matrizItems'] = $matrizItems;
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
-				unset ( $atributos );
-			// ----------------FIN CONTROL: Lista TIPO ACTO ADMINISTRATIVO--------------------------------------------------------
 
 			// ----------------INICIO CONTROL: Campo de Texto NUMERO CDP--------------------------------------------------------					
 				$esteCampo = 'numCDP';
@@ -536,7 +552,7 @@ class registrarForm {
 				$atributos ['columnas'] = 2;
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
+				$atributos ['validar'] = "";
 				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
@@ -654,7 +670,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=nuevoContrato";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		//$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para

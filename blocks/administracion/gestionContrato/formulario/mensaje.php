@@ -47,7 +47,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
     	
     $variable = "pagina=" . $miPaginaActual;
-    $variable .= "&usuario=".$_REQUEST['usuario'];
+    //$variable .= "&usuario=".$_REQUEST['usuario'];
     $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
     	
     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -76,19 +76,19 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje = "Se registro el Contrato correctamente.";
         $boton = "continuar";
 
-        $valorCodificado = "pagina=contrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado = "pagina=" . $miPaginaActual;
+        $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         
         
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. No se subió el archivo correctamente";
+        $mensaje = "Error en el cargue. No se guardo el contrato.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=gestionContrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        

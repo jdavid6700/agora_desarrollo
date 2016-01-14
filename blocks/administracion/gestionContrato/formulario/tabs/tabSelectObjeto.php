@@ -94,7 +94,7 @@ class listarDatos {
 						$url = $directorio . '=' . $variable;
 		
 						if( $dato['estado']==1){
-							$valor = 'Activo';
+							$valor = 'Seleccionar';
 							$clase = "btn btn-default";
 						}else{
 							$valor = 'Inactivo';

@@ -4,6 +4,11 @@ $this->idioma["FechasError"] =  "<center>Error al Seleccionar rango de Fechas<br
 $this->idioma["nFechasErrorTitulo"] = "Ingrese Número Contrato ";
 
 $this->idioma["marcoDatos"]="Datos contrato";
+$this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
+$this->idioma["marcoSupervisor"]="Supervisor encargado del contrato";
+$this->idioma["marcoSearch"]="Consultar por número de Contrato";
+$this->idioma["marcoSearchFecha"]="Consultar por período de fechas en que se registro el Contrato";
+$this->idioma["marcoResultado"]="Resultado consulta";
 
 $this->idioma["num_contrato"] = "Número Contrato :";
 $this->idioma["num_contratoTitulo"] = "Ingrese Número Contrato ";
@@ -72,6 +77,7 @@ $this->idioma["formaPagoTitulo"] = "Indicar forma de pago";
 
 //************ MENSAJES *********
 $this->idioma["mensajeObjeto"] =  "Actualmente no hay Objetos a Contratar </br> Ingresa por la pestaña Objeto a Contratar para crear uno nuevo. <br>";
+$this->idioma["noRetornaDatosContrato"] =  "No se econtraron registros con la consulta realizada. <br>";
 
 
 

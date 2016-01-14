@@ -50,7 +50,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = "marcoDatos";
+		$esteCampo = "marcoResultado";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -65,53 +65,6 @@ if (isset ( $_REQUEST ['num_contrato'] ) && $_REQUEST ['num_contrato'] != '') {
 	$numeroContrato = '';
 }
 
-if (isset ( $_REQUEST ['fecha_inicio_c'] ) && $_REQUEST ['fecha_inicio_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_final_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaInicio_C = $_REQUEST ['fecha_inicio_c'];
-	}
-} else {
-	
-	$fechaInicio_C = '';
-}
-
-if (isset ( $_REQUEST ['fecha_final_c'] ) && $_REQUEST ['fecha_final_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_inicio_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaFin_C = $_REQUEST ['fecha_final_c'];
-	}
-} else {
-	
-	$fechaFin_C = '';
-}
 
 if (isset ( $_REQUEST ['fecha_inicio_r'] ) && $_REQUEST ['fecha_inicio_r'] != '') {
 	// $fechaInicio = $_REQUEST ['fecha_inicio'];
@@ -163,16 +116,12 @@ if (isset ( $_REQUEST ['fecha_final_r'] ) && $_REQUEST ['fecha_final_r'] != '') 
 
 $arreglo = array (
 		$numeroContrato,
-		$fechaInicio_C,
-		$fechaFin_C,
 		$fechaInicio_R,
 		$fechaFin_R 
 );
 unset($resultadoContratos);
 $cadena_sql = $this->sql->getCadenaSql ( "consultarContrato", $arreglo );
-
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
 
 if ($resultadoContratos) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
@@ -202,7 +151,7 @@ if ($resultadoContratos) {
 			$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variable .= "&opcion=modificar";
 			$variable .= "&idContrato=" . $dato['id_contrato'];
-			$variable .= "&usuario=".$_REQUEST['usuario'];
+			//$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			$mostrarHtml = "<tr>
@@ -256,7 +205,7 @@ if ($resultadoContratos) {
 		echo $this->miFormulario->division ( "inicio", $atributos );
 		
 		// -------------Control Boton-----------------------
-		$esteCampo = "noEncontroProcesos";
+		$esteCampo = "noRetornaDatosContrato";
 		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
 		$atributos ["etiqueta"] = "";
 		$atributos ["estilo"] = "centrar";

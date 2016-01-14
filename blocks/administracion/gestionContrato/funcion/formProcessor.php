@@ -17,6 +17,9 @@ $resultado = '';
 $fechaActual = date ( 'Y-m-d' );
 $annnoActual = date ( 'Y' );
 
+
+$poliza = $_REQUEST ['poliza']==''?0:$_REQUEST ['poliza'];
+
 $arreglo = array (
 		$_REQUEST ['idObjeto'],
 		$_REQUEST ['num_contrato'],
@@ -33,7 +36,7 @@ $arreglo = array (
 		$_REQUEST ['proveedor'],
 		$_REQUEST ['valor'],
 		$_REQUEST ['rubro'],
-		$_REQUEST ['poliza'],		
+		$poliza,		
 		$_REQUEST ['formaPago'],
 		$annnoActual,
 		1
@@ -50,15 +53,15 @@ if ($resultado) {
 	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
 		$parametros = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
-				'estado' => 2  //asignado
+				'estado' => 3  //asignado a un contrato
 		);
 		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarObjeto", $parametros );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
 				
-		$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['usuario'] );
+		$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['idObjeto'] );
 		exit();
 } else {
-		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
+		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['idObjeto'] );
 		exit();
 }
