@@ -70,9 +70,9 @@ $(function() {
 // Asociar el widget de validación al formulario
 
 /////////Se define el ancho de los campos de listas desplegables///////
-$('#<?php echo $this->campoSeguro('divisionCIIU')?>').width(310);
-$('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(310);
-$('#<?php echo $this->campoSeguro('claseCIIU')?>').width(310);
+$('#<?php echo $this->campoSeguro('divisionCIIU')?>').width(750);
+$('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
+$('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('ordenador')?>').width(250);
 $('#<?php echo $this->campoSeguro('dependencia')?>').width(250);
 $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
@@ -87,10 +87,6 @@ $("#<?php echo $this->campoSeguro('ordenador')?>").select2();
 $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
 
 
-$("#<?php echo $this->campoSeguro('proyectoCurricular')?>").select2();
-$("#<?php echo $this->campoSeguro('tipoDocumento')?>").select2();
-$('#<?php echo $this->campoSeguro('categoriaActualDocente')?>').select2();
-$('#<?php echo $this->campoSeguro('dedicacion')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

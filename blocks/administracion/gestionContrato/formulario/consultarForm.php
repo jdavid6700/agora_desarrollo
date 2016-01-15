@@ -142,6 +142,7 @@ if ($resultadoContratos) {
 					<th><center>No. CDP</center></th>
 					<th><center>No. RP</center></th>
 					<th><center>Supervisor</center></th>
+					<th><center>Estado</center></th>
 					<th><center>Modificar</center></th>
 				</tr>
 				</thead>
@@ -154,6 +155,16 @@ if ($resultadoContratos) {
 			//$variable .= "&usuario=".$_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
+			
+			if($dato['estado']==1){
+					$estado = 'Nuevo';
+					$imagen = 'edit.png';
+			}else{
+					$estado = 'Evaluado';
+					$variable = '#';
+					$imagen = 'cancel.png';
+			}
+			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
 						<td><center>" . $dato['fecha_inicio'] . "</center></td>
@@ -163,9 +174,10 @@ if ($resultadoContratos) {
 						<td><center>" . $dato['numero_cdp'] . "</center></td>
 						<td><center>" . $dato['numero_rp'] . "</center></td>
 						<td>" . $dato['nombre_supervisor'] . "</td>
+						<td><center>" . $estado . "</center></td>
 						<td><center>
 							<a href='" . $variable . "'>                        
-								<img src='" . $rutaBloque . "/images/edit.png' width='15px'> 
+								<img src='" . $rutaBloque . "/images/" . $imagen . "' width='15px'> 
 							</a>
 						</center></td>						
 					</tr>";

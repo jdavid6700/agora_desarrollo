@@ -310,7 +310,7 @@ class FormularioRegistro {
 						$atributos ['seleccion'] = -1;
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 3;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;
@@ -342,7 +342,7 @@ class FormularioRegistro {
 						$atributos ['seleccion'] = - 1;
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 3;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;
@@ -374,7 +374,7 @@ class FormularioRegistro {
 						$atributos ['seleccion'] = - 1;
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 3;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['ajax_function'] = "";
 					$atributos ['ajax_control'] = $esteCampo;

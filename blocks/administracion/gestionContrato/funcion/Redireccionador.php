@@ -20,20 +20,20 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable.="&mensaje=confirma";
                 break;
 
-            case "noregistroDocumento":
-                $variable = "pagina=" . $miPaginaActual;;
+            case "noregistroContrato":
+                $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=error";
                 break;
 
-            case "actualizoDocumento":
-                $variable = "pagina=gestionContrato";
+            case "actualizoContrato":
+                $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=mensajeActualizacion";
                 break;
 
-            case "noactualizoDocumento":
-                $variable = "pagina=gestionContrato";
+            case "noactualizoContrato":
+                $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=error";
                 break;

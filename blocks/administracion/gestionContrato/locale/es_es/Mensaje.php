@@ -4,6 +4,7 @@ $this->idioma["FechasError"] =  "<center>Error al Seleccionar rango de Fechas<br
 $this->idioma["nFechasErrorTitulo"] = "Ingrese Número Contrato ";
 
 $this->idioma["marcoDatos"]="Datos contrato";
+$this->idioma["marcoDatosUpdate"]="Actualizar - Datos contrato";
 $this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
 $this->idioma["marcoSupervisor"]="Supervisor encargado del contrato";
 $this->idioma["marcoSearch"]="Consultar por número de Contrato";

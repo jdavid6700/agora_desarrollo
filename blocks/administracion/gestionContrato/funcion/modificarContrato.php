@@ -15,63 +15,33 @@ $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" 
 $rutaBloque .= $esteBloque ['nombre'];
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/" . $esteBloque ['nombre'];
 
-$conexion = "inventarios";
+$conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 $resultado = '';
 
-	
-// Guardar el archivo
-if ($_FILES) {
-	foreach ( $_FILES as $key => $values ) {
-		$archivo = $_FILES [$key];
-	}
-	// obtenemos los datos del archivo
-	$tamano = $archivo ['size'];
-	$tipo = $archivo ['type'];
-	$archivo1 = $archivo ['name'];
-	$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
-	
-	if ($archivo1 != "") {
-		// guardamos el archivo a la carpeta files
-		$destino1 = $rutaBloque . "/archivoSoporte/" . $prefijo . "-" . $archivo1;
-		
-		if (copy ( $archivo ['tmp_name'], $destino1 )) {
-			$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-			$destino1 = $host . "/archivoSoporte/" . $prefijo . "-" . $archivo1;
-			
-			$parametros = array (
-					'nombre_archivo' => $archivo1,
-					'id_unico' => $prefijo . "-" . $archivo1,
-					'fecha_registro' => date ( 'd/m/Y' ),
-					'ruta' => $destino1,
-					'estado' => TRUE,
-					'id_doc' => $_REQUEST ['identificador_documento'] 
-			);
-			
-			$cadenaSql = $this->sql->cadena_sql ( "actualizarDocumento", $parametros );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' ,$parametros,"actualizarDocumento");
-			
-			
-			
-		} else {
-			$status = "<br>Error al subir el archivo1";
-		}
-	} else {
-		$status = "<br>Error al subir archivo2";
-	}
-}
-
-
+$poliza = $_REQUEST ['poliza']==''?0:$_REQUEST ['poliza'];
 
 $arreglo = array (
-		$_REQUEST ['id_contratista'],
 		$_REQUEST ['num_contrato'],
-		$_REQUEST ['fecha_contrato'],
-		$_REQUEST ['identificador_contrato'] 
+		$_REQUEST ['fecha_inicio_c'],
+		$_REQUEST ['fecha_final_c'],
+		$_REQUEST ['supervisor'],
+		$_REQUEST ['numActoAdmin'],
+		$_REQUEST ['tipoActoAdmin'],
+		$_REQUEST ['numCDP'],		
+		$_REQUEST ['numRP'],
+		$_REQUEST ['fecha_RP'],
+		$_REQUEST ['modalidad'],
+		$_REQUEST ['proveedor'],
+		$_REQUEST ['valor'],
+		$_REQUEST ['rubro'],
+		$poliza,		
+		$_REQUEST ['formaPago'],
+		$_REQUEST ['idContrato']
 );
 
-$cadenaSql = $this->sql->cadena_sql ( "actualizarContrato", $arreglo );
+$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"actualizarContrato" );
 
 // Crear Variables necesarias en los métodos
@@ -79,11 +49,10 @@ $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"act
 $variable = '';
 
 if ($resultado) {
-    $this->miConfigurador->setVariableConfiguracion("cache",true);
-	$this->funcion->Redireccionador ( 'actualizoDocumento', $_REQUEST['usuario'] );
+	$this->funcion->Redireccionador ( 'actualizoContrato', $_REQUEST['idContrato'] );
 	exit();
 	
 } else {
-	$this->funcion->Redireccionador ( 'noactualizoDocumento', $_REQUEST['usuario'] );
+	$this->funcion->Redireccionador ( 'noactualizoContrato', $_REQUEST['idContrato'] );
 	exit();
 }

@@ -9,7 +9,7 @@ class listarDatos {
 	var $miFormulario;
 	var $miSql;
 	
-	const OBJETOCREADO = 1; //Estado objeto creado
+	const ESTADOOBJETO = 2; //COTIZACION
 	
 	function __construct($lenguaje, $formulario, $sql) {
 		
@@ -48,7 +48,7 @@ class listarDatos {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-        $this->cadena_sql = $this->miSql->getCadenaSql("listaObjetoContratar", self::OBJETOCREADO);
+        $this->cadena_sql = $this->miSql->getCadenaSql("listaObjetoContratar", self::ESTADOOBJETO);
         $resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
 
 		if( $resultado ){

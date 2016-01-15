@@ -62,6 +62,6 @@ if ($resultado) {
 		$this->funcion->Redireccionador ( 'registroContrato', $_REQUEST['idObjeto'] );
 		exit();
 } else {
-		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['idObjeto'] );
+		$this->funcion->Redireccionador ( 'noregistroContrato', $_REQUEST['idObjeto'] );
 		exit();
 }

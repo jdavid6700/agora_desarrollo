@@ -22,48 +22,70 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+
+			/* CONSULTAR - CONTRATO por ID */					
+				case "consultarContratoByID" :			
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " id_contrato, ";
+					$cadenaSql .= " id_objeto, ";
+					$cadenaSql .= " numero_contrato, ";
+					$cadenaSql .= " fecha_inicio, ";
+					$cadenaSql .= " fecha_finalizacion, ";
+					$cadenaSql .= " id_supervisor, ";
+					$cadenaSql .= " id_proveedor, ";
+					$cadenaSql .= " numero_acto_admin, ";
+					$cadenaSql .= " tipo_acto_admin, ";
+					$cadenaSql .= " numero_cdp, ";
+					$cadenaSql .= " numero_rp, ";
+					$cadenaSql .= " fecha_rp, ";
+					$cadenaSql .= " modalidad,  ";
+					$cadenaSql .= " valor, ";
+					$cadenaSql .= " rubro, ";
+					$cadenaSql .= " poliza, ";
+					$cadenaSql .= " forma_pago,  ";				
+					$cadenaSql .= " estado  ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " WHERE  id_contrato=" . $variable;  //Activo
+					break;
+				
 			/* CONSULTAR - CONTRATO */					
-			case "consultarContrato" :			
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " id_contrato, ";
-				$cadenaSql .= " numero_contrato, ";
-				$cadenaSql .= " fecha_inicio, ";
-				$cadenaSql .= " fecha_finalizacion, ";
-				$cadenaSql .= " S.nombre_supervisor, ";
-				$cadenaSql .= " P.nomempresa, ";
-				$cadenaSql .= " numero_acto_admin, ";
-				$cadenaSql .= " tipo_acto_admin, ";
-				$cadenaSql .= " numero_cdp, ";
-				$cadenaSql .= " numero_rp, ";
-				$cadenaSql .= " fecha_registro, ";
-				$cadenaSql .= " modalidad  ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.prov_contrato C";
-				$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-				$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
-				$cadenaSql .= " WHERE 1=1 ";
-				if ($variable [0] != '') {
-					$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
-				}
-				
-			/*	if ($variable [1] != '') {
-					$cadenaSql .= " AND fecha_contrato BETWEEN CAST ( '" . $variable [1] . "' AS DATE) ";
-					$cadenaSql .= " AND  CAST ( '" . $variable [2] . "' AS DATE)  ";
-				}*/
-				
-				if ($variable [1] != '') {
-					$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [1] . "' AND '" . $variable [2] . "'" ;
-				}
-				
-				break;
+				case "consultarContrato" :			
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " id_contrato, ";
+					$cadenaSql .= " numero_contrato, ";
+					$cadenaSql .= " fecha_inicio, ";
+					$cadenaSql .= " fecha_finalizacion, ";
+					$cadenaSql .= " S.nombre_supervisor, ";
+					$cadenaSql .= " P.nomempresa, ";
+					$cadenaSql .= " numero_acto_admin, ";
+					$cadenaSql .= " tipo_acto_admin, ";
+					$cadenaSql .= " numero_cdp, ";
+					$cadenaSql .= " numero_rp, ";
+					$cadenaSql .= " fecha_registro, ";
+					$cadenaSql .= " modalidad,  ";
+					$cadenaSql .= " C.estado  ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";//falta colocar la tabla que es para proveedores
+					$cadenaSql .= " WHERE 1=1 ";
+					if ($variable [0] != '') {
+						$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
+					}
+					if ($variable [1] != '') {
+						$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [1] . "' AND '" . $variable [2] . "'" ;
+					}
+					break;
 		
 			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
-			case 'actualizarObjeto' :
-				$cadenaSql = "UPDATE proveedor.prov_objeto_contratar SET ";
-				$cadenaSql .= "estado='" . $variable ['estado'] . "'";
-				$cadenaSql .= " WHERE id_objeto=";
-				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
-				break;
+				case 'actualizarObjeto' :
+					$cadenaSql = "UPDATE proveedor.prov_objeto_contratar SET ";
+					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql .= " WHERE id_objeto=";
+					$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
+					break;
+					
 			/* LISTA - OBJETO A CONTRATAR  */
 				case "listaObjetoContratar" :
 					$cadenaSql = "SELECT";
@@ -111,7 +133,30 @@ class Sql extends \Sql {
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " proveedor.prov_objeto_contratar";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
-					break;		
+					break;
+			
+			/* ACTUALIZAR - CONTRATO */
+				case 'actualizarContrato' :
+					$cadenaSql = "UPDATE proveedor.prov_contrato SET ";
+					$cadenaSql .= "numero_contrato='" . $variable [0] . "',";
+					$cadenaSql .= "fecha_inicio='" . $variable [1] . "',";
+					$cadenaSql .= "fecha_finalizacion='" . $variable [2] . "',";
+					$cadenaSql .= "id_supervisor='" . $variable [3] . "',";
+					$cadenaSql .= "numero_acto_admin='" . $variable [4] . "',";
+					$cadenaSql .= "tipo_acto_admin='" . $variable [5] . "',";
+					$cadenaSql .= "numero_cdp='" . $variable [6] . "',";
+					$cadenaSql .= "numero_rp='" . $variable [7] . "',";
+					$cadenaSql .= "fecha_rp='" . $variable [8] . "',";
+					$cadenaSql .= "modalidad='" . $variable [9] . "',";
+					$cadenaSql .= "id_proveedor='" . $variable [10] . "',";
+					$cadenaSql .= "valor='" . $variable [11] . "',";
+					$cadenaSql .= "rubro='" . $variable [12] . "',";
+					$cadenaSql .= "poliza='" . $variable [13] . "',";
+					$cadenaSql .= "forma_pago='" . $variable [14] . "' ";
+					$cadenaSql .= " WHERE id_contrato=";
+					$cadenaSql .= "'" . $variable [15] . "' ";
+					break;					
+					
 			/* GUARDAR - NUEVO CONTRATO */
 				case 'registroContrato' :
 					$cadenaSql = 'INSERT INTO ';
@@ -238,15 +283,7 @@ class Sql extends \Sql {
 				$cadenaSql .= '\'' . $variable ['id_doc'] . '\' ';
 				break;
 			
-			case 'actualizarContrato' :
-				$cadenaSql = "UPDATE contratos SET ";
-				$cadenaSql .= "nombre_contratista='" . $variable [0] . "',";
-				$cadenaSql .= "numero_contrato='" . $variable [1] . "',";
-				$cadenaSql .= "fecha_contrato='" . $variable [2] . "' ";
-				$cadenaSql .= " WHERE id_contrato=";
-				$cadenaSql .= "'" . $variable [3] . "' ";
-				
-				break;
+
 			/**
 			 * /**
 			 * Clausulas específicas

@@ -82,7 +82,7 @@ class Funcion {
 					$this->formProcessor ();
 					break;
 				
-				case 'documentoModificar' :
+				case 'actualizar' :
 					$this->modificarContrato ();
 					break;
 			}

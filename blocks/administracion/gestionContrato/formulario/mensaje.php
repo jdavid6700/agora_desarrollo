@@ -87,7 +87,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje = "Error en el cargue. No se guardo el contrato.";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=gestionContrato";
+		$valorCodificado = "pagina=" . $miPaginaActual;
         $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
@@ -97,8 +97,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje = "Se actualizo correctamente el registro del contrato.<br>";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=gestionContrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado = "pagina=" . $miPaginaActual;
+        $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
