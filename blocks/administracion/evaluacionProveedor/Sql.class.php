@@ -133,6 +133,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
 					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
+					$cadenaSql .= " ORDER BY id_contrato ";
 					break;
 
 			/* GUARDAR - NUEVA EVALUACION */

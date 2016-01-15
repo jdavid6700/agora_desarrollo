@@ -5,14 +5,14 @@ $this->idioma["tabEvaluar"] = "Evaluar Contrato ";
 $this->idioma["tabConsultar"] = "Consultar Evaluación por Contrato";
 $this->idioma["tabConsultarProveedor"] = "Consultar Evaluación por Proveedor";
 
-$this->idioma["marcoDatos"]="Evaluar";
+$this->idioma["marcoDatos"]="Evaluaci&oacute;n";
 $this->idioma["marcoCumplimiento"]="Cumplimiento";
 $this->idioma["marcoCalidad"]="Calidad";
 $this->idioma["marcoContractual"]="Pos Contractual";
 $this->idioma["marcoGestion"]="Gestión";
 $this->idioma["marcoSearch"]="Ingesar No. de Contrato para ver Evaluaciòn";
 $this->idioma["marcoSearchProveedor"]="Ingesar NIT o Cèdula del proveedor";
-
+$this->idioma["marcoContrato"]="Contrato - Información general";
 
 
 

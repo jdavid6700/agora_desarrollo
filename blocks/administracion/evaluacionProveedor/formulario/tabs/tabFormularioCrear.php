@@ -10,13 +10,9 @@ class registrarForm {
 	var $miSql;
 	function __construct($lenguaje, $formulario, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
-		
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
-		
 		$this->lenguaje = $lenguaje;
-		
 		$this->miFormulario = $formulario;
-		
 		$this->miSql = $sql;
 	}
 	function miForm() {
@@ -72,36 +68,26 @@ class registrarForm {
 		//DATOS DEL CONTRATO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
 		$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-                
-		$esteCampo = "marcoObjeto";
+
+		$esteCampo = "marcoContrato";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
-                
-		echo "<span class='textoElegante textoEnorme textoAzul'>Número Contrato : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . " - " . $objetoEspecifico[0][2] . "</span></br>"; 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
-
-		//FIN OBJETO A CONTRATAR
+				//INICIO INFO CONTRATO
+				echo "<span class='textoElegante textoEnorme textoAzul'>Número Contrato : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][0] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][1] . " - " . $consulta[0][2] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][3] . "</span></br>";                 
+				//FIN INFO CONTRATO
                 echo $this->miFormulario->marcoAgrupacion ( 'fin' );                 
 		
 		$_REQUEST["idProveedor"] = $consulta[0]["id_proveedor"];
 	
-		echo "<span class='textoElegante textoEnorme textoAzul'>Contrato</span><hr>"; 
-		echo '<table style="width:100%">';
-		echo '<tr><td style="width:20%"><span class="textoAzul">No. Contrato</td><td><span class="textoGris">' . $consulta[0][0] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Inicial</td><td><span class="textoGris">' . $consulta[0][1] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Final</td><td><span class="textoGris">' . $consulta[0][2] . "</span></td></tr>";	
-		echo '<tr><td style="width:20%"><span class="textoAzul">Proveedor</td><td><span class="textoGris">' . $consulta[0][3] . "</span></td></tr>";	
-		echo '</table>';
-		//FIN OBJETO A CONTRATAR
-		
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -555,7 +541,7 @@ class registrarForm {
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$valorCodificado .= "&opcion=nuevaEaluacion";
-		$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
+		//$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.
 		 * Para ello utiliza la hora en que es creado el formulario para
