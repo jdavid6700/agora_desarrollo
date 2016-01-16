@@ -27,6 +27,30 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+                    
+			/* REGISTRAR COTIZACION */
+				case "ingresarCotizacion" :
+					$hoy = date("Y-m-d");  
+					
+					$cadenaSql=" INSERT INTO proveedor.prov_solicitud_cotizacion";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" id_objeto,";
+					$cadenaSql.=" id_proveedor";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable[0]. "',";
+					$cadenaSql.=" '" . $variable[1]. "'";
+					$cadenaSql.=" );";
+					break;
+                                    
+			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
+				case 'actualizarObjeto' :
+					$cadenaSql = "UPDATE proveedor.prov_objeto_contratar SET ";
+					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql .= " WHERE id_objeto=";
+					$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
+					break;
 
 			/* verificar si existe proveedores con la actividad economica */				
 			case "verificarActividad" :
@@ -53,14 +77,14 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " proveedor.prov_proveedor_info P";
 				$cadenaSql .= " JOIN proveedor.prov_ciiu_actividad A ON A.id_registro = P.nit::text";
-				$cadenaSql .= " WHERE  A.actividad='" . $variable[0] . "'";  
+				$cadenaSql .= " WHERE  A.actividad='" . $variable['actividadEconomica'] . "'";  
                                 //$cadenaSql .= " AND P.puntaje_evaluacion > 45"; 
 				$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
-				$cadenaSql .= " LIMIT " . $variable[1];
+				$cadenaSql .= " LIMIT " . $variable['numCotizaciones'];
 				break;			
 
 			/* ULTIMO NUMERO DE SECUENCIA */				
-				case "lastId" :
+				case "lastIdObjeto" :
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " last_value";
 					$cadenaSql .= " FROM ";
@@ -72,11 +96,11 @@ class Sql extends \Sql {
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= "	codigociiu,";
-					//$cadenaSql .= "	S.nombre,";
+					$cadenaSql .= "	S.nombre AS actividad,";
 					$cadenaSql .= "	descripcion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_objeto_contratar C";
-					//$cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = C.codigociiu";
+					$cadenaSql .= " proveedor.prov_objeto_contratar O";
+                                        $cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = O.codigociiu";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
 					break;			
 		
@@ -86,6 +110,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_objeto,";
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= " codigociiu,";
+                                        $cadenaSql .= " S.nombre AS actividad,";
 					$cadenaSql .= " fecharegistro,";
 					$cadenaSql .= " unidad,";
 					$cadenaSql .= " cantidad,";
@@ -93,7 +118,8 @@ class Sql extends \Sql {
 					$cadenaSql .= "	numero_cotizaciones,";
 					$cadenaSql .= "	estado";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar O";
+                                        $cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = O.codigociiu";
 					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
 					$cadenaSql .= " ORDER BY fechaRegistro";
 					break;

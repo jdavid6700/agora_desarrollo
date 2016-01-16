@@ -73,8 +73,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-                $actividadEconomica = $objetoEspecifico[0][1];
-                $actividadEconomica = '0112';
+                $idActividad = $objetoEspecifico[0][1];
                 
 		$esteCampo = "marcoObjeto";
 		$atributos ['id'] = $esteCampo;
@@ -87,26 +86,53 @@ class registrarForm {
 		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
                 echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
 		echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $actividadEconomica . "</span></br>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $idActividad . '-' . $objetoEspecifico[0][2] . "</span></br>"; 
 		echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][2] . "</span></br>";                 
+                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
 
 		//FIN OBJETO A CONTRATAR
                 echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 
+                
+                $cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividad', $idActividad );
+                $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+		if( !$resultado )
+                {
+				// ------------------INICIO Division para los botones-------------------------
+				$atributos ["id"] = "divNoEncontroEgresado";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeNoHayProveedores";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . '-' . $objetoEspecifico[0][2];
+				
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
+		}else{               
+                
+                
+                
+                
+                
 		//LISTA DE PROVEEDORES CON MEJOR CLASIFICACION 
                 //------- FILTRAR POR ACTIVIDAD ECONOMICA
-                
-			$datos = array (
-					$actividadEconomica,
-					$_REQUEST ['numCotizaciones'],
-			);                
+        $datos = array (
+		'actividadEconomica' => $idActividad,
+		'numCotizaciones' => $_REQUEST ['numCotizaciones']
+	);                
 
                 //-------- Limite de registros
                 //--------- evaluacion mayor a 45
 		$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
-		
-                
                 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 		
@@ -269,6 +295,7 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		return true;
+            }
 	}
 }
 

@@ -143,7 +143,7 @@ class FormularioRegistro {
 				$atributos ['seleccion'] = -1;
 			}
 			$atributos ['deshabilitado'] = false;
-			$atributos ['columnas'] = 2;
+			$atributos ['columnas'] = 1;
 			$atributos ['tamanno'] = 1;
 			$atributos ['estilo'] = "jqueryui";
 			$atributos ['validar'] = "required";
@@ -173,7 +173,7 @@ class FormularioRegistro {
 						$atributos ['seleccion'] = -1;
 					}
 					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 2;
+					$atributos ['columnas'] = 1;
 					$atributos ['tamanno'] = 1;
 					$atributos ['estilo'] = "jqueryui";
 					$atributos ['validar'] = "required";

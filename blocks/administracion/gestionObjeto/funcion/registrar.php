@@ -38,16 +38,16 @@ class Registrar {
 		
                 //Guardar datos del Objeto a contratar
 		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+                $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 		
 		if ($resultado) {
 			//Conusltar el ultimo ID del objeto
-			$cadenaSql = $this->miSql->getCadenaSql ( 'lastId' );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'lastIdObjeto' );
 			$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );                        
 			
 			$datos = array (
 					$lastId[0][0],
-					$_REQUEST ['cotizaciones'],
+					$_REQUEST ['cotizaciones']
 			);			
 			
                     

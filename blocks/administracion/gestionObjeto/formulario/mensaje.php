@@ -65,6 +65,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=cotizacion";
         $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         
  
     } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {

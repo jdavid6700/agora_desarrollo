@@ -78,6 +78,8 @@ $this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se evio la solicitu
 $this->idioma["mensajeError"] =  "Error al tratar de registrar la Título Académico.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
+
+$this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con la Actividad Económica </br> ";
 /////////////////////////////////
 
 $this->idioma["marcoConsultaGeneral"] = "Consulta Títulos Académicos Registradas";

@@ -38,18 +38,37 @@ class SolicitudCotizacion {
 		
 		
         $proveedores = unserialize(stripslashes($_REQUEST['idProveedor']));
-        var_dump($proveedores);
+
         
         
 $count = count($proveedores);    
 for ($i = 0; $i < $count; $i++) {
-   echo $proveedores[$i] . "<br>";
+   
+   $datos = array (
+		$_REQUEST ['idObjeto'],
+		$proveedores[$i]
+    );
+    //Inserto las solicitudes de cotizacion para cada proveedor
+    $cadenaSql = $this->miSql->getCadenaSql ( 'ingresarCotizacion', $datos );
+    $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+    
+    if($resultado){
+        //Envio correo al preveedor
+
+    }
 }
 
-exit;
-                //$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
-		//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
-		$resultado = true;
+    //actualizo estado del objeto a contratar a 2(cotizacion)
+    //actualizo fecha de solicitud
+	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
+        $parametros = array (
+		'idObjeto' => $_REQUEST ['idObjeto'],
+		'estado' => 2  //solicitud de cotizacion
+	);
+
+    $cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjeto', $parametros );
+    $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+
 		if ($resultado) {
 			redireccion::redireccionar ( 'insertoCotizacion',  $_REQUEST['docenteRegistrar']);
 			exit ();
