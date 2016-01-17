@@ -3,7 +3,6 @@ $indice = 0;
 $funcion [$indice ++] = "select2.js";
 $funcion [$indice ++] = "select2_locale_es.js";
 $funcion [$indice ++] = "jquery.dataTables.js";
-$funcion [$indice ++] = "timepicker.js";
 $funcion [$indice ++] = "jquery.autocomplete.js";
 $funcion [$indice ++] = "jquery.autocomplete.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
@@ -11,12 +10,6 @@ $funcion [$indice ++] = "jquery.autocomplete.min.js";
 
 $embebido [$indice] = true;
 $funcion [$indice ++] = "ajax.php";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/validarCampoNumerico.js";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/campoFecha.js";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/asignacionPuntaje.js";
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );
