@@ -65,16 +65,6 @@ $resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 			endforeach;
 			
 			?>			
-			<ul class="nav navbar-nav navbar-right">
-				<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mi Sesión <span class="caret"></span></a>
-				<ul class="dropdown-menu">
-					<li class="dropdown-header">Usuario: <?php echo $regUser [0] ['nombre'] . ' ' . $regUser [0] ['apellido']; ?> </li>
-					<li><a href="#">Cambiar Contraseña</a></li>
-					<li><a href="#">Cerrar Sesión</a></li>
-				</ul>
-				</li>
-			</ul>
           </ul>		
         </div>
       </div>

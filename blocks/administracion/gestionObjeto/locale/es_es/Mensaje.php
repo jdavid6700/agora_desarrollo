@@ -4,7 +4,7 @@
 $this->idioma["objetoContrato"] = "Objeto a contratar : ";
 $this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
 
-$this->idioma["marcoCIIU"]="Actividad econòmica";
+$this->idioma["marcoCIIU"]="Actividad Económica";
 $this->idioma["marcoDatos"]="Datos generales";
 $this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
