@@ -75,7 +75,7 @@ class Sesion extends SesionBase {
                     /**
                      * Ejecutar una consulta
                      */
-                    $resultado = $this->miConexion->ejecutarAcceso($cadenaSql, self::ACCEDER);
+                    $resultado = $this->miConexion->ejecutarAcceso($cadenaSql, self::ACCEDER, $parametro, 'actualizarSesion');
                 }
             } else {
                 $resultado = false;
@@ -185,7 +185,6 @@ class Sesion extends SesionBase {
     function crearSesion($usuarioId) {
         // 0. Borrar todas las sesiones del equipo
         if ($this->verificarSesion()) {
-
             $this->terminarSesion($this->sesionId);
         }
 
@@ -313,7 +312,6 @@ class Sesion extends SesionBase {
     function borrarSesionExpirada() {
 
         $cadenaSql = $cadenaSql = $this->miSql->getCadenaSql("borrarSesionesExpiradas");
-
         return !$this->miConexion->ejecutarAcceso($cadenaSql);
     }
 
@@ -330,11 +328,10 @@ class Sesion extends SesionBase {
         if (strlen($sesion) != 32) {
             return FALSE;
         }
+        $parametro [self::SESIONID] = $sesion;
         // Borrar cookies anteriores
         setcookie(self::APLICATIVO, "", time() - 3600, "/");
-
-        $cadenaSql = $cadenaSql = $this->miSql->getCadenaSql("borrarSesion", $sesion);
-
+        $cadenaSql = $cadenaSql = $this->miSql->getCadenaSql("borrarSesion", $parametro);
         return !$this->miConexion->ejecutarAcceso($cadenaSql);
     }
 
@@ -342,7 +339,6 @@ class Sesion extends SesionBase {
 
     /**
      * @METHOD obtener_nivel
-     *
      * Retorna el nivel de usuario en la base de datos
      * @PARAM 
      *
@@ -354,9 +350,91 @@ class Sesion extends SesionBase {
         $cadenaSql = $this->miSql->getCadenaSql("verificarNivelUsuario", $this->sesionUsuarioId);
         $resultadoNivel = $this->miConexion->ejecutarAcceso($cadenaSql, self::BUSCAR);
         $nivel = $resultadoNivel[0][0];
+
         return $nivel;
     }
 
+    /**
+     * @METHOD obtener_nivel
+     *
+     * Retorna el nivel de usuario en la base de datos
+     * @PARAM 
+     *
+     * @return valor
+     * @access public
+     */
+    function idUsuario() {
+        return $this->sesionUsuarioId = trim($this->getValorSesion('idUsuario'));
+    }    
+     /**
+     * @METHOD obtener_roles
+     * Retorna los roles de usuario en la base de datos
+     * @PARAM 
+     *
+     * @return valor
+     * @access public
+     */
+    function RolesSesion() {
+        $this->sesionUsuarioId = trim($this->getValorSesion('idUsuario'));
+        $cadenaSql = $this->miSql->getCadenaSql("verificarRolesUsuario", $this->sesionUsuarioId);
+        $resultadoRoles = $this->miConexion->ejecutarAcceso($cadenaSql, self::BUSCAR);
+        return $resultadoRoles;
+    }
+    
+    
+         /**
+     * @METHOD obtener_roles
+     * Devuelve los roles de usuario en la base de datos sin el valor de la aplicacion
+     * @PARAM 
+     *
+     * @return valor
+     * @access public
+     */
+    function RolesSesion_unico() {
+        $this->sesionUsuarioId = trim($this->getValorSesion('idUsuario'));
+      $cadenaSql = $this->miSql->getCadenaSql("verificarRolesUsuario_unico", $this->sesionUsuarioId);
+        $resultadoRoles = $this->miConexion->ejecutarAcceso($cadenaSql, self::BUSCAR);
+        return $resultadoRoles;
+    }
+
+
+
+    /**
+     * @METHOD obtener_sesion activa
+     *
+     * Retorna false o array para una sesion activa
+     * @PARAM 
+     *
+     * @return boolean
+     * @access public
+     */
+    function sesionActiva($parametrosSesion) {
+        $cadenaSql = $this->miSql->getCadenaSql("buscarSesionActiva", $parametrosSesion);
+        $resultadoSesion = $this->miConexion->ejecutarAcceso($cadenaSql, self::BUSCAR);
+
+        if ($resultadoSesion) {
+            $sesion = $resultadoSesion;
+        } else {
+            $sesion = false;
+        }
+
+        return $sesion;
+    }
+
+    // Fin del método  sesion_activa
+
+    /**
+     *
+     * @name borrar_sesion_activa
+     * @return void
+     * @access public
+     */
+    function borrarSesionActiva($parametro) {
+        $cadenaSql = $cadenaSql = $this->miSql->getCadenaSql("borrarSesionActiva", $parametro);
+        return !$this->miConexion->ejecutarAcceso($cadenaSql);
+    }
+
+    // Fin del método borrar_sesion_activa    
 }
 
 ?>

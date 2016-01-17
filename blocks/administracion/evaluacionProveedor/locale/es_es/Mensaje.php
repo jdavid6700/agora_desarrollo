@@ -13,7 +13,7 @@ $this->idioma["marcoGestion"]="Gestión";
 $this->idioma["marcoSearch"]="Ingesar No. de Contrato para ver Evaluaciòn";
 $this->idioma["marcoSearchProveedor"]="Ingesar NIT o Cèdula del proveedor";
 $this->idioma["marcoContrato"]="Contrato - Información general";
-
+$this->idioma["mensaNoEvaluado"] = "Este contrato no se encuentra evaluado.";
 
 
 $this->idioma["num_contrato"] =  "No. de Contrato";

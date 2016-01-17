@@ -50,7 +50,7 @@ class Sql extends \Sql {
 					$cadenaSql .= "	puntaje_evaluacion,";
 					$cadenaSql .= "	clasificacion_evaluacion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_proveedor_info";
+					$cadenaSql .= " proveedor.prov_proveedor_info";
 					$cadenaSql .= " WHERE  id_proveedor=" . $variable;  
 					break;
 					
@@ -78,11 +78,11 @@ class Sql extends \Sql {
 					$cadenaSql .= " nomempresa,";
 					$cadenaSql .= " C.estado";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
 					$cadenaSql .= " WHERE 1=1 ";
 					if ($variable [0] != '') {
-						$cadenaSql .= " AND  numero_contrato= '" . $variable [0] . "'";
+						$cadenaSql .= " AND  numero_contrato= '" . $variable . "'";
 					}
 					break;
 
@@ -139,7 +139,7 @@ class Sql extends \Sql {
 			/* GUARDAR - NUEVA EVALUACION */
 				case 'registroEvaluacion' :
 					$cadenaSql = 'INSERT INTO ';
-					$cadenaSql .= 'prov_evaluacion';
+					$cadenaSql .= 'proveedor.prov_evaluacion';
 					$cadenaSql .= '( ';
 					$cadenaSql .= 'id_contrato,';
 					$cadenaSql .= 'fecha_registro,';
@@ -179,7 +179,7 @@ class Sql extends \Sql {
 
 			/* ACTUALIZAR - CONTRATO - ESTADO */			
 				case 'actualizarContrato' :
-					$cadenaSql = "UPDATE prov_contrato SET ";
+					$cadenaSql = "UPDATE proveedor.prov_contrato SET ";
 					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
 					$cadenaSql .= " WHERE id_contrato=";
 					$cadenaSql .= "'" . $variable ['idContrato'] . "' ";
@@ -187,7 +187,7 @@ class Sql extends \Sql {
 					
 			/* ACTUALIZAR - PROVEEEDOR PUNTAJE Y CLASIFICACION */			
 				case 'actualizarProveedor' :
-					$cadenaSql = "UPDATE prov_proveedor_info SET ";
+					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
 					$cadenaSql .= "puntaje_evaluacion='" . $variable ['puntajeNuevo'] . "', ";
 					$cadenaSql .= "clasificacion_evaluacion='" . $variable ['clasificacion'] . "'";
 					$cadenaSql .= " WHERE id_proveedor=";

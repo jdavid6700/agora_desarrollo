@@ -46,7 +46,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " puntaje_evaluacion, ";
 				$cadenaSql .= " clasificacion_evaluacion  ";				
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " prov_proveedor_info";
+				$cadenaSql .= " proveedor.prov_proveedor_info";
 				$cadenaSql .= " WHERE 1=1 ";
 				if ($variable [0] != '') {
 					$cadenaSql .= " AND  nit= '" . $variable [0] . "'";

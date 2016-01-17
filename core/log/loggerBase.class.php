@@ -24,7 +24,13 @@ class loggerBase {
      * @return valor
      * @access public
      */
-            
+    function setIdUsuario($idUsuario) {
+        
+        $this->setSesionUsuarioId = $idUsuario;
+    
+    }
+    // Fin del mètodo especificar_usuario
+        
     function setPrefijoTablas($valor) {
         
         $this->prefijoTablas = $valor;

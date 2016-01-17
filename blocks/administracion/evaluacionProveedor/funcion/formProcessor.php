@@ -59,7 +59,10 @@ $arreglo = array (
 
 //Guardar datos de la evaluacion
 $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
+echo $cadenaSql; 
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+echo $resultado; 
+$resultado =true;
 
 if ($resultado) {
 	//Actualizar estado del CONTRATO A EVALUADO

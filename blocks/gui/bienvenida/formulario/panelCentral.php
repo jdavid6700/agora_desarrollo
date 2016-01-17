@@ -7,19 +7,14 @@ $urlBloque = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' )
 
 
 ?>
-<!--Division flotante para el panel-->
-		<div id="divPanelCentral">
-			<div class="iconoPanelCentral">
-			</div>			
-			<div class="tituloPanelCentral">
-				¿Qué es SARA?
-			</div>
-			 <div class="cuerpoPanelCentral">
-			 <p>
-			 SARA es un marco de trabajo para crear aplicaciones en PHP. Tiene los elemento necesarios para crear aplicaciones
-			 de manera ágil, gestionando varios aspectos relacionados con la seguridad, la estructura y la integración de módulos. 
-			 </p>			 
-			 </div>
-		</div>
-	<!--Fin Division flotante para el Panel-->
+    <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron" align="center">
+        <h2>¡Bienvenido al Registro Único de Proveedores!</h2>
+        <p>Módulo de Administración.</p>
+
+      </div>
+
+    </div> <!-- /container -->
 		

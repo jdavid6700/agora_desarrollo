@@ -47,7 +47,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
     	
     $variable = "pagina=" . $miPaginaActual;
-    $variable .= "&usuario=".$_REQUEST['usuario'];
+    //$variable .= "&usuario=".$_REQUEST['usuario'];
     $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
     	
     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -83,11 +83,11 @@ if (!isset($GLOBALS["autorizado"])) {
         
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. No se subió el archivo correctamente";
+        $mensaje = "Error en el cargue. No se subió la evaluaciòn.";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=gestionContrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado = "pagina=" . $miPaginaActual;
+        $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        

@@ -47,6 +47,8 @@ class FormProcessor {
          */
         $variable ['usuario'] = $_REQUEST ["usuario"];
         $variable ['clave'] = $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ["clave"]);
+		
+		//echo $variable ['clave']; exit;
         // Verificar que el tiempo registrado en los controles no sea superior al tiempo actual + el tiempo de expiración
         if ($_REQUEST ['campoSeguro'] <= time() + $this->miConfigurador->getVariableConfiguracion('expiracion')) {
             // Verificar que el usuario esté registrado en el sistema
@@ -71,7 +73,7 @@ class FormProcessor {
                     $argumento = json_encode($arregloLogin);
                     $arreglo = array(
                         $registro [0] ["id_usuario"],
-                        $argumento
+                        $registro [0] ["tipo"]
                     );
 
                     // var_dump ( $arreglo );
@@ -80,20 +82,22 @@ class FormProcessor {
 
                     if ($estaSesion) 
                         {
-                            $log=array('opcion'=>"INGRESO",
-                                       'id_registro'=>$variable ['usuario']."|".$estaSesion,
-                                       'tipo_registro'=>"LOGIN",
-                                       'nombre_registro'=>$arreglo[1],
-                                       'descripcion'=>"Ingreso al sistemas del usuario ".$variable ['usuario']." con la sesion ".$estaSesion,
-                                      ); 
-//var_dump($registro);exit;                          
-                            $_COOKIE["aplicativo"]=$estaSesion;
-                            $this->miLogger->log_usuario($log);
+        
+                   
+                          //  $_COOKIE["aplicativo"]=$estaSesion;
+                          //  $this->miLogger->log_usuario($log);
                             //Si estado dif Activo redirecciona a pagina decambio contraseña
                             if($registro [0] ['estado']==2)
                                 {Redireccionador::redireccionar('claves', $registro);}
                             else
-                                {Redireccionador::redireccionar('index', $registro [0]);}
+                                {
+                                
+
+                                //echo "hola";
+                                Redireccionador::redireccionar('index', $registro [0]);
+                                
+                                
+                                }
                         }
                     // Redirigir a la página principal del usuario, en el arreglo $registro se encuentran los datos de la sesion:
                     // $this->funcion->redireccionar("indexUsuario", $registro[0]);
