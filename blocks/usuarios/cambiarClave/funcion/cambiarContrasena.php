@@ -42,11 +42,13 @@ class RegistradorUsuarios {
 
             $_REQUEST['usuario']=isset($_REQUEST['usuario'])?$_REQUEST['usuario']:$_REQUEST['id_usuario'];
             $parametro['id_usuario']=$_REQUEST['usuario'];
-            $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
+            $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $parametro);
             $resultadoUs = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
             if($resultadoUs)
                 {   if ($resultadoUs && $_REQUEST ['contrasenaActual']==$resultadoUs[0]['clave'])
-                      { $parametro['contrasena']=$_REQUEST ["contrasena"];
+                      { 
+						//MODIFICAR CLAVE
+						$parametro['contrasena']=$_REQUEST ["contrasena"];
                         $cadena_sql = $this->miSql->getCadenaSql ( "modificaClave", $parametro );
                         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "acceso" );
                         if ($resultado == true) {

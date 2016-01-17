@@ -30,7 +30,7 @@ class Sql extends \Sql {
 
 			/* REGISTRAR DATOS */
 				case "registrar" :
-					$cadenaSql=" INSERT INTO param_supervisor";
+					$cadenaSql=" INSERT INTO proveedor.param_supervisor";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" cedula,";
 					$cadenaSql.=" nombre_supervisor,";
@@ -41,7 +41,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
 					$cadenaSql.=" '" . $variable['cedula']. "',";
-					$cadenaSql.=" '" . $variable['nombre']. "',";
+					$cadenaSql.=" '" . $variable['nombre'] . ' ' . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['dependencia']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
 					$cadenaSql.=" '1'";
@@ -54,8 +54,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_dependencia,";
 					$cadenaSql .= "	dependencia";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_dependencia";
-					$cadenaSql .= " order by dependencia";
+					$cadenaSql .= " proveedor.param_dependencia";
+					$cadenaSql .= " ORDER BY dependencia";
 					break;
 					
 			/* LISTA - SUPERVISOR */		

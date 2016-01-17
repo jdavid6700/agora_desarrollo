@@ -51,7 +51,7 @@ class registrarForm {
 
                 $_REQUEST['usuario']=isset($_REQUEST['usuario'])?$_REQUEST['usuario']:$_REQUEST['id_usuario'];
                 $parametro['id_usuario']=$_REQUEST['usuario'];
-                $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
+                $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $parametro);
                 $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------

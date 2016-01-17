@@ -15,6 +15,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 //Guardar datos
 $cadenaSql = $this->sql->getCadenaSql ( "registrar", $_REQUEST );
+echo $cadenaSql; exit;
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 if ($resultado) {
