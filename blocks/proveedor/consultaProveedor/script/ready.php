@@ -4,7 +4,7 @@
 
 ?>
 // Asociar el widget de validación al formulario
-$("#evaluacionProveedor").validationEngine({
+$("#consultaProveedor").validationEngine({
     promptPosition : "centerRight", 
     scroll: false,
     autoHidePrompt: true,
@@ -46,7 +46,7 @@ $(function() {
 	});
 
 	
-$('#<?php echo $this->campoSeguro('fecha_RP')?>').datepicker({
+$('#<?php echo $this->campoSeguro('fecha')?>').datepicker({
         dateFormat: 'yy-mm-dd',
         changeYear: true,
         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
