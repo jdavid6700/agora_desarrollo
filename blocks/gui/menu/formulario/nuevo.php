@@ -34,6 +34,17 @@ $cadena_sql = $miSql->getCadenaSql("consultarMenu", $regUser [0] ['tipo']);
 $resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
 
+// Fin de la sesión
+$_REQUEST ['tiempo'] = time();
+$enlaceFinSesion ['enlace'] = "action=login";
+$enlaceFinSesion ['enlace'] .= "&pagina=index";
+$enlaceFinSesion ['enlace'] .= "&bloque=login";
+$enlaceFinSesion ['enlace'] .= "&bloqueGrupo=registro";
+$enlaceFinSesion ['enlace'] .= "&opcion=finSesion";
+$enlaceFinSesion ['enlace'] .= "&campoSeguro=" . $_REQUEST ['tiempo'];
+$enlaceFinSesion ['enlace'] .= "&sesion=" . $miSesion->getSesionId();
+$enlaceFinSesion ['enlace'] .= "&usuario=" . $id_usuario;
+$enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($enlaceFinSesion ['enlace'], $directorio);
 // ------------------------------- Inicio del Menú-------------------------- //
 ?>
 
@@ -64,7 +75,9 @@ $resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 				
 			endforeach;
 			
-			?>			
+			?>	
+			<!--Cerrar Sesión-->
+			<li><a href='<?php echo $enlaceFinSesion ['urlCodificada']; ?>'>Cerrar Sesión</a></li>
           </ul>		
         </div>
       </div>
