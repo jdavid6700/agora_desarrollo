@@ -31,6 +31,10 @@ class Formulario {
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
         $rutaBloque .= $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/";
         $rutaBloque .= $esteBloque ['grupo'] . "/" . $esteBloque ['nombre'];
+		
+		$directorio = $this->miConfigurador->getVariableConfiguracion("host");
+		$directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
+		$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");		
         ?>
 
         <!--        <div id="slider1_container" style="position: absolute; top: -500px; left: 0px; width: 100%; height: 50px; overflow: hidden;">
@@ -43,6 +47,19 @@ class Formulario {
 				<img src='<?php echo $rutaBloque . "/imagenes/AGORA.png"; ?>' > 
 			</a>
         </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+		  
+			<!--Registro de proveedor-->
+			<?php
+				$enlace = 'pagina=registroProveedor';
+				$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+				echo "<li><a href='" . $url . "'>Proveedor Nuevo</a></li>";
+			?>	
+			
+
+          </ul>		
+        </div>		
       </div>
     </nav>
         <div id="slider1_container" style="position: absolute; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 300px;">
