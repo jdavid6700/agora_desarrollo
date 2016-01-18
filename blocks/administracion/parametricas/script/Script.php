@@ -9,15 +9,6 @@ $funcion [$indice ++] = "jquery.autocomplete.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
 
 
-$embebido [$indice] = true;
-$funcion [$indice ++] = "ajax.php";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/validarCampoNumerico.js";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/campoFecha.js";
-$embebido [$indice] = true;
-$funcion [$indice ++] = "scriptLocal/asignacionPuntaje.js";
-
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );
 

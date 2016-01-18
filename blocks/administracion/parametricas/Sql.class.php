@@ -88,11 +88,13 @@ class Sql extends \Sql {
 			/* LISTA - SUPERVISOR */		
 				case "supervisor" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido AS value, ";
-					$cadenaSql.=" documento_docente AS data ";
+					$cadenaSql.=" cedula, nombre_supervisor, correo_supervisor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" docencia.docente WHERE documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido ";
-					$cadenaSql.=" LIKE '%" . $variable . "%' AND estado = true LIMIT 10;";
+					$cadenaSql.=" proveedor.param_supervisor ";
+					$cadenaSql.=" WHERE 1=1 ";
+					if ($variable != '') {
+						$cadenaSql .= " AND cedula= '" . $variable . "'";
+					}					
 					break;
 
 		}
