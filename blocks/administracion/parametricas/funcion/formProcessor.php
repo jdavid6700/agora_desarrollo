@@ -12,24 +12,21 @@ $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miCo
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-
+///--------------FALTA VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 //Guardar datos
 $cadenaSql = $this->sql->getCadenaSql ( "registrar", $_REQUEST );
-echo $cadenaSql; exit;
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 if ($resultado) {
 	//Insertar datos en la tabla USUARIO
-		/*$parametros = array (
-				'idContrato' => $_REQUEST ['idContrato'],
-				'estado' => 2  //evaluado
-		);
-		$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $parametros );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); */
-	
+		$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['cedula'] );
+		$_REQUEST ["tipo"] = 2;//Supervisor
+		$_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
 
-			
-		$this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['usuario'] );
+		$cadenaSql = $this->sql->getCadenaSql ( "registrarUsuario", $_REQUEST );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+
+		$this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['cedula'] );
 		exit();
 } else {
 		$this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );

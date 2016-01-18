@@ -27,8 +27,35 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			/* REGISTRAR DATOS - USUARIO */
+				case "registrarUsuario" :
+					$cadenaSql=" INSERT INTO ";
+					$cadenaSql.= $prefijo."usuario ";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" id_usuario,";
+					$cadenaSql.=" nombre,";
+					$cadenaSql.=" apellido,";
+					$cadenaSql.=" correo,";
+					$cadenaSql.=" telefono, ";
+					$cadenaSql.=" clave, ";
+					$cadenaSql.=" tipo,";
+					$cadenaSql.=" estado";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable['cedula']. "',";
+					$cadenaSql.=" '" . $variable['nombre']. "',";
+					$cadenaSql.=" '" . $variable['apellido']. "',";
+					$cadenaSql.=" '" . $variable['correo']. "',";
+					$cadenaSql.=" '" . $variable['telefono']. "',";
+					$cadenaSql.=" '" . $variable['contrasena']. "',";
+					$cadenaSql.=" '" . $variable['tipo']. "',";
+					$cadenaSql.=" '" . $variable['estado']. "'";
+					$cadenaSql.=" );";
+					break;						
 
-			/* REGISTRAR DATOS */
+			/* REGISTRAR DATOS - SUPERVISOR */
 				case "registrar" :
 					$cadenaSql=" INSERT INTO proveedor.param_supervisor";
 					$cadenaSql.=" (";					

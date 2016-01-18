@@ -61,7 +61,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
-        $mensaje = "Se registro el Supervisor.";
+        $mensaje = "Se registro el Supervisor.<br >";
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
