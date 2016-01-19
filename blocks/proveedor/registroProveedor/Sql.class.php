@@ -29,18 +29,37 @@ class Sql extends \Sql {
 		switch ($tipo) {
 			
 			/* REGISTRAR DATOS - USUARIO */
-				case "registrarUsuario" :
+				case "registrarProveedor" :
 					$cadenaSql=" INSERT INTO ";
-					$cadenaSql.= $prefijo."usuario ";
+					$cadenaSql.="proveedor.proveedor_info ";
 					$cadenaSql.=" (";					
-					$cadenaSql.=" id_usuario,";
-					$cadenaSql.=" nombre,";
-					$cadenaSql.=" apellido,";
-					$cadenaSql.=" correo,";
-					$cadenaSql.=" telefono, ";
-					$cadenaSql.=" clave, ";
-					$cadenaSql.=" tipo,";
-					$cadenaSql.=" estado";
+					$cadenaSql.=" tipopersona,";
+                                        $cadenaSql.=" nit,";
+					$cadenaSql.=" digitoverificacion,";
+                                        $cadenaSql.=" nomempresa,";
+					$cadenaSql.=" municipio,";
+                                        $cadenaSql.=" direccion,";
+					$cadenaSql.=" correo, ";
+					$cadenaSql.=" web, ";
+					$cadenaSql.=" telefono,";
+                                        $cadenaSql.=" ext1,";
+					$cadenaSql.=" movil,";
+                                        $cadenaSql.=" nomAsesor,";
+                                        $cadenaSql.=" telAsesor,";
+					$cadenaSql.=" tipodocumento,";
+					$cadenaSql.=" numdocumento,";
+					$cadenaSql.=" apellido1, ";
+					$cadenaSql.=" apellido2, ";
+					$cadenaSql.=" nombre1,";
+                                        $cadenaSql.=" nombre2,";
+                                        
+                                        
+					$cadenaSql.=" regimen,";
+					$cadenaSql.=" importacion,";
+					$cadenaSql.=" pyme,";
+					$cadenaSql.=" registromercantil, ";
+					$cadenaSql.=" puntaje_evaluacion, ";
+					$cadenaSql.=" clasificacion_evaluacion";
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
@@ -53,49 +72,17 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['tipo']. "',";
 					$cadenaSql.=" '" . $variable['estado']. "'";
 					$cadenaSql.=" );";
-					break;						
-
-			/* REGISTRAR DATOS - SUPERVISOR */
-				case "registrar" :
-					$cadenaSql=" INSERT INTO proveedor.param_supervisor";
-					$cadenaSql.=" (";					
-					$cadenaSql.=" cedula,";
-					$cadenaSql.=" nombre_supervisor,";
-					$cadenaSql.=" id_dependencia,";
-					$cadenaSql.=" correo_supervisor,";
-					$cadenaSql.=" estado";
-					$cadenaSql.=" )";
-					$cadenaSql.=" VALUES";
-					$cadenaSql.=" (";
-					$cadenaSql.=" '" . $variable['cedula']. "',";
-					$cadenaSql.=" '" . $variable['nombre'] . ' ' . $variable['apellido']. "',";
-					$cadenaSql.=" '" . $variable['dependencia']. "',";
-					$cadenaSql.=" '" . $variable['correo']. "',";
-					$cadenaSql.=" '1'";
-					$cadenaSql.=" );";
-					break;		
-		
-			/* LISTA - DEPENDENCIA */
-				case "dependencia" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_dependencia,";
-					$cadenaSql .= "	dependencia";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.param_dependencia";
-					$cadenaSql .= " ORDER BY dependencia";
 					break;
-					
-			/* LISTA - SUPERVISOR */		
-				case "supervisor" :
+                                    
+			/* VERIFICAR NUMERO DE NIT */		
+				case "verificarNIT" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" cedula, nombre_supervisor, correo_supervisor";
+					$cadenaSql.=" NIT";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.param_supervisor ";
-					$cadenaSql.=" WHERE 1=1 ";
-					if ($variable != '') {
-						$cadenaSql .= " AND cedula= '" . $variable . "'";
-					}					
-					break;
+					$cadenaSql.=" proveedor.prov_proveedor_info ";
+					$cadenaSql.=" WHERE nit= '" . $variable . "'";	
+					break;                                    
+
 
 		}
 		

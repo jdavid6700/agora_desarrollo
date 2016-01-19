@@ -257,7 +257,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -288,9 +288,9 @@ class registrarForm {
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
-						$atributos ['tamanno'] = 35;
+						$atributos ['tamanno'] = 30;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -321,9 +321,9 @@ class registrarForm {
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
-						$atributos ['tamanno'] = 35;
+						$atributos ['tamanno'] = 30;
 						$atributos ['maximoTamanno'] = '30';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 							
 						// Aplica atributos globales al control
@@ -354,9 +354,9 @@ class registrarForm {
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
-						$atributos ['tamanno'] = 35;
+						$atributos ['tamanno'] = 30;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -389,7 +389,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -422,7 +422,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -455,7 +455,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -488,7 +488,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control
@@ -521,7 +521,7 @@ class registrarForm {
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
 						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
+						$atributos ['anchoEtiqueta'] = 160;
 						$tab ++;
 						
 						// Aplica atributos globales al control

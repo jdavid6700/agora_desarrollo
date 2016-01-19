@@ -11,26 +11,42 @@ $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miCo
 
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-echo "<pre>";
-var_dump ($_REQUEST);
-echo "</pre>"; exit;
-///--------------FALTA VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-//Guardar datos
-$cadenaSql = $this->sql->getCadenaSql ( "registrar", $_REQUEST );
+
+
+var_dump($_REQUEST);exit;
+
+//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
+$cadenaSql = $this->sql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
+echo $cadenaSql;
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 if ($resultado) {
-	//Insertar datos en la tabla USUARIO
-		$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['cedula'] );
-		$_REQUEST ["tipo"] = 2;//Supervisor
-		$_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
+        //El proveedor ya existe
+	$this->funcion->Redireccionador ( 'existeProveedor', $_REQUEST ['nit'] );
+	exit();    
+}else{
+    
+        //Guardar datos
+        $cadenaSql = $this->sql->getCadenaSql ( "registrarProveedor", $_REQUEST );
+        
+        echo $cadenaSql; exit;
+        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
-		$cadenaSql = $this->sql->getCadenaSql ( "registrarUsuario", $_REQUEST );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+        if ($resultado) {
+                //Insertar datos en la tabla USUARIO
+                        $_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['cedula'] );
+                        $_REQUEST ["tipo"] = 2;//Supervisor
+                        $_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
 
-		$this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['cedula'] );
-		exit();
-} else {
-		$this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );
-		exit();
+                        $cadenaSql = $this->sql->getCadenaSql ( "registrarUsuario", $_REQUEST );
+                        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+
+                        $this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['cedula'] );
+                        exit();
+        } else {
+                        $this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );
+                        exit();
+        }
+
+        
 }

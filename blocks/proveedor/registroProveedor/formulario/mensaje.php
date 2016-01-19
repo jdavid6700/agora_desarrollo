@@ -69,7 +69,17 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         
         
-    } else if($_REQUEST['mensaje'] == 'error') {
+    } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
+        $tipo = 'error';
+        $mensaje = "Error en el cargue. <br>El número de NIT ya se encuentra registrado.";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+       
+    }else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
         $mensaje = "Error en el cargue. <br>No se subió la informaciòn correctamente.";
         $boton = "regresar";

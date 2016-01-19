@@ -71,7 +71,7 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
 			
 				$enlace = 'pagina=' . $dato['nombre'];
 				$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-				echo "<li><a href='" . $url . "'>" . utf8_encode($dato['nombre_menu']) . "</a></li>";
+				echo "<li><a href='" . $url . "'>" . $dato['nombre_menu'] . "</a></li>";
 				
 			endforeach;
 			

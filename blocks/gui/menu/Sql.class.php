@@ -39,7 +39,7 @@ class Sqlmenu extends sql {
 			$cadena_sql .= "tooltip ";
             $cadena_sql .= "FROM ";
             $cadena_sql .= "proveedor.param_menu M ";
-            $cadena_sql .= "JOIN proveedor.prov_pagina P ON P.id_pagina = M.id_pagina ";
+            $cadena_sql .= "JOIN prov_pagina P ON P.id_pagina = M.id_pagina ";
 			$cadena_sql .= "WHERE ";
             $cadena_sql .= "tipo ='" . $variable . "' ";
 			$cadena_sql .= "ORDER BY orden";

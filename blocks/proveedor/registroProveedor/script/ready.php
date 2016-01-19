@@ -1,4 +1,4 @@
-$("#registroProveedor").validationEngine({
+$("#registroProveedorrrrrr").validationEngine({
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,

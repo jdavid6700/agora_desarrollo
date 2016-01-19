@@ -26,16 +26,10 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable.="&mensaje=error";
                 break;
 
-            case "actualizoDocumento":
-                $variable = "pagina=gestionContrato";
+            case "existeProveedor":
+                $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
-                $variable.="&mensaje=mensajeActualizacion";
-                break;
-
-            case "noactualizoDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=error";
+                $variable.="&mensaje=mensajeExisteProveedor";
                 break;
 
             case "paginaPrincipal":
