@@ -52,7 +52,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------    	
     unset ( $atributos );
-    
+
     $atributos["id"] = "divNoEncontroEgresado";
     $atributos["estilo"] = "marcoBotones";
 
@@ -61,10 +61,13 @@ if (!isset($GLOBALS["autorizado"])) {
 
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
-        $mensaje = "Se registro el Supervisor.<br >";
+        $mensaje = "Se registro el Proveeedor. Continuar para ingresar Actividad Económica<br >";
+		$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['nit'] . "<br >";
+		$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['nit']. "<br >";
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
+		$valorCodificado.="&opcion=modificar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         

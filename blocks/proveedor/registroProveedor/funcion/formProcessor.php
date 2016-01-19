@@ -13,35 +13,37 @@ $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
-var_dump($_REQUEST);exit;
 
+unset($resultado);
 //VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 $cadenaSql = $this->sql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
-echo $cadenaSql;
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+
 
 if ($resultado) {
-        //El proveedor ya existe
+	//El proveedor ya existe
 	$this->funcion->Redireccionador ( 'existeProveedor', $_REQUEST ['nit'] );
 	exit();    
 }else{
-    
-        //Guardar datos
+        //Guardar datos PROVEEDOR
         $cadenaSql = $this->sql->getCadenaSql ( "registrarProveedor", $_REQUEST );
-        
-        echo $cadenaSql; exit;
-        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
         if ($resultado) {
                 //Insertar datos en la tabla USUARIO
-                        $_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['cedula'] );
-                        $_REQUEST ["tipo"] = 2;//Supervisor
+                        $_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['nit'] );
+                        $_REQUEST ["tipo"] = 2;//usuario Normal
+						$_REQUEST ["rolMenu"] = 9;//MENU
                         $_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
+						$_REQUEST ["nombre"] = $_REQUEST ["primerNombre"] . ' ' . $_REQUEST ["segundoNombre"];
+						$_REQUEST ["apellido"] = $_REQUEST ["primerApellido"] . ' ' . $_REQUEST ["segundoApellido"];;
+						
+						//FALTA EL CAMPO DEL MENU
 
                         $cadenaSql = $this->sql->getCadenaSql ( "registrarUsuario", $_REQUEST );
                         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
 
-                        $this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['cedula'] );
+                        $this->funcion->Redireccionador ( 'registroProveedor', $_REQUEST['nit'] );
                         exit();
         } else {
                         $this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );

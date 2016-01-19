@@ -14,10 +14,11 @@ if (!isset($GLOBALS ["autorizado"])) {
 
         switch ($opcion) {
 
-            case "registroSupervisor":
+            case "registroProveedor":
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";
+				$variable.="&nit=" . $valor;
                 break;
 
             case "noregistro":
