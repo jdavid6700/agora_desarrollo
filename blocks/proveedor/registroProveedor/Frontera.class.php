@@ -1,13 +1,11 @@
 <?php
 
-namespace inventarios\gestionContrato;
+namespace hojaDeVida\crearDocente;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("../index.php");
     exit();
 }
-
-
 
 include_once ("core/manager/Configurador.class.php");
 
@@ -64,13 +62,17 @@ class Frontera {
                 case "mensaje":
                     include_once($this->ruta . "/formulario/mensaje.php");
                     break;
-                              
-                case "nuevo":
-                     include_once($this->ruta . "/formulario/formulario.php");
+                
+                case "consultar":
+                    include_once($this->ruta . "/formulario/consultar.php");
                     break;
                 
-                case "modificar":
-                     include_once($this->ruta . "/formulario/nuevo.php");
+                case "actividad":
+                     include_once($this->ruta . "/formulario/formActividad.php");
+                    break;
+                
+                 case "modificar":
+                     include_once($this->ruta . "/formulario/modificar.php");
                     break;
             }
         } else {

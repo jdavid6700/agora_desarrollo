@@ -58,6 +58,7 @@ class FormProcessor {
             // Verificar que el usuario esté registrado en el sistema
             $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $variable);
             $registro = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+
             if ($registro) {
 
                 if ($registro [0] ['clave'] == $variable ["clave"]) {

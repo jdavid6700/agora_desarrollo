@@ -1,34 +1,24 @@
 <?php
-use inventarios\gestionContrato\Sql;
+use asignacionPuntajes\salariales\premiosDocente\Sql;
+
+$conexion = "estructura";
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
-$conexion = "inventarios";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+//Estas funciones se llaman desde ajax.php y estas a la vez realizan las consultas de Sql.class.php 
 
-
-
-if ($_REQUEST ['funcion'] == 'consultaProveedor') {
-	
-	
-	
-
-	$cadenaSql = $this->sql->cadena_sql ( 'buscar_Proveedores', $_GET ['query'] );
-
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data'
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
-	}
-
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+if ($_REQUEST ['funcion'] == 'consultarClase') {
+	$cadenaSql = $this->sql->getCadenaSql ( 'ciiuClase', $_REQUEST["valor"]);
+	$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	echo json_encode( $datos );
 }
 
 
 
-
+if ($_REQUEST ['funcion'] == 'consultarCiudad') {
+	$cadenaSql = $this->sql->getCadenaSql ( 'ciiuGrupo', $_REQUEST["valor"]);
+	$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	echo json_encode( $datos );
+}
 
 ?>

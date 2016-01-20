@@ -9,7 +9,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-class Formulario {
+class Registrar {
 	
 	var $miConfigurador;
 	var $lenguaje;
@@ -36,45 +36,33 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
-
-		unset($resultado);
-		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
+		
+		
+		//VERIFICAR SI YA REGISTRO LA ACTIVIDAD
+		$arreglo = array('nit' => $_REQUEST['nit'],
+						'actividad' =>  $_REQUEST['claseCIIU']);
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarActividad", $arreglo);		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-				
+	
 		if ($resultado) {
 			//El proveedor ya existe
-			redireccion::redireccionar ( 'existeProveedor',  $_REQUEST ['nit']);
+			redireccion::redireccionar ( 'mensajeExisteActividad',  $_REQUEST ['nit']);
 			exit();    
 		}else{
-				//Guardar datos PROVEEDOR
-				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedor", $_REQUEST );
+						
+				//Guardar ACTIVIDAD
+				$cadenaSql = $this->miSql->getCadenaSql ( "registrarActividad", $arreglo );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-				
+		
 				if ($resultado) {
-						//Insertar datos en la tabla USUARIO
-						$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['nit'] );
-						$_REQUEST ["tipo"] = 2;//usuario Normal
-						$_REQUEST ["rolMenu"] = 9;//MENU usuario proveedor
-						$_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
-						$_REQUEST ["nombre"] = $_REQUEST ["primerNombre"] . ' ' . $_REQUEST ["segundoNombre"];
-						$_REQUEST ["apellido"] = $_REQUEST ["primerApellido"] . ' ' . $_REQUEST ["segundoApellido"];;
-								
-								//FALTA EL CAMPO DEL MENU
-		
-								$cadenaSql = $this->miSql->getCadenaSql ( "registrarUsuario", $_REQUEST );
-								$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
-		
-								redireccion::redireccionar ( 'registroProveedor',  $_REQUEST['nit']);
+								redireccion::redireccionar ( 'registroActividad',  $arreglo);
 								exit();
 				} else {
-								redireccion::redireccionar ( 'noregistro',  $_REQUEST['usuario']);
+								redireccion::redireccionar ( 'noregistro',  $arreglo);
 								exit();
-				}
-		
+				}  
 		}		
-		
-	
 
 
 	}
@@ -89,7 +77,7 @@ class Formulario {
 	}
 }
 
-$miRegistrador = new Formulario ( $this->lenguaje, $this->sql, $this->funcion );
+$miRegistrador = new Registrar ( $this->lenguaje, $this->sql, $this->funcion );
 
 $resultado = $miRegistrador->procesarFormulario ();
 

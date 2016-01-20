@@ -67,9 +67,10 @@ if (!isset($GLOBALS["autorizado"])) {
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
-		$valorCodificado.="&opcion=modificar";
+		$valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $valorCodificado.="&nit=" . $_REQUEST['nit'];
         
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
@@ -82,6 +83,17 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
+    }else if($_REQUEST['mensaje'] == 'mensajeExisteActividad') {
+        $tipo = 'error';
+        $mensaje = "Error en el cargue. <br>La Actividad ya se encuentra registrada.";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=actividad";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+		$valorCodificado.="&nit=" . $_REQUEST['nit'];
+       
     }else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
         $mensaje = "Error en el cargue. <br>No se subió la informaciòn correctamente.";
@@ -92,15 +104,17 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
-    } else if($_REQUEST['mensaje'] == 'mensajeActualizacion') {
+    } else if($_REQUEST['mensaje'] == 'registroActividad') {
         $tipo = 'success';
-        $mensaje = "Se actualizo correctamente el registro del contrato.<br>";
+        $mensaje = "Se registro la Actividad Económica<br >";
+		$mensaje .= "<strong>" . $_REQUEST['actividad'] . "</strong><br >";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=gestionContrato";
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+		$valorCodificado.="&nit=" . $_REQUEST['nit'];
        
     }
 

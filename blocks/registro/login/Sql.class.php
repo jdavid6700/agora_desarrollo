@@ -55,7 +55,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'FROM ';
 				$cadenaSql .= $prefijo . 'usuario ';
 				$cadenaSql .= "WHERE ";
-				$cadenaSql .= "id_usuario = '" . trim ( $variable ["usuario"] ) . "' ";
+				$cadenaSql .= "usuario = '" . trim ( $variable ["usuario"] ) . "' ";
 				break;
 			
 			case "registrarEvento" :

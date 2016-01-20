@@ -70,6 +70,17 @@ $this->idioma["pymeTitulo"]="Seleccione si es usted PYME";
 $this->idioma["registroMercantil"]="Registro Mercantil :";
 $this->idioma["registroMercantilTitulo"]="Seleccione Registro Mercantil";
 
+
+
+$this->idioma["divisionCIIU"] = "División :";
+$this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
+
+$this->idioma["grupoCIIU"] = "Grupo :";
+$this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
+
+$this->idioma["claseCIIU"] = "Clase :";
+$this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
@@ -84,8 +95,16 @@ $this->idioma["marcoDatos"] = "Ingresar Datos";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
+$this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
+$this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
+
+
 
 $this->idioma["tabProveedor"] = "Registro Proveedor";
+$this->idioma["tabActividad"] = "Actividades Económicas";
+
+
+
 
 
 

@@ -137,7 +137,7 @@ class registrarForm {
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+						$atributos ['validar'] = 'required, minSize[1],maxSize[14],custom[onlyNumberSp]';
 						
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -170,7 +170,7 @@ class registrarForm {
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'minSize[1],maxSize[3],custom[onlyNumberSp]';
+						$atributos ['validar'] = 'minSize[1],maxSize[2],custom[onlyNumberSp]';
 						
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -564,8 +564,9 @@ class registrarForm {
 						$atributos ['miEvento'] = '';
 						// Valores a mostrar en el control
 						$matrizItems = array (
-								array ( 1, 'Natural' ),
-								array ( 2, 'Jurídica' ) 
+								array ( 1, 'Cédula de Ciudadania' ),
+								array ( 2, 'Cédula de Extranjería' ), 
+                                                                array ( 3, 'Otro' )
 						);
 						$atributos ['matrizItems'] = $matrizItems;
 						$atributos = array_merge ( $atributos, $atributosGlobales );

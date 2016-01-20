@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionContrato;
+namespace hojaDeVida\crearDocente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -18,7 +18,7 @@ class Sql extends \Sql {
 		$this->miConfigurador = \Configurador::singleton ();
 	}
 	function getCadenaSql($tipo, $variable = "") {
-
+		
 		/**
 		 * 1.
 		 * Revisar las variables para evitar SQL Injection
@@ -27,13 +27,55 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			/* ULTIMO NUMERO DE SECUENCIA */				
+				case "lastIdProveedor" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " last_value";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_proveedor_info_id_proveedor_seq";	
+					break;			
+			
+			/* REGISTRAR DATOS - USUARIO */
+				case "registrarActividad" :
+					$cadenaSql=" INSERT INTO ";
+					$cadenaSql.="proveedor.prov_actividad ";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" nit,";
+					$cadenaSql.=" actividad";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable['nit']. "',";
+					$cadenaSql.=" '" . $variable['actividad']. "'";
+					$cadenaSql.=" );";
+					break;
+					
+			/* VERIFICAR NUMERO DE NIT */		
+				case "verificarActividad" :
+					$cadenaSql=" SELECT";
+					$cadenaSql.=" nit";
+					$cadenaSql.=" FROM ";
+					$cadenaSql.=" proveedor.prov_actividad ";
+					$cadenaSql.=" WHERE nit= " . $variable['nit'];
+					$cadenaSql.=" AND actividad= " . $variable['actividad'];
+					break;			
+			
+			/* CONSULTAR ACTIVIDADES DEL PROVEEDOR */		
+				case "consultarActividades" :
+					$cadenaSql=" SELECT";
+					$cadenaSql.=" actividad";
+					$cadenaSql.=" FROM ";
+					$cadenaSql.=" proveedor.prov_actividad ";
+					$cadenaSql.=" WHERE nit= " . $variable;	
+					break;			
 
 			/* REGISTRAR DATOS - USUARIO */
 				case "registrarUsuario" :
 					$cadenaSql=" INSERT INTO ";
 					$cadenaSql.= $prefijo."usuario ";
 					$cadenaSql.=" (";					
-					//$cadenaSql.=" usuario,";
+					$cadenaSql.=" usuario,";
 					$cadenaSql.=" nombre,";
 					$cadenaSql.=" apellido,";
 					$cadenaSql.=" correo,";
@@ -41,12 +83,12 @@ class Sql extends \Sql {
 					$cadenaSql.=" imagen, ";
 					$cadenaSql.=" clave, ";
 					$cadenaSql.=" tipo,";
-					//$cadenaSql.=" rolMenu,";
+					$cadenaSql.=" rolmenu,";
 					$cadenaSql.=" estado";
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
-					//$cadenaSql.=" '" . $variable['nit']. "',";
+					$cadenaSql.=" '" . $variable['nit']. "',";
 					$cadenaSql.=" '" . $variable['nombre']. "',";
 					$cadenaSql.=" '" . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
@@ -54,7 +96,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" '-',";
 					$cadenaSql.=" '" . $variable['contrasena']. "',";
 					$cadenaSql.=" '" . $variable['tipo']. "',";
-					//$cadenaSql.=" '" . $variable['rolMenu']. "',";
+					$cadenaSql.=" '" . $variable['rolMenu']. "',";
 					$cadenaSql.=" '" . $variable['estado']. "'";
 					$cadenaSql.=" );";
 					break;
@@ -125,14 +167,44 @@ class Sql extends \Sql {
 			/* VERIFICAR NUMERO DE NIT */		
 				case "verificarNIT" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" nit";
+					$cadenaSql.=" nit,";
+					$cadenaSql.=" nomempresa,";
+					$cadenaSql.=" correo,";
+					$cadenaSql.=" id_proveedor";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" proveedor.prov_proveedor_info ";
 					$cadenaSql.=" WHERE nit= " . $variable;	
 					break; 
+		
+			/* CIIU */				
+				case "ciiuDivision" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_ciiu_division";	
+					$cadenaSql .= " ORDER BY nombre";
+					break;
+				
+				case "ciiuGrupo" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_ciiu_clase";
+					$cadenaSql .= " WHERE division ='" . $variable ."'";
+					$cadenaSql .= " ORDER BY nombre";
+					break;
 
-					
-
+				case "ciiuClase" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id,";
+					$cadenaSql .= "	nombre";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_ciiu_subclase";
+					$cadenaSql .= " WHERE clase ='" . $variable ."'";
+					$cadenaSql .= " ORDER BY nombre";
+					break;
 
 		}
 		
