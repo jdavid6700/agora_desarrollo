@@ -28,18 +28,30 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+                    
+			/* VERIFICAR NUMERO DE CEDULA */		
+				case "verificarCedula" :
+					$cadenaSql=" SELECT";
+					$cadenaSql.=" usuario";
+					$cadenaSql.=" FROM ";
+					$cadenaSql.=" prov_usuario ";
+					$cadenaSql.=" WHERE usuario = '" . $variable . "'";
+					break;                     
+
 			/* REGISTRAR DATOS - USUARIO */
 				case "registrarUsuario" :
 					$cadenaSql=" INSERT INTO ";
 					$cadenaSql.= $prefijo."usuario ";
 					$cadenaSql.=" (";					
-					$cadenaSql.=" id_usuario,";
+					$cadenaSql.=" usuario,";
 					$cadenaSql.=" nombre,";
 					$cadenaSql.=" apellido,";
 					$cadenaSql.=" correo,";
 					$cadenaSql.=" telefono, ";
+					$cadenaSql.=" imagen, ";
 					$cadenaSql.=" clave, ";
 					$cadenaSql.=" tipo,";
+					$cadenaSql.=" rolmenu,";
 					$cadenaSql.=" estado";
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
@@ -49,11 +61,13 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
 					$cadenaSql.=" '" . $variable['telefono']. "',";
+					$cadenaSql.=" '-',";
 					$cadenaSql.=" '" . $variable['contrasena']. "',";
 					$cadenaSql.=" '" . $variable['tipo']. "',";
+					$cadenaSql.=" '" . $variable['rolMenu']. "',";
 					$cadenaSql.=" '" . $variable['estado']. "'";
 					$cadenaSql.=" );";
-					break;						
+					break;                                    
 
 			/* REGISTRAR DATOS - SUPERVISOR */
 				case "registrar" :
