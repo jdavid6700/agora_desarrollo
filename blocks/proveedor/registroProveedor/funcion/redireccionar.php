@@ -14,12 +14,12 @@ class redireccion {
 		
 		switch ($opcion) {
 
-            case "registroProveedor":
-                $variable = "pagina=" . $miPaginaActual;
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=confirma";
-				$variable.="&nit=" . $valor;
-                break;				
+                        case "registroProveedor":
+                            $variable = "pagina=" . $miPaginaActual;
+                            $variable.="&opcion=mensaje";
+                            $variable.="&mensaje=confirma";
+                            $variable.="&nit=" . $valor;
+                            break;				
 	
 			case "registroActividad" :
 				$variable = "pagina=" . $miPaginaActual;
@@ -27,7 +27,15 @@ class redireccion {
 				$variable.= "&mensaje=registroActividad";
 				$variable.="&nit=" . $valor['nit'];
 				$variable.="&actividad=" . $valor['actividad'];
-				break;				
+				break;	
+                            
+ 			case "existeProveedor" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable.= "&opcion=mensaje";
+				$variable.= "&mensaje=mensajeExisteProveedor";
+				$variable.="&nit=" . $valor;
+				break;                           
+                            
 			
 			case "noregistro" :
 				$variable = "pagina=" . $miPaginaActual;

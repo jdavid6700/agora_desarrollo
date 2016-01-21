@@ -114,7 +114,7 @@ class FormularioRegistro {
 
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
-		$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+                $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
 
 		if( $resultadoActividades ){
 			
@@ -126,7 +126,7 @@ class FormularioRegistro {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 
 				foreach ($resultadoActividades as $dato):
-					echo $dato['actividad']. "<br>";
+					echo $dato['actividad'] . '-' . $dato['nombre'] . "<br>";
 				endforeach;
 				
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );

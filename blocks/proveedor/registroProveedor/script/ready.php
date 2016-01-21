@@ -73,9 +73,7 @@ $(function() {
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
-$('#<?php echo $this->campoSeguro('ordenador')?>').width(350);
-$('#<?php echo $this->campoSeguro('dependencia')?>').width(400);
-$('#<?php echo $this->campoSeguro('unidad')?>').width(250);
+
 
 
 
@@ -83,8 +81,7 @@ $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
-$("#<?php echo $this->campoSeguro('ordenador')?>").select2();
-$("#<?php echo $this->campoSeguro('dependencia')?>").select2();
+
 
 
 

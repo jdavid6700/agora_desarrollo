@@ -41,12 +41,13 @@ class Formulario {
 		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 		$cadenaSql = $this->miSql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-				
+
 		if ($resultado) {
 			//El proveedor ya existe
 			redireccion::redireccionar ( 'existeProveedor',  $_REQUEST ['nit']);
 			exit();    
 		}else{
+                    
 				//Guardar datos PROVEEDOR
 				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedor", $_REQUEST );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );

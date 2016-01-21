@@ -44,9 +44,9 @@ class Registrar {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( "verificarActividad", $arreglo);		
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-	
+
 		if ($resultado) {
-			//El proveedor ya existe
+			//La actividad ya existe
 			redireccion::redireccionar ( 'mensajeExisteActividad',  $_REQUEST ['nit']);
 			exit();    
 		}else{
@@ -54,8 +54,24 @@ class Registrar {
 				//Guardar ACTIVIDAD
 				$cadenaSql = $this->miSql->getCadenaSql ( "registrarActividad", $arreglo );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+                                
+				//Actualizo el estado del usuario a ACTIVO
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+
+            
+                if($resultado[0]['estado']==2){
+                                
+                        $parametros = array('idProveedor' => $resultado[0]['id_proveedor'],
+                                                    'estado' =>  1);                                
+
+			$cadenaSql = $this->miSql->getCadenaSql ( "updateEstado", $parametros );
+                        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' ); 
+                       
+                }
 		
-				if ($resultado) {
+
+if ($resultado) {
 								redireccion::redireccionar ( 'registroActividad',  $arreglo);
 								exit();
 				} else {

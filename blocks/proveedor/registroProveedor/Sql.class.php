@@ -27,6 +27,14 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+                    
+			/* ACTUALIZAR - ESTADO PROVEEDOR */			
+				case 'updateEstado' :
+					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
+					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql .= " WHERE id_proveedor=";
+					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
+					break;                    
 			
 			/* ULTIMO NUMERO DE SECUENCIA */				
 				case "lastIdProveedor" :
@@ -57,16 +65,18 @@ class Sql extends \Sql {
 					$cadenaSql.=" nit";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" proveedor.prov_actividad ";
-					$cadenaSql.=" WHERE nit= " . $variable['nit'];
-					$cadenaSql.=" AND actividad= " . $variable['actividad'];
+					$cadenaSql.=" WHERE nit= '" . $variable['nit'] . "'";
+					$cadenaSql.=" AND actividad= '" . $variable['actividad'] . "'";
 					break;			
 			
 			/* CONSULTAR ACTIVIDADES DEL PROVEEDOR */		
 				case "consultarActividades" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" actividad";
+					$cadenaSql.=" actividad,";
+                                        $cadenaSql.=" nombre";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.prov_actividad ";
+					$cadenaSql.=" proveedor.prov_actividad A";
+                                        $cadenaSql.=" JOIN proveedor.prov_ciiu_subclase S ON S.id = A.actividad ";
 					$cadenaSql.=" WHERE nit= " . $variable;	
 					break;			
 
@@ -170,11 +180,13 @@ class Sql extends \Sql {
 					$cadenaSql.=" nit,";
 					$cadenaSql.=" nomempresa,";
 					$cadenaSql.=" correo,";
-					$cadenaSql.=" id_proveedor";
+					$cadenaSql.=" id_proveedor,";
+                                        $cadenaSql.=" estado";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" proveedor.prov_proveedor_info ";
 					$cadenaSql.=" WHERE nit= " . $variable;	
 					break; 
+                                    
 		
 			/* CIIU */				
 				case "ciiuDivision" :

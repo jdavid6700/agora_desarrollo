@@ -44,34 +44,6 @@ $("#<?php echo $this->campoSeguro('docente') ?>").autocomplete({
 });
 
 
-//////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
-
-$("#<?php echo $this->campoSeguro('contexto')?>").change(function() {
-
-	if($("#<?php echo $this->campoSeguro('contexto')?>").val() == ''){
-
-		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('pais')?>");
-		$("#<?php echo $this->campoSeguro('ciudad')?>").select2('val','-1');
-		
-		$("#<?php echo $this->campoSeguro('pais_div')?>").css('display','none'); 
-		$("#<?php echo $this->campoSeguro('ciudad_div')?>").css('display','none'); 
-		 		
-	}else{
-		
-		$("#<?php echo $this->campoSeguro('ciudad')?>").select2('val','-1');
-
-		$("#<?php echo $this->campoSeguro('pais')?>").html("");
-		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('pais')?>");
-		consultarPais();
-		
-		$("#<?php echo $this->campoSeguro('pais_div')?>").css('display','block'); 
-		
-		$("#<?php echo $this->campoSeguro('pais')?>").select2();
-	}
-	
-});
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
 
@@ -245,14 +217,3 @@ function consultarCiudad(elem, request, response){
 };
 ///////////////////////////////////////////////////////////////////////////////////// 
     	 
-
-
-if($("#<?php echo $this->campoSeguro('contexto')?>").val() != '' ){
-	$('#<?php echo $this->campoSeguro('pais')?>').width(470);
-	$("#<?php echo $this->campoSeguro('pais')?>").select2();
-}
-
-if($("#<?php echo $this->campoSeguro('pais')?>").val() != '' ){
-	$('#<?php echo $this->campoSeguro('ciudad')?>').width(470);
-	$("#<?php echo $this->campoSeguro('ciudad')?>").select2();
-}

@@ -79,7 +79,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
-        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
