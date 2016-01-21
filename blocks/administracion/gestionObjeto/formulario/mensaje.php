@@ -83,7 +83,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje =  $this->lenguaje->getCadena('mensajeError');
         $boton = "regresar";
 
-        $valorCodificado = "pagina=".$esteBloque['nombre'];
+        $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];

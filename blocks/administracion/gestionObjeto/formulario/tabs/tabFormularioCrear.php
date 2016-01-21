@@ -133,9 +133,30 @@ class registrarForm {
                 //-------- Limite de registros
                 //--------- evaluacion mayor a 45
 		$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
-                $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-		
+                $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                if(!$resultadoProveedor){
+                    
+				// ------------------INICIO Division para los botones-------------------------
+				$atributos ["id"] = "divNoEncontroEgresado";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeNoHayProveedoresPuntaje";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
+				
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );                    
+                    
+                }else{
+//---------------INICIO TABLA CON LISTA DE PROVEEDORES--------------------- 		
 		$esteCampo = "marcoProveedores";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -154,7 +175,7 @@ class registrarForm {
 			<?php 
 				
                         $proveedores = array();
-                        foreach ($resultado as $dato):
+                        foreach ($resultadoProveedor as $dato):
 		
 					echo "<tr>";
 					echo "<td align='center'>" . $dato['nit'] . "</td>";
@@ -163,15 +184,8 @@ class registrarForm {
 					echo "<td align='right'>" . $dato['clasificacion_evaluacion'] . "</td>";			
 					echo "</tr>";
 					
-					
-		array_push($proveedores, $dato['id_proveedor'] );			
-					
-					
-					
-					
-					
-					
-					
+                            		array_push($proveedores, $dato['id_proveedor'] );			
+
 				endforeach; 
 			?>
 			</table>
@@ -196,7 +210,7 @@ class registrarForm {
                 
                 
                 
-                
+ //---------------FIN TABLA CON LISTA DE PROVEEDORES---------------------               
                 
 	
 		$esteCampo = 'idObjeto';
@@ -295,6 +309,8 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		return true;
+                
+                }
             }
 	}
 }

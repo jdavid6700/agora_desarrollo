@@ -47,7 +47,8 @@ class Sql extends \Sql {
 			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */			
 				case 'actualizarObjeto' :
 					$cadenaSql = "UPDATE proveedor.prov_objeto_contratar SET ";
-					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql .= "estado='" . $variable ['estado'] . "',";
+                                        $cadenaSql .= "fechasolicitudcotizacion='" . $variable ['fecha'] . "'";
 					$cadenaSql .= " WHERE id_objeto=";
 					$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
 					break;
@@ -56,7 +57,7 @@ class Sql extends \Sql {
 			case "verificarActividad" :
 				$cadenaSql = "SELECT *";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.prov_ciiu_actividad";	
+				$cadenaSql .= " proveedor.prov_actividad";	
 				$cadenaSql .= " WHERE  actividad='" . $variable . "'"; 
 				$cadenaSql .= " LIMIT 5; ";
 				break;
@@ -70,15 +71,16 @@ class Sql extends \Sql {
 			case "proveedoresByClasificacion" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " id_proveedor,";
-				$cadenaSql .= " nit,";
+				$cadenaSql .= " P.nit,";
 				$cadenaSql .= "	nomempresa,";
 				$cadenaSql .= "	puntaje_evaluacion,";
 				$cadenaSql .= "	clasificacion_evaluacion";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " proveedor.prov_proveedor_info P";
-				$cadenaSql .= " JOIN proveedor.prov_ciiu_actividad A ON A.id_registro = P.nit::text";
+				$cadenaSql .= " JOIN proveedor.prov_actividad A ON A.nit = P.nit";
 				$cadenaSql .= " WHERE  A.actividad='" . $variable['actividadEconomica'] . "'";  
-                                //$cadenaSql .= " AND P.puntaje_evaluacion > 45"; 
+                                $cadenaSql .= " AND P.puntaje_evaluacion > 45"; 
+                                $cadenaSql .= " AND P.estado = '1'";
 				$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
 				$cadenaSql .= " LIMIT " . $variable['numCotizaciones'];
 				break;			
