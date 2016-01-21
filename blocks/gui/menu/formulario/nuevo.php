@@ -30,7 +30,7 @@ $regUser = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
 
 //CONSULTAR MENU
-$cadena_sql = $miSql->getCadenaSql("consultarMenu", $regUser [0] ['tipo']);
+$cadena_sql = $miSql->getCadenaSql("consultarMenu", $regUser [0] ['rolmenu']);
 $resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
 

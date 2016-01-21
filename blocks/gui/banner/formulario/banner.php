@@ -7,7 +7,7 @@ if (!isset($GLOBALS ["autorizado"])) {
     exit();
 }
 
-class Formulario {
+class Banner {
 
     var $miConfigurador;
     var $lenguaje;
@@ -51,7 +51,7 @@ class Formulario {
 			<!--Registro de proveedor-->
 			<?php
 				
-				if(isset($_REQUEST["pagina"])){
+				if(isset($_REQUEST["pagina"] ) && $_REQUEST["pagina"] != 'index'){
 					// Fin de la sesión
 					$_REQUEST ['tiempo'] = time();
 					$enlaceFinSesion ['enlace'] = "action=login";
@@ -67,7 +67,7 @@ class Formulario {
 				}else{
 					$enlace = 'pagina=registroProveedor';
 					$urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-					echo "<li><a href='" . $urlCodificada . "'>Proveedor Nuevo</a></li>";
+					echo "<li><a href='" . $urlCodificada . "'>Registro Proveedor Nuevo</a></li>";
 				}
 			?>	
 
@@ -86,7 +86,7 @@ class Formulario {
 
 }
 
-$miFormulario = new Formulario($this->lenguaje, $this->miFormulario);
+$miFormulario = new Banner($this->lenguaje, $this->miFormulario);
 $miFormulario->formulario();
 
 ?>
