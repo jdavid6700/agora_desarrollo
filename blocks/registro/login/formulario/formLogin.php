@@ -37,31 +37,7 @@ class Formulario {
 		$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");		
         ?>
 
-        <!--        <div id="slider1_container" style="position: absolute; top: -500px; left: 0px; width: 100%; height: 50px; overflow: hidden;">
-                     Slides Container 
-                    <div u="slides" style="cursor: move; position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100px; overflow: hidden;">-->
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-			<a href='" . $variable . "'>                        
-				<img src='<?php echo $rutaBloque . "/imagenes/AGORA.png"; ?>' > 
-			</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-		  
-			<!--Registro de proveedor-->
-			<?php
-				$enlace = 'pagina=registroProveedor';
-				$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-				echo "<li><a href='" . $url . "'>Proveedor Nuevo</a></li>";
-			?>	
-			
 
-          </ul>		
-        </div>		
-      </div>
-    </nav>
         <div id="slider1_container" style="position: absolute; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 300px;">
             <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px;  height: 300px;
                  overflow: hidden;">
