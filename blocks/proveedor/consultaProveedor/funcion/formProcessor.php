@@ -27,9 +27,10 @@ $arreglo = array (
 );
 
 
-//Guardar datos de la evaluacion
+//Guardar datos de la inhabilidad
 $cadenaSql = $this->sql->getCadenaSql ( "ingresarInhabilidad", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
 
 if ($resultado) {
 		//Actualizo el estado del proveedor a INHABILITADO
@@ -44,6 +45,6 @@ if ($resultado) {
 		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['idProveedor'] );
 		exit();
 } else {
-		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
+		$this->funcion->Redireccionador ( 'noregistroInhabilidad', $_REQUEST['usuario'] );
 		exit();
 }

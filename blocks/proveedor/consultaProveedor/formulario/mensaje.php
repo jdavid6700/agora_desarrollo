@@ -83,11 +83,11 @@ if (!isset($GLOBALS["autorizado"])) {
         
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. No se subió la evaluaciòn.";
+        $mensaje = "Error en el cargue. No se registro la Inhabilidad.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
-        $valorCodificado.="&opcion=mostrar";
+        $valorCodificado.="&opcion=consultarProveedor";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        

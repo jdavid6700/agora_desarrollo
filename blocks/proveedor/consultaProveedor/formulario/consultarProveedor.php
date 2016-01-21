@@ -93,8 +93,8 @@ if ($resultado) {
 					<th><center>NIT</center></th>
 					<th><center>Nombre Empresa</center></th>
 					<th><center>Correo</center></th>
+                                        <th><center>Teléfono</center></th>
 					<th><center>Movil</center></th>
-					<th><center>Contacto</center></th>
 					<th><center>Puntaje Total</center></th>
 					<th><center>Clasificaciòn</center></th>
 					<th><center>Estado</center></th>
@@ -108,23 +108,33 @@ if ($resultado) {
 			$variable .= "&opcion=inhabilidad";
 			$variable .= "&idProveedor=" . $dato['id_proveedor'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			$nombreCompleto = utf8_encode($dato['nombre1'] . ' ' . $dato['nombre2'] . ' '. $dato['apellido1'] . ' ' . $dato['apellido2']);
 			
-			if($dato['estado']==1){
-					$estado = 'Activo';
-					$imagen = 'edit.png';
-			}else{
-					$estado = 'Inhabilitado';
-					$variable = '#';
-					$imagen = 'cancel.png';
-			}			
+
+switch ($dato['estado']) {
+    case 1:
+        $estado = 'Activo';
+	$imagen = 'edit.png';
+        break;
+    case 2:
+        $estado = 'Inactivo';
+	$variable = '#';
+	$imagen = 'cancel.png';
+        break;
+    case 3:
+        $estado = 'Inhabilitado';
+	$variable = '#';
+	$imagen = 'cancel.png';
+        break;
+}
+
+			
 			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['nit'] . "</center></td>
 						<td><center>" . utf8_encode($dato['nomempresa']) . "</center></td>
 						<td><center>" . $dato['correo'] . "</center></td>
+						<td><center>" . $dato['telefono'] . "</center></td>                                                    
 						<td><center>" . $dato['movil'] . "</center></td>
-						<td>" . $nombreCompleto . "</td>
 						<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 						<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
 						<td><center>" . $estado . "</center></td>
