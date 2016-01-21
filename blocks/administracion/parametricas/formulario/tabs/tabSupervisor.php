@@ -113,7 +113,7 @@ class FormularioRegistro {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 40;
+					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
@@ -146,7 +146,7 @@ class FormularioRegistro {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 40;
+					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
@@ -179,7 +179,7 @@ class FormularioRegistro {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 40;
+					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
@@ -242,7 +242,7 @@ class FormularioRegistro {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 40;
+					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
@@ -275,7 +275,7 @@ class FormularioRegistro {
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 40;
+					$atributos ['tamanno'] = 20;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
