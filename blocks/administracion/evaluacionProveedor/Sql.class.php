@@ -90,7 +90,7 @@ class Sql extends \Sql {
 				case "evalaucionByIdContrato" :
 					$cadenaSql = "SELECT *";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_evaluacion ";
+					$cadenaSql .= " proveedor.prov_evaluacion ";
 					$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
 					break;
 					
@@ -112,7 +112,7 @@ class Sql extends \Sql {
 					break;
 					
 			/* LISTAR - CONTRATO */					
-				case "listaContato" :			
+				case "listaCrontato" :			
 					$cadenaSql = "SELECT  ";
 					$cadenaSql .= " id_contrato, ";
 					$cadenaSql .= " numero_contrato, ";
@@ -131,8 +131,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " proveedor.prov_contrato C";
 					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+                                        $cadenaSql .= " JOIN prov_usuario U ON U.usuario = S.cedula::text ";
 					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
-					$cadenaSql .= " WHERE 1=1 AND C.estado=1 ";
+					$cadenaSql .= " WHERE 1=1 AND C.estado=1 AND U.id_usuario=" . $variable ;
 					$cadenaSql .= " ORDER BY id_contrato ";
 					break;
 
@@ -154,8 +155,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'garantia,';
 					$cadenaSql .= 'garantia_satisfaccion,';
 					$cadenaSql .= 'puntaje_total,';
-					$cadenaSql .= 'clasificacion,';
-					$cadenaSql .= 'id_usuario'; //FALTA EL ID DEL SUPERVISOR
+					$cadenaSql .= 'clasificacion';
 					$cadenaSql .= ') ';
 					$cadenaSql .= 'VALUES ';
 					$cadenaSql .= '( ';
@@ -172,8 +172,7 @@ class Sql extends \Sql {
 					$cadenaSql .= '\'' . $variable [10] . '\', ';
 					$cadenaSql .= '\'' . $variable [11] . '\', ';
 					$cadenaSql .= '\'' . $variable [12] . '\', ';
-					$cadenaSql .= '\'' . $variable [13] . '\', ';
-					$cadenaSql .= '\'' . $variable [14] . '\'';
+					$cadenaSql .= '\'' . $variable [13] . '\' ';
 					$cadenaSql .= ');';
 					break;					
 

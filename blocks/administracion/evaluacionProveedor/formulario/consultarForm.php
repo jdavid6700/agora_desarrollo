@@ -134,7 +134,7 @@ if ($resultadoContratos) {
 			$idContrato = $resultadoContratos[0]["id_contrato"];
 			$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $idContrato );
 			$resultadoEvaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-var_dump($resultadoEvaluacion);			
+		
 		?>
 			<table class="table table-bordered table-condensed">
 				<tr class="info">

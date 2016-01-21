@@ -286,7 +286,8 @@ class registrarForm {
 			// ----------------FIN CONTROL: Lista RECLAMACIONES--------------------------------------------------------
 
 			// ---------------- CONTROL: Lista RECLAMACIONES SOLUCION --------------------------------------------------------
-				$esteCampo = "reclamacionSolucion";
+				echo '<div id="reclamacionSolucion_div" style="display: none;">';
+                                $esteCampo = "reclamacionSolucion";
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -316,10 +317,11 @@ class registrarForm {
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
+                               echo "</div>";
 			// ----------------FIN CONTROL: Lista RECLAMACIONES SOLUCION--------------------------------------------------------			
 			
 			// ---------------- CONTROL: Lista SERVICIOS POS VENTA --------------------------------------------------------
-				$esteCampo = "servicioVenta";
+                                $esteCampo = "servicioVenta";
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -429,7 +431,8 @@ class registrarForm {
 			// ----------------FIN CONTROL: Lista GARANTIA--------------------------------------------------------			
 
 			// ---------------- CONTROL: Lista GARANTIA SATISFACCION--------------------------------------------------------
-				$esteCampo = "garantiaSatisfaccion";
+				echo '<div id="garantiaSatisfaccion_div" style="display: none;">';
+                                $esteCampo = "garantiaSatisfaccion";
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -459,6 +462,7 @@ class registrarForm {
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 				unset ( $atributos );
+                                echo "</div>";
 			// ----------------FIN CONTROL: Lista GARANTIA SATISFACCION--------------------------------------------------------			
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );

@@ -47,8 +47,11 @@ class listarDatos {
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+  
+        $this->cadena_sql = $this->miSql->getCadenaSql("listaCrontato", $_REQUEST['usuario']);
+        
 
-        $this->cadena_sql = $this->miSql->getCadenaSql("listaContato", self::CONTRATOCREADO);
+        
 		$resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
 		
 		if( $resultado ){
