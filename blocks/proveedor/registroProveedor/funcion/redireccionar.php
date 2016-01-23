@@ -18,7 +18,8 @@ class redireccion {
                             $variable = "pagina=" . $miPaginaActual;
                             $variable.="&opcion=mensaje";
                             $variable.="&mensaje=confirma";
-                            $variable.="&nit=" . $valor;
+                            $variable.="&nit=" . $valor['nit'];
+							$variable.="&correo=" . $valor['correo'];
                             break;				
 	
 			case "registroActividad" :
@@ -65,14 +66,12 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
-				$variable .= "&docente=" . $valor;
 				break;
 			
 			case "noActualizo" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noActualizo";
-				$variable .= "&docente=" . $valor;
 				break;
 			
 			case "registrar" :

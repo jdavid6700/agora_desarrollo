@@ -123,8 +123,8 @@ class Funcion {
 					break;
 					
 				case "resumen":
-                    $this->resumen();
-				break;
+                                        $this->resumen();
+                                        break;
 				
 				case 'actualizar' :
 					case 'actualizar':

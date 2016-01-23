@@ -62,47 +62,87 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
         $mensaje = "Se registro el Proveeedor. Continuar para ingresar Actividad Económica<br >";
-		$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['nit'] . "<br >";
-		$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['nit']. "<br >";
+	$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['nit'] . "<br >";
+	$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['nit']. "<br >";
         $boton = "continuar";
 
+//INICIO ENVIO DE CORREO AL USUARIO
+    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+
+    include_once($rutaClases."/mail/class.phpmailer.php");
+    include_once($rutaClases."/mail/class.smtp.php");
+	
+	$mail = new PHPMailer();     
+
+	
+	//configuracion de cuenta de envio
+	$mail->Host     = "200.69.103.49";
+	$mail->Mailer   = "smtp";
+	$mail->SMTPAuth = true;
+	$mail->Username = "condor@udistrital.edu.co";
+	$mail->Password = "CondorOAS2012";
+	$mail->Timeout  = 1200;
+	$mail->Charset  = "utf-8";
+	$mail->IsHTML(true);
+
+        //remitente
+        $fecha = date("d-M-Y g:i:s A");
+        $to_mail=$_REQUEST ['correo'];
+
+        $mail->AddAddress($to_mail);
+        $mail->From='agora@udistrital.edu.co';
+        $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
+        $mail->Subject="Datos de Acceso - Registro de proveedores";
+        $contenido="<p>Fecha de envio: " . $fecha . "</p>";
+        $contenido.= "<p>Señor usuario, bienvenido al banco de proveedores de la Universidad Distrital Francisco José de Caldas. </p>";
+        $contenido.= "<p>Sus datos de acceso son los siguientes:</p>";
+        $contenido.= "Usuario:" . $_REQUEST ['nit'] . "<br>";
+		$contenido.= "Clave de acceso:" . $_REQUEST ['nit'];
+        $contenido.= "<p>Este es su usuario y clave para ingresar al Banco de proveedores de la Universidad Distrital. Al ingresar el sistema le solicitará cambar su clave de acceso.</p>";
+		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";		
+		
+        $mail->Body=$contenido;
+        
+        if(!$mail->Send())
+        {
+                ?>
+                <script language='javascript'>
+                alert('Error! El mensaje no pudo ser enviado, es posible que la dirección de correo electrónico no sea válido.!');
+                </script>
+                <?
+        }
+		else
+		{
+  			?>
+			<script language='javascript'>
+			alert('Se envió un correo con los datos de ingreso.');
+			</script>
+			<?php
+		}    
+
+$mail->ClearAllRecipients();
+$mail->ClearAttachments();
+
+//FIN ENVIO DE CORREO AL USUARIO		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
         $valorCodificado = "pagina=" . $miPaginaActual;
-		$valorCodificado.="&opcion=actividad";
+	$valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&nit=" . $_REQUEST['nit'];
-		
-		
-		
-		$variableResumen = "pagina=" . $miPaginaActual;
-		$variableResumen.= "&action=".$esteBloque["nombre"];
-		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
-		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
-		$variableResumen.= "&opcion=resumen";
-		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
-		
-		//------------------Division para los botones-------------------------
-		$atributos["id"]="botones";
-		$atributos["estilo"]="marcoBotones";
-		echo $this->miFormulario->division("inicio",$atributos);
-		
-		$enlace = "<a href='".$variableResumen."'>";
-		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Resumen ";
-		$enlace.="</a><br><br>";       
-		echo $enlace;
-		//------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division("fin"); 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
         
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
@@ -147,6 +187,26 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
 		$valorCodificado.="&nit=" . $_REQUEST['nit'];
+       
+    }else if($_REQUEST['mensaje'] == 'actualizo') {
+        $tipo = 'success';
+        $mensaje = "Se guardaron los datos del Proveedor.<br >";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=modificar";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+       
+    }else if($_REQUEST['mensaje'] == 'noActualizo') {
+        $tipo = 'error';
+        $mensaje = "Error en el cargue. <br>No se actualizaron los datos.";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=modificar";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
     }
 
