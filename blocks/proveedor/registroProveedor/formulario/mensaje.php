@@ -71,6 +71,38 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&nit=" . $_REQUEST['nit'];
+		
+		
+		
+		$variableResumen = "pagina=" . $miPaginaActual;
+		$variableResumen.= "&action=".$esteBloque["nombre"];
+		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
+		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
+		$variableResumen.= "&opcion=resumen";
+		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+		
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		$enlace = "<a href='".$variableResumen."'>";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Resumen ";
+		$enlace.="</a><br><br>";       
+		echo $enlace;
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin"); 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
         
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
