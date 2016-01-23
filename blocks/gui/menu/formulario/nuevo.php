@@ -70,6 +70,9 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
 			foreach ($resultado as $dato):
 			
 				$enlace = 'pagina=' . $dato['nombre'];
+                                if($dato['parametros']!=''){
+                                    $enlace .= $dato['parametros'];
+                                }
 				$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
 				echo "<li><a href='" . $url . "'>" . $dato['nombre_menu'] . "</a></li>";
 				

@@ -35,14 +35,15 @@ class Sqlmenu extends sql {
          case "consultarMenu" :
             $cadena_sql = "SELECT ";
             $cadena_sql .= "P.nombre, ";
-			$cadena_sql .= "nombre_menu, ";
-			$cadena_sql .= "tooltip ";
+            $cadena_sql .= "nombre_menu, ";
+            $cadena_sql .= "tooltip, ";
+            $cadena_sql .= "parametros ";
             $cadena_sql .= "FROM ";
             $cadena_sql .= "proveedor.param_menu M ";
             $cadena_sql .= "JOIN prov_pagina P ON P.id_pagina = M.id_pagina ";
-			$cadena_sql .= "WHERE ";
+            $cadena_sql .= "WHERE ";
             $cadena_sql .= "rolmenu ='" . $variable . "' ";
-			$cadena_sql .= "ORDER BY orden";
+            $cadena_sql .= "ORDER BY orden";
             break;
 			
             case "datosUsuario":
