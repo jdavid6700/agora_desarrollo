@@ -544,7 +544,7 @@ class registrarForm {
 		$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$valorCodificado .= "&opcion=nuevaEaluacion";
+		$valorCodificado .= "&opcion=nuevaEvaluacion";
 		//$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 		/**
 		 * SARA permite que los nombres de los campos sean dinámicos.

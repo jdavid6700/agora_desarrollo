@@ -70,12 +70,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	
 	
 	
-	$esteCampo = "Agrupacion";
-	$atributos ['id'] = $esteCampo;
-	$atributos ["estilo"] = "jqueryui";
-	$atributos ['tipoEtiqueta'] = 'inicio';
-	$atributos ['leyenda'] = "Registro Contratos";
-	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+
 	
 
 	
@@ -102,22 +97,34 @@ unset($resultadoContratos);
 //CONSULTAR PROVEEDOR
 $cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $_REQUEST ['nit_proveedor'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-echo $cadena_sql;
-if ($resultadoProveedor) {
-	
-		echo "<span class='textoElegante textoEnorme textoAzul'>PROVEEDOR</span><hr>"; 
-		echo '<table style="width:100%">';
-		echo '<tr><td style="width:20%"><span class="textoAzul">NIT</td><td><span class="textoGris">' . $resultadoProveedor[0][1] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">NOMBRE</td><td><span class="textoGris">' . $resultadoProveedor[0][2] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">PUNTAJE TOTAL</td><td><span class="textoGris">' . $resultadoProveedor[0][3] . "</span></td></tr>";
 
+if ($resultadoProveedor) {
+    
+
+		$esteCampo = "marcoProveedor";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
+                    
+		//INICIO INFORMACION PROVEEDOR	
+		echo "<span class='textoElegante textoEnorme textoAzul'>NIT: </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoProveedor[0][1] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Nombre Empresa: </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoProveedor[0][2] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Puntaje Total : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoProveedor[0][3] . "</span></br>";  
+                echo "<span class='textoElegante textoEnorme textoAzul'>Clasificación : </span>"; 
 		$claseficacionActual = $resultadoProveedor[0]["clasificacion_evaluacion"];	
-		if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' )
-			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">' . $claseficacionActual . "</span></td></tr>";
-		else
-			echo '<tr><td style="width:20%"><span class="textoAzul">CLASIFICACIÒN</td><td><span class="textoGris">NO SE ENCUENTRA EVALUADO</span></td></tr>';
-		echo '</table>';
-		//FIN OBJETO A CONTRATAR		
+		if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' ){
+                    echo "<span class='textoElegante textoMediano textoGris'>". $claseficacionActual . "</span></br>"; 
+                }else{
+                    echo "<span class='textoElegante textoMediano textoGris'>No se encuentra evaluado</span></br>"; 
+                }                
+		//FIN INFORMACION PROVEEDOR
+		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+
 
 //Si se encuentra evaluado muestro las evaluaciones
 if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C' ){
@@ -131,12 +138,14 @@ if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacio
 	
 
 	// -----------------Inicio de Conjunto de Controles----------------------------------------
-	$esteCampo = "marcoDatosResultadoParametrizar";
-	$atributos ["estilo"] = "jqueryui";
-// 	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-	echo $this->miFormulario->marcoAgrupacion("inicio", $atributos);
-	unset ( $atributos );
-	
+		$esteCampo = "marcoEvaluacion";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );         
+                unset ( $atributos );
+                
 	echo "<table id='tablaContratos'>";
 	
 	echo "<thead>
@@ -182,68 +191,33 @@ if(  $claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacio
 	
 	echo "</table>";
 	
-	echo $this->miFormulario->agrupacion ( 'fin' );
+
+        echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 	unset ( $atributos );
 	
 	
 	// Fin de Conjunto de Controles
 	// echo $this->miFormulario->marcoAgrupacion("fin");
 }} else {
-	$nombreFormulario = $esteBloque ["nombre"];
-	include_once ("core/crypto/Encriptador.class.php");
-	$cripto = Encriptador::singleton ();
-	$directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" ) . "/imagen/";
-	
-	$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
-	
-	$tab = 1;
-	// ---------------Inicio Formulario (<form>)--------------------------------
-	$atributos ["id"] = $nombreFormulario;
-	$atributos ["tipoFormulario"] = "multipart/form-data";
-	$atributos ["metodo"] = "POST";
-	$atributos ["nombreFormulario"] = $nombreFormulario;
-	$verificarFormulario = "1";
-	$atributos ['marco'] = true;
-	$atributos ['tipoEtiqueta'] = 'inicio';
-	echo $this->miFormulario->formulario ( $atributos );
-	
-	$atributos ["id"] = "divNoEncontroEgresado";
-	$atributos ["estilo"] = "marcoBotones";
-	// $atributos["estiloEnLinea"]="display:none";
-	echo $this->miFormulario->division ( "inicio", $atributos );
-	
-	// -------------Control Boton-----------------------
-	$esteCampo = "noEncontroProcesos";
-	$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-	$atributos ["etiqueta"] = "";
-	$atributos ["estilo"] = "centrar";
-	$atributos ["tipo"] = 'error';
-	$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-	
-	echo $this->miFormulario->cuadroMensaje ( $atributos );
-	unset ( $atributos );
-	
-	$valorCodificado = "pagina=" . $miPaginaActual;
-	$valorCodificado .= "&bloque=" . $esteBloque ["id_bloque"];
-	$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-	$valorCodificado = $cripto->codificar ( $valorCodificado );
-	// -------------Fin Control Boton----------------------
-	// ------------------Fin Division para los botones-------------------------
-	echo $this->miFormulario->division ( "fin" );
-	
-	
-	echo $this->miFormulario->agrupacion ( 'fin' );
-	unset ( $atributos );
-	// -------------Control cuadroTexto con campos ocultos-----------------------
-	// Para pasar variables entre formularios o enviar datos para validar sesiones
-	$atributos ["id"] = "formSaraData"; // No cambiar este nombre
-	$atributos ["tipo"] = "hidden";
-	$atributos ["obligatorio"] = false;
-	$atributos ["etiqueta"] = "";
-	$atributos ["valor"] = $valorCodificado;
-	echo $this->miFormulario->campoCuadroTexto ( $atributos );
-	unset ( $atributos );
-	
+
+		// ------------------INICIO Division para los botones-------------------------
+		$atributos ["id"] = "divNoEncontroEgresado";
+		$atributos ["estilo"] = "marcoBotones";
+		echo $this->miFormulario->division ( "inicio", $atributos );
+		// -------------SECCION: Controles del Formulario-----------------------
+		$esteCampo = "mensajeNoEncontroProveedor";
+		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+		$atributos ["etiqueta"] = "";
+		$atributos ["estilo"] = "centrar";
+		$atributos ["tipo"] = 'error';
+		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
+		
+		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		unset ( $atributos );
+		// -------------FIN Control Formulario----------------------
+		// ------------------FIN Division para los botones-------------------------
+		echo $this->miFormulario->division ( "fin" );
+		unset ( $atributos );	
 
 }
 

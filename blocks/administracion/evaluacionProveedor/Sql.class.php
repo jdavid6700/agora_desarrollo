@@ -37,7 +37,7 @@ class Sql extends \Sql {
 					$cadenaSql .= "	puntaje_evaluacion,";
 					$cadenaSql .= "	clasificacion_evaluacion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_proveedor_info";
+					$cadenaSql .= " proveedor.prov_proveedor_info";
 					$cadenaSql .= " WHERE  NIT=" . $variable;  
 					break;
 					
@@ -104,10 +104,10 @@ class Sql extends \Sql {
 					$cadenaSql .= " S.nombre_supervisor,";
 					$cadenaSql .= " O.objetocontratar";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_evaluacion E";
-					$cadenaSql .= " JOIN prov_contrato C ON C.id_contrato = E.id_contrato ";
-					$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-					$cadenaSql .= " JOIN prov_objeto_contratar O ON O.id_objeto = C.id_objeto ";
+					$cadenaSql .= " proveedor.prov_evaluacion E";
+					$cadenaSql .= " JOIN proveedor.prov_contrato C ON C.id_contrato = E.id_contrato ";
+					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN proveedor.prov_objeto_contratar O ON O.id_objeto = C.id_objeto ";
 					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
 					break;
 					

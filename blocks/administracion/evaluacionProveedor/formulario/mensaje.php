@@ -79,6 +79,29 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado = "pagina=" . $miPaginaActual;
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+
+//INICIO enlace boton descargar resumen	
+		$variableResumen = "pagina=" . $miPaginaActual;
+		$variableResumen.= "&action=".$esteBloque["nombre"];
+		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
+		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
+		$variableResumen.= "&opcion=resumen";
+		$variableResumen.= "&idContrato=" . $_REQUEST['idContrato'];
+		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+		
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		$enlace = "<a href='".$variableResumen."'>";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Evaluación ";
+		$enlace.="</a><br><br>";       
+		echo $enlace;
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin"); 		
+//FIN enlace boton descargar resumen		
+		
         
         
     } else if($_REQUEST['mensaje'] == 'error') {

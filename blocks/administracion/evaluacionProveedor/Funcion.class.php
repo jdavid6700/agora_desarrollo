@@ -43,6 +43,10 @@ class Funcion {
 	function consultarContrato() {
 		include_once ($this->ruta . "/funcion/consultarContrato.php");
 	}
+	function resumen()
+	{
+		include_once($this->ruta."/funcion/evaluacionPDF.php");
+	}	
 	function modificarContrato() {
 		include_once ($this->ruta . "/funcion/modificarContrato.php");
 	}
@@ -78,9 +82,13 @@ class Funcion {
 					$this->consultarContrato ();
 					break;
 				
-				case 'nuevaEaluacion' :
+				case 'nuevaEvaluacion' :
 					$this->formProcessor ();
 					break;
+					
+				case "resumen":
+                                        $this->resumen();
+                                        break;					
 				
 				case 'documentoModificar' :
 					$this->modificarContrato ();
