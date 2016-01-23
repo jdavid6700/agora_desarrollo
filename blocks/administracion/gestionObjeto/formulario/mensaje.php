@@ -26,6 +26,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $miPaginaActual = $this->miConfigurador->getVariableConfiguracion("pagina");
 
     $conexion = "estructura";
+    $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
     $tab = 1;
@@ -72,6 +73,83 @@ if (!isset($GLOBALS["autorizado"])) {
         $tipo = 'success';
         $mensaje =  $this->lenguaje->getCadena('mensajeCotizacion');
         $boton = "regresar";
+        
+//INICIO enlace boton descargar resumen	
+		$variableResumen = "pagina=" . $miPaginaActual;
+		$variableResumen.= "&action=".$esteBloque["nombre"];
+		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
+		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
+		$variableResumen.= "&opcion=resumen";
+		$variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
+		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+		
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		$enlace = "<a href='".$variableResumen."'>";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
+		$enlace.="</a><br><br>";       
+		echo $enlace;
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin"); 		
+//FIN enlace boton descargar resumen        
+        
+//Buscar usuario para enviar correo
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
+$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+//Buscar usuario para enviar correo
+$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
+$resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+ 
+ 
+//INICIO ENVIO DE CORREO AL USUARIO
+    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+
+    include_once($rutaClases."/mail/class.phpmailer.php");
+    include_once($rutaClases."/mail/class.smtp.php");
+	
+	$mail = new PHPMailer();     
+
+	//configuracion de cuenta de envio
+	$mail->Host     = "200.69.103.49";
+	$mail->Mailer   = "smtp";
+	$mail->SMTPAuth = true;
+	$mail->Username = "condor@udistrital.edu.co";
+	$mail->Password = "CondorOAS2012";
+	$mail->Timeout  = 1200;
+	$mail->Charset  = "utf-8";
+	$mail->IsHTML(true);
+
+        $mail->From='agora@udistrital.edu.co';
+        $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
+        $mail->Subject="Solicitud de Cotización";
+        $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
+        $contenido.= "<b>Descripción de artículo : </b>" . $resultadoObjeto [0]['descripcion'] . "<br>";
+		$contenido.= "<b>Características adicionales : </b>" . $resultadoObjeto [0]['caracteristicas'] . "<br>";
+		$contenido.= "<b>Cantidad : </b>" . $resultadoObjeto [0]['cantidad'] . "<br>";
+		$contenido.= "<b>Dependencia Solicitante : </b>" . $resultadoObjeto [0]['dependencia']. "<br>";
+		$contenido.= "<b>Correo : </b>" . $resultadoObjeto [0]['correo'];
+        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado.</p>";
+		$contenido.= "<p>Agradeciendo su gentil atención.</p>";
+		$contenido.= "Cordialmente :<br>";
+		$contenido.= "<b>" . $resultadoObjeto [0]['nombre_ordenador'] . "</b>";
+		
+        $mail->Body=$contenido;
+        
+		foreach ($resultadoProveedor as $dato):
+			$to_mail=$dato ['correo'];
+			$mail->AddAddress($to_mail);
+			$mail->Send();
+		endforeach; 
+        $mail->ClearAllRecipients();
+        $mail->ClearAttachments();
+//FIN ENVIO DE CORREO AL USUARIO                
+                
+        
+        
 
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";

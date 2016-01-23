@@ -28,6 +28,22 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
                     
+                    
+			/*BUSCAR PROVEEDORES SOLICITUD DE COTIZACION */
+				case "buscarProveedores" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " P.id_proveedor,";
+					$cadenaSql .= "	P.correo,";
+					$cadenaSql .= " P.nomempresa,";
+					$cadenaSql .= "	P.nit,";
+					$cadenaSql .= " P.puntaje_evaluacion,";
+					$cadenaSql .= "	P.clasificacion_evaluacion";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_solicitud_cotizacion S";
+                                        $cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = S.id_proveedor";
+					$cadenaSql .= " WHERE  id_objeto=" . $variable;
+					break;                    
+                    
 			/* REGISTRAR COTIZACION */
 				case "ingresarCotizacion" :
 					$hoy = date("Y-m-d");  
@@ -99,10 +115,18 @@ class Sql extends \Sql {
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= "	codigociiu,";
 					$cadenaSql .= "	S.nombre AS actividad,";
-					$cadenaSql .= "	descripcion";
+					$cadenaSql .= "	descripcion,";
+					$cadenaSql .= "	cantidad,";
+					$cadenaSql .= "	caracteristicas,";
+					$cadenaSql .= "	D.dependencia,";
+					$cadenaSql .= "	D.correo,";
+					$cadenaSql .= "	G.nombre_ordenador,";
+                                        $cadenaSql .= "	fechasolicitudcotizacion";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " proveedor.prov_objeto_contratar O";
                                         $cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = O.codigociiu";
+					$cadenaSql .= " JOIN proveedor.param_dependencia D ON D.id_dependencia = O.id_dependencia";
+					$cadenaSql .= " JOIN proveedor.param_ordenador_gasto G ON G.id_ordenador = O.id_ordenador";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
 					break;			
 		

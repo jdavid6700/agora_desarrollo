@@ -45,7 +45,11 @@ class Funcion {
 	}
 	function solicitudCotizacion() {
 		include_once ($this->ruta . "/funcion/solicitudCotizacion.php");
-	}	
+	}
+	function resumen()
+	{
+		include_once($this->ruta."/funcion/resumenPDF.php");
+	}        
 	function actualizar() {
 		include_once ($this->ruta . "/funcion/actualizar.php");
 	}
@@ -116,7 +120,11 @@ class Funcion {
 					
 				case 'cotizacion' :
 					$this->solicitudCotizacion ();
-					break;					
+					break;
+
+				case "resumen":
+                                        $this->resumen();
+                                        break;	
 				
 				case 'actualizar' :
 					case 'actualizar':
