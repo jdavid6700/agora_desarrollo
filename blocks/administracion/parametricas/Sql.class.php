@@ -27,10 +27,51 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+                    
+			/* VERIFICAR NUMERO DE CEDULA */		
+				case "verificarCedula" :
+					$cadenaSql=" SELECT";
+					$cadenaSql.=" usuario";
+					$cadenaSql.=" FROM ";
+					$cadenaSql.=" prov_usuario ";
+					$cadenaSql.=" WHERE usuario = '" . $variable . "'";
+					break;                     
 
-			/* REGISTRAR DATOS */
+			/* REGISTRAR DATOS - USUARIO */
+				case "registrarUsuario" :
+					$cadenaSql=" INSERT INTO ";
+					$cadenaSql.= $prefijo."usuario ";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" usuario,";
+					$cadenaSql.=" nombre,";
+					$cadenaSql.=" apellido,";
+					$cadenaSql.=" correo,";
+					$cadenaSql.=" telefono, ";
+					$cadenaSql.=" imagen, ";
+					$cadenaSql.=" clave, ";
+					$cadenaSql.=" tipo,";
+					$cadenaSql.=" rolmenu,";
+					$cadenaSql.=" estado";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable['cedula']. "',";
+					$cadenaSql.=" '" . $variable['nombre']. "',";
+					$cadenaSql.=" '" . $variable['apellido']. "',";
+					$cadenaSql.=" '" . $variable['correo']. "',";
+					$cadenaSql.=" '" . $variable['telefono']. "',";
+					$cadenaSql.=" '-',";
+					$cadenaSql.=" '" . $variable['contrasena']. "',";
+					$cadenaSql.=" '" . $variable['tipo']. "',";
+					$cadenaSql.=" '" . $variable['rolMenu']. "',";
+					$cadenaSql.=" '" . $variable['estado']. "'";
+					$cadenaSql.=" );";
+					break;                                    
+
+			/* REGISTRAR DATOS - SUPERVISOR */
 				case "registrar" :
-					$cadenaSql=" INSERT INTO param_supervisor";
+					$cadenaSql=" INSERT INTO proveedor.param_supervisor";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" cedula,";
 					$cadenaSql.=" nombre_supervisor,";
@@ -41,7 +82,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
 					$cadenaSql.=" '" . $variable['cedula']. "',";
-					$cadenaSql.=" '" . $variable['nombre']. "',";
+					$cadenaSql.=" '" . $variable['nombre'] . ' ' . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['dependencia']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
 					$cadenaSql.=" '1'";
@@ -54,18 +95,20 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_dependencia,";
 					$cadenaSql .= "	dependencia";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_dependencia";
-					$cadenaSql .= " order by dependencia";
+					$cadenaSql .= " proveedor.param_dependencia";
+					$cadenaSql .= " ORDER BY dependencia";
 					break;
 					
 			/* LISTA - SUPERVISOR */		
 				case "supervisor" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido AS value, ";
-					$cadenaSql.=" documento_docente AS data ";
+					$cadenaSql.=" cedula, nombre_supervisor, correo_supervisor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" docencia.docente WHERE documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido ";
-					$cadenaSql.=" LIKE '%" . $variable . "%' AND estado = true LIMIT 10;";
+					$cadenaSql.=" proveedor.param_supervisor ";
+					$cadenaSql.=" WHERE 1=1 ";
+					if ($variable != '') {
+						$cadenaSql .= " AND cedula= '" . $variable . "'";
+					}					
 					break;
 
 		}

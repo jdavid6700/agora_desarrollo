@@ -93,37 +93,54 @@ if ($resultado) {
 					<th><center>NIT</center></th>
 					<th><center>Nombre Empresa</center></th>
 					<th><center>Correo</center></th>
-					<th><center>Web</center></th>
-					<th><center>Telèfono</center></th>
-					<th><center>Ext.</center></th>
+                                        <th><center>Teléfono</center></th>
 					<th><center>Movil</center></th>
-					<th><center>Contacto</center></th>
 					<th><center>Puntaje Total</center></th>
 					<th><center>Clasificaciòn</center></th>
+					<th><center>Estado</center></th>
+					<th><center>Registrar Inhabilidad</center></th>
 				</tr>
 				</thead>
 				<tbody>";
 
 		foreach ($resultado as $dato):
 			$variable = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variable .= "&opcion=modificar";
-			$variable .= "&idContrato=" . $dato['id_proveedor'];
+			$variable .= "&opcion=inhabilidad";
+			$variable .= "&idProveedor=" . $dato['id_proveedor'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
+
+switch ($dato['estado']) {
+    case 1:
+        $estado = 'Activo';
+	$imagen = 'edit.png';
+        break;
+    case 2:
+        $estado = 'Inactivo';
+	$variable = '#';
+	$imagen = 'cancel.png';
+        break;
+    case 3:
+        $estado = 'Inhabilitado';
+	$variable = '#';
+	$imagen = 'cancel.png';
+        break;
+}
+
+			
 			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['nit'] . "</center></td>
-						<td><center>" . $dato['nomempresa'] . "</center></td>
+						<td><center>" . utf8_encode($dato['nomempresa']) . "</center></td>
 						<td><center>" . $dato['correo'] . "</center></td>
-						<td><center>" . $dato['web'] . "</center></td>
-						<td><center>" . $dato['telefono'] . "</center></td>
-						<td><center>" . $dato['ext1'] . "</center></td>
+						<td><center>" . $dato['telefono'] . "</center></td>                                                    
 						<td><center>" . $dato['movil'] . "</center></td>
-						<td>" . $dato['nombre1'] . ' ' . $dato['nombre2'] . ' '. $dato['apellido1'] . ' ' . $dato['apellido2'] . "</td>
 						<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 						<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
+						<td><center>" . $estado . "</center></td>
 						<td><center>
 							<a href='" . $variable . "'>                        
-								<img src='" . $rutaBloque . "/images/edit.png' width='15px'> 
+								<img src='" . $rutaBloque . "/images/" . $imagen . "' width='15px'> 
 							</a>
 						</center></td>						
 					</tr>";

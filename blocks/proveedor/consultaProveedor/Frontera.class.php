@@ -61,9 +61,17 @@ class Frontera {
 
             switch ($_REQUEST['opcion']) {
 					
+                case "mensaje":
+                    include_once($this->ruta . "/formulario/mensaje.php");
+                    break;
+					
                 case "consultarProveedor":
                     include_once($this->ruta . "/formulario/consultarProveedor.php");
                     break;
+					
+                 case "inhabilidad":
+                     include_once($this->ruta . "/formulario/inhabilidad.php");
+                    break;					
                 
             }
         } else {

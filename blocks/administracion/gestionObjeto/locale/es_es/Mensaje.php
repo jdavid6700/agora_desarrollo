@@ -4,7 +4,7 @@
 $this->idioma["objetoContrato"] = "Objeto a contratar : ";
 $this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
 
-$this->idioma["marcoCIIU"]="Actividad econòmica";
+$this->idioma["marcoCIIU"]="Actividad Económica";
 $this->idioma["marcoDatos"]="Datos generales";
 $this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
@@ -68,18 +68,19 @@ $this->idioma["paso3"] = "Información Adicional";
 
 //************ MENSAJES *********
 $this->idioma["mensajeActualizar"] =  "Actualización Exitosa </br> Han sido actualizados los datos de la Título Académico para el docente <br>";
-$this->idioma["mensajeRegistro"] =  "Registro Exitoso.<br> Se guardaron los datos del Objeto a contratar <br>" ;
+$this->idioma["mensajeRegistro"] =  "Registro Exitoso.<br> Se guardaron los datos del Objeto a contratar. <br>" ;
 
 $this->idioma["mensajeObjeto"] =  "Actualmente no hay Objetos a Contratar </br> Ingresa por la pestaña Objeto a Contratar para crear uno nuevo. <br>";
 $this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Actividad Económica.<br>";
 
 
-$this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se evio la solicitud de Cotizaciòn a los proveedores <br>" ;
-$this->idioma["mensajeError"] =  "Error al tratar de registrar la Título Académico.";
+$this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotizaciòn a los proveedores. <br>" ;
+$this->idioma["mensajeError"] =  "Error al cargar los datos.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
 $this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con la Actividad Económica </br> ";
+$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
 /////////////////////////////////
 
 $this->idioma["marcoConsultaGeneral"] = "Consulta Títulos Académicos Registradas";

@@ -80,7 +80,7 @@ class listarDatos {
 		
 					echo "<tr>";
 					echo "<td >" . $dato['objetocontratar']. "</td>";
-					echo "<td align='center'>" . $dato['codigociiu'] . "</td>";
+					echo "<td align='center'>" . $dato['codigociiu'] . '-' . $dato['actividad'] . "</td>";
 					echo "<td align='center'>" . $dato['fecharegistro'] . "</td>";
 					echo "<td align='right'>" . $dato['unidad'] . "</td>";
 					echo "<td align='right'>" . $dato['cantidad'] . "</td>";
@@ -93,7 +93,7 @@ class listarDatos {
 						$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 						$url = $directorio . '=' . $variable;
 		
-						if( $dato['estado']==1){
+						if( $dato['estado']==2){
 							$valor = 'Seleccionar';
 							$clase = "btn btn-default";
 						}else{

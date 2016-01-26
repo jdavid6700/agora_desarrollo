@@ -107,9 +107,9 @@ class Formulario {
 				echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . '-' . $objetoEspecifico[0][2] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][2] . "</span></br>";                 
+				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
 			//FIN INFORMACION OBJETO A CONTRATAR
 			
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );                

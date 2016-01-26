@@ -18,6 +18,7 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";
+                $variable.="&cedula=" . $valor;
                 break;
 
             case "noregistro":
@@ -26,17 +27,19 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable.="&mensaje=error";
                 break;
 
+            case "existeUsuario":
+                $variable = "pagina=" . $miPaginaActual;
+                $variable.="&opcion=mensaje";
+                $variable.="&mensaje=existeUsuario";
+                $variable.="&cedula=" . $valor;
+                break;            
+            
             case "actualizoDocumento":
                 $variable = "pagina=gestionContrato";
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=mensajeActualizacion";
                 break;
 
-            case "noactualizoDocumento":
-                $variable = "pagina=gestionContrato";
-                $variable.="&opcion=mensaje";
-                $variable.="&mensaje=error";
-                break;
 
             case "paginaPrincipal":
                 $variable = "pagina=index";

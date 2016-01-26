@@ -27,39 +27,85 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-
+			
+			/* ACTUALIZAR - PROVEEEDOR ESTADO INHABILITADO */			
+				case 'actualizarProveedor' :
+					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
+					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql .= " WHERE id_proveedor=";
+					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
+					break;
+					
+			/* REGISTRAR INHABILIDAD */
+				case "ingresarInhabilidad" :
+					$cadenaSql=" INSERT INTO proveedor.prov_inhabilidad";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" id_proveedor,";
+					$cadenaSql.=" tipo_inhabilidad,";
+					$cadenaSql.=" tiempo_inhabilidad,";
+					$cadenaSql.=" fecha_inhabilidad,";
+					$cadenaSql.=" descripcion";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable[0]. "',";
+					$cadenaSql.=" '" . $variable[1]. "',";
+					$cadenaSql.=" '" . $variable[2]. "',";
+					$cadenaSql.=" '" . $variable[3]. "',";
+					$cadenaSql.=" '" . $variable[4]. "'";
+					$cadenaSql.=" );";
+					break;
+					
+			/* CONSULTAR - PROVEEDOR POR ID */					
+				case "buscarProveedor" :			
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " id_proveedor, ";
+					$cadenaSql .= " nit, ";
+					$cadenaSql .= " nomempresa, ";
+					$cadenaSql .= " correo, ";
+					$cadenaSql .= " web, ";
+					$cadenaSql .= " telefono, ";
+					$cadenaSql .= " ext1, ";
+					$cadenaSql .= " movil, ";
+					$cadenaSql .= " primerapellido, ";
+					$cadenaSql .= " segundoapellido, ";
+					$cadenaSql .= " primernombre, ";
+					$cadenaSql .= " segundonombre,  ";
+					$cadenaSql .= " puntaje_evaluacion, ";
+					$cadenaSql .= " clasificacion_evaluacion  ";				
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_proveedor_info";
+					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
+					break;
+				
 			/* CONSULTAR - PROVEEDOR */					
-			case "consultarProveedor" :			
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " id_proveedor, ";
-				$cadenaSql .= " nit, ";
-				$cadenaSql .= " nomempresa, ";
-				$cadenaSql .= " correo, ";
-				$cadenaSql .= " web, ";
-				$cadenaSql .= " telefono, ";
-				$cadenaSql .= " ext1, ";
-				$cadenaSql .= " movil, ";
-				$cadenaSql .= " apellido1, ";
-				$cadenaSql .= " apellido2, ";
-				$cadenaSql .= " nombre1, ";
-				$cadenaSql .= " nombre2,  ";
-				$cadenaSql .= " puntaje_evaluacion, ";
-				$cadenaSql .= " clasificacion_evaluacion  ";				
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " prov_proveedor_info";
-				$cadenaSql .= " WHERE 1=1 ";
-				if ($variable [0] != '') {
-					$cadenaSql .= " AND  nit= '" . $variable [0] . "'";
-				}
-				
-				if ($variable [1] != '') {
-					$cadenaSql .=" AND nomempresa LIKE '%" . $variable [1] . "%'";
-				}
-				
-			/*	if ($variable [3] != '') {
-					$cadenaSql .= " AND C.fecha_registro BETWEEN '" . $variable [3] . "' AND '" . $variable [4] . "'" ;
-				}*/
-				break;
+				case "consultarProveedor" :			
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " id_proveedor, ";
+					$cadenaSql .= " nit, ";
+					$cadenaSql .= " nomempresa, ";
+					$cadenaSql .= " correo, ";
+					$cadenaSql .= " web, ";
+					$cadenaSql .= " telefono, ";
+					$cadenaSql .= " ext1, ";
+					$cadenaSql .= " movil, ";
+					$cadenaSql .= " primerapellido, ";
+					$cadenaSql .= " segundoapellido, ";
+					$cadenaSql .= " primernombre, ";
+					$cadenaSql .= " segundonombre,  ";
+					$cadenaSql .= " puntaje_evaluacion, ";
+					$cadenaSql .= " clasificacion_evaluacion, ";
+					$cadenaSql .= " estado  ";				
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_proveedor_info";
+					$cadenaSql .= " WHERE 1=1 ";
+					if ($variable [0] != '') {
+						$cadenaSql .= " AND  nit= '" . $variable [0] . "'";
+					}
+					if ($variable [1] != '') {
+						$cadenaSql .=" AND nomempresa LIKE '%" . $variable [1] . "%'";
+					}
+					break;
 				
 		}
 		

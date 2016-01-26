@@ -58,19 +58,23 @@ for ($i = 0; $i < $count; $i++) {
     }
 }
 
+
+
     //actualizo estado del objeto a contratar a 2(cotizacion)
     //actualizo fecha de solicitud
 	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
         $parametros = array (
 		'idObjeto' => $_REQUEST ['idObjeto'],
-		'estado' => 2  //solicitud de cotizacion
+		'estado' => 2,  //solicitud de cotizacion
+                'fecha' => date("Y-m-d") 
 	);
 
     $cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjeto', $parametros );
     $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 
+
 		if ($resultado) {
-			redireccion::redireccionar ( 'insertoCotizacion',  $_REQUEST['docenteRegistrar']);
+			redireccion::redireccionar ( 'insertoCotizacion',  $_REQUEST['idObjeto']);
 			exit ();
 		} else {
 			redireccion::redireccionar ( 'noInserto' );

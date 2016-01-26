@@ -151,12 +151,12 @@ class FormularioRegistro {
 			$atributos ['anchoCaja'] = 60;
 			$atributos ['miEvento'] = '';
 			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ordenador' );
-                        $matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-                        $atributos ['matrizItems'] = $matrizItems;
-                        $atributos = array_merge ( $atributos, $atributosGlobales );
-                        echo $this->miFormulario->campoCuadroLista ( $atributos );
-                        unset ( $atributos );
-                        // ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			$atributos ['matrizItems'] = $matrizItems;
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			unset ( $atributos );
+		// ----------------FIN CONTROL: Lista Ordenador del gasto--------------------------------------------------------
 			
 				// ---------------- CONTROL: Lista DEPENDENCIA --------------------------------------------------------
 					$esteCampo = "dependencia";

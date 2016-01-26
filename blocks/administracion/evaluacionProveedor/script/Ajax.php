@@ -47,6 +47,52 @@ $(function () {
         	        $("#<?php echo $this->campoSeguro('id_contratista') ?>").val(suggestion.data);
         	    }
         });
+        
+        
+        
+        
+        
+        
+        
+//////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
+
+$("#<?php echo $this->campoSeguro('reclamaciones')?>").change(function() {
+
+	if($("#<?php echo $this->campoSeguro('reclamaciones')?>").val() == 0){
+		  $("#reclamacionSolucion_div").css("display", "block");
+                
+		 		
+        }else{
+                    $("#reclamacionSolucion_div").css("display", "none");
+	}
+});
+
+$("#<?php echo $this->campoSeguro('garantia')?>").change(function() {
+
+	if($("#<?php echo $this->campoSeguro('garantia')?>").val() == 0){
+		  $("#garantiaSatisfaccion_div").css("display", "block");
+                
+		 		
+        }else{
+                    $("#garantiaSatisfaccion_div").css("display", "none");
+	}
+});
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 });
 
 </script>

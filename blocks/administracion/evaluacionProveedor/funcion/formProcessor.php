@@ -52,14 +52,15 @@ $arreglo = array (
 		$_REQUEST ['garantia'],		
 		$_REQUEST ['garantiaSatisfaccion'],
 		$puntajeTotal,
-		$clasificacion,
-		1
-);//FALTA EL ID DEL SUPERVISOR
+		$clasificacion
+);
 
 
 //Guardar datos de la evaluacion
 $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
+
 
 if ($resultado) {
 	//Actualizar estado del CONTRATO A EVALUADO
@@ -94,10 +95,10 @@ if ($resultado) {
 		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
-			
-		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['usuario'] );
+
+		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['idContrato'] );
 		exit();
 } else {
-		$this->funcion->Redireccionador ( 'noregistroDocumento', $_REQUEST['usuario'] );
+		$this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );
 		exit();
 }

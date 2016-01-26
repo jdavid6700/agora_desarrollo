@@ -33,8 +33,7 @@ unset ( $atributos );
 	
 	$items = array (
 			"tabSupervisor" => $this->lenguaje->getCadena ( "tabSupervisor" ),
-			"tabSearchSupervisor" => $this->lenguaje->getCadena ( "tabSearchSupervisor" ),
-			"tabConsultarProveedor" => $this->lenguaje->getCadena ( "tabConsultarProveedor" )
+			"tabSearchSupervisor" => $this->lenguaje->getCadena ( "tabSearchSupervisor" )
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
@@ -69,19 +68,7 @@ unset ( $atributos );
 		echo $this->miFormulario->agrupacion ( 'fin' );
 	// -----------------Fin Division para la pestaña 2-------------------------
 
-	// -----------------INICIO Division para la pestaña 3-------------------------
-		$esteCampo = "tabConsultarProveedor";
-		$atributos ['id'] = $esteCampo;
-		$atributos ["estilo"] = "jqueryui";
-		$atributos ['tipoEtiqueta'] = 'inicio';
-		// $atributos ["leyenda"] = "Contratos ViceRectoria";
-		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
-		unset ( $atributos );
-		{
-			include ($this->ruta . "formulario/tabs/tabSearchByproveedor.php");
-		}
-		echo $this->miFormulario->agrupacion ( 'fin' );	
-	// -----------------FIN Division para la pestaña 3-------------------------
+
 	
 }
 echo $this->miFormulario->division ( "fin" );

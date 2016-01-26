@@ -13,6 +13,9 @@ $this->idioma["marcoGestion"]="Gestión";
 $this->idioma["marcoSearch"]="Ingesar No. de Contrato para ver Evaluaciòn";
 $this->idioma["marcoSearchProveedor"]="Ingesar NIT o Cèdula del proveedor";
 $this->idioma["marcoContrato"]="Contrato - Información general";
+$this->idioma["marcoProveedor"]="Proveedor - Información general";
+$this->idioma["marcoEvaluacion"]="Evaluaciones realizadas al Proveedor";
+$this->idioma["mensaNoEvaluado"] = "Este contrato no se encuentra evaluado.";
 
 
 
@@ -54,6 +57,7 @@ $this->idioma["garantiaSatisfaccionTitulo"] = "Seleccionar ";
 
 $this->idioma["mensajeNoEncontroContrato"] = "Actualmente no hay Contratos sin evaluar.";
 $this->idioma["mensajeNoEncontroContratoByNoContrato"] = "No existe ningùn contrato con ese nùmero.";
+$this->idioma["mensajeNoEncontroProveedor"] = "Actualmente no hay proveedores con ese NIT.";
 
 $this->idioma ["botonRegresar"] ="< < Regresar";
 $this->idioma["botonAceptar"] = "Aceptar";

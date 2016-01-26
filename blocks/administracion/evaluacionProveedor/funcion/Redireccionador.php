@@ -18,9 +18,10 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";
+		$variable.="&idContrato=" . $valor;
                 break;
 
-            case "noregistroDocumento":
+            case "noregistro":
                 $variable = "pagina=" . $miPaginaActual;;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=error";

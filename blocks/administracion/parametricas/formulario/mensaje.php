@@ -61,7 +61,9 @@ if (!isset($GLOBALS["autorizado"])) {
 
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
-        $mensaje = "Se registro el Supervisor.";
+        $mensaje = "Se registro el Supervisor.<br >";
+	$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['cedula'] . "<br >";
+	$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['cedula']. "<br >";        
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
@@ -72,6 +74,16 @@ if (!isset($GLOBALS["autorizado"])) {
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
         $mensaje = "Error en el cargue. <br>No se subió la informaciòn correctamente.";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+       
+    } else if($_REQUEST['mensaje'] == 'existeUsuario') {
+        $tipo = 'error';
+        $mensaje = "Error en el cargue. El usuario ya existe. <br>Usuario : " . $_REQUEST['cedula'];
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;

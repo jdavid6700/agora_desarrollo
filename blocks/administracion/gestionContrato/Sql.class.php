@@ -92,13 +92,15 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_objeto,";
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= " codigociiu,";
+					$cadenaSql .= "	S.nombre AS actividad,";
 					$cadenaSql .= " fecharegistro,";
 					$cadenaSql .= " unidad,";
 					$cadenaSql .= " cantidad,";
 					$cadenaSql .= "	descripcion,";
 					$cadenaSql .= "	estado";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar O";
+					$cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = O.codigociiu";
 					$cadenaSql .= " WHERE  estado=" . $variable;  //Activo
 					$cadenaSql .= " order by fechaRegistro";
 					break;
@@ -129,11 +131,13 @@ class Sql extends \Sql {
 					$cadenaSql = "SELECT";
 					$cadenaSql .= " objetocontratar,";
 					$cadenaSql .= "	codigociiu,";
+					$cadenaSql .= "	S.nombre AS actividad,";
 					$cadenaSql .= "	descripcion";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_objeto_contratar";
+					$cadenaSql .= " proveedor.prov_objeto_contratar O";
+					$cadenaSql .= " JOIN proveedor.prov_ciiu_subclase S ON S.id = O.codigociiu";
 					$cadenaSql .= " WHERE  id_objeto=" . $variable;  //Activo
-					break;
+					break;	
 			
 			/* ACTUALIZAR - CONTRATO */
 				case 'actualizarContrato' :

@@ -81,137 +81,60 @@ if (isset ( $_REQUEST ['num_contrato'] ) && $_REQUEST ['num_contrato'] != '') {
 	$numeroContrato = '';
 }
 
-if (isset ( $_REQUEST ['fecha_inicio_c'] ) && $_REQUEST ['fecha_inicio_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_final_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaInicio_C = $_REQUEST ['fecha_inicio_c'];
-	}
-} else {
-	
-	$fechaInicio_C = '';
-}
-
-if (isset ( $_REQUEST ['fecha_final_c'] ) && $_REQUEST ['fecha_final_c'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_inicio_c'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaFin_C = $_REQUEST ['fecha_final_c'];
-	}
-} else {
-	
-	$fechaFin_C = '';
-}
-
-if (isset ( $_REQUEST ['fecha_inicio_r'] ) && $_REQUEST ['fecha_inicio_r'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_final_r'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaInicio_R = $_REQUEST ['fecha_inicio_r'];
-	}
-} else {
-	
-	$fechaInicio_R = '';
-}
-
-if (isset ( $_REQUEST ['fecha_final_r'] ) && $_REQUEST ['fecha_final_r'] != '') {
-	// $fechaInicio = $_REQUEST ['fecha_inicio'];
-	
-	if ($_REQUEST ['fecha_inicio_r'] == '') {
-		$esteCampo = "FechasError";
-		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-		$atributos ["etiqueta"] = '';
-		$atributos ["estilo"] = "centrar";
-		$atributos ["tipo"] = 'error';
-		$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-		
-		echo $this->miFormulario->cuadroMensaje ( $atributos );
-		unset ( $atributos );
-		
-		exit ();
-	} else {
-		
-		$fechaFin_R = $_REQUEST ['fecha_final_r'];
-	}
-} else {
-	
-	$fechaFin_R = '';
-}
-
-$arreglo = array (
-		$numeroContrato,
-		$fechaInicio_C,
-		$fechaFin_C,
-		$fechaInicio_R,
-		$fechaFin_R 
-);
 unset($resultadoContratos);
 
 //datos del contrtato
-$cadena_sql = $this->sql->getCadenaSql ( "contratoByNumero", $arreglo );
+$cadena_sql = $this->sql->getCadenaSql ( "contratoByNumero", $numeroContrato );
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 if ($resultadoContratos) {
 	
-		echo "<span class='textoElegante textoEnorme textoAzul'>Contrato</span><hr>"; 
-		echo '<table style="width:100%">';
-		echo '<tr><td style="width:20%"><span class="textoAzul">No. Contrato</td><td><span class="textoGris">' . $resultadoContratos[0][1] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Inicial</td><td><span class="textoGris">' . $resultadoContratos[0][2] . "</span></td></tr>";
-		echo '<tr><td style="width:20%"><span class="textoAzul">Fecha Final</td><td><span class="textoGris">' . $resultadoContratos[0][3] . "</span></td></tr>";	
-		echo '<tr><td style="width:20%"><span class="textoAzul">Proveedor</td><td><span class="textoGris">' . $resultadoContratos[0][4] . "</span></td></tr>";	
-		echo '</table>';
-		//FIN OBJETO A CONTRATAR	
+		$esteCampo = "marcoContrato";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
+                    
+				//INICIO OBJETO A CONTRATAR
+				echo "<span class='textoElegante textoEnorme textoAzul'>Nùmero Contrato : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][1] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][2] . '-' . $resultadoContratos[0][3] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][4] . "</span></br>";                 
+				//FIN CONTRATO
+		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+
+				
 	
 		if ($resultadoContratos[0]["estado"] == 1 ){
-			
 			//MOSTRAT MENSAJE QUE NO SE HA EVALUADO EL CONTRATO
-			
-			echo "NO SE HA EVALUADO EL CONTATO"; exit;
+				// ------------------INICIO Division para los botones-------------------------
+				$atributos ["id"] = "divNoEncontroEgresado";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensaNoEvaluado";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
+				
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );			
 			
 		}else{
 			//datos de la evaluacion
 			$idContrato = $resultadoContratos[0]["id_contrato"];
 			$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $idContrato );
-			$resultadoEvaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );	
+			$resultadoEvaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
 		?>
 			<table class="table table-bordered table-condensed">
 				<tr class="info">
