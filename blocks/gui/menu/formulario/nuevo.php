@@ -57,7 +57,7 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
 		
     <!-- Fixed navbar -->
     <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+     
         <div class="navbar-header">
 			<a href='" . $variable . "'>                        
 				<img src='<?php echo $rutaBloque . "/images/AGORA.png"; ?>' > 
@@ -83,5 +83,5 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
 			<li><a href='<?php echo $enlaceFinSesion ['urlCodificada']; ?>'>Cerrar Sesión</a></li>
           </ul>		
         </div>
-      </div>
+    
     </nav>

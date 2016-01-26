@@ -46,10 +46,14 @@ class Funcion {
 	function registrarActividad() {
 		include_once ($this->ruta . "/funcion/registrarActividad.php");
 	}
-	function resumen()
+	function certContrato()
 	{
-		include_once($this->ruta."/funcion/resumen.php");
-	}	
+		include_once($this->ruta."/funcion/certContratoPDF.php");
+	}
+	function certCumplimiento()
+	{
+		include_once($this->ruta."/funcion/certCumplimientoPDF.php");
+	}		
 	function actualizar() {
 		include_once ($this->ruta . "/funcion/actualizar.php");
 	}
@@ -122,9 +126,13 @@ class Funcion {
 					$this->registrarActividad ();
 					break;
 					
-				case "resumen":
-                                        $this->resumen();
-                                        break;
+				case "certContrato":
+					$this->certContrato();
+                    break;
+					
+				case "certCumplimiento":
+					$this->certCumplimiento();
+                    break;					
 				
 				case 'actualizar' :
 					case 'actualizar':

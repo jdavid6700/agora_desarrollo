@@ -43,10 +43,10 @@ class Sql extends \Sql {
 					$cadenaSql .= " clasificacion, ";
 					$cadenaSql .= " C.estado ";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " prov_contrato C";
-					$cadenaSql .= " JOIN param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-					$cadenaSql .= " JOIN prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
-					$cadenaSql .= " LEFT JOIN prov_evaluacion E ON E.id_contrato = C.id_contrato ";
+					$cadenaSql .= " proveedor.prov_contrato C";
+					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
+					$cadenaSql .= " LEFT JOIN proveedor.prov_evaluacion E ON E.id_contrato = C.id_contrato ";
 					$cadenaSql .= " WHERE C.vigencia >= " . $variable;
 					$cadenaSql .= " ORDER BY C.id_contrato";
 					break;

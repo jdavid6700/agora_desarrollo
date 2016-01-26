@@ -95,8 +95,25 @@ if ($resultado) {
 		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
+                
+                
+                
+        $parametros2 = array (
+		'idTabla' => $_REQUEST ['idContrato'],
+		'tipo' => 1,  //evaluacion
+                'fecha' => date("Y-m-d H:i:s")
+	);    
+//Inserto codigo de validacion
+    $cadenaSql = $this->sql->getCadenaSql ( 'ingresarCodigo', $parametros2 );
+    $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" ); 
+    
+        $datos = array (
+		'idContrato' => $_REQUEST ['idContrato'],
+                'idCodigo' => $resultado[0]['id_codigo_validacion']
+	);     
+                
 
-		$this->funcion->Redireccionador ( 'registroExitoso', $_REQUEST['idContrato'] );
+		$this->funcion->Redireccionador ( 'registroExitoso', $datos );
 		exit();
 } else {
 		$this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );

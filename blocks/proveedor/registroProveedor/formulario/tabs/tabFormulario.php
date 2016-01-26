@@ -880,10 +880,72 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroLista ( $atributos );
 						unset ( $atributos );
 					// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
-								
+
+echo $this->miFormulario->marcoAgrupacion ( 'fin' );					
+					
+				$esteCampo = "marcoRUT";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );						
+// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------					
+		$esteCampo = "DocumentoRUT";
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["nombre"] = $esteCampo;
+		$atributos ["tipo"] = "file";
+		// $atributos ["obligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["tabIndex"] = $tab ++;
+		$atributos ["columnas"] = 1;
+		$atributos ["estilo"] = "textoIzquierda";
+		$atributos ["anchoEtiqueta"] = 400;
+		$atributos ["tamanno"] = 500000;
+		$atributos ["validar"] = "required";
+		$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		// $atributos ["valor"] = $valorCodificado;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );								
+// ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------									
 
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );			
+
+
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'descripcion';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 90;
+				$atributos ['filas'] = 2;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required,maxSize[250]';
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 20;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 220;
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$tab ++;
 				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoTextArea ( $atributos );
+				unset ( $atributos );
+                                
+				// ---------------- FIN CONTROL: Cuadro de Texto --------------------------------------------------------				
        				
 				// ------------------Division para los botones-------------------------
 				$atributos ["id"] = "botones";

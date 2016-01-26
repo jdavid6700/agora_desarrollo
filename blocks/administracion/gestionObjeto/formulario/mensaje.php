@@ -81,6 +81,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
 		$variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
+                $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------

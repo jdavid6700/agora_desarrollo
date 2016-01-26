@@ -33,10 +33,11 @@ unset ( $atributos );
 	
 	$items = array (
 			"tabHistoricoAnual" => $this->lenguaje->getCadena ( "tabHistoricoAnual" ),
+			"tabTotalProveedores" => $this->lenguaje->getCadena ( "tabTotalProveedores" ),
 			"tabDatosProveedores" => $this->lenguaje->getCadena ( "tabDatosProveedores" ),
 			"tabListadoProveedores" => $this->lenguaje->getCadena ( "tabListadoProveedores" ),
-			"tabProcesoContratacion" => $this->lenguaje->getCadena ( "tabProcesoContratacion" ),
-			"tabTotalProveedores" => $this->lenguaje->getCadena ( "tabTotalProveedores" )
+			"tabProcesoContratacion" => $this->lenguaje->getCadena ( "tabProcesoContratacion" )
+			
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
@@ -58,7 +59,7 @@ unset ( $atributos );
 	// -----------------FIN Division para la pestaña 1-------------------------
 	
 	// -----------------INICIO Division para la pestaña 2-------------------------
-		$esteCampo = "tabDatosProveedores";
+		$esteCampo = "tabTotalProveedores";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -66,7 +67,7 @@ unset ( $atributos );
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
-			include ($this->ruta . "formulario/tabs/tabSearchByContrato.php");
+			include ($this->ruta . "formulario/tabs/tabProveedorTipo.php");
 		}
 		echo $this->miFormulario->agrupacion ( 'fin' );
 	// -----------------Fin Division para la pestaña 2-------------------------

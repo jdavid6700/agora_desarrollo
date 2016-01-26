@@ -28,7 +28,22 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
                     
-                    
+			/* REGISTRAR codigo validacion */
+				case "ingresarCodigo" :
+					$cadenaSql=" INSERT INTO proveedor.param_codigo_validacion";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" id_tabla,";
+					$cadenaSql.=" tipo_certificacion,";
+                                        $cadenaSql.=" fecha";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable['idObjeto']. "',";
+                                        $cadenaSql.=" '" . $variable['tipo']. "',";
+					$cadenaSql.=" '" . $variable['fecha']. "'";
+					$cadenaSql.=" ) RETURNING id_codigo_validacion;";
+					break;
+                                    
 			/*BUSCAR PROVEEDORES SOLICITUD DE COTIZACION */
 				case "buscarProveedores" :
 					$cadenaSql = "SELECT";

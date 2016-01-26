@@ -99,7 +99,11 @@ class FormProcessor {
 						if ($registro [0] ['estado'] == 2) {
                             Redireccionador::redireccionar('claves', $registro);
                         } else {
-                            Redireccionador::redireccionar('index', $registro [0]);
+							if ($registro [0] ['tipo'] == 2) {
+								Redireccionador::redireccionar('indexProveedor', $registro [0]);
+							}else{
+								Redireccionador::redireccionar('index', $registro [0]);
+							}
                         }
                     }
                     // Redirigir a la página principal del usuario, en el arreglo $registro se encuentran los datos de la sesion:

@@ -18,7 +18,8 @@ if (!isset($GLOBALS ["autorizado"])) {
                 $variable = "pagina=" . $miPaginaActual;
                 $variable.="&opcion=mensaje";
                 $variable.="&mensaje=confirma";
-		$variable.="&idContrato=" . $valor;
+		$variable.="&idContrato=" . $valor['idContrato'];
+                $variable.="&idCodigo=". $valor['idCodigo'];
                 break;
 
             case "noregistro":

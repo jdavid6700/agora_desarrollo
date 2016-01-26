@@ -83,7 +83,7 @@ class Formulario {
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$_REQUEST['idProveedor'] =  $resultado[0]["id_proveedor"];
-                $_REQUEST['tipoPersona'] =  $resultado[0]["tipopersona"];
+        $_REQUEST['tipoPersona'] =  $resultado[0]["tipopersona"];
 		$_REQUEST['nit'] =  $resultado[0]['nit'];
 		$_REQUEST['digito'] =  $resultado[0]["digitoverificacion"];
 		$_REQUEST['nombreEmpresa'] =  $resultado[0]['nomempresa'];
@@ -107,6 +107,8 @@ class Formulario {
 		$_REQUEST['regimenContributivo'] =  $resultado[0]['importacion'];
 		$_REQUEST['pyme'] =  $resultado[0]["pyme"];
 		$_REQUEST['registroMercantil'] =  $resultado[0]['registromercantil'];
+		$_REQUEST['descripcion'] =  $resultado[0]["descripcion"];
+		$_REQUEST['DocumentoRUT'] =  $resultado[0]['anexorut'];
        
 		
 		// ---------------- FIN: Lista Variables Modificar--------------------------------------------------------		
@@ -917,10 +919,83 @@ class Formulario {
 						echo $this->miFormulario->campoCuadroLista ( $atributos );
 						unset ( $atributos );
 					// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
-								
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 
-				echo $this->miFormulario->marcoAgrupacion ( 'fin' );			
+				$esteCampo = "marcoRUT";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );					
+// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------					
+		$esteCampo = "DocumentoRUT";
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["nombre"] = $esteCampo;
+		$atributos ["tipo"] = "file";
+		// $atributos ["obligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["tabIndex"] = $tab ++;
+		$atributos ["columnas"] = 2;
+		$atributos ["estilo"] = "textoIzquierda";
+		$atributos ["anchoEtiqueta"] = 400;
+		$atributos ["tamanno"] = 500000;
+		$atributos ["validar"] = "";
+		$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		// $atributos ["valor"] = $valorCodificado;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );								
+// ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------
+
+//INICIO enlace boton descargar RUT	
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+		$enlace.="</a>";       
+		echo $enlace;
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin"); 		
+//FIN enlace boton descargar RUT 					
+echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'descripcion';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 90;
+				$atributos ['filas'] = 2;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required,maxSize[250]';
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 20;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 220;
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoTextArea ( $atributos );
+				unset ( $atributos );
+                                
+				// ---------------- FIN CONTROL: Cuadro de Texto --------------------------------------------------------								
 		$esteCampo = 'idProveedor';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";

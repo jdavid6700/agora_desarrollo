@@ -4,8 +4,8 @@ $this->idioma ['botonAceptar'] = 'Aceptar';
 $this->idioma ['botonIngresar'] = 'Ingresar';
 $this->idioma ['botonCancelar'] = 'Cancelar';
 $this->idioma ['noDefinido'] = 'Etiqueta No definida';
-$this->idioma ['usuario'] = 'Usuario';
-$this->idioma ['clave'] = 'Contraseña';
+$this->idioma ['usuario'] = 'Usuario : ';
+$this->idioma ['clave'] = 'Contraseña : ';
 
 
 $this->idioma ['claveNoValida'] = '<center>Contraseña No Valida<br>Verifique los Datos Ingresados</center>';

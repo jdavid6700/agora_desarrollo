@@ -16,13 +16,16 @@ class Redireccionador {
 
         switch ($opcion) {
             case "index" :
-                //echo "Bienvenido, perfil Titan, todo poderoso.";
                 $variable = 'pagina=bienvenida';
                 $variable .= '&registro=' . $valor [0];
                 break;
+				
+            case "indexProveedor" :
+                $variable = 'pagina=actualizarProveedor';
+                $variable .= '&usuario=' . $valor [0];
+                break;				
 
             case "claves" :
-                // echo "Bienvenido, perfil Compras";
                 $variable = 'pagina=cambiarClave';
                 $variable .= '&usuario=' . $valor [0]['id_usuario'];
                 break;

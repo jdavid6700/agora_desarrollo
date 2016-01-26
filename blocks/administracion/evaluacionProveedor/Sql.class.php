@@ -27,6 +27,22 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+                    
+			/* REGISTRAR codigo validacion */
+				case "ingresarCodigo" :
+					$cadenaSql=" INSERT INTO proveedor.param_codigo_validacion";
+					$cadenaSql.=" (";					
+					$cadenaSql.=" id_tabla,";
+					$cadenaSql.=" tipo_certificacion,";
+                                        $cadenaSql.=" fecha";
+					$cadenaSql.=" )";
+					$cadenaSql.=" VALUES";
+					$cadenaSql.=" (";
+					$cadenaSql.=" '" . $variable['idTabla']. "',";
+                                        $cadenaSql.=" '" . $variable['tipo']. "',";
+					$cadenaSql.=" '" . $variable['fecha']. "'";
+					$cadenaSql.=" ) RETURNING id_codigo_validacion;";
+					break;                    
 
 			/* CONSULTAR - PROVEEDOR POR NIT */
 				case "consultarProveedor" :

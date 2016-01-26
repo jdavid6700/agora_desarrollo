@@ -34,24 +34,30 @@ class Formulario {
 		
 		$directorio = $this->miConfigurador->getVariableConfiguracion("host");
 		$directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
-		$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");		
+		$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
+
+		$enlace = 'pagina=registroProveedor';
+		$urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );		
         ?>
 
+<br>
+    <div class="container">
+		<div class="row">
+			<div class='col-md-8'>	  
+				<div class="jumbotron" align="center">
+					<h2>¡Bienvenido al Registro Único de Proveedores! </h2>
+                     <h2>ÁGORA</h2><br>		
+					<p>La vicerrectoría administrativa y financiera y la Sección de compras  de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
+					<p>
+						<a class="btn btn-lg btn-primary" href="<?php echo $urlCodificada; ?>" role="button">Registro Proveedor Nuevo</a>
+					</p>
+				</div>
+			</div>
+			<div class='col-md-4'>
+				<div class="jumbotron" align="center">
+					<h3>PROVEEDOR REGISTRADO </h3>
 
-        <div id="slider1_container" style="position: absolute; margin: 0 auto; top: 0px; left: 0px; width: 600px; height: 300px;">
-            <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 600px;  height: 300px;
-                 overflow: hidden;">
-                <div><img u="image" src="<?php echo $rutaBloque ?>/imagenes/square_2.jpg" /></div>
 
-            </div>
-        </div>
-        <header>
-            <div id = "fondo_base"></div>
-
-
-        </header>
-        <section>
-            <article id = "fondo_login">
                 <?php
                 $atributosGlobales ['campoSeguro'] = 'false';
                 $_REQUEST ['tiempo'] = time();
@@ -96,8 +102,10 @@ class Formulario {
                 $atributos ['id'] = $esteCampo;
                 $atributos ['nombre'] = $esteCampo;
                 $atributos ['tipo'] = 'text';
-                $atributos ['estilo'] = 'login jqueryui';
+                $atributos ['estilo'] = 'jqueryui';
                 $atributos ['marco'] = false;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
                 $atributos ['columnas'] = 1;
                 $atributos ['dobleLinea'] = false;
                 $atributos ['tabIndex'] = $tab;
@@ -124,8 +132,10 @@ class Formulario {
                 $atributos ['id'] = $esteCampo;
                 $atributos ['nombre'] = $esteCampo;
                 $atributos ['tipo'] = 'password';
-                $atributos ['estilo'] = 'login jqueryui';
+                $atributos ['estilo'] = 'jqueryui';
                 $atributos ['marco'] = false;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
                 $atributos ['columnas'] = 1;
                 $atributos ['dobleLinea'] = false;
                 $atributos ['tabIndex'] = $tab;
@@ -214,21 +224,11 @@ class Formulario {
                 $atributos ['tipoEtiqueta'] = 'fin';
                 echo $this->miFormulario->formulario($atributos);
                 ?>
-            </article>
-            <div id="logo_u">
-                <img src="<?php echo $directorioImagenes ?>/UD_logo2.png" />
-            </div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-        </section>
-        <section>
-            <div id="fondo_texto">
-                <div id="texto">
-                    <h3>REGISTRO ÚNICO </h3>
-                    <h3>DE PROVEEDORES</h3><BR>
-                    <h2>ÁGORA</h2>
-                </div>
-            </div>
-        </section>
         <footer>
             <div id="footerLeft">
                 <p style="font-size: 15px;">Universidad Distrital Francisco José de

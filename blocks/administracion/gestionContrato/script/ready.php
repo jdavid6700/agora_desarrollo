@@ -72,7 +72,6 @@ $('#<?php echo $this->campoSeguro('fecha_RP')?>').datepicker({
         
          $('#<?php echo $this->campoSeguro('fecha_inicio_c')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		maxDate: 0,
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -98,7 +97,6 @@ $('#<?php echo $this->campoSeguro('fecha_RP')?>').datepicker({
 		});
               $('#<?php echo $this->campoSeguro('fecha_final_c')?>').datepicker({
 		dateFormat: 'yy-mm-dd',
-		maxDate: 0,
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',

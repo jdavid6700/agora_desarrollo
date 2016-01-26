@@ -40,6 +40,10 @@ $(function() {
 $('#tablaContratos').dataTable( {
                 "sPaginationType": "full_numbers"
         } );
+		
+$('#tablaTipos').dataTable( {
+                "sPaginationType": "full_numbers"
+        } );		
                 
 $(function() {
 		$(document).tooltip();

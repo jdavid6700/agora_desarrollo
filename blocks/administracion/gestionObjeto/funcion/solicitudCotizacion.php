@@ -68,13 +68,29 @@ for ($i = 0; $i < $count; $i++) {
 		'estado' => 2,  //solicitud de cotizacion
                 'fecha' => date("Y-m-d") 
 	);
-
+//Actualizo estado del objeto a contratar
     $cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjeto', $parametros );
     $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 
+    
+        $parametros2 = array (
+		'idObjeto' => $_REQUEST ['idObjeto'],
+		'tipo' => 2,  //objeto
+                'fecha' => date("Y-m-d H:i:s")
+	);    
+//Inserto codigo de validacion
+    $cadenaSql = $this->miSql->getCadenaSql ( 'ingresarCodigo', $parametros2 );
+    $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );    
+    
+
+        $datos = array (
+		'idObjeto' => $_REQUEST ['idObjeto'],
+                'idCodigo' => $resultado[0]['id_codigo_validacion']
+	); 
+
 
 		if ($resultado) {
-			redireccion::redireccionar ( 'insertoCotizacion',  $_REQUEST['idObjeto']);
+			redireccion::redireccionar ( 'insertoCotizacion',  $datos );
 			exit ();
 		} else {
 			redireccion::redireccionar ( 'noInserto' );

@@ -70,8 +70,6 @@ $this->idioma["pymeTitulo"]="Seleccione si es usted PYME";
 $this->idioma["registroMercantil"]="Registro Mercantil :";
 $this->idioma["registroMercantilTitulo"]="Seleccione Registro Mercantil";
 
-
-
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 
@@ -80,6 +78,12 @@ $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 
 $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
+
+$this->idioma["DocumentoRUT"] = "Adjuntar PDF Registro Único Tributario :";
+$this->idioma["DocumentoRUTTitulo"]="Seleccionar documento";
+
+$this->idioma["descripcion"] = "Descripción adicional o características especiales del producto";
+$this->idioma["descripcionTitulo"]="Descripción";
 
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
@@ -97,12 +101,16 @@ $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
 $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
+$this->idioma["marcoContratos"] = "Contratos";
+$this->idioma["marcoRUT"] = "Registro Único Tributario ";
 
 
 
 $this->idioma["tabProveedor"] = "Registro Proveedor";
 $this->idioma["tabActividad"] = "Actividades Económicas";
 
+//************ MENSAJES *********
+$this->idioma["noEncontroContrato"] =  "No hay ningun contrato con la Universidad.";
 
 
 

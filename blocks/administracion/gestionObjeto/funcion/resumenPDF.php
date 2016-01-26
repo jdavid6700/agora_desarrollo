@@ -53,6 +53,7 @@ $contenidoPagina .= "<page_header>
                     <br>
                     Carrera 8 N. 40-78 Piso 1 / PBX 3238400 - 3239300
                     <br>
+                    Codigo de Validación : " . $_REQUEST['idCodigo']  . "
                    
                 </td>
             </tr>
