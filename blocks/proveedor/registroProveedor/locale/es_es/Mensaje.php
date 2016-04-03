@@ -13,6 +13,9 @@ $this->idioma["digitoTitulo"]="Digito de Verificación";
 $this->idioma["nombreEmpresa"]="Nombre de la Empresa";
 $this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
 
+$this->idioma["paisEmpresa"] = "Procedencia Empresa : ";
+$this->idioma["paisEmpresaTitulo"]="Seleccione Procedencia de la Empresa";
+
 $this->idioma["ciudad"]="Ciudad";
 $this->idioma["ciudadTitulo"]="Digite Ciudad";
 
@@ -85,6 +88,24 @@ $this->idioma["DocumentoRUTTitulo"]="Seleccionar documento";
 $this->idioma["descripcion"] = "Descripción adicional o características especiales del producto";
 $this->idioma["descripcionTitulo"]="Descripción";
 
+$this->idioma["pais"]="Pais :";
+$this->idioma["paisTitulo"]="Digite Pais de Procedencia";
+
+$this->idioma["codigoPais"]="Código del País :";
+$this->idioma["codigoPaisTitulo"]="Digite el Código del País";
+
+$this->idioma["codigoPostal"]="Codigo Postal :";
+$this->idioma["codigoPostalTitulo"]="Digite el Codigo Postal";
+
+$this->idioma["tipoIdentifiExtranjera"] = "Identificación de Extranjeria :";
+$this->idioma["tipoIdentifiExtranjeraTitulo"]="Selección de Identificación de Extranjeria";
+
+$this->idioma["cedulaExtranjeria"]="Cédula de extranjería :";
+$this->idioma["cedulaExtranjeriaTitulo"]="Digite el Cédula de extranjería";
+
+$this->idioma["pasaporte"]="Pasaporte :";
+$this->idioma["pasaporteTitulo"]="Digite el Pasaporte";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
@@ -97,6 +118,7 @@ $this->idioma["noDefinido"] = "No definido";
 
 $this->idioma["marcoDatos"] = "Ingresar Datos";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
+$this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";

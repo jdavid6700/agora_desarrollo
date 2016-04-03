@@ -83,7 +83,12 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
 
 
+//////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
 
+//$("#editarBotonesConcepto").show("slow");
+$("#marcoProcedencia").hide("fast");
+$("#obligatorioCedula").hide("fast");
+$("#obligatorioPasaporte").hide("fast");
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
