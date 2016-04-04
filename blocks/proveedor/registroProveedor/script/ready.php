@@ -75,12 +75,33 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
 
 
+$('#<?php echo $this->campoSeguro('tipoPersona')?>').width(150);
+$('#<?php echo $this->campoSeguro('paisEmpresa')?>').width(150);
+$('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').width(250);
+$('#<?php echo $this->campoSeguro('tipoDocumento')?>').width(250);
+
+$('#<?php echo $this->campoSeguro('productoImportacion')?>').width(150);
+$('#<?php echo $this->campoSeguro('regimenContributivo')?>').width(150);
+$('#<?php echo $this->campoSeguro('pyme')?>').width(150);
+$('#<?php echo $this->campoSeguro('registroMercantil')?>').width(150);
+
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
+
+$('#<?php echo $this->campoSeguro('tipoPersona')?>').select2();
+$('#<?php echo $this->campoSeguro('paisEmpresa')?>').select2();
+$('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').select2();
+$('#<?php echo $this->campoSeguro('tipoDocumento')?>').select2();
+
+$('#<?php echo $this->campoSeguro('productoImportacion')?>').select2();
+$('#<?php echo $this->campoSeguro('regimenContributivo')?>').select2();
+$('#<?php echo $this->campoSeguro('pyme')?>').select2();
+$('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
+
 
 
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
