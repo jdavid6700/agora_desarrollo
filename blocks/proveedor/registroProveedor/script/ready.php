@@ -112,4 +112,23 @@ $("#obligatorioCedula").hide("fast");
 $("#obligatorioPasaporte").hide("fast");
 
 
+if($('#<?php echo $this->campoSeguro('paisEmpresa') ?>').val() == 2){
+		$("#marcoProcedencia").show("slow");
+}else {
+		$("#marcoProcedencia").hide("slow");
+}
+
+
+if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
+		$("#obligatorioCedula").show("fast");
+		$("#obligatorioPasaporte").hide("fast");
+}else if ($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 2){
+		$("#obligatorioCedula").hide("fast");
+		$("#obligatorioPasaporte").show("fast");
+}else{
+		$("#obligatorioCedula").hide("fast");
+		$("#obligatorioPasaporte").hide("fast");
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

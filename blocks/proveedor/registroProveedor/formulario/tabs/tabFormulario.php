@@ -266,7 +266,7 @@ class registrarForm {
 						echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 						unset($atributos);
 						{
-							// ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
+							// ---------------- CONTROL: Cuadro de Texto PAIS--------------------------------------------------------
 							$esteCampo = 'pais';
 							$atributos ['id'] = $esteCampo;
 							$atributos ['nombre'] = $esteCampo;
@@ -297,9 +297,9 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
-							// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+							// ---------------- FIN CONTROL: Cuadro de Texto  PAIS--------------------------------------------------------
 							
-							// ---------------- CONTROL: Cuadro de Texto  Dirección--------------------------------------------------------
+							// ---------------- CONTROL: Cuadro de Texto  Codigo Pais--------------------------------------------------------
 							$esteCampo = 'codigoPais';
 							$atributos ['id'] = $esteCampo;
 							$atributos ['nombre'] = $esteCampo;
@@ -330,9 +330,9 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
-							// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
+							// ---------------- FIN CONTROL: Cuadro de Texto  Codigo Pais--------------------------------------------------------
 							
-							// ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
+							// ---------------- CONTROL: Cuadro de Texto Codigo Postal--------------------------------------------------------
 							$esteCampo = 'codigoPostal';
 							$atributos ['id'] = $esteCampo;
 							$atributos ['nombre'] = $esteCampo;
@@ -363,9 +363,9 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroTexto ( $atributos );
 							unset ( $atributos );
-							// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+							// ---------------- FIN CONTROL: Cuadro de Texto  Codigo Postal--------------------------------------------------------
 								
-							// ---------------- CONTROL: Lista NACIONALIDAD Empresa --------------------------------------------------------
+							// ---------------- CONTROL: Lista Tipo Identificacion Empresa --------------------------------------------------------
 							$esteCampo = "tipoIdentifiExtranjera";
 							$atributos ['nombre'] = $esteCampo;
 							$atributos ['id'] = $esteCampo;
@@ -396,7 +396,7 @@ class registrarForm {
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoCuadroLista ( $atributos );
 							unset ( $atributos );
-							// ----------------FIN CONTROL: Lista NACIONALIDAD Empresa--------------------------------------------------------
+							// ----------------FIN CONTROL: Lista Tipo Identificacion Empresa--------------------------------------------------------
 							
 							$atributos ["id"] = "obligatorioCedula";
 							$atributos ["estilo"] = "Marco";
@@ -404,7 +404,7 @@ class registrarForm {
 							unset ( $atributos );
 							{
 								
-								// ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
+								// ---------------- CONTROL: Cuadro de Texto CEDULA EXTRANJERIA--------------------------------------------------------
 								$esteCampo = 'cedulaExtranjeria';
 								$atributos ['id'] = $esteCampo;
 								$atributos ['nombre'] = $esteCampo;
@@ -435,7 +435,7 @@ class registrarForm {
 								$atributos = array_merge ( $atributos, $atributosGlobales );
 								echo $this->miFormulario->campoCuadroTexto ( $atributos );
 								unset ( $atributos );
-								// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------				
+								// ---------------- FIN CONTROL: Cuadro de Texto  CEDULA EXTRANJERIA--------------------------------------------------------				
 								
 							}
 							echo $this->miFormulario->division ( 'fin' );
@@ -446,7 +446,7 @@ class registrarForm {
 							unset ( $atributos );
 							{
 							
-								// ---------------- CONTROL: Cuadro de Texto  Dirección--------------------------------------------------------
+								// ---------------- CONTROL: Cuadro de Texto  PASAPORTE--------------------------------------------------------
 								$esteCampo = 'pasaporte';
 								$atributos ['id'] = $esteCampo;
 								$atributos ['nombre'] = $esteCampo;
@@ -477,7 +477,7 @@ class registrarForm {
 								$atributos = array_merge ( $atributos, $atributosGlobales );
 								echo $this->miFormulario->campoCuadroTexto ( $atributos );
 								unset ( $atributos );
-								// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
+								// ---------------- FIN CONTROL: Cuadro de Texto  PASAPORTE--------------------------------------------------------
 							
 							
 							}
