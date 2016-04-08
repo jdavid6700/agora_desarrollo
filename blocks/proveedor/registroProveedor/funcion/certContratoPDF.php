@@ -4,12 +4,13 @@ if (!isset($GLOBALS["autorizado"])) {
     include("index.php");
     exit;
 }	
+
 ob_end_clean();
+
 $ruta=$this->miConfigurador->getVariableConfiguracion('raizDocumento');
-//include($ruta.'/core/classes/html2pdf/html2pdf.class.php');
 include($ruta.'/plugin/html2pdf/html2pdf.class.php');
 
-//$directorio=$this->miConfigurador->getVariableConfiguracion("rutaUrlBloque");
+
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
 $aplicativo=$this->miConfigurador->getVariableConfiguracion("nombreAplicativo");
 $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->configuracion ["site"];
@@ -39,6 +40,13 @@ $contenidoPagina .= "<page_header>
         </table>
     </page_header>
     <page_footer>
+		
+		<p class=MsoNormal style='text-align:center'><span style='font-size:14.0pt;
+mso-bidi-font-size:11.0pt;line-height:107%'> <b> CAMILO ANDRÉS BUSTOS PARRA </b>  </span></p>
+    		<p class=MsoNormal style='text-align:center'><span style='font-size:10.0pt;
+mso-bidi-font-size:11.0pt;line-height:107%'> <b> Jefe Oficina Asesora Jurídica  </b>  </span></p>
+    
+		<br>
         <table align='center' width = '100%'>
 
             <tr>
@@ -77,9 +85,7 @@ mso-bidi-font-size:11.0pt;line-height:107%'> <b>FECHA INICIO - FECHA FIN : </b>
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
 mso-bidi-font-size:11.0pt;line-height:107%'> <b>VALOR DEL CONTRATO : $</b>
-" . $valorContrto . "  </span></p>
-
-";
+" . $valorContrto . "  </span></p>";
 
 $contenidoPagina .= "</page>";
 

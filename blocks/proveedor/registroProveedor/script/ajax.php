@@ -43,6 +43,29 @@ $("#<?php echo $this->campoSeguro('docente') ?>").autocomplete({
 	}
 });
 
+////////////////////////Seleccion Procedencia Formulario Adicional//////////////////////////////////////////
+$( "#<?php echo $this->campoSeguro('paisEmpresa')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('paisEmpresa') ?>').val() == 2){
+		$("#marcoProcedencia").show("slow");
+	}else {
+		$("#marcoProcedencia").hide("slow");
+	}
+});
+
+$( "#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
+		$("#obligatorioCedula").show("fast");
+		$("#obligatorioPasaporte").hide("fast");
+	}else if ($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 2){
+		$("#obligatorioCedula").hide("fast");
+		$("#obligatorioPasaporte").show("fast");
+	}else{
+		$("#obligatorioCedula").hide("fast");
+		$("#obligatorioPasaporte").hide("fast");
+	}
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 //////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////

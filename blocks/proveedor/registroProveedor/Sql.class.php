@@ -172,7 +172,22 @@ class Sql extends \Sql {
 					$cadenaSql.=" anexorut,";
 					$cadenaSql.=" puntaje_evaluacion, ";
 					$cadenaSql.=" clasificacion_evaluacion,";
-					$cadenaSql.=" estado";
+					$cadenaSql.=" estado,";
+					
+					if($variable['paisEmpresa'] == 1){
+						$cadenaSql.=" tipo_procedencia";
+					}else{
+						$cadenaSql.=" tipo_procedencia,";
+						$cadenaSql.=" pais,";
+						$cadenaSql.=" codigo_pais,";
+						$cadenaSql.=" codigo_postal,";
+						$cadenaSql.=" tipo_doc_extranjero,";
+						if($variable['tipoIdentifiExtranjera'] == 1){
+							$cadenaSql.=" cedula_extranjeria";
+						}else{
+							$cadenaSql.=" pasaporte";
+						}
+					}
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
@@ -203,7 +218,22 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['destino']. "',";
 					$cadenaSql.=" '0',";//puntaje
 					$cadenaSql.=" '0',";//clasificacion
-					$cadenaSql.=" '2'";//estado inactivo
+					$cadenaSql.=" '2',";//estado inactivo
+					if($variable['paisEmpresa'] == 1){
+						$cadenaSql.=" 'Nacional'";
+					}else{
+						$cadenaSql.=" 'Extranjero',";
+						$cadenaSql.=" '" . $variable['pais']. "',";
+						$cadenaSql.= $variable['codigoPais']. ",";
+						$cadenaSql.= $variable['codigoPostal']. ",";
+						if($variable['tipoIdentifiExtranjera'] == 1){
+							$cadenaSql.=" 'Cedula de Extranjeria',";
+							$cadenaSql.= $variable['cedulaExtranjeria'];
+						}else{
+							$cadenaSql.=" 'Pasaporte',";
+							$cadenaSql.= $variable['pasaporte'];
+						}
+					}
 					$cadenaSql.=" );";
 					break;
                                     
@@ -232,7 +262,32 @@ class Sql extends \Sql {
 					$cadenaSql .= "regimen='" . $variable ['regimenContributivo'] . "',";
 					$cadenaSql .= "pyme='" . $variable ['pyme'] . "',";
 					$cadenaSql .= "registromercantil='" . $variable ['registroMercantil'] . "',";
-					$cadenaSql .= "descripcion='" . $variable ['descripcion'] . "'";
+					$cadenaSql .= "descripcion='" . $variable ['descripcion'] . "',";
+					
+					if($variable['paisEmpresa'] == 1){
+						$cadenaSql.= "tipo_procedencia= 'Nacional',";
+						$cadenaSql.= "pais= NULL,";
+						$cadenaSql.= "codigo_pais= NULL,";
+						$cadenaSql.= "codigo_postal= NULL,";
+						$cadenaSql.= "tipo_doc_extranjero= NULL,";
+						$cadenaSql.= "cedula_extranjeria= NULL,";
+						$cadenaSql.= "pasaporte= NULL";
+					}else{
+						$cadenaSql.= "tipo_procedencia= 'Extranjero',";
+						$cadenaSql.= "pais= '" . $variable['pais']. "',";
+						$cadenaSql.= "codigo_pais= ".$variable['codigoPais']. ",";
+						$cadenaSql.= "codigo_postal= ".$variable['codigoPostal']. ",";
+						if($variable['tipoIdentifiExtranjera'] == 1){
+							$cadenaSql.= "tipo_doc_extranjero= 'Cedula de Extranjeria',";
+							$cadenaSql.= "cedula_extranjeria= ". $variable['cedulaExtranjeria'].",";
+							$cadenaSql.= "pasaporte= NULL";
+						}else{
+							$cadenaSql.= "tipo_doc_extranjero= 'Pasaporte',";
+							$cadenaSql.= "pasaporte= ". $variable['pasaporte'].",";
+							$cadenaSql.= "cedula_extranjeria= NULL";
+						}
+					}
+					
 					$cadenaSql .= " WHERE id_proveedor=";
 					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
 					break; 
@@ -287,7 +342,14 @@ class Sql extends \Sql {
 					$cadenaSql.=" P.registromercantil,";
 					$cadenaSql.=" P.descripcion,";
 					$cadenaSql.=" P.anexorut,";
-					$cadenaSql.=" P.estado";                                        
+					$cadenaSql.=" P.estado,";
+					$cadenaSql.=" P.tipo_procedencia,";
+					$cadenaSql.=" P.pais,";
+					$cadenaSql.=" P.codigo_pais,";
+					$cadenaSql.=" P.codigo_postal,";
+					$cadenaSql.=" P.tipo_doc_extranjero,";
+					$cadenaSql.=" P.cedula_extranjeria,";
+					$cadenaSql.=" P.pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
 					$cadenaSql.=" JOIN proveedor.prov_proveedor_info P ON P.nit::text = U.usuario";
