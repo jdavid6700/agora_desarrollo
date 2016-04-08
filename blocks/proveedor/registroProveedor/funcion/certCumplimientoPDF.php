@@ -4,12 +4,13 @@ if (!isset($GLOBALS["autorizado"])) {
     include("index.php");
     exit;
 }	
+
 ob_end_clean();
+
 $ruta=$this->miConfigurador->getVariableConfiguracion('raizDocumento');
-//include($ruta.'/core/classes/html2pdf/html2pdf.class.php');
 include($ruta.'/plugin/html2pdf/html2pdf.class.php');
 
-//$directorio=$this->miConfigurador->getVariableConfiguracion("rutaUrlBloque");
+
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
 $aplicativo=$this->miConfigurador->getVariableConfiguracion("nombreAplicativo");
 $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->configuracion ["site"];
@@ -58,7 +59,7 @@ $contenidoPagina .= "<page_header>
     $contenidoPagina .= "
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>CERTIFICACIÓN</span></b></p>
+107%'>CERTIFICACIï¿½N</span></b></p>
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
 mso-bidi-font-size:11.0pt;line-height:107%'>El proveedor <b>".$resultado[0]['nomempresa']."</b>, con
@@ -84,7 +85,7 @@ mso-bidi-font-size:11.0pt;line-height:107%'> <b>VALOR DEL CONTRATO : $</b>
 $contenidoPagina .= "</page>";
 
 
-	$nombreDocumento = 'certificacion.pdf';
+	$nombreDocumento = 'certificacionCum.pdf';
 
     $html2pdf = new HTML2PDF('P','LETTER','es');
     $res = $html2pdf->WriteHTML($contenidoPagina);

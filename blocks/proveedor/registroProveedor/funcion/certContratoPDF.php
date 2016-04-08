@@ -4,12 +4,13 @@ if (!isset($GLOBALS["autorizado"])) {
     include("index.php");
     exit;
 }	
+
 ob_end_clean();
+
 $ruta=$this->miConfigurador->getVariableConfiguracion('raizDocumento');
-//include($ruta.'/core/classes/html2pdf/html2pdf.class.php');
 include($ruta.'/plugin/html2pdf/html2pdf.class.php');
 
-//$directorio=$this->miConfigurador->getVariableConfiguracion("rutaUrlBloque");
+
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
 $aplicativo=$this->miConfigurador->getVariableConfiguracion("nombreAplicativo");
 $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->configuracion ["site"];
