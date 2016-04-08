@@ -132,7 +132,7 @@ $this->idioma["tabProveedor"] = "Registro Proveedor";
 $this->idioma["tabActividad"] = "Actividades Económicas";
 
 //************ MENSAJES *********
-$this->idioma["noEncontroContrato"] =  "No hay ningun contrato con la Universidad.";
+$this->idioma["noEncontroContrato"] =  "No se ha relacionado ningun contrato con la Universidad, por tal motivo no se puede expedir ningún certificado.";
 
 
 
