@@ -23,6 +23,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	
 	$registro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 	
+	
 	if ($registro) {
 		
 		// 0. Verificar que las claves coincidan
