@@ -354,8 +354,22 @@ class Sql extends \Sql {
 					$cadenaSql.=" prov_usuario U";
 					$cadenaSql.=" JOIN proveedor.prov_proveedor_info P ON P.nit::text = U.usuario";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
-					break;  
-
+					break;
+				
+				/* DATOS BIENVENIDA PROVEEDOR */
+			case "buscarProveedorLog" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " t1.nomempresa,";
+				$cadenaSql .= " t1.nit,";
+				$cadenaSql .= " t2.usuario,";
+				$cadenaSql .= " t2.id_usuario ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.prov_proveedor_info t1";
+				$cadenaSql .= " INNER JOIN prov_usuario t2 ON t1.nit::varchar = t2.usuario";
+				$cadenaSql .= " WHERE t2.id_usuario = " . $variable . ";";
+				break;
+							
+					
 			/* CONSULTAR CONTRATOS DEL PROVEEDOR */		
 				case "consultarContratos" :
 					$cadenaSql=" SELECT";
