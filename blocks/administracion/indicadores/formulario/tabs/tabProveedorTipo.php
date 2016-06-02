@@ -51,7 +51,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = "marcoDatos";
+		$esteCampo = "marcoTipoA";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -62,10 +62,9 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 		unset($resultado);
 		//CONSULTAR
-		$annnoActual = date ( 'Y' );
-		$filtroVigencita = $annnoActual - 3;//Se filtra por los ultimos 3 años
+		$tipo = 'A';//Se filtra TIPO DE CLASIFICACION
 		
-		$cadenaSql = $this->sql->getCadenaSql ( 'listaContato', $filtroVigencita );
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaTipoA', $tipo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
 
 		if ($resultado) {
@@ -74,32 +73,21 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 						<tr>
 							<th><center>NIT</center></th>
 							<th><center>Proveedor</center></th>
-							<th><center>No. Contrato</center></th>
-							<th><center>Fecha Inicial</center></th>
-							<th><center>Fecha Final</center></th>
-							<th><center>Fecha Registro <br>Contrato</center></th>
-							<th><center>Supervisor</center></th>
+							<th><center>Correo</center></th>
 							<th><center>Puntaje Total</center></th>
 							<th><center>Clasificaci&oacute;n</center></th>
-							<th><center>Estado</center></th>
 						</tr>
 						</thead>
 						<tbody>";
 	
 				foreach ($resultado as $dato):
-					$estado = $dato['estado']==1?"Nuevo":"Evaluado";
 					
 					$mostrarHtml = "<tr>
 								<td><right>" . $dato['nit'] . "</center></td>
 								<td><center>" . $dato['nomempresa'] . "</center></td>
-								<td><center>" . $dato['numero_contrato'] . "</center></td>
-								<td><center>" . $dato['fecha_inicio'] . "</center></td>
-								<td><center>" . $dato['fecha_finalizacion'] . "</center></td>
-								<td><center>" . $dato['fecha_registro'] . "</center></td>
-								<td><right>" . $dato['nombre_supervisor'] . "</center></td>
-								<td><right>" . $dato['puntaje_total'] . "</center></td>
-								<td><center>" . $dato['clasificacion'] . "</center></td>
-								<td><center>" . $estado . "</center></td>
+								<td><center>" . $dato['correo'] . "</center></td>
+								<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
+								<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
 							</tr>";
 					echo $mostrarHtml;
 					unset ( $mostrarHtml );

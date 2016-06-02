@@ -12,6 +12,7 @@ $indice=0;
 $funcion[$indice++]="jquery.validationEngine.js";
 $funcion[$indice++]="jquery.validationEngine-es.js";
 
+$funcion [$indice ++] = "ajax.php";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

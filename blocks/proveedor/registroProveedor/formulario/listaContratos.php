@@ -128,13 +128,13 @@ if ($resultado) {
 					if ($evaluacion [0] ['puntaje_total'] > 45) {
 						$msj = 'Evaluado';
 						
-						$variable = "pagina=" . $miPaginaActual;
-						$variable .= "&action=" . $esteBloque ["nombre"];
-						$variable .= "&bloque=" . $esteBloque ['nombre'];
-						$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-						$variable .= "&opcion=certCumplimiento";
-						$variable .= "&idContrato=" . $dato ['id_contrato'];
-						$varSatisfaccion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+						//$variable = "pagina=" . $miPaginaActual;
+						//$variable .= "&action=" . $esteBloque ["nombre"];
+						//$variable .= "&bloque=" . $esteBloque ['nombre'];
+						//$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+						//$variable .= "&opcion=certContrato";
+						//$variable .= "&idContrato=" . $dato ['id_contrato'];
+						//$varSatisfaccion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 						$certSatisImagen = 'pdf.png';
 					} else {
 						$msj = 'Evaluado, pero no cumplio a satisfacción';

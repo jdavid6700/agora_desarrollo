@@ -49,7 +49,10 @@ class Sql extends \Sql {
 					$cadenaSql .= " P.nomempresa, ";
 					$cadenaSql .= " P.nit, ";
 					$cadenaSql .= " O.objetocontratar, ";
-					$cadenaSql .= " O.descripcion ";					
+					$cadenaSql .= " O.descripcion, ";
+					$cadenaSql .= " C.numero_cdp, ";
+					$cadenaSql .= " C.numero_rp, ";
+					$cadenaSql .= " C.fecha_rp ";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " proveedor.prov_contrato C";
 					$cadenaSql .= " JOIN proveedor.prov_objeto_contratar O ON O.id_objeto = C.id_objeto";

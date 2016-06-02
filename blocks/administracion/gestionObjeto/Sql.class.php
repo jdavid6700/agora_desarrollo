@@ -232,6 +232,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" id_ordenador,";
 					$cadenaSql.=" codigociiu,";
 					$cadenaSql.=" id_dependencia,";
+					$cadenaSql.=" numero_cdp,";
 					$cadenaSql.=" unidad,";
 					$cadenaSql.=" cantidad,";
 					$cadenaSql.=" descripcion,";
@@ -246,6 +247,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['ordenador']. "',";
 					$cadenaSql.=" '" . $variable['claseCIIU']. "',";
 					$cadenaSql.=" '" . $variable['dependencia']. "',";
+					$cadenaSql.=" '" . $variable['numCDP']. "',";
 					$cadenaSql.=" '" . $variable['unidad']. "',";
 					$cadenaSql.=" '" . $variable['cantidad']. "',";
 					$cadenaSql.=" '" . $variable['descripcion']. "',";

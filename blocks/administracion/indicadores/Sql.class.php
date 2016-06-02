@@ -27,7 +27,21 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-			
+	
+
+			/* LISTAR - CONTRATO */					
+				case "listaTipoA" :			
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " P.nomempresa, ";
+					$cadenaSql .= " P.nit, ";
+					$cadenaSql .= " P.correo, ";
+					$cadenaSql .= " P.clasificacion_evaluacion, ";
+					$cadenaSql .= " P.puntaje_evaluacion ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " proveedor.prov_proveedor_info P";
+					$cadenaSql .= " WHERE P.clasificacion_evaluacion = '" . $variable . "'";
+					$cadenaSql .= " ORDER BY P.puntaje_evaluacion DESC";
+					break;	
 			/* LISTAR - CONTRATO */					
 				case "listaContato" :			
 					$cadenaSql = "SELECT  ";

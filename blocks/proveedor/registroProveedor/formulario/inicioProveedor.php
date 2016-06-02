@@ -26,16 +26,26 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 $cadena_sql = $this->sql->getCadenaSql ( "buscarProveedorLog", $_REQUEST ['usuario'] );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
+setlocale(LC_ALL, "es_ES");
+$fecha = strftime("%A %d de %B del %Y");
+$fechaHoy = utf8_encode(ucwords($fecha));
 ?>
 
 <br><br>
     <div class="container">
-
+     <div align="right">
+     	<p><?php echo $fechaHoy ?></p>
+     	<div id="bannerReloj">
+     	
+     	</div>
+     </div>
+		<br>
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron" align="center">
         <h2>Sistema de Registro Único de Proveedores!</h2>
         <p>Módulo de Proveedores</p>
-        <h3>!Bienvenido Proveedor: <?php echo $resultado[0]['nomempresa'] ?></h3>
+        <h3>Bienvenido Proveedor: <?php echo $resultado[0]['nomempresa'] ?></h3>
+        
 
       </div>
 
