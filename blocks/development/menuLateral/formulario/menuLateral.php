@@ -74,6 +74,15 @@ $enlace = 'pagina=formatearSQL';
 $enlace .= '&development=true';
 $items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
 
+
+$item = 'Servicios';
+$items [$item] ['nombre'] = 'Servicios Agora';
+$items [$item] ['enlace'] = true; // El <li> es un enlace directo
+$items [$item] ['icono'] = 'ui-icon-circle-triangle-e'; // El <li> es un enlace directo
+$enlace = 'pagina=servicio';
+$enlace .= '&development=true';
+$items [$item] ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+
 // Atributos generales para la lista
 $atributos ['id'] = 'menuLateral';
 $atributos ['estilo'] = 'jqueryui';
