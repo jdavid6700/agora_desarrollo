@@ -26,6 +26,7 @@ class Funcion {
 	var $error;
 	var $miRecursoDB;
 	var $crypto;
+	
 	function verificarCampos() {
 		include_once ($this->ruta . "/funcion/verificarCampos.php");
 		if ($this->error == true) {

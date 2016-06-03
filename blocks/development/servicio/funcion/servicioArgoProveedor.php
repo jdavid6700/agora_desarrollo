@@ -4,10 +4,13 @@ use development\servicio\Funcion;
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+
 if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
     
-	$cadena_sql = $this->sql->getCadenaSql ( "informacion_proveedor" );
+	$cadena_sql = $this->sql->getCadenaSql ( "informacion_por_proveedor", $_REQUEST['variable'] );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	var_dump($cadena_sql);
 	
 	if($resultado != false){
 		$this->deliver_response(200,"Proveedores Encontrados",$resultado);

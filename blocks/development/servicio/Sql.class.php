@@ -105,10 +105,15 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_bloque>0';
 				break;
 				
-				case "informacion_proveedor" :
-					$cadenaSql = " SELECT * FROM proveedor.prov_proveedor_info;  ";
-					//$cadenaSql .= " WHERE nit= $variable ";
-					break;
+			case "informacion_proveedor" :
+				$cadenaSql = " SELECT * FROM proveedor.prov_proveedor_info;  ";
+				// $cadenaSql .= " WHERE nit= $variable ";
+				break;
+			
+			case "informacion_por_proveedor" :
+				$cadenaSql = " SELECT * FROM proveedor.prov_proveedor_info";
+				$cadenaSql .= " WHERE nit= $variable ";
+				break;
 		}
 		
 		return $cadenaSql;

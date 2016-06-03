@@ -36,9 +36,8 @@ class Bloque implements \Bloque {
 	var $miFuncion;
 	var $miSql;
 	var $miConfigurador;
-	public 
-
-	function __construct($esteBloque, $lenguaje = "") {
+	
+	public function __construct($esteBloque, $lenguaje = "") {
 		
 		// El objeto de la clase Configurador debe ser único en toda la aplicación
 		$this->miConfigurador = \Configurador::singleton ();
@@ -81,11 +80,14 @@ class Bloque implements \Bloque {
 				$url = $this->miConfigurador->fabricaConexiones->crypto->decodificar($_GET['data'], $enlace);
 				$url_fragmentada = explode('&',$url);
 				if(!isset($url_fragmentada[2])){
-				$this->miFrontera->frontera ();
+					$this->miFrontera->frontera ();
 				}
 				else{
 					$servicio= explode('=',$url_fragmentada[2]);
 					$_REQUEST['servicio']=$servicio[1];
+					
+					$parametro= explode('=',$url_fragmentada[3]);
+					$_REQUEST['variable']=$parametro[1];
 					$this->miFuncion->action();
 				}
 				
