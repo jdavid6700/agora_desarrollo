@@ -106,8 +106,7 @@ class Sql extends \Sql {
 				break;
 				
 			case "informacion_proveedor" :
-				$cadenaSql = " SELECT * FROM proveedor.prov_proveedor_info;  ";
-				// $cadenaSql .= " WHERE nit= $variable ";
+				$cadenaSql = " SELECT numdocumento, primerapellido, segundoapellido, primernombre, segundonombre FROM proveedor.prov_proveedor_info;  ";
 				break;
 			
 			case "informacion_por_proveedor" :

@@ -41,6 +41,9 @@ class Funcion {
 	function servicioArgoProveedor() {
 		include_once ($this->ruta . "funcion/servicioArgoProveedor.php");
 	}
+	function servicioArkaProveedor() {
+		include_once ($this->ruta . "funcion/servicioArkaProveedor.php");
+	}
 	function registrarBloque() {
 		include_once ($this->ruta . "funcion/RegistradorBloque.class.php");
 		
@@ -76,6 +79,10 @@ class Funcion {
 				
 				case 'servicioArgoProveedor' :
 					$resultado = $this->servicioArgoProveedor ();
+					break;
+					
+				case 'servicioArkaProveedor' :
+					$resultado = $this->servicioArkaProveedor ();
 					break;
 				
 				case 'registrarBloque' :
