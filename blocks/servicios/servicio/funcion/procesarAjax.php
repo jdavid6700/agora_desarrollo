@@ -2,7 +2,7 @@
 
 namespace registro;
 
-use development\registro\Lenguaje;
+use servicios\registro\Lenguaje;
 
 class procesarAjax {
     

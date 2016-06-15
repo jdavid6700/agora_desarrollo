@@ -1,6 +1,6 @@
 <?php
 
-namespace development\servicio;
+namespace servicios\servicio;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

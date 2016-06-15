@@ -1,5 +1,5 @@
 <?php
-use development\servicio\Funcion;
+use servicios\servicio\Funcion;
 
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -18,7 +18,7 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 
 }else{
 
- $this->deliver_response(400,"Peticion Invalidad",null);
+ $this->deliver_response(400,"Peticion Invalida",null);
 
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace development\servicio;
+namespace servicios\servicio;
 
 // Evitar un acceso directo a este archivo
 if (! isset ( $GLOBALS ["autorizado"] )) {
