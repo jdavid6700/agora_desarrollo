@@ -25,7 +25,7 @@ include_once ("Funcion.class.php");
 include_once ("Sql.class.php");
 
 // Mensajes
-include_once ("Lenguaje.class.php");
+//include_once ("Lenguaje.class.php");
 
 // Esta clase actua como control del bloque en un patron FCE
 
@@ -59,7 +59,7 @@ class Bloque implements \Bloque {
 		$this->miFuncion = new Funcion ();
 		$this->miSql = new Sql ();
 		$this->miFrontera = new Frontera ();
-		$this->miLenguaje = new Lenguaje ();
+		//$this->miLenguaje = new Lenguaje ();
 	}
 	public function bloque() {
 		if (isset ( $_REQUEST ['botonCancelar'] ) && $_REQUEST ['botonCancelar'] == "true") {
@@ -68,10 +68,10 @@ class Bloque implements \Bloque {
 			
 			$this->miFrontera->setSql ( $this->miSql );
 			$this->miFrontera->setFuncion ( $this->miFuncion );
-			$this->miFrontera->setLenguaje ( $this->miLenguaje );
+			//$this->miFrontera->setLenguaje ( $this->miLenguaje );
 			
 			$this->miFuncion->setSql ( $this->miSql );
-			$this->miFuncion->setLenguaje ( $this->miLenguaje );
+			//$this->miFuncion->setLenguaje ( $this->miLenguaje );
 			
 			if (! isset ( $_GET ['servicio'] )) {
 				
@@ -86,11 +86,12 @@ class Bloque implements \Bloque {
 					$servicio= explode('=',$url_fragmentada[2]);
 					$_REQUEST['servicio']=$servicio[1];
 					
-					$parametro= explode('=',$url_fragmentada[3]);
-					$_REQUEST['variable']=$parametro[1];
+					if(isset($url_fragmentada[3])){
+						$parametro= explode('=',$url_fragmentada[3]);
+						$_REQUEST['variable']=$parametro[1];
+					}
 					$this->miFuncion->action();
 				}
-				
 			
 			} else {
 			
