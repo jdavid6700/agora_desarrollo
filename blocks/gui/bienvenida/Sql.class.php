@@ -153,6 +153,19 @@ class Sqlbienvenida extends sql {
 				$cadena_sql.="WHERE ";
 				$cadena_sql.="id_sesion='".$idSesion."'";
 				break;
+				
+			case "rolUsuario" :
+				$cadena_sql = "SELECT ";
+				$cadena_sql .= "id_usuario, ";
+				$cadena_sql .= "nombre, ";
+				$cadena_sql .= "apellido, ";
+				$cadena_sql .= "usuario, ";
+				$cadena_sql .= "rolmenu ";
+				$cadena_sql .= "FROM ";
+				$cadena_sql .= $prefijo . "usuario ";
+				$cadena_sql .= "WHERE ";
+				$cadena_sql .= "id_usuario='" . $variable . "'";
+				break;
 
 
 
