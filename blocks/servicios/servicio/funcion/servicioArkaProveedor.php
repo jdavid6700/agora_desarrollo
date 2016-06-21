@@ -13,7 +13,7 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 	if($resultado != false){
 		$this->deliver_response(200,"Proveedores Encontrados",$resultado);
 	}else{
-		$this->deliver_response(200,"No se encontraron proveedores",null);
+		$this->deliver_response(300,"No se encontraron proveedores",null);
 	}
 
 }else{

@@ -27,38 +27,25 @@ class Funcion {
 	var $miRecursoDB;
 	var $crypto;
 	
-	function verificarCampos() {
-		include_once ($this->ruta . "/funcion/verificarCampos.php");
-		if ($this->error == true) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	function redireccionar($opcion, $valor = "") {
-		include_once ($this->ruta . "/funcion/redireccionar.php");
-	}
 	function servicioArgoProveedor() {
 		include_once ($this->ruta . "funcion/servicioArgoProveedor.php");
 	}
 	function servicioArkaProveedor() {
 		include_once ($this->ruta . "funcion/servicioArkaProveedor.php");
 	}
-	function registrarBloque() {
-		include_once ($this->ruta . "funcion/RegistradorBloque.class.php");
-		
-		return $resultado;
-	}
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
 	function deliver_response($status,$status_message,$data){
 				
-		
-				$response['status']=$status."-".$status_message;
+				header("HTTP/1.1 $status."-".$status_message");
+				echo "<json>";
+				$response['status']=$status;
+				$response['message']= $status_message;
 				$response['datos']=$data;
 			    $json_response = json_encode($response);
 				echo $json_response;
+				echo "<json>";
 				
 	}
 	function action() {
@@ -83,14 +70,6 @@ class Funcion {
 					
 				case 'servicioArkaProveedor' :
 					$resultado = $this->servicioArkaProveedor ();
-					break;
-				
-				case 'registrarBloque' :
-					$resultado = $this->registrarBloque ();
-					break;
-				
-				case 'armarPagina' :
-					$resultado = $this->armarPagina ();
 					break;
 			}
 		}
@@ -121,9 +100,6 @@ class Funcion {
 	}
 	function setFuncion($funcion) {
 		$this->funcion = $funcion;
-	}
-	public function setLenguaje($lenguaje) {
-		$this->lenguaje = $lenguaje;
 	}
 	public function setFormulario($formulario) {
 		$this->formulario = $formulario;
