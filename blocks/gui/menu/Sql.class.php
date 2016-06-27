@@ -39,7 +39,7 @@ class Sqlmenu extends sql {
             $cadena_sql .= "tooltip, ";
             $cadena_sql .= "parametros ";
             $cadena_sql .= "FROM ";
-            $cadena_sql .= "proveedor.param_menu M ";
+            $cadena_sql .= "parametro.menu M ";
             $cadena_sql .= "JOIN prov_pagina P ON P.id_pagina = M.id_pagina ";
             $cadena_sql .= "WHERE ";
             $cadena_sql .= "rolmenu ='" . $variable . "' ";
@@ -53,7 +53,7 @@ class Sqlmenu extends sql {
                 $cadena_sql.=" apellido ,";
                 $cadena_sql.=" correo ,";
                 $cadena_sql.=" imagen ,";
-		$cadena_sql.=" rolmenu ,";
+				$cadena_sql.=" rolmenu ,";
                 $cadena_sql.=" estado ";
                 $cadena_sql.=" FROM ".$prefijo."usuario";
                 $cadena_sql.=" WHERE id_usuario='" . $variable . "' ";                
