@@ -85,7 +85,12 @@ $('#<?php echo $this->campoSeguro('regimenContributivo')?>').width(150);
 $('#<?php echo $this->campoSeguro('pyme')?>').width(150);
 $('#<?php echo $this->campoSeguro('registroMercantil')?>').width(150);
 
-
+$('#<?php echo $this->campoSeguro('personaJuridicaPais')?>').width(250);
+$("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").select2();
+$('#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>').width(250);
+$("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").select2();
+$('#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>').width(250);
+$("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").select2();
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
@@ -105,6 +110,9 @@ $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
 
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
+
+$("#marcoDatosNatural").hide("fast");
+$("#marcoDatosJuridica").hide("fast");
 
 //$("#editarBotonesConcepto").show("slow");
 $("#marcoProcedencia").hide("fast");

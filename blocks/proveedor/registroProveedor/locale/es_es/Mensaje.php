@@ -4,8 +4,11 @@
 $this->idioma["tipoPersona"] = "Tipo de Persona : ";
 $this->idioma["tipoPersonaTitulo"]="Seleccione Tipo de Persona";
 
-$this->idioma["nit"] = "NIT o cédula : ";
-$this->idioma["nitTitulo"]="Digite NIT o cédula de la empresa";
+$this->idioma["nit"] = "NIT: ";
+$this->idioma["nitTitulo"]="Digite NIT de la empresa";
+
+$this->idioma["cedula"] = "Cédula: ";
+$this->idioma["cedulaTitulo"]="Digite cédula de la persona";
 
 $this->idioma["digito"] = "Digito de Verificación : ";
 $this->idioma["digitoTitulo"]="Digito de Verificación";
@@ -106,6 +109,10 @@ $this->idioma["cedulaExtranjeriaTitulo"]="Digite el Cédula de extranjería";
 $this->idioma["pasaporte"]="Pasaporte :";
 $this->idioma["pasaporteTitulo"]="Digite el Pasaporte";
 
+$this->idioma["personaJuridicaPais"]="Pais :";
+$this->idioma["personaJuridicaDepartamento"]="Departamento :";
+$this->idioma["personaJuridicaCiudad"]="Ciudad :";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
@@ -116,8 +123,14 @@ $this->idioma["noDefinido"] = "No definido";
 
 ///////////////////////////////////////////////////////
 
-$this->idioma["marcoDatos"] = "Ingresar Datos";
+$this->idioma["marcoDatosNatural"] = "Ingresar Datos de Persona Natural";
+$this->idioma["marcoDatosJuridica"] = "Ingresar Datos de Persona Juridica";
+
+
+$this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
+
+
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";

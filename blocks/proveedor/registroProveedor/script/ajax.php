@@ -52,6 +52,19 @@ $( "#<?php echo $this->campoSeguro('paisEmpresa')?>" ).change(function() {
 	}
 });
 
+$( "#<?php echo $this->campoSeguro('tipoPersona')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('tipoPersona') ?>').val() == 1){
+		$("#marcoDatosNatural").show("slow");
+		$("#marcoDatosJuridica").hide("fast");
+	}else if($('#<?php echo $this->campoSeguro('tipoPersona') ?>').val() == 2){
+		$("#marcoDatosNatural").hide("fast");
+		$("#marcoDatosJuridica").show("slow");
+	}else{
+		$("#marcoDatosNatural").hide("fast");
+		$("#marcoDatosJuridica").hide("fast");
+	}
+});
+
 $( "#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 		$("#obligatorioCedula").show("fast");
@@ -220,6 +233,56 @@ $enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarCiudad, $enlace );
 // URL definitiva
 $urlFinalCiudad = $url . $cadena;
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar16 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar16 .= "&procesarAjax=true";
+$cadenaACodificar16 .= "&action=index.php";
+$cadenaACodificar16 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar16 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar16 .= $cadenaACodificar16 . "&funcion=consultarDepartamentoAjax";
+$cadenaACodificar16 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena16 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar16, $enlace );
+
+// URL definitiva
+$urlFinal16 = $url . $cadena16;
+//echo $urlFinal16; exit;
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar17 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar17 .= "&procesarAjax=true";
+$cadenaACodificar17 .= "&action=index.php";
+$cadenaACodificar17 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar17 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar17 .= $cadenaACodificar17 . "&funcion=consultarCiudadAjax";
+$cadenaACodificar17 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena17 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar17, $enlace );
+
+// URL definitiva
+$urlFinal17 = $url . $cadena17;
+//echo $urlFinal16; exit;
+
 ?>
 
 function consultarCiudad(elem, request, response){
@@ -256,4 +319,102 @@ function hora(){
 
 fecha = new Date(); 
 hora();
+
+
+
+
+
+function consultarDepartamentoLug(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal16?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").val()},
+	    success: function(data){
+	        if(data[0]!=" "){
+	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>");
+	            $.each(data , function(indice,valor){
+	            	$("<option value='"+data[ indice ].id_departamento+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").removeAttr('disabled');
+	            
+	            //$('#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>').width(250);
+	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").select2();
+	            
+	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").removeClass("validate[required]");
+	            
+		    }
+		    
+	  			
+	    }
+		                    
+	   });
+	};
+
+	function consultarCiudadLug(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal17?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_ciudad+"'>"+data[ indice ].nombreciudad+"</option>").appendTo("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};
+		
+		
+	function calcularDigito(cadenaNit){
+		  alert(cadenaNit);
+		  for (i = 0; i <= 9; i++) {
+        		var counter = i;
+        		subCadena[i] = cadenaNit.substring(i, counter++);
+        		alert(subCadena[i]);
+		  }
+	};
+		
+      $(function () {
+		        $("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").val()!=''){
+						consultarDepartamentoLug();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").attr('disabled','');
+		    			}
+		    	      });
+		        $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").val()!=''){
+		            	consultarCiudadLug();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").attr('disabled','');
+		    			}
+		    	      });
+		    	      
+		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){
+        				var value = $(this).val().length;
+        				if(value == 9){
+        					var cadenaNit = $(this).val();
+        					calcularDigito(cadenaNit);
+        				}
+        				
+    			}).keyup();      
+	    	      
+		 });
     	 

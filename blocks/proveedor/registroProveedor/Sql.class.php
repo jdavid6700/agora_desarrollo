@@ -428,6 +428,53 @@ class Sql extends \Sql {
 					$cadenaSql .= " WHERE clase ='" . $variable ."'";
 					$cadenaSql .= " ORDER BY nombre";
 					break;
+					
+			case 'buscarPais' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_pais as ID_PAIS, ';
+				$cadenaSql .= 'nombre_pais as NOMBRE ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_pais != 112 ';
+				$cadenaSql .= 'ORDER BY NOMBRE';
+				break;
+			
+			case 'buscarDepartamento' : // Solo Departamentos de Colombia
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
+				$cadenaSql .= 'nombre as NOMBRE ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_pais = 112;';
+				break;
+			
+			case 'buscarDepartamentoAjax' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
+				$cadenaSql .= 'nombre as NOMBRE ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_pais = ' . $variable . ' ';
+				$cadenaSql .= 'ORDER BY NOMBRE';
+				break;
+				
+			case 'buscarCiudadAjax' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_ciudad as ID_CIUDAD, ';
+				$cadenaSql .= 'nombre as NOMBRECIUDAD ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_departamento = ' . $variable . ' ';
+				$cadenaSql .= 'ORDER BY NOMBRE';
+				break;
 
 		}
 		
