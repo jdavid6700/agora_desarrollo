@@ -51,7 +51,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = "marcoTipoB";
+		$esteCampo = "marcoProcesoCont";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -62,13 +62,12 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 		unset($resultado);
 		//CONSULTAR
-		$tipo = 'B';//Se filtra por los ultimos 3 a�os
-		
-		$cadenaSql = $this->sql->getCadenaSql ( 'listaPorTipo', $tipo );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+		$resultado = null;
+		//$cadenaSql = $this->sql->getCadenaSql ( 'listaSeleccionados' ); /REVISAR NO FUE IMPLEMENTADO
+		//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
 
 		if ($resultado) {
-				echo "<table id='tablaTiposB'>";
+				echo "<table id='tablaTipos'>";
 				echo "<thead>
 						<tr>
 							<th><center>NIT</center></th>
@@ -83,7 +82,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				foreach ($resultado as $dato):
 					
 					$mostrarHtml = "<tr>
-								<td><center>" . $dato['num_documento'] . "</center></td>
+								<td><right>" . $dato['num_documento'] . "</center></td>
 								<td><center>" . $dato['nom_proveedor'] . "</center></td>
 								<td><center>" . $dato['correo'] . "</center></td>
 								<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>

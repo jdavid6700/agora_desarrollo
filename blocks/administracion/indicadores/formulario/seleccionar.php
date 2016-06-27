@@ -112,8 +112,23 @@ unset ( $atributos );
 		{
 			include ($this->ruta . "formulario/tabs/tabProveedorTipoC.php");
 		}
-		echo $this->miFormulario->agrupacion ( 'fin' );	
-	// -----------------FIN Division para la pestaña 3-------------------------	
+		echo $this->miFormulario->agrupacion ( 'fin' );
+		// -----------------FIN Division para la pestaña 3-------------------------
+		
+	// -----------------INICIO Division para la pestaña 3-------------------------
+		$esteCampo = "tabProcesoContratacion";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabProcesoContratacion.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+		// -----------------FIN Division para la pestaña 3-------------------------
+		
 	
 }
 echo $this->miFormulario->division ( "fin" );

@@ -62,13 +62,13 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 		unset($resultado);
 		//CONSULTAR
-		$tipo = 'C';//Se filtra por los ultimos 3 años
+		$tipo = 'C';//Se filtra por los ultimos 3 aï¿½os
 		
-		$cadenaSql = $this->sql->getCadenaSql ( 'listaTipoA', $tipo );
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaPorTipo', $tipo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
 
 		if ($resultado) {
-				echo "<table id='tablaTipos'>";
+				echo "<table id='tablaTiposC'>";
 				echo "<thead>
 						<tr>
 							<th><center>NIT</center></th>
@@ -83,8 +83,8 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				foreach ($resultado as $dato):
 					
 					$mostrarHtml = "<tr>
-								<td><right>" . $dato['nit'] . "</center></td>
-								<td><center>" . $dato['nomempresa'] . "</center></td>
+								<td><center>" . $dato['num_documento'] . "</center></td>
+								<td><center>" . $dato['nom_proveedor'] . "</center></td>
 								<td><center>" . $dato['correo'] . "</center></td>
 								<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 								<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>

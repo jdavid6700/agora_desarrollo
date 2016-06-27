@@ -71,7 +71,7 @@ class Sql extends \Sql {
 
 			/* REGISTRAR DATOS - SUPERVISOR */
 				case "registrar" :
-					$cadenaSql=" INSERT INTO proveedor.param_supervisor";
+					$cadenaSql=" INSERT INTO proveedor.supervisor";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" cedula,";
 					$cadenaSql.=" nombre_supervisor,";
@@ -85,7 +85,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['nombre'] . ' ' . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['dependencia']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
-					$cadenaSql.=" '1'";
+					$cadenaSql.=" 'ACTIVO'";
 					$cadenaSql.=" );";
 					break;		
 		
@@ -95,7 +95,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_dependencia,";
 					$cadenaSql .= "	dependencia";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.param_dependencia";
+					$cadenaSql .= " parametro.dependencia";
 					$cadenaSql .= " ORDER BY dependencia";
 					break;
 					
@@ -104,7 +104,7 @@ class Sql extends \Sql {
 					$cadenaSql=" SELECT";
 					$cadenaSql.=" cedula, nombre_supervisor, correo_supervisor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.param_supervisor ";
+					$cadenaSql.=" proveedor.supervisor ";
 					$cadenaSql.=" WHERE 1=1 ";
 					if ($variable != '') {
 						$cadenaSql .= " AND cedula= '" . $variable . "'";

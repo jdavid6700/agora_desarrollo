@@ -64,8 +64,8 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 		//CONSULTAR
 		$tipo = 'A';//Se filtra TIPO DE CLASIFICACION
 		
-		$cadenaSql = $this->sql->getCadenaSql ( 'listaTipoA', $tipo );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaPorTipo', $tipo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 		if ($resultado) {
 				echo "<table id='tablaTipos'>";
@@ -83,8 +83,8 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 				foreach ($resultado as $dato):
 					
 					$mostrarHtml = "<tr>
-								<td><right>" . $dato['nit'] . "</center></td>
-								<td><center>" . $dato['nomempresa'] . "</center></td>
+								<td><center>" . $dato['num_documento'] . "</center></td>
+								<td><center>" . $dato['nom_proveedor'] . "</center></td>
 								<td><center>" . $dato['correo'] . "</center></td>
 								<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 								<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>

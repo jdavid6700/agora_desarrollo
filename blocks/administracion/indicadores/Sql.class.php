@@ -30,15 +30,15 @@ class Sql extends \Sql {
 	
 
 			/* LISTAR - CONTRATO */					
-				case "listaTipoA" :			
+				case "listaPorTipo" :			
 					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " P.nomempresa, ";
-					$cadenaSql .= " P.nit, ";
+					$cadenaSql .= " P.nom_proveedor, ";
+					$cadenaSql .= " P.num_documento, ";
 					$cadenaSql .= " P.correo, ";
 					$cadenaSql .= " P.clasificacion_evaluacion, ";
 					$cadenaSql .= " P.puntaje_evaluacion ";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_proveedor_info P";
+					$cadenaSql .= " proveedor.informacion_proveedor P";
 					$cadenaSql .= " WHERE P.clasificacion_evaluacion = '" . $variable . "'";
 					$cadenaSql .= " ORDER BY P.puntaje_evaluacion DESC";
 					break;	
@@ -50,17 +50,17 @@ class Sql extends \Sql {
 					$cadenaSql .= " fecha_inicio, ";
 					$cadenaSql .= " fecha_finalizacion, ";
 					$cadenaSql .= " S.nombre_supervisor, ";
-					$cadenaSql .= " P.nomempresa, ";
-					$cadenaSql .= " P.nit, ";
+					$cadenaSql .= " P.nom_proveedor, ";
+					$cadenaSql .= " P.num_documento, ";
 					$cadenaSql .= " C.fecha_registro, ";
 					$cadenaSql .= " puntaje_total, ";
 					$cadenaSql .= " clasificacion, ";
 					$cadenaSql .= " C.estado ";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_contrato C";
-					$cadenaSql .= " JOIN proveedor.param_supervisor S ON S.id_supervisor = C.id_supervisor ";
-					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor ";
-					$cadenaSql .= " LEFT JOIN proveedor.prov_evaluacion E ON E.id_contrato = C.id_contrato ";
+					$cadenaSql .= " proveedor.contrato C";
+					$cadenaSql .= " JOIN proveedor.supervisor S ON S.id_supervisor = C.id_supervisor ";
+					$cadenaSql .= " JOIN proveedor.informacion_proveedor P ON P.id_proveedor = C.id_proveedor ";
+					$cadenaSql .= " LEFT JOIN proveedor.evaluacion E ON E.id_contrato = C.id_contrato ";
 					$cadenaSql .= " WHERE C.vigencia >= " . $variable;
 					$cadenaSql .= " ORDER BY C.id_contrato";
 					break;

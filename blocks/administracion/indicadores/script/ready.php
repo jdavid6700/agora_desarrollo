@@ -43,6 +43,14 @@ $('#tablaContratos').dataTable( {
 		
 $('#tablaTipos').dataTable( {
                 "sPaginationType": "full_numbers"
+        } );
+        
+$('#tablaTiposB').dataTable( {
+                "sPaginationType": "full_numbers"
+        } );
+        
+$('#tablaTiposC').dataTable( {
+                "sPaginationType": "full_numbers"
         } );		
                 
 $(function() {
