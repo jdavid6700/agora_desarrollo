@@ -178,10 +178,10 @@ foreach ($resultadoProveedor as $dato):
         $contenidoPagina .= "
             <tr>
                 <td align='center' >
-                    " . $dato['nit'] . "
+                    " . $dato['num_documento'] . "
                 </td>
                 <td align='center' >
-                    " . $dato['nomempresa'] . "
+                    " . $dato['nom_proveedor'] . "
                 </td>
                 <td align='center' >
                     " . $dato['puntaje_evaluacion'] . "

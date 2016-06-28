@@ -92,50 +92,44 @@ class registrarForm {
 
 		//FIN OBJETO A CONTRATAR
                 echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-
-                
-                $cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividad', $idActividad );
-                $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-		if( !$resultado )
-                {
-				// ------------------INICIO Division para los botones-------------------------
-				$atributos ["id"] = "divNoEncontroEgresado";
-				$atributos ["estilo"] = "marcoBotones";
-				echo $this->miFormulario->division ( "inicio", $atributos );
-				// -------------SECCION: Controles del Formulario-----------------------
-				$esteCampo = "mensajeNoHayProveedores";
-				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-				$atributos ["etiqueta"] = "";
-				$atributos ["estilo"] = "centrar";
-				$atributos ["tipo"] = 'error';
-				$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . '-' . $objetoEspecifico[0][2];
+		$cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividad', $idActividad );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		if (! $resultado) {
+			// ------------------INICIO Division para los botones-------------------------
+			$atributos ["id"] = "divNoEncontroEgresado";
+			$atributos ["estilo"] = "marcoBotones";
+			echo $this->miFormulario->division ( "inicio", $atributos );
+			// -------------SECCION: Controles del Formulario-----------------------
+			$esteCampo = "mensajeNoHayProveedores";
+			$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+			$atributos ["etiqueta"] = "";
+			$atributos ["estilo"] = "centrar";
+			$atributos ["tipo"] = 'error';
+			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . '-' . $objetoEspecifico [0] [2];
+			
+			echo $this->miFormulario->cuadroMensaje ( $atributos );
+			unset ( $atributos );
+			// -------------FIN Control Formulario----------------------
+			// ------------------FIN Division para los botones-------------------------
+			echo $this->miFormulario->division ( "fin" );
+			unset ( $atributos );
+		} else {
+			
+			// LISTA DE PROVEEDORES CON MEJOR CLASIFICACION
+			// ------- FILTRAR POR ACTIVIDAD ECONOMICA
+			$datos = array (
+					'actividadEconomica' => $idActividad,
+					'numCotizaciones' => $_REQUEST ['numCotizaciones'] 
+			);
+			
+			// -------- Limite de registros
+			// --------- evaluacion mayor a 45
+			$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
+			$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			if (! $resultadoProveedor) {
 				
-				echo $this->miFormulario->cuadroMensaje ( $atributos );
-				unset ( $atributos );
-				// -------------FIN Control Formulario----------------------
-				// ------------------FIN Division para los botones-------------------------
-				echo $this->miFormulario->division ( "fin" );
-				unset ( $atributos );
-		}else{               
-                
-                
-                
-                
-                
-		//LISTA DE PROVEEDORES CON MEJOR CLASIFICACION 
-                //------- FILTRAR POR ACTIVIDAD ECONOMICA
-        $datos = array (
-		'actividadEconomica' => $idActividad,
-		'numCotizaciones' => $_REQUEST ['numCotizaciones']
-	);                
-
-                //-------- Limite de registros
-                //--------- evaluacion mayor a 45
-		$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
-                $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-                if(!$resultadoProveedor){
-                    
 				// ------------------INICIO Division para los botones-------------------------
 				$atributos ["id"] = "divNoEncontroEgresado";
 				$atributos ["estilo"] = "marcoBotones";
@@ -153,111 +147,104 @@ class registrarForm {
 				// -------------FIN Control Formulario----------------------
 				// ------------------FIN Division para los botones-------------------------
 				echo $this->miFormulario->division ( "fin" );
-				unset ( $atributos );                    
-                    
-                }else{
-//---------------INICIO TABLA CON LISTA DE PROVEEDORES--------------------- 		
-		$esteCampo = "marcoProveedores";
-		$atributos ['id'] = $esteCampo;
-		$atributos ["estilo"] = "jqueryui";
-		$atributos ['tipoEtiqueta'] = 'inicio';
-		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );		
-		
-			?>
-			<table class="table table-bordered table-striped table-hover table-condensed">
-				<tr class="info">
-							<td align="center"><strong>NIT</strong></td>	
-							<td align="center"><strong>Empresa Proveedor</strong></td>
-							<td align="center"><strong>Puntaje Evaluaciòn</strong></td>
-							<td align="center"><strong>Clasificaciòn</strong></td>
-				</tr>	
-			<?php 
+				unset ( $atributos );
+			} else {
+				// ---------------INICIO TABLA CON LISTA DE PROVEEDORES---------------------
+				$esteCampo = "marcoProveedores";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 				
-                        $proveedores = array();
-                        foreach ($resultadoProveedor as $dato):
-		
+				?>
+<table
+	class="table table-bordered table-striped table-hover table-condensed">
+	<tr class="info">
+		<td align="center"><strong>NIT</strong></td>
+		<td align="center"><strong>Empresa Proveedor</strong></td>
+		<td align="center"><strong>Puntaje Evaluaciòn</strong></td>
+		<td align="center"><strong>Clasificaciòn</strong></td>
+	</tr>	
+			<?php
+				
+				$proveedores = array ();
+				foreach ( $resultadoProveedor as $dato ) :
+					
 					echo "<tr>";
-					echo "<td align='center'>" . $dato['nit'] . "</td>";
-					echo "<td align='center'>" . $dato['nomempresa'] . "</td>";
-					echo "<td align='right'>" . $dato['puntaje_evaluacion'] . "</td>";
-					echo "<td align='right'>" . $dato['clasificacion_evaluacion'] . "</td>";			
+					echo "<td align='center'>" . $dato ['num_documento'] . "</td>";
+					echo "<td align='center'>" . $dato ['nom_proveedor'] . "</td>";
+					echo "<td align='right'>" . $dato ['puntaje_evaluacion'] . "</td>";
+					echo "<td align='right'>" . $dato ['clasificacion_evaluacion'] . "</td>";
 					echo "</tr>";
 					
-                            		array_push($proveedores, $dato['id_proveedor'] );			
-
-				endforeach; 
-			?>
+					array_push ( $proveedores, $dato ['id_proveedor'] );
+				endforeach
+				;
+				?>
 			</table>
-			<?php
-	
-		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-               
-                
-                
-		$esteCampo = 'idProveedor';
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ['valor'] = serialize($proveedores);
-
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );                
-                
-                
-                
- //---------------FIN TABLA CON LISTA DE PROVEEDORES---------------------               
-                
-	
-		$esteCampo = 'idObjeto';
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		if (isset ( $_REQUEST [$esteCampo] )) {
-			$atributos ['valor'] = $_REQUEST [$esteCampo];
-		} else {
-			$atributos ['valor'] = '';
-		}
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		
-
-		
-		// ------------------Division para los botones-------------------------
-		$atributos ["id"] = "botones";
-		$atributos ["estilo"] = "marcoBotones";
-		echo $this->miFormulario->division ( "inicio", $atributos );
-		
-		// -----------------CONTROL: Botón ----------------------------------------------------------------
-		$esteCampo = 'botonAceptar';
-		$atributos ["id"] = $esteCampo;
-		$atributos ["tabIndex"] = $tab;
-		$atributos ["tipo"] = 'boton';
-		// submit: no se coloca si se desea un tipo button genérico
-		$atributos ['submit'] = 'true';
-		$atributos ["estiloMarco"] = '';
-		$atributos ["estiloBoton"] = 'jqueryui';
-		// verificar: true para verificar el formulario antes de pasarlo al servidor.
-		$atributos ["verificar"] = '';
-		$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-		$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-		$tab ++;
-		
-		// Aplica atributos globales al control
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoBoton ( $atributos );
-		unset ( $atributos );
-		// ------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division ( "fin" );
+<?php
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				$esteCampo = 'idProveedor';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = serialize ( $proveedores );
+				
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				
+				// ---------------FIN TABLA CON LISTA DE PROVEEDORES---------------------
+				
+				$esteCampo = 'idObjeto';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "botones";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				
+				// -----------------CONTROL: Botón ----------------------------------------------------------------
+				$esteCampo = 'botonAceptar';
+				$atributos ["id"] = $esteCampo;
+				$atributos ["tabIndex"] = $tab;
+				$atributos ["tipo"] = 'boton';
+				// submit: no se coloca si se desea un tipo button genérico
+				$atributos ['submit'] = 'true';
+				$atributos ["estiloMarco"] = '';
+				$atributos ["estiloBoton"] = 'jqueryui';
+				// verificar: true para verificar el formulario antes de pasarlo al servidor.
+				$atributos ["verificar"] = '';
+				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoBoton ( $atributos );
+				unset ( $atributos );
+				// ------------------Fin Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
 		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		

@@ -38,7 +38,9 @@ class Registrar {
 		
                 //Guardar datos del Objeto a contratar
 		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
-                $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        
+        //var_dump($cadenaSql);exit;
 		
 		if ($resultado) {
 			//Conusltar el ultimo ID del objeto
