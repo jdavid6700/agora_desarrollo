@@ -174,7 +174,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
   solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['nit']."</span></p>
+  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['num_documento']."</span></p>
   </td>
  </tr>
   <tr style='mso-yfti-irow:3'>
@@ -192,7 +192,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
   mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
   <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
   text-align:center;line-height:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['nomempresa']."</span></p>
+  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['nom_proveedor']."</span></p>
   </td>
  </tr>
 
