@@ -39,12 +39,12 @@ $arreglo = array (
 		$poliza,		
 		$_REQUEST ['formaPago'],
 		$annnoActual,
-		1
+		'CREADO'
 );
 //Guardar datos del nuevo contrato
 $cadenaSql = $this->sql->getCadenaSql ( "registroContrato", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso',$arreglo,"registroContrato" );
-
+//var_dump($cadenaSql);exit;
 // Crear Variables necesarias en los métodos
 $variable = '';
 
@@ -53,7 +53,7 @@ if ($resultado) {
 	//Actualizar estado del OBJETO CONTRATO A ASIGNADA
 		$parametros = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
-				'estado' => 3  //asignado a un contrato
+				'estado' => 'ASIGNADO'  //asignado a un contrato
 		);
 		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarObjeto", $parametros );
