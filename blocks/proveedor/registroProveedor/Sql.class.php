@@ -27,91 +27,95 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
-			
+				
 			/* CONSULTAR - EVALUACION POR ID CONTRATO */
-				case "evalaucionByIdContrato" :
-					$cadenaSql = "SELECT ";
-					$cadenaSql .= " puntaje_total";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_evaluacion ";
-					$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
-					break;			
+			case "evalaucionByIdContrato" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " puntaje_total";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.evaluacion ";
+				$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
+				break;
 			
-			/* CONSULTAR - CONTRATO por ID */					
-				case "consultarContratoByID" :			
-					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " id_contrato, ";
-					$cadenaSql .= " numero_contrato, ";
-					$cadenaSql .= " fecha_inicio, ";
-					$cadenaSql .= " fecha_finalizacion, ";
-					$cadenaSql .= " valor, ";
-					$cadenaSql .= " vigencia, ";
-					$cadenaSql .= " P.nomempresa, ";
-					$cadenaSql .= " P.nit, ";
-					$cadenaSql .= " O.objetocontratar, ";
-					$cadenaSql .= " O.descripcion, ";
-					$cadenaSql .= " C.numero_cdp, ";
-					$cadenaSql .= " C.numero_rp, ";
-					$cadenaSql .= " C.fecha_rp ";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_contrato C";
-					$cadenaSql .= " JOIN proveedor.prov_objeto_contratar O ON O.id_objeto = C.id_objeto";
-					$cadenaSql .= " JOIN proveedor.prov_proveedor_info P ON P.id_proveedor = C.id_proveedor";
-					$cadenaSql .= " WHERE  id_contrato=" . $variable;  
-					break;			
-                    
-			/* ACTUALIZAR - ESTADO PROVEEDOR */			
-				case 'updateEstado' :
-					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
-					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
-					$cadenaSql .= " WHERE id_proveedor=";
-					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
-					break;                    
+			/* CONSULTAR - CONTRATO por ID */
+			case "consultarContratoByID" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_contrato, ";
+				$cadenaSql .= " numero_contrato, ";
+				$cadenaSql .= " fecha_inicio, ";
+				$cadenaSql .= " fecha_finalizacion, ";
+				$cadenaSql .= " valor, ";
+				$cadenaSql .= " vigencia, ";
+				$cadenaSql .= " P.nom_proveedor, ";
+				$cadenaSql .= " P.num_documento, ";
+				$cadenaSql .= " O.objetocontratar, ";
+				$cadenaSql .= " O.descripcion, ";
+				$cadenaSql .= " C.numero_cdp, ";
+				$cadenaSql .= " C.numero_rp, ";
+				$cadenaSql .= " C.fecha_rp ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.contrato C";
+				$cadenaSql .= " JOIN proveedor.objeto_contratar O ON O.id_objeto = C.id_objeto";
+				$cadenaSql .= " JOIN proveedor.informacion_proveedor P ON P.id_proveedor = C.id_proveedor";
+				$cadenaSql .= " WHERE  id_contrato=" . $variable;
+				break;
 			
-			/* ULTIMO NUMERO DE SECUENCIA */				
-				case "lastIdProveedor" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " last_value";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_proveedor_info_id_proveedor_seq";	
-					break;			
+			/* ACTUALIZAR - ESTADO PROVEEDOR */
+			case 'updateEstado' :
+				$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+				$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+				$cadenaSql .= " WHERE id_proveedor=";
+				$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
+				break;
+			
+			/* ULTIMO NUMERO DE SECUENCIA */
+			case "lastIdProveedor" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " last_value";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.prov_proveedor_info_id_proveedor_seq";
+				break;
 			
 			/* REGISTRAR DATOS - USUARIO */
-				case "registrarActividad" :
-					$cadenaSql=" INSERT INTO ";
-					$cadenaSql.="proveedor.prov_actividad ";
-					$cadenaSql.=" (";					
-					$cadenaSql.=" nit,";
-					$cadenaSql.=" actividad";
-					$cadenaSql.=" )";
-					$cadenaSql.=" VALUES";
-					$cadenaSql.=" (";
-					$cadenaSql.=" '" . $variable['nit']. "',";
-					$cadenaSql.=" '" . $variable['actividad']. "'";
-					$cadenaSql.=" );";
-					break;
-					
-			/* VERIFICAR NUMERO DE NIT */		
-				case "verificarActividad" :
-					$cadenaSql=" SELECT";
-					$cadenaSql.=" nit";
-					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.prov_actividad ";
-					$cadenaSql.=" WHERE nit= '" . $variable['nit'] . "'";
-					$cadenaSql.=" AND actividad= '" . $variable['actividad'] . "'";
-					break;			
+			case "registrarActividad" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " id_subclase";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " '" . $variable ['nit'] . "',";
+				$cadenaSql .= " '" . $variable ['actividad'] . "'";
+				$cadenaSql .= " );";
+				break;
 			
-			/* CONSULTAR ACTIVIDADES DEL PROVEEDOR */		
-				case "consultarActividades" :
-					$cadenaSql=" SELECT";
-					$cadenaSql.=" actividad,";
-                                        $cadenaSql.=" nombre";
-					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.prov_actividad A";
-                                        $cadenaSql.=" JOIN proveedor.prov_ciiu_subclase S ON S.id = A.actividad ";
-					$cadenaSql.=" WHERE nit= " . $variable;	
-					break;			
-
+			/* VERIFICAR NUMERO DE NIT */
+			case "verificarActividad" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " num_documento";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " WHERE num_documento= '" . $variable ['nit'] . "'";
+				$cadenaSql .= " AND id_subclase = '" . $variable ['actividad'] . "'";
+				break;
+			
+			/* CONSULTAR ACTIVIDADES DEL PROVEEDOR */
+			case "consultarActividades" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " id_subclase,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.proveedor_actividad_ciiu A";
+				$cadenaSql .= " JOIN parametro.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
+				$cadenaSql .= " WHERE num_documento= " . $variable;
+				break;	
+					
+					
+					
+					
+			//**************************************************************************
 			/* REGISTRAR DATOS - USUARIO */
 				case "registrarUsuario" :
 					$cadenaSql=" INSERT INTO ";
@@ -396,39 +400,45 @@ class Sql extends \Sql {
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario ";
 					$cadenaSql.=" WHERE usuario = '" . $variable . "'";
-					break;                                    
-                                    
-		
-			/* CIIU */				
-				case "ciiuDivision" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " id,";
-					$cadenaSql .= "	nombre";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_ciiu_division";	
-					$cadenaSql .= " ORDER BY nombre";
 					break;
 				
-				case "ciiuGrupo" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " id,";
-					$cadenaSql .= "	nombre";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_ciiu_clase";
-					$cadenaSql .= " WHERE division ='" . $variable ."'";
-					$cadenaSql .= " ORDER BY nombre";
-					break;
-
-				case "ciiuClase" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " id,";
-					$cadenaSql .= "	nombre";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_ciiu_subclase";
-					$cadenaSql .= " WHERE clase ='" . $variable ."'";
-					$cadenaSql .= " ORDER BY nombre";
-					break;
+			// ********************************************************************************+
+				
 					
+					
+					
+					
+					
+			/* CIIU */
+			case "ciiuDivision" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_division,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " parametro.ciiu_division";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+			
+			case "ciiuGrupo" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_clase,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " parametro.ciiu_clase";
+				$cadenaSql .= " WHERE division ='" . $variable . "'";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+			
+			case "ciiuClase" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_subclase,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " parametro.ciiu_subclase";
+				$cadenaSql .= " WHERE clase ='" . $variable . "'";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+			
 			case 'buscarPais' :
 				
 				$cadenaSql = 'SELECT ';
@@ -463,7 +473,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_pais = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
-				
+			
 			case 'buscarCiudadAjax' :
 				
 				$cadenaSql = 'SELECT ';
