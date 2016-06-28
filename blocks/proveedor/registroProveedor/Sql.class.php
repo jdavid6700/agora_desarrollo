@@ -38,7 +38,7 @@ class Sql extends \Sql {
 				break;
 			
 			/* CONSULTAR - CONTRATO por ID */
-			case "consultarContratoByID" :
+			case "consultarContratoByID" ://***********************************************************************
 				$cadenaSql = "SELECT  ";
 				$cadenaSql .= " id_contrato, ";
 				$cadenaSql .= " numero_contrato, ";
@@ -61,10 +61,10 @@ class Sql extends \Sql {
 				break;
 			
 			/* ACTUALIZAR - ESTADO PROVEEDOR */
-			case 'updateEstado' :
+			case 'updateEstado' ://****************************************************************************************
 				$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
-				$cadenaSql .= "estado='" . $variable ['estado'] . "'";
-				$cadenaSql .= " WHERE id_proveedor=";
+				$cadenaSql .= "estado = '" . $variable ['estado'] . "'";
+				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
 				break;
 			
@@ -77,7 +77,7 @@ class Sql extends \Sql {
 				break;
 			
 			/* REGISTRAR DATOS - USUARIO */
-			case "registrarActividad" :
+			case "registrarActividad" ://**********************************************************
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= "proveedor.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
@@ -92,7 +92,7 @@ class Sql extends \Sql {
 				break;
 			
 			/* VERIFICAR NUMERO DE NIT */
-			case "verificarActividad" :
+			case "verificarActividad" ://******************************************************************
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento";
 				$cadenaSql .= " FROM ";
@@ -102,9 +102,9 @@ class Sql extends \Sql {
 				break;
 			
 			/* CONSULTAR ACTIVIDADES DEL PROVEEDOR */
-			case "consultarActividades" :
+			case "consultarActividades" ://********************************************************************
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " id_subclase,";
+				$cadenaSql .= " A.id_subclase,";
 				$cadenaSql .= " nombre";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " proveedor.proveedor_actividad_ciiu A";
@@ -308,77 +308,77 @@ class Sql extends \Sql {
 					break; 					
                                     
 			/* VERIFICAR NUMERO DE NIT */		
-				case "verificarNIT" :
+				case "verificarNIT" ://******************************************************************************
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" nit,";
-					$cadenaSql.=" nomempresa,";
+					$cadenaSql.=" num_documento,";
+					$cadenaSql.=" nom_proveedor,";
 					$cadenaSql.=" correo,";
 					$cadenaSql.=" id_proveedor,";
-                                        $cadenaSql.=" estado";
+                    $cadenaSql.=" estado";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.prov_proveedor_info ";
-					$cadenaSql.=" WHERE nit= " . $variable;	
+					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" WHERE num_documento = " . $variable;	
 					break; 
                                     
 			/* DATOS DEL PROVEEDOR POR USUARIO */		
-				case "buscarProveedorByUsuario" :
+				case "buscarProveedorByUsuario" ://****************************************************************************
 					$cadenaSql=" SELECT";
 					$cadenaSql.=" P.id_proveedor,";
-					$cadenaSql.=" P.nit,";
-					$cadenaSql.=" P.digitoverificacion,";
-					$cadenaSql.=" P.nomempresa,";
-					$cadenaSql.=" P.municipio,";
+					$cadenaSql.=" P.num_documento,";
+					$cadenaSql.=" P.digito_verificacion,";
+					$cadenaSql.=" P.nom_proveedor,";
+					$cadenaSql.=" P.id_pais_origen,";
 					$cadenaSql.=" P.direccion,";
 					$cadenaSql.=" P.correo,";
 					$cadenaSql.=" P.web,";                                        
-					$cadenaSql.=" P.telefono,";
-					$cadenaSql.=" P.ext1,";
-					$cadenaSql.=" P.movil,";
-					$cadenaSql.=" P.nomasesor,";
-					$cadenaSql.=" P.telasesor,";                                        
-					$cadenaSql.=" P.tipodocumento,";
-					$cadenaSql.=" P.numdocumento,";
-					$cadenaSql.=" P.primerapellido,";
-					$cadenaSql.=" P.segundoapellido,";                                        
-					$cadenaSql.=" P.primernombre,";
-					$cadenaSql.=" P.segundonombre,";
+// 					$cadenaSql.=" P.telefono,";
+// 					$cadenaSql.=" P.ext1,";
+// 					$cadenaSql.=" P.movil,";
+// 					$cadenaSql.=" P.nomasesor,";
+// 					$cadenaSql.=" P.telasesor,";                                        
+// 					$cadenaSql.=" P.tipodocumento,";
+// 					$cadenaSql.=" P.numdocumento,";
+// 					$cadenaSql.=" P.primerapellido,";
+// 					$cadenaSql.=" P.segundoapellido,";                                        
+// 					$cadenaSql.=" P.primernombre,";
+// 					$cadenaSql.=" P.segundonombre,";
 					$cadenaSql.=" P.tipopersona,";
 					$cadenaSql.=" P.regimen,";
 					$cadenaSql.=" P.importacion,";                                        
 					$cadenaSql.=" P.pyme,";
-					$cadenaSql.=" P.registromercantil,";
+					$cadenaSql.=" P.registro_mercantil,";
 					$cadenaSql.=" P.descripcion,";
 					$cadenaSql.=" P.anexorut,";
 					$cadenaSql.=" P.estado,";
 					$cadenaSql.=" P.tipo_procedencia,";
-					$cadenaSql.=" P.pais,";
-					$cadenaSql.=" P.codigo_pais,";
-					$cadenaSql.=" P.codigo_postal,";
+// 					$cadenaSql.=" P.pais,";
+// 					$cadenaSql.=" P.codigo_pais,";
+// 					$cadenaSql.=" P.codigo_postal,";
 					$cadenaSql.=" P.tipo_doc_extranjero,";
-					$cadenaSql.=" P.cedula_extranjeria,";
-					$cadenaSql.=" P.pasaporte";
+					$cadenaSql.=" P.num_cedula_extranjeria,";
+					$cadenaSql.=" P.num_pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.prov_proveedor_info P ON P.nit::text = U.usuario";
+					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break;
 				
 				/* DATOS BIENVENIDA PROVEEDOR */
-			case "buscarProveedorLog" :
+			case "buscarProveedorLog" ://******************************************************************+
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " t1.nomempresa,";
-				$cadenaSql .= " t1.nit,";
+				$cadenaSql .= " t1.nom_proveedor,";
+				$cadenaSql .= " t1.num_documento,";
 				$cadenaSql .= " t2.usuario,";
 				$cadenaSql .= " t2.id_usuario ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.prov_proveedor_info t1";
-				$cadenaSql .= " INNER JOIN prov_usuario t2 ON t1.nit::varchar = t2.usuario";
+				$cadenaSql .= " proveedor.informacion_proveedor t1";
+				$cadenaSql .= " INNER JOIN prov_usuario t2 ON t1.num_documento::varchar = t2.usuario";
 				$cadenaSql .= " WHERE t2.id_usuario = " . $variable . ";";
 				break;
 							
 					
 			/* CONSULTAR CONTRATOS DEL PROVEEDOR */		
-				case "consultarContratos" :
+				case "consultarContratos" ://****************************************************************************
 					$cadenaSql=" SELECT";
 					$cadenaSql .= " id_contrato, ";
 					$cadenaSql .= " numero_contrato, ";
@@ -388,8 +388,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " C.estado";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.prov_proveedor_info P ON P.nit::text = U.usuario";
-					$cadenaSql.=" JOIN proveedor.prov_contrato C ON C.id_proveedor = P.id_proveedor";
+					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
+					$cadenaSql.=" JOIN proveedor.contrato C ON C.id_proveedor = P.id_proveedor";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break; 					
          

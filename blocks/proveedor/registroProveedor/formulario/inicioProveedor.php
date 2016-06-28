@@ -44,7 +44,7 @@ $fechaHoy = utf8_encode(ucwords($fecha));
       <div class="jumbotron" align="center">
         <h2>Sistema de Registro Único de Proveedores!</h2>
         <p>Módulo de Proveedores</p>
-        <h3><b>Bienvenido Proveedor:</b> <i><?php echo $resultado[0]['nomempresa'] ?></i></h3>
+        <h3><b>Bienvenido Proveedor:</b> <i><?php echo $resultado[0]['nom_proveedor'] ?></i></h3>
         
 
       </div>

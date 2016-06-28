@@ -116,12 +116,12 @@ if ($resultado) {
 			$certUniversidadImagen = 'pdf.png';
 			
 			switch ($dato ['estado']) {
-				case 1 :
+				case 'CREADO' :
 					$msj = 'No se ha realizado el proceso de evaluaci&oacute;n';
 					$varSatisfaccion = '#';
 					$certSatisImagen = 'cancel.png';
 					break;
-				case 2 :
+				case 'EVALUADO' :
 					$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $dato ['id_contrato'] );
 					$evaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 					

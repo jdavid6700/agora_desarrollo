@@ -26,6 +26,7 @@ class Registrar {
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
 	}
+	
 	function procesarFormulario() {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -36,53 +37,50 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+		// VERIFICAR SI YA REGISTRO LA ACTIVIDAD
+		$arreglo = array (
+				'nit' => $_REQUEST ['nit'],
+				'actividad' => $_REQUEST ['claseCIIU'] 
+		);
 		
-		
-		//VERIFICAR SI YA REGISTRO LA ACTIVIDAD
-		$arreglo = array('nit' => $_REQUEST['nit'],
-						'actividad' =>  $_REQUEST['claseCIIU']);
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarActividad", $arreglo);		
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarActividad", $arreglo );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-
+		
 		if ($resultado) {
-			//La actividad ya existe
-			redireccion::redireccionar ( 'mensajeExisteActividad',  $_REQUEST ['nit']);
-			exit();    
-		}else{
-						
-				//Guardar ACTIVIDAD
-				$cadenaSql = $this->miSql->getCadenaSql ( "registrarActividad", $arreglo );
+			// La actividad ya existe
+			redireccion::redireccionar ( 'mensajeExisteActividad', $_REQUEST ['nit'] );
+			exit ();
+		} else {
+			
+			// Guardar ACTIVIDAD
+			$cadenaSql = $this->miSql->getCadenaSql ( "registrarActividad", $arreglo );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			
+			// Actualizo el estado del usuario a ACTIVO
+			$cadenaSql = $this->miSql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit'] );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+			
+			
+			if ($resultado [0] ['estado'] == 2) {
+				
+				$parametros = array (
+						'idProveedor' => $resultado [0] ['id_proveedor'],
+						'estado' => 1 
+				);
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( "updateEstado", $parametros );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-                                
-				//Actualizo el estado del usuario a ACTIVO
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarNIT", $_REQUEST ['nit']);
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-
-            
-                if($resultado[0]['estado']==2){
-                                
-                        $parametros = array('idProveedor' => $resultado[0]['id_proveedor'],
-                                                    'estado' =>  1);                                
-
-			$cadenaSql = $this->miSql->getCadenaSql ( "updateEstado", $parametros );
-                        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' ); 
-                       
-                }
-		
-
-if ($resultado) {
-								redireccion::redireccionar ( 'registroActividad',  $arreglo);
-								exit();
-				} else {
-								redireccion::redireccionar ( 'noregistro',  $arreglo);
-								exit();
-				}  
-		}		
-
-
+			}
+			
+			if ($resultado) {
+				redireccion::redireccionar ( 'registroActividad', $arreglo );
+				exit ();
+			} else {
+				redireccion::redireccionar ( 'noregistro', $arreglo );
+				exit ();
+			}
+		}
 	}
-	
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {
 			

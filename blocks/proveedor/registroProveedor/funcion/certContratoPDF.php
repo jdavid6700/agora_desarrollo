@@ -156,8 +156,8 @@ UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</span>
 
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'>Que el proveedor <b>".$resultado[0]['nomempresa']."</b>, con
-NIT (o CC) No. <b>".$resultado[0]['nit']."</b>, prestó sus servicios en calidad de contratista con la 
+mso-bidi-font-size:11.0pt;line-height:107%'>Que el proveedor <b>".$resultado[0]['nom_proveedor']."</b>, con
+NIT (o CC) No. <b>".$resultado[0]['num_documento']."</b>, prestó sus servicios en calidad de contratista con la 
 		Universidad Distrital Francisco José de Caldas, respaldada con la Disponibilidad Presupuestal 
 		No. <b>".$resultado[0]['numero_cdp']."</b> y Registro Presupuestal No. <b>".$resultado[0]['numero_rp']."</b>  
 				con fecha de <b>".$date[2]."</b> de <b>".$date[1]."</b> del <b>".$date[0]."</b> y en virtud 
