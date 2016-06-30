@@ -124,7 +124,7 @@ class registrarForm {
 			echo "<br>";
 			
 			
-			//********************************************************************************************** PERSONA NATURAL****************************
+			//********************************************************************************************** PERSONA JURIDICA****************************
                         
 			$esteCampo = "marcoDatosJuridica";
 			$atributos ['id'] = $esteCampo;
@@ -1412,7 +1412,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
 			
 			
-			//********************************************************************************************** PERSONA JURIDICA****************************
+			//********************************************************************************************** PERSONA NATURAL****************************
 			
 			$esteCampo = "marcoDatosNatural";
 			$atributos ['id'] = $esteCampo;
@@ -1453,7 +1453,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 15;
-				$atributos ['maximoTamanno'] = '';
+				$atributos ['maximoTamanno'] = 15;
 				$atributos ['anchoEtiqueta'] = 200;
 				$tab ++;
 			
@@ -1462,9 +1462,9 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
-			/*
+			
 				// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
-				$esteCampo = 'digito2';
+				$esteCampo = 'digitoNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1484,7 +1484,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					$atributos ['valor'] = '';
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = false;
+				$atributos ['deshabilitado'] = true;
 				$atributos ['tamanno'] = 15;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 200;
@@ -1495,7 +1495,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
-					*/
+			
 				
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			}

@@ -426,6 +426,52 @@ function consultarDepartamentoLug(elem, request, response){
 		  		$("#<?php echo $this->campoSeguro('digito')?>").val(digito_verificacion);
 		  }
 	};
+	
+	
+	function calcularDigitoCedula(cadenaCedula){
+		  
+		  var num_primos, control_mod_1, control_mod_2, tamano_cedula, i, digito_verificacion;
+		  
+		  if(isNaN(cadenaCedula)){
+		  		alert('El valor digitado no es un numero valido');	
+		  }else{
+		  		num_primos = new Array (16); 
+		       	control_mod_1 = 0; 
+		        control_mod_2 = 0; 
+		        tamano_cedula = cadenaCedula.length ;
+		
+		       	num_primos[1]=3;
+		       	num_primos[2]=7;
+		       	num_primos[3]=13; 
+		       	num_primos[4]=17;
+		       	num_primos[5]=19;
+		       	num_primos[6]=23;
+		       	num_primos[7]=29;
+		       	num_primos[8]=37;
+		       	num_primos[9]=41;
+		       	num_primos[10]=43;
+		       	num_primos[11]=47;  
+		       	num_primos[12]=53;  
+		       	num_primos[13]=59; 
+		       	num_primos[14]=67; 
+		       	num_primos[15]=71;
+		       	
+		       	for(i=0 ; i < tamano_cedula ; i++)
+       			{ 
+         	 		control_mod_2 = (cadenaCedula.substr(i,1));
+           			control_mod_1 += (control_mod_2 * num_primos[tamano_cedula - i]);
+       			} 
+        		control_mod_2 = control_mod_1 % 11;
+		  		
+		  		if (control_mod_2 > 1)
+		       	{
+		            digito_verificacion = 11 - control_mod_2;
+		       	} else {
+		            digito_verificacion = control_mod_2;
+		       	}
+		  		$("#<?php echo $this->campoSeguro('digitoNat')?>").val(digito_verificacion);
+		  }
+	};
 		
       $(function () {
 		        $("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").change(function(){
@@ -450,9 +496,23 @@ function consultarDepartamentoLug(elem, request, response){
         					calcularDigito(cadenaNit);//LLamar la Función para Ejecutar Calculo Digito Verificación
         				}else{
         					var cadenaNit = null;
+        					$("#<?php echo $this->campoSeguro('digito')?>").val(null);
         				}
         				
-    			}).keyup();      
+    			}).keyup();
+    			
+    			
+    			$("#<?php echo $this->campoSeguro('cedula')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
+        				var value = $(this).val().length;
+        				if(value > 3){//Ejecutar solo Cuando se Completa el NIT
+        					var cadenaCedula = $(this).val();
+        					calcularDigitoCedula(cadenaCedula);//LLamar la Función para Ejecutar Calculo Digito Verificación
+        				}else{
+        					var cadenaCedula = null;
+        					$("#<?php echo $this->campoSeguro('digitoNat')?>").val(null);
+        				}
+        				
+    			}).keyup();    
 	    	      
 		 });
     	 

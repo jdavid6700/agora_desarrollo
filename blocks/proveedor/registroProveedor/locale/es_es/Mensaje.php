@@ -13,6 +13,9 @@ $this->idioma["cedulaTitulo"]="Digite cédula de la persona";
 $this->idioma["digito"] = "Digito de Verificación : ";
 $this->idioma["digitoTitulo"]="Digito de Verificación";
 
+$this->idioma["digitoNat"] = "Digito de Verificación : ";
+$this->idioma["digitoNatTitulo"]="Digito de Verificación";
+
 $this->idioma["nombreEmpresa"]="Nombre de la Empresa";
 $this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
 
