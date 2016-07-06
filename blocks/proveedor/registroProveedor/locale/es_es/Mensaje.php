@@ -52,6 +52,12 @@ $this->idioma["telAsesorTitulo"]="Digite Teléfono del Asesor";
 $this->idioma["tipoDocumento"]="Tipo de Documento :";
 $this->idioma["tipoDocumentoTitulo"]="Seleccione Tipo de Documento";
 
+$this->idioma["tipoDocumentoNat"]="Tipo de Documento :";
+$this->idioma["tipoDocumentoNatTitulo"]="Seleccione Tipo de Documento";
+
+$this->idioma["documentoNat"]="Número Documento : ";
+$this->idioma["documentoNatTitulo"]="Digite Número Documento";
+
 $this->idioma["numeroDocumento"]="Número Documento : ";
 $this->idioma["numeroDocumentoTitulo"]="Digite Número Documento";
 
@@ -66,6 +72,18 @@ $this->idioma["primerNombreTitulo"]="Digite Primer Nombre";
 
 $this->idioma["segundoNombre"]="Segundo nombre : ";
 $this->idioma["segundoNombreTitulo"]="Digite Segundo nombre";
+
+$this->idioma["primerApellidoNat"]="Primer Apellido : ";
+$this->idioma["primerApellidoNatTitulo"]="Digite Primer Apellido";
+
+$this->idioma["segundoApellidoNat"]="Segundo Apellido :";
+$this->idioma["segundoApellidoNatTitulo"]="Digite Segundo Apellido";
+
+$this->idioma["primerNombreNat"]="Primer Nombre : ";
+$this->idioma["primerNombreNatTitulo"]="Digite Primer Nombre";
+
+$this->idioma["segundoNombreNat"]="Segundo nombre : ";
+$this->idioma["segundoNombreNatTitulo"]="Digite Segundo nombre";
 
 $this->idioma["regimenContributivo"]="Regimen Contributivo :";
 $this->idioma["regimenContributivoTitulo"]="Regimen Contributivo";

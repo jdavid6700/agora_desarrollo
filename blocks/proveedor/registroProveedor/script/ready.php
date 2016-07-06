@@ -79,6 +79,7 @@ $('#<?php echo $this->campoSeguro('tipoPersona')?>').width(150);
 $('#<?php echo $this->campoSeguro('paisEmpresa')?>').width(150);
 $('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoDocumento')?>').width(250);
+$('#<?php echo $this->campoSeguro('tipoDocumentoNat')?>').width(250);
 
 $('#<?php echo $this->campoSeguro('productoImportacion')?>').width(150);
 $('#<?php echo $this->campoSeguro('regimenContributivo')?>').width(150);
@@ -101,6 +102,7 @@ $('#<?php echo $this->campoSeguro('tipoPersona')?>').select2();
 $('#<?php echo $this->campoSeguro('paisEmpresa')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoDocumento')?>').select2();
+$('#<?php echo $this->campoSeguro('tipoDocumentoNat')?>').select2();
 
 $('#<?php echo $this->campoSeguro('productoImportacion')?>').select2();
 $('#<?php echo $this->campoSeguro('regimenContributivo')?>').select2();

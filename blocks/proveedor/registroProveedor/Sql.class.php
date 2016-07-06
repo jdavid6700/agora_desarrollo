@@ -485,6 +485,18 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_departamento = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
+				
+			case 'consultarTipoDocumento' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'valor_parametro != \'NIT\' ';
+				$cadenaSql .= 'AND clase_parametro = \'Tipo Documento\';';
+				break;
 
 		}
 		
