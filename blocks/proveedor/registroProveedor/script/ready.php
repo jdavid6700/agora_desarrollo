@@ -93,6 +93,11 @@ $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").select2();
 $('#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>').width(250);
 $("#<?php echo $this->campoSeguro('personaJuridicaCiudad')?>").select2();
 
+$('#<?php echo $this->campoSeguro('personaNaturalContaDepartamento')?>').width(250);
+$("#<?php echo $this->campoSeguro('personaNaturalContaDepartamento')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>').width(250);
+$("#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>").select2();
+
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();

@@ -465,10 +465,10 @@ class registrarForm {
 								$atributos ['valor'] = '';
 							}
 							$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-							$atributos ['deshabilitado'] = false;
-							$atributos ['tamanno'] = 30;
+							$atributos ['deshabilitado'] = true;
+							$atributos ['tamanno'] = 10;
 							$atributos ['maximoTamanno'] = '';
-							$atributos ['anchoEtiqueta'] = 160;
+							$atributos ['anchoEtiqueta'] = 180;
 							$tab ++;
 							
 							// Aplica atributos globales al control
@@ -1694,6 +1694,85 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 				
+				
+				
+				// ---------------- CONTROL: Select --------------------------------------------------------
+				$esteCampo = 'personaNaturalContaDepartamento';
+				$atributos['nombre'] = $esteCampo;
+				$atributos['id'] = $esteCampo;
+				$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos['tab'] = $tab;
+				$atributos['seleccion'] = -1;
+				$atributos['evento'] = ' ';
+				$atributos['deshabilitado'] = false;
+				$atributos['limitar']= 50;
+				$atributos['tamanno']= 1;
+				$atributos['columnas']= 1;
+					
+				$atributos ['obligatorio'] = true;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['validar'] = 'required';
+					
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamento" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					
+				$atributos['matrizItems'] = $matrizItems;
+					
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				// --------------- FIN CONTROL : Select --------------------------------------------------
+					
+				// ---------------- CONTROL: Select --------------------------------------------------------
+				$esteCampo = 'personaNaturalContaCiudad';
+				$atributos['nombre'] = $esteCampo;
+				$atributos['id'] = $esteCampo;
+				$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos['tab'] = $tab;
+				$atributos['seleccion'] = -1;
+				$atributos['evento'] = ' ';
+				$atributos['deshabilitado'] = true;
+				$atributos['limitar']= 50;
+				$atributos['tamanno']= 1;
+				$atributos['columnas']= 1;
+					
+				$atributos ['obligatorio'] = true;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['validar'] = 'required';
+					
+				$matrizItems=array(
+						array(1,'Bogota D.C.'),
+						array(2,'Medellin'),
+						array(3,'Barranquilla'),
+						array(4,'Cali'),
+						array(5,'Cucuta'),
+						array(6,'Bucaramanga')
+							
+				);
+				$atributos['matrizItems'] = $matrizItems;
+					
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				
+					
+				
+				
+				/*
 				// ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
 				$esteCampo = 'ciudad';
 				$atributos ['id'] = $esteCampo;
@@ -1726,9 +1805,9 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
-				
+				*/
 				// ---------------- CONTROL: Cuadro de Texto  Dirección--------------------------------------------------------
-				$esteCampo = 'direccion';
+				$esteCampo = 'direccionNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1761,7 +1840,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 					
 				// ---------------- CONTROL: Cuadro de Texto Correo--------------------------------------------------------
-				$esteCampo = 'correo';
+				$esteCampo = 'correoNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1794,7 +1873,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto  Sitio Web--------------------------------------------------------
-				$esteCampo = 'sitioWeb';
+				$esteCampo = 'sitioWebNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1827,7 +1906,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto Teléfono --------------------------------------------------------
-				$esteCampo = 'telefono';
+				$esteCampo = 'telefonoNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1860,7 +1939,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto Extensión --------------------------------------------------------
-				$esteCampo = 'extension';
+				$esteCampo = 'extensionNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1893,7 +1972,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto Movil--------------------------------------------------------
-				$esteCampo = 'movil';
+				$esteCampo = 'movilNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1926,7 +2005,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto  Asesor Comercial--------------------------------------------------------
-				$esteCampo = 'asesorComercial';
+				$esteCampo = 'asesorComercialNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1959,7 +2038,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
 				// ---------------- CONTROL: Cuadro de Texto Teléfono del Asesor--------------------------------------------------------
-				$esteCampo = 'telAsesor';
+				$esteCampo = 'telAsesorNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
@@ -1992,6 +2071,102 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
 				
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+					
+				$esteCampo = "marcoRUT";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+				$esteCampo = "DocumentoRUT";
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["nombre"] = $esteCampo;
+				$atributos ["tipo"] = "file";
+				// $atributos ["obligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["tabIndex"] = $tab ++;
+				$atributos ["columnas"] = 1;
+				$atributos ["estilo"] = "textoIzquierda";
+				$atributos ["anchoEtiqueta"] = 400;
+				$atributos ["tamanno"] = 500000;
+				$atributos ["validar"] = "required";
+				$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+				// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				// $atributos ["valor"] = $valorCodificado;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				$esteCampo = 'descripcion';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 90;
+				$atributos ['filas'] = 2;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required,maxSize[250]';
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 20;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 220;
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoTextArea ( $atributos );
+				unset ( $atributos );
+				
+				// ---------------- FIN CONTROL: Cuadro de Texto --------------------------------------------------------
+				 
+				// ------------------Division para los botones-------------------------
+				$atributos ["id"] = "botones";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
+				{
+					// -----------------CONTROL: Botón ----------------------------------------------------------------
+					$esteCampo = 'botonGuardar';
+					$atributos ["id"] = $esteCampo;
+					$atributos ["tabIndex"] = $tab;
+					$atributos ["tipo"] = 'boton';
+					// submit: no se coloca si se desea un tipo button genérico
+					$atributos ['submit'] = true;
+					$atributos ["estiloMarco"] = '';
+					$atributos ["estiloBoton"] = 'jqueryui';
+					// verificar: true para verificar el formulario antes de pasarlo al servidor.
+					$atributos ["verificar"] = true;
+					$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+					$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoBoton ( $atributos );
+					// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+				}
+				echo $this->miFormulario->division ( 'fin' );
+				
+				
 				
 				
 				

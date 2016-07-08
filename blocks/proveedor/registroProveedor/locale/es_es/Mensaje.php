@@ -115,8 +115,8 @@ $this->idioma["descripcionTitulo"]="Descripción";
 $this->idioma["pais"]="Pais :";
 $this->idioma["paisTitulo"]="Digite Pais de Procedencia";
 
-$this->idioma["codigoPais"]="Código del País :";
-$this->idioma["codigoPaisTitulo"]="Digite el Código del País";
+$this->idioma["codigoPais"]="Código del País DIAN:";
+$this->idioma["codigoPaisTitulo"]="Código del País según DIAN";
 
 $this->idioma["codigoPostal"]="Codigo Postal :";
 $this->idioma["codigoPostalTitulo"]="Digite el Codigo Postal";
@@ -133,6 +133,33 @@ $this->idioma["pasaporteTitulo"]="Digite el Pasaporte";
 $this->idioma["personaJuridicaPais"]="Pais :";
 $this->idioma["personaJuridicaDepartamento"]="Departamento :";
 $this->idioma["personaJuridicaCiudad"]="Ciudad :";
+
+$this->idioma["personaNaturalContaDepartamento"]="Departamento :";
+$this->idioma["personaNaturalContaCiudad"]="Ciudad :";
+
+$this->idioma["direccionNat"] = "Dirección : ";
+$this->idioma["direccionNatTitulo"]="Digite Dirección";
+
+$this->idioma["correoNat"] = "Correo : ";
+$this->idioma["correoNatTitulo"]="Digite el correo";
+
+$this->idioma["sitioWebNat"] = "Sitio Web : ";
+$this->idioma["sitioWebNatTitulo"]="Digite el Sitio Web";
+
+$this->idioma["telefonoNat"] = "Teléfono : ";
+$this->idioma["telefonoNatTitulo"]="Digite el teléfono";
+
+$this->idioma["extensionNat"] = "Extensión : ";
+$this->idioma["extensionNatTitulo"]="Digite la Extensión";
+
+$this->idioma["movilNat"] = "Movil : ";
+$this->idioma["movilNatTitulo"]="Digite número de Movil";
+
+$this->idioma["asesorComercialNat"] = "Asesor Comercial : ";
+$this->idioma["asesorComercialNatTitulo"]="Digite Asesor Comercial";
+
+$this->idioma["telAsesorNat"] = "Teléfono del Asesor : ";
+$this->idioma["telAsesorNatTitulo"]="Digite Teléfono del Asesor";
 
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";

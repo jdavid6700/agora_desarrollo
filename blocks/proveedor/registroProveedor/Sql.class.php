@@ -443,12 +443,23 @@ class Sql extends \Sql {
 				
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'id_pais as ID_PAIS, ';
-				$cadenaSql .= 'nombre_pais as NOMBRE ';
+				$cadenaSql .= 'nombre_pais as NOMBRE, ';
+				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
 				$cadenaSql .= 'parametro.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais != 112 ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
+				break;
+				
+			case 'buscarPaisCod' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'codigo_pais as COD_PAIS ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_pais = ' . $variable . ' ;';
 				break;
 			
 			case 'buscarDepartamento' : // Solo Departamentos de Colombia
@@ -459,7 +470,8 @@ class Sql extends \Sql {
 				$cadenaSql .= 'FROM ';
 				$cadenaSql .= 'parametro.departamento ';
 				$cadenaSql .= 'WHERE ';
-				$cadenaSql .= 'id_pais = 112;';
+				$cadenaSql .= 'id_pais = 112 ';
+				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
 			
 			case 'buscarDepartamentoAjax' :
