@@ -22,8 +22,10 @@ $this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
 $this->idioma["paisEmpresa"] = "Procedencia Empresa : ";
 $this->idioma["paisEmpresaTitulo"]="Seleccione Procedencia de la Empresa";
 
-$this->idioma["ciudad"]="Ciudad";
+$this->idioma["ciudad"]="Ciudad :";
 $this->idioma["ciudadTitulo"]="Digite Ciudad";
+$this->idioma["departamento"]="Departamento :";
+$this->idioma["departamentoTitulo"]="Digite Ciudad";
 
 $this->idioma["direccion"] = "Dirección : ";
 $this->idioma["direccionTitulo"]="Digite Dirección";

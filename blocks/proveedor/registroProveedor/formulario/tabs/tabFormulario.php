@@ -656,6 +656,81 @@ class registrarForm {
 				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                    
 				
+				
+						// ---------------- CONTROL: Select --------------------------------------------------------
+						$esteCampo = 'departamento';
+						$atributos['nombre'] = $esteCampo;
+						$atributos['id'] = $esteCampo;
+						$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+						$atributos['tab'] = $tab;
+						$atributos['seleccion'] = -1;
+						$atributos['evento'] = ' ';
+						$atributos['deshabilitado'] = false;
+						$atributos['limitar']= 50;
+						$atributos['tamanno']= 1;
+						$atributos['columnas']= 1;
+							
+						$atributos ['obligatorio'] = true;
+						$atributos ['etiquetaObligatorio'] = true;
+						$atributos ['validar'] = 'required';
+							
+						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamento" );
+						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+							
+						$atributos['matrizItems'] = $matrizItems;
+							
+						if (isset ( $_REQUEST [$esteCampo] )) {
+							$atributos ['valor'] = $_REQUEST [$esteCampo];
+						} else {
+							$atributos ['valor'] = '';
+						}
+						$tab ++;
+							
+						// Aplica atributos globales al control
+						$atributos = array_merge ( $atributos, $atributosGlobales );
+						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						// --------------- FIN CONTROL : Select --------------------------------------------------
+							
+						// ---------------- CONTROL: Select --------------------------------------------------------
+						$esteCampo = 'ciudad';
+						$atributos['nombre'] = $esteCampo;
+						$atributos['id'] = $esteCampo;
+						$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+						$atributos['tab'] = $tab;
+						$atributos['seleccion'] = -1;
+						$atributos['evento'] = ' ';
+						$atributos['deshabilitado'] = true;
+						$atributos['limitar']= 50;
+						$atributos['tamanno']= 1;
+						$atributos['columnas']= 1;
+							
+						$atributos ['obligatorio'] = true;
+						$atributos ['etiquetaObligatorio'] = true;
+						$atributos ['validar'] = 'required';
+							
+						$matrizItems=array(
+								array(1,'Bogota D.C.'),
+								array(2,'Medellin'),
+								array(3,'Barranquilla'),
+								array(4,'Cali'),
+								array(5,'Cucuta'),
+								array(6,'Bucaramanga')
+									
+						);
+						$atributos['matrizItems'] = $matrizItems;
+							
+						if (isset ( $_REQUEST [$esteCampo] )) {
+							$atributos ['valor'] = $_REQUEST [$esteCampo];
+						} else {
+							$atributos ['valor'] = '';
+						}
+						$tab ++;
+							
+						// Aplica atributos globales al control
+						$atributos = array_merge ( $atributos, $atributosGlobales );
+						echo $this->miFormulario->campoCuadroLista ( $atributos );
+				
+					/*
 					// ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
 						$esteCampo = 'ciudad';
 						$atributos ['id'] = $esteCampo;
@@ -688,6 +763,8 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 					// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+					
+					*/
 		
 					// ---------------- CONTROL: Cuadro de Texto  Dirección--------------------------------------------------------
 						$esteCampo = 'direccion';

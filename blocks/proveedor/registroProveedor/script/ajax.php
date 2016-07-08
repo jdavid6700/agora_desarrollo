@@ -332,6 +332,31 @@ $cadena19 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal19 = $url . $cadena19;
 //echo $urlFinal16; exit;
 
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar20 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar20 .= "&procesarAjax=true";
+$cadenaACodificar20 .= "&action=index.php";
+$cadenaACodificar20 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar20 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar20 .= $cadenaACodificar20 . "&funcion=consultarCiudadAjax";
+$cadenaACodificar20 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena20 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar20, $enlace );
+
+// URL definitiva
+$urlFinal20 = $url . $cadena20;
+//echo $urlFinal16; exit;
+
+
 ?>
 
 function consultarCiudad(elem, request, response){
@@ -475,6 +500,35 @@ function consultarDepartamentoLug(elem, request, response){
 		   });
 		};
 		
+	
+	function consultarCiudadJur(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal20?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('departamento')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('ciudad')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('ciudad')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_ciudad+"'>"+data[ indice ].nombreciudad+"</option>").appendTo("#<?php echo $this->campoSeguro('ciudad')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('ciudad')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('ciudad')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('ciudad')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('ciudad')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};
+		
 		
 	function calcularDigito(cadenaNit){
 		  
@@ -592,7 +646,16 @@ function consultarDepartamentoLug(elem, request, response){
 		    		}else{
 		    			$("#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>").attr('disabled','');
 		    			}
-		    	      });      
+		    	      });
+		    	      
+		    	      
+		    	$("#<?php echo $this->campoSeguro('departamento')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('departamento')?>").val()!=''){
+		            	consultarCiudadJur();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('ciudad')?>").attr('disabled','');
+		    			}
+		    	      });         
 		    	
 		    	      
 		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
