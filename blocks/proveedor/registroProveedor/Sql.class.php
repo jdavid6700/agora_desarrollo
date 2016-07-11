@@ -402,12 +402,43 @@ class Sql extends \Sql {
 					$cadenaSql.=" WHERE usuario = '" . $variable . "'";
 					break;
 				
-			// ********************************************************************************+
+				// ********************************************************************************+
+			
+			
+			
+			
+			
+			
+			
+			case 'consultarPaises' :
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_pais as ID_PAIS, ';
+				$cadenaSql .= 'nombre_pais as NOMBRE, ';
+				$cadenaSql .= 'codigo_pais as COD_PAIS ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'ORDER BY NOMBRE';
+				break;
+					
+			case "consultarBanco" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_codigo,";
+				$cadenaSql .= "	nombre_banco";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " parametro.banco";
+				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
+				$cadenaSql .= " ORDER BY nombre_banco";
+				break;
 				
-					
-					
-					
-					
+			case "consultarConformacion" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_conformacion,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " parametro.tipo_conformacion";
+				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
 					
 			/* CIIU */
 			case "ciiuDivision" :

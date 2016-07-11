@@ -15,6 +15,8 @@ $this->idioma["digitoTitulo"]="Digito de Verificación";
 
 $this->idioma["digitoNat"] = "Digito de Verificación : ";
 $this->idioma["digitoNatTitulo"]="Digito de Verificación";
+$this->idioma["digitoRepre"] = "Digito de Verificación : ";
+$this->idioma["digitoRepreTitulo"]="Digito de Verificación";
 
 $this->idioma["nombreEmpresa"]="Nombre de la Empresa";
 $this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
@@ -72,7 +74,7 @@ $this->idioma["segundoApellidoTitulo"]="Digite Segundo Apellido";
 $this->idioma["primerNombre"]="Primer Nombre : ";
 $this->idioma["primerNombreTitulo"]="Digite Primer Nombre";
 
-$this->idioma["segundoNombre"]="Segundo nombre : ";
+$this->idioma["segundoNombre"]="Segundo Nombre : ";
 $this->idioma["segundoNombreTitulo"]="Digite Segundo nombre";
 
 $this->idioma["primerApellidoNat"]="Primer Apellido : ";
@@ -84,7 +86,7 @@ $this->idioma["segundoApellidoNatTitulo"]="Digite Segundo Apellido";
 $this->idioma["primerNombreNat"]="Primer Nombre : ";
 $this->idioma["primerNombreNatTitulo"]="Digite Primer Nombre";
 
-$this->idioma["segundoNombreNat"]="Segundo nombre : ";
+$this->idioma["segundoNombreNat"]="Segundo Nombre : ";
 $this->idioma["segundoNombreNatTitulo"]="Digite Segundo nombre";
 
 $this->idioma["regimenContributivo"]="Regimen Contributivo :";
@@ -110,9 +112,13 @@ $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
 $this->idioma["DocumentoRUT"] = "Adjuntar PDF Registro Único Tributario :";
 $this->idioma["DocumentoRUTTitulo"]="Seleccionar documento";
+$this->idioma["DocumentoRUTNat"] = "Adjuntar PDF Registro Único Tributario :";
+$this->idioma["DocumentoRUTNatTitulo"]="Seleccionar documento";
 
 $this->idioma["descripcion"] = "Descripción adicional o características especiales del producto";
 $this->idioma["descripcionTitulo"]="Descripción";
+$this->idioma["descripcionNat"] = "Descripción adicional o características especiales del producto";
+$this->idioma["descripcionNatTitulo"]="Descripción";
 
 $this->idioma["pais"]="Pais :";
 $this->idioma["paisTitulo"]="Digite Pais de Procedencia";
@@ -163,6 +169,58 @@ $this->idioma["asesorComercialNatTitulo"]="Digite Asesor Comercial";
 $this->idioma["telAsesorNat"] = "Teléfono del Asesor : ";
 $this->idioma["telAsesorNatTitulo"]="Digite Teléfono del Asesor";
 
+
+$this->idioma["cargo"] = "Cargo : ";
+$this->idioma["cargoTitulo"]="Digite el Cargo";
+$this->idioma["perfil"] = "Perfil : ";
+$this->idioma["perfilTitulo"]="Digite el Perfil";
+$this->idioma["profesion"] = "Profesión : ";
+$this->idioma["profesionTitulo"]="Digite la Profesión";
+$this->idioma["especialidad"] = "Especialidad : ";
+$this->idioma["especialidadTitulo"]="Digite la Especialidad";
+$this->idioma["genero"] = "Genero : ";
+$this->idioma["generoTitulo"]="Digite el Genero";
+$this->idioma["correoPer"] = "Correo : ";
+$this->idioma["correoPerTitulo"]="Digite el Correo Personal";
+$this->idioma["numeroContacto"] = "Telefono de Contacto : ";
+$this->idioma["numeroContactoTitulo"]="Digite el Telefono de Contacto";
+$this->idioma["tipoCuenta"] = "Tipo de Cuenta : ";
+$this->idioma["tipoCuentaTitulo"]="Digite el Tipo de Cuenta";
+$this->idioma["numeroCuenta"] = "Número de Cuenta : ";
+$this->idioma["numeroCuentaTitulo"]="Digite el Número de Cuenta";
+$this->idioma["entidadBancaria"] = "Entidad Bancaria : ";
+$this->idioma["entidadBancariaTitulo"]="Digite la Entidad Bancaria";
+$this->idioma["tipoConformacion"] = "Tipo Conformación : ";
+$this->idioma["tipoConformacionTitulo"]="Digite el Tipo de Configuración";
+$this->idioma["paisNacimiento"] = "Pais de Nacimiento : ";
+$this->idioma["paisNacimientoTitulo"]="Digite el Pais de Nacimiento";
+
+
+$this->idioma["cargoNat"] = "Cargo : ";
+$this->idioma["cargoNatTitulo"]="Digite el Cargo";
+$this->idioma["perfilNat"] = "Perfil : ";
+$this->idioma["perfilNatTitulo"]="Digite el Perfil";
+$this->idioma["profesionNat"] = "Profesión : ";
+$this->idioma["profesionNatTitulo"]="Digite la Profesión";
+$this->idioma["especialidadNat"] = "Especialidad : ";
+$this->idioma["especialidadNatTitulo"]="Digite la Especialidad";
+$this->idioma["generoNat"] = "Genero : ";
+$this->idioma["generoNatTitulo"]="Digite el Genero";
+$this->idioma["correoPerNat"] = "Correo : ";
+$this->idioma["correoPerNatTitulo"]="Digite el Correo Personal";
+$this->idioma["numeroContactoNat"] = "Telefono de Contacto : ";
+$this->idioma["numeroContactoNatTitulo"]="Digite el Telefono de Contacto";
+$this->idioma["tipoCuentaNat"] = "Tipo de Cuenta : ";
+$this->idioma["tipoCuentaNatTitulo"]="Digite el Tipo de Cuenta";
+$this->idioma["numeroCuentaNat"] = "Número de Cuenta : ";
+$this->idioma["numeroCuentaNatTitulo"]="Digite el Número de Cuenta";
+$this->idioma["entidadBancariaNat"] = "Entidad Bancaria : ";
+$this->idioma["entidadBancariaNatTitulo"]="Digite la Entidad Bancaria";
+$this->idioma["tipoConformacionNat"] = "Tipo Conformación : ";
+$this->idioma["tipoConformacionNatTitulo"]="Digite el Tipo de Configuración";
+$this->idioma["paisNacimientoNat"] = "Pais de Nacimiento : ";
+$this->idioma["paisNacimientoNatTitulo"]="Digite el Pais de Nacimiento";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
@@ -179,7 +237,7 @@ $this->idioma["marcoDatosJuridica"] = "Ingresar Datos de Persona Juridica";
 
 $this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
-
+$this->idioma["marcoFinanciero"] = "Información Financiera";
 
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";

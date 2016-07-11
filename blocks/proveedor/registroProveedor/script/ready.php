@@ -103,6 +103,34 @@ $("#<?php echo $this->campoSeguro('departamento')?>").select2();
 $('#<?php echo $this->campoSeguro('ciudad')?>').width(250);
 $("#<?php echo $this->campoSeguro('ciudad')?>").select2();
 
+$('#<?php echo $this->campoSeguro('genero')?>').width(250);
+$("#<?php echo $this->campoSeguro('genero')?>").select2();
+$('#<?php echo $this->campoSeguro('generoNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('generoNat')?>").select2();
+
+$('#<?php echo $this->campoSeguro('perfil')?>').width(250);
+$("#<?php echo $this->campoSeguro('perfil')?>").select2();
+
+$('#<?php echo $this->campoSeguro('tipoCuenta')?>').width(250);
+$("#<?php echo $this->campoSeguro('tipoCuenta')?>").select2();
+$('#<?php echo $this->campoSeguro('entidadBancaria')?>').width(300);
+$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
+$('#<?php echo $this->campoSeguro('tipoConformacion')?>').width(300);
+$("#<?php echo $this->campoSeguro('tipoConformacion')?>").select2();
+$('#<?php echo $this->campoSeguro('paisNacimiento')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisNacimiento')?>").select2();
+
+
+$('#<?php echo $this->campoSeguro('perfilNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('perfilNat')?>").select2();
+
+$('#<?php echo $this->campoSeguro('tipoCuentaNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('tipoCuentaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('entidadBancariaNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('entidadBancariaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('paisNacimientoNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisNacimientoNat')?>").select2();
+
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
@@ -130,6 +158,34 @@ $("#marcoDatosJuridica").hide("fast");
 $("#marcoProcedencia").hide("fast");
 $("#obligatorioCedula").hide("fast");
 $("#obligatorioPasaporte").hide("fast");
+
+$("#obligatorioProfesion").hide("fast");
+$("#obligatorioEspecialidad").hide("fast");
+
+if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
+	$("#obligatorioProfesion").show("fast");
+	$("#obligatorioEspecialidad").show("fast");
+}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3){
+	$("#obligatorioProfesion").show("fast");
+	$("#obligatorioEspecialidad").hide("fast");
+}else{
+	$("#obligatorioProfesion").hide("fast");
+	$("#obligatorioEspecialidad").hide("fast");
+}
+
+$("#obligatorioProfesionNat").hide("fast");
+$("#obligatorioEspecialidadNat").hide("fast");
+
+if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4){
+	$("#obligatorioProfesionNat").show("fast");
+	$("#obligatorioEspecialidadNat").show("fast");
+}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3){
+	$("#obligatorioProfesionNat").show("fast");
+	$("#obligatorioEspecialidadNat").hide("fast");
+}else{
+	$("#obligatorioProfesionNat").hide("fast");
+	$("#obligatorioEspecialidadNat").hide("fast");
+}
 
 
 if($('#<?php echo $this->campoSeguro('paisEmpresa') ?>').val() == 2){
