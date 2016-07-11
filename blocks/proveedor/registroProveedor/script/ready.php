@@ -131,6 +131,15 @@ $("#<?php echo $this->campoSeguro('entidadBancariaNat')?>").select2();
 $('#<?php echo $this->campoSeguro('paisNacimientoNat')?>').width(250);
 $("#<?php echo $this->campoSeguro('paisNacimientoNat')?>").select2();
 
+$('#<?php echo $this->campoSeguro('sujetoDeRetencion')?>').width(150);
+$("#<?php echo $this->campoSeguro('sujetoDeRetencion')?>").select2();
+$('#<?php echo $this->campoSeguro('agenteRetenedor')?>').width(150);
+$("#<?php echo $this->campoSeguro('agenteRetenedor')?>").select2();
+$('#<?php echo $this->campoSeguro('responsableICA')?>').width(150);
+$("#<?php echo $this->campoSeguro('responsableICA')?>").select2();
+$('#<?php echo $this->campoSeguro('responsableIVA')?>').width(150);
+$("#<?php echo $this->campoSeguro('responsableIVA')?>").select2();
+
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();

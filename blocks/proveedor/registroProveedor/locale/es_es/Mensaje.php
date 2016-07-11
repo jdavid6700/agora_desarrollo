@@ -221,6 +221,17 @@ $this->idioma["tipoConformacionNatTitulo"]="Digite el Tipo de Configuración";
 $this->idioma["paisNacimientoNat"] = "Pais de Nacimiento : ";
 $this->idioma["paisNacimientoNatTitulo"]="Digite el Pais de Nacimiento";
 
+
+$this->idioma["sujetoDeRetencion"] = "Sujeto de Retención : ";
+$this->idioma["agenteRetenedor"] = "Agente Retenedor : ";
+$this->idioma["responsableICA"] = "Responsable de ICA : ";
+$this->idioma["responsableIVA"] = "Responsable de IVA : ";
+
+$this->idioma["monto"] = "Monto Capital Autorizado : ";
+$this->idioma["montoTitulo"]="Digite el Monto de Camara de Comercio";
+$this->idioma["montoNat"] = "Monto Capital Autorizado : ";
+$this->idioma["montoNatTitulo"]="Digite el Monto de Camara de Comercio";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
