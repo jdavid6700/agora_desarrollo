@@ -2,12 +2,12 @@
 
 $this->idioma["tabConsultarProveedor"] = "Consultar Infomación del Proveedor";
 
-$this->idioma["marcoSearchByNIT"]="Ingesar NIT o Cédula del proveedor";
-$this->idioma["marcoSearchByName"]="Ingesar nombre empresa del proveedor";
+$this->idioma["marcoSearchByNIT"]="Ingresar NIT/Cédula o Nombre del proveedor";
+$this->idioma["marcoSearchByName"]="Ingresar nombre empresa del proveedor";
 $this->idioma["marcoDatos"]="Datos del Proveedor";
 $this->idioma["marcoInhabilidad"]="Datos Inhabilidad";
 
-$this->idioma["nit_proveedor"] =  "NIT o Cédula : ";
+$this->idioma["nit_proveedor"] =  "NIT/Cédula o Nombre : ";
 $this->idioma["nit_proveedorTitulo"] = "Indicar NIT o Cédula del proveedor";
 
 $this->idioma["nombreEmpresa"] =  "Nombre empresa : ";

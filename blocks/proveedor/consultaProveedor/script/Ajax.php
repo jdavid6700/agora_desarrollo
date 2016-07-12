@@ -31,6 +31,22 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 // URL definitiva
 $urlFinalProveedor = $url . $cadena;
 
+
+
+
+$cadenaACodificarProveedorFiltro = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarProveedorFiltro .= "&procesarAjax=true";
+$cadenaACodificarProveedorFiltro .= "&action=index.php";
+$cadenaACodificarProveedorFiltro .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarProveedorFiltro .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarProveedorFiltro .= $cadenaACodificarProveedorFiltro . "&funcion=consultarProveedorFiltro";
+$cadenaACodificarProveedorFiltro .= "&tiempo=" . $_REQUEST ['tiempo'];
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarProveedorFiltro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarProveedorFiltro, $enlace);
+// URL definitiva
+$urlProveedorFiltro = $url . $cadenaACodificarProveedorFiltro;
+
 ?>
 
 <script type='text/javascript'>
@@ -47,6 +63,19 @@ $(function () {
         	        $("#<?php echo $this->campoSeguro('id_contratista') ?>").val(suggestion.data);
         	    }
         });
+});
+
+
+
+$("#<?php echo $this->campoSeguro('nit_proveedor') ?>").keyup(function () {
+    $('#<?php echo $this->campoSeguro('nit_proveedor') ?>').val($('#<?php echo $this->campoSeguro('nit_proveedor') ?>').val());
+});
+$("#<?php echo $this->campoSeguro('nit_proveedor') ?>").autocomplete({
+    minChars: 3,
+    serviceUrl: '<?php echo $urlProveedorFiltro; ?>',
+    onSelect: function (suggestions) {
+        $("#<?php echo $this->campoSeguro('id_proveedor') ?>").val(suggestions.data);
+    }
 });
 
 </script>

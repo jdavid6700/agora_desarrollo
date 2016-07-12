@@ -28,6 +28,13 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			
+			case "buscarProveedoresFiltro" :
+				$cadenaSql = " SELECT DISTINCT num_documento||' - ('||nom_proveedor||')' AS  value, num_documento AS data  ";
+				$cadenaSql .= " FROM proveedor.informacion_proveedor ";
+				$cadenaSql .= " WHERE cast(num_documento as text) LIKE '%$variable%' OR nom_proveedor LIKE '%$variable%' LIMIT 10; ";
+				break;
+			
 			/* ACTUALIZAR - PROVEEEDOR ESTADO INHABILITADO */			
 				case 'actualizarProveedor' :
 					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
