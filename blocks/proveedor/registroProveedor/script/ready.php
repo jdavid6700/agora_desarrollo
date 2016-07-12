@@ -140,6 +140,16 @@ $("#<?php echo $this->campoSeguro('responsableICA')?>").select2();
 $('#<?php echo $this->campoSeguro('responsableIVA')?>').width(150);
 $("#<?php echo $this->campoSeguro('responsableIVA')?>").select2();
 
+ $('#<?php echo $this->campoSeguro('seccionParametrosNat')?>').width(150);
+ $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").select2(); 
+ $('#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>').width(240);
+ $("#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>").select2();
+ 
+ $('#<?php echo $this->campoSeguro('seccionParametros')?>').width(150);
+ $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2(); 
+ $('#<?php echo $this->campoSeguro('listaNomenclaturas')?>').width(240);
+ $("#<?php echo $this->campoSeguro('listaNomenclaturas')?>").select2();
+
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();

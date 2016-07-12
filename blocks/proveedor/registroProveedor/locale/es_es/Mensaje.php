@@ -232,6 +232,12 @@ $this->idioma["montoTitulo"]="Digite el Monto de Camara de Comercio";
 $this->idioma["montoNat"] = "Monto Capital Autorizado : ";
 $this->idioma["montoNatTitulo"]="Digite el Monto de Camara de Comercio";
 
+$this->idioma["listaNomenclaturasNat"] = "Buscar Nomenclatura  ";
+$this->idioma["listaNomenclaturasNatTitulo"]="Busque la Nomenclatura";
+
+$this->idioma["listaNomenclaturas"] = "Buscar Nomenclatura  ";
+$this->idioma["listaNomenclaturasTitulo"]="Busque la Nomenclatura";
+
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";

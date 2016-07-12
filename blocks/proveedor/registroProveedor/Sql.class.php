@@ -403,12 +403,37 @@ class Sql extends \Sql {
 					break;
 				
 				// ********************************************************************************+
-			
-			
-			
-			
-			
-			
+				
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+			case 'buscarNomenclaturaAbreviatura' :
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
+				$cadenaSql .= 'abreviatura as ABREVIATURA ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
+				$cadenaSql .= 'ORDER BY NOMENCLATURA';
+				break;
+			case 'buscarNomenclaturas' :
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
+				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'ORDER BY NOMENCLATURA';
+				break;
 			
 			case 'consultarPaises' :
 				$cadenaSql = 'SELECT ';

@@ -383,6 +383,54 @@ $urlFinal20 = $url . $cadena20;
 //echo $urlFinal16; exit;
 
 
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar21 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar21 .= "&procesarAjax=true";
+$cadenaACodificar21 .= "&action=index.php";
+$cadenaACodificar21 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar21 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar21 .= $cadenaACodificar21 . "&funcion=consultarNomenclatura";
+$cadenaACodificar21 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena21 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar21, $enlace );
+
+// URL definitiva
+$urlFinal21 = $url . $cadena21;
+//echo $urlFinal16; exit;
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar22 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar22 .= "&procesarAjax=true";
+$cadenaACodificar22 .= "&action=index.php";
+$cadenaACodificar22 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar22 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar22 .= $cadenaACodificar22 . "&funcion=consultarNomenclatura";
+$cadenaACodificar22 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena22 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar22, $enlace );
+
+// URL definitiva
+$urlFinal22 = $url . $cadena22;
+//echo $urlFinal16; exit;
+
+
 ?>
 
 function consultarCiudad(elem, request, response){
@@ -554,6 +602,62 @@ function consultarDepartamentoLug(elem, request, response){
 			                    
 		   });
 		};
+		
+		
+	function consultarNomenclaturaNat(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal21?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").html('');
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_nomenclatura+"'>"+data[ indice ].abreviatura+"</option>").appendTo("#<?php echo $this->campoSeguro('seccionParametrosNat')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('seccionParametrosNat')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};	
+		
+		
+	function consultarNomenclatura(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal22?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('listaNomenclaturas')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").html('');
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_nomenclatura+"'>"+data[ indice ].abreviatura+"</option>").appendTo("#<?php echo $this->campoSeguro('seccionParametros')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('seccionParametros')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};	
 		
 		
 	function calcularDigito(cadenaNit){
@@ -768,4 +872,257 @@ function consultarDepartamentoLug(elem, request, response){
     			}).keyup();      
 	    	      
 		 });
+		  
+ 
+		 
+		$( '#<?php echo $this->campoSeguro('direccion')?>' ).keypress(function(tecla) {
+			 if(tecla.charCode != 48  && tecla.charCode != 49 && tecla.charCode != 50 && 
+			    tecla.charCode != 51  && tecla.charCode != 52 && tecla.charCode != 53 && 
+			    tecla.charCode != 54  && tecla.charCode != 55 && tecla.charCode != 56 && 
+			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32) return false;
+		});
+		
+		$(function () {
+			    $('#parametros').draggable({
+			        revert: true,
+			        helper: 'clone',
+			        start: function (event, ui) {
+			            $(this).fadeTo('fast', 1.5);
+			        },
+			        stop: function (event, ui) {
+			            $(this).fadeTo(0, 1);
+			        }
+			    });
+		
+			    $('#<?php echo $this->campoSeguro('direccion')?>').droppable({
+			        hoverClass: 'active',
+			        drop: function (event, ui) {
+			        	if($(ui.draggable).find('select option:selected').text() != 'Nomenclatura'){
+			        		this.value += $(ui.draggable).find('select option:selected').text() + " ";
+			        	}
+			        }
+			    });
+			    
+			    
+			    $("#<?php echo $this->campoSeguro('listaNomenclaturas')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('listaNomenclaturas')?>").val()!=''){
+						consultarNomenclatura();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('seccionParametros')?>").attr('disabled','');
+		    			}
+		    	    });
+		});
+		
+		$( '#<?php echo $this->campoSeguro('listaNomenclaturas')?>' ).change(function() {
+		
+			$("#<?php echo $this->campoSeguro('seccionParametros')?>").removeAttr('disabled');
+		    $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2();
+		});
+		
+		$("#btOper1").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " A ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper2").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " B ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper3").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " C ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper4").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " D ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper5").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " E ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper6").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " F ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper7").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " G ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper8").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " H ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper9").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " I ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper10").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " J ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper11").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " K ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper12").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();
+			var post = actual + " L ";
+			$('#<?php echo $this->campoSeguro('direccion')?>').val(post);
+		});
+		
+		$("#btOper13").click(function(){
+			$('#<?php echo $this->campoSeguro('direccion')?>').val("");
+		});
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		$( '#<?php echo $this->campoSeguro('direccionNat')?>' ).keypress(function(tecla) {
+			 if(tecla.charCode != 48  && tecla.charCode != 49 && tecla.charCode != 50 && 
+			    tecla.charCode != 51  && tecla.charCode != 52 && tecla.charCode != 53 && 
+			    tecla.charCode != 54  && tecla.charCode != 55 && tecla.charCode != 56 && 
+			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32) return false;
+		});
+		
+		$(function () {
+			    $('#parametrosNat').draggable({
+			        revert: true,
+			        helper: 'clone',
+			        start: function (event, ui) {
+			            $(this).fadeTo('fast', 1.5);
+			        },
+			        stop: function (event, ui) {
+			            $(this).fadeTo(0, 1);
+			        }
+			    });
+		
+			    $('#<?php echo $this->campoSeguro('direccionNat')?>').droppable({
+			        hoverClass: 'active',
+			        drop: function (event, ui) {
+			        	if($(ui.draggable).find('select option:selected').text() != 'Nomenclatura'){
+			        		this.value += $(ui.draggable).find('select option:selected').text() + " ";
+			        	}
+			        }
+			    });
+			    
+			    
+			    $("#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>").val()!=''){
+						consultarNomenclaturaNat();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").attr('disabled','');
+		    			}
+		    	    });
+		});
+		
+		$( '#<?php echo $this->campoSeguro('listaNomenclaturasNat')?>' ).change(function() {
+		
+			$("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").removeAttr('disabled');
+		    $("#<?php echo $this->campoSeguro('seccionParametrosNat')?>").select2();
+		});
+		
+		
+		$("#btOper1Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " A ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper2Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " B ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper3Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " C ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper4Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " D ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper5Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " E ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper6Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " F ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper7Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " G ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper8Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " H ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper9Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " I ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper10Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " J ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper11Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " K ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper12Nat").click(function(){
+			var actual = $('#<?php echo $this->campoSeguro('direccionNat')?>').val();
+			var post = actual + " L ";
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
+		});
+		
+		$("#btOper13Nat").click(function(){
+			$('#<?php echo $this->campoSeguro('direccionNat')?>').val("");
+		});
     	 
