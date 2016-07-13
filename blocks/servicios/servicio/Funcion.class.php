@@ -36,16 +36,41 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
+	
+	function codifica_utf8($dat) // -- It returns $dat encoded to UTF8
+	{
+		if (is_string($dat)) return utf8_encode($dat);
+		if (!is_array($dat)) return $dat;
+		$ret = array();
+		foreach($dat as $i=>$d) $ret[$i] = $this->codifica_utf8($d);
+		return $ret;
+	}
+	
+	function decodifica_utf8($dat) // -- It returns $dat decoded from UTF8
+	{
+		if (is_string($dat)) return utf8_decode($dat);
+		if (!is_array($dat)) return $dat;
+		$ret = array();
+		foreach($dat as $i=>$d) $ret[$i] = $this->decodifica_utf8($d);
+		return $ret;
+	}
+	
 	function deliver_response($status,$status_message,$data){
 				
 				header("HTTP/1.1 $status."-".$status_message");
 				echo "<json>";
 				$response['status']=$status;
 				$response['message']= $status_message;
-				$response['datos']=$data;
+				$response['datos']= $data;
 			    $json_response = json_encode($response);
 				echo $json_response;
 				echo "<json>";
+				
+				/*Acentos DECODIFICA UTF8 Arreglo JSON
+				$jsondata = $json_response;
+				$obj = json_decode($jsondata, true);
+				var_dump($this->decodifica_utf8($obj));
+				*/
 				
 	}
 	function action() {
