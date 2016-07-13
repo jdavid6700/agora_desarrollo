@@ -37,15 +37,16 @@ class Sql extends \Sql {
 			
 			/* ACTUALIZAR - PROVEEEDOR ESTADO INHABILITADO */			
 				case 'actualizarProveedor' :
-					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
-					$cadenaSql .= "estado='" . $variable ['estado'] . "'";
+					$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+					$cadenaSql .= " estado='" . $variable ['estado'] . "',";
+					$cadenaSql .= " fecha_ultima_modificacion='" . $variable ['fecha_modificacion'] . "'";
 					$cadenaSql .= " WHERE id_proveedor=";
 					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
 					break;
 					
 			/* REGISTRAR INHABILIDAD */
 				case "ingresarInhabilidad" :
-					$cadenaSql=" INSERT INTO proveedor.prov_inhabilidad";
+					$cadenaSql=" INSERT INTO proveedor.inhabilidad";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" id_proveedor,";
 					$cadenaSql.=" tipo_inhabilidad,";
@@ -67,21 +68,14 @@ class Sql extends \Sql {
 				case "buscarProveedor" :			
 					$cadenaSql = "SELECT  ";
 					$cadenaSql .= " id_proveedor, ";
-					$cadenaSql .= " nit, ";
-					$cadenaSql .= " nomempresa, ";
+					$cadenaSql .= " num_documento, ";
+					$cadenaSql .= " nom_proveedor, ";
 					$cadenaSql .= " correo, ";
 					$cadenaSql .= " web, ";
-					$cadenaSql .= " telefono, ";
-					$cadenaSql .= " ext1, ";
-					$cadenaSql .= " movil, ";
-					$cadenaSql .= " primerapellido, ";
-					$cadenaSql .= " segundoapellido, ";
-					$cadenaSql .= " primernombre, ";
-					$cadenaSql .= " segundonombre,  ";
 					$cadenaSql .= " puntaje_evaluacion, ";
 					$cadenaSql .= " clasificacion_evaluacion  ";				
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.prov_proveedor_info";
+					$cadenaSql .= " proveedor.informacion_proveedor";
 					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
 					break;
 				

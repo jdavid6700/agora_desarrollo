@@ -72,6 +72,7 @@ class Formulario {
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedor', $_REQUEST['idProveedor']  );
 		$proveedorEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
             
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
@@ -82,9 +83,9 @@ class Formulario {
                 
 			//INICIO INFORMACION OBJETO A CONTRATAR
 				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["nomempresa"] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["nom_proveedor"] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>NIT : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["nit"] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["num_documento"] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["correo"] . "</span></br>";                 
 			//FIN INFORMACION OBJETO A CONTRATAR
