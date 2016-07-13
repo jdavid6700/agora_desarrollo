@@ -325,38 +325,51 @@ class Sql extends \Sql {
 					$cadenaSql=" SELECT";
 					$cadenaSql.=" P.id_proveedor,";
 					$cadenaSql.=" P.num_documento,";
-					$cadenaSql.=" P.digito_verificacion,";
+					$cadenaSql.=" P.tipopersona,";
 					$cadenaSql.=" P.nom_proveedor,";
-					$cadenaSql.=" P.id_pais_origen,";
+					$cadenaSql.=" P.id_ciudad_contacto,";
 					$cadenaSql.=" P.direccion,";
 					$cadenaSql.=" P.correo,";
-					$cadenaSql.=" P.web,";                                        
+					$cadenaSql.=" P.web,";
+					$cadenaSql.=" P.nom_asesor,";
+					$cadenaSql.=" P.tel_asesor,";
+					$cadenaSql.=" P.tipo_cuenta_bancaria,";
+					$cadenaSql.=" P.num_cuenta_bancaria,";
+					$cadenaSql.=" P.id_entidad_bancaria,";
+					$cadenaSql.=" P.descripcion,";
+					$cadenaSql.=" P.anexorut,";
+					$cadenaSql.=" P.fecha_registro,";
+					$cadenaSql.=" P.fecha_ultima_modificacion,";
+					$cadenaSql.=" P.estado";
+					
+					
+					//$cadenaSql.=" P.digito_verificacion,";
+					
+					//$cadenaSql.=" P.id_pais_origen,";
+					                                       
 // 					$cadenaSql.=" P.telefono,";
 // 					$cadenaSql.=" P.ext1,";
 // 					$cadenaSql.=" P.movil,";
-// 					$cadenaSql.=" P.nomasesor,";
-// 					$cadenaSql.=" P.telasesor,";                                        
+                                      
 // 					$cadenaSql.=" P.tipodocumento,";
 // 					$cadenaSql.=" P.numdocumento,";
 // 					$cadenaSql.=" P.primerapellido,";
 // 					$cadenaSql.=" P.segundoapellido,";                                        
 // 					$cadenaSql.=" P.primernombre,";
 // 					$cadenaSql.=" P.segundonombre,";
-					$cadenaSql.=" P.tipopersona,";
-					$cadenaSql.=" P.regimen,";
-					$cadenaSql.=" P.importacion,";                                        
-					$cadenaSql.=" P.pyme,";
-					$cadenaSql.=" P.registro_mercantil,";
-					$cadenaSql.=" P.descripcion,";
-					$cadenaSql.=" P.anexorut,";
-					$cadenaSql.=" P.estado,";
-					$cadenaSql.=" P.tipo_procedencia,";
+					
+					//$cadenaSql.=" P.regimen,";
+					//$cadenaSql.=" P.importacion,";                                        
+					//$cadenaSql.=" P.pyme,";
+					//$cadenaSql.=" P.registro_mercantil,";
+					
+					//$cadenaSql.=" P.tipo_procedencia,";
 // 					$cadenaSql.=" P.pais,";
 // 					$cadenaSql.=" P.codigo_pais,";
 // 					$cadenaSql.=" P.codigo_postal,";
-					$cadenaSql.=" P.tipo_doc_extranjero,";
-					$cadenaSql.=" P.num_cedula_extranjeria,";
-					$cadenaSql.=" P.num_pasaporte";
+					//$cadenaSql.=" P.tipo_doc_extranjero,";
+					//$cadenaSql.=" P.num_cedula_extranjeria,";
+					//$cadenaSql.=" P.num_pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
 					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";

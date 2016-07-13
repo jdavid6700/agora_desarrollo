@@ -119,6 +119,7 @@ class Funcion {
 					break;
 
 				case 'registrar' :
+					var_dump($_REQUEST);
 					$this->formProcessor ();
 					break;					
 

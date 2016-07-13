@@ -241,6 +241,7 @@ $this->idioma["listaNomenclaturasTitulo"]="Busque la Nomenclatura";
 //***************** SECCIÓN BOTONES ******************//
 $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
+$this->idioma["botonGuardarNat"] = "Guardar";
 $this->idioma["botonAceptar"] = "Buscar";
 $this->idioma["continuar"] = "Continuar";
 $this->idioma["regresar"] = "Regresar";

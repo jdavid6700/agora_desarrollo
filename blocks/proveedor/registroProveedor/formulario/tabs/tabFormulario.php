@@ -485,12 +485,12 @@ class registrarForm {
 							$atributos ['estilo'] = 'jqueryui';
 							$atributos ['marco'] = true;
 							$atributos ['estiloMarco'] = '';
-							$atributos ["etiquetaObligatorio"] = true;
+							$atributos ["etiquetaObligatorio"] = false;
 							$atributos ['columnas'] = 2;
 							$atributos ['dobleLinea'] = 0;
 							$atributos ['tabIndex'] = $tab ++;
 							$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-							$atributos ['validar'] = 'required, minSize[1],maxSize[30],custom[onlyNumberSp]';
+							$atributos ['validar'] = 'minSize[1],maxSize[30],custom[onlyNumberSp]';
 								
 							if (isset ( $_REQUEST [$esteCampo] )) {
 								$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1061,12 +1061,12 @@ class registrarForm {
 						$atributos ['estilo'] = 'jqueryui';
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ["etiquetaObligatorio"] = false;
 						$atributos ['columnas'] = 6;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'required, minSize[1],maxSize[100]';
+						$atributos ['validar'] = 'minSize[1],maxSize[100]';
 						
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1127,12 +1127,12 @@ class registrarForm {
 						$atributos ['estilo'] = 'jqueryui';
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ["etiquetaObligatorio"] = false;
 						$atributos ['columnas'] = 2;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'required, minSize[1],maxSize[7],custom[onlyNumberSp]';
+						$atributos ['validar'] = 'minSize[1],maxSize[7],custom[onlyNumberSp]';
 						
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1415,7 +1415,7 @@ class registrarForm {
 						$atributos ['estilo'] = 'jqueryui';
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ["etiquetaObligatorio"] = false;
 						$atributos ['columnas'] = 2;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
@@ -1481,7 +1481,7 @@ class registrarForm {
 						$atributos ['estilo'] = 'jqueryui';
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ["etiquetaObligatorio"] = false;
 						$atributos ['columnas'] = 2;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
@@ -2552,7 +2552,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
@@ -2618,7 +2618,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
@@ -2692,7 +2692,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'minSize[1],maxSize[30]';
+				$atributos ['validar'] = 'required,minSize[1],maxSize[30]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2712,7 +2712,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
-				// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
+				/*// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
 				$esteCampo = 'correoPerNat';
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
@@ -2743,7 +2743,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
-				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
+				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------*/
 				
 				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
 				$esteCampo = "paisNacimientoNat";
@@ -3359,12 +3359,12 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[100]';
+				$atributos ['validar'] = 'minSize[1],maxSize[100]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3458,12 +3458,12 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[7],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[1],maxSize[7],custom[onlyNumberSp]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3491,12 +3491,12 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[150]';
+				$atributos ['validar'] = 'minSize[1],maxSize[150]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3524,12 +3524,12 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[1],maxSize[15],custom[onlyNumberSp]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3691,12 +3691,12 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[1],maxSize[15],custom[onlyNumberSp]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3791,7 +3791,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				unset ( $atributos );
 				{
 					// -----------------CONTROL: Botón ----------------------------------------------------------------
-					$esteCampo = 'botonGuardar';
+					$esteCampo = 'botonGuardarNat';
 					$atributos ["id"] = $esteCampo;
 					$atributos ["tabIndex"] = $tab;
 					$atributos ["tipo"] = 'boton';

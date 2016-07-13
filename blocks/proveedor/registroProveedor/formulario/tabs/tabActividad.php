@@ -99,7 +99,7 @@ class FormularioRegistro {
 		$_REQUEST['idProveedor'] = $datosProvedor[0]['id_proveedor'];
         $_REQUEST['nit']  = $datosProvedor[0]['num_documento'];
 		
-        
+        var_dump($datosProvedor);
         
 		$esteCampo = "marcoEmpresa";
 		$atributos ['id'] = $esteCampo;
@@ -121,7 +121,8 @@ class FormularioRegistro {
 
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
-        $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+        $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
         
 		if( $resultadoActividades ){
 			
