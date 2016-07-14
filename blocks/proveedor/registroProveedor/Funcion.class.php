@@ -40,8 +40,11 @@ class Funcion {
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function formProcessor() {
-		include_once ($this->ruta . "/funcion/formProcessor.php");
+	function formProcessorJuridica() {
+		include_once ($this->ruta . "/funcion/formProcessorJuridica.php");
+	}
+	function formProcessorNatural() {
+		include_once ($this->ruta . "/funcion/formProcessorNatural.php");
 	}
 	function registrarActividad() {
 		include_once ($this->ruta . "/funcion/registrarActividad.php");
@@ -119,8 +122,12 @@ class Funcion {
 					break;
 
 				case 'registrar' :
-					var_dump($_REQUEST);
-					$this->formProcessor ();
+					
+					if($_REQUEST['botonGuardar'] == 'true'){
+						$this->formProcessorJuridica();
+					}else if($_REQUEST['botonGuardarNat'] == 'true'){
+						$this->formProcessorNatural();
+					}
 					break;					
 
 				case 'registrarActividad' :

@@ -1,4 +1,5 @@
 $("#registroProveedor").validationEngine({
+    validateNonVisibleFields: false,
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,

@@ -134,7 +134,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" )";
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
-					$cadenaSql.=" '" . $variable['nit']. "',";
+					$cadenaSql.=" '" . $variable['num_documento']. "',";
 					$cadenaSql.=" '" . $variable['nombre']. "',";
 					$cadenaSql.=" '" . $variable['apellido']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
@@ -146,103 +146,141 @@ class Sql extends \Sql {
 					$cadenaSql.=" '" . $variable['estado']. "'";
 					$cadenaSql.=" );";
 					break;
-		
-			/* REGISTRAR DATOS - USUARIO */
-				case "registrarProveedor" :
-					$cadenaSql=" INSERT INTO ";
-					$cadenaSql.="proveedor.prov_proveedor_info ";
-					$cadenaSql.=" (";					
-					$cadenaSql.=" tipopersona,";
-					$cadenaSql.=" nit,";
-					$cadenaSql.=" digitoverificacion,";
-					$cadenaSql.=" nomempresa,";
-					$cadenaSql.=" municipio,";
-					$cadenaSql.=" direccion,";
-					$cadenaSql.=" correo, ";
-					$cadenaSql.=" web, ";
-					$cadenaSql.=" telefono,";
-					$cadenaSql.=" ext1,";
-					$cadenaSql.=" movil,";
-					$cadenaSql.=" nomAsesor,";
-					$cadenaSql.=" telAsesor,";
-					$cadenaSql.=" tipodocumento,";
-					$cadenaSql.=" numdocumento,";
-					$cadenaSql.=" primerApellido, ";
-					$cadenaSql.=" segundoapellido, ";
-					$cadenaSql.=" primerNombre,";
-					$cadenaSql.=" segundoNombre,";
-					$cadenaSql.=" importacion,";
-					$cadenaSql.=" regimen,";
-					$cadenaSql.=" pyme,";
-					$cadenaSql.=" registromercantil, ";
-					$cadenaSql.=" descripcion, ";
-					$cadenaSql.=" anexorut,";
-					$cadenaSql.=" puntaje_evaluacion, ";
-					$cadenaSql.=" clasificacion_evaluacion,";
-					$cadenaSql.=" estado,";
+				
+				/* REGISTRAR DATOS - USUARIO */
+			case "insertarInformacionProveedor" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " nom_proveedor,";
+				$cadenaSql .= " id_ciudad_contacto,";
+				$cadenaSql .= " direccion,";
+				$cadenaSql .= " correo,";
+				$cadenaSql .= " web,";
+				$cadenaSql .= " nom_asesor,";
+				$cadenaSql .= " tel_asesor,";
+				$cadenaSql .= " descripcion,";
+				$cadenaSql .= " anexorut,";
+				$cadenaSql .= " tipo_cuenta_bancaria,";
+				$cadenaSql .= " num_cuenta_bancaria,";
+				$cadenaSql .= " id_entidad_bancaria,";
+				$cadenaSql .= " fecha_registro,";
+				$cadenaSql .= " fecha_ultima_modificacion,";
+				$cadenaSql .= " estado";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= " VALUES ";
+				$cadenaSql .= " ( ";
+				$cadenaSql .= " '" . $variable ['tipoPersona'] . "', ";
+				$cadenaSql .= $variable ['numero_documento'] . ", ";
+				$cadenaSql .= " '" . $variable ['nombre_proveedor'] . "', ";
+				$cadenaSql .= $variable ['id_ciudad_contacto'] . ", ";
+				$cadenaSql .= " '" . $variable ['direccion_contacto'] . "', ";
+				$cadenaSql .= " '" . $variable ['correo_contacto'] . "', ";
+				$cadenaSql .= " '" . $variable ['web_contacto'] . "', ";
+				$cadenaSql .= " '" . $variable ['nom_asesor_comercial_contacto'] . "', ";
+				$cadenaSql .= " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
+				$cadenaSql .= " '" . $variable ['descripcion_proveedor'] . "', ";
+				$cadenaSql .= " '" . $variable ['anexo_rut'] . "', ";
+				$cadenaSql .= " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
+				$cadenaSql .= $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= $variable ['id_entidad_bancaria'] . ", ";
+				$cadenaSql .= " '" . $variable ['fecha_registro'] . "', ";
+				$cadenaSql .= " '" . $variable ['fecha_modificación'] . "', ";
+				$cadenaSql .= $variable ['id_estado'] . " ";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= "RETURNING  id_proveedor; ";
+				break;
+				
+				/* INSERTAR - PROVEEEDOR DATOS TELEFONO */
+			case 'insertarInformacionProveedorTelefono' :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " numero_tel,";
+				if($variable ['extension_telefono'] != null){
+					$cadenaSql .= " extension,";
+				}
+				$cadenaSql .= " tipo";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= " VALUES ";
+				$cadenaSql .= " ( ";
+				$cadenaSql .= $variable ['num_telefono'] . ", ";
+				if($variable ['extension_telefono'] != null){
+					$cadenaSql .= $variable ['extension_telefono'] . ", ";
+				}
+				$cadenaSql .= $variable ['tipo'] . " ";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= "RETURNING  id_telefono; ";
+				break;
+			
+			/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
+			case 'insertarInformacionProveedorXTelefono' :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.proveedor_telefono ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " id_proveedor,";
+				$cadenaSql .= " id_telefono";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= " VALUES ";
+				$cadenaSql .= " ( ";
+				$cadenaSql .= $variable ['fki_id_Proveedor'] . ", ";
+				$cadenaSql .= $variable ['fki_id_tel'] . " ";
+				$cadenaSql .= " ); ";
+				break;
+				
+				/* REGISTRAR DATOS - USUARIO NATURAL */
+			case "registrarProveedorNatural" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " tipo_documento,";
+				$cadenaSql .= " num_documento_persona,";
+				$cadenaSql .= " digito_verificacion,";
+				$cadenaSql .= " primer_apellido, ";
+				$cadenaSql .= " segundo_apellido, ";
+				$cadenaSql .= " primer_nombre,";
+				$cadenaSql .= " segundo_nombre,";
+				$cadenaSql .= " cargo,";
+				$cadenaSql .= " id_pais_nacimiento,";
+				$cadenaSql .= " perfil,";
+				$cadenaSql .= " profesion,";
+				$cadenaSql .= " especialidad,";
+				$cadenaSql .= " monto_capital_autorizado,";
+				$cadenaSql .= " genero";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " " . $variable ['id_tipo_documento'] . ",";
+				$cadenaSql .= " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " " . $variable ['digito_verificacion'] . ",";
+				$cadenaSql .= " '" . $variable ['primer_apellido'] . "',";
+				$cadenaSql .= " '" . $variable ['segundo_apellido'] . "',";
+				$cadenaSql .= " '" . $variable ['primer_nombre'] . "',";
+				$cadenaSql .= " '" . $variable ['segundo_nombre'] . "',";
+				$cadenaSql .= " '" . $variable ['cargo'] . "',";
+				$cadenaSql .= " " . $variable ['id_pais_nacimiento'] . ",";
+				$cadenaSql .= " " . $variable ['id_perfil'] . ",";
+				$cadenaSql .= " '" . $variable ['profesion'] . "',";
+				$cadenaSql .= " '" . $variable ['especialidad'] . "',";
+				$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
+				$cadenaSql .= " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " ); ";
+				break;
 					
-					if($variable['paisEmpresa'] == 1){
-						$cadenaSql.=" tipo_procedencia";
-					}else{
-						$cadenaSql.=" tipo_procedencia,";
-						$cadenaSql.=" pais,";
-						$cadenaSql.=" codigo_pais,";
-						$cadenaSql.=" codigo_postal,";
-						$cadenaSql.=" tipo_doc_extranjero,";
-						if($variable['tipoIdentifiExtranjera'] == 1){
-							$cadenaSql.=" cedula_extranjeria";
-						}else{
-							$cadenaSql.=" pasaporte";
-						}
-					}
-					$cadenaSql.=" )";
-					$cadenaSql.=" VALUES";
-					$cadenaSql.=" (";
-					$cadenaSql.=" '" . $variable['tipoPersona']. "',";
-					$cadenaSql.=" '" . $variable['nit']. "',";
-					$cadenaSql.=" '" . $variable['digito']. "',";
-					$cadenaSql.=" '" . $variable['nombreEmpresa']. "',";
-					$cadenaSql.=" '" . $variable['ciudad']. "',";
-					$cadenaSql.=" '" . $variable['direccion']. "',";
-					$cadenaSql.=" '" . $variable['correo']. "',";
-					$cadenaSql.=" '" . $variable['sitioWeb']. "',";
-					$cadenaSql.=" '" . $variable['telefono']. "',";
-					$cadenaSql.=" '" . $variable['extension']. "',";					
-					$cadenaSql.=" '" . $variable['movil']. "',";
-					$cadenaSql.=" '" . $variable['asesorComercial']. "',";
-					$cadenaSql.=" '" . $variable['telAsesor']. "',";
-					$cadenaSql.=" '" . $variable['tipoDocumento']. "',";
-					$cadenaSql.=" '" . $variable['numeroDocumento']. "',";
-					$cadenaSql.=" '" . $variable['primerApellido']. "',";
-					$cadenaSql.=" '" . $variable['segundoApellido']. "',";
-					$cadenaSql.=" '" . $variable['primerNombre']. "',";
-					$cadenaSql.=" '" . $variable['segundoNombre']. "',";
-					$cadenaSql.=" '" . $variable['productoImportacion']. "',";
-					$cadenaSql.=" '" . $variable['regimenContributivo']. "',";
-					$cadenaSql.=" '" . $variable['pyme']. "',";
-					$cadenaSql.=" '" . $variable['registroMercantil']. "',";
-					$cadenaSql.=" '" . $variable['descripcion']. "',";
-					$cadenaSql.=" '" . $variable['destino']. "',";
-					$cadenaSql.=" '0',";//puntaje
-					$cadenaSql.=" '0',";//clasificacion
-					$cadenaSql.=" '2',";//estado inactivo
-					if($variable['paisEmpresa'] == 1){
-						$cadenaSql.=" 'Nacional'";
-					}else{
-						$cadenaSql.=" 'Extranjero',";
-						$cadenaSql.=" '" . $variable['pais']. "',";
-						$cadenaSql.= $variable['codigoPais']. ",";
-						$cadenaSql.= $variable['codigoPostal']. ",";
-						if($variable['tipoIdentifiExtranjera'] == 1){
-							$cadenaSql.=" 'Cedula de Extranjeria',";
-							$cadenaSql.= $variable['cedulaExtranjeria'];
-						}else{
-							$cadenaSql.=" 'Pasaporte',";
-							$cadenaSql.= $variable['pasaporte'];
-						}
-					}
-					$cadenaSql.=" );";
-					break;
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					
                                     
 			/* ACTUALIZAR - PROVEEEDOR DATOS */			
 				case 'actualizarProveedor' :
@@ -407,12 +445,13 @@ class Sql extends \Sql {
 					break; 					
          
 			/* VERIFICAR NUMERO DE NIT */		
-				case "verificarNITProveedor" :
+				case "verificarProveedor" :
 					$cadenaSql=" SELECT";
-					$cadenaSql.=" usuario";
+					$cadenaSql.=" num_documento,";
+					$cadenaSql.=" nom_proveedor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" prov_usuario ";
-					$cadenaSql.=" WHERE usuario = '" . $variable . "'";
+					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" WHERE num_documento = '" . $variable . "'";
 					break;
 				
 				// ********************************************************************************+
