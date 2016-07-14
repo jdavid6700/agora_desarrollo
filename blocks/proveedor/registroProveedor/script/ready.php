@@ -171,16 +171,23 @@ $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
 
-$("#marcoDatosNatural").hide("fast");
-$("#marcoDatosJuridica").hide("fast");
+
+if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 1){
+	$("#marcoDatosJuridicaUP").hide("fast");
+}else if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 2){
+	$("#marcoDatosNaturalUP").hide("fast");
+}else{
+	$("#marcoDatosNatural").hide("fast");
+	$("#marcoDatosJuridica").hide("fast");
+}
+
+
 
 //$("#editarBotonesConcepto").show("slow");
 $("#marcoProcedencia").hide("fast");
 $("#obligatorioCedula").hide("fast");
 $("#obligatorioPasaporte").hide("fast");
 
-$("#obligatorioProfesion").hide("fast");
-$("#obligatorioEspecialidad").hide("fast");
 
 if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
 	$("#obligatorioProfesion").show("fast");
@@ -193,8 +200,6 @@ if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
 	$("#obligatorioEspecialidad").hide("fast");
 }
 
-$("#obligatorioProfesionNat").hide("fast");
-$("#obligatorioEspecialidadNat").hide("fast");
 
 if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4){
 	$("#obligatorioProfesionNat").show("fast");

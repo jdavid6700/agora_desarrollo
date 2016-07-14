@@ -268,8 +268,135 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['genero'] . "'";
 				$cadenaSql .= " ); ";
 				break;
-					
-					
+				
+			case "consultar_tipo_proveedor" :
+				$cadenaSql = " SELECT U.usuario, P.tipoPersona FROM public.prov_usuario U";
+				$cadenaSql.= " JOIN proveedor.informacion_proveedor P ON P.num_documento = U.usuario::numeric";
+				$cadenaSql.= " WHERE U.id_usuario = $variable ";
+				break;
+				
+			case "consultarContactoTelProveedor" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " P.id_proveedor, ";
+				$cadenaSql .= " P.num_documento, ";
+				$cadenaSql .= " P.nom_proveedor, ";
+				$cadenaSql .= " C.id_telefono,  ";
+				$cadenaSql .= " T.numero_tel,  ";
+				$cadenaSql .= " T.tipo,  ";
+				$cadenaSql .= " T.extension,  ";
+				$cadenaSql .= " P.estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.informacion_proveedor P ";
+				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
+				$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
+				break;
+			
+			case "consultarContactoMovilProveedor" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " P.id_proveedor, ";
+				$cadenaSql .= " P.num_documento, ";
+				$cadenaSql .= " P.nom_proveedor, ";
+				$cadenaSql .= " C.id_telefono,  ";
+				$cadenaSql .= " T.numero_tel,  ";
+				$cadenaSql .= " T.tipo,  ";
+				$cadenaSql .= " T.extension,  ";
+				$cadenaSql .= " P.estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.informacion_proveedor P ";
+				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
+				$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
+				break;
+				
+				/* CONSULTAR DATOS - USUARIO NATURAL */
+			case "consultarProveedorNatural" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " tipo_documento,";
+				$cadenaSql .= " num_documento_persona,";
+				$cadenaSql .= " digito_verificacion,";
+				$cadenaSql .= " primer_apellido, ";
+				$cadenaSql .= " segundo_apellido, ";
+				$cadenaSql .= " primer_nombre,";
+				$cadenaSql .= " segundo_nombre,";
+				$cadenaSql .= " cargo,";
+				$cadenaSql .= " id_pais_nacimiento,";
+				$cadenaSql .= " perfil,";
+				$cadenaSql .= " profesion,";
+				$cadenaSql .= " especialidad,";
+				$cadenaSql .= " monto_capital_autorizado,";
+				$cadenaSql .= " genero";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.informacion_persona_natural";
+				$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
+				break;
+				
+				
+				/* ACTUALIZAR DATOS - USUARIO */
+			case "actualizarInformacionProveedor" :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " SET";
+				$cadenaSql .= " num_documento = " . $variable ['numero_documento'] . ", ";
+				;
+				$cadenaSql .= " nom_proveedor = " . " '" . $variable ['nombre_proveedor'] . "', ";
+				$cadenaSql .= " id_ciudad_contacto = " . $variable ['id_ciudad_contacto'] . ", ";
+				$cadenaSql .= " direccion = " . " '" . $variable ['direccion_contacto'] . "', ";
+				$cadenaSql .= " correo = " . " '" . $variable ['correo_contacto'] . "', ";
+				$cadenaSql .= " web = " . " '" . $variable ['web_contacto'] . "', ";
+				$cadenaSql .= " nom_asesor = " . " '" . $variable ['nom_asesor_comercial_contacto'] . "', ";
+				$cadenaSql .= " tel_asesor = " . " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
+				$cadenaSql .= " descripcion = " . " '" . $variable ['descripcion_proveedor'] . "', ";
+				$cadenaSql .= " tipo_cuenta_bancaria = " . " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
+				$cadenaSql .= " num_cuenta_bancaria = " . $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= " id_entidad_bancaria = " . $variable ['id_entidad_bancaria'] . ", ";
+				$cadenaSql .= " fecha_ultima_modificacion = " . " '" . $variable ['fecha_modificación'] . "' ";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
+				break;
+				
+				/* ACTUALIZAR - PROVEEEDOR DATOS TELEFONO */
+			case 'actualizarInformacionProveedorTelefono' :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " SET";
+				$cadenaSql .= " numero_tel = " . $variable ['num_telefono'] . ", ";
+				if ($variable ['extension_telefono'] != null) {
+					$cadenaSql .= " extension = " . $variable ['extension_telefono'] . ", ";
+				}
+				$cadenaSql .= " tipo = " . $variable ['tipo'] . " ";
+				$cadenaSql .= " WHERE id_telefono = ";
+				$cadenaSql .= "'" . $variable ['id_telefono'] . "' ";
+				break;
+				
+				/* ACTUALIZAR DATOS - USUARIO NATURAL */
+			case "actualizarProveedorNatural" :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " SET";
+				$cadenaSql .= " tipo_documento = " . " " . $variable ['id_tipo_documento'] . ",";
+				$cadenaSql .= " num_documento_persona = " . " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
+				$cadenaSql .= " primer_apellido = " . " '" . $variable ['primer_apellido'] . "',";
+				$cadenaSql .= " segundo_apellido = " . " '" . $variable ['segundo_apellido'] . "',";
+				$cadenaSql .= " primer_nombre = " . " '" . $variable ['primer_nombre'] . "',";
+				$cadenaSql .= " segundo_nombre = " . " '" . $variable ['segundo_nombre'] . "',";
+				$cadenaSql .= " cargo = " . " '" . $variable ['cargo'] . "',";
+				$cadenaSql .= " id_pais_nacimiento = " . " " . $variable ['id_pais_nacimiento'] . ",";
+				$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
+				$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
+				$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
+				$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
+				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " WHERE num_documento_persona = ";
+				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
+				break;
+				
+				
 					
 					
 					
@@ -413,6 +540,13 @@ class Sql extends \Sql {
 					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break;
+					
+					
+					
+					
+					
+					
+					
 				
 				/* DATOS BIENVENIDA PROVEEDOR */
 			case "buscarProveedorLog" ://******************************************************************+
@@ -560,6 +694,16 @@ class Sql extends \Sql {
 				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
 				
+			case 'buscarPaisXDepa' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_pais as ID_PAIS ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_departamento = ' . $variable . ' ;';
+				break;
+				
 			case 'buscarPaisCod' :
 				
 				$cadenaSql = 'SELECT ';
@@ -568,6 +712,18 @@ class Sql extends \Sql {
 				$cadenaSql .= 'parametro.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = ' . $variable . ' ;';
+				break;
+				
+			case 'buscarCiudad' : 
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_ciudad as ID_CIUDAD, ';
+				$cadenaSql .= 'nombre as NOMBRE, ';
+				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'id_ciudad = ' . $variable . ' ';
+				$cadenaSql .= 'ORDER BY NOMBRE;';
 				break;
 			
 			case 'buscarDepartamento' : // Solo Departamentos de Colombia

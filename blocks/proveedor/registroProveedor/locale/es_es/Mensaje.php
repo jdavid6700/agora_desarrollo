@@ -252,6 +252,8 @@ $this->idioma["noDefinido"] = "No definido";
 $this->idioma["marcoDatosNatural"] = "Ingresar Datos de Persona Natural";
 $this->idioma["marcoDatosJuridica"] = "Ingresar Datos de Persona Juridica";
 
+$this->idioma["marcoDatosNaturalUP"] = "Actualizar Datos de Persona Natural";
+$this->idioma["marcoDatosJuridicaUP"] = "Actualizar Datos de Persona Juridica";
 
 $this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";

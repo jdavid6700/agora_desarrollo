@@ -57,8 +57,11 @@ class Funcion {
 	{
 		include_once($this->ruta."/funcion/certCumplimientoPDF.php");
 	}		
-	function actualizar() {
-		include_once ($this->ruta . "/funcion/actualizar.php");
+	function actualizarJuridica() {
+		include_once ($this->ruta . "/funcion/actualizarJuridica.php");
+	}
+	function actualizarNatural() {
+		include_once ($this->ruta . "/funcion/actualizarNatural.php");
 	}
 	function action() {
 		
@@ -149,7 +152,9 @@ class Funcion {
 						redireccion::redireccionar ( "paginaConsulta", $arreglo );
 						exit();
 					} else if (isset ( $_REQUEST ["botonGuardar"] ) && $_REQUEST ["botonGuardar"] == 'true') {
-						$this->actualizar();
+						$this->actualizarJuridica();
+					} else if (isset ( $_REQUEST ["botonGuardarNat"] ) &&  $_REQUEST['botonGuardarNat'] == 'true'){
+					    $this->actualizarNatural();
 					}
 					break;
 			}
