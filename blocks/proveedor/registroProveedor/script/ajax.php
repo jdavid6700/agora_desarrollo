@@ -492,6 +492,7 @@ function consultarDepartamentoLug(elem, request, response){
 	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").select2();
 	            
 	            $("#<?php echo $this->campoSeguro('personaJuridicaDepartamento')?>").removeClass("validate[required]");
+	            $("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").removeClass("validate[required]");
 	            
 		    }
 		    

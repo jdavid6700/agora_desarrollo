@@ -73,7 +73,7 @@ class Formulario {
 
 		unset($resultado);
 		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['nit']);
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['documentoNat']);
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
 		

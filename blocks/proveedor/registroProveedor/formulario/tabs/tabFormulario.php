@@ -2274,33 +2274,33 @@ class registrarForm {
 						// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 						
 
-echo $this->miFormulario->marcoAgrupacion ( 'fin' );					
-					
+echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
 				$esteCampo = "marcoRUT";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
 				$atributos ['tipoEtiqueta'] = 'inicio';
 				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );						
-// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------					
-		$esteCampo = "DocumentoRUT";
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["nombre"] = $esteCampo;
-		$atributos ["tipo"] = "file";
-		// $atributos ["obligatorio"] = true;
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ["tabIndex"] = $tab ++;
-		$atributos ["columnas"] = 1;
-		$atributos ["estilo"] = "textoIzquierda";
-		$atributos ["anchoEtiqueta"] = 400;
-		$atributos ["tamanno"] = 500000;
-		$atributos ["validar"] = "required";
-		$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
-		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		// $atributos ["valor"] = $valorCodificado;
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );								
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+				$esteCampo = "DocumentoRUT";
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["nombre"] = $esteCampo;
+				$atributos ["tipo"] = "file";
+				// $atributos ["obligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["tabIndex"] = $tab ++;
+				$atributos ["columnas"] = 1;
+				$atributos ["estilo"] = "textoIzquierda";
+				$atributos ["anchoEtiqueta"] = 400;
+				$atributos ["tamanno"] = 500000;
+				$atributos ["validar"] = "required";
+				$atributos ["etiqueta"] = $this->lenguaje->getCadena ( $esteCampo );
+				// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				// $atributos ["valor"] = $valorCodificado;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );								
 // ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------									
 
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );			

@@ -247,7 +247,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " perfil,";
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
-				$cadenaSql .= " monto_capital_autorizado,";
+				if($variable ['monto_capital_autorizado'] != null){
+					$cadenaSql .= " monto_capital_autorizado,";
+				}
 				$cadenaSql .= " genero";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
@@ -264,7 +266,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " " . $variable ['id_perfil'] . ",";
 				$cadenaSql .= " '" . $variable ['profesion'] . "',";
 				$cadenaSql .= " '" . $variable ['especialidad'] . "',";
-				$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
+				if($variable ['monto_capital_autorizado'] != null){
+					$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
+				}
 				$cadenaSql .= " '" . $variable ['genero'] . "'";
 				$cadenaSql .= " ); ";
 				break;
@@ -396,9 +400,104 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
 				break;
 				
+				/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
+			case 'insertarInformacionProveedorXRepresentante' :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " (";
+				$cadenaSql .= " id_proveedor,";
+				$cadenaSql .= " id_representante,";
+				$cadenaSql .= " telefono_contacto,";
+				$cadenaSql .= " correo_representante";
+				$cadenaSql .= " ) ";
+				$cadenaSql .= " VALUES ";
+				$cadenaSql .= " ( ";
+				$cadenaSql .= $variable ['fki_id_Proveedor'] . ", ";
+				$cadenaSql .= $variable ['fki_id_Representante'] . ", ";
+				$cadenaSql .= $variable ['tel_Repre'] . ", ";
+				$cadenaSql .= " '" . $variable ['correo_Repre'] . "' ";
+				$cadenaSql .= " ); ";
+				break;
 				
-					
-					
+				
+				/* REGISTRAR DATOS - USUARIO JURIDICA */
+			case "registrarProveedorJuridica" :
+				$cadenaSql = " INSERT INTO ";
+				$cadenaSql .= "proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " (";
+				$cadenaSql.=" num_nit_empresa, ";
+				$cadenaSql.=" digito_verificacion, ";
+				if($variable['procedencia_empresa'] == 'NACIONAL'){
+					$cadenaSql.=" procedencia_empresa, ";
+				}else{
+					$cadenaSql.=" procedencia_empresa, ";
+					$cadenaSql.=" id_ciudad_origen, ";
+					$cadenaSql.=" codigo_pais_dian, ";
+					$cadenaSql.=" codigo_postal, ";
+					$cadenaSql.=" tipo_identificacion_extranjera, ";
+					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
+						$cadenaSql.=" num_pasaporte, ";
+					}else{
+						$cadenaSql.=" num_cedula_extranjeria, ";
+					}
+				}
+				$cadenaSql.=" id_tipo_conformacion, ";
+				$cadenaSql.=" monto_capital_autorizado, ";
+				$cadenaSql.=" exclusividad_producto, ";
+				$cadenaSql.=" regimen_contributivo, ";
+				$cadenaSql.=" pyme, ";
+				$cadenaSql.=" registro_mercantil, ";
+				$cadenaSql.=" sujeto_retencion, ";
+				$cadenaSql.=" agente_retenedor, ";
+				$cadenaSql.=" \"responsable_ICA\", ";
+				$cadenaSql.=" \"responsable_IVA\", ";
+				$cadenaSql.=" genero, ";
+				$cadenaSql.=" nom_proveedor";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " " . $variable ['digito_verificacion'] . ",";
+				if($variable['procedencia_empresa'] == 'NACIONAL'){
+					$cadenaSql .= " '" . $variable ['procedencia_empresa'] . "',";
+				}else{
+					$cadenaSql .= " '" . $variable ['procedencia_empresa'] . "',";
+					$cadenaSql .= " " . $variable ['id_ciudad_origen'] . ",";
+					$cadenaSql .= " " . $variable ['codigo_pais_dian'] . ",";
+					$cadenaSql .= " " . $variable ['codigo_postal'] . ",";
+					$cadenaSql .= " '" . $variable ['tipo_identificacion_extranjera'] . "',";
+					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
+						$cadenaSql .= " " . $variable ['num_pasaporte'] . ",";
+					}else{
+						$cadenaSql .= " " . $variable ['num_cedula_extranjeria'] . ",";
+					}
+				}
+				$cadenaSql .= " " . $variable ['id_tipo_conformacion'] . ",";
+				$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
+				$cadenaSql .= " " . $variable ['exclusividad_producto'] . ",";
+				$cadenaSql .= " '" . $variable ['regimen_contributivo'] . "',";
+				$cadenaSql .= " " . $variable ['pyme'] . ",";
+				$cadenaSql .= " " . $variable ['registro_mercantil'] . ",";
+				$cadenaSql .= " " . $variable ['sujeto_retencion'] . ",";
+				$cadenaSql .= " " . $variable ['agente_retenedor'] . ",";
+				$cadenaSql .= " " . $variable ['responsable_ICA'] . ",";
+				$cadenaSql .= " " . $variable ['responsable_IVA'] . ",";
+				$cadenaSql .= " '" . $variable ['genero'] . "',";
+				$cadenaSql .= " '" . $variable ['nom_proveedor'] . "'";
+				$cadenaSql .= " ); ";
+				break;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 					
 					
 					
