@@ -394,7 +394,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
 				$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
 				$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
-				$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
+				if($variable ['monto_capital_autorizado'] != null){
+						$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
+				}
 				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "'";
 				$cadenaSql .= " WHERE num_documento_persona = ";
 				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
@@ -487,6 +489,99 @@ class Sql extends \Sql {
 				$cadenaSql .= " ); ";
 				break;
 				
+				/* CONSULTAR - PROVEEEDOR DATOS X TELEFONO */
+			case 'consultarInformacionProveedorXRepresentante' :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " id_proveedor,";
+				$cadenaSql .= " id_representante,";
+				$cadenaSql .= " telefono_contacto,";
+				$cadenaSql .= " correo_representante";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable . "' ";
+				break;
+				
+			case "consultarProveedorJuridica" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " num_nit_empresa, ";
+				$cadenaSql .= " digito_verificacion, ";
+				$cadenaSql .= " procedencia_empresa, ";
+				$cadenaSql .= " id_ciudad_origen, ";
+				$cadenaSql .= " codigo_pais_dian, ";
+				$cadenaSql .= " codigo_postal, ";
+				$cadenaSql .= " tipo_identificacion_extranjera, ";
+				$cadenaSql .= " num_pasaporte, ";
+				$cadenaSql .= " num_cedula_extranjeria, ";
+				$cadenaSql .= " id_tipo_conformacion, ";
+				$cadenaSql .= " monto_capital_autorizado, ";
+				$cadenaSql .= " exclusividad_producto, ";
+				$cadenaSql .= " regimen_contributivo, ";
+				$cadenaSql .= " pyme, ";
+				$cadenaSql .= " registro_mercantil, ";
+				$cadenaSql .= " sujeto_retencion, ";
+				$cadenaSql .= " agente_retenedor, ";
+				$cadenaSql .= " \"responsable_ICA\", ";
+				$cadenaSql .= " \"responsable_IVA\", ";
+				$cadenaSql .= " genero, ";
+				$cadenaSql .= " nom_proveedor";
+				$cadenaSql .= " FROM";
+				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " WHERE num_nit_empresa = ";
+				$cadenaSql .= "'" . $variable . "' ";
+				break;
+				
+				/* ACTUALIZAR - PROVEEEDOR DATOS X TELEFONO */
+			case 'actualizarInformacionProveedorXRepresentante' :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " SET";
+				$cadenaSql .= " telefono_contacto = " . $variable ['tel_Repre'] . ", ";
+				$cadenaSql .= " correo_representante = " . " '" . $variable ['correo_Repre'] . "' ";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable ['fki_id_Proveedor'] . "' AND ";
+				$cadenaSql .= " id_representante = ";
+				$cadenaSql .= "'" . $variable ['fki_id_Representante'] . "' ";
+				break;
+				
+				/* ACTUALIZAR DATOS - USUARIO JURIDICA */
+			case "actualizarProveedorJuridica" :
+				$cadenaSql = " UPDATE ";
+				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " SET";
+				$cadenaSql .= " num_nit_empresa = " . " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
+				if ($variable ['procedencia_empresa'] == 'NACIONAL') {
+					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
+				} else {
+					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
+					$cadenaSql .= " id_ciudad_origen = " . " " . $variable ['id_ciudad_origen'] . ",";
+					$cadenaSql .= " codigo_pais_dian = " . " " . $variable ['codigo_pais_dian'] . ",";
+					$cadenaSql .= " codigo_postal = " . " " . $variable ['codigo_postal'] . ",";
+					$cadenaSql .= " tipo_identificacion_extranjera = " . " '" . $variable ['tipo_identificacion_extranjera'] . "',";
+					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
+						$cadenaSql .= " num_pasaporte = " . " " . $variable ['num_pasaporte'] . ",";
+					} else {
+						$cadenaSql .= " num_cedula_extranjeria = " . " " . $variable ['num_cedula_extranjeria'] . ",";
+					}
+				}
+				$cadenaSql .= " id_tipo_conformacion = " . " " . $variable ['id_tipo_conformacion'] . ",";
+				$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
+				$cadenaSql .= " exclusividad_producto = " . " " . $variable ['exclusividad_producto'] . ",";
+				$cadenaSql .= " regimen_contributivo = " . " '" . $variable ['regimen_contributivo'] . "',";
+				$cadenaSql .= " pyme = " . " " . $variable ['pyme'] . ",";
+				$cadenaSql .= " registro_mercantil = " . " " . $variable ['registro_mercantil'] . ",";
+				$cadenaSql .= " sujeto_retencion = " . " " . $variable ['sujeto_retencion'] . ",";
+				$cadenaSql .= " agente_retenedor = " . " " . $variable ['agente_retenedor'] . ",";
+				$cadenaSql .= " \"responsable_ICA\" = " . " " . $variable ['responsable_ICA'] . ",";
+				$cadenaSql .= " \"responsable_IVA\" = " . " " . $variable ['responsable_IVA'] . ",";
+				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "',";
+				$cadenaSql .= " nom_proveedor = " . " '" . $variable ['nom_proveedor'] . "'";
+				$cadenaSql .= " WHERE num_nit_empresa = ";
+				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "'; ";
+				break;
+				
+				
 				
 				
 				
@@ -508,67 +603,14 @@ class Sql extends \Sql {
 					
 					
                                     
-			/* ACTUALIZAR - PROVEEEDOR DATOS */			
-				case 'actualizarProveedor' :
-					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
-					$cadenaSql .= "tipopersona='" . $variable ['tipoPersona'] . "',";
-					$cadenaSql .= "digitoverificacion='" . $variable ['digito'] . "',";
-					$cadenaSql .= "nomempresa='" . $variable ['nombreEmpresa'] . "',";
-					$cadenaSql .= "municipio='" . $variable ['ciudad'] . "',";
-					$cadenaSql .= "direccion='" . $variable ['direccion'] . "',";
-					$cadenaSql .= "correo='" . $variable ['correo'] . "',";
-					$cadenaSql .= "web='" . $variable ['sitioWeb'] . "',";
-					$cadenaSql .= "telefono='" . $variable ['telefono'] . "',";
-					$cadenaSql .= "ext1='" . $variable ['extension'] . "',";
-					$cadenaSql .= "movil='" . $variable ['movil'] . "',";
-					$cadenaSql .= "nomasesor='" . $variable ['asesorComercial'] . "',";
-					$cadenaSql .= "telasesor='" . $variable ['telAsesor'] . "',";
-					$cadenaSql .= "tipodocumento='" . $variable ['tipoDocumento'] . "',";
-					$cadenaSql .= "numdocumento='" . $variable ['numeroDocumento'] . "',";
-					$cadenaSql .= "primerapellido='" . $variable ['primerApellido'] . "',";
-					$cadenaSql .= "segundoapellido='" . $variable ['segundoApellido'] . "',";
-					$cadenaSql .= "primernombre='" . $variable ['primerNombre'] . "',";
-					$cadenaSql .= "segundonombre='" . $variable ['segundoNombre'] . "',";
-					$cadenaSql .= "importacion='" . $variable ['productoImportacion'] . "',";
-					$cadenaSql .= "regimen='" . $variable ['regimenContributivo'] . "',";
-					$cadenaSql .= "pyme='" . $variable ['pyme'] . "',";
-					$cadenaSql .= "registromercantil='" . $variable ['registroMercantil'] . "',";
-					$cadenaSql .= "descripcion='" . $variable ['descripcion'] . "',";
-					
-					if($variable['paisEmpresa'] == 1){
-						$cadenaSql.= "tipo_procedencia= 'Nacional',";
-						$cadenaSql.= "pais= NULL,";
-						$cadenaSql.= "codigo_pais= NULL,";
-						$cadenaSql.= "codigo_postal= NULL,";
-						$cadenaSql.= "tipo_doc_extranjero= NULL,";
-						$cadenaSql.= "cedula_extranjeria= NULL,";
-						$cadenaSql.= "pasaporte= NULL";
-					}else{
-						$cadenaSql.= "tipo_procedencia= 'Extranjero',";
-						$cadenaSql.= "pais= '" . $variable['pais']. "',";
-						$cadenaSql.= "codigo_pais= ".$variable['codigoPais']. ",";
-						$cadenaSql.= "codigo_postal= ".$variable['codigoPostal']. ",";
-						if($variable['tipoIdentifiExtranjera'] == 1){
-							$cadenaSql.= "tipo_doc_extranjero= 'Cedula de Extranjeria',";
-							$cadenaSql.= "cedula_extranjeria= ". $variable['cedulaExtranjeria'].",";
-							$cadenaSql.= "pasaporte= NULL";
-						}else{
-							$cadenaSql.= "tipo_doc_extranjero= 'Pasaporte',";
-							$cadenaSql.= "pasaporte= ". $variable['pasaporte'].",";
-							$cadenaSql.= "cedula_extranjeria= NULL";
-						}
-					}
-					
-					$cadenaSql .= " WHERE id_proveedor=";
-					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
-					break; 
+
 
 			/* ACTUALIZAR - PROVEEEDOR DATOS */			
 				case 'actualizarRUT' :
-					$cadenaSql = "UPDATE proveedor.prov_proveedor_info SET ";
+					$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
 					$cadenaSql .= "anexorut='" . $variable ['destino'] . "'";
-					$cadenaSql .= " WHERE id_proveedor=";
-					$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
+					$cadenaSql .= " WHERE id_proveedor = ";
+					$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
 					break; 					
                                     
 			/* VERIFICAR NUMERO DE NIT */		

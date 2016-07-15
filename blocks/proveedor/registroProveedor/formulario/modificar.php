@@ -110,179 +110,402 @@ class Formulario {
 		
 		$fechaModificacion = date ( 'Y-m-d' . ' - ' .'h:i:s A');
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
-		$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
-		$_REQUEST['tipoPersona'] =  $resultadoPersonaNatural[0]["tipopersona"];
-		$_REQUEST['documentoNat'] =  $resultadoPersonaNatural[0]['num_documento'];
-		$_REQUEST['fki_idciudadContacto'] =  $resultadoPersonaNatural[0]["id_ciudad_contacto"];
-		$_REQUEST['direccionNat'] =  $resultadoPersonaNatural[0]['direccion'];
-		$_REQUEST['correoNat'] =  $resultadoPersonaNatural[0]["correo"];
-		$_REQUEST['sitioWebNat'] =  $resultadoPersonaNatural[0]['web'];
-		$_REQUEST['asesorComercialNat'] =  $resultadoPersonaNatural[0]['nom_asesor'];
-		$_REQUEST['telAsesorNat'] =  $resultadoPersonaNatural[0]["tel_asesor"];
-		$_REQUEST['descripcionNat'] =  $resultadoPersonaNatural[0]["descripcion"];
-		$_REQUEST['DocumentoRUTNat'] =  $resultadoPersonaNatural[0]['anexorut'];
-		$_REQUEST['tipoCuentaNat'] =  $resultadoPersonaNatural[0]["tipo_cuenta_bancaria"];
-		$_REQUEST['numeroCuentaNat'] =  $resultadoPersonaNatural[0]["num_cuenta_bancaria"];
-		$_REQUEST['entidadBancariaNat'] =  $resultadoPersonaNatural[0]["id_entidad_bancaria"];
-		$_REQUEST['fecha_RegistroNat'] =  $resultadoPersonaNatural[0]["fecha_registro"];
-		$_REQUEST['fecha_CambiosNat'] =  $fechaModificacion ;
-		$_REQUEST['estadoNat'] =  $resultadoPersonaNatural[0]["estado"];
-
-		 
-		$_REQUEST['personaNaturalContaCiudad'] = $_REQUEST['fki_idciudadContacto'];
-		
-		
-		$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $resultadoPersonaNatural[0]['num_documento'] );
-		$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-		$_REQUEST['telefonoNat'] = $resultadoTel[0]['numero_tel'];
-		$_REQUEST['extensionNat'] = $resultadoTel[0]['extension'];
-	
-		
-		$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoMovilProveedor', $resultadoPersonaNatural[0]['num_documento'] );
-		$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-		$_REQUEST['movilNat'] = $resultadoMovil[0]['numero_tel'];
-		
-		
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorNatural', $resultadoPersonaNatural[0]['num_documento'] );
-		$resultadoPersonaNaturalInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
-		$_REQUEST['tipoDocumentoNat'] =  $resultadoPersonaNaturalInfo[0]["tipo_documento"];
-		$_REQUEST['primerApellidoNat'] =  $resultadoPersonaNaturalInfo[0]["primer_apellido"];
-		$_REQUEST['segundoApellidoNat'] =  $resultadoPersonaNaturalInfo[0]["segundo_apellido"];
-		$_REQUEST['primerNombreNat'] =  $resultadoPersonaNaturalInfo[0]["primer_nombre"];
-		$_REQUEST['segundoNombreNat'] =  $resultadoPersonaNaturalInfo[0]["segundo_nombre"];
-		$_REQUEST['generoNat'] =  $resultadoPersonaNaturalInfo[0]["genero"];
-		$_REQUEST['cargoNat'] =  $resultadoPersonaNaturalInfo[0]["cargo"];
-		$_REQUEST['paisNacimientoNat'] =  $resultadoPersonaNaturalInfo[0]["id_pais_nacimiento"];
-		$_REQUEST['perfilNat'] =  $resultadoPersonaNaturalInfo[0]["perfil"];
-		$_REQUEST['montoNat'] =  $resultadoPersonaNaturalInfo[0]["monto_capital_autorizado"];
-		$_REQUEST['profesionNat'] =  $resultadoPersonaNaturalInfo[0]["profesion"];
-		$_REQUEST['especialidadNat'] =  $resultadoPersonaNaturalInfo[0]["especialidad"];
-		
-		
-		if(isset($_REQUEST['perfilNat'])){//CAST
-			switch($_REQUEST['perfilNat']){
-				case 18 :
-					$_REQUEST ['perfilNat'] = 1;
-					break;
-				case 19 :
-					$_REQUEST ['perfilNat'] = 2;
-					break;
-				case 20 :
-					$_REQUEST ['perfilNat'] = 3;
-					break;
-				case 21 :
-					$_REQUEST ['perfilNat'] = 4;
-					break;
-				case 22 :
-					$_REQUEST ['perfilNat'] = 5;
-					break;
-			}
-		}
-		
-		$esteCampo = 'id_Proveedor';
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ['valor'] = $_REQUEST['fki_idProveedor'];
-		$atributos = array_merge($atributos, $atributosGlobales);
-		echo $this->miFormulario->campoCuadroTexto($atributos);
-		unset($atributos);
-		
-		
-		$esteCampo = 'id_TelefonoNat';
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ['valor'] = $resultadoTel[0]['id_telefono'];
-		$atributos = array_merge($atributos, $atributosGlobales);
-		echo $this->miFormulario->campoCuadroTexto($atributos);
-		unset($atributos);
-		
-		$esteCampo = 'id_MovilNat';
-		$atributos ["id"] = $esteCampo; // No cambiar este nombre
-		$atributos ["tipo"] = "hidden";
-		$atributos ['estilo'] = '';
-		$atributos ["obligatorio"] = false;
-		$atributos ['marco'] = true;
-		$atributos ["etiqueta"] = "";
-		$atributos ['valor'] = $resultadoMovil[0]['id_telefono'];;
-		$atributos = array_merge($atributos, $atributosGlobales);
-		echo $this->miFormulario->campoCuadroTexto($atributos);
-		unset($atributos);
-		
-		//echo $cadenaSql;
-		//var_dump($resultado);
-		//var_dump($_REQUEST);
-		//var_dump($resultadoPersonaNaturalInfo);
-		
-		
-		
-		
-		/*
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
-		$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		$_REQUEST['fki_idProveedor'] =  $resultado[0]["id_proveedor"];
-		$_REQUEST['tipoPersona'] =  $resultado[0]["tipopersona"];
-		$_REQUEST['documentoNat'] =  $resultado[0]['num_documento'];
-		$_REQUEST['digito'] =  $resultado[0]["digitoverificacion"];
-		$_REQUEST['nombreEmpresa'] =  $resultado[0]['nomempresa'];
-		$_REQUEST['ciudad'] =  $resultado[0]["municipio"];
-		$_REQUEST['direccion'] =  $resultado[0]['direccion'];
-		$_REQUEST['correo'] =  $resultado[0]["correo"];
-		$_REQUEST['sitioWeb'] =  $resultado[0]['web'];
-		$_REQUEST['telefono'] =  $resultado[0]["telefono"];
-		$_REQUEST['extension'] =  $resultado[0]['ext1'];
-		$_REQUEST['movil'] =  $resultado[0]["movil"];
-		$_REQUEST['asesorComercial'] =  $resultado[0]['nomasesor'];
-		$_REQUEST['telAsesor'] =  $resultado[0]["telasesor"];
-		$_REQUEST['tipoDocumento'] =  $resultado[0]['tipodocumento'];
-		$_REQUEST['numeroDocumento'] =  $resultado[0]["numdocumento"];
-		$_REQUEST['primerApellido'] =  $resultado[0]['primerapellido'];
-		$_REQUEST['segundoApellido'] =  $resultado[0]["segundoapellido"];
-		$_REQUEST['primerNombre'] =  $resultado[0]['primernombre'];
-		$_REQUEST['segundoNombre'] =  $resultado[0]["segundonombre"];
-		$_REQUEST['productoImportacion'] =  $resultado[0]['tipopersona'];
-		$_REQUEST['tipoPersona'] =  $resultado[0]["regimen"];
-		$_REQUEST['regimenContributivo'] =  $resultado[0]['importacion'];
-		$_REQUEST['pyme'] =  $resultado[0]["pyme"];
-		$_REQUEST['registroMercantil'] =  $resultado[0]['registromercantil'];
-		$_REQUEST['descripcion'] =  $resultado[0]["descripcion"];
-		$_REQUEST['DocumentoRUT'] =  $resultado[0]['anexorut'];
-		
-		if($resultado[0]['tipo_procedencia'] == 'Nacional'){
-		$_REQUEST['paisEmpresa'] = 1;
-		}else{
-		$_REQUEST['paisEmpresa'] = 2;
-		}
-		
-		$_REQUEST['pais'] = $resultado[0]['pais'];
-		$_REQUEST['codigoPais'] = $resultado[0]['codigo_pais'];
-		$_REQUEST['codigoPostal'] = $resultado[0]['codigo_postal'];
-		
-		if($resultado[0]['tipo_doc_extranjero'] == 'Pasaporte'){
-		$_REQUEST['tipoIdentifiExtranjera'] = 2;
-		}else{
-		$_REQUEST['tipoIdentifiExtranjera'] = 1;
-		}
-		
-		$_REQUEST['cedulaExtranjeria'] = $resultado[0]['cedula_extranjeria'];
-		$_REQUEST['pasaporte'] = $resultado[0]['pasaporte'];
+		if($_TIPO == 1){
 			
-		*/
+				
+				//******************************************************************************************************NATURAL****************************************
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
+				$_REQUEST['tipoPersona'] =  $resultadoPersonaNatural[0]["tipopersona"];
+				$_REQUEST['documentoNat'] =  $resultadoPersonaNatural[0]['num_documento'];
+				$_REQUEST['fki_idciudadContacto'] =  $resultadoPersonaNatural[0]["id_ciudad_contacto"];
+				$_REQUEST['direccionNat'] =  $resultadoPersonaNatural[0]['direccion'];
+				$_REQUEST['correoNat'] =  $resultadoPersonaNatural[0]["correo"];
+				$_REQUEST['sitioWebNat'] =  $resultadoPersonaNatural[0]['web'];
+				$_REQUEST['asesorComercialNat'] =  $resultadoPersonaNatural[0]['nom_asesor'];
+				$_REQUEST['telAsesorNat'] =  $resultadoPersonaNatural[0]["tel_asesor"];
+				$_REQUEST['descripcionNat'] =  $resultadoPersonaNatural[0]["descripcion"];
+				$_REQUEST['DocumentoRUTNat'] =  $resultadoPersonaNatural[0]['anexorut'];
+				$_REQUEST['tipoCuentaNat'] =  $resultadoPersonaNatural[0]["tipo_cuenta_bancaria"];
+				$_REQUEST['numeroCuentaNat'] =  $resultadoPersonaNatural[0]["num_cuenta_bancaria"];
+				$_REQUEST['entidadBancariaNat'] =  $resultadoPersonaNatural[0]["id_entidad_bancaria"];
+				$_REQUEST['fecha_RegistroNat'] =  $resultadoPersonaNatural[0]["fecha_registro"];
+				$_REQUEST['fecha_CambiosNat'] =  $fechaModificacion ;
+				$_REQUEST['estadoNat'] =  $resultadoPersonaNatural[0]["estado"];
+		
+				 
+				$_REQUEST['personaNaturalContaCiudad'] = $_REQUEST['fki_idciudadContacto'];
+				
+				
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $resultadoPersonaNatural[0]['num_documento'] );
+				$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$_REQUEST['telefonoNat'] = $resultadoTel[0]['numero_tel'];
+				$_REQUEST['extensionNat'] = $resultadoTel[0]['extension'];
+			
+				
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoMovilProveedor', $resultadoPersonaNatural[0]['num_documento'] );
+				$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$_REQUEST['movilNat'] = $resultadoMovil[0]['numero_tel'];
+				
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorNatural', $resultadoPersonaNatural[0]['num_documento'] );
+				$resultadoPersonaNaturalInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				
+				$_REQUEST['tipoDocumentoNat'] =  $resultadoPersonaNaturalInfo[0]["tipo_documento"];
+				$_REQUEST['primerApellidoNat'] =  $resultadoPersonaNaturalInfo[0]["primer_apellido"];
+				$_REQUEST['segundoApellidoNat'] =  $resultadoPersonaNaturalInfo[0]["segundo_apellido"];
+				$_REQUEST['primerNombreNat'] =  $resultadoPersonaNaturalInfo[0]["primer_nombre"];
+				$_REQUEST['segundoNombreNat'] =  $resultadoPersonaNaturalInfo[0]["segundo_nombre"];
+				$_REQUEST['generoNat'] =  $resultadoPersonaNaturalInfo[0]["genero"];
+				$_REQUEST['cargoNat'] =  $resultadoPersonaNaturalInfo[0]["cargo"];
+				$_REQUEST['paisNacimientoNat'] =  $resultadoPersonaNaturalInfo[0]["id_pais_nacimiento"];
+				$_REQUEST['perfilNat'] =  $resultadoPersonaNaturalInfo[0]["perfil"];
+				$_REQUEST['montoNat'] =  $resultadoPersonaNaturalInfo[0]["monto_capital_autorizado"];
+				$_REQUEST['profesionNat'] =  $resultadoPersonaNaturalInfo[0]["profesion"];
+				$_REQUEST['especialidadNat'] =  $resultadoPersonaNaturalInfo[0]["especialidad"];
+				
+				
+				if(isset($_REQUEST['perfilNat'])){//CAST
+					switch($_REQUEST['perfilNat']){
+						case 18 :
+							$_REQUEST ['perfilNat'] = 1;
+							break;
+						case 19 :
+							$_REQUEST ['perfilNat'] = 2;
+							break;
+						case 20 :
+							$_REQUEST ['perfilNat'] = 3;
+							break;
+						case 21 :
+							$_REQUEST ['perfilNat'] = 4;
+							break;
+						case 22 :
+							$_REQUEST ['perfilNat'] = 5;
+							break;
+					}
+				}
+				
+				$esteCampo = 'id_Proveedor';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = $_REQUEST['fki_idProveedor'];
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+				
+				
+				$esteCampo = 'id_TelefonoNat';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = $resultadoTel[0]['id_telefono'];
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+				
+				$esteCampo = 'id_MovilNat';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = $resultadoMovil[0]['id_telefono'];;
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+		
+		
+		}else{
+		
+				//*******************************************************************************************************************JURIDICA******************
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];
+				$_REQUEST['tipoPersona'] =  $resultadoPersonaJuridica[0]["tipopersona"];
+				$_REQUEST['nit'] =  $resultadoPersonaJuridica[0]['num_documento'];
+				$_REQUEST['fki_idciudadContactoJur'] =  $resultadoPersonaJuridica[0]["id_ciudad_contacto"];
+				$_REQUEST['direccion'] =  $resultadoPersonaJuridica[0]['direccion'];
+				$_REQUEST['correo'] =  $resultadoPersonaJuridica[0]["correo"];
+				$_REQUEST['sitioWeb'] =  $resultadoPersonaJuridica[0]['web'];
+				$_REQUEST['asesorComercial'] =  $resultadoPersonaJuridica[0]['nom_asesor'];
+				$_REQUEST['telAsesor'] =  $resultadoPersonaJuridica[0]["tel_asesor"];
+				$_REQUEST['descripcion'] =  $resultadoPersonaJuridica[0]["descripcion"];
+				$_REQUEST['DocumentoRUT'] =  $resultadoPersonaJuridica[0]['anexorut'];
+				$_REQUEST['tipoCuenta'] =  $resultadoPersonaJuridica[0]["tipo_cuenta_bancaria"];
+				$_REQUEST['numeroCuenta'] =  $resultadoPersonaJuridica[0]["num_cuenta_bancaria"];
+				$_REQUEST['entidadBancaria'] =  $resultadoPersonaJuridica[0]["id_entidad_bancaria"];
+				$_REQUEST['fecha_Registro'] =  $resultadoPersonaJuridica[0]["fecha_registro"];
+				$_REQUEST['fecha_Cambios'] =  $fechaModificacion ;
+				$_REQUEST['estado'] =  $resultadoPersonaJuridica[0]["estado"];
+				
+				
+				
+				$_REQUEST['ciudad'] = $_REQUEST['fki_idciudadContactoJur'];
+				
+				
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $_REQUEST['nit']);
+				$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$_REQUEST['telefono'] = $resultadoTel[0]['numero_tel'];
+				$_REQUEST['extension'] = $resultadoTel[0]['extension'];
+				
+				
+				
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarInformacionProveedorXRepresentante', $_REQUEST['fki_idProveedorJur']);
+				$resultadoRepr = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$_REQUEST['correoPer'] =  $resultadoRepr[0]["correo_representante"];
+				$_REQUEST['numeroContacto'] =  $resultadoRepr[0]["telefono_contacto"];
+				
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorNatural', $resultadoRepr[0]['id_representante'] );
+				$resultadoPersonaNaturalInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$_REQUEST['numeroDocumento'] =  $resultadoPersonaNaturalInfo[0]["num_documento_persona"];
+				$_REQUEST['tipoDocumento'] =  $resultadoPersonaNaturalInfo[0]["tipo_documento"];
+				$_REQUEST['primerApellido'] =  $resultadoPersonaNaturalInfo[0]["primer_apellido"];
+				$_REQUEST['segundoApellido'] =  $resultadoPersonaNaturalInfo[0]["segundo_apellido"];
+				$_REQUEST['primerNombre'] =  $resultadoPersonaNaturalInfo[0]["primer_nombre"];
+				$_REQUEST['segundoNombre'] =  $resultadoPersonaNaturalInfo[0]["segundo_nombre"];
+				$_REQUEST['genero'] =  $resultadoPersonaNaturalInfo[0]["genero"];
+				$_REQUEST['cargo'] =  $resultadoPersonaNaturalInfo[0]["cargo"];
+				$_REQUEST['paisNacimiento'] =  $resultadoPersonaNaturalInfo[0]["id_pais_nacimiento"];
+				$_REQUEST['perfil'] =  $resultadoPersonaNaturalInfo[0]["perfil"];
+				//$_REQUEST['monto'] =  $resultadoPersonaNaturalInfo[0]["monto_capital_autorizado"];
+				$_REQUEST['profesion'] =  $resultadoPersonaNaturalInfo[0]["profesion"];
+				$_REQUEST['especialidad'] =  $resultadoPersonaNaturalInfo[0]["especialidad"];
+				
+				
+				if(isset($_REQUEST['perfil'])){//CAST
+					switch($_REQUEST['perfil']){
+						case 18 :
+							$_REQUEST ['perfil'] = 1;
+							break;
+						case 19 :
+							$_REQUEST ['perfil'] = 2;
+							break;
+						case 20 :
+							$_REQUEST ['perfil'] = 3;
+							break;
+						case 21 :
+							$_REQUEST ['perfil'] = 4;
+							break;
+						case 22 :
+							$_REQUEST ['perfil'] = 5;
+							break;
+					}
+				}
+				
+				$esteCampo = 'id_Proveedor';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = $_REQUEST['fki_idProveedorJur'];
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+				
+				
+				$esteCampo = 'id_Telefono';
+				$atributos ["id"] = $esteCampo; // No cambiar este nombre
+				$atributos ["tipo"] = "hidden";
+				$atributos ['estilo'] = '';
+				$atributos ["obligatorio"] = false;
+				$atributos ['marco'] = true;
+				$atributos ["etiqueta"] = "";
+				$atributos ['valor'] = $resultadoTel[0]['id_telefono'];
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+		
+				
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorJuridica', $_REQUEST['nit'] );
+				$resultadoPersonaJuridicaInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$_REQUEST['paisEmpresa'] = $resultadoPersonaJuridicaInfo[0]['procedencia_empresa'];
+				$_REQUEST['tipoIdentifiExtranjera'] = $resultadoPersonaJuridicaInfo[0]['tipo_identificacion_extranjera'];
+				$_REQUEST['regimenContributivo'] = $resultadoPersonaJuridicaInfo[0]['regimen_contributivo'];
+				
+				$_REQUEST['productoImportacion'] = $resultadoPersonaJuridicaInfo[0]['exclusividad_producto'];
+				$_REQUEST['pyme'] = $resultadoPersonaJuridicaInfo[0]['pyme'];
+				$_REQUEST['registroMercantil'] = $resultadoPersonaJuridicaInfo[0]['registro_mercantil'];
+				$_REQUEST['sujetoDeRetencion'] = $resultadoPersonaJuridicaInfo[0]['sujeto_retencion'];
+				$_REQUEST['agenteRetenedor'] = $resultadoPersonaJuridicaInfo[0]['agente_retenedor'];
+				$_REQUEST['responsableICA'] = $resultadoPersonaJuridicaInfo[0]['responsable_ICA'];
+				$_REQUEST['responsableIVA'] = $resultadoPersonaJuridicaInfo[0]['responsable_IVA'];
+				
+				
+				$_REQUEST['personaJuridicaCiudad'] = $resultadoPersonaJuridicaInfo[0]['id_ciudad_origen'];
+				
+				
+				$_REQUEST['codigoPais'] = $resultadoPersonaJuridicaInfo[0]['codigo_pais_dian'];
+				$_REQUEST['codigoPostal'] = $resultadoPersonaJuridicaInfo[0]['codigo_postal'];
+				$_REQUEST['pasaporte'] = $resultadoPersonaJuridicaInfo[0]['num_pasaporte'];
+				$_REQUEST['cedulaExtranjeria'] = $resultadoPersonaJuridicaInfo[0]['num_cedula_extranjeria'];
+				$_REQUEST['tipoConformacion'] = $resultadoPersonaJuridicaInfo[0]['id_tipo_conformacion'];
+				$_REQUEST['monto'] = $resultadoPersonaJuridicaInfo[0]['monto_capital_autorizado'];
+				
+				$_REQUEST['nombreEmpresa'] = $resultadoPersonaJuridicaInfo[0]['nom_proveedor'];
+				
+				if(isset($_REQUEST['paisEmpresa'])){//CAST
+					switch($_REQUEST['paisEmpresa']){
+						case 'NACIONAL' :
+							$_REQUEST['paisEmpresa'] = 1;
+							break;
+						case 'EXTRANJERO' :
+							$_REQUEST['paisEmpresa'] = 2;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['tipoIdentifiExtranjera'])){//CAST
+					switch($_REQUEST['tipoIdentifiExtranjera']){
+						case 'CEDULA DE EXTRANJERIA' :
+							$_REQUEST['tipoIdentifiExtranjera'] = 1;
+							break;
+						case 'PASAPORTE' :
+							$_REQUEST['tipoIdentifiExtranjera'] = 2;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['regimenContributivo'])){//CAST
+					switch($_REQUEST['regimenContributivo']){
+						case 'COMUN' :
+							$_REQUEST['regimenContributivo'] = 1;
+							break;
+						case 'SIMPLIFICADO' :
+							$_REQUEST['regimenContributivo'] = 2;
+							break;
+					}
+				}
+				
+				
+				// 7 campos TRUE FALSE
+					
+				if(isset($_REQUEST['productoImportacion'])){
+					switch($_REQUEST ['productoImportacion']){
+						case 't' :
+							$_REQUEST ['productoImportacion'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['productoImportacion'] = 2;
+							break;
+						default:
+							$_REQUEST ['productoImportacion'] = -1;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['pyme'])){
+					switch($_REQUEST ['pyme']){
+						case 't' :
+							$_REQUEST ['pyme'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['pyme'] = 2;
+							break;
+						default:
+							$_REQUEST ['pyme'] = -1;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['registroMercantil'])){
+					switch($_REQUEST ['registroMercantil']){
+						case 't' :
+							$_REQUEST ['registroMercantil'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['registroMercantil'] = 2;
+							break;
+						default:
+							$_REQUEST ['registroMercantil'] = -1;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['sujetoDeRetencion'])){
+					switch($_REQUEST ['sujetoDeRetencion']){
+						case 't' :
+							$_REQUEST ['sujetoDeRetencion'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['sujetoDeRetencion'] = 2;
+							break;
+						default:
+							$_REQUEST ['sujetoDeRetencion'] = -1;
+							break;
+					}
+				}
+					
+					
+				if(isset($_REQUEST['agenteRetenedor'])){
+					switch($_REQUEST ['agenteRetenedor']){
+						case 't' :
+							$_REQUEST ['agenteRetenedor'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['agenteRetenedor'] = 2;
+							break;
+						default:
+							$_REQUEST ['agenteRetenedor'] = -1;
+							break;
+					}
+				}
+					
+				if(isset($_REQUEST['responsableICA'])){
+					switch($_REQUEST ['responsableICA']){
+						case 't' :
+							$_REQUEST ['responsableICA'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['responsableICA'] = 2;
+							break;
+						default:
+							$_REQUEST ['responsableICA'] = -1;
+							break;
+					}
+				}
+					
+					
+				if(isset($_REQUEST['responsableIVA'])){
+					switch($_REQUEST ['responsableIVA']){
+						case 't' :
+							$_REQUEST ['responsableIVA'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['responsableIVA'] = 2;
+							break;
+						default:
+							$_REQUEST ['responsableIVA'] = -1;
+							break;
+					}
+				}
+				
+				
+		}
+		
 		
 		
 		
@@ -335,7 +558,9 @@ class Formulario {
 		echo "<br>";
 		echo "<br>";
 			
-			
+		
+		
+		
 		//********************************************************************************************** PERSONA JURIDICA****************************
 		
 		$esteCampo = "marcoDatosJuridicaUP";
@@ -505,7 +730,7 @@ class Formulario {
 			{
 				// ---------------- CONTROL: Cuadro de Texto PAIS--------------------------------------------------------
 					
-					
+				if($_TIPO == 2){	
 					
 				// ---------------- CONTROL: Select --------------------------------------------------------
 				$esteCampo = 'personaJuridicaPais';
@@ -513,7 +738,87 @@ class Formulario {
 				$atributos['id'] = $esteCampo;
 				$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 				$atributos['tab'] = $tab;
-				$atributos['seleccion'] = -1;
+				
+				$atributos['evento'] = ' ';
+				$atributos['deshabilitado'] = false;
+				$atributos['limitar']= 50;
+				$atributos['tamanno']= 1;
+				$atributos['columnas']= 1;
+					
+				$atributos ['obligatorio'] = true;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['validar'] = 'required';
+				
+				
+				$cadenaTest = $this->miSql->getCadenaSql ( "buscarCiudad", $_REQUEST['personaJuridicaCiudad']);
+				$matrizPrev = $esteRecursoDB->ejecutarAcceso ( $cadenaTest, "busqueda" );
+				
+				$cadenaTestP = $this->miSql->getCadenaSql ( "buscarPaisXDepa", $matrizPrev[0]['id_departamento']);
+				$matrizPrevP = $esteRecursoDB->ejecutarAcceso ( $cadenaTestP, "busqueda" );
+					
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarPais" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					
+				$atributos['matrizItems'] = $matrizItems;
+					
+				
+				$atributos['seleccion'] = $matrizPrevP[0]['id_pais'];
+				$atributos ['valor'] = $matrizPrevP[0]['id_pais'];
+				
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				// --------------- FIN CONTROL : Select --------------------------------------------------
+					
+				
+				
+				
+				// ---------------- CONTROL: Select --------------------------------------------------------
+				$esteCampo = 'personaJuridicaDepartamento';
+				$atributos['nombre'] = $esteCampo;
+				$atributos['id'] = $esteCampo;
+				$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos['tab'] = $tab;
+				
+				$atributos['evento'] = ' ';
+				$atributos['deshabilitado'] = false;
+				$atributos['limitar']= 50;
+				$atributos['tamanno']= 1;
+				$atributos['columnas']= 1;
+					
+				$atributos ['obligatorio'] = true;
+				$atributos ['etiquetaObligatorio'] = true;
+				$atributos ['validar'] = 'required';
+				
+				
+				
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamentoAjax", $matrizPrevP[0]['id_pais'] );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					
+				$atributos['matrizItems'] = $matrizItems;
+				$atributos['seleccion'] = $matrizPrev[0]['id_departamento'];
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = $matrizPrev[0]['id_departamento'];
+				}
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				// --------------- FIN CONTROL : Select --------------------------------------------------
+					
+				// ---------------- CONTROL: Select --------------------------------------------------------
+				$esteCampo = 'personaJuridicaCiudad';
+				$atributos['nombre'] = $esteCampo;
+				$atributos['id'] = $esteCampo;
+				$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos['tab'] = $tab;
+				$atributos['seleccion'] = $_REQUEST['personaJuridicaCiudad'];
 				$atributos['evento'] = ' ';
 				$atributos['deshabilitado'] = false;
 				$atributos['limitar']= 50;
@@ -524,9 +829,9 @@ class Formulario {
 				$atributos ['etiquetaObligatorio'] = true;
 				$atributos ['validar'] = 'required';
 					
-				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarPais" );
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarCiudadAjax", $matrizPrev[0]['id_departamento']);
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-					
+				
 				$atributos['matrizItems'] = $matrizItems;
 					
 				if (isset ( $_REQUEST [$esteCampo] )) {
@@ -539,8 +844,15 @@ class Formulario {
 				// Aplica atributos globales al control
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
-				// --------------- FIN CONTROL : Select --------------------------------------------------
-					
+				
+				
+				
+				}
+				
+				
+				
+				/*
+				
 				// ---------------- CONTROL: Select --------------------------------------------------------
 				$esteCampo = 'personaJuridicaDepartamento';
 				$atributos['nombre'] = $esteCampo;
@@ -620,7 +932,7 @@ class Formulario {
 				$atributos = array_merge ( $atributos, $atributosGlobales );
 				echo $this->miFormulario->campoCuadroLista ( $atributos );
 		
-					
+					*/
 					
 				/*
 				 $esteCampo = 'pais';
@@ -875,6 +1187,83 @@ class Formulario {
 			$atributos['id'] = $esteCampo;
 			$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			$atributos['tab'] = $tab;
+			
+			$atributos['evento'] = ' ';
+			$atributos['deshabilitado'] = false;
+			$atributos['limitar']= 50;
+			$atributos['tamanno']= 1;
+			$atributos['columnas']= 1;
+				
+			$atributos ['obligatorio'] = true;
+			$atributos ['etiquetaObligatorio'] = true;
+			$atributos ['validar'] = 'required';
+			
+			
+			$cadenaTest = $this->miSql->getCadenaSql ( "buscarCiudad", $_REQUEST['fki_idciudadContactoJur']);
+			$matrizPrev = $esteRecursoDB->ejecutarAcceso ( $cadenaTest, "busqueda" );
+			
+			$cadenaTestP = $this->miSql->getCadenaSql ( "buscarPaisXDepa", $matrizPrev[0]['id_departamento']);
+			$matrizPrevP = $esteRecursoDB->ejecutarAcceso ( $cadenaTestP, "busqueda" );
+			
+			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamentoAjax", $matrizPrevP[0]['id_pais'] );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+			$atributos['matrizItems'] = $matrizItems;
+			$atributos['seleccion'] = $matrizPrev[0]['id_departamento'];
+			if (isset ( $_REQUEST [$esteCampo] )) {
+				$atributos ['valor'] = $_REQUEST [$esteCampo];
+			} else {
+				$atributos ['valor'] = $matrizPrev[0]['id_departamento'];
+			}
+			$tab ++;
+				
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			// --------------- FIN CONTROL : Select --------------------------------------------------
+				
+			// ---------------- CONTROL: Select --------------------------------------------------------
+			$esteCampo = 'ciudad';
+			$atributos['nombre'] = $esteCampo;
+			$atributos['id'] = $esteCampo;
+			$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos['tab'] = $tab;
+			$atributos['seleccion'] = $_REQUEST['fki_idciudadContactoJur'];
+			$atributos['evento'] = ' ';
+			$atributos['deshabilitado'] = false;
+			$atributos['limitar']= 50;
+			$atributos['tamanno']= 1;
+			$atributos['columnas']= 1;
+				
+			$atributos ['obligatorio'] = true;
+			$atributos ['etiquetaObligatorio'] = true;
+			$atributos ['validar'] = 'required';
+				
+			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarCiudadAjax", $matrizPrev[0]['id_departamento']);
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+			
+			$atributos['matrizItems'] = $matrizItems;
+				
+			if (isset ( $_REQUEST [$esteCampo] )) {
+				$atributos ['valor'] = $_REQUEST [$esteCampo];
+			} else {
+				$atributos ['valor'] = '';
+			}
+			$tab ++;
+				
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			
+			/*
+			
+			
+			// ---------------- CONTROL: Select --------------------------------------------------------
+			$esteCampo = 'departamento';
+			$atributos['nombre'] = $esteCampo;
+			$atributos['id'] = $esteCampo;
+			$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos['tab'] = $tab;
 			$atributos['seleccion'] = -1;
 			$atributos['evento'] = ' ';
 			$atributos['deshabilitado'] = false;
@@ -911,7 +1300,7 @@ class Formulario {
 			$atributos['tab'] = $tab;
 			$atributos['seleccion'] = -1;
 			$atributos['evento'] = ' ';
-			$atributos['deshabilitado'] = true;
+			$atributos['deshabilitado'] = false;
 			$atributos['limitar']= 50;
 			$atributos['tamanno']= 1;
 			$atributos['columnas']= 1;
@@ -941,7 +1330,7 @@ class Formulario {
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
-		
+		*/
 			/*
 			 // ---------------- CONTROL: Cuadro de Texto CIUDAD--------------------------------------------------------
 			 $esteCampo = 'ciudad';
@@ -1541,7 +1930,7 @@ class Formulario {
 				$atributos ['valor'] = '';
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = false;
+			$atributos ['deshabilitado'] = true;
 			$atributos ['tamanno'] = 15;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 200;
@@ -2190,7 +2579,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'required, minSize[1],maxSize[15]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2612,7 +3001,8 @@ class Formulario {
 			// ------------------Fin Division para los botones-------------------------
 				
 				
-				
+		
+		
 				
 				
 				
@@ -3931,7 +4321,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'minSize[1],maxSize[15],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[1],maxSize[15]';
 		
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];

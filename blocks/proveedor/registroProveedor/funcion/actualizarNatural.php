@@ -58,6 +58,7 @@ class Formulario {
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					
 					// Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
 					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
