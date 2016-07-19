@@ -9,7 +9,7 @@ class listarDatos {
 	var $miFormulario;
 	var $miSql;
 	
-	const ESTADOOBJETO = 2; //COTIZACION
+	const ESTADOOBJETO = 'COTIZACION'; //COTIZACION
 	
 	function __construct($lenguaje, $formulario, $sql) {
 		
@@ -82,7 +82,7 @@ class listarDatos {
 					echo "<td >" . $dato['objetocontratar']. "</td>";
 					echo "<td align='center'>" . $dato['codigociiu'] . '-' . $dato['actividad'] . "</td>";
 					echo "<td align='center'>" . $dato['fecharegistro'] . "</td>";
-					echo "<td align='right'>" . $dato['unidad'] . "</td>";
+					echo "<td align='right'>" . $dato['id_unidad'] . "</td>";
 					echo "<td align='right'>" . $dato['cantidad'] . "</td>";
 					echo "<td >" . $dato['descripcion'] . "</td>";
 					echo "<td class='text-center'>";
@@ -93,7 +93,7 @@ class listarDatos {
 						$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 						$url = $directorio . '=' . $variable;
 		
-						if( $dato['estado']==2){
+						if( $dato['estado'] == 'COTIZACION'){
 							$valor = 'Seleccionar';
 							$clase = "btn btn-default";
 						}else{

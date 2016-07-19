@@ -139,7 +139,7 @@ $mail->ClearAttachments();
 		
 
         $valorCodificado = "pagina=" . $miPaginaActual;
-	$valorCodificado.="&opcion=actividad";
+		$valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&nit=" . $_REQUEST['nit'];

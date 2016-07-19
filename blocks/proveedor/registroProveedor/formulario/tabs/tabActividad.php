@@ -86,7 +86,7 @@ class FormularioRegistro {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 				// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
-
+		
                 //DATOS DEL PROVEEDOR 
                 if(isset($_REQUEST['usuario'])){
                     $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST['usuario']  );
@@ -97,8 +97,8 @@ class FormularioRegistro {
                 $datosProvedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         
 		$_REQUEST['idProveedor'] = $datosProvedor[0]['id_proveedor'];
-                $_REQUEST['nit']  = $datosProvedor[0]['nit'];
-		
+        $_REQUEST['nit']  = $datosProvedor[0]['num_documento'];
+        
 		$esteCampo = "marcoEmpresa";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -108,9 +108,9 @@ class FormularioRegistro {
                 
 			//INICIO INFORMACION 
 				echo "<span class='textoElegante textoEnorme textoAzul'>NIT : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nit'] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre de la Empresa : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nomempresa'] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";                 
 			//FIN INFORMACION 
@@ -119,8 +119,9 @@ class FormularioRegistro {
 
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
-                $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+        $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
+        
 		if( $resultadoActividades ){
 			
 			$esteCampo = "marcoActividades";
@@ -131,7 +132,7 @@ class FormularioRegistro {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 
 				foreach ($resultadoActividades as $dato):
-					echo $dato['actividad'] . '-' . $dato['nombre'] . "<br>";
+					echo $dato['id_subclase'] . '-' . $dato['nombre'] . "<br>";
 				endforeach;
 				
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );

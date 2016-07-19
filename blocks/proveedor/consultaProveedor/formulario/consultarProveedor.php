@@ -59,8 +59,9 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 		unset ( $atributos );		
 }
 
+
 if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
-	$NIT = $_REQUEST ['nit_proveedor'];
+	$NIT = $_REQUEST ['id_proveedor'];
 } else {
 	$NIT = '';
 }
@@ -79,6 +80,8 @@ unset($resultado);
 $cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
+//var_dump($cadena_sql);
+
 if ($resultado) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";
@@ -91,9 +94,10 @@ if ($resultado) {
 		echo "<thead>
 				<tr>
 					<th><center>NIT</center></th>
-					<th><center>Nombre Empresa</center></th>
+					<th><center>Nombre Proveedor</center></th>
+					<th><center>Tipo Persona</center></th>
 					<th><center>Correo</center></th>
-                                        <th><center>Teléfono</center></th>
+                    <th><center>Teléfono</center></th>
 					<th><center>Movil</center></th>
 					<th><center>Puntaje Total</center></th>
 					<th><center>Clasificaciòn</center></th>
@@ -110,31 +114,40 @@ if ($resultado) {
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 
-switch ($dato['estado']) {
-    case 1:
-        $estado = 'Activo';
-	$imagen = 'edit.png';
-        break;
-    case 2:
-        $estado = 'Inactivo';
-	$variable = '#';
-	$imagen = 'cancel.png';
-        break;
-    case 3:
-        $estado = 'Inhabilitado';
-	$variable = '#';
-	$imagen = 'cancel.png';
-        break;
-}
+			switch ($dato['estado']) {
+			    case 1:
+			        $estado = 'Activo';
+				$imagen = 'edit.png';
+			        break;
+			    case 2:
+			        $estado = 'Inactivo';
+				$variable = '#';
+				$imagen = 'cancel.png';
+			        break;
+			    case 3:
+			        $estado = 'Inhabilitado';
+				$variable = '#';
+				$imagen = 'cancel.png';
+			        break;
+			}
 
 			
+			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $dato['num_documento'] );
+			$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $dato['num_documento'] );
+			$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			//var_dump($resultadoTel);
+			//var_dump($resultadoMovil);
 			
 			$mostrarHtml = "<tr>
-						<td><center>" . $dato['nit'] . "</center></td>
-						<td><center>" . utf8_encode($dato['nomempresa']) . "</center></td>
+						<td><center>" . $dato['num_documento'] . "</center></td>
+						<td><center>" . utf8_encode($dato['nom_proveedor']) . "</center></td>
+						<td><center>" . utf8_encode($dato['tipopersona']) . "</center></td>
 						<td><center>" . $dato['correo'] . "</center></td>
-						<td><center>" . $dato['telefono'] . "</center></td>                                                    
-						<td><center>" . $dato['movil'] . "</center></td>
+						<td><center>" . $resultadoTel[0]['numero_tel'] . "</center></td>                                                    
+						<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>
 						<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 						<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
 						<td><center>" . $estado . "</center></td>

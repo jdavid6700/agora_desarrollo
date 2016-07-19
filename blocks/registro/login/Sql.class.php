@@ -7,11 +7,6 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
     exit ();
 }
 
-if (! isset ( $GLOBALS ["autorizado"] )) {
-    include ("../index.php");
-    exit ();
-}
-
 include_once ("core/manager/Configurador.class.php");
 include_once ("core/connection/Sql.class.php");
 
@@ -34,11 +29,11 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 
         switch ($tipo) {
-
-            /**
+			
+			/**
 			 * Clausulas específicas
 			 */
-			
+        	
 			case "buscarUsuario" :
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'id_usuario, ';
@@ -64,9 +59,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "evento, ";
 				$cadenaSql .= "fecha) ";
 				$cadenaSql .= "VALUES( ";
-				$cadenaSql .= "'" . $variable[1] . "', ";
-				$cadenaSql .= "'" .date('Y-m-d  h:i:s A') . "') ";
-
+				$cadenaSql .= "'" . $variable [1] . "', ";
+				$cadenaSql .= "'" . date ( 'Y-m-d  h:i:s A' ) . "') ";
 				break;
 
         }

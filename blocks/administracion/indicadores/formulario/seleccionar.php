@@ -33,9 +33,10 @@ unset ( $atributos );
 	
 	$items = array (
 			"tabHistoricoAnual" => $this->lenguaje->getCadena ( "tabHistoricoAnual" ),
-			"tabTotalProveedores" => $this->lenguaje->getCadena ( "tabTotalProveedores" ),
-			"tabDatosProveedores" => $this->lenguaje->getCadena ( "tabDatosProveedores" ),
-			"tabListadoProveedores" => $this->lenguaje->getCadena ( "tabListadoProveedores" ),
+			"tabProvSeleccionados" => $this->lenguaje->getCadena ( "tabProvSeleccionados" ),
+			"tabTotalProveedoresA" => $this->lenguaje->getCadena ( "tabTotalProveedoresA" ),
+			"tabTotalProveedoresB" => $this->lenguaje->getCadena ( "tabTotalProveedoresB" ),
+			"tabTotalProveedoresC" => $this->lenguaje->getCadena ( "tabTotalProveedoresC" ),
 			"tabProcesoContratacion" => $this->lenguaje->getCadena ( "tabProcesoContratacion" )
 			
 	);
@@ -57,9 +58,23 @@ unset ( $atributos );
 		}
 		echo $this->miFormulario->agrupacion ( 'fin' );
 	// -----------------FIN Division para la pestaña 1-------------------------
+
+	// -----------------INICIO Division para la pestaña 1-------------------------
+		$esteCampo = "tabProvSeleccionados";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabProvSeleccionados.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+	// -----------------FIN Division para la pestaña 1-------------------------
 	
 	// -----------------INICIO Division para la pestaña 2-------------------------
-		$esteCampo = "tabTotalProveedores";
+		$esteCampo = "tabTotalProveedoresA";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -73,7 +88,7 @@ unset ( $atributos );
 	// -----------------Fin Division para la pestaña 2-------------------------
 
 	// -----------------INICIO Division para la pestaña 3-------------------------
-		$esteCampo = "tabListadoProveedores";
+		$esteCampo = "tabTotalProveedoresB";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -81,10 +96,39 @@ unset ( $atributos );
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
-			include ($this->ruta . "formulario/tabs/tabSearchByproveedor.php");
+			include ($this->ruta . "formulario/tabs/tabProveedorTipoB.php");
 		}
 		echo $this->miFormulario->agrupacion ( 'fin' );	
 	// -----------------FIN Division para la pestaña 3-------------------------
+	
+	// -----------------INICIO Division para la pestaña 3-------------------------
+		$esteCampo = "tabTotalProveedoresC";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabProveedorTipoC.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+		// -----------------FIN Division para la pestaña 3-------------------------
+		
+	// -----------------INICIO Division para la pestaña 3-------------------------
+		$esteCampo = "tabProcesoContratacion";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		// $atributos ["leyenda"] = "Contratos ViceRectoria";
+		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+		unset ( $atributos );
+		{
+			include ($this->ruta . "formulario/tabs/tabProcesoContratacion.php");
+		}
+		echo $this->miFormulario->agrupacion ( 'fin' );
+		// -----------------FIN Division para la pestaña 3-------------------------
+		
 	
 }
 echo $this->miFormulario->division ( "fin" );

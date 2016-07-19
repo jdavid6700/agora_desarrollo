@@ -24,6 +24,9 @@ $this->idioma["ordenadorTitulo"]="Seleccionar ordenador";
 $this->idioma["dependencia"] = "Dependencia :";
 $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
 
+$this->idioma["numCDP"] = "No. CDP :";
+$this->idioma["numCDPTitulo"] = "Indicar número de CDP";
+
 $this->idioma["unidad"] = "Unidad :";
 $this->idioma["unidadTitulo"]="Seleccionar unidad";
 

@@ -55,7 +55,7 @@ class Formulario {
 			</div>
 			<div class='col-md-4'>
 				<div class="jumbotron" align="center">
-					<h3>PROVEEDOR REGISTRADO </h3>
+					<h3>ACCESO AL SISTEMA </h3>
 
 
                 <?php

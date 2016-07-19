@@ -27,10 +27,9 @@ $enlace= $this->miConfigurador->getVariableConfiguracion ( 'enlace' );
 </div>
 	<div class="pieImagenes">
 	<br>
-		<div class="pieMenuImagen">
+		<div class="pieMenuImagen" align="center">
 		      <div class="pieImagen fleft"> <a id="unidistrital" href="http://www.udistrital.edu.co" target="_blank"> <span>Universidad Distrital Francisco Jos&eacute; de Caldas</span> </a> </div>
 		      <div class="pieImagen fleft"> <a id="minEducacion" href="http://www.mineducacion.gov.co" target="_blank"> <span>Ministerio de educaci&oacute;n</span> </a> </div>
-		      <div class="pieImagen fleft"> <a id="bogota" href="http://www.bogota.gov.co" target="_blank"> <span>Bogot&aacute;</span> </a> </div>
 		      <div class="pieImagen fleft"> <a id="segEducacionBogota" href="http://www.sedbogota.edu.co/" target="_blank"> <span>Secretaria de Educaci&oacute;n de Bogot&aacute;</span></a> </div>
 		</div>
 	<br>

@@ -90,14 +90,14 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 					$estado = $dato['estado']==1?"Nuevo":"Evaluado";
 					
 					$mostrarHtml = "<tr>
-								<td><right>" . $dato['nit'] . "</center></td>
-								<td><center>" . $dato['nomempresa'] . "</center></td>
+								<td><right>" . $dato['num_documento'] . "</center></td>
+								<td><center>" . $dato['nom_proveedor'] . "</center></td>
 								<td><center>" . $dato['numero_contrato'] . "</center></td>
 								<td><center>" . $dato['fecha_inicio'] . "</center></td>
 								<td><center>" . $dato['fecha_finalizacion'] . "</center></td>
 								<td><center>" . $dato['fecha_registro'] . "</center></td>
-								<td><right>" . $dato['nombre_supervisor'] . "</center></td>
-								<td><right>" . $dato['puntaje_total'] . "</center></td>
+								<td><center>" . $dato['nombre_supervisor'] . "</center></td>
+								<td><center>" . $dato['puntaje_total'] . "</center></td>
 								<td><center>" . $dato['clasificacion'] . "</center></td>
 								<td><center>" . $estado . "</center></td>
 							</tr>";

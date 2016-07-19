@@ -14,7 +14,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 $resultado = '';
 
-$fechaActual = date ( 'Y-m-d' );
+$fechaActual = date ( 'Y-m-d' . ' - ' .'h:i:s A');
 
 				
 //Cargo array con los datos para insertar en la table INHABILIDAD
@@ -28,17 +28,19 @@ $arreglo = array (
 
 
 //Guardar datos de la inhabilidad
-$cadenaSql = $this->sql->getCadenaSql ( "ingresarInhabilidad", $arreglo );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+//$cadenaSql = $this->sql->getCadenaSql ( "ingresarInhabilidad", $arreglo );
+//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+$resultado = true;
 
 
 if ($resultado) {
 		//Actualizo el estado del proveedor a INHABILITADO
 		$valores = array (
 				'idProveedor' => $_REQUEST ['idProveedor'],
-				'estado' => 2
+				'estado' => 2,
+				'fecha_modificacion' => $fechaActual
 		);
-
+		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
 			

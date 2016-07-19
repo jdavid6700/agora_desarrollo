@@ -80,8 +80,17 @@ class Frontera {
                     break;
             }
         } else {
-            $_REQUEST['opcion'] = "mostrar";
-            include_once($this->ruta . "/formulario/formulario.php");
+        	
+        	
+        	if($_REQUEST['pagina'] == 'registroProveedor'){
+        		$_REQUEST['opcion'] = "mostrar";
+        		include_once($this->ruta . "/formulario/formulario.php");
+        	}else{
+        		$_REQUEST['opcion'] = "inicio";
+        		include_once($this->ruta . "/formulario/inicioProveedor.php");
+        	}
+            
+            
         }
     }
 

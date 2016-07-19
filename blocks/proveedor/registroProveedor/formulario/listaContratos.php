@@ -116,25 +116,25 @@ if ($resultado) {
 			$certUniversidadImagen = 'pdf.png';
 			
 			switch ($dato ['estado']) {
-				case 1 :
+				case 'CREADO' :
 					$msj = 'No se ha realizado el proceso de evaluaci&oacute;n';
 					$varSatisfaccion = '#';
 					$certSatisImagen = 'cancel.png';
 					break;
-				case 2 :
+				case 'EVALUADO' :
 					$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $dato ['id_contrato'] );
 					$evaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 					
 					if ($evaluacion [0] ['puntaje_total'] > 45) {
 						$msj = 'Evaluado';
 						
-						$variable = "pagina=" . $miPaginaActual;
-						$variable .= "&action=" . $esteBloque ["nombre"];
-						$variable .= "&bloque=" . $esteBloque ['nombre'];
-						$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-						$variable .= "&opcion=certCumplimiento";
-						$variable .= "&idContrato=" . $dato ['id_contrato'];
-						$varSatisfaccion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+						//$variable = "pagina=" . $miPaginaActual;
+						//$variable .= "&action=" . $esteBloque ["nombre"];
+						//$variable .= "&bloque=" . $esteBloque ['nombre'];
+						//$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+						//$variable .= "&opcion=certContrato";
+						//$variable .= "&idContrato=" . $dato ['id_contrato'];
+						//$varSatisfaccion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 						$certSatisImagen = 'pdf.png';
 					} else {
 						$msj = 'Evaluado, pero no cumplio a satisfacción';
