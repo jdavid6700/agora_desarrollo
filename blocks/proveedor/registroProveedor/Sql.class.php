@@ -33,7 +33,7 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= " puntaje_total";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.evaluacion ";
+				$cadenaSql .= " agora.evaluacion ";
 				$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
 				break;
 			
@@ -54,15 +54,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " C.numero_rp, ";
 				$cadenaSql .= " C.fecha_rp ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.contrato C";
-				$cadenaSql .= " JOIN proveedor.objeto_contratar O ON O.id_objeto = C.id_objeto";
-				$cadenaSql .= " JOIN proveedor.informacion_proveedor P ON P.id_proveedor = C.id_proveedor";
+				$cadenaSql .= " agora.contrato C";
+				$cadenaSql .= " JOIN agora.objeto_contratar O ON O.id_objeto = C.id_objeto";
+				$cadenaSql .= " JOIN agora.informacion_proveedor P ON P.id_proveedor = C.id_proveedor";
 				$cadenaSql .= " WHERE  id_contrato=" . $variable;
 				break;
 			
 			/* ACTUALIZAR - ESTADO PROVEEDOR */
 			case 'updateEstado' ://****************************************************************************************
-				$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+				$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
 				$cadenaSql .= "estado = '" . $variable ['estado'] . "'";
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
@@ -73,13 +73,13 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " last_value";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.prov_proveedor_info_id_proveedor_seq";
+				$cadenaSql .= " agora.prov_proveedor_info_id_proveedor_seq";
 				break;
 			
 			/* REGISTRAR DATOS - USUARIO */
 			case "registrarActividad" ://**********************************************************
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
@@ -96,7 +96,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " WHERE num_documento= '" . $variable ['nit'] . "'";
 				$cadenaSql .= " AND id_subclase = '" . $variable ['actividad'] . "'";
 				break;
@@ -107,8 +107,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " A.id_subclase,";
 				$cadenaSql .= " nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_actividad_ciiu A";
-				$cadenaSql .= " JOIN parametro.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu A";
+				$cadenaSql .= " JOIN agora.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
 				$cadenaSql .= " WHERE num_documento= " . $variable;
 				break;	
 					
@@ -150,7 +150,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO */
 			case "insertarInformacionProveedor" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipopersona,";
 				$cadenaSql .= " num_documento,";
@@ -196,7 +196,7 @@ class Sql extends \Sql {
 				/* INSERTAR - PROVEEEDOR DATOS TELEFONO */
 			case 'insertarInformacionProveedorTelefono' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " agora.telefono ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " numero_tel,";
 				if($variable ['extension_telefono'] != null){
@@ -218,7 +218,7 @@ class Sql extends \Sql {
 			/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'insertarInformacionProveedorXTelefono' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_telefono ";
+				$cadenaSql .= " agora.proveedor_telefono ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " id_proveedor,";
 				$cadenaSql .= " id_telefono";
@@ -233,7 +233,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO NATURAL */
 			case "registrarProveedorNatural" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " agora.informacion_persona_natural ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipo_documento,";
 				$cadenaSql .= " num_documento_persona,";
@@ -275,7 +275,7 @@ class Sql extends \Sql {
 				
 			case "consultar_tipo_proveedor" :
 				$cadenaSql = " SELECT U.usuario, P.tipoPersona FROM public.prov_usuario U";
-				$cadenaSql.= " JOIN proveedor.informacion_proveedor P ON P.num_documento = U.usuario::numeric";
+				$cadenaSql.= " JOIN agora.informacion_proveedor P ON P.num_documento = U.usuario::numeric";
 				$cadenaSql.= " WHERE U.id_usuario = $variable ";
 				break;
 				
@@ -290,9 +290,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
@@ -309,9 +309,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
@@ -335,7 +335,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " monto_capital_autorizado,";
 				$cadenaSql .= " genero";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_persona_natural";
+				$cadenaSql .= " agora.informacion_persona_natural";
 				$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
 				break;
 				
@@ -343,7 +343,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO */
 			case "actualizarInformacionProveedor" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " num_documento = " . $variable ['numero_documento'] . ", ";
 				;
@@ -366,7 +366,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR - PROVEEEDOR DATOS TELEFONO */
 			case 'actualizarInformacionProveedorTelefono' :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " agora.telefono ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " numero_tel = " . $variable ['num_telefono'] . ", ";
 				if ($variable ['extension_telefono'] != null) {
@@ -380,7 +380,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO NATURAL */
 			case "actualizarProveedorNatural" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " agora.informacion_persona_natural ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " tipo_documento = " . " " . $variable ['id_tipo_documento'] . ",";
 				$cadenaSql .= " num_documento_persona = " . " " . $variable ['fki_numero_documento'] . ",";
@@ -405,7 +405,7 @@ class Sql extends \Sql {
 				/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'insertarInformacionProveedorXRepresentante' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " id_proveedor,";
 				$cadenaSql .= " id_representante,";
@@ -425,7 +425,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO JURIDICA */
 			case "registrarProveedorJuridica" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " (";
 				$cadenaSql.=" num_nit_empresa, ";
 				$cadenaSql.=" digito_verificacion, ";
@@ -435,7 +435,9 @@ class Sql extends \Sql {
 					$cadenaSql.=" procedencia_empresa, ";
 					$cadenaSql.=" id_ciudad_origen, ";
 					$cadenaSql.=" codigo_pais_dian, ";
-					$cadenaSql.=" codigo_postal, ";
+				    if($variable ['codigo_postal'] != null){
+				    	$cadenaSql.=" codigo_postal, ";
+					}
 					$cadenaSql.=" tipo_identificacion_extranjera, ";
 					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
 						$cadenaSql.=" num_pasaporte, ";
@@ -466,7 +468,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " '" . $variable ['procedencia_empresa'] . "',";
 					$cadenaSql .= " " . $variable ['id_ciudad_origen'] . ",";
 					$cadenaSql .= " " . $variable ['codigo_pais_dian'] . ",";
-					$cadenaSql .= " " . $variable ['codigo_postal'] . ",";
+					if($variable ['codigo_postal'] != null){
+						$cadenaSql .= " " . $variable ['codigo_postal'] . ",";
+					}
 					$cadenaSql .= " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
 						$cadenaSql .= " " . $variable ['num_pasaporte'] . ",";
@@ -497,7 +501,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " telefono_contacto,";
 				$cadenaSql .= " correo_representante";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable . "' ";
 				break;
@@ -526,7 +530,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " genero, ";
 				$cadenaSql .= " nom_proveedor";
 				$cadenaSql .= " FROM";
-				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " WHERE num_nit_empresa = ";
 				$cadenaSql .= "'" . $variable . "' ";
 				break;
@@ -534,7 +538,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'actualizarInformacionProveedorXRepresentante' :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " telefono_contacto = " . $variable ['tel_Repre'] . ", ";
 				$cadenaSql .= " correo_representante = " . " '" . $variable ['correo_Repre'] . "' ";
@@ -547,7 +551,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO JURIDICA */
 			case "actualizarProveedorJuridica" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " num_nit_empresa = " . " " . $variable ['fki_numero_documento'] . ",";
 				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
@@ -557,7 +561,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
 					$cadenaSql .= " id_ciudad_origen = " . " " . $variable ['id_ciudad_origen'] . ",";
 					$cadenaSql .= " codigo_pais_dian = " . " " . $variable ['codigo_pais_dian'] . ",";
-					$cadenaSql .= " codigo_postal = " . " " . $variable ['codigo_postal'] . ",";
+					if($variable ['codigo_postal'] != null){
+						$cadenaSql .= " codigo_postal = " . " " . $variable ['codigo_postal'] . ",";
+					}
 					$cadenaSql .= " tipo_identificacion_extranjera = " . " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
 						$cadenaSql .= " num_pasaporte = " . " " . $variable ['num_pasaporte'] . ",";
@@ -607,7 +613,7 @@ class Sql extends \Sql {
 
 			/* ACTUALIZAR - PROVEEEDOR DATOS */			
 				case 'actualizarRUT' :
-					$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+					$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
 					$cadenaSql .= "anexorut='" . $variable ['destino'] . "'";
 					$cadenaSql .= " WHERE id_proveedor = ";
 					$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
@@ -622,7 +628,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" id_proveedor,";
                     $cadenaSql.=" estado";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" agora.informacion_proveedor ";
 					$cadenaSql.=" WHERE num_documento = " . $variable;	
 					break; 
                                     
@@ -678,7 +684,7 @@ class Sql extends \Sql {
 					//$cadenaSql.=" P.num_pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
+					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.num_documento::text = U.usuario";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break;
 					
@@ -697,7 +703,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " t2.usuario,";
 				$cadenaSql .= " t2.id_usuario ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor t1";
+				$cadenaSql .= " agora.informacion_proveedor t1";
 				$cadenaSql .= " INNER JOIN prov_usuario t2 ON t1.num_documento::varchar = t2.usuario";
 				$cadenaSql .= " WHERE t2.id_usuario = " . $variable . ";";
 				break;
@@ -714,8 +720,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " C.estado";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
-					$cadenaSql.=" JOIN proveedor.contrato C ON C.id_proveedor = P.id_proveedor";
+					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.num_documento::text = U.usuario";
+					$cadenaSql.=" JOIN agora.contrato C ON C.id_proveedor = P.id_proveedor";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break; 					
          
@@ -725,7 +731,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" num_documento,";
 					$cadenaSql.=" nom_proveedor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" agora.informacion_proveedor ";
 					$cadenaSql.=" WHERE num_documento = '" . $variable . "'";
 					break;
 				
@@ -748,7 +754,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'abreviatura as ABREVIATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'agora.nomenclatura_dian ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
@@ -758,7 +764,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'agora.nomenclatura_dian ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
 				break;
 			
@@ -768,7 +774,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre_pais as NOMBRE, ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
 					
@@ -777,7 +783,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_codigo,";
 				$cadenaSql .= "	nombre_banco";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.banco";
+				$cadenaSql .= " agora.banco";
 				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 				$cadenaSql .= " ORDER BY nombre_banco";
 				break;
@@ -787,7 +793,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_conformacion,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.tipo_conformacion";
+				$cadenaSql .= " agora.tipo_conformacion";
 				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -798,7 +804,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_division,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_division";
+				$cadenaSql .= " agora.ciiu_division";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
 			
@@ -807,7 +813,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_clase,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_clase";
+				$cadenaSql .= " agora.ciiu_clase";
 				$cadenaSql .= " WHERE division ='" . $variable . "'";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -817,7 +823,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_subclase,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_subclase";
+				$cadenaSql .= " agora.ciiu_subclase";
 				$cadenaSql .= " WHERE clase ='" . $variable . "'";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -829,7 +835,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre_pais as NOMBRE, ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais != 112 ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -840,7 +846,7 @@ class Sql extends \Sql {
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'id_pais as ID_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_departamento = ' . $variable . ' ;';
 				break;
@@ -850,7 +856,7 @@ class Sql extends \Sql {
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = ' . $variable . ' ;';
 				break;
@@ -861,7 +867,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre as NOMBRE, ';
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'agora.ciudad ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_ciudad = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE;';
@@ -873,7 +879,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
 				$cadenaSql .= 'nombre as NOMBRE ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = 112 ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -885,7 +891,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
 				$cadenaSql .= 'nombre as NOMBRE ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -897,7 +903,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_ciudad as ID_CIUDAD, ';
 				$cadenaSql .= 'nombre as NOMBRECIUDAD ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'agora.ciudad ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_departamento = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -909,7 +915,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
 				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.parametro_estandar ';
+				$cadenaSql .= 'agora.parametro_estandar ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'valor_parametro != \'NIT\' ';
 				$cadenaSql .= 'AND clase_parametro = \'Tipo Documento\';';

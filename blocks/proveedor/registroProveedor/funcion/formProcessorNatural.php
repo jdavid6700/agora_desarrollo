@@ -77,6 +77,7 @@ class Formulario {
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		
 		
+		
 		if ($resultado) {
 			//El proveedor ya existe
 			redireccion::redireccionar ( 'existeProveedor',  $_REQUEST ['documentoNat']);

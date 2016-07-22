@@ -164,7 +164,6 @@ class Formulario {
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaJuridica);
 				$id_proveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaJuridica, "insertarInformacionProveedor");
 				
-				
 				$datosTelefonoFijoPersonaProveedor = array (
 						'num_telefono' => $_REQUEST['telefono'],
 						'extension_telefono' => $_REQUEST['extension'],
