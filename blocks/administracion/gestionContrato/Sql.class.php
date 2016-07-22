@@ -52,18 +52,18 @@ class Sql extends \Sql {
 			/* CONSULTAR - CONTRATO */
 			case "consultarContrato" :
 				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " id_contrato, ";
-				$cadenaSql .= " numero_contrato, ";
-				$cadenaSql .= " fecha_inicio, ";
-				$cadenaSql .= " fecha_finalizacion, ";
+				$cadenaSql .= " C.id_contrato, ";
+				$cadenaSql .= " C.numero_contrato, ";
+				$cadenaSql .= " C.fecha_inicio, ";
+				$cadenaSql .= " C.fecha_finalizacion, ";
 				$cadenaSql .= " S.nombre_supervisor, ";
 				$cadenaSql .= " P.nom_proveedor, ";
-				$cadenaSql .= " numero_acto_admin, ";
+				$cadenaSql .= " C.numero_acto_admin, ";
 				$cadenaSql .= " tipo_acto_admin, ";
-				$cadenaSql .= " numero_cdp, ";
-				$cadenaSql .= " numero_rp, ";
-				$cadenaSql .= " fecha_registro, ";
-				$cadenaSql .= " modalidad,  ";
+				$cadenaSql .= " C.numero_cdp, ";
+				$cadenaSql .= " C.numero_rp, ";
+				$cadenaSql .= " C.fecha_registro, ";
+				$cadenaSql .= " C.modalidad,  ";
 				$cadenaSql .= " C.estado  ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.contrato C";

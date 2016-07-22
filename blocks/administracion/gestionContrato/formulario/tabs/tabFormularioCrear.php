@@ -111,7 +111,7 @@ class registrarForm {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[15]';
+				$atributos ['validar'] = 'required, minSize[1],maxSize[10]';
 				
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -120,7 +120,7 @@ class registrarForm {
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 15;
+				$atributos ['tamanno'] = 10;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 200;
 				$tab ++;

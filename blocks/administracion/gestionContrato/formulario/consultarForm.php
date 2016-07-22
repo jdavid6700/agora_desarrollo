@@ -117,8 +117,10 @@ $arreglo = array (
 		$fechaFin_R 
 );
 unset ( $resultadoContratos );
+
 $cadena_sql = $this->sql->getCadenaSql ( "consultarContrato", $arreglo );
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
 
 if ($resultadoContratos) {
 	// -----------------Inicio de Conjunto de Controles----------------------------------------
