@@ -72,27 +72,17 @@ if ($resultado) {
 	?>
 <br>
 
-<table id="tablaReporte" class="display" cellspacing="0" width="100%">
-	<thead style="display: table-row-group">
+<table id="tablaReporteCont" class="display" cellspacing="0" width="100%">
+	<thead>
 		<tr>
-			<th>NUMERO CONTRATO</th>
-			<th>FECHA INICIO</th>
-			<th>FECHA FINAL</th>
-			<th>VALOR</th>
-			<th>CERTIFICADO</th>
-			<th>ESTADO</th>
+			<th>Número Contrato</th>
+			<th>Fecha Inicio</th>
+			<th>Fecha Final</th>
+			<th>Valor</th>
+			<th>Certificado</th>
+			<th>Estado</th>
 		</tr>
 	</thead>
-	<tfoot style="display: none">
-		<tr>
-			<th>numero contrato</th>
-			<th>fecha inicio</th>
-			<th>fecha final</th>
-			<th>valor</th>
-			<th>certificado</th>
-			<th>estado</th>
-		</tr>
-	</tfoot>
 	<tbody>
                     
 

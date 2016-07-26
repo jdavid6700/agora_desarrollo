@@ -93,7 +93,7 @@ if ($resultado) {
 		
 		echo "<thead>
 				<tr>
-					<th><center>NIT</center></th>
+					<th><center>Documento</center></th>
 					<th><center>Nombre Proveedor</center></th>
 					<th><center>Tipo Persona</center></th>
 					<th><center>Correo</center></th>
@@ -117,7 +117,7 @@ if ($resultado) {
 			switch ($dato['estado']) {
 			    case 1:
 			        $estado = 'Activo';
-				$imagen = 'edit.png';
+				$imagen = 'editPro.png';
 			        break;
 			    case 2:
 			        $estado = 'Inactivo';
