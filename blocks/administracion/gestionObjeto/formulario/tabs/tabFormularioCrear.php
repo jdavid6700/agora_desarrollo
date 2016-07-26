@@ -30,6 +30,10 @@ class registrarForm {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "sicapital";
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
@@ -72,8 +76,10 @@ class registrarForm {
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		//var_dump($resultado);
 
-                $idActividad = $objetoEspecifico[0][1];
+        $idActividad = $objetoEspecifico[0][1];
                 
 		$esteCampo = "marcoObjeto";
 		$atributos ['id'] = $esteCampo;

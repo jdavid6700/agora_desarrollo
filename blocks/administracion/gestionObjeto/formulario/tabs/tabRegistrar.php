@@ -34,6 +34,9 @@ class FormularioRegistro {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "sicapital";
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -93,6 +96,101 @@ class FormularioRegistro {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
+		
+		
+		$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidad", 2008);
+		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		
+		//echo $cadena_sql;// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		//var_dump($resultado);
+		
+		
+		
+		if ($resultado) {
+			
+			
+			echo '<table id="tablaObjetos" class="display" cellspacing="0" width="100%"> ';
+			
+			echo "<thead>
+				<tr>
+					<th><center>Vigencia</center></th>
+					<th><center>Fecha Solicitud</center></th>
+					<th><center>Origen Solicitud</center></th>
+					<th><center>Justificación</center></th>
+                    <th><center>Objeto</center></th>
+					<th><center>Tipo Contratación</center></th>
+					<th><center>Plazo Ejecución</center></th>
+					<th><center>Tipo Estudio</center></th>
+					<th><center>Detalle</center></th>
+					<th><center>Relacionar</center></th>
+				</tr>
+				</thead>
+				<tbody>";
+			
+			foreach ($resultado as $dato):
+			
+			if (isset($dato['FECHA_SOLICITUD']) && isset($dato['ORIGEN_SOLICITUD']) && isset($dato['JUSTIFICACION']) && isset($dato['OBJETO']) &&
+					isset($dato['TIPO_CONTRATACION']) && isset($dato['PLAZO_EJECUCION']) && isset($dato['TIPO_ESTUDIO'])){
+				
+			
+			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableView .= "&opcion=verPro";
+			$variableView .= "&idProveedor=" . $dato['VIGENCIA'];
+			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
+			$imagenView = 'verPro.png';
+				
+				
+				
+			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableEdit .= "&opcion=modificarPro";
+			$variableEdit .= "&idProveedor=" . $dato['VIGENCIA'];
+			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+			$variableEdit = '#';
+			$variableView = '#';
+			$imagenEdit = 'editPro.png';
+				
+				
+			
+			
+				
+			$mostrarHtml = "<tr>
+						<td><center>" . $dato['VIGENCIA'] . "</center></td>
+						<td><center>" . $dato['FECHA_SOLICITUD'] . "</center></td>
+						<td><center>" . $dato['ORIGEN_SOLICITUD'] . "</center></td>
+						<td><center>" . $dato['JUSTIFICACION'] . "</center></td>
+						<td><center>" . $dato['OBJETO'] . "</center></td>
+						<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
+						<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
+						<td><center>" . $dato['TIPO_ESTUDIO'] . "</center></td>
+						<td><center>
+							<a href='" . $variableView . "'>
+								<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
+							</a>
+						</center></td>
+						<td><center>
+							<a href='" . $variableEdit . "'>
+								<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
+							</a>
+						</center></td>
+					</tr>";
+			echo $mostrarHtml;
+			unset ( $mostrarHtml );
+			unset ( $variableView );
+			unset ( $variableEdit );
+			}
+			endforeach;
+			
+			echo "</tbody>";
+			echo "</table>";
+			
+		
+		}
+		
+		
+		
+		
+		/*
 		// ----------------INICIO CONTROL: Campo de Texto OBJETO A CONTRATAR--------------------------------------------------------
 		$esteCampo = 'objetoContrato';
 		$atributos ['id'] = $esteCampo;
@@ -315,7 +413,11 @@ class FormularioRegistro {
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto CANTIDAD--------------------------------------------------------
 		
+		*/
+		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		
+		/*
 		
 		$esteCampo = "marcoCIIU";
 		$atributos ['id'] = $esteCampo;
@@ -488,6 +590,8 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoTextArea ( $atributos );
 		unset ( $atributos );
 		
+		*/
+		
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "botones";
 		$atributos ["estilo"] = "marcoBotones";
@@ -511,7 +615,7 @@ class FormularioRegistro {
 			
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->campoBoton ( $atributos );
+			//echo $this->miFormulario->campoBoton ( $atributos );
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		}

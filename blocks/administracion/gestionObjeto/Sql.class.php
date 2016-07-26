@@ -27,6 +27,20 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			/* CONSULTAR siCapital */
+			case "listaSolicitudNecesidad" :
+				$cadenaSql = "SELECT *";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " CO_SOLICITUD_ADQ";
+				$cadenaSql .= " WHERE VIGENCIA = " . $variable . "";
+				break;
+			
+				
+				
+			
+			
+			
 				
 			/* REGISTRAR codigo validacion */
 			case "ingresarCodigo" :
