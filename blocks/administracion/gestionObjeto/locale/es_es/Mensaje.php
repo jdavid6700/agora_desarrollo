@@ -7,7 +7,7 @@ $this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 $this->idioma["marcoDatos"]="Solicitudes de Necesidad";
 $this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
 $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
-$this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
+$this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
 $this->idioma["divisionCIIU"] = "División :";

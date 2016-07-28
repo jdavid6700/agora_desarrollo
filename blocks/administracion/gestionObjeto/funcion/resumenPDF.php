@@ -19,6 +19,11 @@ $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+$conexion = "sicapital";
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+
+
 //CONSULTAR USUARIO
 $cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -29,9 +34,40 @@ $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 $cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
 $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$contenidoPagina = "<page backtop='30mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
+
+$datos = array (
+		'idSolicitud' => $resultadoObjeto[0]['numero_solicitud'],
+		'vigencia' => $resultadoObjeto[0]['vigencia']
+);
+
+
+$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+// var_dump($resultadoProveedor);
+
+// var_dump($resultadoObjeto);
+
+// var_dump($_REQUEST);
+
+// var_dump($solicitudNecesidad);
+
+// exit();
+
+$certUniversidadImagen = 'sabio_caldas.png';
+$directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
+
+
+$contenidoPagina = "<page backtop='60mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
 $contenidoPagina .= "<page_header>
         <table align='center' style='width: 100%;'>
+			<tr>
+				<td align='center' >
+					<img src='" . $directorio . "/images/" . $certUniversidadImagen . "' width='120' height='150'/>
+					<br>
+				</td>
+			</tr>
             <tr>
                 <td align='center' >
                     <font size='18px'><b>UNIVERSIDAD DISTRITAL</b></font>
@@ -66,80 +102,83 @@ $contenidoPagina .= "<page_header>
 
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>OBAJETO A CONTRATAR</span></b></p>
+107%'>OBJETO SOLICITUD DE NECESIDAD A COTIZAR</span></b></p>
 
 
 
 <div align=center>
         
         <table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
- style='width:80%;border-collapse:collapse;border:none;'> 
+ style='width:100%;border-collapse:collapse;border:none;'> 
  
 
             <tr>
-                <td align='center' style='background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Fecha</b>
                 </td>
-                <td align='left' >
+                <td align='left' style='width:80%;'>
                     " . $resultadoObjeto[0]['fechasolicitudcotizacion'] . "
                 </td>
             </tr>
+                    	
             <tr>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Objeto a contratar</b>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Objeto Solicitud de Necesidad</b>
                 </td>
-                <td align='left' >
-                    " . $resultadoObjeto[0]['objetocontratar'] . "
+                <td align='left' style='width:80%;'>
+                    " . $solicitudNecesidad [0]['OBJETO'] . "
                 </td>
             </tr>
             <tr>
-                <td align='center' style='background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Actividad Económica</b>
                 </td>
-                <td align='left' >
+                <td align='left' style='width:80%;'>
                     " . $resultadoObjeto[0]['codigociiu'] . '-' . $resultadoObjeto[0]['actividad'] . "
                 </td>
             </tr>
             <tr>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Descripción del Artículo</b>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Justificación</b>
                 </td>
-                <td align='left' >
-                    " . $resultadoObjeto[0]['descripcion'] . "
+                <td align='left' style='width:80%;'>
+                    " . $solicitudNecesidad [0]['JUSTIFICACION'] . "
                 </td>
             </tr>
             <tr>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Caracterìsticas Adicionales</b>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Número de Solicitud de Necesidad - Vigencia</b>
                 </td>
-                <td align='left' >
-                    " . $resultadoObjeto[0]['caracteristicas'] . "
+                <td align='left' style='width:80%;'>
+                    " . $solicitudNecesidad [0]['NUM_SOL_ADQ'] . " - " . $solicitudNecesidad [0]['VIGENCIA'] . "
                 </td>
             </tr>  
             <tr>
-                <td align='center' style='background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Cantidad</b>
                 </td>
-                <td align='left' >
+                <td align='left' style='width:80%;'>
                     " . $resultadoObjeto[0]['cantidad'] . "
                 </td>
             </tr>
             <tr>
-                <td align='center' style='background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Dependencia</b>
                 </td>
-                <td align='left' >
-                    " . $resultadoObjeto[0]['dependencia'] . "
+                <td align='left' style='width:80%;'>
+                    " . $solicitudNecesidad [0]['DEPENDENCIA'] . "
                 </td>
             </tr>
             <tr>
-                <td align='center' style='background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Ordenador del Gasto</b>
                 </td>
-                <td align='left' >
-                    " . $resultadoObjeto[0]['nombre_ordenador'] . "
+                <td align='left' style='width:80%;'>
+                    " . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "
                 </td>
             </tr>
+                    		
+                    		
 
         </table>
 
@@ -155,14 +194,14 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 <div align=center>
 
         <table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
- style='width:80%;border-collapse:collapse;border:none;'> 
+ style='width:100%;border-collapse:collapse;border:none;'> 
 
             <tr>
                 <td align='center' style='background:#BDD6EE'>
-                    <b>NIT</b>
+                    <b>Documento</b>
                 </td>
                 <td align='center' style='background:#BDD6EE'>
-                    <b>Nombre Empresa</b>
+                    <b>Proveedor</b>
                 </td>
                 <td align='center' style='background:#BDD6EE'>
                     <b>Puntaje Evaluación</b>

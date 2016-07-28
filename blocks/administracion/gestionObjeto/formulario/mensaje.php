@@ -27,6 +27,9 @@ if (!isset($GLOBALS["autorizado"])) {
 
     $conexion = "estructura";
     $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+    
+    $conexion = "sicapital";
+    $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
     $tab = 1;
@@ -66,8 +69,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=cotizacion";
         $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        $valorCodificado.="&numSolicitud=".$valor['numSolicitud'];
-        $valorCodificado.="&vigencia=".$valor['vigencia'];
+        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         
  
@@ -83,7 +86,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
 		$variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
-                $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
+        $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------
@@ -99,13 +102,22 @@ if (!isset($GLOBALS["autorizado"])) {
 		echo $this->miFormulario->division("fin"); 		
 //FIN enlace boton descargar resumen        
         
+		
 //Buscar usuario para enviar correo
 $cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 //Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
-$resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
+$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+$datos = array (
+		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+		'vigencia' => $objetoEspecifico[0]['vigencia']
+);
+
+$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
  
  
 //INICIO ENVIO DE CORREO AL USUARIO
@@ -130,20 +142,35 @@ $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
         $mail->Subject="Solicitud de Cotización";
         $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
-        $contenido.= "<b>Descripción de artículo : </b>" . $resultadoObjeto [0]['descripcion'] . "<br>";
-		$contenido.= "<b>Características adicionales : </b>" . $resultadoObjeto [0]['caracteristicas'] . "<br>";
-		$contenido.= "<b>Cantidad : </b>" . $resultadoObjeto [0]['cantidad'] . "<br>";
-		$contenido.= "<b>Dependencia Solicitante : </b>" . $resultadoObjeto [0]['dependencia']. "<br>";
-		$contenido.= "<b>Correo : </b>" . $resultadoObjeto [0]['correo'];
-        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado.</p>";
-		$contenido.= "<p>Agradeciendo su gentil atención.</p>";
-		$contenido.= "Cordialmente :<br>";
-		$contenido.= "<b>" . $resultadoObjeto [0]['nombre_ordenador'] . "</b>";
+        $contenido.= "<b>Objeto Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['OBJETO'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Justificación Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['JUSTIFICACION'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Actividad econ&oacute;mica : </b>" . $objetoEspecifico[0]['codigociiu'] . ' - ' . $objetoEspecifico[0]['actividad'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Dependencia Solicitante : </b>" . $solicitudNecesidad [0]['DEPENDENCIA']. "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Responsable : </b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'];
+        $contenido.= "<br>";
+        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado, para lo cual 
+        		         puede ingresar al Banco de Proveedores.</p>";
+        $contenido.= "<br>";
+        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "Cordialmente :<br>";
+		$contenido.= "<b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "</b>";
+		$contenido.= "<br>";
+		$contenido.= "<br>";
+		$contenido.= "<br>";
+		$contenido.= "<br>";
+		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
 		
         $mail->Body=$contenido;
         
 		foreach ($resultadoProveedor as $dato):
-			$to_mail=$dato ['correo'];
+			//$to_mail=$dato ['correo'];
+		    $to_mail="jdavid.6700@gmail.com";
 			$mail->AddAddress($to_mail);
 			$mail->Send();
 		endforeach; 
@@ -152,7 +179,9 @@ $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 //FIN ENVIO DE CORREO AL USUARIO                
                 
         
-        
+        //var_dump($resultadoProveedor);
+        //var_dump($_REQUEST);
+        //exit();
 
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";

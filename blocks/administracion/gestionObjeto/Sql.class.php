@@ -205,21 +205,17 @@ class Sql extends \Sql {
 			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
 			case "objetoContratar" :
 				$cadenaSql = "SELECT";
-				$cadenaSql .= " objetocontratar,";
+				$cadenaSql .= " numero_solicitud,";
+				$cadenaSql .= " vigencia,";
 				$cadenaSql .= "	codigociiu,";
-				$cadenaSql .= "	S.nombre AS actividad,";
-				$cadenaSql .= "	descripcion,";
+				$cadenaSql .= "	UPPER(S.nombre) AS actividad,";
 				$cadenaSql .= "	cantidad,";
-				$cadenaSql .= "	caracteristicas,";
-				$cadenaSql .= "	D.dependencia,";
-				$cadenaSql .= "	D.correo,";
-				$cadenaSql .= "	G.nombre_ordenador,";
-				$cadenaSql .= "	fechasolicitudcotizacion";
+				$cadenaSql .= "	fecharegistro,";
+				$cadenaSql .= "	fechasolicitudcotizacion,";
+				$cadenaSql .= "	estado";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_contratar O";
 				$cadenaSql .= " JOIN agora.ciiu_subclase S ON S.id_subclase = O.codigociiu";
-				$cadenaSql .= " JOIN agora.dependencia D ON D.id_dependencia = O.id_dependencia";
-				$cadenaSql .= " JOIN agora.ordenador_gasto G ON G.id_ordenador = O.id_ordenador";
 				$cadenaSql .= " WHERE  id_objeto=" . $variable; // Activo
 				break;
 			

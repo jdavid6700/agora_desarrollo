@@ -73,15 +73,28 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
-		var_dump($_REQUEST);
+		//var_dump($_REQUEST);
 		
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		var_dump($resultado);
+		$datos = array (
+				'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+				'vigencia' => $objetoEspecifico[0]['vigencia']
+		);
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		
+		//echo $cadenaSql;
+		//var_dump($objetoEspecifico);
+		//var_dump($solicitudNecesidad);
 
-        $idActividad = $objetoEspecifico[0][1];
+        $idActividad = $objetoEspecifico[0]['codigociiu'];
                 
 		$esteCampo = "marcoObjeto";
 		$atributos ['id'] = $esteCampo;
@@ -90,13 +103,20 @@ class registrarForm {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
-                
-		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto Solicitud de Necesidad : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['OBJETO'] . "</span></br>"; 
+                echo "<br>";
+        echo "<span class='textoElegante textoEnorme textoAzul'>Justificación Solicitud de Necesidad : </span>";
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['JUSTIFICACION'] . "</span></br>";
+                echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $idActividad . '-' . $objetoEspecifico[0][2] . "</span></br>"; 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
+                echo "<span class='textoElegante textoMediano textoGris'>". $idActividad . ' - ' . $objetoEspecifico[0]['actividad'] . "</span></br>"; 
+                echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['DEPENDENCIA'] . "</span></br>"; 
+                echo "<br>";
+        echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto : </span>";
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] ."</span></br>";
 
 		//FIN OBJETO A CONTRATAR
                 echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -114,7 +134,7 @@ class registrarForm {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . '-' . $objetoEspecifico [0] [2];
+			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . ' - ' . $objetoEspecifico[0]['actividad'];
 			
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );
@@ -169,8 +189,8 @@ class registrarForm {
 <table
 	class="table table-bordered table-striped table-hover table-condensed">
 	<tr class="info">
-		<td align="center"><strong>NIT</strong></td>
-		<td align="center"><strong>Empresa Proveedor</strong></td>
+		<td align="center"><strong>Documento</strong></td>
+		<td align="center"><strong>Proveedor</strong></td>
 		<td align="center"><strong>Puntaje Evaluaciòn</strong></td>
 		<td align="center"><strong>Clasificaciòn</strong></td>
 	</tr>	
