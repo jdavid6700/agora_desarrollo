@@ -36,11 +36,22 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
-                //Guardar datos del Objeto a contratar
-		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
+        
+        $datosSolicitud = array (
+        		'numero_solicitud' => $_REQUEST ['numSolicitud'],
+        		'vigencia' => $_REQUEST ['vigencia'],
+        		'claseCIIU' => $_REQUEST ['claseCIIU'],
+        		'unidad' => $_REQUEST ['unidad'],
+        		'cantidad' => $_REQUEST ['cantidad'],
+        		'cotizaciones' => $_REQUEST ['cotizaciones']
+        );
+        
+        
+        //Guardar datos del Objeto a contratar
+		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
         
-        //var_dump($cadenaSql);exit;
+
 		
 		if ($resultado) {
 			//Conusltar el ultimo ID del objeto
@@ -48,8 +59,10 @@ class Registrar {
 			$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );                        
 			
 			$datos = array (
-					$lastId[0][0],
-					$_REQUEST ['cotizaciones']
+					'idObjeto' => $lastId[0][0],
+					'numero_solicitud' => $_REQUEST ['numSolicitud'],
+					'vigencia' => $_REQUEST ['vigencia'],
+					'cotizaciones' => $_REQUEST ['cotizaciones']
 			);			
 			
                     
