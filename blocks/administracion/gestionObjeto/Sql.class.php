@@ -35,6 +35,70 @@ class Sql extends \Sql {
 				$cadenaSql .= " CO_SOLICITUD_ADQ";
 				$cadenaSql .= " WHERE VIGENCIA = " . $variable . "";
 				break;
+				
+			case "listaSolicitudNecesidadXVigencia" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" P.NUM_SOL_ADQ as NUM_SOL_ADQ,";
+				$cadenaSql.=" P.VIGENCIA as VIGENCIA,";
+				$cadenaSql.=" U.NOMBRE_DEPENDENCIA as DEPENDENCIA,";
+				$cadenaSql.=" F.FUN_NOMBRE as FUNCIONARIO,";
+				$cadenaSql.=" F.FUN_CARGO as FUNCIONARIO_CARGO,";
+				$cadenaSql.=" F.FUN_TIPO as FUNCIONARIO_TIPO,";
+				$cadenaSql.=" P.FECHA_SOLICITUD as FECHA_SOLICITUD,";
+				$cadenaSql.=" P.ORIGEN_SOLICITUD as ORIGEN_SOLICITUD,";
+				$cadenaSql.=" V.NOMBRE_DEPENDENCIA as DEPENDENCIA_DESTINO,";
+				$cadenaSql.=" P.JUSTIFICACION as JUSTIFICACION,";
+				$cadenaSql.=" P.CONDICIONES_CONTRATACION as CONDICIONES,";
+				$cadenaSql.=" P.VALOR_CONTRATACION as VALOR_CONTRATACION,";
+				$cadenaSql.=" P.OBJETO as OBJETO,";
+				$cadenaSql.=" P.TIPO_CONTRATACION as TIPO_CONTRATACION,";
+				$cadenaSql.=" P.PLAZO_EJECUCION as PLAZO_EJECUCION,";
+				$cadenaSql.=" P.ELABORADO_POR as ELABORADO_POR,";
+				$cadenaSql.=" O.ORG_NOMBRE as ORDENADOR_GASTO,";
+				$cadenaSql.=" O.ORG_ORDENADOR_GASTO as CARGO_ORDENADOR_GASTO,";
+				$cadenaSql.=" P.CODIGO_UNIDAD_EJECUTORA as CODIGO_UNIDAD_EJECUTORA,";
+				$cadenaSql.=" P.ESTADO as ESTADO";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" CO_SOLICITUD_ADQ P";
+				$cadenaSql.=" JOIN CO_DEPENDENCIAS U ON U.COD_DEPENDENCIA = P.DEPENDENCIA";
+				$cadenaSql.=" JOIN CO_DEPENDENCIAS V ON V.COD_DEPENDENCIA = P.DEPENDENCIA_DESTINO";
+				$cadenaSql.=" JOIN SICAARKA.FUNCIONARIOS F ON F.FUN_IDENTIFICADOR = P.FUNCIONARIO";
+				$cadenaSql.=" JOIN SICAARKA.ORDENADORES_GASTO O ON O.ORG_TIPO_ORDENADOR = P.CODIGO_ORDENADOR AND O.ORG_ESTADO = 'A'";
+				$cadenaSql.=" WHERE P.VIGENCIA = " . $variable;
+				$cadenaSql.=" ORDER BY P.NUM_SOL_ADQ";
+				break;
+				
+			case "listaSolicitudNecesidadXNumSolicitud" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " P.NUM_SOL_ADQ as NUM_SOL_ADQ,";
+				$cadenaSql .= " P.VIGENCIA as VIGENCIA,";
+				$cadenaSql .= " U.NOMBRE_DEPENDENCIA as DEPENDENCIA,";
+				$cadenaSql .= " F.FUN_NOMBRE as FUNCIONARIO,";
+				$cadenaSql .= " F.FUN_CARGO as FUNCIONARIO_CARGO,";
+				$cadenaSql .= " F.FUN_TIPO as FUNCIONARIO_TIPO,";
+				$cadenaSql .= " P.FECHA_SOLICITUD as FECHA_SOLICITUD,";
+				$cadenaSql .= " P.ORIGEN_SOLICITUD as ORIGEN_SOLICITUD,";
+				$cadenaSql .= " V.NOMBRE_DEPENDENCIA as DEPENDENCIA_DESTINO,";
+				$cadenaSql .= " P.JUSTIFICACION as JUSTIFICACION,";
+				$cadenaSql .= " P.CONDICIONES_CONTRATACION as CONDICIONES,";
+				$cadenaSql .= " P.VALOR_CONTRATACION as VALOR_CONTRATACION,";
+				$cadenaSql .= " P.OBJETO as OBJETO,";
+				$cadenaSql .= " P.TIPO_CONTRATACION as TIPO_CONTRATACION,";
+				$cadenaSql .= " P.PLAZO_EJECUCION as PLAZO_EJECUCION,";
+				$cadenaSql .= " P.ELABORADO_POR as ELABORADO_POR,";
+				$cadenaSql .= " O.ORG_NOMBRE as ORDENADOR_GASTO,";
+				$cadenaSql .= " O.ORG_ORDENADOR_GASTO as CARGO_ORDENADOR_GASTO,";
+				$cadenaSql .= " P.CODIGO_UNIDAD_EJECUTORA as CODIGO_UNIDAD_EJECUTORA,";
+				$cadenaSql .= " P.ESTADO as ESTADO";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " CO_SOLICITUD_ADQ P";
+				$cadenaSql .= " JOIN CO_DEPENDENCIAS U ON U.COD_DEPENDENCIA = P.DEPENDENCIA";
+				$cadenaSql .= " JOIN CO_DEPENDENCIAS V ON V.COD_DEPENDENCIA = P.DEPENDENCIA_DESTINO";
+				$cadenaSql .= " JOIN SICAARKA.FUNCIONARIOS F ON F.FUN_IDENTIFICADOR = P.FUNCIONARIO";
+				$cadenaSql .= " JOIN SICAARKA.ORDENADORES_GASTO O ON O.ORG_TIPO_ORDENADOR = P.CODIGO_ORDENADOR AND O.ORG_ESTADO = 'A'";
+				$cadenaSql .= " WHERE P.NUM_SOL_ADQ = " . $variable['idSolicitud'];
+				$cadenaSql .= " AND P.VIGENCIA = " . $variable['vigencia'];
+				break;
 			
 				
 				
@@ -236,36 +300,31 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.unidad";
 				$cadenaSql .= " ORDER BY tipo";
 				break;
+				
+				
+				
+				
 			/* REGISTRAR DATOS DEL OBJETO A CONTRATAR */
 			case "registrar" :
 				$hoy = date ( "Y-m-d" );
-				
 				$cadenaSql = " INSERT INTO agora.objeto_contratar";
 				$cadenaSql .= " (";
-				$cadenaSql .= " objetocontratar,";
-				$cadenaSql .= " id_ordenador,";
+				$cadenaSql .= " numero_solicitud,";
+				$cadenaSql .= " vigencia,";
 				$cadenaSql .= " codigociiu,";
-				$cadenaSql .= " id_dependencia,";
-				$cadenaSql .= " numero_cdp,";
 				$cadenaSql .= " id_unidad,";
 				$cadenaSql .= " cantidad,";
-				$cadenaSql .= " descripcion,";
-				$cadenaSql .= " caracteristicas,";
 				$cadenaSql .= " numero_cotizaciones,";
 				$cadenaSql .= " estado,";
 				$cadenaSql .= " fecharegistro";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= " '" . $variable ['objetoContrato'] . "',";
-				$cadenaSql .= " '" . $variable ['ordenador'] . "',";
+				$cadenaSql .= " " . $variable ['numero_solicitud'] . ",";
+				$cadenaSql .= " " . $variable ['vigencia'] . ",";
 				$cadenaSql .= " '" . $variable ['claseCIIU'] . "',";
-				$cadenaSql .= " '" . $variable ['dependencia'] . "',";
-				$cadenaSql .= " '" . $variable ['numCDP'] . "',";
 				$cadenaSql .= " '" . $variable ['unidad'] . "',";
 				$cadenaSql .= " '" . $variable ['cantidad'] . "',";
-				$cadenaSql .= " '" . $variable ['descripcion'] . "',";
-				$cadenaSql .= " '" . $variable ['caracteristicas'] . "',";
 				$cadenaSql .= " '" . $variable ['cotizaciones'] . "',";
 				$cadenaSql .= " 'CREADO',";
 				$cadenaSql .= " '" . $hoy . "'";
@@ -346,200 +405,9 @@ class Sql extends \Sql {
 				$cadenaSql .= "id_sesion='" . $idSesion . "'";
 				break;
 			
-			/* Consultas del desarrollo */
-				
-				case "pais" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " paiscodigo,";
-					$cadenaSql .= "	paisnombre";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " pais";	
-					$cadenaSql .= " WHERE paiscodigo != '-1'";
-					$cadenaSql .= " order by paisnombre";
-					break;
-				
-				case "ciudad" :
-					$cadenaSql = "SELECT";
-					$cadenaSql .= " ciudadid,";
-					$cadenaSql .= "	ciudadnombre";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " ciudad";
-					$cadenaSql .= " WHERE paiscodigo ='" . $variable ."'";
-					$cadenaSql .= " order by ciudadnombre";
-					break;
-					
-			case "facultad" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_facultad,";
-				$cadenaSql .= "	nombre";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.facultad";
-				break;
-				
-			case "proyectoCurricular" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_proyectocurricular,";
-				$cadenaSql .= "	nombre";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.proyectocurricular";
-				$cadenaSql .= " WHERE estado=true";
-				break;
 
-			case "tipo_documento" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_tipo_documento,";
-				$cadenaSql .= "	descripcion";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.tipo_documento";
-				break;
-				
-			case "categoria_actual_docente" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_categoria_actual_docente,";
-				$cadenaSql .= "	categoria_actual";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.categoria_actual_docente";
-				$cadenaSql .= " WHERE estado=true";
-				
-				break;
-				
-			case "tipo_dedicacion" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_tipo_dedicacion,";
-				$cadenaSql .= "	dedicacion";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.tipo_dedicacion";
-				$cadenaSql .= " WHERE estado=true";
-				break;
-					
-			case "entidadInstitucion" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_universidad,";
-				$cadenaSql .= "	nombre_universidad";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.universidad";
-				$cadenaSql .= " WHERE estado=true";
-				break;
-				
-			case "pais" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " paiscodigo,";
-				$cadenaSql .= "	paisnombre";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " docencia.pais";
-				$cadenaSql .= " order by paisnombre";
-				break;
-				
-			case "docente" :
-				$cadenaSql=" SELECT";
-				$cadenaSql.=" documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido AS value, ";
-				$cadenaSql.=" documento_docente AS data ";
-				$cadenaSql.=" FROM ";
-				$cadenaSql.=" docencia.docente WHERE documento_docente||' - '||primer_nombre||' '||segundo_nombre||' '||primer_apellido||' '||segundo_apellido ";
-				$cadenaSql.=" LIKE '%" . $variable . "%' AND estado = true LIMIT 10;";
-				break;
 								
-			case "consultar" :			
-				$cadenaSql=" SELECT";
-				$cadenaSql.=" ta.id_titulo_academico AS id_titulo_academico,";
-				$cadenaSql.=" dc.documento_docente AS documento_docente,";
-				$cadenaSql.=" dc.primer_nombre||' '||dc.segundo_nombre||' '||dc.primer_apellido||' '||dc.segundo_apellido AS nombre_docente,";
-				$cadenaSql.=" tta.tipo AS tipo,";
-				$cadenaSql.=" ta.titulo AS titulo,";
-				$cadenaSql.=" un.nombre_universidad AS universidad,";
-				$cadenaSql.=" pa.paisnombre AS pais,";
-				$cadenaSql.=" ta.anno AS anno,";
-				$cadenaSql.=" mta.modalidad AS modalidad,";
-				$cadenaSql.=" ta.resolucion AS resolucion,";
-				$cadenaSql.=" ta.fecha_resolucion AS fecha_resolucion,";
-				$cadenaSql.=" ta.entidad_convalidacion AS entidad_convalidacion,";
-				$cadenaSql.=" ta.numero_acta AS numero_acta,";
-				$cadenaSql.=" ta.fecha_acta AS fecha_acta,";
-				$cadenaSql.=" ta.numero_caso AS numero_caso,";
-				$cadenaSql.=" ta.puntaje AS puntaje";
-				$cadenaSql.=" FROM";
-				$cadenaSql.=" docencia.titulo_academico AS ta";
-				$cadenaSql.=" LEFT JOIN docencia.tipo_titulo_academico AS tta ON tta.id_tipo_titulo_academico=ta.id_tipo_titulo_academico";
-				$cadenaSql.=" LEFT JOIN docencia.universidad AS un ON un.id_universidad=ta.id_universidad";
-				$cadenaSql.=" LEFT JOIN docencia.pais AS pa ON pa.paiscodigo=ta.paiscodigo";
-				$cadenaSql.=" LEFT JOIN docencia.modalidad_titulo_academico AS mta ON mta.id_modalidad_titulo_academico=ta.id_modalidad_titulo_academico";
-				$cadenaSql.=" LEFT JOIN docencia.docente AS dc ON dc.documento_docente=ta.documento_docente";
-				$cadenaSql.=" LEFT JOIN docencia.docente_proyectocurricular AS dc_pc ON dc_pc.documento_docente=ta.documento_docente";
-				$cadenaSql.=" LEFT JOIN docencia.proyectocurricular AS pc ON dc_pc.id_proyectocurricular=pc.id_proyectocurricular";
-				$cadenaSql.=" LEFT JOIN docencia.facultad AS fc ON pc.id_facultad=fc.id_facultad";
-				$cadenaSql.=" WHERE";
-				$cadenaSql.=" ta.estado=true";
-				$cadenaSql.=" AND dc.estado=true";
-				$cadenaSql.=" AND pc.estado=true";
-				$cadenaSql.=" AND dc_pc.estado=true";
-				if ($variable ['documento_docente'] != '') {
-					$cadenaSql .= " AND dc.documento_docente = '" . $variable ['documento_docente'] . "'";
-				}
-				if ($variable ['id_facultad'] != '') {
-					$cadenaSql .= " AND fc.id_facultad = '" . $variable ['id_facultad'] . "'";
-				}
-				if ($variable ['id_proyectocurricular'] != '') {
-					$cadenaSql .= " AND pc.id_proyectocurricular = '" . $variable ['id_proyectocurricular'] . "'";
-				}
-				break;
-				
-				
-			case "consultaActualizar" :
-				$cadenaSql=" SELECT";
-				$cadenaSql.=" ta.id_titulo_academico AS id_titulo_academico,";
-				$cadenaSql.=" dc.documento_docente AS documento_docente,";
-				$cadenaSql.=" dc.primer_nombre||' '||dc.segundo_nombre||' '||dc.primer_apellido||' '||dc.segundo_apellido AS nombre_docente,";
-				$cadenaSql.=" ta.id_tipo_titulo_academico AS id_tipo_titulo_academico,";
-				$cadenaSql.=" tta.tipo AS tipo,";
-				$cadenaSql.=" ta.titulo AS titulo,";
-				$cadenaSql.=" ta.id_universidad AS id_universidad,";
-				$cadenaSql.=" un.nombre_universidad AS universidad,";
-				$cadenaSql.=" ta.paiscodigo AS paiscodigo,";
-				$cadenaSql.=" pa.paisnombre AS pais,";
-				$cadenaSql.=" ta.anno AS anno,";
-				$cadenaSql.=" mta.id_modalidad_titulo_academico AS id_modalidad_titulo_academico,";
-				$cadenaSql.=" mta.modalidad AS modalidad,";
-				$cadenaSql.=" ta.resolucion AS resolucion,";
-				$cadenaSql.=" ta.fecha_resolucion AS fecha_resolucion,";
-				$cadenaSql.=" ta.entidad_convalidacion AS entidad_convalidacion,";
-				$cadenaSql.=" ta.numero_acta AS numero_acta,";
-				$cadenaSql.=" ta.fecha_acta AS fecha_acta,";
-				$cadenaSql.=" ta.numero_caso AS numero_caso,";
-				$cadenaSql.=" ta.puntaje AS puntaje";
-				$cadenaSql.=" FROM";
-				$cadenaSql.=" docencia.titulo_academico AS ta";
-				$cadenaSql.=" LEFT JOIN docencia.tipo_titulo_academico AS tta ON tta.id_tipo_titulo_academico=ta.id_tipo_titulo_academico";
-				$cadenaSql.=" LEFT JOIN docencia.universidad AS un ON un.id_universidad=ta.id_universidad";
-				$cadenaSql.=" LEFT JOIN docencia.pais AS pa ON pa.paiscodigo=ta.paiscodigo";
-				$cadenaSql.=" LEFT JOIN docencia.modalidad_titulo_academico AS mta ON mta.id_modalidad_titulo_academico=ta.id_modalidad_titulo_academico";
-				$cadenaSql.=" LEFT JOIN docencia.docente AS dc ON dc.documento_docente=ta.documento_docente";
-				$cadenaSql.=" WHERE";
-				$cadenaSql.=" ta.estado=true";
-				$cadenaSql.=" and ta.id_titulo_academico ='" . $variable['id_titulo_academico']. "'";
-				break;
-				
-			case "actualizar" :
-				$cadenaSql = "UPDATE ";
-				$cadenaSql .= "docencia.titulo_academico ";
-				$cadenaSql .= "SET ";
-				$cadenaSql.=" documento_docente='" . $variable ['id_docenteRegistrar'] . "',";
-				$cadenaSql.=" id_tipo_titulo_academico='" . $variable ['tipo'] . "',";
-				$cadenaSql.=" titulo='" . $variable ['titulo'] . "',";
-				$cadenaSql.=" id_universidad='" . $variable ['entidad'] . "',";
-				$cadenaSql.=" paiscodigo='" . $variable ['pais'] . "',";
-				$cadenaSql.=" anno='" . $variable ['anno'] . "',";
-				$cadenaSql.=" id_modalidad_titulo_academico='" . $variable ['modalidad'] . "',";
-				$cadenaSql.=" resolucion='" . $variable ['resolucion'] . "',";
-				$cadenaSql.=" fecha_resolucion='" . $variable ['fechaResolucion'] . "',";
-				$cadenaSql.=" entidad_convalidacion='" . $variable ['entidadConvalidacion'] . "',";
-				$cadenaSql.=" numero_acta='" . $variable ['numeroActa'] . "',";
-				$cadenaSql.=" fecha_acta='" . $variable ['fechaActa'] . "',";
-				$cadenaSql.=" numero_caso='" . $variable ['numeroCasoActa'] . "',";
-				$cadenaSql.=" puntaje='" . $variable ['puntaje'] . "'";
-				$cadenaSql .= " WHERE";
-				$cadenaSql .= " id_titulo_academico ='" . $variable ['id_titulo_academico'] . "' ";
-				$cadenaSql .= " AND estado=true ";
-				break;
+
 		}
 		
 		return $cadenaSql;

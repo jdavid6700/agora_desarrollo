@@ -66,6 +66,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=cotizacion";
         $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        $valorCodificado.="&numSolicitud=".$valor['numSolicitud'];
+        $valorCodificado.="&vigencia=".$valor['vigencia'];
         $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         
  

@@ -39,3 +39,10 @@ body {font-family:arial;font-size:15}
 }
 
 
+input {font-weight:bold;}
+
+
+textarea{
+font-weight: bold;
+}
+

@@ -1,11 +1,12 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
-$this->idioma["objetoContrato"] = "Objeto a contratar : ";
-$this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
+$this->idioma["objetoContrato"] = "Objeto a Contratar : ";
+$this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 
-$this->idioma["marcoCIIU"]="Actividad Económica";
 $this->idioma["marcoDatos"]="Solicitudes de Necesidad";
+$this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
+$this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
 $this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
@@ -19,7 +20,7 @@ $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
 $this->idioma["ordenador"] = "Ordenador del Gasto :";
-$this->idioma["ordenadorTitulo"]="Seleccionar ordenador";
+$this->idioma["ordenadorTitulo"]="Ordenador del Gasto";
 
 $this->idioma["dependencia"] = "Dependencia :";
 $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
@@ -27,7 +28,7 @@ $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
 $this->idioma["numCDP"] = "No. CDP :";
 $this->idioma["numCDPTitulo"] = "Indicar número de CDP";
 
-$this->idioma["unidad"] = "Unidad :";
+$this->idioma["unidad"] = "Unidad de Medida:";
 $this->idioma["unidadTitulo"]="Seleccionar unidad";
 
 $this->idioma["cantidad"] = "Cantidad :";
@@ -42,6 +43,39 @@ $this->idioma["descripcionTitulo"]="Digite la descripción";
 
 $this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
+
+
+$this->idioma["estado"] = "Estado Solicitud :";
+$this->idioma["estadoTitulo"]="Estado Solicitud de Necesidad";
+$this->idioma["ordenadorCargo"] = "Cargo Ordenador Gasto :";
+$this->idioma["ordenadorCargoTitulo"]="Cargo Ordenador Gasto";
+$this->idioma["justificacion"] = "Justificación :";
+$this->idioma["justificacionTitulo"]="Justificación";
+$this->idioma["plazo"] = "Plazo de Ejecución :";
+$this->idioma["plazoTitulo"]="Plazo de Ejecución";
+$this->idioma["tipoContratacion"] = "Tipo de Contratación :";
+$this->idioma["tipoContratacionTitulo"]="Tipo de Contratación";
+$this->idioma["valorContratacion"] = "Valor para Contratación :";
+$this->idioma["valorContratacionTitulo"]="Valor para Contratación";
+$this->idioma["condiciones"] = "Condiciones :";
+$this->idioma["condicionesTitulo"]="Condiciones";
+$this->idioma["dependenciaDestino"] = "Dependencia Destino :";
+$this->idioma["dependenciaDestino-Titulo"]="Dependencia Destino";
+$this->idioma["origenSolicitud"] = "Origen :";
+$this->idioma["origenSolicitudTitulo"]="Origen";
+$this->idioma["fechaSolicitud"] = "Fecha de Solicitud :";
+$this->idioma["fechaSolicitudTitulo"]="Fecha de Solicitud";
+$this->idioma["funcionario"] = "Funcionario :";
+$this->idioma["funcionarioTitulo"]="Funcionario";
+$this->idioma["vigencia"] = "Vigencia :";
+$this->idioma["vigenciaTitulo"]="Vigencia";
+$this->idioma["numSolicitud"] = "Número de la Solicitud :";
+$this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
+
+
+
+
+
 
 
 
@@ -97,7 +131,7 @@ $this->idioma["ciudad"] = "Ciudad";
 
 
 //***************** SECCIÓN BOTONES ******************//
-$this->idioma["botonRegresar"] = "Regresar";
+$this->idioma["botonRegresar"] = "< < Regresar";
 $this->idioma["botonConsultar"] = "Consultar";
 $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";

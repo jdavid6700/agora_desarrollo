@@ -98,7 +98,7 @@ class FormularioRegistro {
 		
 		
 		
-		$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidad", 2008);
+		$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXVigencia", 2008);
 		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 		
 		
@@ -114,14 +114,17 @@ class FormularioRegistro {
 			
 			echo "<thead>
 				<tr>
+					<th><center>Número Solicitud</center></th>
 					<th><center>Vigencia</center></th>
+					<th><center>Dependencia</center></th>
 					<th><center>Fecha Solicitud</center></th>
 					<th><center>Origen Solicitud</center></th>
+					<th><center>Dependencia Destino</center></th>
 					<th><center>Justificación</center></th>
                     <th><center>Objeto</center></th>
 					<th><center>Tipo Contratación</center></th>
 					<th><center>Plazo Ejecución</center></th>
-					<th><center>Tipo Estudio</center></th>
+					<th><center>Estado</center></th>
 					<th><center>Detalle</center></th>
 					<th><center>Relacionar</center></th>
 				</tr>
@@ -129,40 +132,47 @@ class FormularioRegistro {
 				<tbody>";
 			
 			foreach ($resultado as $dato):
-			
-			if (isset($dato['FECHA_SOLICITUD']) && isset($dato['ORIGEN_SOLICITUD']) && isset($dato['JUSTIFICACION']) && isset($dato['OBJETO']) &&
-					isset($dato['TIPO_CONTRATACION']) && isset($dato['PLAZO_EJECUCION']) && isset($dato['TIPO_ESTUDIO'])){
-				
-			
 			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableView .= "&opcion=verPro";
-			$variableView .= "&idProveedor=" . $dato['VIGENCIA'];
+			$variableView .= "&opcion=verSolicitud";
+			$variableView .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
+			$variableView .= "&vigencia=" . $dato['VIGENCIA'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
 				
 				
 				
 			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableEdit .= "&opcion=modificarPro";
-			$variableEdit .= "&idProveedor=" . $dato['VIGENCIA'];
+			$variableEdit .= "&opcion=modificarSolicitud";
+			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
+			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			$variableEdit = '#';
-			$variableView = '#';
 			$imagenEdit = 'editPro.png';
 				
 				
-			
-			
+			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";
+			if(!isset($dato['VIGENCIA'])) $dato['VIGENCIA'] = " ";
+			if(!isset($dato['DEPENDENCIA'])) $dato['DEPENDENCIA'] = " ";
+			if(!isset($dato['FECHA_SOLICITUD'])) $dato['FECHA_SOLICITUD'] = " ";
+			if(!isset($dato['ORIGEN_SOLICITUD'])) $dato['ORIGEN_SOLICITUD'] = " ";
+			if(!isset($dato['DEPENDENCIA_DESTINO'])) $dato['DEPENDENCIA_DESTINO'] = " ";
+			if(!isset($dato['JUSTIFICACION'])) $dato['JUSTIFICACION'] = " ";
+			if(!isset($dato['OBJETO'])) $dato['OBJETO'] = " ";
+			if(!isset($dato['TIPO_CONTRATACION'])) $dato['TIPO_CONTRATACION'] = " ";
+			if(!isset($dato['PLAZO_EJECUCION'])) $dato['PLAZO_EJECUCION'] = " ";
+			if(!isset($dato['ESTADO'])) $dato['ESTADO'] = " ";
 				
 			$mostrarHtml = "<tr>
+						<td><center>" . $dato['NUM_SOL_ADQ'] . "</center></td>
 						<td><center>" . $dato['VIGENCIA'] . "</center></td>
+						<td><center>" . $dato['DEPENDENCIA'] . "</center></td>
 						<td><center>" . $dato['FECHA_SOLICITUD'] . "</center></td>
 						<td><center>" . $dato['ORIGEN_SOLICITUD'] . "</center></td>
+					    <td><center>" . $dato['DEPENDENCIA_DESTINO'] . "</center></td>
 						<td><center>" . $dato['JUSTIFICACION'] . "</center></td>
 						<td><center>" . $dato['OBJETO'] . "</center></td>
 						<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
 						<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
-						<td><center>" . $dato['TIPO_ESTUDIO'] . "</center></td>
+						<td><center>" . $dato['ESTADO'] . "</center></td>
 						<td><center>
 							<a href='" . $variableView . "'>
 								<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
@@ -178,7 +188,6 @@ class FormularioRegistro {
 			unset ( $mostrarHtml );
 			unset ( $variableView );
 			unset ( $variableEdit );
-			}
 			endforeach;
 			
 			echo "</tbody>";

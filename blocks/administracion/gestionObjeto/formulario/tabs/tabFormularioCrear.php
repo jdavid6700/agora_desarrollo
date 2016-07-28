@@ -73,11 +73,13 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
+		var_dump($_REQUEST);
+		
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		//var_dump($resultado);
+		var_dump($resultado);
 
         $idActividad = $objetoEspecifico[0][1];
                 

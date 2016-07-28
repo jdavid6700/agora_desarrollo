@@ -16,8 +16,10 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
-				$variable .= "&idObjeto=".$valor[0];
-				$variable .= "&numCotizaciones=".$valor[1];				
+				$variable .= "&idObjeto=".$valor['idObjeto'];
+				$variable .= "&numSolicitud=".$valor['numero_solicitud'];
+				$variable .= "&vigencia=".$valor['vigencia'];
+				$variable .= "&numCotizaciones=".$valor['cotizaciones'];				
 				break;
 				
 			case "insertoCotizacion" :
