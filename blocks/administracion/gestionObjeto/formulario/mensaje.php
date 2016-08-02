@@ -170,18 +170,13 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         
 		foreach ($resultadoProveedor as $dato):
 			//$to_mail=$dato ['correo'];
-		    $to_mail="jdavid.6700@gmail.com";
+		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
 			$mail->AddAddress($to_mail);
 			$mail->Send();
 		endforeach; 
         $mail->ClearAllRecipients();
         $mail->ClearAttachments();
 //FIN ENVIO DE CORREO AL USUARIO                
-                
-        
-        //var_dump($resultadoProveedor);
-        //var_dump($_REQUEST);
-        //exit();
 
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";

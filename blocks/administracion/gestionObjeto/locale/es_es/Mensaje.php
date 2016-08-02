@@ -82,6 +82,7 @@ $this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
 
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 $this->idioma["tabConsultar"] = "Solicitar Cotizaciòn";
+$this->idioma["tabCotizacion"] = "Estado Cotizaciòn";
 
 $this->idioma["tipoDocumento"] = "Tipo de Documento";
 $this->idioma["identificacionDocente"] = "Número de Identificación del Docente:";

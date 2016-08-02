@@ -1,5 +1,5 @@
 <?php
-namespace hojaDeVida\crearDocente\formulario;
+namespace administracion\gestionObjeto\formulario;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -12,7 +12,7 @@ class Formulario {
 	var $miFormulario;
 	var $miSql;
 	
-	const OBJETOCREADO = 'CREADO'; //Estado objeto creado
+	const OBJETOCOTIZACION = 'COTIZACION'; //Estado objeto creado
 	
 	function __construct($lenguaje, $formulario, $sql) {
 		
@@ -54,7 +54,7 @@ class Formulario {
 		$conexion = "sicapital";
 		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCREADO );
+		$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCOTIZACION );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 		
 		$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosSinCotizacionXVigencia", 2008 );
@@ -90,7 +90,7 @@ class Formulario {
 
 <?php 
 
-			echo '<table id="tablaObjetosSinCotizacion" class="display" cellspacing="0" width="100%"> ';
+			echo '<table id="tablaObjetosEnCotizacion" class="display" cellspacing="0" width="100%"> ';
 				
 			echo "<thead>
 							<tr>
@@ -106,8 +106,7 @@ class Formulario {
 								<th><center>Plazo Ejecución</center></th>
 								<th><center>Estado</center></th>
 								<th><center>Detalle</center></th>
-								<th><center>Modificar</center></th>
-								<th><center>Cotizar</center></th>
+								<th><center>Cotizaciones</center></th>
 							</tr>
 							</thead>
 							<tbody>";
@@ -166,11 +165,6 @@ class Formulario {
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
-										</a>
-									</center></td>
-									<td><center>
-										<a href='" . $variableEdit . "'>
-											<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
 										</a>
 									</center></td>
 									<td><center>

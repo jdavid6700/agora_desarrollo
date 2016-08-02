@@ -100,6 +100,52 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND P.VIGENCIA = " . $variable['vigencia'];
 				break;
 			
+			case "listarObjetosSinCotizacionXVigencia" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" string_agg(cast(numero_solicitud as text),',' ";
+				$cadenaSql.=" ORDER BY ";
+				$cadenaSql.=" numero_solicitud) ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" agora.objeto_contratar ";
+				$cadenaSql.=" WHERE ";
+				$cadenaSql.=" vigencia = " . $variable;
+				$cadenaSql.=" AND ";
+				$cadenaSql.=" estado = 'CREADO';";
+				break;
+				
+			case "listaSolicitudNecesidadXNumSolicitudSinCotizar" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " P.NUM_SOL_ADQ as NUM_SOL_ADQ,";
+				$cadenaSql .= " P.VIGENCIA as VIGENCIA,";
+				$cadenaSql .= " U.NOMBRE_DEPENDENCIA as DEPENDENCIA,";
+				$cadenaSql .= " F.FUN_NOMBRE as FUNCIONARIO,";
+				$cadenaSql .= " F.FUN_CARGO as FUNCIONARIO_CARGO,";
+				$cadenaSql .= " F.FUN_TIPO as FUNCIONARIO_TIPO,";
+				$cadenaSql .= " P.FECHA_SOLICITUD as FECHA_SOLICITUD,";
+				$cadenaSql .= " P.ORIGEN_SOLICITUD as ORIGEN_SOLICITUD,";
+				$cadenaSql .= " V.NOMBRE_DEPENDENCIA as DEPENDENCIA_DESTINO,";
+				$cadenaSql .= " P.JUSTIFICACION as JUSTIFICACION,";
+				$cadenaSql .= " P.CONDICIONES_CONTRATACION as CONDICIONES,";
+				$cadenaSql .= " P.VALOR_CONTRATACION as VALOR_CONTRATACION,";
+				$cadenaSql .= " P.OBJETO as OBJETO,";
+				$cadenaSql .= " P.TIPO_CONTRATACION as TIPO_CONTRATACION,";
+				$cadenaSql .= " P.PLAZO_EJECUCION as PLAZO_EJECUCION,";
+				$cadenaSql .= " P.ELABORADO_POR as ELABORADO_POR,";
+				$cadenaSql .= " O.ORG_NOMBRE as ORDENADOR_GASTO,";
+				$cadenaSql .= " O.ORG_ORDENADOR_GASTO as CARGO_ORDENADOR_GASTO,";
+				$cadenaSql .= " P.CODIGO_UNIDAD_EJECUTORA as CODIGO_UNIDAD_EJECUTORA,";
+				$cadenaSql .= " P.ESTADO as ESTADO";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " CO_SOLICITUD_ADQ P";
+				$cadenaSql .= " JOIN CO_DEPENDENCIAS U ON U.COD_DEPENDENCIA = P.DEPENDENCIA";
+				$cadenaSql .= " JOIN CO_DEPENDENCIAS V ON V.COD_DEPENDENCIA = P.DEPENDENCIA_DESTINO";
+				$cadenaSql .= " JOIN SICAARKA.FUNCIONARIOS F ON F.FUN_IDENTIFICADOR = P.FUNCIONARIO";
+				$cadenaSql .= " JOIN SICAARKA.ORDENADORES_GASTO O ON O.ORG_TIPO_ORDENADOR = P.CODIGO_ORDENADOR AND O.ORG_ESTADO = 'A'";
+				$cadenaSql .= " WHERE P.NUM_SOL_ADQ IN (" . $variable ['solicitudes'] . ")";
+				$cadenaSql .= " AND P.VIGENCIA = " . $variable ['vigencia'];
+				break;
+				
+			
 				
 				
 			
@@ -223,13 +269,13 @@ class Sql extends \Sql {
 			case "listaObjetoContratar" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " id_objeto,";
-				$cadenaSql .= " objetocontratar,";
-				$cadenaSql .= " codigociiu,";
-				$cadenaSql .= " S.nombre AS actividad,";
-				$cadenaSql .= " fecharegistro,";
-				$cadenaSql .= " id_unidad,";
-				$cadenaSql .= " cantidad,";
-				$cadenaSql .= "	descripcion,";
+				$cadenaSql .= " numero_solicitud,";
+				$cadenaSql .= " vigencia,";
+				$cadenaSql .= "	codigociiu,";
+				$cadenaSql .= "	UPPER(S.nombre) AS actividad,";
+				$cadenaSql .= "	cantidad,";
+				$cadenaSql .= "	fechasolicitudcotizacion,";
+				$cadenaSql .= "	fecharegistro,";
 				$cadenaSql .= "	numero_cotizaciones,";
 				$cadenaSql .= "	estado";
 				$cadenaSql .= " FROM ";

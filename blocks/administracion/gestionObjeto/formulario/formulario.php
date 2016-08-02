@@ -35,7 +35,8 @@ unset ( $atributos );
 
 	$items = array (
 			"tabIngresar" => $this->lenguaje->getCadena ( 'tabIngresar' ),
- 			"tabConsultar" => $this->lenguaje->getCadena ( 'tabConsultar' )	
+ 			"tabConsultar" => $this->lenguaje->getCadena ( 'tabConsultar' ),	
+			"tabCotizacion" => $this->lenguaje->getCadena ( 'tabCotizacion' )
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "";
@@ -66,6 +67,19 @@ unset ( $atributos );
 		
 		include ($this->ruta . "formulario/tabs/tabRegistrar.php");
 		// -----------------Fin Division para la pestaña 1-------------------------
+	}
+	echo $this->miFormulario->agrupacion ( 'fin' );
+	
+	$esteCampo = "tabCotizacion";
+	$atributos ['id'] = $esteCampo;
+	$atributos ["estilo"] = "";
+	$atributos ['tipoEtiqueta'] = 'inicio';
+	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
+	unset ( $atributos );
+	{
+	
+		include ($this->ruta . "formulario/tabs/tabCotizacion.php");
+		// -----------------Fin Division para la pestaña 2-------------------------
 	}
 	echo $this->miFormulario->agrupacion ( 'fin' );
 }
