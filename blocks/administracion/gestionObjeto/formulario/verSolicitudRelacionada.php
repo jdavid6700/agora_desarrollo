@@ -704,7 +704,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 3;
 		$atributos ['tamanno'] = 1;
 		$atributos ['estilo'] = "jqueryui";
@@ -741,7 +741,7 @@ class FormularioRegistro {
 			$atributos ['valor'] = '';
 		}
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['tamanno'] = 32;
 		$atributos ['maximoTamanno'] = '30';
 		$atributos ['anchoEtiqueta'] = 200;
@@ -774,7 +774,7 @@ class FormularioRegistro {
 			$atributos ['valor'] = '';
 		}
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['tamanno'] = 32;
 		$atributos ['maximoTamanno'] = '30';
 		$atributos ['anchoEtiqueta'] = 200;
@@ -802,7 +802,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -834,7 +834,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -866,7 +866,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -910,7 +910,7 @@ class FormularioRegistro {
 			
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->campoBoton ( $atributos );
+			//echo $this->miFormulario->campoBoton ( $atributos );
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		}

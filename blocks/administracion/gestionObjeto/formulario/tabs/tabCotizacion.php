@@ -57,16 +57,15 @@ class Formulario {
 		$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCOTIZACION );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 		
-		$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosSinCotizacionXVigencia", 2008 );
+		$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosConCotizacionXVigencia", 2008 );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
-		
 		
 		$datos = array (
 				'solicitudes' => $resultado[0][0],
 				'vigencia' => 2008
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudEnCotizar', $datos );
 		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 
@@ -161,7 +160,7 @@ class Formulario {
 									<td><center>" . $dato['OBJETO'] . "</center></td>
 									<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
 									<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
-									<td><center>" . $dato['ESTADO'] . "</center></td>
+									<td><center>" . "COTIZACIÓN"/*$dato['ESTADO']*/ . "</center></td>
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>

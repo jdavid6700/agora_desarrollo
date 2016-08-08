@@ -86,6 +86,14 @@ class Frontera {
 				case "modificarSolicitud" :
 					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
 					break;
+					
+				case "modificarSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
+					break;
+					
+				case "verSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/verSolicitudRelacionada.php");
+					break;
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";

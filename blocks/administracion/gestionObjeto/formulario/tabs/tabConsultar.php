@@ -162,7 +162,7 @@ class Formulario {
 									<td><center>" . $dato['OBJETO'] . "</center></td>
 									<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
 									<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
-									<td><center>" . $dato['ESTADO'] . "</center></td>
+									<td><center>" . "RELACIONADO"/*$dato['ESTADO']*/ . "</center></td>
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
