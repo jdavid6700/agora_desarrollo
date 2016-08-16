@@ -19,7 +19,8 @@ class redireccion {
 				$variable .= "&idObjeto=".$valor['idObjeto'];
 				$variable .= "&numSolicitud=".$valor['numero_solicitud'];
 				$variable .= "&vigencia=".$valor['vigencia'];
-				$variable .= "&numCotizaciones=".$valor['cotizaciones'];				
+				$variable .= "&numCotizaciones=".$valor['cotizaciones'];
+				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
 				break;
 				
 			case "insertoCotizacion" :

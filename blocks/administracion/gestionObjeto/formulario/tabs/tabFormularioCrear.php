@@ -75,6 +75,23 @@ class registrarForm {
 		
 		//var_dump($_REQUEST);
 		
+		
+		if(isset($_REQUEST['idSolicitud']) && isset($_REQUEST['vigencia'])){
+			
+			
+			$datos = array (
+					'idSolicitud' => $_REQUEST['idSolicitud'],
+					'vigencia' => $_REQUEST['vigencia']
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'informacionSolicitudAgora', $datos );
+			$objeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$_REQUEST["idObjeto"] = $objeto[0]['id_objeto'];
+			$_REQUEST['numCotizaciones'] = $objeto[0]['numero_cotizaciones'];
+				
+		}
+		
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -87,8 +104,6 @@ class registrarForm {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
 		
 		//echo $cadenaSql;
 		//var_dump($objetoEspecifico);

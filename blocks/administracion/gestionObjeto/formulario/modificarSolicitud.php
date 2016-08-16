@@ -913,7 +913,15 @@ class FormularioRegistro {
 		echo $this->miFormulario->division ( "inicio", $atributos );
 		{
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
-			$esteCampo = 'botonRegistrar';
+			
+			
+			if (isset ( $estadoSolicitud )) {
+				$esteCampo = 'botonModificar';
+			} else {
+				$esteCampo = 'botonRegistrar';
+			}
+			
+			
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
 			$atributos ["tipo"] = 'boton';

@@ -78,7 +78,8 @@ class Registrar {
 						'idObjeto' => $resultadoNecesidadRelacionada[0]['id_objeto'],
 						'numero_solicitud' => $_REQUEST ['numSolicitud'],
 						'vigencia' => $_REQUEST ['vigencia'],
-						'cotizaciones' => $_REQUEST ['cotizaciones']
+						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
 				
 			}else{
@@ -90,10 +91,10 @@ class Registrar {
 						'idObjeto' => $lastId[0][0],
 						'numero_solicitud' => $_REQUEST ['numSolicitud'],
 						'vigencia' => $_REQUEST ['vigencia'],
-						'cotizaciones' => $_REQUEST ['cotizaciones']
+						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
 			}
-			
                     
 			redireccion::redireccionar ( 'inserto',  $datos);
 			exit ();

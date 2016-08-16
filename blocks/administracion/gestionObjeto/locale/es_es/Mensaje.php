@@ -89,6 +89,7 @@ $this->idioma["identificacionDocente"] = "Número de Identificación del Docente
 $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primero debe realizar la validación del funcionario.<br> Por favor seleccione el tipo documento y digite el número de documento y <br> de click en 'Validar'.</center>"; 
 
 $this->idioma["botonValidar"] = "Validar";
+$this->idioma["botonModificar"] = "Modificar";
 
 
 $this->idioma["paso1"] = "Consultar Funcionario";

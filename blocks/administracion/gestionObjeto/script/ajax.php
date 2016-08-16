@@ -77,6 +77,16 @@ $("#<?php echo $this->campoSeguro('contexto')?>").change(function() {
 
 $("#<?php echo $this->campoSeguro('divisionCIIU')?>").change(function() {
 
+
+		$("#<?php echo $this->campoSeguro('grupoCIIU')?>").attr('disabled', true);
+		$("#<?php echo $this->campoSeguro('grupoCIIU')?>").select2();
+		$("#<?php echo $this->campoSeguro('claseCIIU')?>").attr('disabled', true);
+		$("#<?php echo $this->campoSeguro('claseCIIU')?>").select2();
+		
+		$("#<?php echo $this->campoSeguro('claseCIIU')?>").html("");
+		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('claseCIIU')?>");
+		
+
 	if($("#<?php echo $this->campoSeguro('divisionCIIU')?>").val() == ''){
 
 		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('grupoCIIU')?>");
@@ -91,7 +101,10 @@ $("#<?php echo $this->campoSeguro('divisionCIIU')?>").change(function() {
 		
 		$("#<?php echo $this->campoSeguro('grupoCIIU_div')?>").css('display','block'); 
 		
+		$("#<?php echo $this->campoSeguro('grupoCIIU')?>").removeAttr('disabled');
+		
 		$("#<?php echo $this->campoSeguro('grupoCIIU')?>").select2();
+		
 		
 	}
 	
@@ -116,6 +129,8 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		consultarClase();
 		
 		$("#<?php echo $this->campoSeguro('claseCIIU_div')?>").css('display','block'); 
+		
+		$("#<?php echo $this->campoSeguro('claseCIIU')?>").removeAttr('disabled');
 		
 		$("#<?php echo $this->campoSeguro('claseCIIU')?>").select2();
 		
@@ -239,6 +254,10 @@ function consultarCiudad(elem, request, response){
 				$.each(data , function(indice,valor){
 					$("<option value='"+data[ indice ].id_clase+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('grupoCIIU')?>");
 				});
+				
+				
+				$("#<?php echo $this->campoSeguro('claseCIIU')?>").html("");
+				$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('claseCIIU')?>");
 			}
 		}
 	});

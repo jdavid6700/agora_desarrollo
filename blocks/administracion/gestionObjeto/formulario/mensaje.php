@@ -65,13 +65,26 @@ if (!isset($GLOBALS["autorizado"])) {
         $tipo = 'success';
         $mensaje =  $this->lenguaje->getCadena('mensajeRegistro') . ".";
         $boton = "continuar";
+        
+        if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "CREADO"){
+        	
+        	$valorCodificado = "pagina=".$miPaginaActual;
+        	$valorCodificado.="&opcion=nuevo";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        	
+        }else{
+        	
+        	$valorCodificado = "pagina=".$miPaginaActual;
+        	$valorCodificado.="&opcion=cotizacion";
+        	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        
+        }
 		
-        $valorCodificado = "pagina=".$miPaginaActual;
-        $valorCodificado.="&opcion=cotizacion";
-        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
-        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
-        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        
         
  
     } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {
@@ -125,7 +138,7 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
 
     include_once($rutaClases."/mail/class.phpmailer.php");
     include_once($rutaClases."/mail/class.smtp.php");
-	
+    
 	$mail = new PHPMailer();     
 
 	//configuracion de cuenta de envio
@@ -141,6 +154,8 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         $mail->From='agora@udistrital.edu.co';
         $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
         $mail->Subject="Solicitud de Cotización";
+        
+        
         $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
         $contenido.= "<b>Objeto Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['OBJETO'] . "<br>";
         $contenido.= "<br>";
@@ -170,12 +185,35 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         
 		foreach ($resultadoProveedor as $dato):
 			//$to_mail=$dato ['correo'];
-		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
+		    $to_mail="davidencolr6700@hotmail.com";//PRUEBAS**********************************************************************************
 			$mail->AddAddress($to_mail);
-			$mail->Send();
-		endforeach; 
+			//$mail->Send();
+			
+			if(!$mail->Send()) {
+    			echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
+		    }
+			
+		endforeach;
+		
         $mail->ClearAllRecipients();
         $mail->ClearAttachments();
+        
+        /*
+        $name = "JOSE";
+        $email_address = "davidencolr6700@hotmail.com";
+        $phone = "4565845";
+        $message = $contenido;
+        
+        // Create the email and send the message
+        $to = 'jdavid.6700@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
+        $email_subject = "Formulario de contacto:  $name";
+        $email_body = "Ha recibido un nuevo mensaje de su formulario de contacto.\n\n"."Aqui tienes los detalles:\n\nNombre: $name\n\nEmail: $email_address\n\nMensaje:\n$message";
+        $headers = "From: agora@udistrital.edu.co"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
+        $headers .= "Reply-To: $email_address";
+        mail($to,$email_subject,$email_body,$headers);
+        */
+        
+        
 //FIN ENVIO DE CORREO AL USUARIO                
 
         $valorCodificado = "pagina=".$miPaginaActual;
