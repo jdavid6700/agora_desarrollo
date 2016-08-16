@@ -114,6 +114,8 @@ $this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Ac
 
 
 $this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotizaciòn a los proveedores. <br>" ;
+
+$this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";

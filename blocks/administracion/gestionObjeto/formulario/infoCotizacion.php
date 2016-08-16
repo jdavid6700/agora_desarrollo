@@ -60,9 +60,37 @@ if (!isset($GLOBALS["autorizado"])) {
     //$atributos["estiloEnLinea"]="display:none"; 
     echo $this->miFormulario->division("inicio", $atributos);
     
+    
+    //********************************************************************************************************************************
+    
+    
+    $datosSolicitudNecesidad = array (
+    		'idSolicitud' => $_REQUEST['idSolicitud'],
+    		'vigencia' => $_REQUEST['vigencia']
+    );
+    
+    
+    //*********************************************************************************************************************************
+    $cadena_sql = $this->sql->getCadenaSql ( "estadoSolicitudAgora", $datosSolicitudNecesidad);
+    $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    
+    if(isset($resultado)) {
+    	$estadoSolicitud = $resultado[0]['estado'];
+    
+    
+    	$cadena_sql = $this->sql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
+    	$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    
+    
+    	$cadena_sql = $this->sql->getCadenaSql ( "informacionCIIURelacionada", $datosSolicitudNecesidad);
+    	$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    }
+    //***************SOLICITUDES RELACIONADAS******************************************************************************************
+    
+    
    
         $tipo = 'success';
-        $mensaje =  $this->lenguaje->getCadena('mensajeCotizacion');
+        $mensaje =  $this->lenguaje->getCadena('mensajeEnCotizacion');
         $boton = "regresar";
         
 //INICIO enlace boton descargar resumen	
@@ -71,8 +99,8 @@ if (!isset($GLOBALS["autorizado"])) {
 		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
-		$variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
-        $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
+		$variableResumen.= "&idObjeto=" . $resultadoNecesidadRelacionada[0]['id_objeto'];
+        $variableResumen.= "&idCodigo=" . "XXXX";
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------
@@ -81,44 +109,28 @@ if (!isset($GLOBALS["autorizado"])) {
 		echo $this->miFormulario->division("inicio",$atributos);
 		
 		$enlace = "<a href='".$variableResumen."'>";
-		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Ver Solicitud Cotización de la Necesidad";
 		$enlace.="</a><br><br>";       
 		echo $enlace;
 		//------------------Fin Division para los botones-------------------------
 		echo $this->miFormulario->division("fin"); 		
 //FIN enlace boton descargar resumen        
-        
-		
-		var_dump($_REQUEST);
-		exit();
-		
-		//********************************************************************************************************************************
 		
 		
-		$datosSolicitudNecesidad = array (
-				'idSolicitud' => $_REQUEST['idSolicitud'],
-				'vigencia' => $_REQUEST['vigencia']
-		);
 		
-		
-		//*********************************************************************************************************************************
-		$cadena_sql = $this->miSql->getCadenaSql ( "estadoSolicitudAgora", $datosSolicitudNecesidad);
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-		
-		if(isset($resultado)) {
-			$estadoSolicitud = $resultado[0]['estado'];
-				
-				
-			$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
-			$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-				
-				
-			$cadena_sql = $this->miSql->getCadenaSql ( "informacionCIIURelacionada", $datosSolicitudNecesidad);
-			$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-		}
-		//***************SOLICITUDES RELACIONADAS******************************************************************************************
-		
-		
+		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+		$esteCampo = 'mensaje';
+		$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+		$atributos["etiqueta"] = "";
+		$atributos["estilo"] = "centrar";
+		$atributos["tipo"] = $tipo;
+		$atributos["mensaje"] = $mensaje;
+		echo $this->miFormulario->cuadroMensaje($atributos);
+		unset($atributos);
+		// ------------------Division para los botones-------------------------
+		$atributos ["id"] = "botones";
+		$atributos ["estilo"] = "marcoBotones";
+		echo $this->miFormulario->division("inicio", $atributos);
 		
 		
 		
@@ -128,11 +140,11 @@ if (!isset($GLOBALS["autorizado"])) {
 		
 		
 //Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $resultadoNecesidadRelacionada[0]['id_objeto'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 //Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
+$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $resultadoNecesidadRelacionada[0]['id_objeto'] );
 $objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 $datos = array (
@@ -143,9 +155,144 @@ $datos = array (
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
  
- 
 
 
+
+
+
+
+
+
+
+$datos = array (
+		'solicitudes' => "1,2,3,4,5,6,7,8",
+		'vigencia' => 2008
+);
+
+$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );
+$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+if ($resultado) {
+	?>
+				<br>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-primary">
+							<div class="panel-heading">
+								<h4 class="list-group-item-heading">Seleccione Objeto a Contratar
+									para solicitar cotizaciòn</h4>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+<?php 
+
+			echo '<table id="tablaObjetosSinCotizacion" class="display" cellspacing="0" width="100%"> ';
+				
+			echo "<thead>
+							<tr>
+								<th><center>Número Solicitud</center></th>
+								<th><center>Vigencia</center></th>
+								<th><center>Dependencia</center></th>
+								<th><center>Fecha Solicitud</center></th>
+								<th><center>Origen Solicitud</center></th>
+								<th><center>Dependencia Destino</center></th>
+								<th><center>Justificación</center></th>
+			                    <th><center>Objeto</center></th>
+								<th><center>Tipo Contratación</center></th>
+								<th><center>Plazo Ejecución</center></th>
+								<th><center>Estado</center></th>
+								<th><center>Detalle</center></th>
+								<th><center>Modificar</center></th>
+								<th><center>Cotizar</center></th>
+							</tr>
+							</thead>
+							<tbody>";
+				
+			foreach ($resultado as $dato):
+			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableView .= "&opcion=verSolicitudRelacionada";
+			$variableView .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
+			$variableView .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
+			$imagenView = 'verPro.png';
+			
+			
+			
+			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableEdit .= "&opcion=modificarSolicitudRelacionada";
+			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
+			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+			$imagenEdit = 'editPro.png';
+
+			
+			
+			$variableAdd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableAdd .= "&opcion=cotizarSolicitud";
+			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
+			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
+			$imagenAdd = 'calPro.png';
+			
+			
+			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";
+			if(!isset($dato['VIGENCIA'])) $dato['VIGENCIA'] = " ";
+			if(!isset($dato['DEPENDENCIA'])) $dato['DEPENDENCIA'] = " ";
+			if(!isset($dato['FECHA_SOLICITUD'])) $dato['FECHA_SOLICITUD'] = " ";
+			if(!isset($dato['ORIGEN_SOLICITUD'])) $dato['ORIGEN_SOLICITUD'] = " ";
+			if(!isset($dato['DEPENDENCIA_DESTINO'])) $dato['DEPENDENCIA_DESTINO'] = " ";
+			if(!isset($dato['JUSTIFICACION'])) $dato['JUSTIFICACION'] = " ";
+			if(!isset($dato['OBJETO'])) $dato['OBJETO'] = " ";
+			if(!isset($dato['TIPO_CONTRATACION'])) $dato['TIPO_CONTRATACION'] = " ";
+			if(!isset($dato['PLAZO_EJECUCION'])) $dato['PLAZO_EJECUCION'] = " ";
+			if(!isset($dato['ESTADO'])) $dato['ESTADO'] = " ";
+			
+			$mostrarHtml = "<tr>
+									<td><center>" . $dato['NUM_SOL_ADQ'] . "</center></td>
+									<td><center>" . $dato['VIGENCIA'] . "</center></td>
+									<td><center>" . $dato['DEPENDENCIA'] . "</center></td>
+									<td><center>" . $dato['FECHA_SOLICITUD'] . "</center></td>
+									<td><center>" . $dato['ORIGEN_SOLICITUD'] . "</center></td>
+								    <td><center>" . $dato['DEPENDENCIA_DESTINO'] . "</center></td>
+									<td><center>" . $dato['JUSTIFICACION'] . "</center></td>
+									<td><center>" . $dato['OBJETO'] . "</center></td>
+									<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
+									<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
+									<td><center>" . "RELACIONADO"/*$dato['ESTADO']*/ . "</center></td>
+									<td><center>
+										<a href='" . $variableView . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
+										</a>
+									</center></td>
+									<td><center>
+										<a href='" . $variableEdit . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
+										</a>
+									</center></td>
+									<td><center>
+										<a href='" . $variableAdd . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenAdd . "' width='15px'>
+										</a>
+									</center></td>	
+								</tr>";
+			echo $mostrarHtml;
+			unset ( $mostrarHtml );
+			unset ( $variableView );
+			unset ( $variableEdit );
+			unset ( $variableAdd );
+			endforeach;
+				
+			echo "</tbody>";
+			echo "</table>";
+}
+
+
+
+/*
 
 //INICIO ENVIO DE CORREO AL USUARIO
     $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
@@ -203,7 +350,9 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
 		endforeach; 
         $mail->ClearAllRecipients();
         $mail->ClearAttachments();
-//FIN ENVIO DE CORREO AL USUARIO                
+//FIN ENVIO DE CORREO AL USUARIO     
+
+*/
 
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";
@@ -259,20 +408,6 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
     // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
     $atributos['tipoEtiqueta'] = 'inicio';
     echo $this->miFormulario->formulario($atributos);
-
-    // ---------------- SECCION: Controles del Formulario -----------------------------------------------
-    $esteCampo = 'mensaje';
-    $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-    $atributos["etiqueta"] = "";
-    $atributos["estilo"] = "centrar";
-    $atributos["tipo"] = $tipo;
-    $atributos["mensaje"] = $mensaje;
-    echo $this->miFormulario->cuadroMensaje($atributos);
-    unset($atributos);
-    // ------------------Division para los botones-------------------------
-    $atributos ["id"] = "botones";
-    $atributos ["estilo"] = "marcoBotones";
-    echo $this->miFormulario->division("inicio", $atributos);
 
     // -----------------CONTROL: Botón ----------------------------------------------------------------
     $esteCampo = 'continuar';

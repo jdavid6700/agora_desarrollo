@@ -22,8 +22,6 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 $conexion = "sicapital";
 $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-
-
 //CONSULTAR USUARIO
 $cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -44,16 +42,6 @@ $datos = array (
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-
-// var_dump($resultadoProveedor);
-
-// var_dump($resultadoObjeto);
-
-// var_dump($_REQUEST);
-
-// var_dump($solicitudNecesidad);
-
-// exit();
 
 $certUniversidadImagen = 'sabio_caldas.png';
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
@@ -191,10 +179,12 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'> &nbsp; </sp
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 107%'>PROVEEDORES SELECCIONADOS</span></b></p>
 
-<div align=center>
-
-        <table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
- style='width:100%;border-collapse:collapse;border:none;'> 
+<div align=center>";
+            
+if($resultadoProveedor){
+	
+	$contenidoPagina .= "<table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
+    style='width:100%;border-collapse:collapse;border:none;'> 
 
             <tr>
                 <td align='center' style='background:#BDD6EE'>
@@ -210,11 +200,9 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     <b>Clasificación</b>
                 </td>
             </tr>";
-            
-
-    
-foreach ($resultadoProveedor as $dato):
-        $contenidoPagina .= "
+	
+	foreach ($resultadoProveedor as $dato):
+	$contenidoPagina .= "
             <tr>
                 <td align='center' >
                     " . $dato['num_documento'] . "
@@ -228,15 +216,26 @@ foreach ($resultadoProveedor as $dato):
                 <td align='center' >
                     " . $dato['clasificacion_evaluacion'] . "
                 </td>
-
-
-
+	
+	
+	
             </tr>";
-endforeach; 
+	endforeach;
+	
+	$contenidoPagina .= "</table></div></page>";
+	
+}else{
+	
+	$contenidoPagina .= "
+            
+                NO EXISTEN PROVEEDORES RELACIONADOS
+            </div></page>";
+	
+}
+    
+			
 
- 
 
-$contenidoPagina .= "</table></div></page>";
 
 $nombreDocumento = 'objetoContratar_' . $_REQUEST['idObjeto'] . '.pdf';
 
