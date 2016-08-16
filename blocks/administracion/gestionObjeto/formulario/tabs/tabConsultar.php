@@ -135,7 +135,7 @@ class Formulario {
 			$variableAdd .= "&opcion=cotizarSolicitud";
 			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
-			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
 			$imagenAdd = 'calPro.png';
 			
 			
@@ -183,6 +183,7 @@ class Formulario {
 			unset ( $mostrarHtml );
 			unset ( $variableView );
 			unset ( $variableEdit );
+			unset ( $variableAdd );
 			endforeach;
 				
 			echo "</tbody>";

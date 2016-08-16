@@ -117,23 +117,14 @@ class Formulario {
 			$variableView .= "&vigencia=" . $dato['VIGENCIA'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
-			
-			
-			
-			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableEdit .= "&opcion=modificarSolicitudRelacionada";
-			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
-			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
-			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			$imagenEdit = 'editPro.png';
 
 			
 			
 			$variableAdd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableAdd .= "&opcion=cotizarSolicitud";
+			$variableAdd .= "&opcion=verCotizacionSolicitud";
 			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
-			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
 			$imagenAdd = 'calPro.png';
 			
 			
@@ -175,7 +166,7 @@ class Formulario {
 			echo $mostrarHtml;
 			unset ( $mostrarHtml );
 			unset ( $variableView );
-			unset ( $variableEdit );
+			unset ( $variableAdd );
 			endforeach;
 				
 			echo "</tbody>";

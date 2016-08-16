@@ -831,10 +831,21 @@ class FormularioRegistro {
 		$atributos ['evento'] = '';
 		if (isset ( $estadoSolicitud )) {
 			$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_clase'];
+			
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuGrupo', $resultadoNecesidadRelacionadaCIIU[0]['num_division'] );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
 		} else {
 			$atributos ['seleccion'] = - 1;
+			
+			
+			$matrizItems = array(
+	        			array(1,'Null')
+	        			 
+	        );
+			
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -844,8 +855,7 @@ class FormularioRegistro {
 		$atributos ['limitar'] = false;
 		$atributos ['anchoCaja'] = 60;
 		$atributos ['miEvento'] = '';
-		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuGrupo', $resultadoNecesidadRelacionadaCIIU[0]['num_division'] );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		$atributos ['matrizItems'] = $matrizItems;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
@@ -863,10 +873,21 @@ class FormularioRegistro {
 		$atributos ['evento'] = '';
 		if (isset ( $estadoSolicitud )) {
 			$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_subclase'];
+			
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClase', $resultadoNecesidadRelacionadaCIIU[0]['num_clase'] );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
 		} else {
 			$atributos ['seleccion'] = - 1;
+			
+			
+			
+			$matrizItems = array(
+	        			array(1,'Null')
+	        			 
+	        );
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -876,8 +897,7 @@ class FormularioRegistro {
 		$atributos ['limitar'] = false;
 		$atributos ['anchoCaja'] = 60;
 		$atributos ['miEvento'] = '';
-		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClase', $resultadoNecesidadRelacionadaCIIU[0]['num_clase'] );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		$atributos ['matrizItems'] = $matrizItems;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
