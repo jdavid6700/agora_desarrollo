@@ -242,6 +242,17 @@ class Sql extends \Sql {
 				break;
 				
 				
+			case "filtroVigencia" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" VIGENCIA AS ID, ";
+				$cadenaSql.=" VIGENCIA AS VIGENCIA ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" CO_SOLICITUD_ADQ ";
+				$cadenaSql.=" GROUP BY VIGENCIA ";
+				$cadenaSql.=" ORDER BY VIGENCIA";
+				break;
+				
+				
 				
 				
 				

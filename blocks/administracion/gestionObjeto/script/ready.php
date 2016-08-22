@@ -29,6 +29,12 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
 
+$('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').width(250);
+
+
+
+
+
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
@@ -37,7 +43,7 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('unidad')?>').select2();
 
-
+$('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').select2();
 
 
 

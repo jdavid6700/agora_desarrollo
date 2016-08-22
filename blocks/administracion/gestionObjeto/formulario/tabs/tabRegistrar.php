@@ -98,16 +98,69 @@ class FormularioRegistro {
 		
 		
 		
-		$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosRelacionadosXVigencia", 2008 );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 		
-		$datos = array (//Datos Relacionados ya en el sistema AGORA
-				'solicitudes' => $resultado[0][0],
-				'vigencia' => 2008
-		);
+		if(isset($_REQUEST['vigenciaNecesidad'])){
 		
-		$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXVigencia", $datos);
-		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$valorVigencia = $_REQUEST['vigenciaNecesidad'];
+			
+			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosRelacionadosXVigencia", $valorVigencia );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
+			
+			
+			if(isset($resultado[0][0])){
+				$datos = array (//Datos Relacionados ya en el sistema AGORA
+						'solicitudes' => $resultado[0][0],
+						'vigencia' => $valorVigencia
+				);
+			}else{
+				$datos = array (//No existen Datos Relacionados ya en el sistema AGORA
+						'solicitudes' => "-1",
+						'vigencia' => $valorVigencia
+				);
+			}
+		
+			$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXVigencia", $datos);
+			$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		}else{
+			
+			
+			// ---------------- CONTROL: Lista Vigencia--------------------------------------------------------
+			$esteCampo = "vigenciaNecesidad";
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['id'] = $esteCampo;
+			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ["etiquetaObligatorio"] = true;
+			$atributos ['tab'] = $tab ++;
+			$atributos ['anchoEtiqueta'] = 200;
+			$atributos ['evento'] = '';
+			if (isset ( $estadoSolicitud )) {
+				$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_division'];
+			} else {
+				$atributos ['seleccion'] = - 1;
+			}
+			$atributos ['deshabilitado'] = false;
+			$atributos ['columnas'] = 1;
+			$atributos ['tamanno'] = 1;
+			$atributos ['ajax_function'] = "";
+			$atributos ['ajax_control'] = $esteCampo;
+			$atributos ['estilo'] = "jqueryui";
+			$atributos ['validar'] = "required";
+			$atributos ['limitar'] = false;
+			$atributos ['anchoCaja'] = 60;
+			$atributos ['miEvento'] = '';
+			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( 'filtroVigencia' );
+			$matrizItems = $siCapitalRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+			$atributos ['matrizItems'] = $matrizItems;
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			unset ( $atributos );
+			// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
+			
+			
+			$resultado = false;
+		}
+		
+		
 		
 		
 		//echo $cadena_sql;// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -615,7 +668,7 @@ class FormularioRegistro {
 		echo $this->miFormulario->division ( "inicio", $atributos );
 		{
 			// -----------------CONTROL: Botón ----------------------------------------------------------------
-			$esteCampo = 'botonRegistrar';
+			$esteCampo = 'botonContinuar';
 			$atributos ["id"] = $esteCampo;
 			$atributos ["tabIndex"] = $tab;
 			$atributos ["tipo"] = 'boton';
@@ -632,7 +685,7 @@ class FormularioRegistro {
 			
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
-			//echo $this->miFormulario->campoBoton ( $atributos );
+			echo $this->miFormulario->campoBoton ( $atributos );
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		}
@@ -655,11 +708,11 @@ class FormularioRegistro {
 				// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
 				// Paso 1: crear el listado de variables
 				
-				$valorCodificado  = "action=" . $esteBloque ["nombre"];
-				$valorCodificado .= "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				//$valorCodificado  = "action=" . $esteBloque ["nombre"];
+				$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 				$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 				$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-				$valorCodificado .= "&opcion=registrar";
+				$valorCodificado .= "&opcion=nuevo";
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.

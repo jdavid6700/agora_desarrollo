@@ -72,6 +72,8 @@ $this->idioma["vigenciaTitulo"]="Vigencia";
 $this->idioma["numSolicitud"] = "Número de la Solicitud :";
 $this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
 
+$this->idioma["vigenciaNecesidad"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadTitulo"]="Por favor seleccione la Vigencia";
 
 
 
