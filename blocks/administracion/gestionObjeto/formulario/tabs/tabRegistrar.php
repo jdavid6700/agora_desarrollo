@@ -121,6 +121,8 @@ class FormularioRegistro {
 		
 			$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXVigencia", $datos);
 			$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			$onlyCheck = false;
 		}else{
 			
 			
@@ -158,6 +160,7 @@ class FormularioRegistro {
 			
 			
 			$resultado = false;
+			$onlyCheck = true;
 		}
 		
 		
@@ -685,7 +688,9 @@ class FormularioRegistro {
 			
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->campoBoton ( $atributos );
+			if($onlyCheck){
+				echo $this->miFormulario->campoBoton ( $atributos );
+			}
 			
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		}

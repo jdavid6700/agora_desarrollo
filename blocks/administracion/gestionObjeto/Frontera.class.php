@@ -70,6 +70,10 @@ class Frontera {
                 case "nuevo":
                      include_once($this->ruta . "/formulario/formulario.php");
                     break;
+                    
+				case "nuevoRelacionada" :
+					include_once ($this->ruta . "/formulario/formulario.php");
+					break;
 					
                 case "cotizacion":
                      include_once($this->ruta . "/formulario/solicitudCotizacion.php");

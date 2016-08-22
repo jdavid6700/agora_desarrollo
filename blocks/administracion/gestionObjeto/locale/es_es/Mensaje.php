@@ -10,6 +10,11 @@ $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
 $this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
+$this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
+
+
+
+
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 
@@ -74,6 +79,9 @@ $this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
 
 $this->idioma["vigenciaNecesidad"] = "Filtro Vigencia :";
 $this->idioma["vigenciaNecesidadTitulo"]="Por favor seleccione la Vigencia";
+$this->idioma["vigenciaNecesidadRelacionada"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadRelacionadaTitulo"]="Por favor seleccione la Vigencia";
+
 
 
 
@@ -92,6 +100,7 @@ $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primer
 
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
+$this->idioma["botonContinuar"] = "Continuar";
 
 
 $this->idioma["paso1"] = "Consultar Funcionario";
