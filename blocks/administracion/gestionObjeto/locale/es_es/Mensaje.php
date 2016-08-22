@@ -11,7 +11,7 @@ $this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información Ge
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
 $this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
-
+$this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en Cotización";
 
 
 
@@ -81,7 +81,8 @@ $this->idioma["vigenciaNecesidad"] = "Filtro Vigencia :";
 $this->idioma["vigenciaNecesidadTitulo"]="Por favor seleccione la Vigencia";
 $this->idioma["vigenciaNecesidadRelacionada"] = "Filtro Vigencia :";
 $this->idioma["vigenciaNecesidadRelacionadaTitulo"]="Por favor seleccione la Vigencia";
-
+$this->idioma["vigenciaNecesidadCotizacion"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vigencia";
 
 
 

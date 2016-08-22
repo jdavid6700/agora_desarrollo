@@ -11,6 +11,13 @@ $("#gestionObjetoConsultarRel").validationEngine({
 	autoHidePrompt: true,
 	autoHideDelay: 2000
 });
+
+$("#gestionObjetoConsultarCot").validationEngine({
+	promptPosition : "bottomRight:-150", 
+	scroll: false,
+	autoHidePrompt: true,
+	autoHideDelay: 2000
+});
         
 /*
  * Función que organiza los tabs en la interfaz gráfica
@@ -38,6 +45,7 @@ $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
 
 $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').width(250);
+$('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
 
 
 
@@ -52,6 +60,7 @@ $('#<?php echo $this->campoSeguro('unidad')?>').select2();
 
 $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').select2();
+$('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').select2();
 
 
 

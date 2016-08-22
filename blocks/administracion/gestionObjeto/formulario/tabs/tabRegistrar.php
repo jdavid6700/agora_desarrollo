@@ -122,6 +122,25 @@ class FormularioRegistro {
 			$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXVigencia", $datos);
 			$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
+			//******************************************************************************************************************************
+			$variable = "pagina=" . $miPaginaActual;
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
+			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['estilo'] = 'textoSubtitulo';
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['ancho'] = '10%';
+			$atributos ['alto'] = '10%';
+			$atributos ['redirLugar'] = true;
+			echo $this->miFormulario->enlace ( $atributos );
+			
+			unset ( $atributos );
+			//********************************************************************************************************************************
+			
 			$onlyCheck = false;
 		}else{
 			
@@ -717,7 +736,7 @@ class FormularioRegistro {
 				$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 				$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 				$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-				$valorCodificado .= "&opcion=nuevo";
+				$valorCodificado .= "&opcion=nuevoRelacionar";
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.
