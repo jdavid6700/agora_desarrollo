@@ -283,6 +283,26 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
 				$cadenaSql .= " WHERE  id_objeto=" . $variable;
 				break;
+				
+			case "buscarProveedoresInfoCotizacion" :
+				$cadenaSql=" SELECT";
+				$cadenaSql.=" P.id_proveedor,";
+				$cadenaSql.=" P.tipopersona,";
+				$cadenaSql.=" P.correo,";
+				$cadenaSql.=" P.direccion,";
+				$cadenaSql.=" P.web,";
+				$cadenaSql.=" (U.nombre || ', ' || D.nombre || ', ' || 'Colombia') as ubicacion, ";
+				$cadenaSql.=" P.nom_proveedor,";
+				$cadenaSql.=" P.num_documento,";
+				$cadenaSql.=" P.puntaje_evaluacion,";
+				$cadenaSql.=" P.clasificacion_evaluacion";
+				$cadenaSql.=" FROM";
+				$cadenaSql.=" agora.solicitud_cotizacion S";
+				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
+				$cadenaSql.=" JOIN agora.ciudad U ON P.id_ciudad_contacto = U.id_ciudad";
+				$cadenaSql.=" JOIN agora.departamento D ON U.id_departamento = D.id_departamento";
+				$cadenaSql.=" WHERE  id_objeto=" . $variable;
+				break;
 			
 			/* REGISTRAR COTIZACION */
 			case "ingresarCotizacion" :

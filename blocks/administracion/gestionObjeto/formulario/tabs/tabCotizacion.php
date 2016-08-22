@@ -68,9 +68,6 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudEnCotizar', $datos );
 		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-
-		echo "todas las solciitudes relacionadas sin cotización";
-		
 		
 		if ($resultado) {
 			?>
@@ -79,8 +76,7 @@ class Formulario {
 					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
-								<h4 class="list-group-item-heading">Seleccione Objeto a Contratar
-									para solicitar cotizaciòn</h4>
+								<h4 class="list-group-item-heading">Solicitudes de Necesidad Relacionadas En Cotización</h4>
 							</div>
 						</div>
 					</div>
@@ -125,7 +121,7 @@ class Formulario {
 			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
 			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
-			$imagenAdd = 'calPro.png';
+			$imagenAdd = 'cotPro.png';
 			
 			
 			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";

@@ -154,7 +154,7 @@ class FormularioRegistro {
 			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			$imagenEdit = 'editPro.png';
+			$imagenEdit = 'addPro.png';
 				
 				
 			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";

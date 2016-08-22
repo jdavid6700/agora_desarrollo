@@ -102,6 +102,14 @@ class Frontera {
 				case "verCotizacionSolicitud" :
 					include_once ($this->ruta . "/formulario/infoCotizacion.php");
 					break;
+					
+				case "resultadoCotizacion" :
+					include_once ($this->ruta . "/formulario/resultadoCotizacion.php");
+					break;
+					
+				case "verCotizacionProveedor" :
+					include_once ($this->ruta . "/formulario/verCotizacion.php");
+					break;
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";

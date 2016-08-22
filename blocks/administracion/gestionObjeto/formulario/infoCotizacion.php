@@ -88,6 +88,7 @@ if (!isset($GLOBALS["autorizado"])) {
     //***************SOLICITUDES RELACIONADAS******************************************************************************************
     
     
+    
    
         $tipo = 'success';
         $mensaje =  $this->lenguaje->getCadena('mensajeEnCotizacion');
@@ -140,7 +141,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		
 		
 //Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $resultadoNecesidadRelacionada[0]['id_objeto'] );
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $resultadoNecesidadRelacionada[0]['id_objeto'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 //Buscar usuario para enviar correo
@@ -159,29 +160,23 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
 
 
 
-
-
-
-
-
 $datos = array (
 		'solicitudes' => "1,2,3,4,5,6,7,8",
-		'vigencia' => 2008
+		'vigencia' => 2070
 );
 
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );
 $resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
-if ($resultado) {
+
 	?>
 				<br>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
-								<h4 class="list-group-item-heading">Seleccione Objeto a Contratar
-									para solicitar cotizaciòn</h4>
+								<h4 class="list-group-item-heading">Proveedores Relacionados en la Cotización</h4>
 							</div>
 						</div>
 					</div>
@@ -194,51 +189,46 @@ if ($resultado) {
 				
 			echo "<thead>
 							<tr>
-								<th><center>Número Solicitud</center></th>
-								<th><center>Vigencia</center></th>
-								<th><center>Dependencia</center></th>
-								<th><center>Fecha Solicitud</center></th>
-								<th><center>Origen Solicitud</center></th>
-								<th><center>Dependencia Destino</center></th>
-								<th><center>Justificación</center></th>
-			                    <th><center>Objeto</center></th>
-								<th><center>Tipo Contratación</center></th>
-								<th><center>Plazo Ejecución</center></th>
-								<th><center>Estado</center></th>
-								<th><center>Detalle</center></th>
-								<th><center>Modificar</center></th>
-								<th><center>Cotizar</center></th>
+								<th><center>Documento</center></th>
+								<th><center>Proveedor</center></th>
+								<th><center>Tipo Persona</center></th>
+								<th><center>Dirección</center></th>
+								<th><center>Web</center></th>
+								<th><center>Correo</center></th>
+								<th><center>Ubicación Contacto</center></th>
+			                    <th><center>Puntaje Evaluacióń</center></th>
+								<th><center>Clasificación Evaluación</center></th>
+    							<th><center>Estado Cotización</center></th>
+								<th><center>Resultado</center></th>
+								<th><center>Cotización</center></th>
 							</tr>
 							</thead>
 							<tbody>";
 				
-			foreach ($resultado as $dato):
+			
+			if($resultadoProveedor){
+			
+			foreach ($resultadoProveedor as $dato):
 			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableView .= "&opcion=verSolicitudRelacionada";
-			$variableView .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
-			$variableView .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableView .= "&opcion=resultadoCotizacion";
+			$variableView .= "&idSolicitudCotizacion=" . "XXXX";
+			$variableView .= "&idProveedor=" . $dato['id_proveedor'];
+			$variableView .= "&idSolicitud=" . $objetoEspecifico[0]['numero_solicitud'];
+			$variableView .= "&vigencia=" . $objetoEspecifico[0]['vigencia'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
-			
-			
-			
-			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableEdit .= "&opcion=modificarSolicitudRelacionada";
-			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
-			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
-			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			$imagenEdit = 'editPro.png';
 
 			
-			
 			$variableAdd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableAdd .= "&opcion=cotizarSolicitud";
-			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
-			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableAdd .= "&opcion=verCotizacionProveedor";
+			$variableAdd .= "&idSolicitudCotizacion=" . "XXXX";
+			$variableAdd .= "&idProveedor=" . $dato['id_proveedor'];
+			$variableAdd .= "&idSolicitud=" . $objetoEspecifico[0]['numero_solicitud'];
+			$variableAdd .= "&vigencia=" . $objetoEspecifico[0]['vigencia'];
 			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
 			$imagenAdd = 'calPro.png';
 			
-			
+			/*
 			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";
 			if(!isset($dato['VIGENCIA'])) $dato['VIGENCIA'] = " ";
 			if(!isset($dato['DEPENDENCIA'])) $dato['DEPENDENCIA'] = " ";
@@ -250,27 +240,22 @@ if ($resultado) {
 			if(!isset($dato['TIPO_CONTRATACION'])) $dato['TIPO_CONTRATACION'] = " ";
 			if(!isset($dato['PLAZO_EJECUCION'])) $dato['PLAZO_EJECUCION'] = " ";
 			if(!isset($dato['ESTADO'])) $dato['ESTADO'] = " ";
+			*/
 			
 			$mostrarHtml = "<tr>
-									<td><center>" . $dato['NUM_SOL_ADQ'] . "</center></td>
-									<td><center>" . $dato['VIGENCIA'] . "</center></td>
-									<td><center>" . $dato['DEPENDENCIA'] . "</center></td>
-									<td><center>" . $dato['FECHA_SOLICITUD'] . "</center></td>
-									<td><center>" . $dato['ORIGEN_SOLICITUD'] . "</center></td>
-								    <td><center>" . $dato['DEPENDENCIA_DESTINO'] . "</center></td>
-									<td><center>" . $dato['JUSTIFICACION'] . "</center></td>
-									<td><center>" . $dato['OBJETO'] . "</center></td>
-									<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
-									<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
-									<td><center>" . "RELACIONADO"/*$dato['ESTADO']*/ . "</center></td>
+									<td><center>" . $dato['num_documento'] . "</center></td>
+									<td><center>" . $dato['nom_proveedor'] . "</center></td>
+									<td><center>" . $dato['tipopersona'] . "</center></td>
+									<td><center>" . $dato['direccion'] . "</center></td>
+									<td><center>" . $dato['web'] . "</center></td>
+								    <td><center>" . $dato['correo'] . "</center></td>
+									<td><center>" . $dato['ubicacion'] . "</center></td>
+									<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
+									<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
+									<td><center>" . "INFORMADO" . "</center></td>
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
-										</a>
-									</center></td>
-									<td><center>
-										<a href='" . $variableEdit . "'>
-											<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
 										</a>
 									</center></td>
 									<td><center>
@@ -285,22 +270,27 @@ if ($resultado) {
 			unset ( $variableEdit );
 			unset ( $variableAdd );
 			endforeach;
+			
+			}
 				
 			echo "</tbody>";
 			echo "</table>";
-}
 
 
 
-/*
 
+//EVALUAR Opcion de Gestionar NUEVO Envio
+
+/*			
+//ERROR Correo se ENVIA a SPAM*******-----------------------------------------------------------------------------------------------------
 //INICIO ENVIO DE CORREO AL USUARIO
     $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
 
     include_once($rutaClases."/mail/class.phpmailer.php");
     include_once($rutaClases."/mail/class.smtp.php");
 	
-	$mail = new PHPMailer();     
+	$mail = new PHPMailer(); 
+
 
 	//configuracion de cuenta de envio
 	$mail->Host     = "200.69.103.49";
@@ -341,17 +331,26 @@ if ($resultado) {
 		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
 		
         $mail->Body=$contenido;
-        
-		foreach ($resultadoProveedor as $dato):
+
+		//foreach ($resultadoProveedor as $dato):
 			//$to_mail=$dato ['correo'];
 		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
 			$mail->AddAddress($to_mail);
-			$mail->Send();
-		endforeach; 
+			//$mail->Send();
+			
+			if(!$mail->Send()) {
+				echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
+			}else{
+				echo "Enviado!!! ". $to_mail .": " . $mail->ErrorInfo;
+			}
+			
+		//endforeach; 
+		
+			var_dump($mail);
+			
         $mail->ClearAllRecipients();
         $mail->ClearAttachments();
 //FIN ENVIO DE CORREO AL USUARIO     
-
 */
 
         $valorCodificado = "pagina=".$miPaginaActual;
@@ -427,7 +426,7 @@ if ($resultado) {
 
     // Aplica atributos globales al control
     $atributos = array_merge($atributos, $atributosGlobales);
-    echo $this->miFormulario->campoBoton($atributos);
+    //echo $this->miFormulario->campoBoton($atributos);
     // -----------------FIN CONTROL: Botón -----------------------------------------------------------
     // ------------------Fin Division para los botones-------------------------
     echo $this->miFormulario->division("fin");
