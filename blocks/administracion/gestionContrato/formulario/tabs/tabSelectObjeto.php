@@ -50,6 +50,8 @@ class listarDatos {
 
         $this->cadena_sql = $this->miSql->getCadenaSql("listaObjetoContratar", self::ESTADOOBJETO);
         $resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
+        
+        
 
 		if( $resultado ){
 			?>
@@ -67,24 +69,26 @@ class listarDatos {
 			</div>
 			<table class="table table-bordered table-striped table-hover table-condensed">
 				<tr class="info">
-							<td align="center"><strong>Objeto a contratar</strong></td>	
+							<td align="center"><strong>Objeto de Necesidad</strong></td>	
+							<td align="center"><strong>Vigencia</strong></td>
+							<td align="center"><strong>Número de Solicitud de Necesidad</strong></td>
 							<td align="center"><strong>Actividad Econòmica</strong></td>
-							<td align="center"><strong>Fecha registro</strong></td>
+							<td align="center"><strong>Fecha de Relación</strong></td>
 							<td align="center"><strong>Unidad</strong></td>
 							<td align="center"><strong>Cantidad</strong></td>
-							<td align="center"><strong>Descripciòn</strong></td>
-							<td align="center"><strong>Asignar contrato</strong></td>
+							<td align="center"><strong>Asignar Contrato</strong></td>
 				</tr>	
 			<?php 
 				foreach ($resultado as $dato):
 		
 					echo "<tr>";
-					echo "<td >" . $dato['objetocontratar']. "</td>";
+					echo "<td >" . $dato['id_objeto']. "</td>";
+					echo "<td >" . $dato['vigencia']. "</td>";
+					echo "<td >" . $dato['numero_solicitud']. "</td>";
 					echo "<td align='center'>" . $dato['codigociiu'] . '-' . $dato['actividad'] . "</td>";
 					echo "<td align='center'>" . $dato['fecharegistro'] . "</td>";
-					echo "<td align='right'>" . $dato['id_unidad'] . "</td>";
+					echo "<td align='right'>" . $dato['unidad'] . "</td>";
 					echo "<td align='right'>" . $dato['cantidad'] . "</td>";
-					echo "<td >" . $dato['descripcion'] . "</td>";
 					echo "<td class='text-center'>";
 						$variable = "pagina=" . $miPaginaActual;
 						$variable.="&opcion=nuevo";

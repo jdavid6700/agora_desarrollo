@@ -73,6 +73,8 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
+		echo $cadenaSql;
+		
 		$esteCampo = "marcoObjeto";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -82,9 +84,9 @@ class registrarForm {
                 
 			//INICIO INFORMACION OBJETO A CONTRATAR
 				echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0]['id_objeto'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][1] . '-' . $objetoEspecifico[0][2] . "</span></br>"; 
+				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0]['codigociiu'] . ' - ' . $objetoEspecifico[0]['actividad'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
 			//FIN INFORMACION OBJETO A CONTRATAR

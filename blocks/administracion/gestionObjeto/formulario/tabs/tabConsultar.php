@@ -316,7 +316,7 @@ class Formulario {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = "Actualmente no hay Solicitudes de Necesidad Relacionadas con Vigencia <b>".$valorVigenciaRelacionada."</b> </br> Ingrese por la pestaña Objeto a Contratar para crear una Relación. <br>";
+			$atributos ["mensaje"] = "Actualmente no hay Solicitudes de Necesidad Relacionadas con Vigencia <b>".$valorVigenciaRelacionada."</b> Sin Cotización </br> Ingrese por la pestaña Objeto a Contratar para crear una Relación. <br>";
 			
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );

@@ -88,21 +88,23 @@ class Sql extends \Sql {
 			
 			/* LISTA - OBJETO A CONTRATAR */
 			case "listaObjetoContratar" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_objeto,";
-				$cadenaSql .= " objetocontratar,";
-				$cadenaSql .= " codigociiu,";
-				$cadenaSql .= "	S.nombre AS actividad,";
-				$cadenaSql .= " fecharegistro,";
-				$cadenaSql .= " id_unidad,";
-				$cadenaSql .= " cantidad,";
-				$cadenaSql .= "	descripcion,";
-				$cadenaSql .= "	estado";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.objeto_contratar O";
-				$cadenaSql .= " JOIN agora.ciiu_subclase S ON S.id_subclase = O.codigociiu";
-				$cadenaSql .= " WHERE  estado = '" . $variable . "'"; // Activo
-				$cadenaSql .= " order by fechaRegistro";
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" O.id_objeto, ";
+				$cadenaSql.=" O.vigencia, ";
+				$cadenaSql.=" O.numero_solicitud, ";
+				$cadenaSql.=" O.codigociiu, ";
+				$cadenaSql.=" S.nombre AS actividad, ";
+				$cadenaSql.=" O.fecharegistro, ";
+				$cadenaSql.=" O.id_unidad, ";
+				$cadenaSql.=" (U.unidad || ' - ' || U.tipo) as unidad, ";
+				$cadenaSql.=" O.cantidad, ";
+				$cadenaSql.=" O.numero_cotizaciones, ";
+				$cadenaSql.=" O.estado ";
+				$cadenaSql.=" FROM agora.objeto_contratar O ";
+				$cadenaSql.=" JOIN agora.ciiu_subclase S ON S.id_subclase = O.codigociiu ";
+				$cadenaSql.=" JOIN agora.unidad U ON U.id_unidad = O.id_unidad ";
+				$cadenaSql.=" WHERE  estado = '" . $variable . "'";
+				$cadenaSql.=" ORDER BY fechaRegistro;";
 				break;
 			
 			/* LISTA - PROVEEDORS */
@@ -128,15 +130,22 @@ class Sql extends \Sql {
 			
 			/* CONSULTAR - OBJETO A CONTRATAR - ESPECIFICO */
 			case "objetoContratar" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " objetocontratar,";
-				$cadenaSql .= "	codigociiu,";
-				$cadenaSql .= "	S.nombre AS actividad,";
-				$cadenaSql .= "	descripcion";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.objeto_contratar O";
-				$cadenaSql .= " JOIN agora.ciiu_subclase S ON S.id_subclase = O.codigociiu";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable; // Activo
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" O.id_objeto, ";
+				$cadenaSql.=" O.vigencia, ";
+				$cadenaSql.=" O.numero_solicitud, ";
+				$cadenaSql.=" O.codigociiu, ";
+				$cadenaSql.=" S.nombre AS actividad, ";
+				$cadenaSql.=" O.fecharegistro, ";
+				$cadenaSql.=" O.id_unidad, ";
+				$cadenaSql.=" (U.unidad || ' - ' || U.tipo) as unidad, ";
+				$cadenaSql.=" O.cantidad, ";
+				$cadenaSql.=" O.numero_cotizaciones, ";
+				$cadenaSql.=" O.estado ";
+				$cadenaSql.=" FROM agora.objeto_contratar O ";
+				$cadenaSql.=" JOIN agora.ciiu_subclase S ON S.id_subclase = O.codigociiu ";
+				$cadenaSql.=" JOIN agora.unidad U ON U.id_unidad = O.id_unidad ";
+				$cadenaSql.=" WHERE  O.id_objeto=" . $variable; 
 				break;
 			
 			/* ACTUALIZAR - CONTRATO */
