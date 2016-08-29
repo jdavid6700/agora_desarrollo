@@ -184,7 +184,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['descripcion_proveedor'] . "', ";
 				$cadenaSql .= " '" . $variable ['anexo_rut'] . "', ";
 				$cadenaSql .= " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
-				$cadenaSql .= $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= " '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= $variable ['id_entidad_bancaria'] . ", ";
 				$cadenaSql .= " '" . $variable ['fecha_registro'] . "', ";
 				$cadenaSql .= " '" . $variable ['fecha_modificación'] . "', ";
@@ -356,7 +356,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " tel_asesor = " . " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
 				$cadenaSql .= " descripcion = " . " '" . $variable ['descripcion_proveedor'] . "', ";
 				$cadenaSql .= " tipo_cuenta_bancaria = " . " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
-				$cadenaSql .= " num_cuenta_bancaria = " . $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= " num_cuenta_bancaria = '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= " id_entidad_bancaria = " . $variable ['id_entidad_bancaria'] . ", ";
 				$cadenaSql .= " fecha_ultima_modificacion = " . " '" . $variable ['fecha_modificación'] . "' ";
 				$cadenaSql .= " WHERE id_proveedor = ";
@@ -653,35 +653,6 @@ class Sql extends \Sql {
 					$cadenaSql.=" P.fecha_registro,";
 					$cadenaSql.=" P.fecha_ultima_modificacion,";
 					$cadenaSql.=" P.estado";
-					
-					
-					//$cadenaSql.=" P.digito_verificacion,";
-					
-					//$cadenaSql.=" P.id_pais_origen,";
-					                                       
-// 					$cadenaSql.=" P.telefono,";
-// 					$cadenaSql.=" P.ext1,";
-// 					$cadenaSql.=" P.movil,";
-                                      
-// 					$cadenaSql.=" P.tipodocumento,";
-// 					$cadenaSql.=" P.numdocumento,";
-// 					$cadenaSql.=" P.primerapellido,";
-// 					$cadenaSql.=" P.segundoapellido,";                                        
-// 					$cadenaSql.=" P.primernombre,";
-// 					$cadenaSql.=" P.segundonombre,";
-					
-					//$cadenaSql.=" P.regimen,";
-					//$cadenaSql.=" P.importacion,";                                        
-					//$cadenaSql.=" P.pyme,";
-					//$cadenaSql.=" P.registro_mercantil,";
-					
-					//$cadenaSql.=" P.tipo_procedencia,";
-// 					$cadenaSql.=" P.pais,";
-// 					$cadenaSql.=" P.codigo_pais,";
-// 					$cadenaSql.=" P.codigo_postal,";
-					//$cadenaSql.=" P.tipo_doc_extranjero,";
-					//$cadenaSql.=" P.num_cedula_extranjeria,";
-					//$cadenaSql.=" P.num_pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
 					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.num_documento::text = U.usuario";
