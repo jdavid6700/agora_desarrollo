@@ -104,6 +104,23 @@ $( "#<?php echo $this->campoSeguro('perfilNat')?>" ).change(function() {
 	}
 });
 
+
+$( "#<?php echo $this->campoSeguro('personasCargo')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
+		$("#obligatorioCantidadPersonasACargo").show("fast");
+	}else{
+		$("#obligatorioCantidadPersonasACargo").hide("fast");
+	}
+});
+
+$( "#<?php echo $this->campoSeguro('discapacidad')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
+		$("#obligatorioTipoDiscapacidad").show("fast");
+	}else{
+		$("#obligatorioTipoDiscapacidad").hide("fast");
+	}
+});
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

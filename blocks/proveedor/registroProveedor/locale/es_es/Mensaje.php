@@ -259,6 +259,8 @@ $this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
 
+
+
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
@@ -276,9 +278,27 @@ $this->idioma["tabActividad"] = "Actividades Económicas";
 $this->idioma["noEncontroContrato"] =  "No se ha relacionado ningun contrato con la Universidad, por tal motivo no se puede expedir ningún certificado.";
 
 
+//*******************************************
 
+$this->idioma["marcoCaracterizacion"] = "Información de Caracterización";
+$this->idioma["grupoEtnico"] = "Grupo Étnico : ";
+$this->idioma["grupoEtnicoTitulo"]="Seleccione Grupo Étnico";
+$this->idioma["comunidadLGBT"] = "¿ Pertenece a la Comunidad LGBT ? : ";
+$this->idioma["comunidadLGBTTitulo"]="¿ Pertenece a la Comunidad LGBT ?";
+$this->idioma["cabezaFamilia"] = "¿ Es Cabeza de Familia ? : ";
+$this->idioma["cabezaFamiliaTitulo"]="¿ Es Cabeza de Familia ?";
+$this->idioma["personasCargo"] = "¿ Tiene Personas a Cargo ? : ";
+$this->idioma["personasCargoTitulo"]="¿ Tiene Personas a Cargo ?";
 
+$this->idioma["numeroPersonasCargo"] = "Número de Personas a Cargo : ";
+$this->idioma["numeroPersonasCargoTitulo"]=" Por favor indique cuantas Personas a Cargo tiene";
 
+$this->idioma["estadoCivil"] = "Estado Civil : ";
+$this->idioma["estadoCivilTitulo"]="Estado Civil actual";
 
+$this->idioma["discapacidad"] = "¿ Tiene alguna Discapacidad ? : ";
+$this->idioma["discapacidadTitulo"]="¿ Tiene alguna Discapacidad ?";
+$this->idioma["tipoDiscapacidad"] = "Tipo de Discapacidad : ";
+$this->idioma["tipoDiscapacidadTitulo"]="Tipo de Discapacidad";
 
 ?>

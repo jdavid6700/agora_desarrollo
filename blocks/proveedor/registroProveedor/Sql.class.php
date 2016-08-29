@@ -891,6 +891,39 @@ class Sql extends \Sql {
 				$cadenaSql .= 'valor_parametro != \'NIT\' ';
 				$cadenaSql .= 'AND clase_parametro = \'Tipo Documento\';';
 				break;
+				
+			case 'consultarGrupoEtnico' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Tipo Etnia\';';
+				break;
+				
+			case 'consultarTipoEstadoCivil' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Estado Civil\';';
+				break;
+				
+			case 'consultarTipoDiscapacidad' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Tipo Discapacidad\';';
+				break;
 
 		}
 		
