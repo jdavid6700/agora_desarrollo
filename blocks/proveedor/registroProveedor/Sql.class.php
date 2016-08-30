@@ -361,7 +361,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " especialidad,";
 				$cadenaSql .= " monto_capital_autorizado,";
 				$cadenaSql .= " genero,";
-
 				$cadenaSql .= " grupo_etnico,";
 				$cadenaSql .= " comunidad_lgbt,";
 				$cadenaSql .= " cabeza_familia,";
@@ -370,7 +369,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " estado_civil,";
 				$cadenaSql .= " tipo_discapacidad,";
 				$cadenaSql .= " discapacitado";
-				
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_persona_natural";
 				$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
@@ -429,12 +427,40 @@ class Sql extends \Sql {
 				$cadenaSql .= " cargo = " . " '" . $variable ['cargo'] . "',";
 				$cadenaSql .= " id_pais_nacimiento = " . " " . $variable ['id_pais_nacimiento'] . ",";
 				$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
-				$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
-				$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
+				if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 22){
+					$cadenaSql .= " profesion = null,";
+					$cadenaSql .= " especialidad = null,";
+				}else if($variable ['id_perfil'] == 20){
+					$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
+					$cadenaSql .= " especialidad = null,";
+				}else{
+					$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
+					$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
+				}
+				
 				if($variable ['monto_capital_autorizado'] != null){
 						$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
 				}
-				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "',";
+				
+				//*************************************************************
+				$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+				$cadenaSql .= " comunidad_lgbt =" . " " . $variable ['comunidadLGBT'] . ",";
+				$cadenaSql .= " cabeza_familia =" . " " . $variable ['cabezaFamilia'] . ",";
+				$cadenaSql .= " personas_a_cargo =" . " " . $variable ['personasCargo'] . ",";
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " numero_personas_a_cargo =" . " " . $variable ['numeroPersonasCargo'] . ",";
+				}else{
+					$cadenaSql .= " numero_personas_a_cargo = null,";
+				}
+				$cadenaSql .= " estado_civil =" . " '" . $variable ['estadoCivil'] . "',";
+				if($variable ['discapacidad'] == 'TRUE'){
+					$cadenaSql .= " tipo_discapacidad =" . " '" . $variable ['tipoDiscapacidad'] . "',";
+				}else{
+					$cadenaSql .= " tipo_discapacidad = null,";
+				}
+				$cadenaSql .= " discapacitado =" . " " . $variable ['discapacidad'] . "";
+				//*************************************************************
 				$cadenaSql .= " WHERE num_documento_persona = ";
 				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
 				break;

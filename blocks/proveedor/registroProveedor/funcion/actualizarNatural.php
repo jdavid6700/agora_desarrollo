@@ -128,6 +128,120 @@ class Formulario {
 					}
 				}
 				
+				if(isset($_REQUEST['grupoEtnico'])){//CAST genero tipoCuenta
+					switch($_REQUEST['grupoEtnico']){
+						case 23 :
+							$_REQUEST['grupoEtnico']='AFRODESCENDIENTES';
+							break;
+						case 24 :
+							$_REQUEST['grupoEtnico']='INDIGENAS';
+							break;
+						case 25 :
+							$_REQUEST['grupoEtnico']='RAIZALES';
+							break;
+						case 26 :
+							$_REQUEST['grupoEtnico']='ROM';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['estadoCivil'])){//CAST genero tipoCuenta
+					switch($_REQUEST['estadoCivil']){
+						case 27 :
+							$_REQUEST['estadoCivil']='SOLTERO';
+							break;
+						case 28 :
+							$_REQUEST['estadoCivil']='CASADO';
+							break;
+						case 29 :
+							$_REQUEST['estadoCivil']='UNION LIBRE';
+							break;
+						case 30 :
+							$_REQUEST['estadoCivil']='VIUDO';
+							break;
+						case 31 :
+							$_REQUEST['estadoCivil']='DIVORCIADO';
+							break;
+					}
+				}
+				
+				
+				if(isset($_REQUEST['tipoDiscapacidad'])){//CAST genero tipoCuenta
+					switch($_REQUEST['tipoDiscapacidad']){
+						case 32 :
+							$_REQUEST['tipoDiscapacidad']='FISICA';
+							break;
+						case 33 :
+							$_REQUEST['tipoDiscapacidad']='SENSORIAL';
+							break;
+						case 34 :
+							$_REQUEST['tipoDiscapacidad']='AUDITIVA';
+							break;
+						case 35 :
+							$_REQUEST['tipoDiscapacidad']='VISUAL';
+							break;
+						case 36 :
+							$_REQUEST['tipoDiscapacidad']='PSIQUICA';
+							break;
+						case 37 :
+							$_REQUEST['tipoDiscapacidad']='MENTAL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['comunidadLGBT'])){
+					switch($_REQUEST ['comunidadLGBT']){
+						case 1 :
+							$_REQUEST ['comunidadLGBT']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['comunidadLGBT']='FALSE';
+							break;
+						default:
+							$_REQUEST ['comunidadLGBT']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['cabezaFamilia'])){
+					switch($_REQUEST ['cabezaFamilia']){
+						case 1 :
+							$_REQUEST ['cabezaFamilia']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['cabezaFamilia']='FALSE';
+							break;
+						default:
+							$_REQUEST ['cabezaFamilia']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['personasCargo'])){
+					switch($_REQUEST ['personasCargo']){
+						case 1 :
+							$_REQUEST ['personasCargo']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['personasCargo']='FALSE';
+							break;
+						default:
+							$_REQUEST ['personasCargo']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['discapacidad'])){
+					switch($_REQUEST ['discapacidad']){
+						case 1 :
+							$_REQUEST ['discapacidad']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['discapacidad']='FALSE';
+							break;
+						default:
+							$_REQUEST ['discapacidad']='NULL';
+							break;
+					}
+				}
+				
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
 				$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
@@ -195,7 +309,15 @@ class Formulario {
 						'id_perfil' => $_REQUEST['perfilNat'],
 						'profesion' => $_REQUEST['profesionNat'],
 						'especialidad' => $_REQUEST['especialidadNat'],
-						'monto_capital_autorizado' => $_REQUEST['montoNat']
+						'monto_capital_autorizado' => $_REQUEST['montoNat'],
+						'grupoEtnico' => $_REQUEST['grupoEtnico'],
+						'comunidadLGBT' => $_REQUEST['comunidadLGBT'],
+						'cabezaFamilia' => $_REQUEST['cabezaFamilia'],
+						'personasCargo' => $_REQUEST['personasCargo'],
+						'numeroPersonasCargo' => $_REQUEST['numeroPersonasCargo'],
+						'estadoCivil' => $_REQUEST['estadoCivil'],
+						'discapacidad' => $_REQUEST['discapacidad'],
+						'tipoDiscapacidad' => $_REQUEST['tipoDiscapacidad']
 				);
 				
 				
