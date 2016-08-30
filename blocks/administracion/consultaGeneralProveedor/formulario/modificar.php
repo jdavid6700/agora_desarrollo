@@ -172,6 +172,14 @@ class Formulario {
 				$_REQUEST['profesionNat'] =  $resultadoPersonaNaturalInfo[0]["profesion"];
 				$_REQUEST['especialidadNat'] =  $resultadoPersonaNaturalInfo[0]["especialidad"];
 				
+				$_REQUEST['grupoEtnico'] = $resultadoPersonaNaturalInfo[0]["grupo_etnico"];
+				$_REQUEST['comunidadLGBT'] = $resultadoPersonaNaturalInfo[0]["comunidad_lgbt"];
+				$_REQUEST['cabezaFamilia'] = $resultadoPersonaNaturalInfo[0]["cabeza_familia"];
+				$_REQUEST['personasCargo'] = $resultadoPersonaNaturalInfo[0]["personas_a_cargo"];
+				$_REQUEST['numeroPersonasCargo'] = $resultadoPersonaNaturalInfo[0]["numero_personas_a_cargo"];
+				$_REQUEST['estadoCivil'] = $resultadoPersonaNaturalInfo[0]["estado_civil"];
+				$_REQUEST['discapacidad'] = $resultadoPersonaNaturalInfo[0]["discapacitado"];
+				$_REQUEST['tipoDiscapacidad'] = $resultadoPersonaNaturalInfo[0]["tipo_discapacidad"];
 				
 				if(isset($_REQUEST['perfilNat'])){//CAST
 					switch($_REQUEST['perfilNat']){
@@ -189,6 +197,123 @@ class Formulario {
 							break;
 						case 22 :
 							$_REQUEST ['perfilNat'] = 5;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['comunidadLGBT'])){
+					switch($_REQUEST ['comunidadLGBT']){
+						case 't' :
+							$_REQUEST ['comunidadLGBT'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['comunidadLGBT'] = 2;
+							break;
+						default:
+							$_REQUEST ['comunidadLGBT'] = -1;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['personasCargo'])){
+					switch($_REQUEST ['personasCargo']){
+						case 't' :
+							$_REQUEST ['personasCargo'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['personasCargo'] = 2;
+							break;
+						default:
+							$_REQUEST ['personasCargo'] = -1;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['cabezaFamilia'])){
+					switch($_REQUEST ['cabezaFamilia']){
+						case 't' :
+							$_REQUEST ['cabezaFamilia'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['cabezaFamilia'] = 2;
+							break;
+						default:
+							$_REQUEST ['cabezaFamilia'] = -1;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['discapacidad'])){
+					switch($_REQUEST ['discapacidad']){
+						case 't' :
+							$_REQUEST ['discapacidad'] = 1;
+							break;
+						case 'f' :
+							$_REQUEST ['discapacidad'] = 2;
+							break;
+						default:
+							$_REQUEST ['discapacidad'] = -1;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['grupoEtnico'])){//CAST
+					switch($_REQUEST['grupoEtnico']){
+						case 'AFRODESCENDIENTES' :
+							$_REQUEST['grupoEtnico'] = 23;
+							break;
+						case 'INDIGENAS' :
+							$_REQUEST['grupoEtnico'] = 24;
+							break;
+						case 'RAIZALES' :
+							$_REQUEST['grupoEtnico'] = 25;
+							break;
+						case 'ROM' :
+							$_REQUEST['grupoEtnico'] = 26;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['estadoCivil'])){//CAST
+					switch($_REQUEST['estadoCivil']){
+						case 'SOLTERO' :
+							$_REQUEST['estadoCivil'] = 27;
+							break;
+						case 'CASADO' :
+							$_REQUEST['estadoCivil'] = 28;
+							break;
+						case 'UNION LIBRE' :
+							$_REQUEST['estadoCivil'] = 29;
+							break;
+						case 'VIUDO' :
+							$_REQUEST['estadoCivil'] = 30;
+							break;
+						case 'DIVORCIADO' :
+							$_REQUEST['estadoCivil'] = 31;
+							break;
+					}
+				}
+				
+				
+				if(isset($_REQUEST['tipoDiscapacidad'])){//CAST
+					switch($_REQUEST['tipoDiscapacidad']){
+						case 'FISICA' :
+							$_REQUEST['tipoDiscapacidad'] = 32;
+							break;
+						case 'SENSORIAL' :
+							$_REQUEST['tipoDiscapacidad'] = 33;
+							break;
+						case 'AUDITIVA' :
+							$_REQUEST['tipoDiscapacidad'] = 34;
+							break;
+						case 'VISUAL' :
+							$_REQUEST['tipoDiscapacidad'] = 35;
+							break;
+						case 'PSIQUICA' :
+							$_REQUEST['tipoDiscapacidad'] = 36;
+							break;
+						case 'MENTAL' :
+							$_REQUEST['tipoDiscapacidad'] = 37;
 							break;
 					}
 				}
@@ -3567,6 +3692,343 @@ class Formulario {
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
 		
+				
+				
+				$esteCampo = "marcoCaracterizacion";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "grupoEtnico";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = " ";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarGrupoEtnico" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "comunidadLGBT";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 350;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$matrizItems=array(
+						array(1,'Si'),
+						array(2,'No')
+				);
+				$atributos['matrizItems'] = $matrizItems;
+					
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "cabezaFamilia";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 350;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$matrizItems=array(
+						array(1,'Si'),
+						array(2,'No')
+				);
+				$atributos['matrizItems'] = $matrizItems;
+					
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "personasCargo";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 350;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$matrizItems=array(
+						array(1,'Si'),
+						array(2,'No')
+				);
+				$atributos['matrizItems'] = $matrizItems;
+					
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				$atributos ["id"] = "obligatorioCantidadPersonasACargo";
+				$atributos ["estilo"] = "Marco";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
+				{
+					// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
+					$esteCampo = 'numeroPersonasCargo';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['tipo'] = 'text';
+					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['marco'] = true;
+					$atributos ['estiloMarco'] = '';
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['columnas'] = 2;
+					$atributos ['dobleLinea'] = 0;
+					$atributos ['tabIndex'] = $tab;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ['validar'] = 'required, custom[number], minSize[1],maxSize[10]';
+				
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+					$atributos ['deshabilitado'] = false;
+					$atributos ['tamanno'] = 15;
+					$atributos ['maximoTamanno'] = '';
+					$atributos ['anchoEtiqueta'] = 350;
+					$tab ++;
+				
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroTexto ( $atributos );
+					unset ( $atributos );
+					// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
+				}
+				echo $this->miFormulario->division ( "fin");
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "estadoCivil";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = " ";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarTipoEstadoCivil" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "discapacidad";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 350;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				// Valores a mostrar en el control
+				
+				$matrizItems=array(
+						array(1,'Si'),
+						array(2,'No')
+				);
+				$atributos['matrizItems'] = $matrizItems;
+					
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				echo "<br>";
+				
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				$atributos ["id"] = "obligatorioTipoDiscapacidad";
+				$atributos ["estilo"] = "Marco";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				unset ( $atributos );
+				{
+					// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+					$esteCampo = "tipoDiscapacidad";
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['tab'] = $tab ++;
+					$atributos ['anchoEtiqueta'] = 200;
+					$atributos ['evento'] = '';
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['seleccion'] = -1;
+					}
+					$atributos ['deshabilitado'] = false;
+					$atributos ['columnas'] = 1;
+					$atributos ['tamanno'] = 1;
+					$atributos ['estilo'] = "jqueryui";
+					$atributos ['validar'] = "required";
+					$atributos ['limitar'] = false;
+					$atributos ['anchoCaja'] = 60;
+					$atributos ['miEvento'] = '';
+					// Valores a mostrar en el control
+				
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarTipoDiscapacidad" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+					$atributos ['matrizItems'] = $matrizItems;
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					unset ( $atributos );
+					// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				}
+				echo $this->miFormulario->division ( "fin");
+				
+				
+				
+				
+				
+				
+				
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				
+				
 		
 				$esteCampo = "marcoContacto";
 				$atributos ['id'] = $esteCampo;

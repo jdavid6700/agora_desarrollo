@@ -125,7 +125,22 @@ $('#<?php echo $this->campoSeguro('regimenContributivo')?>').select2();
 $('#<?php echo $this->campoSeguro('pyme')?>').select2();
 $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
+$('#<?php echo $this->campoSeguro('grupoEtnico')?>').width(250);
+$("#<?php echo $this->campoSeguro('grupoEtnico')?>").select2();
+$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(150);
+$("#<?php echo $this->campoSeguro('comunidadLGBT')?>").select2();
+$('#<?php echo $this->campoSeguro('cabezaFamilia')?>').width(150);
+$("#<?php echo $this->campoSeguro('cabezaFamilia')?>").select2();
+$('#<?php echo $this->campoSeguro('personasCargo')?>').width(150);
+$("#<?php echo $this->campoSeguro('personasCargo')?>").select2();
 
+$('#<?php echo $this->campoSeguro('estadoCivil')?>').width(250);
+$("#<?php echo $this->campoSeguro('estadoCivil')?>").select2();
+
+$('#<?php echo $this->campoSeguro('discapacidad')?>').width(150);
+$("#<?php echo $this->campoSeguro('discapacidad')?>").select2();
+$('#<?php echo $this->campoSeguro('tipoDiscapacidad')?>').width(250);
+$("#<?php echo $this->campoSeguro('tipoDiscapacidad')?>").select2();
 
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
 
@@ -147,6 +162,18 @@ if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 1){
 }else{
 	$("#marcoDatosNatural").hide("fast");
 	$("#marcoDatosJuridica").hide("fast");
+}
+
+if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
+	$("#obligatorioCantidadPersonasACargo").show("fast");
+}else{
+	$("#obligatorioCantidadPersonasACargo").hide("fast");
+}
+
+if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
+	$("#obligatorioTipoDiscapacidad").show("fast");
+}else{
+	$("#obligatorioTipoDiscapacidad").hide("fast");
 }
 
 
