@@ -360,7 +360,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
 				$cadenaSql .= " monto_capital_autorizado,";
-				$cadenaSql .= " genero";
+				$cadenaSql .= " genero,";
+
+				$cadenaSql .= " grupo_etnico,";
+				$cadenaSql .= " comunidad_lgbt,";
+				$cadenaSql .= " cabeza_familia,";
+				$cadenaSql .= " personas_a_cargo,";
+				$cadenaSql .= " numero_personas_a_cargo,";
+				$cadenaSql .= " estado_civil,";
+				$cadenaSql .= " tipo_discapacidad,";
+				$cadenaSql .= " discapacitado";
+				
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_persona_natural";
 				$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
