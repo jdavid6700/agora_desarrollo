@@ -825,22 +825,38 @@ class registrarForm {
 									{
 						
 										$atributos ["id"] = "botonesPanel";
-										$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+										$atributos ["estilo"] = "col-md-12 btn-group";
 										echo $this->miFormulario->division ( "inicio", $atributos );
 										{
-											echo "<input type=\"button\" id=\"btOper1\" value=\"A\" class=\"btn btn-primary\"/>";
-											echo "<input type=\"button\" id=\"btOper2\" value=\"B\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper3\" value=\"C\" class=\"btn btn-primary\"/>";
-											echo "<input type=\"button\" id=\"btOper4\" value=\"D\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper5\" value=\"E\" class=\"btn btn-primary\"/>";
-											echo "<input type=\"button\" id=\"btOper6\" value=\"F\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper7\" value=\"G\" class=\"btn btn-primary\"/>";
-											echo "<input type=\"button\" id=\"btOper8\" value=\"H\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper9\" value=\"I\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper10\" value=\"J\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper11\" value=\"K\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper12\" value=\"L\" class=\"btn btn-primary\" />";
-											echo "<input type=\"button\" id=\"btOper13\" value=\"Borrar\" class=\"btn btn-danger\" />";
+											echo "<input type=\"button\" id=\"btOper1\" value=\"A\" class=\"btn btn-primary btn-xs\"/>";
+											echo "<input type=\"button\" id=\"btOper2\" value=\"B\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper3\" value=\"C\" class=\"btn btn-primary btn-xs\"/>";
+											echo "<input type=\"button\" id=\"btOper4\" value=\"D\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper5\" value=\"E\" class=\"btn btn-primary btn-xs\"/>";
+											echo "<input type=\"button\" id=\"btOper6\" value=\"F\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper7\" value=\"G\" class=\"btn btn-primary btn-xs\"/>";
+											echo "<input type=\"button\" id=\"btOper8\" value=\"H\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper9\" value=\"I\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper10\" value=\"J\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper11\" value=\"K\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper12\" value=\"L\" class=\"btn btn-primary btn-xs\" />";
+											
+											echo "<input type=\"button\" id=\"btOper15\" value=\"M\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper16\" value=\"N\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper17\" value=\"O\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper18\" value=\"P\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper19\" value=\"Q\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper20\" value=\"R\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper21\" value=\"S\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper22\" value=\"T\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper23\" value=\"U\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper24\" value=\"V\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper25\" value=\"W\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper26\" value=\"X\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper27\" value=\"Y\" class=\"btn btn-primary btn-xs\" />";
+											echo "<input type=\"button\" id=\"btOper28\" value=\"Z\" class=\"btn btn-primary btn-xs\" />";
+											
+											echo "<input type=\"button\" id=\"btOper13\" value=\"Borrar\" class=\"btn btn-danger btn-xs\" />";
 										}
 										echo $this->miFormulario->division ( "fin" );
 						
@@ -915,7 +931,7 @@ class registrarForm {
 										unset($atributos);
 											
 										$atributos ["id"] = "parametros";
-										$atributos ["estilo"] = "col-md-12";
+										$atributos ["estilo"] = "col-md-10";
 										echo $this->miFormulario->division ( "inicio", $atributos );
 										{
 											// ---------------- CONTROL: Select --------------------------------------------------------
@@ -960,6 +976,20 @@ class registrarForm {
 											$atributos = array_merge ( $atributos, $atributosGlobales );
 											echo $this->miFormulario->campoCuadroLista ( $atributos );
 											// --------------- FIN CONTROL : Select --------------------------------------------------
+										}
+										echo $this->miFormulario->division ( "fin" );
+										
+										$atributos ["id"] = "botonParametros";
+										$atributos ["estilo"] = "col-md-2";
+										echo $this->miFormulario->division ( "inicio", $atributos );
+										{
+											$atributos ["id"] = "botonesPanel";
+											$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+											echo $this->miFormulario->division ( "inicio", $atributos );
+											{
+												echo "<input type=\"button\" id=\"btOper14\" value=\"Insertar\" class=\"btn btn-success\" />";
+											}
+											echo $this->miFormulario->division ( "fin" );
 										}
 										echo $this->miFormulario->division ( "fin" );
 											
@@ -3454,22 +3484,38 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 						{
 								
 							$atributos ["id"] = "botonesPanel";
-							$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+							$atributos ["estilo"] = "col-md-12 btn-group";
 							echo $this->miFormulario->division ( "inicio", $atributos );
 							{
-								echo "<input type=\"button\" id=\"btOper1Nat\" value=\"A\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper2Nat\" value=\"B\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper3Nat\" value=\"C\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper4Nat\" value=\"D\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper5Nat\" value=\"E\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper6Nat\" value=\"F\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper7Nat\" value=\"G\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper8Nat\" value=\"H\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper9Nat\" value=\"I\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper10Nat\" value=\"J\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper11Nat\" value=\"K\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper12Nat\" value=\"L\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper13Nat\" value=\"Borrar\" class=\"btn btn-danger\" />";
+								echo "<input type=\"button\" id=\"btOper1Nat\" value=\"A\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper2Nat\" value=\"B\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper3Nat\" value=\"C\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper4Nat\" value=\"D\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper5Nat\" value=\"E\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper6Nat\" value=\"F\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper7Nat\" value=\"G\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper8Nat\" value=\"H\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper9Nat\" value=\"I\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper10Nat\" value=\"J\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper11Nat\" value=\"K\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper12Nat\" value=\"L\" class=\"btn btn-primary btn-xs\" />";
+								
+								echo "<input type=\"button\" id=\"btOper15Nat\" value=\"M\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper16Nat\" value=\"N\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper17Nat\" value=\"O\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper18Nat\" value=\"P\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper19Nat\" value=\"Q\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper20Nat\" value=\"R\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper21Nat\" value=\"S\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper22Nat\" value=\"T\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper23Nat\" value=\"U\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper24Nat\" value=\"V\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper25Nat\" value=\"W\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper26Nat\" value=\"X\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper27Nat\" value=\"Y\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper28Nat\" value=\"Z\" class=\"btn btn-primary btn-xs\" />";
+								
+								echo "<input type=\"button\" id=\"btOper13Nat\" value=\"Borrar\" class=\"btn btn-danger btn-xs\" />";
 							}
 							echo $this->miFormulario->division ( "fin" );
 						
@@ -3544,7 +3590,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 							unset($atributos);
 					
 							$atributos ["id"] = "parametrosNat";
-							$atributos ["estilo"] = "col-md-12";
+							$atributos ["estilo"] = "col-md-10";
 							echo $this->miFormulario->division ( "inicio", $atributos );
 							{
 								// ---------------- CONTROL: Select --------------------------------------------------------
@@ -3589,6 +3635,21 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 								$atributos = array_merge ( $atributos, $atributosGlobales );
 								echo $this->miFormulario->campoCuadroLista ( $atributos );
 								// --------------- FIN CONTROL : Select --------------------------------------------------
+							}
+							echo $this->miFormulario->division ( "fin" );
+							
+							
+							$atributos ["id"] = "botonParametrosNat";
+							$atributos ["estilo"] = "col-md-2";
+							echo $this->miFormulario->division ( "inicio", $atributos );
+							{
+								$atributos ["id"] = "botonesPanel";
+								$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+								echo $this->miFormulario->division ( "inicio", $atributos );
+								{
+									echo "<input type=\"button\" id=\"btOper14Nat\" value=\"Insertar\" class=\"btn btn-success\" />";
+								}
+								echo $this->miFormulario->division ( "fin" );
 							}
 							echo $this->miFormulario->division ( "fin" );
 					
