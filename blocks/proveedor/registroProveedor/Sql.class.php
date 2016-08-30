@@ -250,7 +250,21 @@ class Sql extends \Sql {
 				if($variable ['monto_capital_autorizado'] != null){
 					$cadenaSql .= " monto_capital_autorizado,";
 				}
-				$cadenaSql .= " genero";
+				$cadenaSql .= " genero,";
+				//**********************************************************************
+				$cadenaSql .= " grupo_etnico,";
+				$cadenaSql .= " comunidad_lgbt,";
+				$cadenaSql .= " cabeza_familia,";
+				$cadenaSql .= " personas_a_cargo,";
+				if($variable ['numeroPersonasCargo'] != null){
+					$cadenaSql .= " numero_personas_a_cargo,";
+				}
+				$cadenaSql .= " estado_civil,";
+				if($variable ['tipoDiscapacidad'] != null){
+					$cadenaSql .= " tipo_discapacidad,";
+				}
+				$cadenaSql .= " discapacitado";
+				//***********************************************************************
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
@@ -269,7 +283,20 @@ class Sql extends \Sql {
 				if($variable ['monto_capital_autorizado'] != null){
 					$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
 				}
-				$cadenaSql .= " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " '" . $variable ['genero'] . "',";
+				
+				$cadenaSql .= " '" . $variable ['grupoEtnico'] . "',";
+				$cadenaSql .= " " . $variable ['comunidadLGBT'] . ",";
+				$cadenaSql .= " " . $variable ['cabezaFamilia'] . ",";
+				$cadenaSql .= " " . $variable ['personasCargo'] . ",";
+				if($variable ['numeroPersonasCargo'] != null){
+					$cadenaSql .= " " . $variable ['numeroPersonasCargo'] . ",";
+				}
+				$cadenaSql .= " '" . $variable ['estadoCivil'] . "',";
+				if($variable ['tipoDiscapacidad'] != null){
+					$cadenaSql .= " '" . $variable ['tipoDiscapacidad'] . "',";
+				}
+				$cadenaSql .= " " . $variable ['discapacidad'] . "";
 				$cadenaSql .= " ); ";
 				break;
 				
