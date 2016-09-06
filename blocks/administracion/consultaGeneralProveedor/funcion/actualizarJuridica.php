@@ -37,6 +37,8 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/administracion/" . $esteBloque ['nombre'];
 		
+		$hostFiles = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/registroProveedor";
+		
 
 		unset($resultado);
 		
@@ -60,11 +62,11 @@ class Formulario {
 			if ($archivo1 != "") {
 				$CambioARCHIVO = true;
 				// guardamos el archivo a la carpeta files
-				$destino = $rutaBloque . "/files/" . $nombreDoc;
+				$destino = "/usr/local/apache/htdocs/agora/blocks/proveedor/registroProveedor/files/" . $nombreDoc;
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					$_REQUEST ['destino'] = $hostFiles . "/files/" . $prefijo . "-" . $archivo1;
 					
 					//Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
@@ -80,7 +82,7 @@ class Formulario {
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
 		}
-	
+		
 		
 		if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
 			switch($_REQUEST['tipoPersona']){
@@ -160,9 +162,7 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 		
-		//var_dump($_REQUEST);
-		//var_dump($cadenaSql);
-		//exit;
+		
 		
 		$datosTelefonoFijoPersonaProveedor = array (
 				'id_telefono' => $_REQUEST['id_Telefono'],
@@ -177,11 +177,10 @@ class Formulario {
 		
 		
 		
-		
 		$datosInformacionPersonaNatural = array (
 				'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
 				'fki_numero_documento' => $_REQUEST['numeroDocumento'],
-				'digito_verificacion' => $_REQUEST['digito'],
+				'digito_verificacion' => $_REQUEST['digitoRepre'],
 				'primer_apellido' => $_REQUEST['primerApellido'],
 				'segundo_apellido' => $_REQUEST['segundoApellido'],
 				'primer_nombre' => $_REQUEST['primerNombre'],
@@ -192,14 +191,21 @@ class Formulario {
 				'id_perfil' => $_REQUEST['perfil'],
 				'profesion' => $_REQUEST['profesion'],
 				'especialidad' => $_REQUEST['especialidad'],
-				'monto_capital_autorizado' => null
+				'monto_capital_autorizado' => null,
+				'grupoEtnico' => null,
+				'comunidadLGBT' => 'FALSE',
+				'cabezaFamilia' => 'FALSE',
+				'personasCargo' => 'FALSE',
+				'numeroPersonasCargo' => null,
+				'estadoCivil' => 'SOLTERO',
+				'discapacidad' => 'FALSE',
+				'tipoDiscapacidad' => null
 		);
 		
 		
 		//Guardar datos PROVEEDOR REPRESENTANTE
 		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-		
 		
 		$datosProveedorXRepre = array (
 				'fki_id_Proveedor' => $_REQUEST['id_Proveedor'],
@@ -210,7 +216,6 @@ class Formulario {
 		
 		$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorXRepresentante",$datosProveedorXRepre);
 		$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
-		
 		
 		
 		if(isset($_REQUEST['paisEmpresa'])){//CAST
@@ -379,7 +384,7 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorJuridica", $datosInformacionPersonaJuridica );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
-				
+		
 
 				if ($resultado) {
 					redireccion::redireccionar ( 'actualizo', $_REQUEST['nit'] );

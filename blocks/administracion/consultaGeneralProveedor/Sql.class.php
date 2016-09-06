@@ -542,7 +542,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "',";
 					
 					//*************************************************************
-					$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+					if($variable ['grupoEtnico'] != null){
+						$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+					}
 					$cadenaSql .= " comunidad_lgbt =" . " " . $variable ['comunidadLGBT'] . ",";
 					$cadenaSql .= " cabeza_familia =" . " " . $variable ['cabezaFamilia'] . ",";
 					$cadenaSql .= " personas_a_cargo =" . " " . $variable ['personasCargo'] . ",";

@@ -161,10 +161,6 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 		
-		//var_dump($_REQUEST);
-		//var_dump($cadenaSql);
-		//exit;
-		
 		$datosTelefonoFijoPersonaProveedor = array (
 				'id_telefono' => $_REQUEST['id_Telefono'],
 				'num_telefono' => $_REQUEST['telefono'],
@@ -182,7 +178,7 @@ class Formulario {
 		$datosInformacionPersonaNatural = array (
 				'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
 				'fki_numero_documento' => $_REQUEST['numeroDocumento'],
-				'digito_verificacion' => $_REQUEST['digito'],
+				'digito_verificacion' => $_REQUEST['digitoRepre'],
 				'primer_apellido' => $_REQUEST['primerApellido'],
 				'segundo_apellido' => $_REQUEST['segundoApellido'],
 				'primer_nombre' => $_REQUEST['primerNombre'],
@@ -193,7 +189,15 @@ class Formulario {
 				'id_perfil' => $_REQUEST['perfil'],
 				'profesion' => $_REQUEST['profesion'],
 				'especialidad' => $_REQUEST['especialidad'],
-				'monto_capital_autorizado' => null
+				'monto_capital_autorizado' => null,
+				'grupoEtnico' => null,
+				'comunidadLGBT' => 'FALSE',
+				'cabezaFamilia' => 'FALSE',
+				'personasCargo' => 'FALSE',
+				'numeroPersonasCargo' => null,
+				'estadoCivil' => 'SOLTERO',
+				'discapacidad' => 'FALSE',
+				'tipoDiscapacidad' => null
 		);
 		
 		

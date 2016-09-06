@@ -252,7 +252,9 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= " genero,";
 				//**********************************************************************
-				$cadenaSql .= " grupo_etnico,";
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " grupo_etnico,";
+				}
 				$cadenaSql .= " comunidad_lgbt,";
 				$cadenaSql .= " cabeza_familia,";
 				$cadenaSql .= " personas_a_cargo,";
@@ -285,7 +287,9 @@ class Sql extends \Sql {
 				}
 				$cadenaSql .= " '" . $variable ['genero'] . "',";
 				
-				$cadenaSql .= " '" . $variable ['grupoEtnico'] . "',";
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " '" . $variable ['grupoEtnico'] . "',";
+				}
 				$cadenaSql .= " " . $variable ['comunidadLGBT'] . ",";
 				$cadenaSql .= " " . $variable ['cabezaFamilia'] . ",";
 				$cadenaSql .= " " . $variable ['personasCargo'] . ",";
@@ -444,7 +448,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "',";
 				
 				//*************************************************************
-				$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+				}
 				$cadenaSql .= " comunidad_lgbt =" . " " . $variable ['comunidadLGBT'] . ",";
 				$cadenaSql .= " cabeza_familia =" . " " . $variable ['cabezaFamilia'] . ",";
 				$cadenaSql .= " personas_a_cargo =" . " " . $variable ['personasCargo'] . ",";

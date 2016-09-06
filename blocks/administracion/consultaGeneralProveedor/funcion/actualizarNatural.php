@@ -37,10 +37,11 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/administracion/" . $esteBloque ['nombre'];
 		
+		$hostFiles = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/registroProveedor";
 
 		unset($resultado);
 			
-			// Guardar el archivo
+		// Guardar el archivo
 		if ($_FILES) {
 			foreach ( $_FILES as $key => $values ) {
 				$archivo = $_FILES [$key];
@@ -51,15 +52,18 @@ class Formulario {
 			$archivo1 = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
 			$nombreDoc = $prefijo . "-" . $archivo1;
+				
+			//echo $archivo ['tmp_name'];
+			//echo "/usr/local/apache/htdocs/agora/blocks/proveedor/registroProveedor/files/" . $nombreDoc;
 			
 			if ($archivo1 != "") {
 				// guardamos el archivo a la carpeta files
-				$destino = $rutaBloque . "/files/" . $nombreDoc;
-				
+				$destino = "/usr/local/apache/htdocs/agora/blocks/proveedor/registroProveedor/files/" . $nombreDoc;
+		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
-					
+					$_REQUEST ['destino'] = $hostFiles . "/files/" . $prefijo . "-" . $archivo1;
+						
 					// Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
 					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
@@ -71,9 +75,7 @@ class Formulario {
 			}
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
-		}		
-		
-		
+		}
 		
 				if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
 					switch($_REQUEST['tipoPersona']){
@@ -290,10 +292,6 @@ class Formulario {
 				
 				$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
 				$id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-				
-				
-				
-				
 				
 				
 				$datosInformacionPersonaNatural = array (

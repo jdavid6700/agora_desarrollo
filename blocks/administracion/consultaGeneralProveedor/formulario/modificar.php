@@ -4367,11 +4367,6 @@ class Formulario {
 									$atributos ['etiquetaObligatorio'] = false;
 									$atributos ['validar'] = '';
 										
-									//$atributos ['cadena_sql'] = $this->miSql->getCadenaSql("buscarCategoriaParametro");
-									//$matrizParametros=$primerRecursoDB->ejecutarAcceso($atributos['cadena_sql'], "busqueda");
-										
-									//$atributos['matrizItems'] = $matrizParametros;
-										
 									$matrizItems=array(
 											array(1,'Nomenclatura'),
 											array(2,'TEST'),

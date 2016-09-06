@@ -349,6 +349,7 @@ class Formulario {
 				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNatural );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
+				
 				if ($resultado) {
 						//Insertar datos en la tabla USUARIO
 						$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['documentoNat'] );
