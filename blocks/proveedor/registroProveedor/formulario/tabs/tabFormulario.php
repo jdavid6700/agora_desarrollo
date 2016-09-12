@@ -3496,11 +3496,6 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-					/* Valores a mostrar en el control
-					 $matrizItems = array (
-					 array ( 1, 'Ahorros' ),
-					 array ( 2, 'Corriente' )
-					 );*/
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->campoCuadroLista ( $atributos );

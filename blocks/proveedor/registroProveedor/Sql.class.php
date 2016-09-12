@@ -265,8 +265,26 @@ class Sql extends \Sql {
 				if($variable ['tipoDiscapacidad'] != null){
 					$cadenaSql .= " tipo_discapacidad,";
 				}
-				$cadenaSql .= " discapacitado";
+				$cadenaSql .= " discapacitado,";
 				//***********************************************************************
+				$cadenaSql .= " medicina_prepagada,";
+				if($variable ['valor_uvt_prepagada'] != null){
+					$cadenaSql .= " valor_uvt_prepagada,";
+				}
+				$cadenaSql .= " cuenta_ahorro_afc,";
+				if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+					$cadenaSql .= " num_cuenta_bancaria_afc,";
+					$cadenaSql .= " id_entidad_bancaria_afc,";
+					$cadenaSql .= " interes_vivienda_afc,";
+				}
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " dependiente_hijo_menor_edad,";
+					$cadenaSql .= " dependiente_hijo_menos23_estudiando,";
+					$cadenaSql .= " dependiente_hijo_mas23_discapacitado,";
+					$cadenaSql .= " dependiente_conyuge,";
+					$cadenaSql .= " dependiente_padre_o_hermano,";
+				}
+				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
@@ -300,7 +318,26 @@ class Sql extends \Sql {
 				if($variable ['tipoDiscapacidad'] != null){
 					$cadenaSql .= " '" . $variable ['tipoDiscapacidad'] . "',";
 				}
-				$cadenaSql .= " " . $variable ['discapacidad'] . "";
+				$cadenaSql .= " " . $variable ['discapacidad'] . ",";
+				//**************************************************************************
+				$cadenaSql .= " " . $variable ['medicina_prepagada'] . ",";
+				if($variable ['valor_uvt_prepagada'] != null){
+					$cadenaSql .= " " . $variable ['valor_uvt_prepagada'] . ",";
+				}
+				$cadenaSql .= " " . $variable ['cuenta_ahorro_afc'] . ",";
+				if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+					$cadenaSql .= " '" . $variable ['num_cuenta_bancaria_afc'] . "',";
+					$cadenaSql .= " " . $variable ['id_entidad_bancaria_afc'] . ",";
+					$cadenaSql .= " " . $variable ['interes_vivienda_afc'] . ",";
+				}
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " " . $variable ['dependiente_hijo_menor_edad'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_hijo_menos23_estudiando'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_hijo_mas23_discapacitado'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_conyuge'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_padre_o_hermano'] . ",";
+				}
+				$cadenaSql .= " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " ); ";
 				break;
 				
