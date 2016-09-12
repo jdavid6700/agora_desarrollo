@@ -142,6 +142,27 @@ $("#<?php echo $this->campoSeguro('discapacidad')?>").select2();
 $('#<?php echo $this->campoSeguro('tipoDiscapacidad')?>').width(250);
 $("#<?php echo $this->campoSeguro('tipoDiscapacidad')?>").select2();
 
+//AGREGADO Tributaria
+$('#<?php echo $this->campoSeguro('declaranteRentaNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('declaranteRentaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('medicinaPrepagadaNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('medicinaPrepagadaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('cuentaAFCNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('cuentaAFCNat')?>").select2();
+$('#<?php echo $this->campoSeguro('entidadBancariaAFCNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('entidadBancariaAFCNat')?>").select2();
+$('#<?php echo $this->campoSeguro('hijosMenoresEdadNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMenoresEdadNat')?>").select2();
+
+$('#<?php echo $this->campoSeguro('hijosMayoresEdadEstudiandoNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMayoresEdadEstudiandoNat')?>").select2();
+$('#<?php echo $this->campoSeguro('hijosMayoresEdadMas23Nat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMayoresEdadMas23Nat')?>").select2();
+$('#<?php echo $this->campoSeguro('conyugeDependienteNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('conyugeDependienteNat')?>").select2();
+$('#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>").select2();
+
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
 
 
@@ -164,10 +185,25 @@ if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 1){
 	$("#marcoDatosJuridica").hide("fast");
 }
 
+if($('#<?php echo $this->campoSeguro('medicinaPrepagadaNat') ?>').val() == 1){//AGREGADO Tributario
+	$("#obligatorioNumeroUVT").show("fast");
+}else{
+	$("#obligatorioNumeroUVT").hide("fast");
+}
+
+if($('#<?php echo $this->campoSeguro('cuentaAFCNat') ?>').val() == 1){//AGREGADO Tributario
+	$("#obligatorioDatosAFC").show("fast");
+}else{
+	$("#obligatorioDatosAFC").hide("fast");
+}
+
+
 if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
 	$("#obligatorioCantidadPersonasACargo").show("fast");
+	$("#marcoDetalleDependientes").show("fast");//AGREGADO Tributario
 }else{
 	$("#obligatorioCantidadPersonasACargo").hide("fast");
+	$("#marcoDetalleDependientes").hide("fast");//AGREGADO Tributario
 }
 
 if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){

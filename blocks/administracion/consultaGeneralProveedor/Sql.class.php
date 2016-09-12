@@ -466,7 +466,19 @@ class Sql extends \Sql {
 					$cadenaSql .= " numero_personas_a_cargo,";
 					$cadenaSql .= " estado_civil,";
 					$cadenaSql .= " tipo_discapacidad,";
-					$cadenaSql .= " discapacitado";
+					$cadenaSql .= " discapacitado,";
+					$cadenaSql .= " medicina_prepagada,";//AGREGADO Benefi*************************************
+					$cadenaSql .= " valor_uvt_prepagada,";
+					$cadenaSql .= " cuenta_ahorro_afc,";
+					$cadenaSql .= " num_cuenta_bancaria_afc,";
+					$cadenaSql .= " id_entidad_bancaria_afc,";
+					$cadenaSql .= " interes_vivienda_afc,";
+					$cadenaSql .= " dependiente_hijo_menor_edad,";
+					$cadenaSql .= " dependiente_hijo_menos23_estudiando,";
+					$cadenaSql .= " dependiente_hijo_mas23_discapacitado,";
+					$cadenaSql .= " dependiente_conyuge,";
+					$cadenaSql .= " dependiente_padre_o_hermano,";
+					$cadenaSql .= " declarante_renta";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.informacion_persona_natural";
 					$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
@@ -559,8 +571,38 @@ class Sql extends \Sql {
 					}else{
 						$cadenaSql .= " tipo_discapacidad = null,";
 					}
-					$cadenaSql .= " discapacitado =" . " " . $variable ['discapacidad'] . "";
-					//*************************************************************
+					$cadenaSql .= " discapacitado =" . " " . $variable ['discapacidad'] . ",";
+					//************************************************************************************BENEFICIOS Tributar
+					$cadenaSql .= " medicina_prepagada =" . " " . $variable ['medicina_prepagada'] . ",";
+					if($variable ['medicina_prepagada'] == 'TRUE'){
+						$cadenaSql .= " valor_uvt_prepagada =" . " " . $variable ['valor_uvt_prepagada'] . ",";
+					}else{
+						$cadenaSql .= " valor_uvt_prepagada = null, ";
+					}
+					$cadenaSql .= " cuenta_ahorro_afc =" . " " . $variable ['cuenta_ahorro_afc'] . ",";
+					if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+						$cadenaSql .= " num_cuenta_bancaria_afc =" . " '" . $variable ['num_cuenta_bancaria_afc'] . "',";
+						$cadenaSql .= " id_entidad_bancaria_afc =" . " " . $variable ['id_entidad_bancaria_afc'] . ",";
+						$cadenaSql .= " interes_vivienda_afc =" . " " . $variable ['interes_vivienda_afc'] . ",";
+					}else{
+						$cadenaSql .= " num_cuenta_bancaria_afc = null, ";
+						$cadenaSql .= " id_entidad_bancaria_afc = null, ";
+						$cadenaSql .= " interes_vivienda_afc = null, ";
+					}
+					if($variable ['personasCargo'] == 'TRUE'){
+						$cadenaSql .= " dependiente_hijo_menor_edad =" . " " . $variable ['dependiente_hijo_menor_edad'] . ",";
+						$cadenaSql .= " dependiente_hijo_menos23_estudiando =" . " " . $variable ['dependiente_hijo_menos23_estudiando'] . ",";
+						$cadenaSql .= " dependiente_hijo_mas23_discapacitado =" . " " . $variable ['dependiente_hijo_mas23_discapacitado'] . ",";
+						$cadenaSql .= " dependiente_conyuge =" . " " . $variable ['dependiente_conyuge'] . ",";
+						$cadenaSql .= " dependiente_padre_o_hermano =" . " " . $variable ['dependiente_padre_o_hermano'] . ",";
+					}else{
+						$cadenaSql .= " dependiente_hijo_menor_edad = FALSE, ";
+						$cadenaSql .= " dependiente_hijo_menos23_estudiando = FALSE, ";
+						$cadenaSql .= " dependiente_hijo_mas23_discapacitado = FALSE, ";
+						$cadenaSql .= " dependiente_conyuge = FALSE, ";
+						$cadenaSql .= " dependiente_padre_o_hermano = FALSE, ";
+					}
+					$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 					$cadenaSql .= " WHERE num_documento_persona = ";
 					$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
 					break;
