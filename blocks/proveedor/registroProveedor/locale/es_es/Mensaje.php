@@ -261,6 +261,48 @@ $this->idioma["marcoFinanciero"] = "Información Financiera";
 
 
 
+//AGREGADO Tributario
+$this->idioma["marcoBeneficiosTributarios"] = "Información para Beneficios Tributarios";
+$this->idioma["marcoDetalleDependientes"] = "Información requerida si tiene Personas a Cargo (Dependientes)";
+
+$this->idioma["declaranteRentaNat"] = "Como Persona Natural, usted es declarante de Renta ? : ";
+$this->idioma["declaranteRentaNatTitulo"]="¿ Es declarante de Renta ?";
+$this->idioma["medicinaPrepagadaNat"] = "Posee Medicina Prepagada actualmente ? : ";
+$this->idioma["medicinaPrepagadaNatTitulo"]="¿ Posee Medicina Prepagada actualmente ?";
+$this->idioma["numeroUVTNat"] = "Valor UVT Medicina Prepagada : ";
+$this->idioma["numeroUVTNatTitulo"]="Valor UVT Medicina Prepagada";
+$this->idioma["cuentaAFCNat"] = "Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
+$this->idioma["cuentaAFCNatTitulo"]="¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ?";
+$this->idioma["numeroCuentaAFCNat"] = "Número de Cuenta : ";
+$this->idioma["numeroCuentaAFCNatTitulo"]="Digite el Número de Cuenta";
+$this->idioma["entidadBancariaAFCNat"] = "Entidad Bancaria : ";
+$this->idioma["entidadBancariaAFCNatTitulo"]="Digite la Entidad Bancaria";
+$this->idioma["interesViviendaAFCNat"] = "Interes de Vivienda : ";
+$this->idioma["interesViviendaAFCNatTitulo"]="Digite el Interes de Vivienda";
+
+$this->idioma["hijosMenoresEdadNat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) menores de 18 años : ";
+$this->idioma["hijosMenoresEdadNatTitulo"]="Indique para hijos menos de 18 años";
+$this->idioma["hijosMayoresEdadEstudiandoNat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) con edad entre 18 y 23 años, a quienes este financiando " .
+		                                         "su educación en instituciones acreditadas, en niveles de educación certificadas por el ICFES: ";
+$this->idioma["hijosMayoresEdadEstudiandoNatTitulo"]="Indique para hijos mayores de 18 años y menores de 23 años";
+
+$this->idioma["hijosMayoresEdadMas23Nat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) mayores de 23 años, que se ecuentre(n) en situación " .
+											"de dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["hijosMayoresEdadMas23NatTitulo"]="Indique para hijos mayores de 23 años dependientes";
+
+$this->idioma["conyugeDependienteNat"] = "Entre las personas a Cargo (Dependientes), esta su conyuge o compañero permanente, que se encuentre en situación de dependencia sea " .
+									     "por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["conyugeDependienteNatTitulo"]="Indique para conyuge o compañero permanente dependiente";
+
+$this->idioma["padresHermanosDependienteNat"] = "Entre las personas a Cargo (Dependientes), estan sus Padres y/o Hermanos(s), que se encuentre en situación de dependencia sea " .
+												"por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o hermanos dependientes";
+
+
+///////////////////////////////////////////////////////
+
+
+
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";

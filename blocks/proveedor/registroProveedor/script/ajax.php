@@ -108,8 +108,10 @@ $( "#<?php echo $this->campoSeguro('perfilNat')?>" ).change(function() {
 $( "#<?php echo $this->campoSeguro('personasCargo')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
 		$("#obligatorioCantidadPersonasACargo").show("fast");
+		$("#marcoDetalleDependientes").show("fast");//AGREGADO Tributario
 	}else{
 		$("#obligatorioCantidadPersonasACargo").hide("fast");
+		$("#marcoDetalleDependientes").hide("fast");//AGREGADO Tributario
 	}
 });
 
@@ -120,6 +122,23 @@ $( "#<?php echo $this->campoSeguro('discapacidad')?>" ).change(function() {
 		$("#obligatorioTipoDiscapacidad").hide("fast");
 	}
 });
+
+$( "#<?php echo $this->campoSeguro('medicinaPrepagadaNat')?>" ).change(function() {//AGREGADO Tributario
+	if($('#<?php echo $this->campoSeguro('medicinaPrepagadaNat') ?>').val() == 1){
+		$("#obligatorioNumeroUVT").show("fast");
+	}else{
+		$("#obligatorioNumeroUVT").hide("fast");
+	}
+});
+
+$( "#<?php echo $this->campoSeguro('cuentaAFCNat')?>" ).change(function() {//AGREGADO Tributario
+	if($('#<?php echo $this->campoSeguro('cuentaAFCNat') ?>').val() == 1){
+		$("#obligatorioDatosAFC").show("fast");
+	}else{
+		$("#obligatorioDatosAFC").hide("fast");
+	}
+});
+
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
