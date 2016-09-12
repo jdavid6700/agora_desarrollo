@@ -242,6 +242,118 @@ class Formulario {
 					}
 				}
 				
+				//AGREGADO Beneficios TRIBUTARIOS ***************************************************************
+				
+				if(isset($_REQUEST['declaranteRentaNat'])){
+					switch($_REQUEST ['declaranteRentaNat']){
+						case 1 :
+							$_REQUEST ['declaranteRentaNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['declaranteRentaNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['declaranteRentaNat']='NULL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['medicinaPrepagadaNat'])){
+					switch($_REQUEST ['medicinaPrepagadaNat']){
+						case 1 :
+							$_REQUEST ['medicinaPrepagadaNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['medicinaPrepagadaNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['medicinaPrepagadaNat']='NULL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['cuentaAFCNat'])){
+					switch($_REQUEST ['cuentaAFCNat']){
+						case 1 :
+							$_REQUEST ['cuentaAFCNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['cuentaAFCNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['cuentaAFCNat']='NULL';
+							break;
+					}
+				}
+				
+				
+				
+				if(isset($_REQUEST['hijosMenoresEdadNat'])){
+					switch($_REQUEST ['hijosMenoresEdadNat']){
+						case 1 :
+							$_REQUEST ['hijosMenoresEdadNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMenoresEdadNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMenoresEdadNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['hijosMayoresEdadEstudiandoNat'])){
+					switch($_REQUEST ['hijosMayoresEdadEstudiandoNat']){
+						case 1 :
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['hijosMayoresEdadMas23Nat'])){
+					switch($_REQUEST ['hijosMayoresEdadMas23Nat']){
+						case 1 :
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['conyugeDependienteNat'])){
+					switch($_REQUEST ['conyugeDependienteNat']){
+						case 1 :
+							$_REQUEST ['conyugeDependienteNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['conyugeDependienteNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['conyugeDependienteNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['padresHermanosDependienteNat'])){
+					switch($_REQUEST ['padresHermanosDependienteNat']){
+						case 1 :
+							$_REQUEST ['padresHermanosDependienteNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['padresHermanosDependienteNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['padresHermanosDependienteNat']='NULL';
+							break;
+					}
+				}
+				
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
 				$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
@@ -317,14 +429,25 @@ class Formulario {
 						'numeroPersonasCargo' => $_REQUEST['numeroPersonasCargo'],
 						'estadoCivil' => $_REQUEST['estadoCivil'],
 						'discapacidad' => $_REQUEST['discapacidad'],
-						'tipoDiscapacidad' => $_REQUEST['tipoDiscapacidad']
+						'tipoDiscapacidad' => $_REQUEST['tipoDiscapacidad'],
+						'declarante_renta' => $_REQUEST ['declaranteRentaNat'],//AGREGADO Beneficios Tributarios *****************
+						'medicina_prepagada' => $_REQUEST ['medicinaPrepagadaNat'],
+						'valor_uvt_prepagada' => $_REQUEST ['numeroUVTNat'],
+						'cuenta_ahorro_afc' => $_REQUEST ['cuentaAFCNat'],
+						'num_cuenta_bancaria_afc' => $_REQUEST ['numeroCuentaAFCNat'],
+						'id_entidad_bancaria_afc' => $_REQUEST ['entidadBancariaAFCNat'],
+						'interes_vivienda_afc' => $_REQUEST ['interesViviendaAFCNat'],
+						'dependiente_hijo_menor_edad' => $_REQUEST ['hijosMenoresEdadNat'],
+						'dependiente_hijo_menos23_estudiando' => $_REQUEST ['hijosMayoresEdadEstudiandoNat'],
+						'dependiente_hijo_mas23_discapacitado' => $_REQUEST ['hijosMayoresEdadMas23Nat'],
+						'dependiente_conyuge' => $_REQUEST ['conyugeDependienteNat'],
+						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat']
 				);
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
 				$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-			
 
 				if ($resultado) {
 					redireccion::redireccionar ( 'actualizo',  $_REQUEST['documentoNat']);
