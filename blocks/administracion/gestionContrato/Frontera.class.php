@@ -1,13 +1,11 @@
 <?php
 
-namespace inventarios\gestionContrato;
+namespace hojaDeVida\crearDocente;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("../index.php");
     exit();
 }
-
-
 
 include_once ("core/manager/Configurador.class.php");
 
@@ -66,24 +64,68 @@ class Frontera {
                     break;
                 
                 case "consultar":
-                    include_once($this->ruta . "/formulario/consultarForm.php");
+                    include_once($this->ruta . "/formulario/consultar.php");
                     break;
                 
                 case "nuevo":
-                     include_once($this->ruta . "/formulario/nuevo.php");
+                     include_once($this->ruta . "/formulario/formulario.php");
                     break;
-                
-                case "mostrar":
-                     include_once($this->ruta . "/formulario/seleccionar.php");
-                    break;                
+          
+                case "nuevoRelacionar":
+                  	include_once($this->ruta . "/formulario/tabs/tabRegistrar.php");
+                   	break;
+                    
+				case "nuevoRelacionada" ://Reestructuración a Corto Plazo
+					include_once ($this->ruta . "/formulario/tabs/tabConsultar.php");
+					break;
+					
+				case "nuevoCotizacion" ://Reestructuración a Corto Plazo
+					include_once ($this->ruta . "/formulario/tabs/tabCotizacion.php");
+					break;
+					
+                case "cotizacion":
+                     include_once($this->ruta . "/formulario/solicitudCotizacion.php");
+                    break;					
                 
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
+                    
+				case "verSolicitud" :
+					include_once ($this->ruta . "/formulario/verSolicitud.php");
+					break;
+				
+				case "modificarSolicitud" :
+					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
+					break;
+					
+				case "modificarSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
+					break;
+					
+				case "verSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/verSolicitudRelacionada.php");
+					break;
+					
+				case "cotizarSolicitud" :
+					include_once ($this->ruta . "/formulario/solicitudCotizacion.php");
+					break;
+					
+				case "verCotizacionSolicitud" :
+					include_once ($this->ruta . "/formulario/infoCotizacion.php");
+					break;
+					
+				case "resultadoCotizacion" :
+					include_once ($this->ruta . "/formulario/resultadoCotizacion.php");
+					break;
+					
+				case "verCotizacionProveedor" :
+					include_once ($this->ruta . "/formulario/verCotizacion.php");
+					break;
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";
-            include_once($this->ruta . "/formulario/seleccionar.php");
+            include_once($this->ruta . "/formulario/formulario.php");
         }
     }
 

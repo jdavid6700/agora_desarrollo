@@ -1,11 +1,10 @@
 <?php
-namespace inventarios\gestionContrato;
+namespace hojaDeVida\crearDocente;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");
     exit ();
 }
-
 
 class Lenguaje{
 

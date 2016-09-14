@@ -1,36 +1,48 @@
-/* 
-    Document   : miestilo
-    Created on : 29/08/2013, 12:11:16 PM
-    Author     : esanchez
-    Description:
-        Purpose of the stylesheet follows.
-*/
-#scroll {
-     width:600px;
-     height:270px;
-     background-color:#F2F2F2;
-     overflow:auto;
+#botonValidar {    font-family: verdana, arial, sans-serif;
+   font-size: 12pt;
+   padding: 5px;
+   background-color: #eeeeee;
+   color: #000000;
+   border-radius: 8px;
+   margin: 0 auto;
+   text-align: center;
+   text-decoration: none;
+}
+#botonValidar:link,
+#botonValidar:visited {
+   border-top: 1px solid #cccccc;
+   border-bottom: 2px solid #cccccc;
+   border-left: 1px solid #cccccc;
+   border-right: 2px solid #cccccc;
+}
+#botonValidar:hover {
+    border-bottom: 1px solid #cccccc;
+   border-top: 2px solid #cccccc;
+   border-right: 1px solid #cccccc;
+   border-left: 2px solid #cccccc;
+}
+body {font-family:arial;font-size:15}
+    td {font-family:arial;font-size:15} 
+
+.padre-enlace{
+	display:block;
+	position:relative;
 }
 
-.contenedor-tabla{
 
-display: table;
-
+#botonValidar {
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 125px;
 }
 
-.contenedor-fila{
 
-display: table-row;
+input {font-weight:bold;}
 
+
+textarea{
+font-weight: bold;
 }
 
-.contenedor-columna{
-
-display: table-cell;
-
-}
-
-#tablaCandidatos{	border: solid 1px #333;	width: 100%; }
-#tablaCandidatos tbody tr{ background: #E0F0FA; }
-.fila-base{ display: none; } /* fila base oculta */
-.eliminar{ cursor: pointer; color: #000; }
