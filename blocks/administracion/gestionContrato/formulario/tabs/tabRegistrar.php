@@ -201,29 +201,46 @@ class FormularioRegistro {
 				<tr>
 					<th><center>Número Contrato</center></th>
 					<th><center>Vigencia</center></th>
-					<th><center>Número Solicitud de Necesidad</center></th>
+					<th><center>Solicitud de Necesidad</center></th>
 					<th><center>Número CDP</center></th>
 					<th><center>Plazo Ejecución</center></th>
 					<th><center>Contratista</center></th>
-					<th><center>Ordenador del Gasto</center></th>
-                    <th><center>##Dependencia</center></th>
+					<th><center>Tipo Contratista</center></th>
+                    <th><center>Ordenador del Gasto</center></th>
 					<th><center>Supervisor</center></th>
 					<th><center>Fecha Registro</center></th>
 					<th><center>Estado</center></th>
-					<th><center>Detalle</center></th>
+					<th><center>Necesidad</center></th>
+					<th><center>Contrato</center></th>
 					<th><center>Relacionar</center></th>
 				</tr>
 				</thead>
 				<tbody>";
 			
 			foreach ($resultado as $dato):
+			
+			$datosCon = array (//Datos
+					'num_contrato' => $dato['numero_contrato'],
+					'vigencia' => $dato['vigencia']
+			);
+			$cadena_sql = $this->miSql->getCadenaSql ( "consultarEstadoContrato", $datosCon);
+			$estadoCont = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			
 			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableView .= "&opcion=verSolicitud";
-			$variableView .= "&idSolicitud=" . $dato['numero_contrato'];
+			$variableView .= "&idSolicitud=" . $dato['numero_solicitud_necesidad'];
 			$variableView .= "&vigencia=" . $dato['vigencia'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
-				
+			
+			
+			$variableViewCon = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+			$variableViewCon .= "&opcion=verSolicitud";
+			$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
+			$variableViewCon .= "&vigencia=" . $dato['vigencia'];
+			$variableViewCon = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewCon, $directorio );
+			$imagenViewCon = 'cotPro.png';
 				
 				
 			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -231,8 +248,22 @@ class FormularioRegistro {
 			$variableEdit .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableEdit .= "&vigencia=" . $dato['vigencia'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			$imagenEdit = 'addPro.png';
+			if(strtoupper ( $estadoCont[0]['estado'] ) == "FINALIZADO"){
+				$imagenEdit = 'addPro.png';
+			}else{
+				$variableEdit = "#";
+				$imagenEdit = 'cancel.png';
+			}
+			
 				
+			
+			
+			if($dato['identificacion_sociedad_temporal'] != null){
+				$dato['identificacion_contratista'] = $dato['identificacion_sociedad_temporal'];
+				$tipoSoc = "CONSORCIO o UNION TEMPORAL";
+			}else{
+				$tipoSoc = "INDIVIDUAL";
+			}
 				
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
@@ -241,14 +272,19 @@ class FormularioRegistro {
 						<td><center>" . $dato['numero_cdp'] . "</center></td>
 						<td><center>" . $dato['plazo_ejecucion'] . "</center></td>
 					    <td><center>" . $dato['identificacion_contratista'] . "</center></td>
+						<td><center>" . $tipoSoc . "</center></td>
 						<td><center>" . $dato['nombre_ordenador_gasto'] . "</center></td>
-						<td><center>" . $dato['numero_contrato'] . "</center></td>
 						<td><center>" . $dato['identificacion_supervisor'] . "</center></td>
 						<td><center>" . $dato['fecha_registro'] . "</center></td>
-						<td><center>" . $dato['numero_contrato'] . "</center></td>
+						<td><center>" . strtoupper ( $estadoCont[0]['estado'] ) . "</center></td>
 						<td><center>
 							<a href='" . $variableView . "'>
 								<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
+							</a>
+						</center></td>
+					    <td><center>
+							<a href='" . $variableViewCon . "'>
+								<img src='" . $rutaBloque . "/images/" . $imagenViewCon . "' width='15px'>
 							</a>
 						</center></td>
 						<td><center>

@@ -5,15 +5,41 @@ $this->idioma["objetoContrato"] = "Objeto Contrato : ";
 $this->idioma["objetoContratoTitulo"]="Objeto Contrato";
 
 $this->idioma["marcoDatos"]="Contratos Disponibles";
+$this->idioma["marcoRelacionContrato"]="Relacionar Contrato para Evaluación";
 $this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
 $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
 $this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
 $this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
 
-$this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
+$this->idioma["marcoDatosContrato"]="Información Contrato";
+
+
+$this->idioma["marcoDatosRelacionada"]="Contratos Relacionadas en el Sistema";
 $this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en Cotización";
 
+$this->idioma["marcoRelacionContratoProveedorConsorcio"]="Consorcio o Union Temporal Asignada (Proveedores)";
+$this->idioma["marcoRelacionContratoProveedor"]="Proveedor Asignado al Contrato";
 
+
+$this->idioma["nombreProveedor"] = "Nombre Proveedor :";
+$this->idioma["nombreProveedorTitulo"]="Nombre Proveedor";
+$this->idioma["identificacionProveedor"] = "Identificación Proveedor :";
+$this->idioma["identificacionProveedorTitulo"]="Identificación Proveedor";
+$this->idioma["participacionProveedor"] = "Participación Proveedor :";
+$this->idioma["participacionProveedorTitulo"]="Participación Proveedor";
+$this->idioma["tipoProveedor"] = "Tipo Persona Proveedor :";
+$this->idioma["tipoProveedorTitulo"]="Tipo Persona Proveedor";
+
+$this->idioma["supervisor"] = "Nombre Supervisor :";
+$this->idioma["supervisorTitulo"]="Nombre Supervisor";
+$this->idioma["docSupervisor"] = "Identificación Supervisor :";
+$this->idioma["docSupervisorTitulo"]="Identificación Supervisor";
+
+
+$this->idioma["fechaInicio"] = "Fecha Inicio (Si está Disponible) :";
+$this->idioma["fechaInicioTitulo"]="Fecha Inicio (Si está Disponible)";
+$this->idioma["fechaFinal"] = "Fecha Final (Si está Disponible) :";
+$this->idioma["fechaFinalTitulo"]="Fecha Final (Si está Disponible)";
 
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
@@ -76,6 +102,8 @@ $this->idioma["vigencia"] = "Vigencia :";
 $this->idioma["vigenciaTitulo"]="Vigencia";
 $this->idioma["numSolicitud"] = "Número de la Solicitud :";
 $this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
+$this->idioma["numContrato"] = "Número del Contrato :";
+$this->idioma["numContratoTitulo"]="Número del Contrato";
 
 $this->idioma["vigenciaNecesidad"] = "Filtro Vigencia :";
 $this->idioma["vigenciaNecesidadTitulo"]="Por favor seleccione la Vigencia";
