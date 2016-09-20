@@ -204,6 +204,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql.=" CG.numero_cdp as numero_cdp,";
 				$cadenaSql.=" CG.contratista as identificacion_contratista,";
+				$cadenaSql.=" CG.convenio_solicitante as convenio,";
 				$cadenaSql.=" CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql.=" CG.valor_contrato as valor_contrato,";
 				$cadenaSql.=" CG.justificacion as justificacion,";
@@ -238,6 +239,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql .= " CG.numero_cdp as numero_cdp,";
 				$cadenaSql .= " CG.contratista as identificacion_contratista,";
+				$cadenaSql .= " CG.convenio_solicitante as convenio,";
 				$cadenaSql .= " CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql .= " CG.valor_contrato as valor_contrato,";
 				$cadenaSql .= " CG.justificacion as justificacion,";
@@ -272,6 +274,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql .= " CG.numero_cdp as numero_cdp,";
 				$cadenaSql .= " CG.contratista as identificacion_contratista,";
+				$cadenaSql .= " CG.convenio_solicitante as convenio,";
 				$cadenaSql .= " CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql .= " CG.valor_contrato as valor_contrato,";
 				$cadenaSql .= " CG.justificacion as justificacion,";

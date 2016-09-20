@@ -1,36 +1,53 @@
 <?php
-namespace asignacionPuntajes\salariales\experienciaDireccionAcademica\formulario;
+namespace hojaDeVida\crearDocente\formulario;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
+	
 	exit ();
 }
-class FormularioRegistro {
+class Formulario {
 	var $miConfigurador;
 	var $lenguaje;
 	var $miFormulario;
 	var $miSql;
 	
+	const OBJETOCREADO = 'CREADO'; //Estado objeto creado
+	
 	function __construct($lenguaje, $formulario, $sql) {
 		
 		$this->miConfigurador = \Configurador::singleton ();
-		
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
 		$this->lenguaje = $lenguaje;
-		
 		$this->miFormulario = $formulario;
-		
 		$this->miSql = $sql;		
 	}
 	
 	function formulario() {
+		// Rescatar los datos de este bloque
+		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
+		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		
+		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
+		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		
+		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
+		$rutaBloque .= $esteBloque ['grupo'] ."/". $esteBloque ['nombre'];
+		
+		// ---------------- SECCION: Par�metros Globales del Formulario ----------------------------------
 		/**
-		 * IMPORTANTE: Este formulario está utilizando jquery.
-		 * Por tanto en el archivo ready.php se delaran algunas funciones js
-		 * que lo complementan.
+		 * Atributos que deben ser aplicados a todos los controles de este formulario.
+		 * Se utiliza un arreglo
+		 * independiente debido a que los atributos individuales se reinician cada vez que se declara un campo.
+		 *
+		 * Si se utiliza esta t�cnica es necesario realizar un mezcla entre este arreglo y el espec�fico en cada control:
+		 * $atributos= array_merge($atributos,$atributosGlobales);
 		 */
+		$atributosGlobales ['campoSeguro'] = 'true';
 		
+		// -------------------------------------------------------------------------------------------------
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
@@ -41,33 +58,13 @@ class FormularioRegistro {
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		
-		// Rescatar los datos de este bloque
-		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
-		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-			
-		$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
-		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
-		$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
-			
-		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
-		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-		$rutaBloque .= $esteBloque ['grupo'] . '/' . $esteBloque ['nombre'];
+		$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCREADO );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 		
-		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
-		/**
-		 * Atributos que deben ser aplicados a todos los controles de este formulario.
-		 * Se utiliza un arreglo
-		 * independiente debido a que los atributos individuales se reinician cada vez que se declara un campo.
-		 *
-		 * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
-		 * $atributos= array_merge($atributos,$atributosGlobales);
-		 */
-		$atributosGlobales ['campoSeguro'] = 'true';
-		$_REQUEST ['tiempo'] = time ();
 		
-		// -------------------------------------------------------------------------------------------------
+		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
-		$esteCampo = $esteBloque ['nombre']."Registrar";
+		$esteCampo = $esteBloque ['nombre']."ConsultarRel";
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		
@@ -86,14 +83,14 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$tab = 1;
 			
-			// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
+		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 			
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
 		
-		$esteCampo = "marcoDatos";
+		$esteCampo = "marcoDatosRelacionada";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -102,32 +99,39 @@ class FormularioRegistro {
 		
 		
 		
-		if(isset($_REQUEST['vigenciaNecesidad'])){
 		
-			$valorVigencia = $_REQUEST['vigenciaNecesidad'];
-			
-			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarContratosRelacionadosXVigencia", $valorVigencia );
+		
+		
+		
+		if(isset($_REQUEST['vigenciaNecesidadRelacionada'])){
+		
+			$valorVigenciaRelacionada = $_REQUEST['vigenciaNecesidadRelacionada'];
+				
+			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarContratosRelacionadosXVigencia", $valorVigenciaRelacionada );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
-			
+				
+				
 			if(isset($resultado[0][0])){
-				$datos = array (//Datos Relacionados ya en el sistema AGORA
+				$datos = array (
 						'contratos' => $resultado[0][0],
-						'vigencia' => $valorVigencia
+						'vigencia' => $valorVigenciaRelacionada
 				);
 			}else{
 				$datos = array (//No existen Datos Relacionados ya en el sistema AGORA
 						'contratos' => "-1",
-						'vigencia' => $valorVigencia
+						'vigencia' => $valorVigenciaRelacionada
 				);
 			}
-		
-			$cadena_sql = $this->miSql->getCadenaSql ( "listaContratoXVigencia", $datos);
-			$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'listaContratosRelacionadosXVigencia', $datos );
+			$resultado = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			
 			
 			//******************************************************************************************************************************
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+				
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 			$esteCampo = 'botonRegresar';
 			$atributos ['id'] = $esteCampo;
@@ -139,28 +143,23 @@ class FormularioRegistro {
 			$atributos ['alto'] = '10%';
 			$atributos ['redirLugar'] = true;
 			echo $this->miFormulario->enlace ( $atributos );
-			
+				
 			unset ( $atributos );
 			//********************************************************************************************************************************
-			
 			$onlyCheck = false;
+			
 		}else{
-			
-			
+				
 			// ---------------- CONTROL: Lista Vigencia--------------------------------------------------------
-			$esteCampo = "vigenciaNecesidad";
+			$esteCampo = "vigenciaNecesidadRelacionada";
 			$atributos ['nombre'] = $esteCampo;
 			$atributos ['id'] = $esteCampo;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			$atributos ["etiquetaObligatorio"] = true;
-			$atributos ['tab'] = $tab ++;
 			$atributos ['anchoEtiqueta'] = 200;
+			$atributos ['tab'] = $tab ++;
 			$atributos ['evento'] = '';
-			if (isset ( $estadoSolicitud )) {
-				$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_division'];
-			} else {
-				$atributos ['seleccion'] = - 1;
-			}
+			$atributos ['seleccion'] = - 1;
 			$atributos ['deshabilitado'] = false;
 			$atributos ['columnas'] = 1;
 			$atributos ['tamanno'] = 1;
@@ -178,25 +177,19 @@ class FormularioRegistro {
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
 			unset ( $atributos );
 			// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
-			
-			
+				
+				
 			$resultado = false;
 			$onlyCheck = true;
 		}
 		
 		
 		
-		
-		//echo $cadena_sql;// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		//var_dump($resultado);
-		
-		
-		
 		if ($resultado) {
-			
-			
-			echo '<table id="tablaObjetos" class="display" cellspacing="0" width="100%"> ';
-			
+				
+				
+			echo '<table id="tablaObjetosSinCotizacion" class="display" cellspacing="0" width="100%"> ';
+				
 			echo "<thead>
 				<tr>
 					<th><center>Número Contrato</center></th>
@@ -212,64 +205,68 @@ class FormularioRegistro {
 					<th><center>Estado</center></th>
 					<th><center>Necesidad</center></th>
 					<th><center>Contrato</center></th>
-					<th><center>Relacionar</center></th>
+					<th><center>Evaluación</center></th>
 				</tr>
 				</thead>
 				<tbody>";
-			
+				
 			foreach ($resultado as $dato):
-			
+				
 			$datosCon = array (//Datos
-					'num_contrato' => $dato['numero_contrato'],
+					'numero_contrato' => $dato['numero_contrato'],
 					'vigencia' => $dato['vigencia']
 			);
-			$cadena_sql = $this->miSql->getCadenaSql ( "consultarEstadoContrato", $datosCon);
-			$estadoCont = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-			
-			
+			$cadena_sql = $this->miSql->getCadenaSql ( "consultarContratoRelacionado", $datosCon);
+			$estadoCont = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				
+				
 			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableView .= "&opcion=verSolicitud";
 			$variableView .= "&idSolicitud=" . $dato['numero_solicitud_necesidad'];
 			$variableView .= "&vigencia=" . $dato['vigencia'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
-			
-			
+				
+				
 			$variableViewCon = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableViewCon .= "&opcion=verSolicitud";
 			$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableViewCon .= "&vigencia=" . $dato['vigencia'];
 			$variableViewCon = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewCon, $directorio );
 			$imagenViewCon = 'cotPro.png';
-				
-				
+		
+		
+			
+			
+			
 			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableEdit .= "&opcion=modificarSolicitud";
 			$variableEdit .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableEdit .= "&vigencia=" . $dato['vigencia'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
-			if(strtoupper ( $estadoCont[0]['estado'] ) == "FINALIZADO"){
-				$imagenEdit = 'addPro.png';
+			
+			
+			
+			if(strtoupper ( $estadoCont[0]['estado'] ) == "EVALUADO"){
+				$variableEdit = "#";
+				$imagenEdit = 'check.png';
+				$textEst = "EVALUADO ";
 			}else{
 				$variableEdit = "#";
 				$imagenEdit = 'cancel.png';
+				$textEst = "SIN EVALUAR ";
 			}
-			
 				
-			
-			
+		
+				
+				
 			if($dato['identificacion_sociedad_temporal'] != null){
 				$dato['identificacion_contratista'] = $dato['identificacion_sociedad_temporal'];
 				$tipoSoc = "CONSORCIO o UNION TEMPORAL";
-			}else if($dato['identificacion_contratista'] != null){
-				$tipoSoc = "INDIVIDUAL";
 			}else{
-				$variableEdit = "#";
-				$imagenEdit = 'desha.png';
-				$tipoSoc = "CONVENIO";
-				$dato['identificacion_contratista'] = $dato['convenio'];
+				$tipoSoc = "INDIVIDUAL";
 			}
-				
+		
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
 						<td><center>" . $dato['vigencia'] . "</center></td>
@@ -293,6 +290,7 @@ class FormularioRegistro {
 							</a>
 						</center></td>
 						<td><center>
+							" . $textEst . " 
 							<a href='" . $variableEdit . "'>
 								<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
 							</a>
@@ -303,10 +301,10 @@ class FormularioRegistro {
 			unset ( $variableView );
 			unset ( $variableEdit );
 			endforeach;
-			
+				
 			echo "</tbody>";
 			echo "</table>";
-			
+				
 		
 		} else if(isset($_REQUEST['vigenciaNecesidad'])){
 			// ------------------INICIO Division para los botones-------------------------
@@ -320,7 +318,7 @@ class FormularioRegistro {
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
 			$atributos ["mensaje"] = "Actualmente no hay Contratos Disponibles con Vigencia <b>".$valorVigencia."</b> para Relacionar en AGORA </br> Los Contratos son Gestionados mediante el Sistema <b>ARGO</b>. <br>";
-				
+		
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );
 			// -------------FIN Control Formulario----------------------
@@ -330,9 +328,8 @@ class FormularioRegistro {
 		}
 		
 		
-		
-		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		
 		
 		
 		// ------------------Division para los botones-------------------------
@@ -353,9 +350,9 @@ class FormularioRegistro {
 			$atributos ["verificar"] = '';
 			$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
 			$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['nombreFormulario'] = $esteBloque ['nombre'] . "Registrar";
+			$atributos ['nombreFormulario'] = $esteBloque ['nombre'] . "ConsultarRel";
 			$tab ++;
-			
+				
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			if($onlyCheck){
@@ -366,65 +363,67 @@ class FormularioRegistro {
 		}
 		// ------------------Fin Division para los botones-------------------------
 		echo $this->miFormulario->division ( "fin" );
-				
-				
-				// ------------------- SECCION: Paso de variables ------------------------------------------------
-				
-				/**
-				 * En algunas ocasiones es útil pasar variables entre las diferentes páginas.
-				 * SARA permite realizar esto a través de tres
-				 * mecanismos:
-				 * (a). Registrando las variables como variables de sesión. Estarán disponibles durante toda la sesión de usuario. Requiere acceso a
-				 * la base de datos.
-				 * (b). Incluirlas de manera codificada como campos de los formularios. Para ello se utiliza un campo especial denominado
-				 * formsara, cuyo valor será una cadena codificada que contiene las variables.
-				 * (c) a través de campos ocultos en los formularios. (deprecated)
-				 */
-				// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
-				// Paso 1: crear el listado de variables
-				
-				//$valorCodificado  = "action=" . $esteBloque ["nombre"];
-				$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
-				$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
-				$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-				$valorCodificado .= "&opcion=nuevoRelacionar";
-				
-				/**
-				 * SARA permite que los nombres de los campos sean dinámicos.
-				 * Para ello utiliza la hora en que es creado el formulario para
-				 * codificar el nombre de cada campo.
-				 */
-				$valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
-				$valorCodificado .= "&tiempo=" . time();
-				/*
-				 * Sara permite validar los campos en el formulario o funcion destino.
-				 * Para ello se envía los datos atributos["validadar"] de los componentes del formulario
-				 * Estos se pueden obtener en el atributo $this->miFormulario->validadorCampos del formulario
-				 * La función $this->miFormulario->codificarCampos() codifica automáticamente el atributo validadorCampos
-				 */
-				$valorCodificado .= "&validadorCampos=" . $this->miFormulario->codificarCampos();
-				
-				// Paso 2: codificar la cadena resultante
-				$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
-				
-				$atributos ["id"] = "formSaraData"; // No cambiar este nombre
-				$atributos ["tipo"] = "hidden";
-				$atributos ['estilo'] = '';
-				$atributos ["obligatorio"] = false;
-				$atributos ['marco'] = true;
-				$atributos ["etiqueta"] = "";
-				$atributos ["valor"] = $valorCodificado;
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				unset ( $atributos );
-				
-				$atributos ['marco'] = true;
-				$atributos ['tipoEtiqueta'] = 'fin';
-				echo $this->miFormulario->formulario ( $atributos );
-								
-				// ----------------FIN SECCION: Paso de variables -------------------------------------------------
-				// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
-			// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
-			// Se debe declarar el mismo atributo de marco con que se inició el formulario.
+		
+		
+		// ------------------- SECCION: Paso de variables ------------------------------------------------
+		
+		/**
+		 * En algunas ocasiones es útil pasar variables entre las diferentes páginas.
+		 * SARA permite realizar esto a través de tres
+		 * mecanismos:
+		 * (a). Registrando las variables como variables de sesión. Estarán disponibles durante toda la sesión de usuario. Requiere acceso a
+		 * la base de datos.
+		 * (b). Incluirlas de manera codificada como campos de los formularios. Para ello se utiliza un campo especial denominado
+		 * formsara, cuyo valor será una cadena codificada que contiene las variables.
+		 * (c) a través de campos ocultos en los formularios. (deprecated)
+		 */
+		// En este formulario se utiliza el mecanismo (b) para pasar las siguientes variables:
+		// Paso 1: crear el listado de variables
+		
+		//$valorCodificado  = "action=" . $esteBloque ["nombre"];
+		$valorCodificado = "&pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+		$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
+		$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+		$valorCodificado .= "&opcion=nuevoRelacionada";
+		
+		/**
+		 * SARA permite que los nombres de los campos sean dinámicos.
+		 * Para ello utiliza la hora en que es creado el formulario para
+		 * codificar el nombre de cada campo.
+		 */
+		$valorCodificado .= "&campoSeguro=" . $_REQUEST ['tiempo'];
+		$valorCodificado .= "&tiempo=" . time();
+		/*
+		 * Sara permite validar los campos en el formulario o funcion destino.
+		 * Para ello se envía los datos atributos["validadar"] de los componentes del formulario
+		 * Estos se pueden obtener en el atributo $this->miFormulario->validadorCampos del formulario
+		 * La función $this->miFormulario->codificarCampos() codifica automáticamente el atributo validadorCampos
+		 */
+		$valorCodificado .= "&validadorCampos=" . $this->miFormulario->codificarCampos();
+		
+		// Paso 2: codificar la cadena resultante
+		$valorCodificado = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $valorCodificado );
+		
+		$atributos ["id"] = "formSaraData"; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ["valor"] = $valorCodificado;
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
+		$atributos ['marco'] = true;
+		$atributos ['tipoEtiqueta'] = 'fin';
+		echo $this->miFormulario->formulario ( $atributos );
+		
+		// ----------------FIN SECCION: Paso de variables -------------------------------------------------
+		// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
+		// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
+		// Se debe declarar el mismo atributo de marco con que se inició el formulario.
+		
+		
 		
 	}
 	function mensaje() {
@@ -460,7 +459,7 @@ class FormularioRegistro {
 }
 
 
-$miFormulario = new FormularioRegistro ( $this->lenguaje, $this->miFormulario, $this->sql  );
+$miFormulario = new Formulario ( $this->lenguaje, $this->miFormulario, $this->sql  );
 
 $miFormulario->formulario ();
 $miFormulario->mensaje ();
