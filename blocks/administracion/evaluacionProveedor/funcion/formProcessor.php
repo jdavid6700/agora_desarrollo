@@ -27,6 +27,7 @@ $puntajeTotal = $puntajeTotal + $_REQUEST ['garantia'] + $_REQUEST ['garantiaSat
 
 // FIN Calculo puntaje total
 
+
 // INICIO CALCULO CLASIFICACION
 function clasificacion($puntajeTotal = '') {
 	if ($puntajeTotal > 79)
@@ -59,44 +60,109 @@ $arreglo = array (
 		$clasificacion 
 );
 
+
 // Guardar datos de la evaluacion
 $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
 
 if ($resultado) {
 	// Actualizar estado del CONTRATO A EVALUADO
 	$parametros = array (
 			'idContrato' => $_REQUEST ['idContrato'],
-			'estado' => 'EVALUADO' 
-	) // evaluado
-;
+			'estado' => 'EVALUADO' //Evaluado
+	);
+	
 	$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $parametros );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 	
 	// Actualizar PUNTAJE TOTAL DEL PROVEEDOR Y SU CLASIFICACION
-	// Consulto puntaje total del Evaluado
-	$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedorByID', $_REQUEST ["idProveedor"] );
-	$proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
-	$puntajeActual = $proveedor [0] ["puntaje_evaluacion"];
-	$claseficacionActual = $proveedor [0] ["clasificacion_evaluacion"];
 	
-	if ($claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C') {
-		$puntajeNuevo = ($puntajeActual + $puntajeTotal) / 2;
-		$clasficacionNueva = clasificacion ( $puntajeNuevo );
-	} else {
-		$puntajeNuevo = $puntajeTotal;
-		$clasficacionNueva = $clasificacion;
+	// Se hace una consulta del Proveedor Evaluado
+	if($_REQUEST ["idProveedor"] == 0){
+			
+		$cadenaSql = $this->sql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
+		$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedoresByID', $consulta3_1[0][0] );
+		$proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		$cantidad = "multiple";
+		$numeroPro = count($proveedor);
+			
+	}else{
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedorByID', $_REQUEST ["idProveedor"] );
+		$proveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		$cantidad = "individual";
+		$numeroPro = count($proveedor);
 	}
 	
-	$valores = array (
-			'idProveedor' => $_REQUEST ['idProveedor'],
-			'puntajeNuevo' => $puntajeNuevo,
-			'clasificacion' => $clasficacionNueva 
-	);
 	
-	$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
-	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+	
+	if ($cantidad == "individual") {
+		$_REQUEST["idProveedor"] = $proveedor[0]["id_proveedor"];
+	} else {
+		$i = 0;
+		while ( $i < $numeroPro ) {
+			$_REQUEST["idProveedor".$i] = $proveedor[$i]["id_proveedor"];
+			$i ++;
+		}
+	}
+	
+	if ($cantidad == "individual") {
+		
+		$puntajeActual = $proveedor [0] ["puntaje_evaluacion"];
+		$claseficacionActual = $proveedor [0] ["clasificacion_evaluacion"];
+		
+		if ($claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C') {
+			$puntajeNuevo = ($puntajeActual + $puntajeTotal) / 2;
+			$clasficacionNueva = clasificacion ( $puntajeNuevo );
+		} else {
+			$puntajeNuevo = $puntajeTotal;
+			$clasficacionNueva = $clasificacion;
+		}
+		
+		$valores = array (
+				'idProveedor' => $_REQUEST ['idProveedor'],
+				'puntajeNuevo' => $puntajeNuevo,
+				'clasificacion' => $clasficacionNueva
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+		
+	} else {
+		
+		$i = 0;
+		while ( $i < $numeroPro ) {
+			
+			$puntajeActual = $proveedor [$i] ["puntaje_evaluacion"];
+			$claseficacionActual = $proveedor [$i] ["clasificacion_evaluacion"];
+			
+			if ($claseficacionActual == 'A' || $claseficacionActual == 'B' || $claseficacionActual == 'C') {
+				$puntajeNuevo = ($puntajeActual + $puntajeTotal) / 2;
+				$clasficacionNueva = clasificacion ( $puntajeNuevo );
+			} else {
+				$puntajeNuevo = $puntajeTotal;
+				$clasficacionNueva = $clasificacion;
+			}
+			
+			$valores = array (
+					'idProveedor' => $_REQUEST ['idProveedor'.$i],
+					'puntajeNuevo' => $puntajeNuevo,
+					'clasificacion' => $clasficacionNueva
+			);
+			
+			$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			
+			
+			$i ++;
+		}
+	}
+	
 	
 	$parametros2 = array (
 			'idTabla' => $_REQUEST ['idContrato'],
@@ -107,6 +173,8 @@ if ($resultado) {
 	$cadenaSql = $this->sql->getCadenaSql ( 'ingresarCodigo', $parametros2 );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
+	
+
 	$datos = array (
 			'idContrato' => $_REQUEST ['idContrato'],
 			'idCodigo' => $resultado [0] ['id_codigo_validacion'] 

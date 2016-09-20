@@ -23,9 +23,40 @@ $cadena_sql = $this->sql->getCadenaSql ( "contratoByID", $_REQUEST ['idContrato'
 $resultadoContrato = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 
+$resultadoContrato[0]['fecha_inicio'] = "HOY";
+$resultadoContrato[0]['id_proveedor'] = 1;
+$resultadoContrato[0]['fecha_finalizacion'] = "HOY";
+
+
+$cadenaSql = $this->sql->getCadenaSql ( 'contratoByProveedor', $_REQUEST["idContrato"] );
+$consulta3 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+if(count($consulta3) > 1){
+		
+	$cadenaSql = $this->sql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
+	$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedoresByID', $consulta3_1[0][0] );
+	$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cantidad = "multiple";
+	$numeroPro = count($consulta3);
+		
+}else{
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedorByID', $consulta3[0]['id_proveedor'] );
+	$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cantidad = "individual";
+	$numeroPro = count($consulta3);
+}
+
+
+
+
 //CONSULTAR PROVEEDOR
-$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedorByID", $resultadoContrato[0]['id_proveedor'] );
-$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+//$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedorByID", $resultadoContrato[0]['id_proveedor'] );
+//$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 //CONSULTAR EVALUACION
 $cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $_REQUEST ['idContrato'] );
@@ -47,6 +78,90 @@ if( $resultadoEvaluacion[0]["puntaje_total"] > 79 )
 elseif( $resultadoEvaluacion[0]["puntaje_total"] > 45 )
 	$casificacion = "B";
 else $casificacion = "C";
+
+if ($cantidad == "individual") {
+
+	$contenidoProv = "<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+		<td width=123 valign=top style='width:12%;border:solid windowtext 1.0pt;
+	  mso-border-alt:solid windowtext .5pt;background:#BDD6EE;mso-background-themecolor:
+	  accent1;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>NIT </span></b></p>
+	  </td>
+	  <td width=236 valign=top style='width:75%;border:solid windowtext 1.0pt;
+	  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+	  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
+	  text-align:center;line-height:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>" . $resultadoProveedor[0]['num_documento'] . "</span></p>
+	  </td>
+	  </tr>
+	  <tr style='mso-yfti-irow:3'>
+	  <td width=123 valign=top style='width:92.1pt;border:solid windowtext 1.0pt;
+	  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+	  background:#BDD6EE;mso-background-themecolor:accent1;mso-background-themetint:
+	  102;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>Nombre Empresa </span></b></p>
+	  </td>
+	  <td width=236 valign=top style='width:177.25pt;border-top:none;border-left:
+	  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+	  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+	  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
+	  text-align:center;line-height:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>" . $resultadoProveedor[0]['nom_proveedor'] . "</span></p>
+	  </td>
+	  </tr>";
+
+} else {
+	$i = 0;
+	$contenidoProv = " ";
+	while ( $i < $numeroPro ) {
+		
+		$item = $i + 1;
+		$contenidoProv = $contenidoProv . "<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
+		<td width=153 valign=top style='width:40%;border:solid windowtext 1.0pt;
+	  mso-border-alt:solid windowtext .5pt;background:#BDD6EE;mso-background-themecolor:
+	  accent1;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>NIT " . $item .  "</span></b></p>
+	  </td>
+	  <td width=100 valign=top style='width:55%;border:solid windowtext 1.0pt;
+	  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
+	  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
+	  text-align:center;line-height:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[$i]['num_documento']."</span></p>
+	  </td>
+	  </tr>
+	  <tr style='mso-yfti-irow:3'>
+	  <td width=153 valign=top style='width:97.1pt;border:solid windowtext 1.0pt;
+	  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
+	  background:#BDD6EE;mso-background-themecolor:accent1;mso-background-themetint:
+	  102;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
+	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>Nombre Empresa " . $item .  "</span></b></p>
+	  </td>
+	  <td width=100 valign=top style='width:100.25pt;border-top:none;border-left:
+	  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
+	  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
+	  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
+	  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
+	  text-align:center;line-height:normal'><span style='font-size:12.0pt;
+	  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[$i]['nom_proveedor']."</span></p>
+	  </td>
+	  </tr>";
+		
+		
+		$i++;
+	}
+}
+
 
 $contenidoPagina = "<page backtop='30mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
 $contenidoPagina .= "<page_header>
@@ -160,43 +275,16 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 
 <table align='center' class=MsoTableGrid border=1 cellspacing=0 cellpadding=0
  style='border-collapse:collapse;border:none;mso-border-alt:solid windowtext .5pt;
- mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>
- <tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-  <td width=123 valign=top style='width:12%;border:solid windowtext 1.0pt;
-  mso-border-alt:solid windowtext .5pt;background:#BDD6EE;mso-background-themecolor:
-  accent1;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>NIT </span></b></p>
-  </td>
-  <td width=236 valign=top style='width:75%;border:solid windowtext 1.0pt; 
-  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
-  solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['num_documento']."</span></p>
-  </td>
- </tr>
-  <tr style='mso-yfti-irow:3'>
-  <td width=123 valign=top style='width:92.1pt;border:solid windowtext 1.0pt;
-  border-top:none;mso-border-top-alt:solid windowtext .5pt;mso-border-alt:solid windowtext .5pt;
-  background:#BDD6EE;mso-background-themecolor:accent1;mso-background-themetint:
-  102;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
-  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>Nombre Empresa </span></b></p>
-  </td>
-  <td width=236 valign=top style='width:177.25pt;border-top:none;border-left:
-  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;
-  mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt:solid windowtext .5pt;
-  mso-border-alt:solid windowtext .5pt;padding:0cm 5.4pt 0cm 5.4pt'>
-  <p class=MsoNormal align=center style='margin-bottom:0cm;margin-bottom:.0001pt;
-  text-align:center;line-height:normal'><span style='font-size:12.0pt;
-  mso-bidi-font-size:11.0pt'>".$resultadoProveedor[0]['nom_proveedor']."</span></p>
-  </td>
- </tr>
+ mso-yfti-tbllook:1184;mso-padding-alt:0cm 5.4pt 0cm 5.4pt'>"
+		
 
-</table>
+		
+
+. $contenidoProv .  		
+  		
+  		
+
+"</table>
 
 </div>
 
@@ -341,6 +429,7 @@ $contenidoPagina .= "</table></div></page>";
 
 
     $html2pdf = new HTML2PDF('P','LETTER','es');
+    $html2pdf -> pdf->SetDisplayMode('fullpage');
     $res = $html2pdf->WriteHTML($contenidoPagina);
     $html2pdf->Output('resumenEvaluacion.pdf','D');
 

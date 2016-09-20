@@ -80,12 +80,41 @@ if (isset ( $_REQUEST ['num_contrato'] ) && $_REQUEST ['num_contrato'] != '') {
 } else {
 	$numeroContrato = '';
 }
-
+//var_dump($_REQUEST);
 unset($resultadoContratos);
 
 //datos del contrtato
 $cadena_sql = $this->sql->getCadenaSql ( "contratoByNumero", $numeroContrato );
 $resultadoContratos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+$_REQUEST['idContrato'] = $resultadoContratos[0]['id_contrato'];
+$_REQUEST['idCodigo'] = "XX";
+
+
+$cadenaSql = $this->sql->getCadenaSql ( 'contratoByProveedor', $_REQUEST["idContrato"] );
+$consulta3 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+if(count($consulta3) > 1){
+		
+	$cadenaSql = $this->sql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
+	$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedoresByID', $consulta3_1[0][0] );
+	$consulta4 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cantidad = "multiple";
+	$numeroPro = count($consulta3);
+		
+}else{
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedorByID', $consulta3[0]['id_proveedor'] );
+	$consulta4 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	$cantidad = "individual";
+	$numeroPro = count($consulta3);
+}
+
+
 
 if ($resultadoContratos) {
 	
@@ -98,11 +127,20 @@ if ($resultadoContratos) {
                     
 				//INICIO OBJETO A CONTRATAR
 				echo "<span class='textoElegante textoEnorme textoAzul'>Nùmero Contrato : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][1] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][2] . '-' . $resultadoContratos[0][3] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][4] . "</span></br>";                 
+                echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0]['numero_contrato'] . " - ". $resultadoContratos[0]['vigencia'] ."</span></br>"; 
+				//echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
+                //echo "<span class='textoElegante textoMediano textoGris'>". $resultadoContratos[0][2] . '-' . $resultadoContratos[0][3] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span><b><br>"; 
+                if($cantidad == "individual"){
+					echo "- <span class='textoElegante textoMediano textoGris'>". $consulta4[0]['num_documento']  . " - " .$consulta4[0]['nom_proveedor'] . " (" . $consulta4[0]['tipopersona'] . ")"."</span></br>";
+				}else{
+					$i = 0;
+					while($i < $numeroPro){
+						echo "- <span class='textoElegante textoMediano textoGris'>". $consulta4[$i]['num_documento']  . " - " .$consulta4[$i]['nom_proveedor']. " (" . $consulta4[$i]['tipopersona'] . ")"."</span></br>";
+						$i++;
+					}
+				}
+                echo "</b>";                 
 				//FIN CONTRATO
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 
@@ -254,6 +292,29 @@ con 	las condiciones y soportes requeridos para su trámite contractual? </small
 			</table>
 		<?php	
 		}
+		
+		//INICIO enlace boton descargar resumen******************************************************************************************
+		$variableResumen = "pagina=" . $miPaginaActual;
+		$variableResumen.= "&action=".$esteBloque["nombre"];
+		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
+		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
+		$variableResumen.= "&opcion=resumen";
+		$variableResumen.= "&idContrato=" . $_REQUEST['idContrato'];
+		$variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
+		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+		
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		$enlace = "<a href='".$variableResumen."'>";
+		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Evaluación ";
+		$enlace.="</a><br><br>";
+		echo $enlace;
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin");
+		//FIN enlace boton descargar resumen**********************************************************************************************
 
 }else{
 		// ------------------INICIO Division para los botones-------------------------

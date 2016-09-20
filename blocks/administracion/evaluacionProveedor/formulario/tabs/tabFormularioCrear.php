@@ -26,6 +26,9 @@ class registrarForm {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "argo_contratos";
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
@@ -68,6 +71,42 @@ class registrarForm {
 		//DATOS DEL CONTRATO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
 		$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$datosContrato = array (
+				'num_contrato' => $consulta[0]['numero_contrato'],
+				'vigencia' => $consulta[0]['vigencia']
+		);
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'listaContratoXNumContrato', $datosContrato );
+		$consulta2 = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByProveedor', $_REQUEST["idContrato"] );
+		$consulta3 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		if(count($consulta3) > 1){
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
+			$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedoresByID', $consulta3_1[0][0] );
+			$consulta4 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cantidad = "multiple";
+			$numeroPro = count($consulta3);
+			
+		}else{
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorByID', $consulta3[0]['id_proveedor'] );
+			$consulta4 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cantidad = "individual";
+			$numeroPro = count($consulta3);
+		}
+		
+		
+		
+		//echo $cadenaSql;
+		//var_dump($_REQUEST);
 
 		$esteCampo = "marcoContrato";
 		$atributos ['id'] = $esteCampo;
@@ -78,15 +117,36 @@ class registrarForm {
                 
 				//INICIO INFO CONTRATO
 				echo "<span class='textoElegante textoEnorme textoAzul'>Número Contrato : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][0] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Fecha Inicial - Final : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][1] . " - " . $consulta[0][2] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0][3] . "</span></br>";                 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0]['numero_contrato']  . " - " . $consulta[0]['vigencia'] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Objeto de Contrato : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta2[0]['objeto_contrato'] . "</span></br>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Proveedor : </span><br><b>";
+				if($cantidad == "individual"){
+					echo "- <span class='textoElegante textoMediano textoGris'>". $consulta4[0]['num_documento']  . " - " .$consulta4[0]['nom_proveedor'] . " (" . $consulta4[0]['tipopersona'] . ")"."</span></br>";
+				}else{
+					$i = 0;
+					while($i < $numeroPro){
+						echo "- <span class='textoElegante textoMediano textoGris'>". $consulta4[$i]['num_documento']  . " - " .$consulta4[$i]['nom_proveedor']. " (" . $consulta4[$i]['tipopersona'] . ")"."</span></br>";
+						$i++;
+					}
+				}
+                echo "</b>";               
 				//FIN INFO CONTRATO
-                echo $this->miFormulario->marcoAgrupacion ( 'fin' );                 
-		
-		$_REQUEST["idProveedor"] = $consulta[0]["id_proveedor"];
+                echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+                
+		if ($cantidad == "individual") {
+			$_REQUEST["idProveedor"] = $consulta3[0]["id_proveedor"];
+		} else {
+			$_REQUEST["idProveedor"] = 0;
+			$i = 0;
+			while ( $i < $numeroPro ) {
+				$_REQUEST["idProveedor".$i] = $consulta3[$i]["id_proveedor"];
+				$i ++;
+			}
+		}        
+                
+                
+		//var_dump($_REQUEST);
 	
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;

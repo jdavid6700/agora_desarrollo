@@ -98,6 +98,8 @@ unset($resultadoContratos);
 $cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $_REQUEST ['nit_proveedor'] );
 $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
+
+
 if ($resultadoProveedor) {
     
 
