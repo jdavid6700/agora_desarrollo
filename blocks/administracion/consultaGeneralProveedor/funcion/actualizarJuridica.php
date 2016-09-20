@@ -199,7 +199,19 @@ class Formulario {
 				'numeroPersonasCargo' => null,
 				'estadoCivil' => 'SOLTERO',
 				'discapacidad' => 'FALSE',
-				'tipoDiscapacidad' => null
+				'tipoDiscapacidad' => null,
+				'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
+				'medicina_prepagada' => 'FALSE',
+				'valor_uvt_prepagada' => null,
+				'cuenta_ahorro_afc' => 'FALSE',
+				'num_cuenta_bancaria_afc' => null,
+				'id_entidad_bancaria_afc' => null,
+				'interes_vivienda_afc' => null,
+				'dependiente_hijo_menor_edad' => 'FALSE',
+				'dependiente_hijo_menos23_estudiando' => 'FALSE',
+				'dependiente_hijo_mas23_discapacitado' => 'FALSE',
+				'dependiente_conyuge' => 'FALSE',
+				'dependiente_padre_o_hermano' => 'FALSE'
 		);
 		
 		
