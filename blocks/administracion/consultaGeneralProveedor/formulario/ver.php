@@ -993,7 +993,7 @@ class Formulario {
 			{
 				// ---------------- CONTROL: Cuadro de Texto PAIS--------------------------------------------------------
 					
-				if($_TIPO == 2){	
+				if($_TIPO == 2 && $_REQUEST['paisEmpresa'] == 2){	
 					
 				// ---------------- CONTROL: Select --------------------------------------------------------
 				$esteCampo = 'personaJuridicaPais';
@@ -1110,6 +1110,123 @@ class Formulario {
 				
 				
 				
+				}else{
+					
+					
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaPais';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = false;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarPais" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					// --------------- FIN CONTROL : Select --------------------------------------------------
+						
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaDepartamento';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = true;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$matrizItems=array(
+							array(1,'Cundinamarca'),
+							array(2,'Antioquia'),
+							array(3,'Santander'),
+							array(4,'Bolivar'),
+							array(5,'Bogotá D.C.')
+								
+					);
+						
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					// --------------- FIN CONTROL : Select --------------------------------------------------
+						
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaCiudad';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = true;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$matrizItems=array(
+							array(1,'Bogota D.C.'),
+							array(2,'Medellin'),
+							array(3,'Barranquilla'),
+							array(4,'Cali'),
+							array(5,'Cucuta'),
+							array(6,'Bucaramanga')
+								
+					);
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					
+					
 				}
 				
 				

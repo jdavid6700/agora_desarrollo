@@ -234,6 +234,7 @@ class Formulario {
 			switch($_REQUEST['paisEmpresa']){
 				case 1 :
 					$_REQUEST['paisEmpresa']='NACIONAL';
+					$_REQUEST['personaJuridicaCiudad'] = null;
 					break;
 				case 2 :
 					$_REQUEST['paisEmpresa']='EXTRANJERO';

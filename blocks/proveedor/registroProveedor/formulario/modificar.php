@@ -626,7 +626,7 @@ class Formulario {
 							$_REQUEST['paisEmpresa'] = 1;
 							break;
 						case 'EXTRANJERO' :
-							$_REQUEST['paisEmpresa'] = 2;
+// 							$_REQUEST['paisEmpresa'] = 2;
 							break;
 					}
 				}
@@ -983,7 +983,7 @@ class Formulario {
 			{
 				// ---------------- CONTROL: Cuadro de Texto PAIS--------------------------------------------------------
 					
-				if($_TIPO == 2){	
+				if($_TIPO == 2 && $_REQUEST['paisEmpresa'] == 2){	
 					
 				// ---------------- CONTROL: Select --------------------------------------------------------
 				$esteCampo = 'personaJuridicaPais';
@@ -1100,6 +1100,123 @@ class Formulario {
 				
 				
 				
+				}else{
+					
+					
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaPais';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = false;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarPais" );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					// --------------- FIN CONTROL : Select --------------------------------------------------
+						
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaDepartamento';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = true;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$matrizItems=array(
+							array(1,'Cundinamarca'),
+							array(2,'Antioquia'),
+							array(3,'Santander'),
+							array(4,'Bolivar'),
+							array(5,'Bogotá D.C.')
+								
+					);
+						
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					// --------------- FIN CONTROL : Select --------------------------------------------------
+						
+					// ---------------- CONTROL: Select --------------------------------------------------------
+					$esteCampo = 'personaJuridicaCiudad';
+					$atributos['nombre'] = $esteCampo;
+					$atributos['id'] = $esteCampo;
+					$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos['tab'] = $tab;
+					$atributos['seleccion'] = -1;
+					$atributos['evento'] = ' ';
+					$atributos['deshabilitado'] = true;
+					$atributos['limitar']= 50;
+					$atributos['tamanno']= 1;
+					$atributos['columnas']= 1;
+						
+					$atributos ['obligatorio'] = true;
+					$atributos ['etiquetaObligatorio'] = true;
+					$atributos ['validar'] = 'required';
+						
+					$matrizItems=array(
+							array(1,'Bogota D.C.'),
+							array(2,'Medellin'),
+							array(3,'Barranquilla'),
+							array(4,'Cali'),
+							array(5,'Cucuta'),
+							array(6,'Bucaramanga')
+								
+					);
+					$atributos['matrizItems'] = $matrizItems;
+						
+					if (isset ( $_REQUEST [$esteCampo] )) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$tab ++;
+						
+					// Aplica atributos globales al control
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					
+					
 				}
 				
 				
@@ -1629,7 +1746,7 @@ class Formulario {
 			$atributos ["leyenda"] = "Dirección Tipo DIAN";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			{
-		
+			
 				$atributos ["id"] = "panelDireccion";
 				$atributos ["estilo"] = "row";
 				echo $this->miFormulario->division ( "inicio", $atributos );
@@ -1651,11 +1768,11 @@ class Formulario {
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ['anchoEtiqueta'] = 150;
 						$atributos ['deshabilitado'] =false;
-		
+			
 						$atributos ['obligatorio'] = true;
 						$atributos ['etiquetaObligatorio'] = true;
 						$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
-		
+			
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
 						} else {
@@ -1663,58 +1780,74 @@ class Formulario {
 						}
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$tab ++;
-		
+			
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
 						echo $this->miFormulario->campoTextArea ( $atributos );
 						// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-		
+			
 						unset($atributos);
-		
+			
 						unset($atributos);
-		
+			
 						$atributos ["id"] = "ingresoBotones";
 						$atributos ["estilo"] = "col-md-12";
 						echo $this->miFormulario->division ( "inicio", $atributos );
 						{
-		
+			
 							$atributos ["id"] = "botonesPanel";
-							$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+							$atributos ["estilo"] = "col-md-12 btn-group";
 							echo $this->miFormulario->division ( "inicio", $atributos );
 							{
-								echo "<input type=\"button\" id=\"btOper1\" value=\"A\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper2\" value=\"B\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper3\" value=\"C\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper4\" value=\"D\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper5\" value=\"E\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper6\" value=\"F\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper7\" value=\"G\" class=\"btn btn-primary\"/>";
-								echo "<input type=\"button\" id=\"btOper8\" value=\"H\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper9\" value=\"I\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper10\" value=\"J\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper11\" value=\"K\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper12\" value=\"L\" class=\"btn btn-primary\" />";
-								echo "<input type=\"button\" id=\"btOper13\" value=\"Borrar\" class=\"btn btn-danger\" />";
+								echo "<input type=\"button\" id=\"btOper1\" value=\"A\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper2\" value=\"B\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper3\" value=\"C\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper4\" value=\"D\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper5\" value=\"E\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper6\" value=\"F\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper7\" value=\"G\" class=\"btn btn-primary btn-xs\"/>";
+								echo "<input type=\"button\" id=\"btOper8\" value=\"H\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper9\" value=\"I\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper10\" value=\"J\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper11\" value=\"K\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper12\" value=\"L\" class=\"btn btn-primary btn-xs\" />";
+			
+								echo "<input type=\"button\" id=\"btOper15\" value=\"M\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper16\" value=\"N\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper17\" value=\"O\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper18\" value=\"P\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper19\" value=\"Q\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper20\" value=\"R\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper21\" value=\"S\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper22\" value=\"T\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper23\" value=\"U\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper24\" value=\"V\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper25\" value=\"W\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper26\" value=\"X\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper27\" value=\"Y\" class=\"btn btn-primary btn-xs\" />";
+								echo "<input type=\"button\" id=\"btOper28\" value=\"Z\" class=\"btn btn-primary btn-xs\" />";
+									
+								echo "<input type=\"button\" id=\"btOper13\" value=\"Borrar\" class=\"btn btn-danger btn-xs\" />";
 							}
 							echo $this->miFormulario->division ( "fin" );
-		
+			
 						}
 						echo $this->miFormulario->division ( "fin" );
-		
-		
-		
-		
-		
+			
+			
+			
+			
+			
 					}
 					echo $this->miFormulario->division ( "fin" );
-						
+			
 					$atributos ["id"] = "variables";
 					$atributos ["estilo"] = "col-md-6";
 					echo $this->miFormulario->division ( "inicio", $atributos );
 					{
 						unset($atributos);
-		
-		
+			
+			
 						$esteCampo = "marcoDatosParametros";
 						$atributos ['id'] = $esteCampo;
 						$atributos ["estilo"] = "jqueryui";
@@ -1722,7 +1855,7 @@ class Formulario {
 						$atributos ["leyenda"] = "Panel Nomenclaturas DIAN";
 						echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 						{
-								
+			
 							$atributos ["id"] = "listaNomenclaturasNatural";
 							$atributos ["estilo"] = "col-md-12";
 							echo $this->miFormulario->division ( "inicio", $atributos );
@@ -1740,17 +1873,17 @@ class Formulario {
 								$atributos['limitar']= 50;
 								$atributos['tamanno']= 1;
 								$atributos['columnas']= 1;
-		
+			
 								$atributos ['obligatorio'] = false;
 								$atributos ['etiquetaObligatorio'] = false;
 								$atributos ['validar'] = '';
-		
-		
+			
+			
 								$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarNomenclaturas" );
 								$matrizParametros = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-		
+			
 								$atributos['matrizItems'] = $matrizParametros;
-		
+			
 								if (isset ( $_REQUEST [$esteCampo] )) {
 									$atributos ['valor'] = $_REQUEST [$esteCampo];
 								} else {
@@ -1758,18 +1891,18 @@ class Formulario {
 								}
 								$atributos ["titulo"] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 								$tab ++;
-		
+			
 								// Aplica atributos globales al control
 								$atributos = array_merge ( $atributos, $atributosGlobales );
 								echo $this->miFormulario->campoCuadroLista ( $atributos );
 								// --------------- FIN CONTROL : Select --------------------------------------------------
 							}
 							echo $this->miFormulario->division ( "fin" );
-								
+			
 							unset($atributos);
-								
+			
 							$atributos ["id"] = "parametros";
-							$atributos ["estilo"] = "col-md-12";
+							$atributos ["estilo"] = "col-md-10";
 							echo $this->miFormulario->division ( "inicio", $atributos );
 							{
 								// ---------------- CONTROL: Select --------------------------------------------------------
@@ -1785,23 +1918,23 @@ class Formulario {
 								$atributos['limitar']= 50;
 								$atributos['tamanno']= 1;
 								$atributos['columnas']= 1;
-		
+			
 								$atributos ['obligatorio'] = false;
 								$atributos ['etiquetaObligatorio'] = false;
 								$atributos ['validar'] = '';
-		
+			
 								//$atributos ['cadena_sql'] = $this->miSql->getCadenaSql("buscarCategoriaParametro");
 								//$matrizParametros=$primerRecursoDB->ejecutarAcceso($atributos['cadena_sql'], "busqueda");
-		
+			
 								//$atributos['matrizItems'] = $matrizParametros;
-		
+			
 								$matrizItems=array(
 										array(1,'Nomenclatura'),
 										array(2,'TEST'),
-		
+			
 								);
 								$atributos['matrizItems'] = $matrizItems;
-		
+			
 								if (isset ( $_REQUEST [$esteCampo] )) {
 									$atributos ['valor'] = $_REQUEST [$esteCampo];
 								} else {
@@ -1809,7 +1942,7 @@ class Formulario {
 								}
 								$atributos ["titulo"] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 								$tab ++;
-		
+			
 								// Aplica atributos globales al control
 								$atributos = array_merge ( $atributos, $atributosGlobales );
 								echo $this->miFormulario->campoCuadroLista ( $atributos );
@@ -1817,19 +1950,33 @@ class Formulario {
 							}
 							echo $this->miFormulario->division ( "fin" );
 								
+							$atributos ["id"] = "botonParametros";
+							$atributos ["estilo"] = "col-md-2";
+							echo $this->miFormulario->division ( "inicio", $atributos );
+							{
+								$atributos ["id"] = "botonesPanel";
+								$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+								echo $this->miFormulario->division ( "inicio", $atributos );
+								{
+									echo "<input type=\"button\" id=\"btOper14\" value=\"Insertar\" class=\"btn btn-success\" />";
+								}
+								echo $this->miFormulario->division ( "fin" );
+							}
+							echo $this->miFormulario->division ( "fin" );
+			
 						}
 						echo $this->miFormulario->marcoAgrupacion ( "fin" );
-		
+			
 						unset($atributos);
-		
+			
 					}
 					echo $this->miFormulario->division ( "fin" );
-						
-						
-						
+			
+			
+			
 				}
 				echo $this->miFormulario->division ( "fin" );
-		
+			
 			}
 			echo $this->miFormulario->marcoAgrupacion ( "fin" );
 		
@@ -1953,7 +2100,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, minSize[1],maxSize[13],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'required, minSize[7],maxSize[7],custom[onlyNumberSp]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1986,7 +2133,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'minSize[1],maxSize[7],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'minSize[1],maxSize[4],custom[onlyNumberSp]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1995,7 +2142,7 @@ class Formulario {
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 			$atributos ['deshabilitado'] = false;
-			$atributos ['tamanno'] = 15;
+			$atributos ['tamanno'] = 4;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 160;
 			$tab ++;
@@ -2087,7 +2234,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'required, minSize[7],maxSize[7],custom[onlyNumberSp]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2647,7 +2794,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
+			$atributos ['validar'] = 'required, minSize[7],maxSize[10],custom[onlyNumberSp]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -4766,7 +4913,7 @@ class Formulario {
 				$atributos ["leyenda"] = "Dirección Tipo DIAN";
 				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 				{
-		
+				
 					$atributos ["id"] = "panelDireccion";
 					$atributos ["estilo"] = "row";
 					echo $this->miFormulario->division ( "inicio", $atributos );
@@ -4788,11 +4935,11 @@ class Formulario {
 							$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 							$atributos ['anchoEtiqueta'] = 150;
 							$atributos ['deshabilitado'] =false;
-								
+				
 							$atributos ['obligatorio'] = true;
 							$atributos ['etiquetaObligatorio'] = true;
 							$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
-								
+				
 							if (isset ( $_REQUEST [$esteCampo] )) {
 								$atributos ['valor'] = $_REQUEST [$esteCampo];
 							} else {
@@ -4800,48 +4947,64 @@ class Formulario {
 							}
 							$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 							$tab ++;
-								
+				
 							// Aplica atributos globales al control
 							$atributos = array_merge ( $atributos, $atributosGlobales );
 							echo $this->miFormulario->campoTextArea ( $atributos );
 							// --------------- FIN CONTROL : Cuadro de Texto --------------------------------------------------
-		
+				
 							unset($atributos);
-		
+				
 							unset($atributos);
-		
+				
 							$atributos ["id"] = "ingresoBotones";
 							$atributos ["estilo"] = "col-md-12";
 							echo $this->miFormulario->division ( "inicio", $atributos );
 							{
-		
+				
 								$atributos ["id"] = "botonesPanel";
-								$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+								$atributos ["estilo"] = "col-md-12 btn-group";
 								echo $this->miFormulario->division ( "inicio", $atributos );
 								{
-									echo "<input type=\"button\" id=\"btOper1Nat\" value=\"A\" class=\"btn btn-primary\"/>";
-									echo "<input type=\"button\" id=\"btOper2Nat\" value=\"B\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper3Nat\" value=\"C\" class=\"btn btn-primary\"/>";
-									echo "<input type=\"button\" id=\"btOper4Nat\" value=\"D\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper5Nat\" value=\"E\" class=\"btn btn-primary\"/>";
-									echo "<input type=\"button\" id=\"btOper6Nat\" value=\"F\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper7Nat\" value=\"G\" class=\"btn btn-primary\"/>";
-									echo "<input type=\"button\" id=\"btOper8Nat\" value=\"H\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper9Nat\" value=\"I\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper10Nat\" value=\"J\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper11Nat\" value=\"K\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper12Nat\" value=\"L\" class=\"btn btn-primary\" />";
-									echo "<input type=\"button\" id=\"btOper13Nat\" value=\"Borrar\" class=\"btn btn-danger\" />";
+									echo "<input type=\"button\" id=\"btOper1Nat\" value=\"A\" class=\"btn btn-primary btn-xs\"/>";
+									echo "<input type=\"button\" id=\"btOper2Nat\" value=\"B\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper3Nat\" value=\"C\" class=\"btn btn-primary btn-xs\"/>";
+									echo "<input type=\"button\" id=\"btOper4Nat\" value=\"D\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper5Nat\" value=\"E\" class=\"btn btn-primary btn-xs\"/>";
+									echo "<input type=\"button\" id=\"btOper6Nat\" value=\"F\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper7Nat\" value=\"G\" class=\"btn btn-primary btn-xs\"/>";
+									echo "<input type=\"button\" id=\"btOper8Nat\" value=\"H\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper9Nat\" value=\"I\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper10Nat\" value=\"J\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper11Nat\" value=\"K\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper12Nat\" value=\"L\" class=\"btn btn-primary btn-xs\" />";
+										
+									echo "<input type=\"button\" id=\"btOper15Nat\" value=\"M\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper16Nat\" value=\"N\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper17Nat\" value=\"O\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper18Nat\" value=\"P\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper19Nat\" value=\"Q\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper20Nat\" value=\"R\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper21Nat\" value=\"S\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper22Nat\" value=\"T\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper23Nat\" value=\"U\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper24Nat\" value=\"V\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper25Nat\" value=\"W\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper26Nat\" value=\"X\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper27Nat\" value=\"Y\" class=\"btn btn-primary btn-xs\" />";
+									echo "<input type=\"button\" id=\"btOper28Nat\" value=\"Z\" class=\"btn btn-primary btn-xs\" />";
+										
+									echo "<input type=\"button\" id=\"btOper13Nat\" value=\"Borrar\" class=\"btn btn-danger btn-xs\" />";
 								}
 								echo $this->miFormulario->division ( "fin" );
-		
+				
 							}
 							echo $this->miFormulario->division ( "fin" );
-		
-		
-		
-		
-		
+				
+				
+				
+				
+				
 						}
 						echo $this->miFormulario->division ( "fin" );
 							
@@ -4850,8 +5013,8 @@ class Formulario {
 						echo $this->miFormulario->division ( "inicio", $atributos );
 						{
 							unset($atributos);
-								
-								
+				
+				
 							$esteCampo = "marcoDatosParametros";
 							$atributos ['id'] = $esteCampo;
 							$atributos ["estilo"] = "jqueryui";
@@ -4877,17 +5040,17 @@ class Formulario {
 									$atributos['limitar']= 50;
 									$atributos['tamanno']= 1;
 									$atributos['columnas']= 1;
-										
+				
 									$atributos ['obligatorio'] = false;
 									$atributos ['etiquetaObligatorio'] = false;
 									$atributos ['validar'] = '';
-										
-		
+				
+				
 									$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarNomenclaturas" );
 									$matrizParametros = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-										
+				
 									$atributos['matrizItems'] = $matrizParametros;
-										
+				
 									if (isset ( $_REQUEST [$esteCampo] )) {
 										$atributos ['valor'] = $_REQUEST [$esteCampo];
 									} else {
@@ -4895,7 +5058,7 @@ class Formulario {
 									}
 									$atributos ["titulo"] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 									$tab ++;
-										
+				
 									// Aplica atributos globales al control
 									$atributos = array_merge ( $atributos, $atributosGlobales );
 									echo $this->miFormulario->campoCuadroLista ( $atributos );
@@ -4906,7 +5069,7 @@ class Formulario {
 								unset($atributos);
 									
 								$atributos ["id"] = "parametrosNat";
-								$atributos ["estilo"] = "col-md-12";
+								$atributos ["estilo"] = "col-md-10";
 								echo $this->miFormulario->division ( "inicio", $atributos );
 								{
 									// ---------------- CONTROL: Select --------------------------------------------------------
@@ -4922,23 +5085,18 @@ class Formulario {
 									$atributos['limitar']= 50;
 									$atributos['tamanno']= 1;
 									$atributos['columnas']= 1;
-										
+				
 									$atributos ['obligatorio'] = false;
 									$atributos ['etiquetaObligatorio'] = false;
 									$atributos ['validar'] = '';
-										
-									//$atributos ['cadena_sql'] = $this->miSql->getCadenaSql("buscarCategoriaParametro");
-									//$matrizParametros=$primerRecursoDB->ejecutarAcceso($atributos['cadena_sql'], "busqueda");
-										
-									//$atributos['matrizItems'] = $matrizParametros;
-										
+				
 									$matrizItems=array(
 											array(1,'Nomenclatura'),
 											array(2,'TEST'),
-												
+				
 									);
 									$atributos['matrizItems'] = $matrizItems;
-										
+				
 									if (isset ( $_REQUEST [$esteCampo] )) {
 										$atributos ['valor'] = $_REQUEST [$esteCampo];
 									} else {
@@ -4946,19 +5104,33 @@ class Formulario {
 									}
 									$atributos ["titulo"] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 									$tab ++;
-										
+				
 									// Aplica atributos globales al control
 									$atributos = array_merge ( $atributos, $atributosGlobales );
 									echo $this->miFormulario->campoCuadroLista ( $atributos );
 									// --------------- FIN CONTROL : Select --------------------------------------------------
 								}
 								echo $this->miFormulario->division ( "fin" );
+				
+								$atributos ["id"] = "botonParametrosNat";
+								$atributos ["estilo"] = "col-md-2";
+								echo $this->miFormulario->division ( "inicio", $atributos );
+								{
+									$atributos ["id"] = "botonesPanel";
+									$atributos ["estilo"] = "col-md-12 btn-group btn-group-lg";
+									echo $this->miFormulario->division ( "inicio", $atributos );
+									{
+										echo "<input type=\"button\" id=\"btOper14Nat\" value=\"Insertar\" class=\"btn btn-success\" />";
+									}
+									echo $this->miFormulario->division ( "fin" );
+								}
+								echo $this->miFormulario->division ( "fin" );
 									
 							}
 							echo $this->miFormulario->marcoAgrupacion ( "fin" );
-								
+				
 							unset($atributos);
-								
+				
 						}
 						echo $this->miFormulario->division ( "fin" );
 							
@@ -4966,7 +5138,7 @@ class Formulario {
 							
 					}
 					echo $this->miFormulario->division ( "fin" );
-		
+				
 				}
 				echo $this->miFormulario->marcoAgrupacion ( "fin" );
 		
@@ -5105,7 +5277,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[13],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'required, minSize[10],maxSize[10],custom[onlyNumberSp]';
 		
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5138,7 +5310,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[13],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'required, minSize[7],maxSize[7],custom[onlyNumberSp]';
 		
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5171,7 +5343,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'minSize[1],maxSize[7],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[1],maxSize[4],custom[onlyNumberSp]';
 		
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5237,7 +5409,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'minSize[1],maxSize[15],custom[onlyNumberSp]';
+				$atributos ['validar'] = 'minSize[7],maxSize[7],custom[onlyNumberSp]';
 		
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
