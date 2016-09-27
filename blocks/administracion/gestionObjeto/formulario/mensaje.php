@@ -61,10 +61,16 @@ if (!isset($GLOBALS["autorizado"])) {
     echo $this->miFormulario->division("inicio", $atributos);
 
     if ($_REQUEST['mensaje'] == 'confirma') {
-
-        $tipo = 'success';
-        $mensaje =  $this->lenguaje->getCadena('mensajeRegistro') . ".";
-        $boton = "continuar";
+    	
+    	if($_REQUEST['unidadEjecutora'] == '01'){
+    		$valorUnidadEjecutoraText = "1 - Rectoría";
+    	}else{
+    		$valorUnidadEjecutoraText = "2 - IDEXUD";
+    	}
+    	$hoy = date ( "d/m/Y" );
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
+    	$resultadoUsuario = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         
         if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "CREADO"){
         	
@@ -78,6 +84,8 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         	
+        	$Proceso = "la <b>Modificación</b>";
+        	
         }else if(isset($_REQUEST['estadoSolicitudAct']) && $_REQUEST['estadoSolicitudAct'] == "CON ACTIVIDADES"){
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
@@ -87,8 +95,12 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        	
+        	$Proceso = "la <b>Modificación</b>";
         
         }else{	
+        	
+        	$Proceso = "el <b>Registro</b>";
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
         	$valorCodificado.="&opcion=actividad";
@@ -102,6 +114,14 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         	
         }
+        
+        $tipo = 'success';
+        $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Necesidad <b>N° ".$_REQUEST['numSolicitud']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
+					Unidad Ejecutora <b>". $valorUnidadEjecutoraText . "</b>
+				</br>
+				</br><b>Fecha del Proceso:</b> ".$hoy."
+				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['usuario'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
+        $boton = "continuar";
 		
         
         

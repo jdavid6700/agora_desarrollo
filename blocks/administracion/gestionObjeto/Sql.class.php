@@ -28,6 +28,14 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "buscarUsuario" ://****************************************************************************
+				$cadenaSql=" SELECT";
+				$cadenaSql.=" *";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" prov_usuario";
+				$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
+				break;
+			
 			/* CONSULTAR siCapital */
 			case "listaSolicitudNecesidad" :
 				$cadenaSql = "SELECT *";

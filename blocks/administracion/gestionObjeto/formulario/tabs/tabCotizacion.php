@@ -334,6 +334,13 @@ class Formulario {
 
 <?php
 		} else if(isset($_REQUEST['vigenciaNecesidadCotizacion'])){
+			
+			if($valorUnidadEjecutoraCotizacion == 1){
+				$valorUnidadEjecutoraCotizacionText = "1 - Rectoría";
+			}else{
+				$valorUnidadEjecutoraCotizacionText = "2 - IDEXUD";
+			}
+			
 			// ------------------INICIO Division para los botones-------------------------
 			$atributos ["id"] = "divNoEncontroEgresado";
 			$atributos ["estilo"] = "marcoBotones";
@@ -344,7 +351,9 @@ class Formulario {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = "Actualmente no hay Solicitudes de Necesidad Relacionadas con Vigencia <b>".$valorVigenciaCotizacion."</b> en Cotización</br> Ingrese por la pestaña Objeto a Contratar para crear una Relación. <br>";
+			$atributos ["mensaje"] = "Actualmente no hay Solicitudes de Necesidad Relacionadas con Vigencia <b>".$valorVigenciaCotizacion."</b> en Cotización para la 
+					Unidad Ejecutora <b>". $valorUnidadEjecutoraCotizacionText . "</b>
+				</br> Ingrese por la pestaña Objeto a Contratar para crear una Relación. <br>";
 			
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );
