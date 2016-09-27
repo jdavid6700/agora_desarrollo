@@ -40,7 +40,8 @@ class Registrar {
         $datosSolicitud = array (
         		'numero_solicitud' => $_REQUEST ['numSolicitud'],
         		'vigencia' => $_REQUEST ['vigencia'],
-        		'claseCIIU' => $_REQUEST ['claseCIIU'],
+        		'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
+        		'claseCIIU' => null,
         		'unidad' => $_REQUEST ['unidad'],
         		'cantidad' => $_REQUEST ['cantidad'],
         		'cotizaciones' => $_REQUEST ['cotizaciones']
@@ -57,10 +58,8 @@ class Registrar {
         }else {
         	//Guardar datos del Objeto a contratar
         	$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
-        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSolicitud, 'registrar' );
         }
-        
-
 		
 		if ($resultado) {
 			
@@ -68,7 +67,8 @@ class Registrar {
 				
 				$datosSolicitudNecesidad = array (
 						'idSolicitud' => $_REQUEST['numSolicitud'],
-						'vigencia' => $_REQUEST['vigencia']
+						'vigencia' => $_REQUEST['vigencia'],
+						'unidadEjecutora' => $_REQUEST['unidadEjecutora']
 				);
 				
 				$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
@@ -78,6 +78,7 @@ class Registrar {
 						'idObjeto' => $resultadoNecesidadRelacionada[0]['id_objeto'],
 						'numero_solicitud' => $_REQUEST ['numSolicitud'],
 						'vigencia' => $_REQUEST ['vigencia'],
+						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
 						'cotizaciones' => $_REQUEST ['cotizaciones'],
 						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
@@ -88,14 +89,15 @@ class Registrar {
 				$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$datos = array (
-						'idObjeto' => $lastId[0][0],
+						'idObjeto' => $resultado[0][0],
 						'numero_solicitud' => $_REQUEST ['numSolicitud'],
 						'vigencia' => $_REQUEST ['vigencia'],
+						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
 						'cotizaciones' => $_REQUEST ['cotizaciones'],
 						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
 			}
-                    
+			
 			redireccion::redireccionar ( 'inserto',  $datos);
 			exit ();
 		} else {

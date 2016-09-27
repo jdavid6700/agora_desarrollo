@@ -43,6 +43,10 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('unidad')?>').width(250);
 
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheck')?>').width(250);
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckRelacionada')?>').width(250);
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckCotizacion')?>').width(250);
+
 $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').width(250);
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
@@ -57,6 +61,10 @@ $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('unidad')?>').select2();
+
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheck')?>').select2();
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckRelacionada')?>').select2();
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckCotizacion')?>').select2();
 
 $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').select2();

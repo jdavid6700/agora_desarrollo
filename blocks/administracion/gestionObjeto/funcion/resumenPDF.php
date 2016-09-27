@@ -35,7 +35,8 @@ $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 $datos = array (
 		'idSolicitud' => $resultadoObjeto[0]['numero_solicitud'],
-		'vigencia' => $resultadoObjeto[0]['vigencia']
+		'vigencia' => $resultadoObjeto[0]['vigencia'],
+		'unidadEjecutora' => $resultadoObjeto[0]['unidad_ejecutora']
 );
 
 
@@ -45,6 +46,24 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
 
 $certUniversidadImagen = 'sabio_caldas.png';
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
+
+
+$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
+$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+$contenidoAct = '';
+
+foreach ($resultadoActividades as $dato):
+	$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
+	$contenidoAct .= "<br>";
+endforeach;
+
+if(!isset($solicitudNecesidad [0]['OBJETO'])) $solicitudNecesidad [0]['OBJETO'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['JUSTIFICACION'])) $solicitudNecesidad [0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+
 
 
 $contenidoPagina = "<page backtop='60mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
@@ -121,8 +140,8 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Actividad Económica</b>
                 </td>
-                <td align='left' style='width:80%;'>
-                    " . $resultadoObjeto[0]['codigociiu'] . '-' . $resultadoObjeto[0]['actividad'] . "
+                <td align='left' style='width:80%;'>		
+                    " . $contenidoAct . "
                 </td>
             </tr>
             <tr>
@@ -190,6 +209,9 @@ if($resultadoProveedor){
                 <td align='center' style='background:#BDD6EE'>
                     <b>Documento</b>
                 </td>
+				<td align='center' style='background:#BDD6EE'>
+                    <b>Tipo</b>
+                </td>
                 <td align='center' style='background:#BDD6EE'>
                     <b>Proveedor</b>
                 </td>
@@ -207,6 +229,9 @@ if($resultadoProveedor){
                 <td align='center' >
                     " . $dato['num_documento'] . "
                 </td>
+                 <td align='center' >
+                    " . " ". $dato['tipopersona'] . " " . "
+                </td>    		
                 <td align='center' >
                     " . $dato['nom_proveedor'] . "
                 </td>

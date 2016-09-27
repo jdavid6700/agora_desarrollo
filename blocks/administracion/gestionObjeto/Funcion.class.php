@@ -46,6 +46,9 @@ class Funcion {
 	function solicitudCotizacion() {
 		include_once ($this->ruta . "/funcion/solicitudCotizacion.php");
 	}
+	function registrarActividad() {
+		include_once ($this->ruta . "/funcion/registrarActividad.php");
+	}
 	function resumen()
 	{
 		include_once($this->ruta."/funcion/resumenPDF.php");
@@ -116,6 +119,21 @@ class Funcion {
 				
 				case 'registrar' :
 					$this->registrar ();
+					break;
+					
+				case 'registrarActividad' :
+					
+					if (isset ( $_REQUEST ["botonTerminar"] ) && $_REQUEST ["botonTerminar"] == 'true') {
+						$arreglo = array (
+								'idObjeto' => $_REQUEST['idObjeto'],
+								'numCotizaciones' => $_REQUEST['numCotizaciones']
+						);
+						redireccion::redireccionar ( "cotizacion", $arreglo );
+						exit();
+					}else{
+						$this->registrarActividad ();
+					}
+					
 					break;
 					
 				case 'cotizacion' :

@@ -19,6 +19,7 @@ class redireccion {
 				$variable .= "&idObjeto=".$valor['idObjeto'];
 				$variable .= "&numSolicitud=".$valor['numero_solicitud'];
 				$variable .= "&vigencia=".$valor['vigencia'];
+				$variable .= "&unidadEjecutora=".$valor['unidad_ejecutora'];
 				$variable .= "&numCotizaciones=".$valor['cotizaciones'];
 				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
 				break;
@@ -85,6 +86,44 @@ class redireccion {
 				$variable .= "&facultad=".$valor[1];
 				$variable .= "&proyectoCurricular=".$valor[2];
 				break;
+				
+			case "registroActividad" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=registroActividad";
+				$variable .= "&idObjeto=" . $valor ['idObjeto'];
+				$variable .= "&actividad=" . $valor ['actividad'];
+				$variable .= "&numSolicitud=".$valor['idSolicitud'];
+				$variable .= "&vigencia=".$valor['vigencia'];
+				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
+				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
+				break;
+			
+			case "mensajeExisteActividad" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=mensajeExisteActividad";
+				$variable .= "&idObjeto=" . $valor ['idObjeto'];
+				$variable .= "&actividad=" . $valor ['actividad'];
+				$variable .= "&numSolicitud=".$valor['idSolicitud'];
+				$variable .= "&vigencia=".$valor['vigencia'];
+				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
+				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
+				break;
+				
+			case "noregistro" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=error";
+				break;
+				
+			case "cotizacion" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=cotizacion";
+				$variable.="&idObjeto=" . $_REQUEST["idObjeto"];
+				$variable.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+				break;
+				
 		}
 		
 		foreach ( $_REQUEST as $clave => $valor ) {

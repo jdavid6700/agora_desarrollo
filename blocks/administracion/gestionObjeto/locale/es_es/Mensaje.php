@@ -8,12 +8,25 @@ $this->idioma["marcoDatos"]="Solicitudes de Necesidad";
 $this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
 $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
 $this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
-$this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
+$this->idioma["marcoProveedores"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU Registrados";
+$this->idioma["marcoObjetoAct"]="Solicitud de Necesidad - Información General";
+
+$this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
+$this->idioma["marcoActividadesRel"] = "Actividades Ecónomicas Relacionadas con la Necesidad";
+$this->idioma["marcoCIIU"] = "Adicionar Actividad Ecónomica";
 
 $this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
 $this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en Cotización";
 
+$this->idioma["unidadEjecutora"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraTitulo"]="Unidad Ejecutora";
 
+$this->idioma["unidadEjecutoraCheck"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckTitulo"]="Unidad Ejecutora";
+$this->idioma["unidadEjecutoraCheckRelacionada"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckRelacionadaTitulo"]="Unidad Ejecutora";
+$this->idioma["unidadEjecutoraCheckCotizacion"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckCotizacionTitulo"]="Unidad Ejecutora";
 
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
@@ -94,6 +107,7 @@ $this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vige
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 $this->idioma["tabConsultar"] = "Solicitar Cotizaciòn";
 $this->idioma["tabCotizacion"] = "Estado Cotizaciòn";
+$this->idioma["tabActividad"] = "Actividades Económicas";
 
 $this->idioma["tipoDocumento"] = "Tipo de Documento";
 $this->idioma["identificacionDocente"] = "Número de Identificación del Docente:";
@@ -102,14 +116,16 @@ $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primer
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
 $this->idioma["botonContinuar"] = "Continuar";
-
+$this->idioma["botonAgregar"] = "Agregar";
+$this->idioma["botonTerminar"] = "Continuar";
 
 $this->idioma["paso1"] = "Consultar Funcionario";
 $this->idioma["paso2"] = "Información del Docente";
 $this->idioma["paso3"] = "Información Adicional";
 
 		
-
+$this->idioma["agregar"] = "Agregar";
+$this->idioma["terminar"] = "Continuar";
 		
 		
 		
@@ -133,7 +149,9 @@ $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de T�
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
 $this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con la Actividad Económica </br> ";
-$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
+//$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
+
+$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con las condiciones </br> y que se encuentren Activos";
 /////////////////////////////////
 
 $this->idioma["marcoConsultaGeneral"] = "Consulta Títulos Académicos Registradas";
