@@ -112,16 +112,32 @@ class FormularioRegistro {
 		
 		$datosSolicitudNecesidad = array (
 				'idSolicitud' => $_REQUEST['idSolicitud'],
-				'vigencia' => $_REQUEST['vigencia']
+				'vigencia' => $_REQUEST['vigencia'],
+				'unidadEjecutora' => $_REQUEST['unidadEjecutora']
 		);
 		
 		
 		$cadena_sql = $this->miSql->getCadenaSql ( "listaSolicitudNecesidadXNumSolicitud", $datosSolicitudNecesidad);
 		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 		
-		//echo $cadena_sql;// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-		//var_dump($resultado);
-		//var_dump($_REQUEST);
+		// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		
+		if(!isset($resultado[0]['NUM_SOL_ADQ'])) $resultado[0]['NUM_SOL_ADQ'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['VIGENCIA'])) $resultado[0]['VIGENCIA'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['CODIGO_UNIDAD_EJECUTORA'])) $resultado[0]['CODIGO_UNIDAD_EJECUTORA'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['DEPENDENCIA'])) $resultado[0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['FUNCIONARIO'])) $resultado[0]['FUNCIONARIO'] = "SIN INFORMACIÓN ";	
+		if(!isset($resultado[0]['OBJETO'])) $resultado[0]['OBJETO'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['ORIGEN_SOLICITUD'])) $resultado[0]['ORIGEN_SOLICITUD'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['DEPENDENCIA_DESTINO'])) $resultado[0]['DEPENDENCIA_DESTINO'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['JUSTIFICACION'])) $resultado[0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['CONDICIONES'])) $resultado[0]['CONDICIONES'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['TIPO_CONTRATACION'])) $resultado[0]['TIPO_CONTRATACION'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['PLAZO_EJECUCION'])) $resultado[0]['PLAZO_EJECUCION'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['ORDENADOR_GASTO'])) $resultado[0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+		if(!isset($resultado[0]['CARGO_ORDENADOR_GASTO'])) $resultado[0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+		
+		
 		
 		$esteCampo = "marcoDatosSolicitud";
 		$atributos ['id'] = $esteCampo;
@@ -140,7 +156,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
+		$atributos ['columnas'] = 3;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -170,7 +186,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
+		$atributos ['columnas'] = 3;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -190,6 +206,37 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+		$esteCampo = 'unidadEjecutora';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 3;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		$atributos ['valor'] = $resultado[0]['CODIGO_UNIDAD_EJECUTORA'];
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 30;
+		$atributos ['maximoTamanno'] = '10';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+		
 		
 		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA--------------------------------------------------------
 		$esteCampo = 'dependencia';

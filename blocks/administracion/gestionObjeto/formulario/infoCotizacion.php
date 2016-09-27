@@ -66,7 +66,8 @@ if (!isset($GLOBALS["autorizado"])) {
     
     $datosSolicitudNecesidad = array (
     		'idSolicitud' => $_REQUEST['idSolicitud'],
-    		'vigencia' => $_REQUEST['vigencia']
+    		'vigencia' => $_REQUEST['vigencia'],
+    		'unidadEjecutora' => $_REQUEST['unidadEjecutora']
     );
     
     
@@ -86,8 +87,6 @@ if (!isset($GLOBALS["autorizado"])) {
     	$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
     }
     //***************SOLICITUDES RELACIONADAS******************************************************************************************
-    
-    
     
    
         $tipo = 'success';
@@ -150,19 +149,17 @@ $objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 $datos = array (
 		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
-		'vigencia' => $objetoEspecifico[0]['vigencia']
+		'vigencia' => $objetoEspecifico[0]['vigencia'],
+		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
 );
 
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
- 
-
-
-
 
 $datos = array (
 		'solicitudes' => "1,2,3,4,5,6,7,8",
-		'vigencia' => 2070
+		'vigencia' => $objetoEspecifico[0]['vigencia'],
+		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
 );
 
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );

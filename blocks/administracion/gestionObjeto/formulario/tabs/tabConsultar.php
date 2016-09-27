@@ -100,22 +100,30 @@ class Formulario {
 		
 		
 		if(isset($_REQUEST['vigenciaNecesidadRelacionada'])){
-		
+			
 			$valorVigenciaRelacionada = $_REQUEST['vigenciaNecesidadRelacionada'];
+			$valorUnidadEjecutoraRelacionada = $_REQUEST['unidadEjecutoraCheckRelacionada'];
 				
-			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosSinCotizacionXVigencia", $valorVigenciaRelacionada );
+			$datosNec = array (
+					'unidadEjecutora' => $valorUnidadEjecutoraRelacionada,
+					'vigencia' => $valorVigenciaRelacionada
+			);
+				
+			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosSinCotizacionXVigencia", $datosNec );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 				
 				
 			if(isset($resultado[0][0])){
 				$datos = array (
 					'solicitudes' => $resultado[0][0],
-					'vigencia' => $valorVigenciaRelacionada
+					'vigencia' => $valorVigenciaRelacionada,
+					'unidadEjecutora' => $valorUnidadEjecutoraRelacionada
 				);
 			}else{
 				$datos = array (//No existen Datos Relacionados ya en el sistema AGORA
 						'solicitudes' => "-1",
-						'vigencia' => $valorVigenciaRelacionada
+						'vigencia' => $valorVigenciaRelacionada,
+						'unidadEjecutora' => $valorUnidadEjecutoraRelacionada
 				);
 			}
 			
@@ -161,7 +169,7 @@ class Formulario {
 				$atributos ['seleccion'] = - 1;
 			}
 			$atributos ['deshabilitado'] = false;
-			$atributos ['columnas'] = 1;
+			$atributos ['columnas'] = 2;
 			$atributos ['tamanno'] = 1;
 			$atributos ['ajax_function'] = "";
 			$atributos ['ajax_control'] = $esteCampo;
@@ -173,6 +181,43 @@ class Formulario {
 			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( 'filtroVigencia' );
 			$matrizItems = $siCapitalRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 			$atributos ['matrizItems'] = $matrizItems;
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			unset ( $atributos );
+			// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
+			
+			// ---------------- CONTROL: Lista Vigencia--------------------------------------------------------
+			$esteCampo = "unidadEjecutoraCheckRelacionada";
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['id'] = $esteCampo;
+			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ["etiquetaObligatorio"] = true;
+			$atributos ['tab'] = $tab ++;
+			$atributos ['anchoEtiqueta'] = 200;
+			$atributos ['evento'] = '';
+			if (isset ( $estadoSolicitud )) {
+				$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_division'];
+			} else {
+				$atributos ['seleccion'] = - 1;
+			}
+			$atributos ['deshabilitado'] = false;
+			$atributos ['columnas'] = 2;
+			$atributos ['tamanno'] = 1;
+			$atributos ['ajax_function'] = "";
+			$atributos ['ajax_control'] = $esteCampo;
+			$atributos ['estilo'] = "jqueryui";
+			$atributos ['validar'] = "required";
+			$atributos ['limitar'] = false;
+			$atributos ['anchoCaja'] = 60;
+			$atributos ['miEvento'] = '';
+				
+			$matrizItems = array (
+					array ( 1, '1 - Rectoría' ),
+					array ( 2, '2 - IDEXUD' )
+			);
+				
+			$atributos ['matrizItems'] = $matrizItems;
+				
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
 			unset ( $atributos );
@@ -207,6 +252,7 @@ class Formulario {
 							<tr>
 								<th><center>Número Solicitud</center></th>
 								<th><center>Vigencia</center></th>
+								<th><center>Unidad Ejecutora</center></th>
 								<th><center>Dependencia</center></th>
 								<th><center>Fecha Solicitud</center></th>
 								<th><center>Origen Solicitud</center></th>
@@ -228,6 +274,7 @@ class Formulario {
 			$variableView .= "&opcion=verSolicitudRelacionada";
 			$variableView .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableView .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableView .= "&unidadEjecutora=" . $dato['CODIGO_UNIDAD_EJECUTORA'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
 			
@@ -237,6 +284,7 @@ class Formulario {
 			$variableEdit .= "&opcion=modificarSolicitudRelacionada";
 			$variableEdit .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableEdit .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableEdit .= "&unidadEjecutora=" . $dato['CODIGO_UNIDAD_EJECUTORA'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
 			$imagenEdit = 'editPro.png';
 
@@ -246,12 +294,14 @@ class Formulario {
 			$variableAdd .= "&opcion=cotizarSolicitud";
 			$variableAdd .= "&idSolicitud=" . $dato['NUM_SOL_ADQ'];
 			$variableAdd .= "&vigencia=" . $dato['VIGENCIA'];
+			$variableAdd .= "&unidadEjecutora=" . $dato['CODIGO_UNIDAD_EJECUTORA'];
 			$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
 			$imagenAdd = 'calPro.png';
 			
 			
 			if(!isset($dato['NUM_SOL_ADQ'])) $dato['NUM_SOL_ADQ'] = " ";
 			if(!isset($dato['VIGENCIA'])) $dato['VIGENCIA'] = " ";
+			if(!isset($dato['CODIGO_UNIDAD_EJECUTORA'])) $dato['CODIGO_UNIDAD_EJECUTORA'] = " ";
 			if(!isset($dato['DEPENDENCIA'])) $dato['DEPENDENCIA'] = " ";
 			if(!isset($dato['FECHA_SOLICITUD'])) $dato['FECHA_SOLICITUD'] = " ";
 			if(!isset($dato['ORIGEN_SOLICITUD'])) $dato['ORIGEN_SOLICITUD'] = " ";
@@ -265,12 +315,13 @@ class Formulario {
 			$mostrarHtml = "<tr>
 									<td><center>" . $dato['NUM_SOL_ADQ'] . "</center></td>
 									<td><center>" . $dato['VIGENCIA'] . "</center></td>
+									<td><center>" . $dato['CODIGO_UNIDAD_EJECUTORA'] . "</center></td>
 									<td><center>" . $dato['DEPENDENCIA'] . "</center></td>
 									<td><center>" . $dato['FECHA_SOLICITUD'] . "</center></td>
 									<td><center>" . $dato['ORIGEN_SOLICITUD'] . "</center></td>
 								    <td><center>" . $dato['DEPENDENCIA_DESTINO'] . "</center></td>
-									<td><center>" . $dato['JUSTIFICACION'] . "</center></td>
-									<td><center>" . $dato['OBJETO'] . "</center></td>
+									<td><center>" . substr($dato['JUSTIFICACION'], 0, 400) . "</center></td>
+									<td><center>" . substr($dato['OBJETO'], 0, 400) . "</center></td>
 									<td><center>" . $dato['TIPO_CONTRATACION'] . "</center></td>
 									<td><center>" . $dato['PLAZO_EJECUCION'] . "</center></td>
 									<td><center>" . "RELACIONADO"/*$dato['ESTADO']*/ . "</center></td>

@@ -66,6 +66,16 @@ class Frontera {
                 case "consultar":
                     include_once($this->ruta . "/formulario/consultar.php");
                     break;
+                    
+				case "actividad" :
+					
+					if (isset ( $_REQUEST ["terminar"] ) && $_REQUEST ["terminar"] == 'true') {
+						include_once($this->ruta . "/formulario/solicitudCotizacion.php");
+					}else{
+						include_once ($this->ruta . "/formulario/formActividad.php");
+					}
+					
+					break;
                 
                 case "nuevo":
                      include_once($this->ruta . "/formulario/formulario.php");

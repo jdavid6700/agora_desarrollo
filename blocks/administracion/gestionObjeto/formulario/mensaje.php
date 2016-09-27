@@ -69,19 +69,38 @@ if (!isset($GLOBALS["autorizado"])) {
         if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "CREADO"){
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
-        	$valorCodificado.="&opcion=nuevo";
+        	$valorCodificado.="&opcion=actividad";
         	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         	
-        }else{
+        }else if(isset($_REQUEST['estadoSolicitudAct']) && $_REQUEST['estadoSolicitudAct'] == "CON ACTIVIDADES"){
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
         	$valorCodificado.="&opcion=cotizacion";
         	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
         	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         
+        }else{	
+        	
+        	$valorCodificado = "pagina=".$miPaginaActual;
+        	$valorCodificado.="&opcion=actividad";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+        	
         }
 		
         
@@ -126,13 +145,30 @@ $objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 $datos = array (
 		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
-		'vigencia' => $objetoEspecifico[0]['vigencia']
+		'vigencia' => $objetoEspecifico[0]['vigencia'],
+		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
 );
 
 $cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
  
  
+$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
+$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+$contenidoAct = '<br>';
+
+foreach ($resultadoActividades as $dato):
+	$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
+	$contenidoAct .= "<br>";
+endforeach;
+
+if(!isset($solicitudNecesidad [0]['OBJETO'])) $solicitudNecesidad [0]['OBJETO'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['JUSTIFICACION'])) $solicitudNecesidad [0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+
 //INICIO ENVIO DE CORREO AL USUARIO
     $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
 
@@ -153,7 +189,7 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
 
         $mail->From='agora@udistrital.edu.co';
         $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
-        $mail->Subject="Solicitud de Cotización";
+        $mail->Subject="Solicitud de Cotización BANCO PROVEEDORES UDISTRITAL";
         
         
         $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
@@ -161,7 +197,7 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         $contenido.= "<br>";
         $contenido.= "<b>Justificación Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['JUSTIFICACION'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Actividad econ&oacute;mica : </b>" . $objetoEspecifico[0]['codigociiu'] . ' - ' . $objetoEspecifico[0]['actividad'] . "<br>";
+        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
         $contenido.= "<br>";
         $contenido.= "<b>Dependencia Solicitante : </b>" . $solicitudNecesidad [0]['DEPENDENCIA']. "<br>";
         $contenido.= "<br>";
@@ -185,7 +221,7 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         
 		foreach ($resultadoProveedor as $dato):
 			//$to_mail=$dato ['correo'];
-		    $to_mail="davidencolr6700@hotmail.com";//PRUEBAS**********************************************************************************
+		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
 			$mail->AddAddress($to_mail);
 			//$mail->Send();
 			
@@ -251,6 +287,42 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
+    }else if($_REQUEST['mensaje'] == 'mensajeExisteActividad') {
+        $tipo = 'error';
+        $mensaje = "Error en el cargue. <br>La Actividad ya se encuentra registrada.";
+        $boton = "regresar";
+        
+        $actividades = true;
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=actividad";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+        
+    }else if($_REQUEST['mensaje'] == 'registroActividad') {
+        $tipo = 'success';
+        $mensaje = "Se registro la Actividad Económica<br >";
+		$mensaje .= "<strong>" . $_REQUEST['actividad'] . "</strong><br >";
+        $boton = "regresar";
+        
+        $actividades = true;
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=actividad";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
     }
     
     
@@ -315,26 +387,74 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
     $atributos ["estilo"] = "marcoBotones";
     echo $this->miFormulario->division("inicio", $atributos);
 
-    // -----------------CONTROL: Botón ----------------------------------------------------------------
-    $esteCampo = 'continuar';
-    $atributos ["id"] = $esteCampo;
-    $atributos ["tabIndex"] = $tab;
-    $atributos ["tipo"] = 'boton';
-    // submit: no se coloca si se desea un tipo button genérico
-    $atributos ['submit'] = true;
-    $atributos ["estiloMarco"] = '';
-    $atributos ["estiloBoton"] = 'jqueryui';
-    // verificar: true para verificar el formulario antes de pasarlo al servidor.
-    $atributos ["verificar"] = '';
-    $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-    $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
-    $atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-    $tab ++;
-
-    // Aplica atributos globales al control
-    $atributos = array_merge($atributos, $atributosGlobales);
-    echo $this->miFormulario->campoBoton($atributos);
-    // -----------------FIN CONTROL: Botón -----------------------------------------------------------
+   
+    
+    if(isset($actividades) && $actividades = true){
+    	
+    	// -----------------CONTROL: Botón ----------------------------------------------------------------
+    	$esteCampo = 'agregar';
+    	$atributos ["id"] = $esteCampo;
+    	$atributos ["tabIndex"] = $tab;
+    	$atributos ["tipo"] = 'boton';
+    	// submit: no se coloca si se desea un tipo button genérico
+    	$atributos ['submit'] = true;
+    	$atributos ["estiloMarco"] = '';
+    	$atributos ["estiloBoton"] = 'jqueryui';
+    	// verificar: true para verificar el formulario antes de pasarlo al servidor.
+    	$atributos ["verificar"] = '';
+    	$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+    	$atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+    	$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+    	$tab ++;
+    	
+    	// Aplica atributos globales al control
+    	$atributos = array_merge($atributos, $atributosGlobales);
+    	echo $this->miFormulario->campoBoton($atributos);
+    	// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+    	
+    	// -----------------CONTROL: Botón ----------------------------------------------------------------
+    	$esteCampo = 'terminar';
+    	$atributos ["id"] = $esteCampo;
+    	$atributos ["tabIndex"] = $tab;
+    	$atributos ["tipo"] = 'boton';
+    	// submit: no se coloca si se desea un tipo button genérico
+    	$atributos ['submit'] = true;
+    	$atributos ["estiloMarco"] = '';
+    	$atributos ["estiloBoton"] = 'jqueryui';
+    	// verificar: true para verificar el formulario antes de pasarlo al servidor.
+    	$atributos ["verificar"] = '';
+    	$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+    	$atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+    	$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+    	$tab ++;
+    	
+    	// Aplica atributos globales al control
+    	$atributos = array_merge($atributos, $atributosGlobales);
+    	echo $this->miFormulario->campoBoton($atributos);
+    	// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+    }else{
+    	// -----------------CONTROL: Botón ----------------------------------------------------------------
+    	$esteCampo = 'continuar';
+    	$atributos ["id"] = $esteCampo;
+    	$atributos ["tabIndex"] = $tab;
+    	$atributos ["tipo"] = 'boton';
+    	// submit: no se coloca si se desea un tipo button genérico
+    	$atributos ['submit'] = true;
+    	$atributos ["estiloMarco"] = '';
+    	$atributos ["estiloBoton"] = 'jqueryui';
+    	// verificar: true para verificar el formulario antes de pasarlo al servidor.
+    	$atributos ["verificar"] = '';
+    	$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+    	$atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+    	$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
+    	$tab ++;
+    	
+    	// Aplica atributos globales al control
+    	$atributos = array_merge($atributos, $atributosGlobales);
+    	echo $this->miFormulario->campoBoton($atributos);
+    	// -----------------FIN CONTROL: Botón -----------------------------------------------------------
+    }
+    
     // ------------------Fin Division para los botones-------------------------
     echo $this->miFormulario->division("fin");
 
