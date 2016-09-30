@@ -28,6 +28,15 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "listaContratoXNumContratoFechas" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " CG.fecha_inicio as inicio,";
+				$cadenaSql .= " CG.fecha_fin as fin ";
+				$cadenaSql .= " FROM contractual.acta_inicio CG";
+				$cadenaSql .= " WHERE CG.vigencia = " . $variable ['vigencia'];
+				$cadenaSql .= " AND CG.numero_contrato = '" . $variable ['num_contrato'] . "';";
+				break;
+			
 			case "listaContratoXNumContrato" :
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " CG.numero_contrato as numero_contrato,";
