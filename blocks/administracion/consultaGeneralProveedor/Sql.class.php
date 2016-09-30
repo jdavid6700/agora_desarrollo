@@ -537,7 +537,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " cargo = " . " '" . $variable ['cargo'] . "',";
 					$cadenaSql .= " id_pais_nacimiento = " . " " . $variable ['id_pais_nacimiento'] . ",";
 					$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
-					if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 22){
+					if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 22 || $variable ['id_perfil'] == 38 || $variable ['id_perfil'] == 39){
 						$cadenaSql .= " profesion = null,";
 						$cadenaSql .= " especialidad = null,";
 					}else if($variable ['id_perfil'] == 20){
