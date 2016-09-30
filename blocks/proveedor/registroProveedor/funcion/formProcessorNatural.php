@@ -136,6 +136,12 @@ class Formulario {
 					case 5 :
 						$_REQUEST ['perfilNat'] = 22;
 						break;
+					case 6 :
+						$_REQUEST ['perfilNat'] = 38;
+						break;
+					case 7 :
+						$_REQUEST ['perfilNat'] = 39;
+						break;
 					}
 				}
 				

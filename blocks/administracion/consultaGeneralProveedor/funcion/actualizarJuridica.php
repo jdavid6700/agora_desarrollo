@@ -135,6 +135,12 @@ class Formulario {
 				case 5 :
 					$_REQUEST ['perfil'] = 22;
 					break;
+				case 6 :
+					$_REQUEST ['perfil'] = 38;
+					break;
+				case 7 :
+					$_REQUEST ['perfil'] = 39;
+					break;
 			}
 		}
 		

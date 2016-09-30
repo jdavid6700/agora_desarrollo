@@ -211,6 +211,12 @@ class Formulario {
 						case 22 :
 							$_REQUEST ['perfilNat'] = 5;
 							break;
+						case 38 :
+							$_REQUEST ['perfilNat'] = 6;
+							break;
+						case 39 :
+							$_REQUEST ['perfilNat'] = 7;
+							break;
 					}
 				}
 				
@@ -560,6 +566,12 @@ class Formulario {
 							break;
 						case 22 :
 							$_REQUEST ['perfil'] = 5;
+							break;
+						case 38 :
+							$_REQUEST ['perfil'] = 6;
+							break;
+						case 39 :
+							$_REQUEST ['perfil'] = 7;
 							break;
 					}
 				}
@@ -2686,6 +2698,8 @@ class Formulario {
 					array ( 2, 'Técnico' ),
 					array ( 3, 'Profesional' ),
 					array ( 4, 'Profesional Especializado' ),
+					array ( 6, 'Asesor 1' ),
+					array ( 7, 'Asesor 2' ),
 					array ( 5, 'No Aplica' )
 			);
 			$atributos ['matrizItems'] = $matrizItems;
@@ -3846,6 +3860,8 @@ class Formulario {
 						array ( 2, 'Técnico' ),
 						array ( 3, 'Profesional' ),
 						array ( 4, 'Profesional Especializado' ),
+						array ( 6, 'Asesor 1' ),
+						array ( 7, 'Asesor 2' ),
 						array ( 5, 'No Aplica' )
 				);
 				$atributos ['matrizItems'] = $matrizItems;
