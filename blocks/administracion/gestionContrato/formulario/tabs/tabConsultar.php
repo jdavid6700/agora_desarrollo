@@ -106,27 +106,33 @@ class Formulario {
 		if(isset($_REQUEST['vigenciaNecesidadRelacionada'])){
 		
 			$valorVigenciaRelacionada = $_REQUEST['vigenciaNecesidadRelacionada'];
+			$valorUnidadEjecutoraRelacionada = $_REQUEST['unidadEjecutoraCheckRelacionada'];
+			
+			$datosNec = array (
+					'unidadEjecutora' => $valorUnidadEjecutoraRelacionada,
+					'vigencia' => $valorVigenciaRelacionada
+			);
 				
-			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarContratosRelacionadosXVigencia", $valorVigenciaRelacionada );
+			$this->cadena_sql = $this->miSql->getCadenaSql ( "listarContratosRelacionadosXVigencia", $datosNec );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 				
 				
 			if(isset($resultado[0][0])){
 				$datos = array (
 						'contratos' => $resultado[0][0],
-						'vigencia' => $valorVigenciaRelacionada
+						'vigencia' => $valorVigenciaRelacionada,
+						'unidadEjecutora' => $valorUnidadEjecutoraRelacionada
 				);
 			}else{
 				$datos = array (//No existen Datos Relacionados ya en el sistema AGORA
-						'contratos' => "-1",
-						'vigencia' => $valorVigenciaRelacionada
+						'contratos' => "'-1'",
+						'vigencia' => $valorVigenciaRelacionada,
+						'unidadEjecutora' => $valorUnidadEjecutoraRelacionada
 				);
 			}
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'listaContratosRelacionadosXVigencia', $datos );
 			$resultado = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			
 			
 			//******************************************************************************************************************************
 			$variable = "pagina=" . $miPaginaActual;
@@ -161,7 +167,7 @@ class Formulario {
 			$atributos ['evento'] = '';
 			$atributos ['seleccion'] = - 1;
 			$atributos ['deshabilitado'] = false;
-			$atributos ['columnas'] = 1;
+			$atributos ['columnas'] = 2;
 			$atributos ['tamanno'] = 1;
 			$atributos ['ajax_function'] = "";
 			$atributos ['ajax_control'] = $esteCampo;
@@ -173,6 +179,43 @@ class Formulario {
 			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( 'filtroVigencia' );
 			$matrizItems = $siCapitalRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 			$atributos ['matrizItems'] = $matrizItems;
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			unset ( $atributos );
+			// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
+			
+			// ---------------- CONTROL: Lista Vigencia--------------------------------------------------------
+			$esteCampo = "unidadEjecutoraCheckRelacionada";
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['id'] = $esteCampo;
+			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ["etiquetaObligatorio"] = true;
+			$atributos ['tab'] = $tab ++;
+			$atributos ['anchoEtiqueta'] = 200;
+			$atributos ['evento'] = '';
+			if (isset ( $estadoSolicitud )) {
+				$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_division'];
+			} else {
+				$atributos ['seleccion'] = - 1;
+			}
+			$atributos ['deshabilitado'] = false;
+			$atributos ['columnas'] = 2;
+			$atributos ['tamanno'] = 1;
+			$atributos ['ajax_function'] = "";
+			$atributos ['ajax_control'] = $esteCampo;
+			$atributos ['estilo'] = "jqueryui";
+			$atributos ['validar'] = "required";
+			$atributos ['limitar'] = false;
+			$atributos ['anchoCaja'] = 60;
+			$atributos ['miEvento'] = '';
+			
+			$matrizItems = array (
+					array ( 1, '1 - Rectoría' ),
+					array ( 2, '2 - IDEXUD' )
+			);
+			
+			$atributos ['matrizItems'] = $matrizItems;
+			
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
 			unset ( $atributos );
@@ -194,6 +237,7 @@ class Formulario {
 				<tr>
 					<th><center>Número Contrato</center></th>
 					<th><center>Vigencia</center></th>
+					<th><center>Unidad Ejecutora</center></th>
 					<th><center>Solicitud de Necesidad</center></th>
 					<th><center>Número CDP</center></th>
 					<th><center>Plazo Ejecución</center></th>
@@ -224,6 +268,7 @@ class Formulario {
 			$variableView .= "&opcion=verSolicitud";
 			$variableView .= "&idSolicitud=" . $dato['numero_solicitud_necesidad'];
 			$variableView .= "&vigencia=" . $dato['vigencia'];
+			$variableView .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
 				
@@ -232,6 +277,7 @@ class Formulario {
 			$variableViewCon .= "&opcion=verSolicitud";
 			$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableViewCon .= "&vigencia=" . $dato['vigencia'];
+			$variableViewCon .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 			$variableViewCon = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewCon, $directorio );
 			$imagenViewCon = 'cotPro.png';
 		
@@ -243,6 +289,7 @@ class Formulario {
 			$variableEdit .= "&opcion=modificarSolicitud";
 			$variableEdit .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableEdit .= "&vigencia=" . $dato['vigencia'];
+			$variableEdit .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
 			
 			
@@ -258,18 +305,21 @@ class Formulario {
 			}
 				
 		
-				
-				
-			if($dato['identificacion_sociedad_temporal'] != null){
-				$dato['identificacion_contratista'] = $dato['identificacion_sociedad_temporal'];
-				$tipoSoc = "CONSORCIO o UNION TEMPORAL";
-			}else{
+
+			if($dato['clase_contratista'] == 'Unión Temporal'){
+				//$dato['identificacion_contratista'] = $dato['identificacion_sociedad_temporal'];
+				$tipoSoc = "UNION TEMPORAL";
+			}else if($dato['clase_contratista'] == 'Consorcio'){
+				$tipoSoc = "CONSORCIO";
+			}else if($dato['clase_contratista'] == 'Único Contratista'){
 				$tipoSoc = "INDIVIDUAL";
+				//$dato['identificacion_contratista'] = $dato['convenio'];
 			}
 		
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
 						<td><center>" . $dato['vigencia'] . "</center></td>
+						<td><center>" . $dato['unidad_ejecutora'] . "</center></td>
 						<td><center>" . $dato['numero_solicitud_necesidad'] . "</center></td>
 						<td><center>" . $dato['numero_cdp'] . "</center></td>
 						<td><center>" . $dato['plazo_ejecucion'] . "</center></td>
@@ -306,7 +356,14 @@ class Formulario {
 			echo "</table>";
 				
 		
-		} else if(isset($_REQUEST['vigenciaNecesidad'])){
+		} else if(isset($_REQUEST['vigenciaNecesidadRelacionada'])){
+			
+			if($valorUnidadEjecutoraRelacionada == 1){
+				$valorUnidadEjecutoraRelacionadaText = "1 - Rectoría";
+			}else{
+				$valorUnidadEjecutoraRelacionadaText = "2 - IDEXUD";
+			}
+			
 			// ------------------INICIO Division para los botones-------------------------
 			$atributos ["id"] = "divNoEncontroEgresado";
 			$atributos ["estilo"] = "marcoBotones";
@@ -317,7 +374,8 @@ class Formulario {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = "Actualmente no hay Contratos Disponibles con Vigencia <b>".$valorVigencia."</b> para Relacionar en AGORA </br> Los Contratos son Gestionados mediante el Sistema <b>ARGO</b>. <br>";
+			$atributos ["mensaje"] = "Actualmente no hay Contratos Disponibles con Vigencia <b>".$valorVigenciaRelacionada."</b> Relacionados en AGORA para la 
+					Unidad Ejecutora <b>". $valorUnidadEjecutoraRelacionadaText . "</b> </br> Por favor relacione un contrato en la Opción <b>Contrato a RELACIONAR</b>. <br>";
 		
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );

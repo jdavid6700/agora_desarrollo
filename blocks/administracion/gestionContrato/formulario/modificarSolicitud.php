@@ -116,7 +116,8 @@ class FormularioRegistro {
 		
 		$datosContrato = array (
 				'num_contrato' => $_REQUEST['idSolicitud'],
-				'vigencia' => $_REQUEST['vigencia']
+				'vigencia' => $_REQUEST['vigencia'],
+				'unidad_ejecutora' => $_REQUEST['unidadEjecutora']
 		);
 		
 		$datosSolicitudNecesidad = array (
@@ -190,7 +191,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
+		$atributos ['columnas'] = 3;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -220,13 +221,43 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
+		$atributos ['columnas'] = 3;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
 		$atributos ['valor'] = $resultado[0]['vigencia'];
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 30;
+		$atributos ['maximoTamanno'] = '10';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+		$esteCampo = 'unidadEjecutora';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 3;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		$atributos ['valor'] = $resultado[0]['unidad_ejecutora'];
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -837,7 +868,7 @@ class FormularioRegistro {
 		
 		//$resultado[0]['identificacion_sociedad_temporal'] = 968774212;
 		
-			if($resultado[0]['identificacion_sociedad_temporal'] == null){
+			if($resultado[0]['clase_contratista'] == 'Único Contratista'){
 				
 				$esteCampo = "marcoRelacionContratoProveedor";
 				$atributos ['id'] = $esteCampo;
@@ -969,7 +1000,7 @@ class FormularioRegistro {
 				
 			}else{
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratoGrupal', $resultado[0]['identificacion_sociedad_temporal'] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratoGrupal', $resultado[0]['identificacion_contratista'] );
 				$resultadoContratoGrupal = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 				$numeroProveedoresConsorcio = count($resultadoContratoGrupal);

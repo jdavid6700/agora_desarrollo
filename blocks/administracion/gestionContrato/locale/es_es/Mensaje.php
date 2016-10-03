@@ -21,6 +21,14 @@ $this->idioma["marcoRelacionContratoProveedorConsorcio"]="Consorcio o Union Temp
 $this->idioma["marcoRelacionContratoProveedor"]="Proveedor Asignado al Contrato";
 
 
+$this->idioma["unidadEjecutora"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraTitulo"]="Unidad Ejecutora";
+
+$this->idioma["unidadEjecutoraCheck"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckTitulo"]="Unidad Ejecutora";
+$this->idioma["unidadEjecutoraCheckRelacionada"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckRelacionadaTitulo"]="Unidad Ejecutora";
+
 $this->idioma["nombreProveedor"] = "Nombre Proveedor :";
 $this->idioma["nombreProveedorTitulo"]="Nombre Proveedor";
 $this->idioma["identificacionProveedor"] = "Identificación Proveedor :";
