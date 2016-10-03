@@ -47,7 +47,8 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').width(250);
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
 
-
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheck')?>').width(250);
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckRelacionada')?>').width(250);
 
 
 
@@ -61,6 +62,9 @@ $('#<?php echo $this->campoSeguro('supervisor')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidad')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').select2();
+
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheck')?>').select2();
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheckRelacionada')?>').select2();
 
 
 

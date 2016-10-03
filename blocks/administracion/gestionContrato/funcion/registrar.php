@@ -36,17 +36,16 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
-        
-		
         $datosIdenContrato = array (
         		'numero_solicitud' => $_REQUEST ['numSolicitud'],
-        		'vigencia' => $_REQUEST ['vigencia']
+        		'vigencia' => $_REQUEST ['vigencia'],
+        		'unidad_ejecutora' => $_REQUEST ['unidadEjecutora']
         );
         
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'consultarIdObjeto', $datosIdenContrato );
         $resultadoIdObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        
+
         
         $fechaActual = date ( 'Y-m-d' );
         $annnoActual = date ( 'Y' );
@@ -56,6 +55,7 @@ class Registrar {
         	$datosIdenContrato = array (
         			'id_objeto' => $resultadoIdObjeto[0]['id_objeto'],
         			'numero_contrato' => $_REQUEST ['numContrato'],
+        			'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
         			'numero_solicitud' => $_REQUEST ['numSolicitud'],
         			'fecha_registro' => $fechaActual,
         			'id_supervisor' => $_REQUEST ['idSupervisor'],
@@ -82,6 +82,7 @@ class Registrar {
         	$datosIdenContrato = array (
         			'id_objeto' => $resultadoIdObjeto[0]['id_objeto'],
         			'numero_contrato' => $_REQUEST ['numContrato'],
+        			'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
         			'numero_solicitud' => $_REQUEST ['numSolicitud'],
         			'fecha_registro' => $fechaActual,
         			'id_supervisor' => $_REQUEST ['idSupervisor'],
@@ -111,9 +112,6 @@ class Registrar {
         	
         	
         }
-        
-        
-        
         
         /*
         if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "CREADO" ) {
