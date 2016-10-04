@@ -35,7 +35,6 @@ class Formulario {
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/";
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
-
 		
 		//Guardar RUT adjuntado Persona Natural
 		$_REQUEST ['destino'] = '';
@@ -122,6 +121,7 @@ class Formulario {
 					switch($_REQUEST['perfil']){
 						case 1 :
 							$_REQUEST ['perfil'] = 18;
+							$_REQUEST ['personaNBC'] = 49207;
 							break;
 						case 2 :
 							$_REQUEST ['perfil'] = 19;
@@ -134,6 +134,7 @@ class Formulario {
 							break;
 						case 5 :
 							$_REQUEST ['perfil'] = 22;
+							$_REQUEST ['personaNBC'] = 0;
 							break;
 						case 6 :
 							$_REQUEST ['perfil'] = 38;
@@ -221,6 +222,7 @@ class Formulario {
 						'cargo' => $_REQUEST['cargo'],
 						'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
 						'id_perfil' => $_REQUEST['perfil'],
+						'id_nucleo_basico' => $_REQUEST['personaNBC'],
 						'profesion' => $_REQUEST['profesion'],
 						'especialidad' => $_REQUEST['especialidad'],
 						'monto_capital_autorizado' => null,

@@ -79,10 +79,10 @@ $( "#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>" ).change(functio
 });
 
 $( "#<?php echo $this->campoSeguro('perfil')?>" ).change(function() {
-	if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
+	if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 7){
 		$("#obligatorioProfesion").show("fast");
 		$("#obligatorioEspecialidad").show("fast");
-	}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3){
+	}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 2){
 		$("#obligatorioProfesion").show("fast");
 		$("#obligatorioEspecialidad").hide("fast");
 	}else{
@@ -92,10 +92,10 @@ $( "#<?php echo $this->campoSeguro('perfil')?>" ).change(function() {
 });
 
 $( "#<?php echo $this->campoSeguro('perfilNat')?>" ).change(function() {
-	if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4){
+	if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
 		$("#obligatorioProfesionNat").show("fast");
 		$("#obligatorioEspecialidadNat").show("fast");
-	}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3){
+	}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
 		$("#obligatorioProfesionNat").show("fast");
 		$("#obligatorioEspecialidadNat").hide("fast");
 	}else{
@@ -467,6 +467,59 @@ $urlFinal22 = $url . $cadena22;
 //echo $urlFinal16; exit;
 
 
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar23 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar23 .= "&procesarAjax=true";
+$cadenaACodificar23 .= "&action=index.php";
+$cadenaACodificar23 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar23 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar23 .= $cadenaACodificar23 . "&funcion=consultarNBC";
+$cadenaACodificar23 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena23 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar23, $enlace );
+
+// URL definitiva
+$urlFinal23 = $url . $cadena23;
+//echo $urlFinal16; exit;
+
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar24 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar24 .= "&procesarAjax=true";
+$cadenaACodificar24 .= "&action=index.php";
+$cadenaACodificar24 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar24 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar24 .= $cadenaACodificar24 . "&funcion=consultarNBC";
+$cadenaACodificar24 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena24 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar24, $enlace );
+
+// URL definitiva
+$urlFinal24 = $url . $cadena24;
+//echo $urlFinal16; exit;
+
+
 ?>
 
 function consultarCiudad(elem, request, response){
@@ -687,7 +740,10 @@ function consultarDepartamentoLug(elem, request, response){
 		            //$('#<?php echo $this->campoSeguro('seccionParametros')?>').width(250);
 		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2();
 		            
+		            
 		            $("#<?php echo $this->campoSeguro('seccionParametros')?>").removeClass("validate[required]");
+		            
+		            
 		            
 			        }
 		    			
@@ -696,6 +752,65 @@ function consultarDepartamentoLug(elem, request, response){
 		   });
 		};	
 		
+		
+	function consultarNBC(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal23?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('personaNaturalArea')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('personaNaturalNBC')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_nucleo+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('personaNaturalNBC')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").removeAttr('disabled');
+		            
+		            $("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('personaNaturalArea')?>").removeClass("validate[required]");
+		            
+		            
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};	
+		
+	
+		function consultarNBCRep(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal24?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('personaArea')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('personaNBC')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('personaNBC')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_nucleo+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('personaNBC')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('personaNBC')?>").removeAttr('disabled');
+		            
+		            $("#<?php echo $this->campoSeguro('personaNBC')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('personaArea')?>").removeClass("validate[required]");
+		            
+		            
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};			
 		
 	function calcularDigito(cadenaNit){
 		  
@@ -867,9 +982,48 @@ function consultarDepartamentoLug(elem, request, response){
 		    		}else{
 		    			$("#<?php echo $this->campoSeguro('ciudad')?>").attr('disabled','');
 		    			}
-		    	      });         
-		    	
+		    	      });  
 		    	      
+		    	      
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   
+
+  
+		    	$("#<?php echo $this->campoSeguro('personaNaturalArea')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaNaturalArea')?>").val()!=''){
+		            	consultarNBC();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaNaturalArea')?>").addClass("validate[required]");
+		    			$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").attr('disabled','');
+		    			}
+		    	      });
+		    	      
+		    	$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").val()!=''){
+		            	$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").removeClass("validate[required]");
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").addClass("validate[required]");
+		    			}
+		    	      });      
+		    	 
+		    	$("#<?php echo $this->campoSeguro('personaArea')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaArea')?>").val()!=''){
+		            	consultarNBCRep();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaArea')?>").addClass("validate[required]");
+		    			$("#<?php echo $this->campoSeguro('personaNBC')?>").attr('disabled','');
+		    			}
+		    	      });
+		    	      
+		    	$("#<?php echo $this->campoSeguro('personaNBC')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('personaNBC')?>").val()!=''){
+		            	$("#<?php echo $this->campoSeguro('personaNBC')?>").removeClass("validate[required]");
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('personaNBC')?>").addClass("validate[required]");
+		    			}
+		    	      });       		    	      
+		    	              
+		    	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
         				var value = $(this).val().length;
         				if(value == 9){//Ejecutar solo Cuando se Completa el NIT
@@ -955,6 +1109,7 @@ function consultarDepartamentoLug(elem, request, response){
 			$("#<?php echo $this->campoSeguro('seccionParametros')?>").removeAttr('disabled');
 		    $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2();
 		});
+		
 		
 		$("#btOper1").click(function(){
 			var actual = $('#<?php echo $this->campoSeguro('direccion')?>').val();

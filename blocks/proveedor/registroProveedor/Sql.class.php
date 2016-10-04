@@ -36,7 +36,36 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.evaluacion ";
 				$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
 				break;
-			
+				
+				/* CONSULTAR - EVALUACION POR ID CONTRATO */
+			case "buscarAreaConocimiento" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_area,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_area ";
+				$cadenaSql .= " WHERE estado != 'INACTIVO';";
+				break;
+				
+			case "buscarAreaConocimientoXNBC" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_area,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_nucleo_basico ";
+				$cadenaSql .= " WHERE id_nucleo = " . $variable . ";";
+				break;
+				
+			case "buscarNBCAjax" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_nucleo,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_nucleo_basico ";
+				$cadenaSql .= " WHERE estado != 'INACTIVO'";
+				$cadenaSql .= " AND id_area = " . $variable . ";";
+				break;
+				
 			/* CONSULTAR - CONTRATO por ID */
 			case "consultarContratoByID" ://***********************************************************************
 				$cadenaSql = "SELECT  ";
@@ -245,6 +274,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " cargo,";
 				$cadenaSql .= " id_pais_nacimiento,";
 				$cadenaSql .= " perfil,";
+				$cadenaSql .= " id_nucleo_basico,";
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
 				if($variable ['monto_capital_autorizado'] != null){
@@ -298,6 +328,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['cargo'] . "',";
 				$cadenaSql .= " " . $variable ['id_pais_nacimiento'] . ",";
 				$cadenaSql .= " " . $variable ['id_perfil'] . ",";
+				$cadenaSql .= " " . $variable ['id_nucleo_basico'] . ",";
 				$cadenaSql .= " '" . $variable ['profesion'] . "',";
 				$cadenaSql .= " '" . $variable ['especialidad'] . "',";
 				if($variable ['monto_capital_autorizado'] != null){
@@ -398,6 +429,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " cargo,";
 				$cadenaSql .= " id_pais_nacimiento,";
 				$cadenaSql .= " perfil,";
+				$cadenaSql .= " id_nucleo_basico,";
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
 				$cadenaSql .= " monto_capital_autorizado,";
@@ -479,11 +511,12 @@ class Sql extends \Sql {
 				$cadenaSql .= " segundo_nombre = " . " '" . $variable ['segundo_nombre'] . "',";
 				$cadenaSql .= " cargo = " . " '" . $variable ['cargo'] . "',";
 				$cadenaSql .= " id_pais_nacimiento = " . " " . $variable ['id_pais_nacimiento'] . ",";
+				$cadenaSql .= " id_nucleo_basico = " . " " . $variable ['id_nucleo_basico'] . ",";
 				$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
-				if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 22){
+				if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 22){
 					$cadenaSql .= " profesion = null,";
 					$cadenaSql .= " especialidad = null,";
-				}else if($variable ['id_perfil'] == 20){
+				}else if($variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 20){
 					$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
 					$cadenaSql .= " especialidad = null,";
 				}else{

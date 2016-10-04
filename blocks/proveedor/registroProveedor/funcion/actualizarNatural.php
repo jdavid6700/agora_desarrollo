@@ -112,6 +112,7 @@ class Formulario {
 					switch($_REQUEST['perfilNat']){
 						case 1 :
 							$_REQUEST ['perfilNat'] = 18;
+							$_REQUEST ['personaNaturalNBC'] = 49207;
 							break;
 						case 2 :
 							$_REQUEST ['perfilNat'] = 19;
@@ -124,6 +125,7 @@ class Formulario {
 							break;
 						case 5 :
 							$_REQUEST ['perfilNat'] = 22;
+							$_REQUEST ['personaNaturalNBC'] = 0;
 							break;
 						case 6 :
 							$_REQUEST ['perfilNat'] = 38;
@@ -425,6 +427,7 @@ class Formulario {
 						'cargo' => $_REQUEST['cargoNat'],
 						'id_pais_nacimiento' => $_REQUEST['paisNacimientoNat'],
 						'id_perfil' => $_REQUEST['perfilNat'],
+						'id_nucleo_basico' => $_REQUEST['personaNaturalNBC'],
 						'profesion' => $_REQUEST['profesionNat'],
 						'especialidad' => $_REQUEST['especialidadNat'],
 						'monto_capital_autorizado' => $_REQUEST['montoNat'],
