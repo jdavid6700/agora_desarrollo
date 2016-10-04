@@ -182,6 +182,12 @@ $this->idioma["personaJuridicaCiudad"]="Ciudad :";
 $this->idioma["personaNaturalContaDepartamento"]="Departamento :";
 $this->idioma["personaNaturalContaCiudad"]="Ciudad :";
 
+$this->idioma["personaNaturalArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNaturalNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+$this->idioma["personaArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
 $this->idioma["direccionNat"] = "Dirección : ";
 $this->idioma["direccionNatTitulo"]="Digite Dirección";
 
