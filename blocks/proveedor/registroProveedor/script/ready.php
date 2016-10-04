@@ -99,6 +99,17 @@ $("#<?php echo $this->campoSeguro('personaNaturalContaDepartamento')?>").select2
 $('#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>').width(250);
 $("#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>").select2();
 
+$('#<?php echo $this->campoSeguro('personaNaturalArea')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNaturalArea')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNaturalNBC')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").select2();
+
+$('#<?php echo $this->campoSeguro('personaArea')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaArea')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNBC')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNBC')?>").select2();
+
+
 $('#<?php echo $this->campoSeguro('departamento')?>').width(250);
 $("#<?php echo $this->campoSeguro('departamento')?>").select2();
 $('#<?php echo $this->campoSeguro('ciudad')?>').width(250);
@@ -257,10 +268,10 @@ if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
 
 
 
-if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
+if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 7){
 	$("#obligatorioProfesion").show("fast");
 	$("#obligatorioEspecialidad").show("fast");
-}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3){
+}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 2){
 	$("#obligatorioProfesion").show("fast");
 	$("#obligatorioEspecialidad").hide("fast");
 }else{
@@ -269,10 +280,10 @@ if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
 }
 
 
-if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4){
+if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
 	$("#obligatorioProfesionNat").show("fast");
 	$("#obligatorioEspecialidadNat").show("fast");
-}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3){
+}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
 	$("#obligatorioProfesionNat").show("fast");
 	$("#obligatorioEspecialidadNat").hide("fast");
 }else{

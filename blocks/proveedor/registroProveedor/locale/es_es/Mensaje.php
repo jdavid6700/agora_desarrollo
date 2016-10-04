@@ -145,6 +145,13 @@ $this->idioma["personaJuridicaCiudad"]="Ciudad :";
 $this->idioma["personaNaturalContaDepartamento"]="Departamento :";
 $this->idioma["personaNaturalContaCiudad"]="Ciudad :";
 
+$this->idioma["personaNaturalArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNaturalNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+$this->idioma["personaArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+
 $this->idioma["direccionNat"] = "Dirección : ";
 $this->idioma["direccionNatTitulo"]="Digite Dirección";
 
@@ -174,8 +181,8 @@ $this->idioma["cargo"] = "Cargo : ";
 $this->idioma["cargoTitulo"]="Digite el Cargo";
 $this->idioma["perfil"] = "Perfil : ";
 $this->idioma["perfilTitulo"]="Digite el Perfil";
-$this->idioma["profesion"] = "Profesión : ";
-$this->idioma["profesionTitulo"]="Digite la Profesión";
+$this->idioma["profesion"] = "Titulo Obtenido : ";
+$this->idioma["profesionTitulo"]="Digite el Titulo Obtenido";
 $this->idioma["especialidad"] = "Especialidad : ";
 $this->idioma["especialidadTitulo"]="Digite la Especialidad";
 $this->idioma["genero"] = "Genero : ";
@@ -200,8 +207,8 @@ $this->idioma["cargoNat"] = "Cargo : ";
 $this->idioma["cargoNatTitulo"]="Digite el Cargo";
 $this->idioma["perfilNat"] = "Perfil : ";
 $this->idioma["perfilNatTitulo"]="Digite el Perfil";
-$this->idioma["profesionNat"] = "Profesión : ";
-$this->idioma["profesionNatTitulo"]="Digite la Profesión";
+$this->idioma["profesionNat"] = "Titulo Obtenido : ";
+$this->idioma["profesionNatTitulo"]="Digite el Titulo Obtenido";
 $this->idioma["especialidadNat"] = "Especialidad : ";
 $this->idioma["especialidadNatTitulo"]="Digite la Especialidad";
 $this->idioma["generoNat"] = "Genero : ";
@@ -306,7 +313,7 @@ $this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o her
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
-$this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
+$this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
 $this->idioma["marcoContratos"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario ";
