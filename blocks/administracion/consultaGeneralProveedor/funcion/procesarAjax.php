@@ -84,6 +84,13 @@ if ($_REQUEST ['funcion'] == 'consultarNomenclatura') {
 	echo $resultado;
 }
 
+if ($_REQUEST ['funcion'] == 'consultarNBC') {
+	$cadenaSql = $this->sql->getCadenaSql ( 'buscarNBCAjax', $_REQUEST['valor'] );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = json_encode ( $resultado);
+	echo $resultado;
+}
+
 
 
 
