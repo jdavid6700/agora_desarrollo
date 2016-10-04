@@ -1,13 +1,32 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
-$this->idioma["objetoContrato"] = "Objeto a contratar : ";
-$this->idioma["objetoContratoTitulo"]="Digite el Objeto a contratar";
+$this->idioma["objetoContrato"] = "Objeto a Contratar : ";
+$this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 
-$this->idioma["marcoCIIU"]="Actividad Económica";
-$this->idioma["marcoDatos"]="Datos generales";
-$this->idioma["marcoObjeto"]="Objeto a Contratar - Información general";
-$this->idioma["marcoProveedores"]="Proveedores con mejor Clasificaciòn";
+$this->idioma["marcoDatos"]="Solicitudes de Necesidad";
+$this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
+$this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
+$this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
+$this->idioma["marcoProveedores"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU Registrados";
+$this->idioma["marcoObjetoAct"]="Solicitud de Necesidad - Información General";
+
+$this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
+$this->idioma["marcoActividadesRel"] = "Actividades Ecónomicas Relacionadas con la Necesidad";
+$this->idioma["marcoCIIU"] = "Adicionar Actividad Ecónomica";
+
+$this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
+$this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en Cotización";
+
+$this->idioma["unidadEjecutora"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraTitulo"]="Unidad Ejecutora";
+
+$this->idioma["unidadEjecutoraCheck"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckTitulo"]="Unidad Ejecutora";
+$this->idioma["unidadEjecutoraCheckRelacionada"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckRelacionadaTitulo"]="Unidad Ejecutora";
+$this->idioma["unidadEjecutoraCheckCotizacion"] = "Unidad Ejecutora : ";
+$this->idioma["unidadEjecutoraCheckCotizacionTitulo"]="Unidad Ejecutora";
 
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
@@ -19,7 +38,7 @@ $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
 $this->idioma["ordenador"] = "Ordenador del Gasto :";
-$this->idioma["ordenadorTitulo"]="Seleccionar ordenador";
+$this->idioma["ordenadorTitulo"]="Ordenador del Gasto";
 
 $this->idioma["dependencia"] = "Dependencia :";
 $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
@@ -27,7 +46,7 @@ $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
 $this->idioma["numCDP"] = "No. CDP :";
 $this->idioma["numCDPTitulo"] = "Indicar número de CDP";
 
-$this->idioma["unidad"] = "Unidad :";
+$this->idioma["unidad"] = "Unidad de Medida:";
 $this->idioma["unidadTitulo"]="Seleccionar unidad";
 
 $this->idioma["cantidad"] = "Cantidad :";
@@ -44,24 +63,69 @@ $this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
 
 
+$this->idioma["estado"] = "Estado Solicitud :";
+$this->idioma["estadoTitulo"]="Estado Solicitud de Necesidad";
+$this->idioma["ordenadorCargo"] = "Cargo Ordenador Gasto :";
+$this->idioma["ordenadorCargoTitulo"]="Cargo Ordenador Gasto";
+$this->idioma["justificacion"] = "Justificación :";
+$this->idioma["justificacionTitulo"]="Justificación";
+$this->idioma["plazo"] = "Plazo de Ejecución :";
+$this->idioma["plazoTitulo"]="Plazo de Ejecución";
+$this->idioma["tipoContratacion"] = "Tipo de Contratación :";
+$this->idioma["tipoContratacionTitulo"]="Tipo de Contratación";
+$this->idioma["valorContratacion"] = "Valor para Contratación :";
+$this->idioma["valorContratacionTitulo"]="Valor para Contratación";
+$this->idioma["condiciones"] = "Condiciones :";
+$this->idioma["condicionesTitulo"]="Condiciones";
+$this->idioma["dependenciaDestino"] = "Dependencia Destino :";
+$this->idioma["dependenciaDestino-Titulo"]="Dependencia Destino";
+$this->idioma["origenSolicitud"] = "Origen :";
+$this->idioma["origenSolicitudTitulo"]="Origen";
+$this->idioma["fechaSolicitud"] = "Fecha de Solicitud :";
+$this->idioma["fechaSolicitudTitulo"]="Fecha de Solicitud";
+$this->idioma["funcionario"] = "Funcionario :";
+$this->idioma["funcionarioTitulo"]="Funcionario";
+$this->idioma["vigencia"] = "Vigencia :";
+$this->idioma["vigenciaTitulo"]="Vigencia";
+$this->idioma["numSolicitud"] = "Número de la Solicitud :";
+$this->idioma["numSolicitudTitulo"]="Número de la Solicitud";
+
+$this->idioma["vigenciaNecesidad"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadTitulo"]="Por favor seleccione la Vigencia";
+$this->idioma["vigenciaNecesidadRelacionada"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadRelacionadaTitulo"]="Por favor seleccione la Vigencia";
+$this->idioma["vigenciaNecesidadCotizacion"] = "Filtro Vigencia :";
+$this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vigencia";
+
+
+
+
+
+
 
 
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 $this->idioma["tabConsultar"] = "Solicitar Cotizaciòn";
+$this->idioma["tabCotizacion"] = "Estado Cotizaciòn";
+$this->idioma["tabActividad"] = "Actividades Económicas";
 
 $this->idioma["tipoDocumento"] = "Tipo de Documento";
 $this->idioma["identificacionDocente"] = "Número de Identificación del Docente:";
 $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primero debe realizar la validación del funcionario.<br> Por favor seleccione el tipo documento y digite el número de documento y <br> de click en 'Validar'.</center>"; 
 
 $this->idioma["botonValidar"] = "Validar";
-
+$this->idioma["botonModificar"] = "Modificar";
+$this->idioma["botonContinuar"] = "Continuar";
+$this->idioma["botonAgregar"] = "Agregar";
+$this->idioma["botonTerminar"] = "Continuar";
 
 $this->idioma["paso1"] = "Consultar Funcionario";
 $this->idioma["paso2"] = "Información del Docente";
 $this->idioma["paso3"] = "Información Adicional";
 
 		
-
+$this->idioma["agregar"] = "Agregar";
+$this->idioma["terminar"] = "Continuar";
 		
 		
 		
@@ -78,12 +142,16 @@ $this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Ac
 
 
 $this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotizaciòn a los proveedores. <br>" ;
+
+$this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
 $this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con la Actividad Económica </br> ";
-$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
+//$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
+
+$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con las condiciones </br> y que se encuentren Activos";
 /////////////////////////////////
 
 $this->idioma["marcoConsultaGeneral"] = "Consulta Títulos Académicos Registradas";
@@ -97,7 +165,7 @@ $this->idioma["ciudad"] = "Ciudad";
 
 
 //***************** SECCIÓN BOTONES ******************//
-$this->idioma["botonRegresar"] = "Regresar";
+$this->idioma["botonRegresar"] = "< < Regresar";
 $this->idioma["botonConsultar"] = "Consultar";
 $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";

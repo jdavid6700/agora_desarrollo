@@ -30,6 +30,10 @@ class registrarForm {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "sicapital";
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
 		// ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
@@ -69,11 +73,37 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
+		
+		if(isset($_REQUEST['idSolicitud']) && isset($_REQUEST['vigencia']) && isset($_REQUEST['unidadEjecutora'])){
+			
+			
+			$datos = array (
+					'idSolicitud' => $_REQUEST['idSolicitud'],
+					'vigencia' => $_REQUEST['vigencia'],
+					'unidadEjecutora' => $_REQUEST['unidadEjecutora']
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'informacionSolicitudAgora', $datos );
+			$objeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$_REQUEST["idObjeto"] = $objeto[0]['id_objeto'];
+			$_REQUEST['numCotizaciones'] = $objeto[0]['numero_cotizaciones'];
+				
+		}
+		
 		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
 		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
 		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-                $idActividad = $objetoEspecifico[0][1];
+		
+		$datos = array (
+				'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+				'vigencia' => $objetoEspecifico[0]['vigencia'],
+				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+		);
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
 		$esteCampo = "marcoObjeto";
 		$atributos ['id'] = $esteCampo;
@@ -82,17 +112,48 @@ class registrarForm {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
-                
-		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto a Contratar : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][0] . "</span></br>"; 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Actividad econ&oacute;mica : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $idActividad . '-' . $objetoEspecifico[0][2] . "</span></br>"; 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Descripci&oacute  del Art&iacuteculo : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $objetoEspecifico[0][3] . "</span></br>";                 
+		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto Solicitud de Necesidad : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['OBJETO'] . "</span></br>"; 
+                echo "<br>";
+        echo "<span class='textoElegante textoEnorme textoAzul'>Justificación Solicitud de Necesidad : </span>";
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['JUSTIFICACION'] . "</span></br>";
+                echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['DEPENDENCIA'] . "</span></br>"; 
+                echo "<br>";
+        echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto : </span>";
+                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] ."</span></br>";
 
 		//FIN OBJETO A CONTRATAR
-                echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		$cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividad', $idActividad );
+        echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+        
+        $cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
+        $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        
+        if( $resultadoActividades ){
+        		
+        	$esteCampo = "marcoActividadesRel";
+        	$atributos ['id'] = $esteCampo;
+        	$atributos ["estilo"] = "jqueryui";
+        	$atributos ['tipoEtiqueta'] = 'inicio';
+        	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+        	echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+        
+        	foreach ($resultadoActividades as $dato):
+        	echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
+        		echo $dato['id_subclase'] . ' - ' . $dato['nombre'] . "</b><br>";
+        	endforeach;
+        
+        	echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+        }
+        
+        
+        $cadenaSql = $this->miSql->getCadenaSql ( 'actividadesXNecesidad', $_REQUEST["idObjeto"] );
+        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        
+        $actividades = $resultado[0][0];
+        
+		$cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividadProveedor', $actividades );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		if (! $resultado) {
@@ -106,7 +167,7 @@ class registrarForm {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . '-' . $objetoEspecifico [0] [2];
+			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . ' - ' . $objetoEspecifico[0]['actividad'];
 			
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );
@@ -115,11 +176,11 @@ class registrarForm {
 			echo $this->miFormulario->division ( "fin" );
 			unset ( $atributos );
 		} else {
-			
+
 			// LISTA DE PROVEEDORES CON MEJOR CLASIFICACION
 			// ------- FILTRAR POR ACTIVIDAD ECONOMICA
 			$datos = array (
-					'actividadEconomica' => $idActividad,
+					'actividadEconomica' => $actividades,
 					'numCotizaciones' => $_REQUEST ['numCotizaciones'] 
 			);
 			
@@ -161,8 +222,8 @@ class registrarForm {
 <table
 	class="table table-bordered table-striped table-hover table-condensed">
 	<tr class="info">
-		<td align="center"><strong>NIT</strong></td>
-		<td align="center"><strong>Empresa Proveedor</strong></td>
+		<td align="center"><strong>Documento</strong></td>
+		<td align="center"><strong>Proveedor</strong></td>
 		<td align="center"><strong>Puntaje Evaluaciòn</strong></td>
 		<td align="center"><strong>Clasificaciòn</strong></td>
 	</tr>	
@@ -171,11 +232,17 @@ class registrarForm {
 				$proveedores = array ();
 				foreach ( $resultadoProveedor as $dato ) :
 					
+					if($dato ['clasificacion_evaluacion'] == null){
+						$clasificacion = 'SIN CLASIFICACIÓN';
+					}else{
+						$clasificacion = $dato ['clasificacion_evaluacion'];
+					}
+				
 					echo "<tr>";
 					echo "<td align='center'>" . $dato ['num_documento'] . "</td>";
 					echo "<td align='center'>" . $dato ['nom_proveedor'] . "</td>";
 					echo "<td align='right'>" . $dato ['puntaje_evaluacion'] . "</td>";
-					echo "<td align='right'>" . $dato ['clasificacion_evaluacion'] . "</td>";
+					echo "<td align='right'>" . $clasificacion . "</td>";
 					echo "</tr>";
 					
 					array_push ( $proveedores, $dato ['id_proveedor'] );

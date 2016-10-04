@@ -35,7 +35,6 @@ class Formulario {
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/";
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
-
 		
 		//Guardar RUT adjuntado Persona Natural
 		$_REQUEST ['destino'] = '';
@@ -122,6 +121,7 @@ class Formulario {
 					switch($_REQUEST['perfil']){
 						case 1 :
 							$_REQUEST ['perfil'] = 18;
+							$_REQUEST ['personaNBC'] = 49207;
 							break;
 						case 2 :
 							$_REQUEST ['perfil'] = 19;
@@ -134,6 +134,13 @@ class Formulario {
 							break;
 						case 5 :
 							$_REQUEST ['perfil'] = 22;
+							$_REQUEST ['personaNBC'] = 0;
+							break;
+						case 6 :
+							$_REQUEST ['perfil'] = 38;
+							break;
+						case 7 :
+							$_REQUEST ['perfil'] = 39;
 							break;
 					}
 				}	
@@ -163,7 +170,6 @@ class Formulario {
 				//Guardar datos PROVEEDOR
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaJuridica);
 				$id_proveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaJuridica, "insertarInformacionProveedor");
-				
 				
 				$datosTelefonoFijoPersonaProveedor = array (
 						'num_telefono' => $_REQUEST['telefono'],
@@ -216,9 +222,30 @@ class Formulario {
 						'cargo' => $_REQUEST['cargo'],
 						'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
 						'id_perfil' => $_REQUEST['perfil'],
+						'id_nucleo_basico' => $_REQUEST['personaNBC'],
 						'profesion' => $_REQUEST['profesion'],
 						'especialidad' => $_REQUEST['especialidad'],
-						'monto_capital_autorizado' => null
+						'monto_capital_autorizado' => null,
+						'grupoEtnico' => null,
+						'comunidadLGBT' => 'FALSE',
+						'cabezaFamilia' => 'FALSE',
+						'personasCargo' => 'FALSE',
+						'numeroPersonasCargo' => null,
+						'estadoCivil' => 'SOLTERO',
+						'discapacidad' => 'FALSE',
+						'tipoDiscapacidad' => null,
+						'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
+						'medicina_prepagada' => 'FALSE',
+						'valor_uvt_prepagada' => null,
+						'cuenta_ahorro_afc' => 'FALSE',
+						'num_cuenta_bancaria_afc' => null,
+						'id_entidad_bancaria_afc' => null,
+						'interes_vivienda_afc' => null,
+						'dependiente_hijo_menor_edad' => 'FALSE',
+						'dependiente_hijo_menos23_estudiando' => 'FALSE',
+						'dependiente_hijo_mas23_discapacitado' => 'FALSE',
+						'dependiente_conyuge' => 'FALSE',
+						'dependiente_padre_o_hermano' => 'FALSE'
 				);
 				
 				
@@ -245,6 +272,7 @@ class Formulario {
 				 	switch($_REQUEST['paisEmpresa']){
 				 		case 1 :
 				 			$_REQUEST['paisEmpresa']='NACIONAL';
+				 			$_REQUEST['personaJuridicaCiudad'] = null;
 				 			break;
 				 		case 2 :
 				 			$_REQUEST['paisEmpresa']='EXTRANJERO';
@@ -435,6 +463,8 @@ class Formulario {
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( "registrarUsuario", $datosRegistroUsuario );
 						$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+						
+
 		
 								redireccion::redireccionar ( 'registroProveedor',  $datosRegistroUsuario);
 								exit();

@@ -36,23 +36,68 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
-                //Guardar datos del Objeto a contratar
-		$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $_REQUEST );
-        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
         
-        //var_dump($cadenaSql);exit;
+        $datosSolicitud = array (
+        		'numero_solicitud' => $_REQUEST ['numSolicitud'],
+        		'vigencia' => $_REQUEST ['vigencia'],
+        		'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
+        		'claseCIIU' => null,
+        		'unidad' => $_REQUEST ['unidad'],
+        		'cantidad' => $_REQUEST ['cantidad'],
+        		'cotizaciones' => $_REQUEST ['cotizaciones']
+        );
+        
+        
+        
+        
+        
+        if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "CREADO" ) {
+        	//Actualizar datos del Objeto a contratar
+        	$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar', $datosSolicitud );
+        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        }else {
+        	//Guardar datos del Objeto a contratar
+        	$cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
+        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSolicitud, 'registrar' );
+        }
 		
 		if ($resultado) {
-			//Conusltar el ultimo ID del objeto
-			$cadenaSql = $this->miSql->getCadenaSql ( 'lastIdObjeto' );
-			$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );                        
 			
-			$datos = array (
-					$lastId[0][0],
-					$_REQUEST ['cotizaciones']
-			);			
+			if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "CREADO" ) {
+				
+				$datosSolicitudNecesidad = array (
+						'idSolicitud' => $_REQUEST['numSolicitud'],
+						'vigencia' => $_REQUEST['vigencia'],
+						'unidadEjecutora' => $_REQUEST['unidadEjecutora']
+				);
+				
+				$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
+				$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				
+				$datos = array (
+						'idObjeto' => $resultadoNecesidadRelacionada[0]['id_objeto'],
+						'numero_solicitud' => $_REQUEST ['numSolicitud'],
+						'vigencia' => $_REQUEST ['vigencia'],
+						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
+						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
+				);
+				
+			}else{
+				//Conusltar el ultimo ID del objeto
+				$cadenaSql = $this->miSql->getCadenaSql ( 'lastIdObjeto' );
+				$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$datos = array (
+						'idObjeto' => $resultado[0][0],
+						'numero_solicitud' => $_REQUEST ['numSolicitud'],
+						'vigencia' => $_REQUEST ['vigencia'],
+						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
+						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
+				);
+			}
 			
-                    
 			redireccion::redireccionar ( 'inserto',  $datos);
 			exit ();
 		} else {

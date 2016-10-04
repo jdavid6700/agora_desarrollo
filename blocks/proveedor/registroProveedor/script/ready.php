@@ -99,6 +99,17 @@ $("#<?php echo $this->campoSeguro('personaNaturalContaDepartamento')?>").select2
 $('#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>').width(250);
 $("#<?php echo $this->campoSeguro('personaNaturalContaCiudad')?>").select2();
 
+$('#<?php echo $this->campoSeguro('personaNaturalArea')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNaturalArea')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNaturalNBC')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNaturalNBC')?>").select2();
+
+$('#<?php echo $this->campoSeguro('personaArea')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaArea')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNBC')?>').width(350);
+$("#<?php echo $this->campoSeguro('personaNBC')?>").select2();
+
+
 $('#<?php echo $this->campoSeguro('departamento')?>').width(250);
 $("#<?php echo $this->campoSeguro('departamento')?>").select2();
 $('#<?php echo $this->campoSeguro('ciudad')?>').width(250);
@@ -168,6 +179,45 @@ $('#<?php echo $this->campoSeguro('pyme')?>').select2();
 $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
 
+$('#<?php echo $this->campoSeguro('grupoEtnico')?>').width(250);
+$("#<?php echo $this->campoSeguro('grupoEtnico')?>").select2();
+$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(150);
+$("#<?php echo $this->campoSeguro('comunidadLGBT')?>").select2();
+$('#<?php echo $this->campoSeguro('cabezaFamilia')?>').width(150);
+$("#<?php echo $this->campoSeguro('cabezaFamilia')?>").select2();
+$('#<?php echo $this->campoSeguro('personasCargo')?>').width(150);
+$("#<?php echo $this->campoSeguro('personasCargo')?>").select2();
+
+$('#<?php echo $this->campoSeguro('estadoCivil')?>').width(250);
+$("#<?php echo $this->campoSeguro('estadoCivil')?>").select2();
+
+$('#<?php echo $this->campoSeguro('discapacidad')?>').width(150);
+$("#<?php echo $this->campoSeguro('discapacidad')?>").select2();
+$('#<?php echo $this->campoSeguro('tipoDiscapacidad')?>').width(250);
+$("#<?php echo $this->campoSeguro('tipoDiscapacidad')?>").select2();
+
+
+//AGREGADO Tributaria
+$('#<?php echo $this->campoSeguro('declaranteRentaNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('declaranteRentaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('medicinaPrepagadaNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('medicinaPrepagadaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('cuentaAFCNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('cuentaAFCNat')?>").select2();
+$('#<?php echo $this->campoSeguro('entidadBancariaAFCNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('entidadBancariaAFCNat')?>").select2();
+$('#<?php echo $this->campoSeguro('hijosMenoresEdadNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMenoresEdadNat')?>").select2();
+
+$('#<?php echo $this->campoSeguro('hijosMayoresEdadEstudiandoNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMayoresEdadEstudiandoNat')?>").select2();
+$('#<?php echo $this->campoSeguro('hijosMayoresEdadMas23Nat')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosMayoresEdadMas23Nat')?>").select2();
+$('#<?php echo $this->campoSeguro('conyugeDependienteNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('conyugeDependienteNat')?>").select2();
+$('#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>").select2();
+
 
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
 
@@ -189,10 +239,39 @@ $("#obligatorioCedula").hide("fast");
 $("#obligatorioPasaporte").hide("fast");
 
 
-if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
+if($('#<?php echo $this->campoSeguro('medicinaPrepagadaNat') ?>').val() == 1){//AGREGADO Tributario
+	$("#obligatorioNumeroUVT").show("fast");
+}else{
+	$("#obligatorioNumeroUVT").hide("fast");
+}
+
+if($('#<?php echo $this->campoSeguro('cuentaAFCNat') ?>').val() == 1){//AGREGADO Tributario
+	$("#obligatorioDatosAFC").show("fast");
+}else{
+	$("#obligatorioDatosAFC").hide("fast");
+}
+
+
+if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
+	$("#obligatorioCantidadPersonasACargo").show("fast");
+	$("#marcoDetalleDependientes").show("fast");//AGREGADO Tributario
+}else{
+	$("#obligatorioCantidadPersonasACargo").hide("fast");
+	$("#marcoDetalleDependientes").hide("fast");//AGREGADO Tributario
+}
+
+if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
+	$("#obligatorioTipoDiscapacidad").show("fast");
+}else{
+	$("#obligatorioTipoDiscapacidad").hide("fast");
+}
+
+
+
+if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 7){
 	$("#obligatorioProfesion").show("fast");
 	$("#obligatorioEspecialidad").show("fast");
-}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3){
+}else if ($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfil') ?>').val() == 2){
 	$("#obligatorioProfesion").show("fast");
 	$("#obligatorioEspecialidad").hide("fast");
 }else{
@@ -201,10 +280,10 @@ if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4){
 }
 
 
-if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4){
+if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
 	$("#obligatorioProfesionNat").show("fast");
 	$("#obligatorioEspecialidadNat").show("fast");
-}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3){
+}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
 	$("#obligatorioProfesionNat").show("fast");
 	$("#obligatorioEspecialidadNat").hide("fast");
 }else{
@@ -235,18 +314,9 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$("#tablaReporte").dataTable().fnDestroy();
+$("#tablaReporteCont").dataTable().fnDestroy();
 
-$(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    $('#tablaReporte tfoot th').each( function () {
-        var title = $(this).text();
-        
-        $(this).html( '<input type="text" placeholder="'+title+'" size="15"/>' );
-    } );
- 
-    // DataTable
-    var table = $('#tablaReporte').DataTable({
+$('#tablaReporteCont').DataTable({
         
     "language": {
         "sProcessing":     "Procesando...",
@@ -254,7 +324,7 @@ $(document).ready(function() {
 	"sZeroRecords":    "No se encontraron resultados",
         "sSearch":         "Buscar:",
         "sLoadingRecords": "Cargando...",
-        "sEmptyTable":     "NingÃºn dato disponible en esta tabla",
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
 	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
 	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
         "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
@@ -263,27 +333,6 @@ $(document).ready(function() {
 		"sLast":     "Ãšltimo",
 		"sNext":     "Siguiente",
 		"sPrevious": "Anterior"
-	}
+		}
     }
-    });
-    
-    $('#tablaReporte tbody')
-        .on( 'mouseenter', 'td', function () {
-            var colIdx = table.cell(this).index().column;
- 
-            $( table.cells().nodes() ).removeClass( 'highlight' );
-            $( table.column( colIdx ).nodes() ).addClass( 'highlight' );
-        } );
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () {
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-} );
+});

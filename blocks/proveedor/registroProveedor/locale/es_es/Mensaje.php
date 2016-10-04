@@ -145,6 +145,13 @@ $this->idioma["personaJuridicaCiudad"]="Ciudad :";
 $this->idioma["personaNaturalContaDepartamento"]="Departamento :";
 $this->idioma["personaNaturalContaCiudad"]="Ciudad :";
 
+$this->idioma["personaNaturalArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNaturalNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+$this->idioma["personaArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["personaNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+
 $this->idioma["direccionNat"] = "Dirección : ";
 $this->idioma["direccionNatTitulo"]="Digite Dirección";
 
@@ -174,8 +181,8 @@ $this->idioma["cargo"] = "Cargo : ";
 $this->idioma["cargoTitulo"]="Digite el Cargo";
 $this->idioma["perfil"] = "Perfil : ";
 $this->idioma["perfilTitulo"]="Digite el Perfil";
-$this->idioma["profesion"] = "Profesión : ";
-$this->idioma["profesionTitulo"]="Digite la Profesión";
+$this->idioma["profesion"] = "Titulo Obtenido : ";
+$this->idioma["profesionTitulo"]="Digite el Titulo Obtenido";
 $this->idioma["especialidad"] = "Especialidad : ";
 $this->idioma["especialidadTitulo"]="Digite la Especialidad";
 $this->idioma["genero"] = "Genero : ";
@@ -200,8 +207,8 @@ $this->idioma["cargoNat"] = "Cargo : ";
 $this->idioma["cargoNatTitulo"]="Digite el Cargo";
 $this->idioma["perfilNat"] = "Perfil : ";
 $this->idioma["perfilNatTitulo"]="Digite el Perfil";
-$this->idioma["profesionNat"] = "Profesión : ";
-$this->idioma["profesionNatTitulo"]="Digite la Profesión";
+$this->idioma["profesionNat"] = "Titulo Obtenido : ";
+$this->idioma["profesionNatTitulo"]="Digite el Titulo Obtenido";
 $this->idioma["especialidadNat"] = "Especialidad : ";
 $this->idioma["especialidadNatTitulo"]="Digite la Especialidad";
 $this->idioma["generoNat"] = "Genero : ";
@@ -259,10 +266,54 @@ $this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Empresa";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
 
+
+
+//AGREGADO Tributario
+$this->idioma["marcoBeneficiosTributarios"] = "Información para Beneficios Tributarios";
+$this->idioma["marcoDetalleDependientes"] = "Información requerida si tiene Personas a Cargo (Dependientes)";
+
+$this->idioma["declaranteRentaNat"] = "Como Persona Natural, usted es declarante de Renta ? : ";
+$this->idioma["declaranteRentaNatTitulo"]="¿ Es declarante de Renta ?";
+$this->idioma["medicinaPrepagadaNat"] = "Posee Medicina Prepagada actualmente ? : ";
+$this->idioma["medicinaPrepagadaNatTitulo"]="¿ Posee Medicina Prepagada actualmente ?";
+$this->idioma["numeroUVTNat"] = "Valor UVT Medicina Prepagada : ";
+$this->idioma["numeroUVTNatTitulo"]="Valor UVT Medicina Prepagada";
+$this->idioma["cuentaAFCNat"] = "Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
+$this->idioma["cuentaAFCNatTitulo"]="¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ?";
+$this->idioma["numeroCuentaAFCNat"] = "Número de Cuenta : ";
+$this->idioma["numeroCuentaAFCNatTitulo"]="Digite el Número de Cuenta";
+$this->idioma["entidadBancariaAFCNat"] = "Entidad Bancaria : ";
+$this->idioma["entidadBancariaAFCNatTitulo"]="Digite la Entidad Bancaria";
+$this->idioma["interesViviendaAFCNat"] = "Interes de Vivienda : ";
+$this->idioma["interesViviendaAFCNatTitulo"]="Digite el Interes de Vivienda";
+
+$this->idioma["hijosMenoresEdadNat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) menores de 18 años : ";
+$this->idioma["hijosMenoresEdadNatTitulo"]="Indique para hijos menos de 18 años";
+$this->idioma["hijosMayoresEdadEstudiandoNat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) con edad entre 18 y 23 años, a quienes este financiando " .
+		                                         "su educación en instituciones acreditadas, en niveles de educación certificadas por el ICFES: ";
+$this->idioma["hijosMayoresEdadEstudiandoNatTitulo"]="Indique para hijos mayores de 18 años y menores de 23 años";
+
+$this->idioma["hijosMayoresEdadMas23Nat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) mayores de 23 años, que se ecuentre(n) en situación " .
+											"de dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["hijosMayoresEdadMas23NatTitulo"]="Indique para hijos mayores de 23 años dependientes";
+
+$this->idioma["conyugeDependienteNat"] = "Entre las personas a Cargo (Dependientes), esta su conyuge o compañero permanente, que se encuentre en situación de dependencia sea " .
+									     "por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["conyugeDependienteNatTitulo"]="Indique para conyuge o compañero permanente dependiente";
+
+$this->idioma["padresHermanosDependienteNat"] = "Entre las personas a Cargo (Dependientes), estan sus Padres y/o Hermanos(s), que se encuentre en situación de dependencia sea " .
+												"por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o hermanos dependientes";
+
+
+///////////////////////////////////////////////////////
+
+
+
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
-$this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
+$this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
 $this->idioma["marcoContratos"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario ";
@@ -276,9 +327,27 @@ $this->idioma["tabActividad"] = "Actividades Económicas";
 $this->idioma["noEncontroContrato"] =  "No se ha relacionado ningun contrato con la Universidad, por tal motivo no se puede expedir ningún certificado.";
 
 
+//*******************************************
 
+$this->idioma["marcoCaracterizacion"] = "Información de Caracterización";
+$this->idioma["grupoEtnico"] = "Grupo Étnico : ";
+$this->idioma["grupoEtnicoTitulo"]="Seleccione Grupo Étnico";
+$this->idioma["comunidadLGBT"] = "¿ Pertenece a la Comunidad LGBT ? : ";
+$this->idioma["comunidadLGBTTitulo"]="¿ Pertenece a la Comunidad LGBT ?";
+$this->idioma["cabezaFamilia"] = "¿ Es Cabeza de Familia ? : ";
+$this->idioma["cabezaFamiliaTitulo"]="¿ Es Cabeza de Familia ?";
+$this->idioma["personasCargo"] = "¿ Tiene Personas a Cargo ? : ";
+$this->idioma["personasCargoTitulo"]="¿ Tiene Personas a Cargo ?";
 
+$this->idioma["numeroPersonasCargo"] = "Número de Personas a Cargo : ";
+$this->idioma["numeroPersonasCargoTitulo"]=" Por favor indique cuantas Personas a Cargo tiene";
 
+$this->idioma["estadoCivil"] = "Estado Civil : ";
+$this->idioma["estadoCivilTitulo"]="Estado Civil actual";
 
+$this->idioma["discapacidad"] = "¿ Tiene alguna Discapacidad ? : ";
+$this->idioma["discapacidadTitulo"]="¿ Tiene alguna Discapacidad ?";
+$this->idioma["tipoDiscapacidad"] = "Tipo de Discapacidad : ";
+$this->idioma["tipoDiscapacidadTitulo"]="Tipo de Discapacidad";
 
 ?>

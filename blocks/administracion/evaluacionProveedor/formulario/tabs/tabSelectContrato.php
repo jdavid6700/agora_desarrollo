@@ -48,11 +48,21 @@ class listarDatos {
 		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-        $this->cadena_sql = $this->miSql->getCadenaSql("listaCrontato", $_REQUEST['usuario']);
-
-
+		if($_REQUEST['usuario'] == 1){
+			$this->cadena_sql = $this->miSql->getCadenaSql("listaContratoAdmin", $_REQUEST['usuario']);
+			
+			//echo ($this->cadena_sql);
+			
+			$resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
+		}else{
+			$this->cadena_sql = $this->miSql->getCadenaSql("listaContratoSupervisor", $_REQUEST['usuario']);
+				
+			//echo ($this->cadena_sql);
+				
+			$resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
+		}
+		
         
-		$resultado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
 		
 		if( $resultado ){
 			?>
@@ -71,27 +81,27 @@ class listarDatos {
 				<table class="table table-bordered table-striped table-hover table-condensed">
 					<tr class="info">
 								<td align="center"><strong>No. Contrato</strong></td>	
-								<td align="center"><strong>Fecha Inicial </strong></td>
-								<td align="center"><strong>Fecha Final </strong></td>
-								<td align="center"><strong>Empresa Proveedor </strong></td>
-								<td align="center"><strong>No. Acto Administrativo</strong></td>
-								<td align="center"><strong>No. CDP</strong></td>
-								<td align="center"><strong>No. RP</strong></td>
-								<td align="center"><strong>Valor</strong></td>
-								<td align="center"><strong>Evaluar</strong></td>
+								<td align="center"><strong>No. Solicitud de Necesidad </strong></td>
+								<td align="center"><strong>Vigencia </strong></td>
+								<td align="center"><strong>Fecha Registro </strong></td>
+								<td align="center"><strong>Nombre Supervisor</strong></td>
+								<td align="center"><strong>Documento Supervisor</strong></td>
+								<td align="center"><strong>Correo Supervisor</strong></td>
+								<td align="center"><strong>Dependencia</strong></td>
+								<td align="center"><strong>Estado</strong></td>
 					</tr>	
 				<?php 
 					foreach ($resultado as $dato):
 			
 						echo "<tr>";
 						echo "<td align='right'>" . $dato['numero_contrato']. "</td>";
-						echo "<td align='center'>" . $dato['fecha_inicio'] . "</td>";
-						echo "<td align='center'>" . $dato['fecha_finalizacion'] . "</td>";
-						echo "<td align='center'>" . $dato['nom_proveedor'] . "</td>";
-						echo "<td align='right'>" . $dato['numero_acto_admin'] . "</td>";
-						echo "<td align='right'>" . $dato['numero_cdp'] . "</td>";
-						echo "<td align='right'>" . $dato['numero_rp'] . "</td>";
-						echo "<td align='right'>$ " . $dato['valor'] . "</td>";				
+						echo "<td align='center'>" . $dato['numero_solicitud'] . "</td>";
+						echo "<td align='center'>" . $dato['vigencia'] . "</td>";
+						echo "<td align='center'>" . $dato['fecha_registro'] . "</td>";
+						echo "<td align='right'>" . $dato['nombre_supervisor'] . "</td>";
+						echo "<td align='right'>" . $dato['cedula'] . "</td>";
+						echo "<td align='right'>" . $dato['correo_supervisor'] . "</td>";
+						echo "<td align='right'>" . $dato['dependencia'] . "</td>";				
 						echo "<td class='text-center'>";
 							$variable = "pagina=" . $miPaginaActual;
 							$variable.="&opcion=nuevo";
@@ -99,7 +109,18 @@ class listarDatos {
 				
 							$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar($variable);
 							$url = $directorio . '=' . $variable;
-			
+						if($_REQUEST['usuario'] == 1){
+							
+							if( $dato['estado'] == 'CREADO'){
+								$valor = 'Sin Evaluar';
+								$clase = "btn btn-default";
+							}else{
+								$valor = 'Evaluado';
+								$clase = "btn btn-danger";
+							}
+							echo $valor;
+							
+						}else{
 							if( $dato['estado'] == 'CREADO'){
 								$valor = 'Seleccionar';
 								$clase = "btn btn-default";
@@ -107,7 +128,9 @@ class listarDatos {
 								$valor = 'Inactivo';
 								$clase = "btn btn-danger";
 							}
-						echo '<a class="' . $clase . '" href="' . $url . '">' .  $valor . ' </span></a>';
+							echo '<a class="' . $clase . '" href="' . $url . '">' .  $valor . ' </span></a>';
+						}
+						
 						echo "</td>";			
 						echo "</tr>";
 					endforeach; 

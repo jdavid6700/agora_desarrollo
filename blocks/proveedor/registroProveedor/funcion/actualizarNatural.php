@@ -112,6 +112,7 @@ class Formulario {
 					switch($_REQUEST['perfilNat']){
 						case 1 :
 							$_REQUEST ['perfilNat'] = 18;
+							$_REQUEST ['personaNaturalNBC'] = 49207;
 							break;
 						case 2 :
 							$_REQUEST ['perfilNat'] = 19;
@@ -124,6 +125,239 @@ class Formulario {
 							break;
 						case 5 :
 							$_REQUEST ['perfilNat'] = 22;
+							$_REQUEST ['personaNaturalNBC'] = 0;
+							break;
+						case 6 :
+							$_REQUEST ['perfilNat'] = 38;
+							break;
+						case 7 :
+							$_REQUEST ['perfilNat'] = 39;
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['grupoEtnico'])){//CAST genero tipoCuenta
+					switch($_REQUEST['grupoEtnico']){
+						case 23 :
+							$_REQUEST['grupoEtnico']='AFRODESCENDIENTES';
+							break;
+						case 24 :
+							$_REQUEST['grupoEtnico']='INDIGENAS';
+							break;
+						case 25 :
+							$_REQUEST['grupoEtnico']='RAIZALES';
+							break;
+						case 26 :
+							$_REQUEST['grupoEtnico']='ROM';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['estadoCivil'])){//CAST genero tipoCuenta
+					switch($_REQUEST['estadoCivil']){
+						case 27 :
+							$_REQUEST['estadoCivil']='SOLTERO';
+							break;
+						case 28 :
+							$_REQUEST['estadoCivil']='CASADO';
+							break;
+						case 29 :
+							$_REQUEST['estadoCivil']='UNION LIBRE';
+							break;
+						case 30 :
+							$_REQUEST['estadoCivil']='VIUDO';
+							break;
+						case 31 :
+							$_REQUEST['estadoCivil']='DIVORCIADO';
+							break;
+					}
+				}
+				
+				
+				if(isset($_REQUEST['tipoDiscapacidad'])){//CAST genero tipoCuenta
+					switch($_REQUEST['tipoDiscapacidad']){
+						case 32 :
+							$_REQUEST['tipoDiscapacidad']='FISICA';
+							break;
+						case 33 :
+							$_REQUEST['tipoDiscapacidad']='SENSORIAL';
+							break;
+						case 34 :
+							$_REQUEST['tipoDiscapacidad']='AUDITIVA';
+							break;
+						case 35 :
+							$_REQUEST['tipoDiscapacidad']='VISUAL';
+							break;
+						case 36 :
+							$_REQUEST['tipoDiscapacidad']='PSIQUICA';
+							break;
+						case 37 :
+							$_REQUEST['tipoDiscapacidad']='MENTAL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['comunidadLGBT'])){
+					switch($_REQUEST ['comunidadLGBT']){
+						case 1 :
+							$_REQUEST ['comunidadLGBT']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['comunidadLGBT']='FALSE';
+							break;
+						default:
+							$_REQUEST ['comunidadLGBT']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['cabezaFamilia'])){
+					switch($_REQUEST ['cabezaFamilia']){
+						case 1 :
+							$_REQUEST ['cabezaFamilia']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['cabezaFamilia']='FALSE';
+							break;
+						default:
+							$_REQUEST ['cabezaFamilia']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['personasCargo'])){
+					switch($_REQUEST ['personasCargo']){
+						case 1 :
+							$_REQUEST ['personasCargo']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['personasCargo']='FALSE';
+							break;
+						default:
+							$_REQUEST ['personasCargo']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['discapacidad'])){
+					switch($_REQUEST ['discapacidad']){
+						case 1 :
+							$_REQUEST ['discapacidad']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['discapacidad']='FALSE';
+							break;
+						default:
+							$_REQUEST ['discapacidad']='NULL';
+							break;
+					}
+				}
+				
+				//AGREGADO Beneficios TRIBUTARIOS ***************************************************************
+				
+				if(isset($_REQUEST['declaranteRentaNat'])){
+					switch($_REQUEST ['declaranteRentaNat']){
+						case 1 :
+							$_REQUEST ['declaranteRentaNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['declaranteRentaNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['declaranteRentaNat']='NULL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['medicinaPrepagadaNat'])){
+					switch($_REQUEST ['medicinaPrepagadaNat']){
+						case 1 :
+							$_REQUEST ['medicinaPrepagadaNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['medicinaPrepagadaNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['medicinaPrepagadaNat']='NULL';
+							break;
+					}
+				}
+				
+				if(isset($_REQUEST['cuentaAFCNat'])){
+					switch($_REQUEST ['cuentaAFCNat']){
+						case 1 :
+							$_REQUEST ['cuentaAFCNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['cuentaAFCNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['cuentaAFCNat']='NULL';
+							break;
+					}
+				}
+				
+				
+				
+				if(isset($_REQUEST['hijosMenoresEdadNat'])){
+					switch($_REQUEST ['hijosMenoresEdadNat']){
+						case 1 :
+							$_REQUEST ['hijosMenoresEdadNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMenoresEdadNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMenoresEdadNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['hijosMayoresEdadEstudiandoNat'])){
+					switch($_REQUEST ['hijosMayoresEdadEstudiandoNat']){
+						case 1 :
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMayoresEdadEstudiandoNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['hijosMayoresEdadMas23Nat'])){
+					switch($_REQUEST ['hijosMayoresEdadMas23Nat']){
+						case 1 :
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosMayoresEdadMas23Nat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['conyugeDependienteNat'])){
+					switch($_REQUEST ['conyugeDependienteNat']){
+						case 1 :
+							$_REQUEST ['conyugeDependienteNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['conyugeDependienteNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['conyugeDependienteNat']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['padresHermanosDependienteNat'])){
+					switch($_REQUEST ['padresHermanosDependienteNat']){
+						case 1 :
+							$_REQUEST ['padresHermanosDependienteNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['padresHermanosDependienteNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['padresHermanosDependienteNat']='NULL';
 							break;
 					}
 				}
@@ -193,16 +427,36 @@ class Formulario {
 						'cargo' => $_REQUEST['cargoNat'],
 						'id_pais_nacimiento' => $_REQUEST['paisNacimientoNat'],
 						'id_perfil' => $_REQUEST['perfilNat'],
+						'id_nucleo_basico' => $_REQUEST['personaNaturalNBC'],
 						'profesion' => $_REQUEST['profesionNat'],
 						'especialidad' => $_REQUEST['especialidadNat'],
-						'monto_capital_autorizado' => $_REQUEST['montoNat']
+						'monto_capital_autorizado' => $_REQUEST['montoNat'],
+						'grupoEtnico' => $_REQUEST['grupoEtnico'],
+						'comunidadLGBT' => $_REQUEST['comunidadLGBT'],
+						'cabezaFamilia' => $_REQUEST['cabezaFamilia'],
+						'personasCargo' => $_REQUEST['personasCargo'],
+						'numeroPersonasCargo' => $_REQUEST['numeroPersonasCargo'],
+						'estadoCivil' => $_REQUEST['estadoCivil'],
+						'discapacidad' => $_REQUEST['discapacidad'],
+						'tipoDiscapacidad' => $_REQUEST['tipoDiscapacidad'],
+						'declarante_renta' => $_REQUEST ['declaranteRentaNat'],//AGREGADO Beneficios Tributarios *****************
+						'medicina_prepagada' => $_REQUEST ['medicinaPrepagadaNat'],
+						'valor_uvt_prepagada' => $_REQUEST ['numeroUVTNat'],
+						'cuenta_ahorro_afc' => $_REQUEST ['cuentaAFCNat'],
+						'num_cuenta_bancaria_afc' => $_REQUEST ['numeroCuentaAFCNat'],
+						'id_entidad_bancaria_afc' => $_REQUEST ['entidadBancariaAFCNat'],
+						'interes_vivienda_afc' => $_REQUEST ['interesViviendaAFCNat'],
+						'dependiente_hijo_menor_edad' => $_REQUEST ['hijosMenoresEdadNat'],
+						'dependiente_hijo_menos23_estudiando' => $_REQUEST ['hijosMayoresEdadEstudiandoNat'],
+						'dependiente_hijo_mas23_discapacitado' => $_REQUEST ['hijosMayoresEdadMas23Nat'],
+						'dependiente_conyuge' => $_REQUEST ['conyugeDependienteNat'],
+						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat']
 				);
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
 				$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-			
 
 				if ($resultado) {
 					redireccion::redireccionar ( 'actualizo',  $_REQUEST['documentoNat']);

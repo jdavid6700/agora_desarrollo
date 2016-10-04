@@ -38,7 +38,7 @@ $fechaHoy = utf8_encode(ucwords($fecha));
         
         $registro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
         
-        if($registro[0]['rolmenu'] == '1'){
+        if($registro[0]['rolmenu'] == '1' || $registro[0]['rolmenu'] == '10'){
         ?>
         	<p>Módulo de Administración.</p>
         	<h3><b>Bienvenido Administrador:</b> <i><?php echo $registro[0]['nombre'].' '.$registro[0]['apellido'] ?></i></h3>

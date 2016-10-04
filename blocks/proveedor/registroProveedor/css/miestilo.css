@@ -70,3 +70,22 @@ body {font-family:arial;font-size:15}
     cursor: grab;
 }
 
+form div label {
+    border-style: solid;
+    border-width: 0;
+    display: block;
+    float: left;
+    font-family: Arial,sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    margin: 0 0 5px;
+    padding: 3px 5px;
+    text-align: left;
+}
+
+label {
+    display: unset;
+    font-weight: 700;
+    margin-bottom: 5px;
+    max-width: 96%;
+}

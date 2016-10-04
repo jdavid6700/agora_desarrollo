@@ -1,6 +1,8 @@
 <?php
 
-namespace inventarios\gestionContrato;
+namespace hojaDeVida\crearDocente;
+
+use hojaDeVida\crearDocente\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -26,28 +28,33 @@ class Funcion {
 	var $error;
 	var $miRecursoDB;
 	var $crypto;
-// 	function verificarCampos() {
-// 		include_once ($this->ruta . "/funcion/verificarCampos.php");
-// 		if ($this->error == true) {
-// 			return false;
-// 		} else {
-// 			return true;
-// 		}
-// 	}
-	function formProcessor() {
-		include_once ($this->ruta . "/funcion/formProcessor.php");
-	}
+	// function verificarCampos() {
+	// include_once ($this->ruta . "/funcion/verificarCampos.php");
+	// if ($this->error == true) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
+	
 	function procesarAjax() {
 		include_once ($this->ruta . "funcion/procesarAjax.php");
 	}
-	function consultarContrato() {
-		include_once ($this->ruta . "/funcion/consultarContrato.php");
+	function registrar() {
+		include_once ($this->ruta . "/funcion/registrar.php");
 	}
-	function modificarContrato() {
-		include_once ($this->ruta . "/funcion/modificarContrato.php");
+	function solicitudCotizacion() {
+		include_once ($this->ruta . "/funcion/solicitudCotizacion.php");
+	}
+	function resumen()
+	{
+		include_once($this->ruta."/funcion/resumenPDF.php");
+	}        
+	function actualizar() {
+		include_once ($this->ruta . "/funcion/actualizar.php");
 	}
 	function action() {
-
+		
 		// Evitar que se ingrese codigo HTML y PHP en los campos de texto
 		// Campos que se quieren excluir de la limpieza de código. Formato: nombreCampo1|nombreCampo2|nombreCampo3
 		$excluir = "";
@@ -68,7 +75,36 @@ class Funcion {
 		// Validar las variables para evitar un tipo insercion de SQL
 		// $this->Redireccionador( "exito" );
 		// }
-		
+		/*
+		 * Se realiza la decodificación de los campos "validador" de los 
+		 * componentes del FormularioHtml. Se realiza la validación. En caso de que algún parámetro
+		 * sea ingresado fuera de lo correspondiente en el campo "validador", este será ajustado
+		 * (o convertido a) a un parámetro permisible o simplemente de no ser válido se devolverá 
+		 * el valor false. Si lo que se quiere es saber si los parámetros son correctos o no, se
+		 * puede introducir un tercer parámetro $arreglar, que es un parámetro booleano que indica,
+		 * si es pertinente o no realizar un recorte de los datos "string" para que cumpla los requerimientos
+		 * de longitud (tamaño) del campo.
+		 */
+	/*	if(isset($_REQUEST['validadorCampos']) && !(isset($_REQUEST ["botonRegresar"]) && $_REQUEST ["botonRegresar"] == 'true')){
+			$validadorCampos = $this->miInspectorHTML->decodificarCampos($_REQUEST['validadorCampos']);
+			$respuesta = $this->miInspectorHTML->validacionCampos($_REQUEST,$validadorCampos,false,false);
+			if ($respuesta != false){
+				$_REQUEST = $respuesta;
+			} else {
+				//Lo que se desea hacer si los parámetros son inválidos
+				$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
+				$variable = "pagina=accesoIncorrecto";
+				$variable .= "&opcion=error";
+				$variable .= "&paginaError=".$miPaginaActual;
+				$variable .= "&parametros=".$this->miInspectorHTML->codificarCampos($_REQUEST);
+				$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar ( $variable );
+				$url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->configuracion ["site"] . "/index.php?";
+				$enlace = $this->miConfigurador->configuracion ['enlace'];				
+				$redireccion = $url . $enlace . '=' . $variable;
+				echo "<script>location.replace('" . $redireccion . "')</script>";
+			}
+		} */
+
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
@@ -78,12 +114,27 @@ class Funcion {
 					$this->consultarContrato ();
 					break;
 				
-				case 'nuevoContrato' :
-					$this->formProcessor ();
+				case 'registrar' :
+					$this->registrar ();
 					break;
+					
+				case 'cotizacion' :
+					$this->solicitudCotizacion ();
+					break;
+
+				case "resumen":
+                                        $this->resumen();
+                                        break;	
 				
 				case 'actualizar' :
-					$this->modificarContrato ();
+					case 'actualizar':
+					if (isset ( $_REQUEST ["botonRegresar"] ) && $_REQUEST ["botonRegresar"] == 'true') {
+						$arreglo = unserialize ( $_REQUEST ['arreglo'] );	
+						redireccion::redireccionar ( "paginaConsulta", $arreglo );
+						exit();
+					} else if (isset ( $_REQUEST ["botonGuardar"] ) && $_REQUEST ["botonGuardar"] == 'true') {
+						$this->actualizar();
+					}
 					break;
 			}
 		} else {
@@ -122,9 +173,6 @@ class Funcion {
 	}
 	public function setFormulario($formulario) {
 		$this->formulario = $formulario;
-	}
-	function Redireccionador($opcion, $valor = "") {
-		include_once ($this->ruta . "/funcion/Redireccionador.php");
 	}
 }
 

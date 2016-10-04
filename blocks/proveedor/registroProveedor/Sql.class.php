@@ -33,10 +33,39 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= " puntaje_total";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.evaluacion ";
+				$cadenaSql .= " agora.evaluacion ";
 				$cadenaSql .= " WHERE id_contrato= '" . $variable . "'";
 				break;
-			
+				
+				/* CONSULTAR - EVALUACION POR ID CONTRATO */
+			case "buscarAreaConocimiento" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_area,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_area ";
+				$cadenaSql .= " WHERE estado != 'INACTIVO';";
+				break;
+				
+			case "buscarAreaConocimientoXNBC" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_area,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_nucleo_basico ";
+				$cadenaSql .= " WHERE id_nucleo = " . $variable . ";";
+				break;
+				
+			case "buscarNBCAjax" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_nucleo,";
+				$cadenaSql .= " nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.snies_nucleo_basico ";
+				$cadenaSql .= " WHERE estado != 'INACTIVO'";
+				$cadenaSql .= " AND id_area = " . $variable . ";";
+				break;
+				
 			/* CONSULTAR - CONTRATO por ID */
 			case "consultarContratoByID" ://***********************************************************************
 				$cadenaSql = "SELECT  ";
@@ -54,15 +83,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " C.numero_rp, ";
 				$cadenaSql .= " C.fecha_rp ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.contrato C";
-				$cadenaSql .= " JOIN proveedor.objeto_contratar O ON O.id_objeto = C.id_objeto";
-				$cadenaSql .= " JOIN proveedor.informacion_proveedor P ON P.id_proveedor = C.id_proveedor";
+				$cadenaSql .= " agora.contrato C";
+				$cadenaSql .= " JOIN agora.objeto_contratar O ON O.id_objeto = C.id_objeto";
+				$cadenaSql .= " JOIN agora.informacion_proveedor P ON P.id_proveedor = C.id_proveedor";
 				$cadenaSql .= " WHERE  id_contrato=" . $variable;
 				break;
 			
 			/* ACTUALIZAR - ESTADO PROVEEDOR */
 			case 'updateEstado' ://****************************************************************************************
-				$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+				$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
 				$cadenaSql .= "estado = '" . $variable ['estado'] . "'";
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['idProveedor'] . "' ";
@@ -73,13 +102,13 @@ class Sql extends \Sql {
 				$cadenaSql = "SELECT";
 				$cadenaSql .= " last_value";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.prov_proveedor_info_id_proveedor_seq";
+				$cadenaSql .= " agora.prov_proveedor_info_id_proveedor_seq";
 				break;
 			
 			/* REGISTRAR DATOS - USUARIO */
 			case "registrarActividad" ://**********************************************************
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
@@ -96,7 +125,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_actividad_ciiu ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " WHERE num_documento= '" . $variable ['nit'] . "'";
 				$cadenaSql .= " AND id_subclase = '" . $variable ['actividad'] . "'";
 				break;
@@ -107,8 +136,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " A.id_subclase,";
 				$cadenaSql .= " nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_actividad_ciiu A";
-				$cadenaSql .= " JOIN parametro.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu A";
+				$cadenaSql .= " JOIN agora.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
 				$cadenaSql .= " WHERE num_documento= " . $variable;
 				break;	
 					
@@ -150,7 +179,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO */
 			case "insertarInformacionProveedor" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipopersona,";
 				$cadenaSql .= " num_documento,";
@@ -184,7 +213,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['descripcion_proveedor'] . "', ";
 				$cadenaSql .= " '" . $variable ['anexo_rut'] . "', ";
 				$cadenaSql .= " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
-				$cadenaSql .= $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= " '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= $variable ['id_entidad_bancaria'] . ", ";
 				$cadenaSql .= " '" . $variable ['fecha_registro'] . "', ";
 				$cadenaSql .= " '" . $variable ['fecha_modificación'] . "', ";
@@ -196,7 +225,7 @@ class Sql extends \Sql {
 				/* INSERTAR - PROVEEEDOR DATOS TELEFONO */
 			case 'insertarInformacionProveedorTelefono' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " agora.telefono ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " numero_tel,";
 				if($variable ['extension_telefono'] != null){
@@ -218,7 +247,7 @@ class Sql extends \Sql {
 			/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'insertarInformacionProveedorXTelefono' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_telefono ";
+				$cadenaSql .= " agora.proveedor_telefono ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " id_proveedor,";
 				$cadenaSql .= " id_telefono";
@@ -233,7 +262,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO NATURAL */
 			case "registrarProveedorNatural" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " agora.informacion_persona_natural ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipo_documento,";
 				$cadenaSql .= " num_documento_persona,";
@@ -245,12 +274,47 @@ class Sql extends \Sql {
 				$cadenaSql .= " cargo,";
 				$cadenaSql .= " id_pais_nacimiento,";
 				$cadenaSql .= " perfil,";
+				$cadenaSql .= " id_nucleo_basico,";
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
 				if($variable ['monto_capital_autorizado'] != null){
 					$cadenaSql .= " monto_capital_autorizado,";
 				}
-				$cadenaSql .= " genero";
+				$cadenaSql .= " genero,";
+				//**********************************************************************
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " grupo_etnico,";
+				}
+				$cadenaSql .= " comunidad_lgbt,";
+				$cadenaSql .= " cabeza_familia,";
+				$cadenaSql .= " personas_a_cargo,";
+				if($variable ['numeroPersonasCargo'] != null){
+					$cadenaSql .= " numero_personas_a_cargo,";
+				}
+				$cadenaSql .= " estado_civil,";
+				if($variable ['tipoDiscapacidad'] != null){
+					$cadenaSql .= " tipo_discapacidad,";
+				}
+				$cadenaSql .= " discapacitado,";
+				//***********************************************************************
+				$cadenaSql .= " medicina_prepagada,";
+				if($variable ['valor_uvt_prepagada'] != null){
+					$cadenaSql .= " valor_uvt_prepagada,";
+				}
+				$cadenaSql .= " cuenta_ahorro_afc,";
+				if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+					$cadenaSql .= " num_cuenta_bancaria_afc,";
+					$cadenaSql .= " id_entidad_bancaria_afc,";
+					$cadenaSql .= " interes_vivienda_afc,";
+				}
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " dependiente_hijo_menor_edad,";
+					$cadenaSql .= " dependiente_hijo_menos23_estudiando,";
+					$cadenaSql .= " dependiente_hijo_mas23_discapacitado,";
+					$cadenaSql .= " dependiente_conyuge,";
+					$cadenaSql .= " dependiente_padre_o_hermano,";
+				}
+				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
@@ -264,18 +328,53 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['cargo'] . "',";
 				$cadenaSql .= " " . $variable ['id_pais_nacimiento'] . ",";
 				$cadenaSql .= " " . $variable ['id_perfil'] . ",";
+				$cadenaSql .= " " . $variable ['id_nucleo_basico'] . ",";
 				$cadenaSql .= " '" . $variable ['profesion'] . "',";
 				$cadenaSql .= " '" . $variable ['especialidad'] . "',";
 				if($variable ['monto_capital_autorizado'] != null){
 					$cadenaSql .= " " . $variable ['monto_capital_autorizado'] . ",";
 				}
-				$cadenaSql .= " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " '" . $variable ['genero'] . "',";
+				
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " '" . $variable ['grupoEtnico'] . "',";
+				}
+				$cadenaSql .= " " . $variable ['comunidadLGBT'] . ",";
+				$cadenaSql .= " " . $variable ['cabezaFamilia'] . ",";
+				$cadenaSql .= " " . $variable ['personasCargo'] . ",";
+				if($variable ['numeroPersonasCargo'] != null){
+					$cadenaSql .= " " . $variable ['numeroPersonasCargo'] . ",";
+				}
+				$cadenaSql .= " '" . $variable ['estadoCivil'] . "',";
+				if($variable ['tipoDiscapacidad'] != null){
+					$cadenaSql .= " '" . $variable ['tipoDiscapacidad'] . "',";
+				}
+				$cadenaSql .= " " . $variable ['discapacidad'] . ",";
+				//**************************************************************************
+				$cadenaSql .= " " . $variable ['medicina_prepagada'] . ",";
+				if($variable ['valor_uvt_prepagada'] != null){
+					$cadenaSql .= " " . $variable ['valor_uvt_prepagada'] . ",";
+				}
+				$cadenaSql .= " " . $variable ['cuenta_ahorro_afc'] . ",";
+				if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+					$cadenaSql .= " '" . $variable ['num_cuenta_bancaria_afc'] . "',";
+					$cadenaSql .= " " . $variable ['id_entidad_bancaria_afc'] . ",";
+					$cadenaSql .= " " . $variable ['interes_vivienda_afc'] . ",";
+				}
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " " . $variable ['dependiente_hijo_menor_edad'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_hijo_menos23_estudiando'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_hijo_mas23_discapacitado'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_conyuge'] . ",";
+					$cadenaSql .= " " . $variable ['dependiente_padre_o_hermano'] . ",";
+				}
+				$cadenaSql .= " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " ); ";
 				break;
 				
 			case "consultar_tipo_proveedor" :
 				$cadenaSql = " SELECT U.usuario, P.tipoPersona FROM public.prov_usuario U";
-				$cadenaSql.= " JOIN proveedor.informacion_proveedor P ON P.num_documento = U.usuario::numeric";
+				$cadenaSql.= " JOIN agora.informacion_proveedor P ON P.num_documento = U.usuario::numeric";
 				$cadenaSql.= " WHERE U.id_usuario = $variable ";
 				break;
 				
@@ -290,9 +389,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
@@ -309,9 +408,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
@@ -330,12 +429,33 @@ class Sql extends \Sql {
 				$cadenaSql .= " cargo,";
 				$cadenaSql .= " id_pais_nacimiento,";
 				$cadenaSql .= " perfil,";
+				$cadenaSql .= " id_nucleo_basico,";
 				$cadenaSql .= " profesion,";
 				$cadenaSql .= " especialidad,";
 				$cadenaSql .= " monto_capital_autorizado,";
-				$cadenaSql .= " genero";
+				$cadenaSql .= " genero,";
+				$cadenaSql .= " grupo_etnico,";
+				$cadenaSql .= " comunidad_lgbt,";
+				$cadenaSql .= " cabeza_familia,";
+				$cadenaSql .= " personas_a_cargo,";
+				$cadenaSql .= " numero_personas_a_cargo,";
+				$cadenaSql .= " estado_civil,";
+				$cadenaSql .= " tipo_discapacidad,";
+				$cadenaSql .= " discapacitado,";
+				$cadenaSql .= " medicina_prepagada,";//AGREGADO Benefi*************************************
+				$cadenaSql .= " valor_uvt_prepagada,";
+				$cadenaSql .= " cuenta_ahorro_afc,";
+				$cadenaSql .= " num_cuenta_bancaria_afc,";
+				$cadenaSql .= " id_entidad_bancaria_afc,";
+				$cadenaSql .= " interes_vivienda_afc,";
+				$cadenaSql .= " dependiente_hijo_menor_edad,";
+				$cadenaSql .= " dependiente_hijo_menos23_estudiando,";
+				$cadenaSql .= " dependiente_hijo_mas23_discapacitado,";
+				$cadenaSql .= " dependiente_conyuge,";
+				$cadenaSql .= " dependiente_padre_o_hermano,";
+				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_persona_natural";
+				$cadenaSql .= " agora.informacion_persona_natural";
 				$cadenaSql .= " WHERE num_documento_persona = '" . $variable . "'";
 				break;
 				
@@ -343,7 +463,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO */
 			case "actualizarInformacionProveedor" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.informacion_proveedor ";
+				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " num_documento = " . $variable ['numero_documento'] . ", ";
 				;
@@ -356,7 +476,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " tel_asesor = " . " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
 				$cadenaSql .= " descripcion = " . " '" . $variable ['descripcion_proveedor'] . "', ";
 				$cadenaSql .= " tipo_cuenta_bancaria = " . " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
-				$cadenaSql .= " num_cuenta_bancaria = " . $variable ['num_cuenta_bancaria'] . ", ";
+				$cadenaSql .= " num_cuenta_bancaria = '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= " id_entidad_bancaria = " . $variable ['id_entidad_bancaria'] . ", ";
 				$cadenaSql .= " fecha_ultima_modificacion = " . " '" . $variable ['fecha_modificación'] . "' ";
 				$cadenaSql .= " WHERE id_proveedor = ";
@@ -366,7 +486,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR - PROVEEEDOR DATOS TELEFONO */
 			case 'actualizarInformacionProveedorTelefono' :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.telefono ";
+				$cadenaSql .= " agora.telefono ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " numero_tel = " . $variable ['num_telefono'] . ", ";
 				if ($variable ['extension_telefono'] != null) {
@@ -380,7 +500,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO NATURAL */
 			case "actualizarProveedorNatural" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.informacion_persona_natural ";
+				$cadenaSql .= " agora.informacion_persona_natural ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " tipo_documento = " . " " . $variable ['id_tipo_documento'] . ",";
 				$cadenaSql .= " num_documento_persona = " . " " . $variable ['fki_numero_documento'] . ",";
@@ -391,13 +511,74 @@ class Sql extends \Sql {
 				$cadenaSql .= " segundo_nombre = " . " '" . $variable ['segundo_nombre'] . "',";
 				$cadenaSql .= " cargo = " . " '" . $variable ['cargo'] . "',";
 				$cadenaSql .= " id_pais_nacimiento = " . " " . $variable ['id_pais_nacimiento'] . ",";
+				$cadenaSql .= " id_nucleo_basico = " . " " . $variable ['id_nucleo_basico'] . ",";
 				$cadenaSql .= " perfil = " . " " . $variable ['id_perfil'] . ",";
-				$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
-				$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
+				if($variable ['id_perfil'] == 18 || $variable ['id_perfil'] == 22){
+					$cadenaSql .= " profesion = null,";
+					$cadenaSql .= " especialidad = null,";
+				}else if($variable ['id_perfil'] == 19 || $variable ['id_perfil'] == 20){
+					$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
+					$cadenaSql .= " especialidad = null,";
+				}else{
+					$cadenaSql .= " profesion = " . " '" . $variable ['profesion'] . "',";
+					$cadenaSql .= " especialidad = " . " '" . $variable ['especialidad'] . "',";
+				}
+				
 				if($variable ['monto_capital_autorizado'] != null){
 						$cadenaSql .= " monto_capital_autorizado = " . " " . $variable ['monto_capital_autorizado'] . ",";
 				}
-				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "'";
+				$cadenaSql .= " genero = " . " '" . $variable ['genero'] . "',";
+				
+				//*************************************************************
+				if($variable ['grupoEtnico'] != null){
+					$cadenaSql .= " grupo_etnico =" . " '" . $variable ['grupoEtnico'] . "',";
+				}
+				$cadenaSql .= " comunidad_lgbt =" . " " . $variable ['comunidadLGBT'] . ",";
+				$cadenaSql .= " cabeza_familia =" . " " . $variable ['cabezaFamilia'] . ",";
+				$cadenaSql .= " personas_a_cargo =" . " " . $variable ['personasCargo'] . ",";
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " numero_personas_a_cargo =" . " " . $variable ['numeroPersonasCargo'] . ",";
+				}else{
+					$cadenaSql .= " numero_personas_a_cargo = null,";
+				}
+				$cadenaSql .= " estado_civil =" . " '" . $variable ['estadoCivil'] . "',";
+				if($variable ['discapacidad'] == 'TRUE'){
+					$cadenaSql .= " tipo_discapacidad =" . " '" . $variable ['tipoDiscapacidad'] . "',";
+				}else{
+					$cadenaSql .= " tipo_discapacidad = null,";
+				}
+				$cadenaSql .= " discapacitado =" . " " . $variable ['discapacidad'] . ",";
+				//************************************************************************************BENEFICIOS Tributar
+				$cadenaSql .= " medicina_prepagada =" . " " . $variable ['medicina_prepagada'] . ",";
+				if($variable ['medicina_prepagada'] == 'TRUE'){
+					$cadenaSql .= " valor_uvt_prepagada =" . " " . $variable ['valor_uvt_prepagada'] . ",";
+				}else{
+					$cadenaSql .= " valor_uvt_prepagada = null, ";
+				}
+				$cadenaSql .= " cuenta_ahorro_afc =" . " " . $variable ['cuenta_ahorro_afc'] . ",";
+				if($variable ['cuenta_ahorro_afc'] == 'TRUE'){
+					$cadenaSql .= " num_cuenta_bancaria_afc =" . " '" . $variable ['num_cuenta_bancaria_afc'] . "',";
+					$cadenaSql .= " id_entidad_bancaria_afc =" . " " . $variable ['id_entidad_bancaria_afc'] . ",";
+					$cadenaSql .= " interes_vivienda_afc =" . " " . $variable ['interes_vivienda_afc'] . ",";
+				}else{
+					$cadenaSql .= " num_cuenta_bancaria_afc = null, ";
+					$cadenaSql .= " id_entidad_bancaria_afc = null, ";
+					$cadenaSql .= " interes_vivienda_afc = null, ";
+				}
+				if($variable ['personasCargo'] == 'TRUE'){
+					$cadenaSql .= " dependiente_hijo_menor_edad =" . " " . $variable ['dependiente_hijo_menor_edad'] . ",";
+					$cadenaSql .= " dependiente_hijo_menos23_estudiando =" . " " . $variable ['dependiente_hijo_menos23_estudiando'] . ",";
+					$cadenaSql .= " dependiente_hijo_mas23_discapacitado =" . " " . $variable ['dependiente_hijo_mas23_discapacitado'] . ",";
+					$cadenaSql .= " dependiente_conyuge =" . " " . $variable ['dependiente_conyuge'] . ",";
+					$cadenaSql .= " dependiente_padre_o_hermano =" . " " . $variable ['dependiente_padre_o_hermano'] . ",";
+				}else{
+					$cadenaSql .= " dependiente_hijo_menor_edad = FALSE, ";
+					$cadenaSql .= " dependiente_hijo_menos23_estudiando = FALSE, ";
+					$cadenaSql .= " dependiente_hijo_mas23_discapacitado = FALSE, ";
+					$cadenaSql .= " dependiente_conyuge = FALSE, ";
+					$cadenaSql .= " dependiente_padre_o_hermano = FALSE, ";
+				}
+				$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " WHERE num_documento_persona = ";
 				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
 				break;
@@ -405,7 +586,7 @@ class Sql extends \Sql {
 				/* INSERTAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'insertarInformacionProveedorXRepresentante' :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " id_proveedor,";
 				$cadenaSql .= " id_representante,";
@@ -425,7 +606,7 @@ class Sql extends \Sql {
 				/* REGISTRAR DATOS - USUARIO JURIDICA */
 			case "registrarProveedorJuridica" :
 				$cadenaSql = " INSERT INTO ";
-				$cadenaSql .= "proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " (";
 				$cadenaSql.=" num_nit_empresa, ";
 				$cadenaSql.=" digito_verificacion, ";
@@ -435,7 +616,9 @@ class Sql extends \Sql {
 					$cadenaSql.=" procedencia_empresa, ";
 					$cadenaSql.=" id_ciudad_origen, ";
 					$cadenaSql.=" codigo_pais_dian, ";
-					$cadenaSql.=" codigo_postal, ";
+				    if($variable ['codigo_postal'] != null){
+				    	$cadenaSql.=" codigo_postal, ";
+					}
 					$cadenaSql.=" tipo_identificacion_extranjera, ";
 					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
 						$cadenaSql.=" num_pasaporte, ";
@@ -466,7 +649,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " '" . $variable ['procedencia_empresa'] . "',";
 					$cadenaSql .= " " . $variable ['id_ciudad_origen'] . ",";
 					$cadenaSql .= " " . $variable ['codigo_pais_dian'] . ",";
-					$cadenaSql .= " " . $variable ['codigo_postal'] . ",";
+					if($variable ['codigo_postal'] != null){
+						$cadenaSql .= " " . $variable ['codigo_postal'] . ",";
+					}
 					$cadenaSql .= " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE'){
 						$cadenaSql .= " " . $variable ['num_pasaporte'] . ",";
@@ -497,7 +682,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " telefono_contacto,";
 				$cadenaSql .= " correo_representante";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable . "' ";
 				break;
@@ -526,7 +711,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " genero, ";
 				$cadenaSql .= " nom_proveedor";
 				$cadenaSql .= " FROM";
-				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " WHERE num_nit_empresa = ";
 				$cadenaSql .= "'" . $variable . "' ";
 				break;
@@ -534,7 +719,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR - PROVEEEDOR DATOS X TELEFONO */
 			case 'actualizarInformacionProveedorXRepresentante' :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= "proveedor.proveedor_representante_legal ";
+				$cadenaSql .= " agora.proveedor_representante_legal ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " telefono_contacto = " . $variable ['tel_Repre'] . ", ";
 				$cadenaSql .= " correo_representante = " . " '" . $variable ['correo_Repre'] . "' ";
@@ -547,7 +732,7 @@ class Sql extends \Sql {
 				/* ACTUALIZAR DATOS - USUARIO JURIDICA */
 			case "actualizarProveedorJuridica" :
 				$cadenaSql = " UPDATE ";
-				$cadenaSql .= " proveedor.informacion_persona_juridica ";
+				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " num_nit_empresa = " . " " . $variable ['fki_numero_documento'] . ",";
 				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
@@ -557,7 +742,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
 					$cadenaSql .= " id_ciudad_origen = " . " " . $variable ['id_ciudad_origen'] . ",";
 					$cadenaSql .= " codigo_pais_dian = " . " " . $variable ['codigo_pais_dian'] . ",";
-					$cadenaSql .= " codigo_postal = " . " " . $variable ['codigo_postal'] . ",";
+					if($variable ['codigo_postal'] != null){
+						$cadenaSql .= " codigo_postal = " . " " . $variable ['codigo_postal'] . ",";
+					}
 					$cadenaSql .= " tipo_identificacion_extranjera = " . " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
 						$cadenaSql .= " num_pasaporte = " . " " . $variable ['num_pasaporte'] . ",";
@@ -607,7 +794,7 @@ class Sql extends \Sql {
 
 			/* ACTUALIZAR - PROVEEEDOR DATOS */			
 				case 'actualizarRUT' :
-					$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+					$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
 					$cadenaSql .= "anexorut='" . $variable ['destino'] . "'";
 					$cadenaSql .= " WHERE id_proveedor = ";
 					$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
@@ -622,7 +809,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" id_proveedor,";
                     $cadenaSql.=" estado";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" agora.informacion_proveedor ";
 					$cadenaSql.=" WHERE num_documento = " . $variable;	
 					break; 
                                     
@@ -647,38 +834,9 @@ class Sql extends \Sql {
 					$cadenaSql.=" P.fecha_registro,";
 					$cadenaSql.=" P.fecha_ultima_modificacion,";
 					$cadenaSql.=" P.estado";
-					
-					
-					//$cadenaSql.=" P.digito_verificacion,";
-					
-					//$cadenaSql.=" P.id_pais_origen,";
-					                                       
-// 					$cadenaSql.=" P.telefono,";
-// 					$cadenaSql.=" P.ext1,";
-// 					$cadenaSql.=" P.movil,";
-                                      
-// 					$cadenaSql.=" P.tipodocumento,";
-// 					$cadenaSql.=" P.numdocumento,";
-// 					$cadenaSql.=" P.primerapellido,";
-// 					$cadenaSql.=" P.segundoapellido,";                                        
-// 					$cadenaSql.=" P.primernombre,";
-// 					$cadenaSql.=" P.segundonombre,";
-					
-					//$cadenaSql.=" P.regimen,";
-					//$cadenaSql.=" P.importacion,";                                        
-					//$cadenaSql.=" P.pyme,";
-					//$cadenaSql.=" P.registro_mercantil,";
-					
-					//$cadenaSql.=" P.tipo_procedencia,";
-// 					$cadenaSql.=" P.pais,";
-// 					$cadenaSql.=" P.codigo_pais,";
-// 					$cadenaSql.=" P.codigo_postal,";
-					//$cadenaSql.=" P.tipo_doc_extranjero,";
-					//$cadenaSql.=" P.num_cedula_extranjeria,";
-					//$cadenaSql.=" P.num_pasaporte";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
+					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.num_documento::text = U.usuario";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break;
 					
@@ -697,7 +855,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " t2.usuario,";
 				$cadenaSql .= " t2.id_usuario ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor t1";
+				$cadenaSql .= " agora.informacion_proveedor t1";
 				$cadenaSql .= " INNER JOIN prov_usuario t2 ON t1.num_documento::varchar = t2.usuario";
 				$cadenaSql .= " WHERE t2.id_usuario = " . $variable . ";";
 				break;
@@ -714,8 +872,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " C.estado";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" prov_usuario U";
-					$cadenaSql.=" JOIN proveedor.informacion_proveedor P ON P.num_documento::text = U.usuario";
-					$cadenaSql.=" JOIN proveedor.contrato C ON C.id_proveedor = P.id_proveedor";
+					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.num_documento::text = U.usuario";
+					$cadenaSql.=" JOIN agora.contrato C ON C.id_proveedor = P.id_proveedor";
 					$cadenaSql.=" WHERE id_usuario = '" . $variable . "'";
 					break; 					
          
@@ -725,7 +883,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" num_documento,";
 					$cadenaSql.=" nom_proveedor";
 					$cadenaSql.=" FROM ";
-					$cadenaSql.=" proveedor.informacion_proveedor ";
+					$cadenaSql.=" agora.informacion_proveedor ";
 					$cadenaSql.=" WHERE num_documento = '" . $variable . "'";
 					break;
 				
@@ -748,7 +906,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'abreviatura as ABREVIATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'agora.nomenclatura_dian ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
@@ -758,7 +916,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.nomenclatura_dian ';
+				$cadenaSql .= 'agora.nomenclatura_dian ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
 				break;
 			
@@ -768,7 +926,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre_pais as NOMBRE, ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
 				break;
 					
@@ -777,7 +935,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_codigo,";
 				$cadenaSql .= "	nombre_banco";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.banco";
+				$cadenaSql .= " agora.banco";
 				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 				$cadenaSql .= " ORDER BY nombre_banco";
 				break;
@@ -787,7 +945,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_conformacion,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.tipo_conformacion";
+				$cadenaSql .= " agora.tipo_conformacion";
 				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -798,7 +956,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_division,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_division";
+				$cadenaSql .= " agora.ciiu_division";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
 			
@@ -807,7 +965,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_clase,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_clase";
+				$cadenaSql .= " agora.ciiu_clase";
 				$cadenaSql .= " WHERE division ='" . $variable . "'";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -817,7 +975,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_subclase,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " parametro.ciiu_subclase";
+				$cadenaSql .= " agora.ciiu_subclase";
 				$cadenaSql .= " WHERE clase ='" . $variable . "'";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
@@ -829,7 +987,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre_pais as NOMBRE, ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais != 112 ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -840,7 +998,7 @@ class Sql extends \Sql {
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'id_pais as ID_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_departamento = ' . $variable . ' ;';
 				break;
@@ -850,7 +1008,7 @@ class Sql extends \Sql {
 				$cadenaSql = 'SELECT ';
 				$cadenaSql .= 'codigo_pais as COD_PAIS ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.pais ';
+				$cadenaSql .= 'agora.pais ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = ' . $variable . ' ;';
 				break;
@@ -861,7 +1019,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'nombre as NOMBRE, ';
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'agora.ciudad ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_ciudad = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE;';
@@ -873,7 +1031,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
 				$cadenaSql .= 'nombre as NOMBRE ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = 112 ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -885,7 +1043,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_departamento as ID_DEPARTAMENTO, ';
 				$cadenaSql .= 'nombre as NOMBRE ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.departamento ';
+				$cadenaSql .= 'agora.departamento ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_pais = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -897,7 +1055,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_ciudad as ID_CIUDAD, ';
 				$cadenaSql .= 'nombre as NOMBRECIUDAD ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.ciudad ';
+				$cadenaSql .= 'agora.ciudad ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_departamento = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMBRE';
@@ -909,10 +1067,43 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
 				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'parametro.parametro_estandar ';
+				$cadenaSql .= 'agora.parametro_estandar ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'valor_parametro != \'NIT\' ';
 				$cadenaSql .= 'AND clase_parametro = \'Tipo Documento\';';
+				break;
+				
+			case 'consultarGrupoEtnico' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Tipo Etnia\';';
+				break;
+				
+			case 'consultarTipoEstadoCivil' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Estado Civil\';';
+				break;
+				
+			case 'consultarTipoDiscapacidad' :
+				
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'id_parametro as ID_PARAMETRO, ';
+				$cadenaSql .= 'INITCAP(LOWER(valor_parametro)) as VALOR_TIPO ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_estandar ';
+				$cadenaSql .= 'WHERE ';
+				$cadenaSql .= 'clase_parametro = \'Tipo Discapacidad\';';
 				break;
 
 		}

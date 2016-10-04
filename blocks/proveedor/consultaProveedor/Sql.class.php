@@ -31,13 +31,13 @@ class Sql extends \Sql {
 			
 			case "buscarProveedoresFiltro" :
 				$cadenaSql = " SELECT DISTINCT num_documento||' - ('||nom_proveedor||')' AS  value, num_documento AS data  ";
-				$cadenaSql .= " FROM proveedor.informacion_proveedor ";
+				$cadenaSql .= " FROM agora.informacion_proveedor ";
 				$cadenaSql .= " WHERE cast(num_documento as text) LIKE '%$variable%' OR nom_proveedor LIKE '%$variable%' LIMIT 10; ";
 				break;
 			
 			/* ACTUALIZAR - PROVEEEDOR ESTADO INHABILITADO */			
 				case 'actualizarProveedor' :
-					$cadenaSql = "UPDATE proveedor.informacion_proveedor SET ";
+					$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
 					$cadenaSql .= " estado='" . $variable ['estado'] . "',";
 					$cadenaSql .= " fecha_ultima_modificacion='" . $variable ['fecha_modificacion'] . "'";
 					$cadenaSql .= " WHERE id_proveedor=";
@@ -46,7 +46,7 @@ class Sql extends \Sql {
 					
 			/* REGISTRAR INHABILIDAD */
 				case "ingresarInhabilidad" :
-					$cadenaSql=" INSERT INTO proveedor.inhabilidad";
+					$cadenaSql=" INSERT INTO agora.inhabilidad";
 					$cadenaSql.=" (";					
 					$cadenaSql.=" id_proveedor,";
 					$cadenaSql.=" tipo_inhabilidad,";
@@ -75,7 +75,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " puntaje_evaluacion, ";
 					$cadenaSql .= " clasificacion_evaluacion  ";				
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.informacion_proveedor";
+					$cadenaSql .= " agora.informacion_proveedor";
 					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
 					break;
 				
@@ -106,7 +106,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " clasificacion_evaluacion, ";
 					$cadenaSql .= " estado  ";				
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " proveedor.informacion_proveedor";
+					$cadenaSql .= " agora.informacion_proveedor";
 					$cadenaSql .= " WHERE 1=1 ";
 					if ($variable [0] != '') {
 						$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
@@ -128,9 +128,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
@@ -147,9 +147,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " T.extension,  ";
 				$cadenaSql .= " P.estado  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " proveedor.informacion_proveedor P ";
-				$cadenaSql .= " JOIN proveedor.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN proveedor.telefono T ON C.id_telefono = T.id_telefono ";
+				$cadenaSql .= " agora.informacion_proveedor P ";
+				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
 				$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";

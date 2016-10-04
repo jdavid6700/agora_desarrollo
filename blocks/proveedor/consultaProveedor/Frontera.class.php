@@ -55,6 +55,7 @@ class Frontera {
 
         $this->ruta = $this->miConfigurador->getVariableConfiguracion("rutaBloque");
         $this->miFormulario = new \FormularioHtml();
+		
 
 
         if (isset($_REQUEST['opcion'])) {
@@ -71,7 +72,7 @@ class Frontera {
 					
                  case "inhabilidad":
                      include_once($this->ruta . "/formulario/inhabilidad.php");
-                    break;					
+                    break;
                 
             }
         } else {

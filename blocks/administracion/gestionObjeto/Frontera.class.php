@@ -66,10 +66,32 @@ class Frontera {
                 case "consultar":
                     include_once($this->ruta . "/formulario/consultar.php");
                     break;
+                    
+				case "actividad" :
+					
+					if (isset ( $_REQUEST ["terminar"] ) && $_REQUEST ["terminar"] == 'true') {
+						include_once($this->ruta . "/formulario/solicitudCotizacion.php");
+					}else{
+						include_once ($this->ruta . "/formulario/formActividad.php");
+					}
+					
+					break;
                 
                 case "nuevo":
                      include_once($this->ruta . "/formulario/formulario.php");
                     break;
+          
+                case "nuevoRelacionar":
+                  	include_once($this->ruta . "/formulario/tabs/tabRegistrar.php");
+                   	break;
+                    
+				case "nuevoRelacionada" ://Reestructuración a Corto Plazo
+					include_once ($this->ruta . "/formulario/tabs/tabConsultar.php");
+					break;
+					
+				case "nuevoCotizacion" ://Reestructuración a Corto Plazo
+					include_once ($this->ruta . "/formulario/tabs/tabCotizacion.php");
+					break;
 					
                 case "cotizacion":
                      include_once($this->ruta . "/formulario/solicitudCotizacion.php");
@@ -78,6 +100,38 @@ class Frontera {
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
+                    
+				case "verSolicitud" :
+					include_once ($this->ruta . "/formulario/verSolicitud.php");
+					break;
+				
+				case "modificarSolicitud" :
+					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
+					break;
+					
+				case "modificarSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
+					break;
+					
+				case "verSolicitudRelacionada" :
+					include_once ($this->ruta . "/formulario/verSolicitudRelacionada.php");
+					break;
+					
+				case "cotizarSolicitud" :
+					include_once ($this->ruta . "/formulario/solicitudCotizacion.php");
+					break;
+					
+				case "verCotizacionSolicitud" :
+					include_once ($this->ruta . "/formulario/infoCotizacion.php");
+					break;
+					
+				case "resultadoCotizacion" :
+					include_once ($this->ruta . "/formulario/resultadoCotizacion.php");
+					break;
+					
+				case "verCotizacionProveedor" :
+					include_once ($this->ruta . "/formulario/verCotizacion.php");
+					break;
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";

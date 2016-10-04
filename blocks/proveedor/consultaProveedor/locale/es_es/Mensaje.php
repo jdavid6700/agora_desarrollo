@@ -1,6 +1,6 @@
 <?php
 
-$this->idioma["tabConsultarProveedor"] = "Consultar Infomación del Proveedor";
+$this->idioma["tabConsultarProveedor"] = "Inhabilitar Proveedor";
 
 $this->idioma["marcoSearchByNIT"]="Ingresar NIT/Cédula o Nombre del proveedor";
 $this->idioma["marcoSearchByName"]="Ingresar nombre empresa del proveedor";
