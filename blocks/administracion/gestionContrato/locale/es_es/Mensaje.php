@@ -44,10 +44,10 @@ $this->idioma["docSupervisor"] = "Identificación Supervisor :";
 $this->idioma["docSupervisorTitulo"]="Identificación Supervisor";
 
 
-$this->idioma["fechaInicio"] = "Fecha Inicio (Si está Disponible) :";
-$this->idioma["fechaInicioTitulo"]="Fecha Inicio (Si está Disponible)";
-$this->idioma["fechaFinal"] = "Fecha Final (Si está Disponible) :";
-$this->idioma["fechaFinalTitulo"]="Fecha Final (Si está Disponible)";
+$this->idioma["fechaInicio"] = "Fecha Inicio :";
+$this->idioma["fechaInicioTitulo"]="Fecha Inicio ";
+$this->idioma["fechaFinal"] = "Fecha Final :";
+$this->idioma["fechaFinalTitulo"]="Fecha Final ";
 
 $this->idioma["divisionCIIU"] = "División :";
 $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
@@ -65,7 +65,18 @@ $this->idioma["dependencia"] = "Dependencia :";
 $this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
 
 $this->idioma["numCDP"] = "No. CDP :";
-$this->idioma["numCDPTitulo"] = "Indicar número de CDP";
+
+$this->idioma["numRP"] = "No. RP :";
+
+$this->idioma["fechaNumCDP"] = "Fecha (CDP) :";
+
+$this->idioma["fechaNumRP"] = "Fecha (RP) :";
+
+$this->idioma["tipoControl"] = "Tipo de Control :";
+
+$this->idioma["formaPago"] = "Forma de Pago :";
+
+$this->idioma["descripcionPago"] = "Descripción Forma de Pago :";
 
 $this->idioma["unidad"] = "Unidad de Medida:";
 $this->idioma["unidadTitulo"]="Seleccionar unidad";
@@ -94,8 +105,8 @@ $this->idioma["plazo"] = "Plazo de Ejecución :";
 $this->idioma["plazoTitulo"]="Plazo de Ejecución";
 $this->idioma["tipoContratacion"] = "Tipo de Contratación :";
 $this->idioma["tipoContratacionTitulo"]="Tipo de Contratación";
-$this->idioma["valorContratacion"] = "Valor para Contratación :";
-$this->idioma["valorContratacionTitulo"]="Valor para Contratación";
+$this->idioma["valorContratacion"] = "Valor Contrato :";
+$this->idioma["valorContratacionTitulo"]="Valor Contrato";
 $this->idioma["condiciones"] = "Condiciones :";
 $this->idioma["condicionesTitulo"]="Condiciones";
 $this->idioma["dependenciaDestino"] = "Dependencia Destino :";

@@ -82,6 +82,33 @@ class Sql extends \Sql {
 				$cadenaSql .= " vigencia = " . $variable ['vigencia'] . "";
 				$cadenaSql .= " AND numero_contrato = " . $variable ['numero_contrato'] . ";";
 				break;
+				
+			case "consultarNovedadesContrato" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql.=" NC.id as id_novedad,";
+				$cadenaSql.=" P.descripcion as tipo_novedad,";
+				$cadenaSql.=" NC.numero_contrato as numero_contrato,";
+				$cadenaSql.=" NC.vigencia as vigencia,";
+				$cadenaSql.=" NC.estado as estado,";
+				$cadenaSql.=" NC.fecha_registro as fecha_registro,";
+				$cadenaSql.=" NC.usuario as usuario,";
+				$cadenaSql.=" NC.acto_administrativo as acto_administrativo,";
+				$cadenaSql.=" NC.descripcion as descripcion ";
+				$cadenaSql.=" FROM contractual.novedad_contractual NC";
+				$cadenaSql.=" JOIN contractual.parametros P ON P.id_parametro = NC.tipo_novedad";
+				$cadenaSql.= " WHERE ";
+				$cadenaSql.= " vigencia = " . $variable ['vigencia'] . "";
+				$cadenaSql.= " AND numero_contrato = '" . $variable ['num_contrato'] . "';";
+				break;
+				
+			case "consultarActaInicio" :
+				$cadenaSql = "SELECT *";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " contractual.acta_inicio";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " vigencia = " . $variable ['vigencia'] . "";
+				$cadenaSql .= " AND numero_contrato = '" . $variable ['num_contrato'] . "';";
+				break;
 			
 			/* CONSULTAR siCapital */
 			case "listaSolicitudNecesidad" :
@@ -196,9 +223,9 @@ class Sql extends \Sql {
 				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
 				$cadenaSql.=" CG.vigencia as vigencia, ";
 				$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
-				$cadenaSql.=" CG.objeto_contrato as objeto_contrato,";
+				$cadenaSql.=" upper(CG.objeto_contrato) as objeto_contrato,";
 				$cadenaSql.=" cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
-				$cadenaSql.=" FP.descripcion as forma_pago,";
+				$cadenaSql.=" upper(FP.descripcion) as forma_pago,";
 				$cadenaSql.=" OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
 				$cadenaSql.=" OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
 				$cadenaSql.=" OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
@@ -206,16 +233,17 @@ class Sql extends \Sql {
 				$cadenaSql.=" CG.supervisor as identificacion_supervisor,";
 				$cadenaSql.=" CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql.=" CG.numero_cdp as numero_cdp,";
+				$cadenaSql.=" CG.resgistro_presupuestal as numero_rp,";
 				$cadenaSql.=" CG.contratista as identificacion_contratista,";
 				$cadenaSql.=" CG.convenio as convenio,";
 				//$cadenaSql.=" CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql.=" CG.valor_contrato as valor_contrato,";
-				$cadenaSql.=" CG.justificacion as justificacion,";
-				$cadenaSql.=" CG.condiciones as condiciones,";
-				$cadenaSql.=" CG.descripcion_forma_pago as descripcion_forma_pago,";
+				$cadenaSql.=" upper(CG.justificacion) as justificacion,";
+				$cadenaSql.=" upper(CG.condiciones) as condiciones,";
+				$cadenaSql.=" upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
 				$cadenaSql.=" CG.fecha_registro as fecha_registro,";
 				$cadenaSql.=" CC.descripcion as clase_contratista, ";
-				$cadenaSql.=" TC.descripcion as tipo_control";
+				$cadenaSql.=" upper(TC.descripcion) as tipo_control";
 				$cadenaSql.=" FROM contractual.contrato_general CG";
 				$cadenaSql.=" JOIN contractual.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
 				$cadenaSql.=" JOIN contractual.parametros FP ON FP.id_parametro = CG.forma_pago";
@@ -233,9 +261,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.numero_contrato as numero_contrato,";
 				$cadenaSql .= " CG.vigencia as vigencia, ";
 				$cadenaSql .= " CG.unidad_ejecutora as unidad_ejecutora, ";
-				$cadenaSql .= " CG.objeto_contrato as objeto_contrato,";
+				$cadenaSql .= " upper(CG.objeto_contrato) as objeto_contrato,";
 				$cadenaSql .= " cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
-				$cadenaSql .= " FP.descripcion as forma_pago,";
+				$cadenaSql .= " upper(FP.descripcion) as forma_pago,";
 				$cadenaSql .= " OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
 				$cadenaSql .= " OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
 				$cadenaSql .= " OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
@@ -243,16 +271,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.supervisor as identificacion_supervisor,";
 				$cadenaSql .= " CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql .= " CG.numero_cdp as numero_cdp,";
+				$cadenaSql .= " CG.resgistro_presupuestal as numero_rp,";
 				$cadenaSql .= " CG.contratista as identificacion_contratista,";
 				$cadenaSql .= " CG.convenio as convenio,";
 				//$cadenaSql .= " CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql .= " CG.valor_contrato as valor_contrato,";
-				$cadenaSql .= " CG.justificacion as justificacion,";
-				$cadenaSql .= " CG.condiciones as condiciones,";
-				$cadenaSql .= " CG.descripcion_forma_pago as descripcion_forma_pago,";
+				$cadenaSql .= " upper(CG.justificacion) as justificacion,";
+				$cadenaSql .= " upper(CG.condiciones) as condiciones,";
+				$cadenaSql .= " upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
 				$cadenaSql .= " CG.fecha_registro as fecha_registro,";
 				$cadenaSql .= " CC.descripcion as clase_contratista, ";
-				$cadenaSql .= " TC.descripcion as tipo_control";
+				$cadenaSql .= " upper(TC.descripcion) as tipo_control";
 				$cadenaSql .= " FROM contractual.contrato_general CG";
 				$cadenaSql .= " JOIN contractual.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
 				$cadenaSql .= " JOIN contractual.parametros FP ON FP.id_parametro = CG.forma_pago";
@@ -270,9 +299,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.numero_contrato as numero_contrato,";
 				$cadenaSql .= " CG.vigencia as vigencia, ";
 				$cadenaSql .= " CG.unidad_ejecutora as unidad_ejecutora, ";
-				$cadenaSql .= " CG.objeto_contrato as objeto_contrato,";
+				$cadenaSql .= " upper(CG.objeto_contrato) as objeto_contrato,";
 				$cadenaSql .= " cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
-				$cadenaSql .= " FP.descripcion as forma_pago,";
+				$cadenaSql .= " upper(FP.descripcion) as forma_pago,";
 				$cadenaSql .= " OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
 				$cadenaSql .= " OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
 				$cadenaSql .= " OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
@@ -280,16 +309,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.supervisor as identificacion_supervisor,";
 				$cadenaSql .= " CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
 				$cadenaSql .= " CG.numero_cdp as numero_cdp,";
+				$cadenaSql .= " CG.resgistro_presupuestal as numero_rp,";
 				$cadenaSql .= " CG.contratista as identificacion_contratista,";
 				$cadenaSql .= " CG.convenio as convenio,";
 				//$cadenaSql .= " CG.id_sociedad_temporal as identificacion_sociedad_temporal,";
 				$cadenaSql .= " CG.valor_contrato as valor_contrato,";
-				$cadenaSql .= " CG.justificacion as justificacion,";
-				$cadenaSql .= " CG.condiciones as condiciones,";
-				$cadenaSql .= " CG.descripcion_forma_pago as descripcion_forma_pago,";
+				$cadenaSql .= " upper(CG.justificacion) as justificacion,";
+				$cadenaSql .= " upper(CG.condiciones) as condiciones,";
+				$cadenaSql .= " upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
 				$cadenaSql .= " CG.fecha_registro as fecha_registro,";
 				$cadenaSql .= " CC.descripcion as clase_contratista, ";
-				$cadenaSql .= " TC.descripcion as tipo_control";
+				$cadenaSql .= " upper(TC.descripcion) as tipo_control";
 				$cadenaSql .= " FROM contractual.contrato_general CG";
 				$cadenaSql .= " JOIN contractual.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
 				$cadenaSql .= " JOIN contractual.parametros FP ON FP.id_parametro = CG.forma_pago";
@@ -332,6 +362,31 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND P.VIGENCIA = " . $variable['vigencia'];
 				$cadenaSql .= " AND P.CODIGO_UNIDAD_EJECUTORA = " . $variable ['unidadEjecutora'];
 				break;
+				
+				
+			case "informacionCDP" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" * ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" PR.PR_DISPONIBILIDADES";
+				$cadenaSql.=" WHERE";
+				$cadenaSql.=" VIGENCIA = " . $variable['vigencia'];
+				$cadenaSql.=" AND CODIGO_UNIDAD_EJECUTORA = " . $variable ['unidadEjecutora'];
+				$cadenaSql.=" AND NUMERO_DISPONIBILIDAD = " . $variable ['numeroDisponibilidad'];
+				break;
+				
+				
+			case "informacionRP" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " PR.PR_REGISTRO_PRESUPUESTAL";
+				$cadenaSql .= " WHERE";
+				$cadenaSql .= " VIGENCIA = " . $variable ['vigencia'];
+				$cadenaSql .= " AND CODIGO_UNIDAD_EJECUTORA = " . $variable ['unidadEjecutora'];
+				$cadenaSql .= " AND NUMERO_DISPONIBILIDAD = " . $variable ['numeroRegistroPresupuestal'];
+				break;
+				
 			
 			case "listarObjetosSinCotizacionXVigencia" :
 				$cadenaSql=" SELECT ";
