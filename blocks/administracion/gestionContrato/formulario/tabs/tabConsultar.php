@@ -274,7 +274,7 @@ class Formulario {
 				
 				
 			$variableViewCon = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableViewCon .= "&opcion=verSolicitud";
+			$variableViewCon .= "&opcion=verSolicitudRelacionada";
 			$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableViewCon .= "&vigencia=" . $dato['vigencia'];
 			$variableViewCon .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
@@ -315,6 +315,12 @@ class Formulario {
 				$tipoSoc = "INDIVIDUAL";
 				//$dato['identificacion_contratista'] = $dato['convenio'];
 			}
+			
+			if(strtoupper ( $estadoCont[0]['estado'] ) == 'CREADO'){
+				$estadoContrato = 'RELACIONADO';
+			}else{
+				$estadoContrato = strtoupper ( $estadoCont[0]['estado'] );
+			}
 		
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['numero_contrato'] . "</center></td>
@@ -328,7 +334,7 @@ class Formulario {
 						<td><center>" . $dato['nombre_ordenador_gasto'] . "</center></td>
 						<td><center>" . $dato['identificacion_supervisor'] . "</center></td>
 						<td><center>" . $dato['fecha_registro'] . "</center></td>
-						<td><center>" . strtoupper ( $estadoCont[0]['estado'] ) . "</center></td>
+						<td><center>" . $estadoContrato . "</center></td>
 						<td><center>
 							<a href='" . $variableView . "'>
 								<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
