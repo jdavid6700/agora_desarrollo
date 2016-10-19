@@ -450,7 +450,7 @@ class Formulario {
 						'primer_nombre' => $_REQUEST['primerNombreNat'],
 						'segundo_nombre' => $_REQUEST['segundoNombreNat'],
 						'genero' => $_REQUEST['generoNat'],
-						'cargo' => $_REQUEST['cargoNat'],
+						'cargo' => null,
 						'id_pais_nacimiento' => $_REQUEST['paisNacimientoNat'],
 						'id_perfil' => $_REQUEST['perfilNat'],
 						'id_nucleo_basico' => $_REQUEST['personaNaturalNBC'],
@@ -476,7 +476,10 @@ class Formulario {
 						'dependiente_hijo_menos23_estudiando' => $_REQUEST ['hijosMayoresEdadEstudiandoNat'],
 						'dependiente_hijo_mas23_discapacitado' => $_REQUEST ['hijosMayoresEdadMas23Nat'],
 						'dependiente_conyuge' => $_REQUEST ['conyugeDependienteNat'],
-						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat']
+						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
+						'id_nit_eps' => $_REQUEST ['afiliacionEPSNat'],
+						'id_nit_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
+						'id_nit_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
 				);
 				
 				
