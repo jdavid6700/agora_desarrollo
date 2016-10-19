@@ -29,6 +29,14 @@ $(function() {
 // Asociar el widget de validación al formulario
 
 /////////Se define el ancho de los campos de listas desplegables///////
+$('#<?php echo $this->campoSeguro('afiliacionEPSNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('afiliacionEPSNat')?>").select2();
+$('#<?php echo $this->campoSeguro('afiliacionPensionNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('afiliacionPensionNat')?>").select2();
+$('#<?php echo $this->campoSeguro('afiliacionCajaNat')?>').width(300);
+$("#<?php echo $this->campoSeguro('afiliacionCajaNat')?>").select2();
+
+
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);

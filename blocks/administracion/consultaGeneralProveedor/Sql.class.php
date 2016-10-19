@@ -27,6 +27,40 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+		
+			case "consultarEPS" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " nit,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.eps";
+				$cadenaSql .= " WHERE estado != 'Inactivo' ";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+			case "consultarFondoPension" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " nit,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.fondo_pension";
+				$cadenaSql .= " WHERE estado != 'Inactivo' ";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+					
+			case "consultarCaja" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " nit,";
+				$cadenaSql .= "	nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.caja_compensacion";
+				$cadenaSql .= " WHERE estado != 'Inactivo' ";
+				$cadenaSql .= " ORDER BY nombre";
+				break;
+				
+				
+				
+				
+			
 			
 			
 			case "buscarProveedoresFiltro" :
@@ -510,6 +544,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " dependiente_hijo_mas23_discapacitado,";
 					$cadenaSql .= " dependiente_conyuge,";
 					$cadenaSql .= " dependiente_padre_o_hermano,";
+					$cadenaSql .= " id_nit_eps,";
+					$cadenaSql .= " id_nit_fondo_pension,";
+					$cadenaSql .= " id_nit_caja_compensacion,";
 					$cadenaSql .= " declarante_renta";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.informacion_persona_natural";
@@ -635,6 +672,9 @@ class Sql extends \Sql {
 						$cadenaSql .= " dependiente_conyuge = FALSE, ";
 						$cadenaSql .= " dependiente_padre_o_hermano = FALSE, ";
 					}
+					$cadenaSql .= " id_nit_eps = " . " " . $variable ['id_nit_eps'] . ",";
+					$cadenaSql .= " id_nit_fondo_pension = " . " " . $variable ['id_nit_fondo_pension'] . ",";
+					$cadenaSql .= " id_nit_caja_compensacion = " . " " . $variable ['id_nit_caja_compensacion'] . ",";
 					$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 					$cadenaSql .= " WHERE num_documento_persona = ";
 					$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
