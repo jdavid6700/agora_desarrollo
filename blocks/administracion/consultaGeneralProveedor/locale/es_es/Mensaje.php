@@ -35,6 +35,15 @@ $this->idioma["descripcionTitulo"]="Digite la descripción";
 $this->idioma["noDefinido"] = "No definido";
 
 
+$this->idioma["marcoAfiliaciones"] = "Información de Afiliaciones";
+
+$this->idioma["afiliacionEPSNat"] = "Entidad de EPS : ";
+$this->idioma["afiliacionEPSTitulo"]="Digite la Entidad de EPS a la que este afliado";
+$this->idioma["afiliacionPensionNat"] = "Entidad de Fondo de Pension : ";
+$this->idioma["afiliacionPensionTitulo"]="Digite la Entidad de Fondo de Pension a la que este afliado";
+$this->idioma["afiliacionCajaNat"] = "Entidad de Caja de Compensación Familiar : ";
+$this->idioma["afiliacionCajaTitulo"]="Digite la Entidad de Caja de Compensacion a la que este afliado";
+
 
 
 //Formulario

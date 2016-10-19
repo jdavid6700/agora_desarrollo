@@ -195,6 +195,11 @@ class Formulario {
 				$_REQUEST ['conyugeDependienteNat'] = $resultadoPersonaNaturalInfo[0]['dependiente_conyuge'];
 				$_REQUEST ['padresHermanosDependienteNat'] = $resultadoPersonaNaturalInfo[0]['dependiente_padre_o_hermano'];
 				
+				
+				$_REQUEST ['afiliacionEPSNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_eps"];
+				$_REQUEST ['afiliacionPensionNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_fondo_pension"];
+				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_caja_compensacion"];
+				
 				if(isset($_REQUEST['perfilNat'])){//CAST
 					switch($_REQUEST['perfilNat']){
 						case 18 :
@@ -5639,6 +5644,123 @@ class Formulario {
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
 		
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				
+				$esteCampo = "marcoAfiliaciones";//Son CONSULTAS a Base de DATOS CENTRAL ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "afiliacionEPSNat";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 300;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarEPS" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "afiliacionPensionNat";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 300;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarFondoPension" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "afiliacionCajaNat";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 300;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarCaja" );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+				
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				
+				
+				
+				
+				
+				
 		
 				$esteCampo = "marcoFinanciero";
 				$atributos ['id'] = $esteCampo;
