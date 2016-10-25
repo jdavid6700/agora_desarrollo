@@ -75,7 +75,7 @@ class FormularioRegistro {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -833,10 +833,21 @@ class FormularioRegistro {
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto CANTIDAD--------------------------------------------------------
 		
+		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
-		/*
-		// ---------------- CONTROL: Lista division CIIU--------------------------------------------------------
-		$esteCampo = "divisionCIIU";
+		
+		
+		$esteCampo = "marcoTipoNecesidad";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+		
+		
+		
+		// ---------------- CONTROL: Lista UNIDAD --------------------------------------------------------
+		$esteCampo = "tipoNecesidad";
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['id'] = $esteCampo;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -844,114 +855,48 @@ class FormularioRegistro {
 		$atributos ['tab'] = $tab ++;
 		$atributos ['anchoEtiqueta'] = 200;
 		$atributos ['evento'] = '';
+		
+		if(isset($resultadoNecesidadRelacionada[0]['tipo_necesidad'])){//CAST tipo de NECESIDAD
+			switch($resultadoNecesidadRelacionada[0]['tipo_necesidad']){
+				case 'BIEN' :
+					$resultadoNecesidadRelacionada[0]['tipo_necesidad'] = 1;
+					break;
+				case 'SERVICIO' :
+					$resultadoNecesidadRelacionada[0]['tipo_necesidad'] = 2;
+					break;
+			}
+		}
+		
 		if (isset ( $estadoSolicitud )) {
-			$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_division'];
+			$atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
 		$atributos ['deshabilitado'] = false;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
-		$atributos ['ajax_function'] = "";
-		$atributos ['ajax_control'] = $esteCampo;
-		$atributos ['estilo'] = "jqueryui";
-		$atributos ['validar'] = "required";
-		$atributos ['limitar'] = false;
-		$atributos ['anchoCaja'] = 60;
-		$atributos ['miEvento'] = '';
-		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuDivision' );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		$atributos ['matrizItems'] = $matrizItems;
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		//echo $this->miFormulario->campoCuadroLista ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Lista division CIIU--------------------------------------------------------
-		
-		// ---------------- CONTROL: Lista grupo CIIU--------------------------------------------------------
-		$esteCampo = "grupoCIIU";
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['id'] = $esteCampo;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['tab'] = $tab ++;
-		$atributos ['anchoEtiqueta'] = 200;
-		$atributos ['evento'] = '';
-		if (isset ( $estadoSolicitud )) {
-			$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_clase'];
-			
-			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuGrupo', $resultadoNecesidadRelacionadaCIIU[0]['num_division'] );
-			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-		} else {
-			$atributos ['seleccion'] = - 1;
-			
-			
-			$matrizItems = array(
-	        			array(1,'Null')
-	        			 
-	        );
-			
-		}
-		$atributos ['deshabilitado'] = true;
-		$atributos ['columnas'] = 1;
-		$atributos ['tamanno'] = 1;
-		$atributos ['ajax_function'] = "";
-		$atributos ['ajax_control'] = $esteCampo;
 		$atributos ['estilo'] = "jqueryui";
 		$atributos ['validar'] = "required";
 		$atributos ['limitar'] = false;
 		$atributos ['anchoCaja'] = 60;
 		$atributos ['miEvento'] = '';
 		
-		$atributos ['matrizItems'] = $matrizItems;
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		//echo $this->miFormulario->campoCuadroLista ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Lista grupo CIIU--------------------------------------------------------
-		
-		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
-		$esteCampo = "claseCIIU";
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['id'] = $esteCampo;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['tab'] = $tab ++;
-		$atributos ['anchoEtiqueta'] = 200;
-		$atributos ['evento'] = '';
-		if (isset ( $estadoSolicitud )) {
-			$atributos ['seleccion'] = $resultadoNecesidadRelacionadaCIIU[0]['num_subclase'];
-			
-			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClase', $resultadoNecesidadRelacionadaCIIU[0]['num_clase'] );
-			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-		} else {
-			$atributos ['seleccion'] = - 1;
-			
-			
-			
-			$matrizItems = array(
-	        			array(1,'Null')
-	        			 
-	        );
-		}
-		$atributos ['deshabilitado'] = true;
-		$atributos ['columnas'] = 1;
-		$atributos ['tamanno'] = 1;
-		$atributos ['ajax_function'] = "";
-		$atributos ['ajax_control'] = $esteCampo;
-		$atributos ['estilo'] = "jqueryui";
-		$atributos ['validar'] = "required";
-		$atributos ['limitar'] = false;
-		$atributos ['anchoCaja'] = 60;
-		$atributos ['miEvento'] = '';
+		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'unidad' );
+		$matrizItems = array (
+						array ( 1, 'Bien' ),
+						array ( 2, 'Servicio' )
+				);
 		
 		$atributos ['matrizItems'] = $matrizItems;
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		//echo $this->miFormulario->campoCuadroLista ( $atributos );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
-		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
-		*/
+		// ----------------FIN CONTROL: Lista UNIDAD--------------------------------------------------------
+		
+		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		
+		
 		
 		
 		// ------------------Division para los botones-------------------------

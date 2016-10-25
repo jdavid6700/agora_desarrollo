@@ -8,18 +8,37 @@ $this->idioma["marcoDatos"]="Solicitudes de Necesidad";
 $this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
 $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
 $this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
+
+$this->idioma["marcoObjetoConv"]="Solicitud de Necesidad para Convocatoria - Información General";
+
 $this->idioma["marcoProveedores"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU Registrados";
+
+$this->idioma["marcoProveedoresConv"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU y NBC (Snies) Registrados";
+
 $this->idioma["marcoObjetoAct"]="Solicitud de Necesidad - Información General";
+$this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
 $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
 $this->idioma["marcoActividadesRel"] = "Actividades Ecónomicas Relacionadas con la Necesidad";
+
+$this->idioma["marcoNBCRel"] = "Núcleo Básico de Conocimiento (Profesión) SNIES Relacionado con la Necesidad";
+
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Ecónomica";
 
-$this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin Cotización";
-$this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en Cotización";
+$this->idioma["marcoNBC"] = "Registrar Núcleo Básico de Conocimiento (Profesiones) SNIES";
+$this->idioma["marcoNBCMod"] = "Modificar Núcleo Básico de Conocimiento (Profesiones) SNIES";
+
+$this->idioma["objetoArea"]="Area de Conocimiento (SNIES) :";
+$this->idioma["objetoNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
+
+$this->idioma["marcoDatosRelacionada"]="Solicitudes de Necesidad Relacionadas sin (Cotización / Convocatoria)";
+$this->idioma["marcoDatosCotizacion"]="Solicitudes de Necesidad Relacionadas en (Cotización / Convocatoria)";
 
 $this->idioma["unidadEjecutora"] = "Unidad Ejecutora : ";
 $this->idioma["unidadEjecutoraTitulo"]="Unidad Ejecutora";
+
+$this->idioma["tipoNecesidad"] = "Tipo de Necesidad : ";
+$this->idioma["tipoNecesidadTitulo"]="Tipo de Necesidad";
 
 $this->idioma["unidadEjecutoraCheck"] = "Unidad Ejecutora : ";
 $this->idioma["unidadEjecutoraCheckTitulo"]="Unidad Ejecutora";
@@ -105,8 +124,12 @@ $this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vige
 
 
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
-$this->idioma["tabConsultar"] = "Solicitar Cotizaciòn";
-$this->idioma["tabCotizacion"] = "Estado Cotizaciòn";
+
+$this->idioma["tabConsultar"] = "Solicitar Cotización";
+$this->idioma["tabConsultarMen"] = "Solicitar (Cotización / Convocatoria)";
+$this->idioma["tabConsultarConv"] = "Solicitar Convocatoria";
+
+$this->idioma["tabCotizacion"] = "Estado (Cotización / Convocatoria)";
 $this->idioma["tabActividad"] = "Actividades Económicas";
 
 $this->idioma["tipoDocumento"] = "Tipo de Documento";
@@ -141,9 +164,11 @@ $this->idioma["mensajeObjeto"] =  "Actualmente no hay Objetos a Contratar </br> 
 $this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Actividad Económica.<br>";
 
 
-$this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotizaciòn a los proveedores. <br>" ;
+$this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotización a los Proveedores. <br>" ;
+$this->idioma["mensajeConvocatoria"] =  "Registro Exitoso.<br> Se envío la información de Convocatoria a los Proveedores. <br>" ;
 
 $this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
+$this->idioma["mensajeEnConvocatoria"] =  "Estado del Objeto a Contratar: CONVOCATORIA.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";

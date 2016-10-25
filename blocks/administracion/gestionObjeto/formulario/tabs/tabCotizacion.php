@@ -71,7 +71,7 @@ class Formulario {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -231,7 +231,7 @@ class Formulario {
 					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
-								<h4 class="list-group-item-heading">Solicitudes de Necesidad Relacionadas En Cotización</h4>
+								<h4 class="list-group-item-heading">Solicitudes de Necesidad Relacionadas En (Cotización / Convocatoria)</h4>
 							</div>
 						</div>
 					</div>

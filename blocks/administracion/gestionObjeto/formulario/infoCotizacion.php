@@ -39,7 +39,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $atributos["metodo"] = "POST";
     $atributos["nombreFormulario"] = $nombreFormulario;
     $atributos["tipoEtiqueta"] = 'inicio';
-    $atributos ['titulo'] = $this->lenguaje->getCadena ( $nombreFormulario );
+    $atributos ['titulo'] = '';
     $verificarFormulario = "1";
     echo $this->miFormulario->formulario($atributos);
 
@@ -87,34 +87,92 @@ if (!isset($GLOBALS["autorizado"])) {
     	$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
     }
     //***************SOLICITUDES RELACIONADAS******************************************************************************************
-    
-   
-        $tipo = 'success';
-        $mensaje =  $this->lenguaje->getCadena('mensajeEnCotizacion');
-        $boton = "regresar";
-        
-//INICIO enlace boton descargar resumen	
+		
+
+		
+		
+		
+		
+		
+		
+		
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $resultadoNecesidadRelacionada[0]['id_objeto'] );
+		$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $resultadoNecesidadRelacionada[0]['id_objeto'] );
+		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$datos = array (
+				'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+				'vigencia' => $objetoEspecifico[0]['vigencia'],
+				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$datos = array (
+				'solicitudes' => "1,2,3,4,5,6,7,8",
+				'vigencia' => $objetoEspecifico[0]['vigencia'],
+				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );
+		$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		if($objetoEspecifico[0]['tipo_necesidad'] == 'SERVICIO'){
+			$convocatoria = true;
+				
+			$cadenaSql = $this->sql->getCadenaSql ( 'consultarNBCImp', $resultadoNecesidadRelacionada[0]['id_objeto']  );
+			$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$tipoMN = "Convocatoria";
+				
+		}else{
+			$convocatoria = false;
+			
+			$tipoMN = "Cotización";
+		}
+
+		
+		$tipo = 'success';
+		if($convocatoria){
+			$mensaje =  $this->lenguaje->getCadena('mensajeEnConvocatoria');
+		}else{
+			$mensaje =  $this->lenguaje->getCadena('mensajeEnCotizacion');
+		}
+		$boton = "regresar";
+		
+		//INICIO enlace boton descargar resumen
 		$variableResumen = "pagina=" . $miPaginaActual;
 		$variableResumen.= "&action=".$esteBloque["nombre"];
 		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
 		$variableResumen.= "&idObjeto=" . $resultadoNecesidadRelacionada[0]['id_objeto'];
-        $variableResumen.= "&idCodigo=" . "XXXX";
+		$variableResumen.= "&idCodigo=" . "XXXX";
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------
 		$atributos["id"]="botones";
 		$atributos["estilo"]="marcoBotones";
 		echo $this->miFormulario->division("inicio",$atributos);
-		
-		$enlace = "<a href='".$variableResumen."'>";
-		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Ver Solicitud Cotización de la Necesidad";
-		$enlace.="</a><br><br>";       
+
+		$enlace = "<a href='".$variableResumen."'>";		
+		if($convocatoria){
+			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Ver Información de Convocatoria de la Necesidad";
+		}else{
+			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Ver Solicitud Cotización de la Necesidad";
+		}
+		$enlace.="</a><br><br>";
 		echo $enlace;
 		//------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division("fin"); 		
-//FIN enlace boton descargar resumen        
+		echo $this->miFormulario->division("fin");
+		//FIN enlace boton descargar resumen
 		
 		
 		
@@ -131,39 +189,6 @@ if (!isset($GLOBALS["autorizado"])) {
 		$atributos ["id"] = "botones";
 		$atributos ["estilo"] = "marcoBotones";
 		echo $this->miFormulario->division("inicio", $atributos);
-		
-		
-		
-		
-		
-		
-		
-		
-//Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $resultadoNecesidadRelacionada[0]['id_objeto'] );
-$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-//Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $resultadoNecesidadRelacionada[0]['id_objeto'] );
-$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-$datos = array (
-		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
-		'vigencia' => $objetoEspecifico[0]['vigencia'],
-		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
-);
-
-$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
-$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-$datos = array (
-		'solicitudes' => "1,2,3,4,5,6,7,8",
-		'vigencia' => $objetoEspecifico[0]['vigencia'],
-		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
-);
-
-$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitudSinCotizar', $datos );
-$resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 
@@ -173,7 +198,7 @@ $resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					<div class="col-md-12">
 						<div class="panel panel-primary">
 							<div class="panel-heading">
-								<h4 class="list-group-item-heading">Proveedores Relacionados en la Cotización</h4>
+								<h4 class="list-group-item-heading">Proveedores Relacionados en la <?php echo $tipoMN ?></h4>
 							</div>
 						</div>
 					</div>
@@ -197,7 +222,7 @@ $resultado = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 								<th><center>Clasificación Evaluación</center></th>
     							<th><center>Estado Cotización</center></th>
 								<th><center>Resultado</center></th>
-								<th><center>Cotización</center></th>
+								<th><center> " . $tipoMN . "</center></th>
 							</tr>
 							</thead>
 							<tbody>";

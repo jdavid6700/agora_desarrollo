@@ -69,10 +69,12 @@ class Frontera {
                     
 				case "actividad" :
 					
-					if (isset ( $_REQUEST ["terminar"] ) && $_REQUEST ["terminar"] == 'true') {
+					if ((isset ( $_REQUEST ["terminar"] ) && $_REQUEST ["terminar"] == 'true' && $_REQUEST["sigueNBC"] == null ) || (isset ( $_REQUEST ["estadoSolicitudAct"] ) && $_REQUEST ["estadoSolicitudAct"] == 'CON ACTIVIDADES Y NBC') ) {
 						include_once($this->ruta . "/formulario/solicitudCotizacion.php");
+					}else if (isset ( $_REQUEST ["terminar"] ) && $_REQUEST ["terminar"] == 'true' && isset ( $_REQUEST ["tipoNecesidad"] ) && $_REQUEST ["tipoNecesidad"] == 'SERVICIO'){
+						include_once ($this->ruta . "formulario/tabs/tabNucleoBasico.php");
 					}else{
-						include_once ($this->ruta . "/formulario/formActividad.php");
+						include_once ($this->ruta . "formulario/tabs/tabActividad.php");
 					}
 					
 					break;

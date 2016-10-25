@@ -62,7 +62,7 @@ class registrarForm {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -74,6 +74,55 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		
+		
+		
+		
+		if(isset($_REQUEST['tipoNecesidad'])){
+		
+			if($_REQUEST['tipoNecesidad'] == "SERVICIO"){
+				$marcoTipo = "marcoProveedoresConv";
+				$tipoMarco = "marcoObjetoConv";
+				$tipoSolicitud = $_REQUEST['tipoNecesidad'];
+				$service = true;
+			}else{
+				$marcoTipo = "marcoProveedores";
+				$tipoMarco = "marcoObjeto";
+				$tipoSolicitud = $_REQUEST['tipoNecesidad'];
+				$service = false;
+			}
+		
+		}else{
+		
+			$datosSolicitudNecesidad = array (
+					'idSolicitud' => $_REQUEST['idSolicitud'],
+					'vigencia' => $_REQUEST['vigencia'],
+					'unidadEjecutora' => $_REQUEST['unidadEjecutora']
+			);
+		
+			$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
+			$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			if($resultadoNecesidadRelacionada[0]['tipo_necesidad'] == "SERVICIO"){
+				$marcoTipo = "marcoProveedoresConv";
+				$tipoMarco = "marcoObjetoConv";
+				$tipoSolicitud = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
+				$service = true;
+			}else{
+				$marcoTipo = "marcoProveedores";
+				$tipoMarco = "marcoObjeto";
+				$tipoSolicitud = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
+				$service = false;
+			}
+			
+			
+			$cadena_sql = $this->miSql->getCadenaSql ( "consultarNucleoBasico", $resultadoNecesidadRelacionada[0]['id_objeto']);
+			$resultadoNBCRel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+			$_REQUEST ['objetoNBC'] = $resultadoNBCRel[0]['id_nucleo'];
+		
+		}
+		
+
 		if(isset($_REQUEST['idSolicitud']) && isset($_REQUEST['vigencia']) && isset($_REQUEST['unidadEjecutora'])){
 			
 			
@@ -105,7 +154,7 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
 		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
-		$esteCampo = "marcoObjeto";
+		$esteCampo = $tipoMarco;
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
@@ -147,6 +196,27 @@ class registrarForm {
         	echo $this->miFormulario->marcoAgrupacion ( 'fin' );
         }
         
+        if($service){
+        	
+        	$cadenaSql = $this->miSql->getCadenaSql ( 'consultarNBCImp', $_REQUEST['idObjeto']  );
+        	$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        	
+        	$esteCampo = "marcoNBCRel";
+        	$atributos ['id'] = $esteCampo;
+        	$atributos ["estilo"] = "jqueryui";
+        	$atributos ['tipoEtiqueta'] = 'inicio';
+        	$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+        	echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+        	
+        	
+        	echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
+        	echo $resultadoNBC[0]['id_nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "</b><br>";
+        	
+        	
+        	echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+        	
+        }
+        
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'actividadesXNecesidad', $_REQUEST["idObjeto"] );
         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -179,15 +249,33 @@ class registrarForm {
 
 			// LISTA DE PROVEEDORES CON MEJOR CLASIFICACION
 			// ------- FILTRAR POR ACTIVIDAD ECONOMICA
-			$datos = array (
-					'actividadEconomica' => $actividades,
-					'numCotizaciones' => $_REQUEST ['numCotizaciones'] 
-			);
 			
-			// -------- Limite de registros
-			// --------- evaluacion mayor a 45
-			$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
-			$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			if($service){
+				$datos = array (
+						'actividadEconomica' => $actividades,
+						'objetoNBC' => $_REQUEST ['objetoNBC'],
+						'numCotizaciones' => $_REQUEST ['numCotizaciones']
+				);
+				
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConv', $datos );
+				$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+			}else{
+				$datos = array (
+						'actividadEconomica' => $actividades,
+						'numCotizaciones' => $_REQUEST ['numCotizaciones']
+				);
+				
+				
+				// -------- Limite de registros
+				// --------- evaluacion mayor a 45
+				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
+				$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+			}
+			
+			
 			
 			if (! $resultadoProveedor) {
 				
@@ -211,7 +299,7 @@ class registrarForm {
 				unset ( $atributos );
 			} else {
 				// ---------------INICIO TABLA CON LISTA DE PROVEEDORES---------------------
-				$esteCampo = "marcoProveedores";
+				$esteCampo = $marcoTipo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
 				$atributos ['tipoEtiqueta'] = 'inicio';

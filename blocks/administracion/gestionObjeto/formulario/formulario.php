@@ -35,7 +35,7 @@ unset ( $atributos );
 
 	$items = array (
 			"tabIngresar" => $this->lenguaje->getCadena ( 'tabIngresar' ),
- 			"tabConsultar" => $this->lenguaje->getCadena ( 'tabConsultar' ),	
+ 			"tabConsultar" => $this->lenguaje->getCadena ( 'tabConsultarMen' ),	
 			"tabCotizacion" => $this->lenguaje->getCadena ( 'tabCotizacion' )
 	);
 	$atributos ["items"] = $items;

@@ -34,7 +34,7 @@ unset ( $atributos );
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 
 	$items = array (
-			"tabIngresar" => $this->lenguaje->getCadena ( 'tabActividad' )
+			"tabActividad" => $this->lenguaje->getCadena ( 'tabActividad' )
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "";
@@ -43,14 +43,13 @@ unset ( $atributos );
 	
 
 	
-	$esteCampo = "tabIngresar";
+	$esteCampo = "tabActividad";
 	$atributos ['id'] = $esteCampo;
 	$atributos ["estilo"] = "";
 	$atributos ['tipoEtiqueta'] = 'inicio';
 	echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 	unset ( $atributos );
 	{
-		
 		include ($this->ruta . "formulario/tabs/tabActividad.php");
 		// -----------------Fin Division para la pestaña 1-------------------------
 	}
