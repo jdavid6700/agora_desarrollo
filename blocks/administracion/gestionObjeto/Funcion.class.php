@@ -49,6 +49,9 @@ class Funcion {
 	function registrarActividad() {
 		include_once ($this->ruta . "/funcion/registrarActividad.php");
 	}
+	function registrarNucleoBasico() {
+		include_once ($this->ruta . "/funcion/registrarNucleo.php");
+	}
 	function resumen()
 	{
 		include_once($this->ruta."/funcion/resumenPDF.php");
@@ -123,14 +126,17 @@ class Funcion {
 					
 				case 'registrarActividad' :
 					
-					if (isset ( $_REQUEST ["botonTerminar"] ) && $_REQUEST ["botonTerminar"] == 'true') {
+					if (isset ( $_REQUEST ["botonTerminar"] ) && $_REQUEST ["botonTerminar"] == 'true' && isset ( $_REQUEST ["tipoNecesidad"] ) && $_REQUEST ["tipoNecesidad"] == 'BIEN') {
 						$arreglo = array (
 								'idObjeto' => $_REQUEST['idObjeto'],
 								'numCotizaciones' => $_REQUEST['numCotizaciones']
 						);
 						redireccion::redireccionar ( "cotizacion", $arreglo );
 						exit();
-					}else{
+					}else if(!isset ( $_REQUEST ["botonTerminar"] ) && isset ( $_REQUEST ["tipoNecesidad"] ) && $_REQUEST ["tipoNecesidad"] == 'SERVICIO'
+							&& (!isset($_REQUEST ["divisionCIIU"]) && !isset($_REQUEST ["grupoCIIU"]) && !isset($_REQUEST ["claseCIIU"]))){			
+						$this->registrarNucleoBasico ();
+					}else{						
 						$this->registrarActividad ();
 					}
 					

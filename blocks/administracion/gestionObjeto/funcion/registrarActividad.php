@@ -44,6 +44,7 @@ class Registrar {
 				'idSolicitud' => $_REQUEST['numSolicitud'],
 				'vigencia' => $_REQUEST['vigencia'],
 				'unidadEjecutora' => $_REQUEST['unidadEjecutora'],
+				'tipoNecesidad' => $_REQUEST['tipoNecesidad'],
 				'numCotizaciones' => $_REQUEST['numCotizaciones']
 		);
 		

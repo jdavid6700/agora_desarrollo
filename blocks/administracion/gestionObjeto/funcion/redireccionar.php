@@ -21,6 +21,7 @@ class redireccion {
 				$variable .= "&vigencia=".$valor['vigencia'];
 				$variable .= "&unidadEjecutora=".$valor['unidad_ejecutora'];
 				$variable .= "&numCotizaciones=".$valor['cotizaciones'];
+				$variable .= "&tipoNecesidad=".$valor['tipo_necesidad'];
 				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
 				break;
 				
@@ -96,7 +97,22 @@ class redireccion {
 				$variable .= "&numSolicitud=".$valor['idSolicitud'];
 				$variable .= "&vigencia=".$valor['vigencia'];
 				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
+				$variable .= "&tipoNecesidad=".$valor['tipoNecesidad'];
 				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
+				break;
+				
+			case "registroNucleo" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=registroNucleo";
+				$variable .= "&idObjeto=" . $valor ['idObjeto'];
+				$variable .= "&nucleo=" . $valor ['objetoNBC'];
+				$variable .= "&numSolicitud=" . $valor ['idSolicitud'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
+				$variable .= "&unidadEjecutora=" . $valor ['unidadEjecutora'];
+				$variable .= "&tipoNecesidad=" . $valor ['tipoNecesidad'];
+				$variable .= "&numCotizaciones=" . $valor ['numCotizaciones'];
+				$variable .= "&modificarNBC=" . $valor ['modificarNBC'];
 				break;
 			
 			case "mensajeExisteActividad" :
@@ -108,6 +124,7 @@ class redireccion {
 				$variable .= "&numSolicitud=".$valor['idSolicitud'];
 				$variable .= "&vigencia=".$valor['vigencia'];
 				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
+				$variable .= "&tipoNecesidad=".$valor['tipoNecesidad'];
 				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
 				break;
 				

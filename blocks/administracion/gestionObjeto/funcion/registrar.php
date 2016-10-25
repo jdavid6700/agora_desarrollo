@@ -36,7 +36,21 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+		
+		
+		if(isset($_REQUEST['tipoNecesidad'])){//CAST tipo de NECESIDAD
+			switch($_REQUEST['tipoNecesidad']){
+				case 1 :
+					$_REQUEST['tipoNecesidad']='BIEN';
+					break;
+				case 2 :
+					$_REQUEST['tipoNecesidad']='SERVICIO';
+					break;
+			}
+		}
         
+		
+		
         $datosSolicitud = array (
         		'numero_solicitud' => $_REQUEST ['numSolicitud'],
         		'vigencia' => $_REQUEST ['vigencia'],
@@ -44,6 +58,7 @@ class Registrar {
         		'claseCIIU' => null,
         		'unidad' => $_REQUEST ['unidad'],
         		'cantidad' => $_REQUEST ['cantidad'],
+        		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
         		'cotizaciones' => $_REQUEST ['cotizaciones']
         );
         
@@ -80,6 +95,7 @@ class Registrar {
 						'vigencia' => $_REQUEST ['vigencia'],
 						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
 						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
 						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
 				
@@ -94,6 +110,7 @@ class Registrar {
 						'vigencia' => $_REQUEST ['vigencia'],
 						'unidad_ejecutora' => $_REQUEST ['unidadEjecutora'],
 						'cotizaciones' => $_REQUEST ['cotizaciones'],
+						'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
 						'estadoSolicitud' => $_REQUEST['estadoSolicitudRelacionada']
 				);
 			}

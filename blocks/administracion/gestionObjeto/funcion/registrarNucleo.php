@@ -9,7 +9,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
 }
-class RegistrarIndexacionRevista {
+class Registrar {
 	
 	var $miConfigurador;
 	var $lenguaje;
@@ -26,8 +26,9 @@ class RegistrarIndexacionRevista {
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
 	}
+	
 	function procesarFormulario() {
-		$conexion = "docencia";
+		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -35,19 +36,45 @@ class RegistrarIndexacionRevista {
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/asignacionPuntajes/salariales/";
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
+		
+		$arreglo = array (
+				'idObjeto' => $_REQUEST ['idObjeto'],
+				'objetoNBC' => $_REQUEST ['objetoNBC'],
+				'idSolicitud' => $_REQUEST['numSolicitud'],
+				'vigencia' => $_REQUEST['vigencia'],
+				'unidadEjecutora' => $_REQUEST['unidadEjecutora'],
+				'tipoNecesidad' => $_REQUEST['tipoNecesidad'],
+				'modificarNBC' => $_REQUEST ['modificarNBC'],
+				'numCotizaciones' => $_REQUEST['numCotizaciones']
+		);
+		
+		if($_REQUEST ['modificarNBC']){
+			
+			// Modificar NUCLEO BASICO
+			$cadenaSql = $this->miSql->getCadenaSql ( "actualizarNucleoBasico", $arreglo );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			
+			
+		}else{
+				
+			// Guardar NUCLEO BASICO
+			$cadenaSql = $this->miSql->getCadenaSql ( "registrarNucleoBasico", $arreglo );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
-		$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar', $_REQUEST );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "actualizar" );
-
-		if ($resultado) {
-			redireccion::redireccionar ( 'actualizo',  $_REQUEST['docenteRegistrar']);
-			exit ();
-		} else {
-			redireccion::redireccionar ( 'noActualizo',  $_REQUEST['docenteRegistrar'] );
-			exit ();
+			
 		}
+		
+			
+			if ($resultado) {
+				redireccion::redireccionar ( 'registroNucleo', $arreglo );
+				exit ();
+			} else {
+				redireccion::redireccionar ( 'noregistro', $arreglo );
+				exit ();
+			}
+			
+			
 	}
-	
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {
 			
@@ -58,7 +85,7 @@ class RegistrarIndexacionRevista {
 	}
 }
 
-$miRegistrador = new RegistrarIndexacionRevista ( $this->lenguaje, $this->sql, $this->funcion );
+$miRegistrador = new Registrar ( $this->lenguaje, $this->sql, $this->funcion );
 
 $resultado = $miRegistrador->procesarFormulario ();
 

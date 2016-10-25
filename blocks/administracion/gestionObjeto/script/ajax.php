@@ -23,55 +23,33 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 
 // URL definitiva
 $urlFinalDocente = $url . $cadena;
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar23 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar23 .= "&procesarAjax=true";
+$cadenaACodificar23 .= "&action=index.php";
+$cadenaACodificar23 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar23 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar23 .= $cadenaACodificar23 . "&funcion=consultarNBC";
+$cadenaACodificar23 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena23 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar23, $enlace );
+
+// URL definitiva
+$urlFinal23 = $url . $cadena23;
+//echo $urlFinal16; exit;
+
 ?>
 
-$( "#<?php echo $this->campoSeguro('docente')?>" ).keyup(function() {
-	$('#<?php echo $this->campoSeguro('docente') ?>').val($('#<?php echo $this->campoSeguro('docente') ?>').val().toUpperCase());
-});
-
-$( "#<?php echo $this->campoSeguro('docente')?>" ).change(function() {
-	if($('#<?php echo $this->campoSeguro('docente') ?>').val()==''){
-		$("#<?php echo $this->campoSeguro('id_docente') ?>").val('');
-	}
-});
-
-$("#<?php echo $this->campoSeguro('docente') ?>").autocomplete({
-	minChars: 3,
-	serviceUrl: '<?php echo $urlFinalDocente; ?>',
-	onSelect: function (suggestion) {
-    	$("#<?php echo $this->campoSeguro('id_docente') ?>").val(suggestion.data);
-	}
-});
-
-
-//////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
-
-$("#<?php echo $this->campoSeguro('contexto')?>").change(function() {
-
-	if($("#<?php echo $this->campoSeguro('contexto')?>").val() == ''){
-
-		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('pais')?>");
-		$("#<?php echo $this->campoSeguro('ciudad')?>").select2('val','-1');
-		
-		$("#<?php echo $this->campoSeguro('pais_div')?>").css('display','none'); 
-		$("#<?php echo $this->campoSeguro('ciudad_div')?>").css('display','none'); 
-		 		
-	}else{
-		
-		$("#<?php echo $this->campoSeguro('ciudad')?>").select2('val','-1');
-
-		$("#<?php echo $this->campoSeguro('pais')?>").html("");
-		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('pais')?>");
-		consultarPais();
-		
-		$("#<?php echo $this->campoSeguro('pais_div')?>").css('display','block'); 
-		
-		$("#<?php echo $this->campoSeguro('pais')?>").select2();
-	}
-	
-});
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
 
@@ -137,6 +115,54 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 	}
 	
 });
+
+	function consultarNBC(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal23?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('objetoArea')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('objetoNBC')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('objetoNBC')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_nucleo+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('objetoNBC')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('objetoNBC')?>").removeAttr('disabled');
+		            
+		            $("#<?php echo $this->campoSeguro('objetoNBC')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('objetoArea')?>").removeClass("validate[required]");
+		            
+		            
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};
+		
+	
+	
+				$("#<?php echo $this->campoSeguro('objetoArea')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('objetoArea')?>").val()!=''){
+		            	consultarNBC();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('objetoArea')?>").addClass("validate[required]");
+		    			$("#<?php echo $this->campoSeguro('objetoNBC')?>").attr('disabled','');
+		    			}
+		    	});
+		    	      
+		    	$("#<?php echo $this->campoSeguro('objetoNBC')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('objetoNBC')?>").val()!=''){
+		            	$("#<?php echo $this->campoSeguro('objetoNBC')?>").removeClass("validate[required]");
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('objetoNBC')?>").addClass("validate[required]");
+		    			}
+		    	}); 		
 
 <?php
 
