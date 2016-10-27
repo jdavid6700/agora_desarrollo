@@ -59,7 +59,7 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
     <nav class="navbar navbar-default navbar-fixed-top">
      
         <div class="navbar-header">
-			<a href='" . $variable . "'>                        
+			<a href='  <?php echo $directorio ?> '>                           
 				<img src='<?php echo $rutaBloque . "/images/AGORA.png"; ?>' > 
 			</a>
         </div>
@@ -67,14 +67,34 @@ $enlaceFinSesion ['urlCodificada'] = $this->miConfigurador->fabricaConexiones->c
           <ul class="nav navbar-nav">
 		  
 			<?php
-			foreach ($resultado as $dato):
 			
-				$enlace = 'pagina=' . $dato['nombre'];
-                                if($dato['parametros']!=''){
-                                    $enlace .= $dato['parametros'];
-                                }
-				$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
-				echo "<li><a href='" . $url . "'>" . $dato['nombre_menu'] . "</a></li>";
+			if($regUser[0]['estado'] == 2){
+				$deshabilitar = true;
+			}else{
+				$deshabilitar = false;
+			}
+			
+			foreach ($resultado as $dato):
+				
+				if($deshabilitar){
+					if($dato['nombre'] == 'cambiarClave'){
+						$enlace = 'pagina=' . $dato['nombre'];
+						if($dato['parametros']!=''){
+							$enlace .= $dato['parametros'];
+						}
+						$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+						echo "<li><a href='" . $url . "'>" . $dato['nombre_menu'] . "</a></li>";
+					}
+				
+				}else{
+					$enlace = 'pagina=' . $dato['nombre'];
+					if($dato['parametros']!=''){
+						$enlace .= $dato['parametros'];
+					}
+					$url = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );
+					echo "<li><a href='" . $url . "'>" . $dato['nombre_menu'] . "</a></li>";
+				}
+				
 				
 			endforeach;
 			

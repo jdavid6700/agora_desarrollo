@@ -35,13 +35,13 @@ class Banner {
 		$directorio = $this->miConfigurador->getVariableConfiguracion("host");
 		$directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
 		$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");		
-  
+  		
      ?>
 
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-			<a href='" . $variable . "'>                        
+			<a href='  <?php echo $directorio ?> '>                        
 				<img src='<?php echo $rutaBloque . "/imagenes/AGORA.png"; ?>' > 
 			</a>
         </div>
