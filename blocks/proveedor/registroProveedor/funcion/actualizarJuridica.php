@@ -218,7 +218,10 @@ class Formulario {
 				'dependiente_hijo_menos23_estudiando' => 'FALSE',
 				'dependiente_hijo_mas23_discapacitado' => 'FALSE',
 				'dependiente_conyuge' => 'FALSE',
-				'dependiente_padre_o_hermano' => 'FALSE'
+				'dependiente_padre_o_hermano' => 'FALSE',
+				'id_nit_eps' => null,
+				'id_nit_fondo_pension' => null,
+				'id_nit_caja_compensacion' => null
 		);
 		
 		

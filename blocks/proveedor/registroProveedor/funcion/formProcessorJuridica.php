@@ -74,9 +74,9 @@ class Formulario {
 		unset($resultado);
 		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['nit']);
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 
-		if ($resultado) {
+		if ($resultadoVerificar) {
 			//El proveedor ya existe
 			redireccion::redireccionar ( 'existeProveedor',  $_REQUEST ['nit']);
 			exit();    
@@ -196,7 +196,7 @@ class Formulario {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoA);
-				$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				$resultadoTelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				/*
 				$datosTelefonoProveedorTipoB = array (
 						'fki_id_tel' => $id_TelefonoMovil[0][0],
@@ -245,13 +245,16 @@ class Formulario {
 						'dependiente_hijo_menos23_estudiando' => 'FALSE',
 						'dependiente_hijo_mas23_discapacitado' => 'FALSE',
 						'dependiente_conyuge' => 'FALSE',
-						'dependiente_padre_o_hermano' => 'FALSE'
+						'dependiente_padre_o_hermano' => 'FALSE',
+						'id_nit_eps' => null,
+						'id_nit_fondo_pension' => null,
+						'id_nit_caja_compensacion' => null
 				);
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
 				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
-				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
 				
 				
@@ -264,7 +267,7 @@ class Formulario {
 				 );
 				
 				 $cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-				 $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				 $resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				 
 				
 				 
@@ -433,12 +436,19 @@ class Formulario {
 				 
 				 //Guardar datos PROVEEDOR JURIDICA
 				 $cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
-				 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
+				 $resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
-				if ($resultado) {
+				//VAR_DUMP($id_proveedor);
+				//var_dump($resultado);
+				//exit();
+				
+				if ( $id_proveedor && $id_TelefonoFijo && $resultadoTelefonoFijo && $resultadoPersonaNatural && $resultadoProveedorxRepresentante && $resultadoPersonaJuridica) {
+						
 						//Insertar datos en la tabla USUARIO
-						$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['nit'] );
+						
+						$generadaPass = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 10);	
+					
+						$_REQUEST ["contrasena"] = $this->miConfigurador->fabricaConexiones->crypto->codificarClave($generadaPass);
 						$_REQUEST ["tipo"] = 2;//usuario Normal
 						$_REQUEST ["rolMenu"] = 9;//MENU usuario proveedor
 						$_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
@@ -451,6 +461,7 @@ class Formulario {
 						$datosRegistroUsuario = array (
 								'num_documento' => $_REQUEST ['nit'],
 								'contrasena' => $_REQUEST ["contrasena"],
+								'generadaPass' => $generadaPass,
 								'tipo' => $_REQUEST ["tipo"],
 								'rolMenu' => $_REQUEST ["rolMenu"],
 								'estado' => $_REQUEST ["estado"],

@@ -13,14 +13,16 @@ class redireccion {
 
 		
 		switch ($opcion) {
-
-                        case "registroProveedor":
-                            $variable = "pagina=" . $miPaginaActual;
-                            $variable.="&opcion=mensaje";
-                            $variable.="&mensaje=confirma";
-                            $variable.="&nit=" . $valor['num_documento'];
-							$variable.="&correo=" . $valor['correo'];
-                            break;				
+			
+			case "registroProveedor" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=confirma";
+				$variable .= "&nit=" . $valor ['num_documento'];
+				$variable .= "&correo=" . $valor ['correo'];
+				$variable .= "&clave=" . $valor ['contrasena'];
+				$variable .= "&generada=" . $valor ['generadaPass'];
+				break;				
 	
 			case "registroActividad" :
 				$variable = "pagina=" . $miPaginaActual;

@@ -89,3 +89,7 @@ label {
     margin-bottom: 5px;
     max-width: 96%;
 }
+
+.mayuscula {
+	text-transform: uppercase; 
+}

@@ -86,7 +86,6 @@ class FormularioRegistro {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 				// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
-		
                 //DATOS DEL PROVEEDOR 
                 if(isset($_REQUEST['usuario'])){
                     $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST['usuario']  );
@@ -107,9 +106,9 @@ class FormularioRegistro {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
 			//INICIO INFORMACION 
-				echo "<span class='textoElegante textoEnorme textoAzul'>NIT : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Identificación : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre de la Empresa : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre del Proveedor : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";                 
