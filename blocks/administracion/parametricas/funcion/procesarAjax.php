@@ -2,29 +2,29 @@
 use inventarios\gestionContrato\Sql;
 
 
-$conexion = "inventarios";
+$conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+//-------------------------------------------------
+//-------------------------------------------------
+//Validación Petición AJAX Parametro SQL Injection
+if(is_numeric($_REQUEST['valor'])){
+	settype($_REQUEST['valor'], 'integer');
+	$secure = true;
+}else{
+	$secure = false;
+}
+//-------------------------------------------------
+//-------------------------------------------------
 
 
-if ($_REQUEST ['funcion'] == 'consultaProveedor') {
-	
-	
-	
-
-	$cadenaSql = $this->sql->cadena_sql ( 'buscar_Proveedores', $_GET ['query'] );
-
-	$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-	foreach ( $resultadoItems as $key => $values ) {
-		$keys = array (
-				'value',
-				'data'
-		);
-		$resultado [$key] = array_intersect_key ( $resultadoItems [$key], array_flip ( $keys ) );
+if($secure){
+	if ($_REQUEST ['funcion'] == 'consultarPersona') {
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarPersonaNatural', $_REQUEST["valor"]);
+		$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
 	}
-
-	echo '{"suggestions":' . json_encode ( $resultado ) . '}';
+	
 }
 
 

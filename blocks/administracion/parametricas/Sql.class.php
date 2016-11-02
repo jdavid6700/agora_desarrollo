@@ -28,6 +28,41 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "consultarPersonaNatural" :
+				$cadenaSql = "SELECT ";
+				$cadenaSql .= " id_proveedor,";
+				$cadenaSql .= " nom_proveedor";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor ";
+				$cadenaSql .= " WHERE estado = 1";
+				$cadenaSql .= " AND num_documento = " . $variable . ";";
+				break;
+			
+			case "consultarPersonasNoSupervisoras" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" num_documento AS data, ";
+				$cadenaSql.=" num_documento||' - ('||upper(nom_proveedor)||')' AS  value ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" agora.informacion_proveedor ";
+				$cadenaSql.=" WHERE ";
+				$cadenaSql.=" estado = 1";
+				$cadenaSql.=" AND ";
+				$cadenaSql.=" num_documento NOT IN (" . $variable . ")";
+				$cadenaSql.=" AND ";
+				$cadenaSql.=" tipopersona = 'NATURAL';";
+				break;
+			
+			case "consultarListaSupervisores" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" string_agg(cast(cedula as text),',' ";
+				$cadenaSql.=" ORDER BY ";
+				$cadenaSql.=" cedula) ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" agora.supervisor ";
+				$cadenaSql.=" WHERE ";
+				$cadenaSql.=" estado = 'ACTIVO';";
+				break;
+			
                     
 			/* VERIFICAR NUMERO DE CEDULA */		
 				case "verificarCedula" :
@@ -82,7 +117,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" VALUES";
 					$cadenaSql.=" (";
 					$cadenaSql.=" '" . $variable['cedula']. "',";
-					$cadenaSql.=" '" . $variable['nombre'] . ' ' . $variable['apellido']. "',";
+					$cadenaSql.=" '" . $variable['nombre'] . "' ,";
 					$cadenaSql.=" '" . $variable['dependencia']. "',";
 					$cadenaSql.=" '" . $variable['correo']. "',";
 					$cadenaSql.=" 'ACTIVO'";

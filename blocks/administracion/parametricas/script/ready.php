@@ -48,11 +48,13 @@ $(function() {
  * Se define el ancho de los campos de listas desplegables
  */
 /////////Se define el ancho de los campos de listas desplegables///////
-$('#<?php echo $this->campoSeguro('dependencia')?>').width(350);
+$('#<?php echo $this->campoSeguro('dependencia')?>').width(450);
+$('#<?php echo $this->campoSeguro('personaNaturalParaSupervisor')?>').width(350);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $("#<?php echo $this->campoSeguro('dependencia')?>").select2();
+$('#<?php echo $this->campoSeguro('personaNaturalParaSupervisor')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

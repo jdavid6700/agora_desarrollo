@@ -14,20 +14,66 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 
 unset($resultado);
+/*
 //VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 $cadenaSql = $this->sql->getCadenaSql ( "verificarCedula", $_REQUEST ['cedula']);
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+*/
 
-if ($resultado) {
-	//El usuario existe
-	$this->funcion->Redireccionador ( 'existeUsuario', $_REQUEST ['cedula'] );
-	exit();    
+
+//-------------------------------------------------
+//-------------------------------------------------
+//Validación Petición AJAX Parametro SQL Injection
+if(is_numeric($_REQUEST['cedula']) && is_numeric($_REQUEST['dependencia'])){
+	settype($_REQUEST['cedula'], 'integer');
+	settype($_REQUEST['dependencia'], 'integer');
+	
+	if (ereg("[^A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s]+", $_REQUEST['nombre'])) {//Validación Petición AJAX Parametro SQL Injection
+		
+		if (ereg("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})", $_REQUEST['correo'])) {//Validación Petición AJAX Parametro SQL Injection
+					
+			$datosSupervisor = array (
+					'cedula' =>	$_REQUEST['cedula'],
+					'dependencia' => $_REQUEST['dependencia'],
+					'nombre' => $_REQUEST['nombre'],
+					'correo' => $_REQUEST['correo']
+			);
+			
+			$secure = true;
+			
+		}else{
+			
+			$secure = false;
+		}
+		
+	}else{
+		
+		$secure = false;
+	}
+	
+	
 }else{
+	
+	$secure = false;
+}
+//-------------------------------------------------
+//-------------------------------------------------
+
+
+
+if ($secure) {
+	
         //Guardar datos
-        $cadenaSql = $this->sql->getCadenaSql ( "registrar", $_REQUEST );
+        $cadenaSql = $this->sql->getCadenaSql ( "registrar", $datosSupervisor );
         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+        
+//         echo $cadenaSql;
+//         var_dump($resultado);
+//         exit();
 
         if ($resultado) {
+        	
+        		/*
                 //Insertar datos en la tabla USUARIO
                         $_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['cedula'] );
                         $_REQUEST ["tipo"] = 1;//Supervisor
@@ -37,14 +83,19 @@ if ($resultado) {
 
                         $cadenaSql = $this->sql->getCadenaSql ( "registrarUsuario", $_REQUEST );
                         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+                        
+                */        
 
-                        $this->funcion->Redireccionador ( 'registroSupervisor', $_REQUEST['cedula'] );
+                        $this->funcion->Redireccionador ( 'registroSupervisor', $datosSupervisor );
                         exit();
         } else {
                         $this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );
                         exit();
         }
 
+}else{
+	$this->funcion->Redireccionador ( 'noregistro', $_REQUEST['usuario'] );
+	exit();
 }
 
 

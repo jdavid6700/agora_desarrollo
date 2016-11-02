@@ -13,6 +13,9 @@ $this->idioma["apellidoTitulo"]="Digite los apellidos del Supervisor";
 $this->idioma["dependencia"] = "Dependencia : ";
 $this->idioma["dependenciaTitulo"]="Seleccionar Dependencia";
 
+$this->idioma["personaNaturalParaSupervisor"] = "Persona Natural Disponible (AGORA) : ";
+$this->idioma["personaNaturalParaSupervisorTitulo"]="Seleccionar Persona Natural para ser Supervisor";
+
 $this->idioma["correo"] = "Correo : ";
 $this->idioma["correoTitulo"]="Digite el correo";
 
