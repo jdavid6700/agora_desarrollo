@@ -90,8 +90,45 @@ class FormularioRegistro {
 			$atributos ['tipoEtiqueta'] = 'inicio';
 			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-
-				// ----------------INICIO CONTROL: Campo de Texto UNIDAD--------------------------------------------------------
+		
+			
+			
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarListaSupervisores' );
+			$resultadoPersonasSupervisoras = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+					// ---------------- CONTROL: Lista division CIIU--------------------------------------------------------
+					$esteCampo = "personaNaturalParaSupervisor";
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['id'] = $esteCampo;
+					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+					$atributos ["etiquetaObligatorio"] = true;
+					$atributos ['tab'] = $tab ++;
+					$atributos ['anchoEtiqueta'] = 400;
+					$atributos ['evento'] = '';
+					
+					$atributos ['seleccion'] = -1;
+					
+					$atributos ['deshabilitado'] = false;
+					$atributos ['columnas'] = 1;
+					$atributos ['tamanno'] = 1;
+					$atributos ['ajax_function'] = "";
+					$atributos ['ajax_control'] = $esteCampo;
+					$atributos ['estilo'] = "jqueryui";
+					$atributos ['validar'] = "required";
+					$atributos ['limitar'] = false;
+					$atributos ['anchoCaja'] = 20;
+					$atributos ['miEvento'] = '';
+					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'consultarPersonasNoSupervisoras', $resultadoPersonasSupervisoras[0][0] );
+					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					$atributos ['matrizItems'] = $matrizItems;
+					$atributos = array_merge ( $atributos, $atributosGlobales );
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					unset ( $atributos );
+					// ----------------FIN CONTROL: Lista division CIIU--------------------------------------------------------
+						
+			
+					// ----------------INICIO CONTROL: Campo de Texto UNIDAD--------------------------------------------------------
 					$esteCampo = 'cedula';
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
@@ -112,7 +149,7 @@ class FormularioRegistro {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = true;
 					$atributos ['tamanno'] = 25;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
@@ -133,7 +170,7 @@ class FormularioRegistro {
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
 					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['columnas'] = 2;
+					$atributos ['columnas'] = 1;
 					$atributos ['dobleLinea'] = 0;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -145,8 +182,8 @@ class FormularioRegistro {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-					$atributos ['deshabilitado'] = false;
-					$atributos ['tamanno'] = 25;
+					$atributos ['deshabilitado'] = true;
+					$atributos ['tamanno'] = 55;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
 					$tab ++;
@@ -156,7 +193,8 @@ class FormularioRegistro {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Campo de Texto CANTIDAD--------------------------------------------------------
-
+				
+				/*	
 				// ----------------INICIO CONTROL: Campo de Texto CANTIDAD--------------------------------------------------------					
 					$esteCampo = 'apellido';
 					$atributos ['id'] = $esteCampo;
@@ -189,7 +227,8 @@ class FormularioRegistro {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Campo de Texto CANTIDAD--------------------------------------------------------
-			
+				*/
+					
 				// ---------------- CONTROL: Lista DEPENDENCIA --------------------------------------------------------
 					$esteCampo = "dependencia";
 					$atributos ['nombre'] = $esteCampo;
@@ -252,7 +291,8 @@ class FormularioRegistro {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Campo de Texto Correo Institucional--------------------------------------------------------				
-
+				
+				/*	
 				// ----------------INICIO CONTROL: Campo de Texto UNIDAD--------------------------------------------------------
 					$esteCampo = 'telefono';
 					$atributos ['id'] = $esteCampo;
@@ -274,7 +314,7 @@ class FormularioRegistro {
 						$atributos ['valor'] = '';
 					}
 					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-					$atributos ['deshabilitado'] = false;
+					$atributos ['deshabilitado'] = true;
 					$atributos ['tamanno'] = 20;
 					$atributos ['maximoTamanno'] = '30';
 					$atributos ['anchoEtiqueta'] = 200;
@@ -285,6 +325,7 @@ class FormularioRegistro {
 					echo $this->miFormulario->campoCuadroTexto ( $atributos );
 					unset ( $atributos );
 				//
+				 */
 						
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					

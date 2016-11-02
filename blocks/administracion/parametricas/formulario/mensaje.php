@@ -62,8 +62,8 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
         $mensaje = "Se registro el Supervisor.<br >";
-	$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['cedula'] . "<br >";
-	$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['cedula']. "<br >";        
+	$mensaje .= "Se ha registrado al Usuario (Persona Natural) <strong>" . $_REQUEST['nombre'] . "</strong><br >";
+	$mensaje .= "con Identificación N° <strong>" . $_REQUEST['cedula']. " </strong> como un <b>FUNCIONARIO</b> Supervisor de CONTRATO<br>";        
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;
