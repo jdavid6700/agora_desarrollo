@@ -32,6 +32,8 @@ $this->idioma["fechaTitulo"]="Seleccione Fecha de inicio de la Inhabilidad";
 $this->idioma["descripcion"] = "Descripci&oacuten";
 $this->idioma["descripcionTitulo"]="Digite la descripción";
 
+$this->idioma["parametrosInvalidos"] = "Párametros de Consulta Invalidos por favor Revise los Datos Ingresados";
+
 $this->idioma["noDefinido"] = "No definido";
 
 

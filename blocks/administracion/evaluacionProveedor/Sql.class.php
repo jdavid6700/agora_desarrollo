@@ -32,7 +32,7 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT ";
 				$cadenaSql .= " CG.fecha_inicio as inicio,";
 				$cadenaSql .= " CG.fecha_fin as fin ";
-				$cadenaSql .= " FROM contractual.acta_inicio CG";
+				$cadenaSql .= " FROM argo.acta_inicio CG";
 				$cadenaSql .= " WHERE CG.vigencia = " . $variable ['vigencia'];
 				$cadenaSql .= " AND CG.numero_contrato = '" . $variable ['num_contrato'] . "';";
 				break;
@@ -61,11 +61,11 @@ class Sql extends \Sql {
 				$cadenaSql .= " CG.descripcion_forma_pago as descripcion_forma_pago,";
 				$cadenaSql .= " CG.fecha_registro as fecha_registro,";
 				$cadenaSql .= " TC.descripcion as tipo_control";
-				$cadenaSql .= " FROM contractual.contrato_general CG";
-				$cadenaSql .= " JOIN contractual.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
-				$cadenaSql .= " JOIN contractual.parametros FP ON FP.id_parametro = CG.forma_pago";
-				$cadenaSql .= " JOIN contractual.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
-				$cadenaSql .= " JOIN contractual.parametros TC ON TC.id_parametro = CG.tipo_control";
+				$cadenaSql .= " FROM argo.contrato_general CG";
+				$cadenaSql .= " JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
+				$cadenaSql .= " JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
+				$cadenaSql .= " JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
+				$cadenaSql .= " JOIN argo.parametros TC ON TC.id_parametro = CG.tipo_control";
 				$cadenaSql .= " WHERE CG.vigencia = " . $variable ['vigencia'];
 				$cadenaSql .= " AND CG.numero_contrato = '" . $variable ['num_contrato'] . "';";
 				break;

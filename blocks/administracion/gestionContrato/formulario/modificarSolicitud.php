@@ -40,6 +40,9 @@ class FormularioRegistro {
 		$conexion = "argo_contratos";
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "centralUD";
+		$centralRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -993,7 +996,7 @@ class FormularioRegistro {
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo OCULTO --------------------------------------------------------*********************
 		
-		
+		//var_dump($resultado);
 		//$resultado[0]['identificacion_sociedad_temporal'] = 968774212;
 		
 			if($resultado[0]['clase_contratista'] == 'Único Contratista'){
@@ -1129,8 +1132,10 @@ class FormularioRegistro {
 			}else{
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratoGrupal', $resultado[0]['identificacion_contratista'] );
-				$resultadoContratoGrupal = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
+				$resultadoContratoGrupal = $centralRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				//var_dump($cadenaSql);
+				//var_dump($resultadoContratoGrupal);
 				$numeroProveedoresConsorcio = count($resultadoContratoGrupal);
 				$i = 0;
 				

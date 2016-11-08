@@ -56,11 +56,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE estado != 'Inactivo' ";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
-				
-				
-				
-				
-			
 			
 			
 			case "buscarProveedoresFiltro" :
@@ -113,35 +108,60 @@ class Sql extends \Sql {
 					$cadenaSql .= " WHERE id_proveedor= '" . $variable . "'";
 					break;
 				
-			/* CONSULTAR - PROVEEDOR */					
-				case "consultarProveedor" :			
-					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " id_proveedor, ";
-					$cadenaSql .= " num_documento, ";
-					$cadenaSql .= " nom_proveedor, ";
-					$cadenaSql .= " correo, ";
-					$cadenaSql .= " web, ";
-					$cadenaSql .= " tipopersona,";
-					$cadenaSql .= " id_ciudad_contacto,";
-					$cadenaSql .= " direccion,";
-					$cadenaSql .= " nom_asesor,";
-					$cadenaSql .= " tel_asesor,";
-					$cadenaSql .= " tipo_cuenta_bancaria,";
-					$cadenaSql .= " num_cuenta_bancaria,";
-					$cadenaSql .= " id_entidad_bancaria,";
-					$cadenaSql .= " puntaje_evaluacion, ";
-					$cadenaSql .= " clasificacion_evaluacion, ";
-					$cadenaSql .= " estado  ";				
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.informacion_proveedor";
-					$cadenaSql .= " WHERE 1=1 ";
-					if ($variable [0] != '') {
-						$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
-					}
-					if ($variable [1] != '') {
-						$cadenaSql .=" AND nom_proveedor LIKE '%" . $variable [1] . "%'";
-					}
-					break;
+				/* CONSULTAR - PROVEEDOR */
+			case "consultarProveedor" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_proveedor, ";
+				$cadenaSql .= " num_documento, ";
+				$cadenaSql .= " nom_proveedor, ";
+				$cadenaSql .= " correo, ";
+				$cadenaSql .= " web, ";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " id_ciudad_contacto,";
+				$cadenaSql .= " direccion,";
+				$cadenaSql .= " nom_asesor,";
+				$cadenaSql .= " tel_asesor,";
+				$cadenaSql .= " tipo_cuenta_bancaria,";
+				$cadenaSql .= " num_cuenta_bancaria,";
+				$cadenaSql .= " id_entidad_bancaria,";
+				$cadenaSql .= " puntaje_evaluacion, ";
+				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor";
+				$cadenaSql .= " WHERE 1=1 ";
+				if ($variable [0] != '') {
+					$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
+				}
+				if ($variable [1] != '') {
+					$cadenaSql .= " AND nom_proveedor LIKE '%" . $variable [1] . "%'";
+				}
+				$cadenaSql .= " AND tipopersona != 'UNION TEMPORAL' AND tipopersona != 'CONSORCIO'";
+				break;
+			
+			case "consultarProveedores" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_proveedor, ";
+				$cadenaSql .= " num_documento, ";
+				$cadenaSql .= " nom_proveedor, ";
+				$cadenaSql .= " correo, ";
+				$cadenaSql .= " web, ";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " id_ciudad_contacto,";
+				$cadenaSql .= " direccion,";
+				$cadenaSql .= " nom_asesor,";
+				$cadenaSql .= " tel_asesor,";
+				$cadenaSql .= " tipo_cuenta_bancaria,";
+				$cadenaSql .= " num_cuenta_bancaria,";
+				$cadenaSql .= " id_entidad_bancaria,";
+				$cadenaSql .= " puntaje_evaluacion, ";
+				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= " AND tipopersona != 'UNION TEMPORAL' AND tipopersona != 'CONSORCIO'";
+				break;
 					
 					
 			case "consultarContactoTelProveedor" :
@@ -674,7 +694,11 @@ class Sql extends \Sql {
 					}
 					$cadenaSql .= " id_nit_eps = " . " " . $variable ['id_nit_eps'] . ",";
 					$cadenaSql .= " id_nit_fondo_pension = " . " " . $variable ['id_nit_fondo_pension'] . ",";
-					$cadenaSql .= " id_nit_caja_compensacion = " . " " . $variable ['id_nit_caja_compensacion'] . ",";
+					if($variable ['id_nit_caja_compensacion'] != null){
+						$cadenaSql .= " id_nit_caja_compensacion = " . " " . $variable ['id_nit_caja_compensacion'] . ",";
+					}else{
+						$cadenaSql .= " id_nit_caja_compensacion = null,";
+					}
 					$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 					$cadenaSql .= " WHERE num_documento_persona = ";
 					$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";

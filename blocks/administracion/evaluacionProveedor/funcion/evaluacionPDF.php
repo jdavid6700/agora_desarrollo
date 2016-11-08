@@ -49,8 +49,6 @@ $contratoARGOFechas = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 $resultadoContrato[0]['fecha_inicio'] = $contratoARGOFechas[0]['inicio'];
 $resultadoContrato[0]['fecha_finalizacion'] = $contratoARGOFechas[0]['fin'];
 
-
-
 $dateIn = explode("-", $resultadoContrato[0]['fecha_inicio']);
 $dateFi = explode("-", $resultadoContrato[0]['fecha_finalizacion']);
 

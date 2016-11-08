@@ -36,6 +36,18 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+		if($_REQUEST ['idSupervisor'] == ''){
+			redireccion::redireccionar ( 'noSupervisor' );
+			exit ();
+		}
+		
+		if($_REQUEST ['unidadEjecutora'] == '1 - RECTORÍA - ADMINISTRATIVA'){
+			$_REQUEST ['unidadEjecutora'] = 1;
+		}else{
+			$_REQUEST ['unidadEjecutora'] = 2;
+		}
+		
+		
         $datosIdenContrato = array (
         		'numero_solicitud' => $_REQUEST ['numSolicitud'],
         		'vigencia' => $_REQUEST ['vigencia'],
@@ -45,7 +57,13 @@ class Registrar {
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'consultarIdObjeto', $datosIdenContrato );
         $resultadoIdObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
+        
+    
+        if(!$resultadoIdObjeto) {
+        	redireccion::redireccionar ( 'noNecesidad' );
+        	exit ();
+        }
+        
         
         $fechaActual = date ( 'Y-m-d' );
         $annnoActual = date ( 'Y' );
@@ -76,6 +94,7 @@ class Registrar {
         	
         	$cadenaSql = $this->miSql->getCadenaSql ( 'registroProveedorContrato', $datosIdenProveedorContrato );
         	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        	
         	
         }else{
         	

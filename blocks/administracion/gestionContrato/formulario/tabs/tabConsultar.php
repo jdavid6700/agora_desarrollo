@@ -226,7 +226,8 @@ class Formulario {
 			$onlyCheck = true;
 		}
 		
-		
+		//echo $cadenaSql;// SI CAPITAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		//var_dump($resultado);
 		
 		if ($resultado) {
 				

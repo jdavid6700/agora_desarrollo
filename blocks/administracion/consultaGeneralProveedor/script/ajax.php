@@ -52,23 +52,6 @@ $("#<?php echo $this->campoSeguro('nit_proveedor') ?>").autocomplete({
     }
 });
 
-$( "#<?php echo $this->campoSeguro('docente')?>" ).keyup(function() {
-	$('#<?php echo $this->campoSeguro('docente') ?>').val($('#<?php echo $this->campoSeguro('docente') ?>').val().toUpperCase());
-});
-
-$( "#<?php echo $this->campoSeguro('docente')?>" ).change(function() {
-	if($('#<?php echo $this->campoSeguro('docente') ?>').val()==''){
-		$("#<?php echo $this->campoSeguro('id_docente') ?>").val('');
-	}
-});
-
-$("#<?php echo $this->campoSeguro('docente') ?>").autocomplete({
-	minChars: 3,
-	serviceUrl: '<?php echo $urlFinalDocente; ?>',
-	onSelect: function (suggestion) {
-    	$("#<?php echo $this->campoSeguro('id_docente') ?>").val(suggestion.data);
-	}
-});
 
 ////////////////////////Seleccion Procedencia Formulario Adicional//////////////////////////////////////////
 $( "#<?php echo $this->campoSeguro('paisEmpresa')?>" ).change(function() {
