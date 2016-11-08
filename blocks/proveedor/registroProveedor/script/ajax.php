@@ -491,7 +491,7 @@ $cadena23 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal23 = $url . $cadena23;
-//echo $urlFinal16; exit;
+//echo $urlFinal23;
 
 
 
@@ -517,7 +517,7 @@ $cadena24 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 
 // URL definitiva
 $urlFinal24 = $url . $cadena24;
-//echo $urlFinal16; exit;
+//echo $urlFinal23; exit;
 
 
 ?>
@@ -753,7 +753,7 @@ function consultarDepartamentoLug(elem, request, response){
 		};	
 		
 		
-	function consultarNBC(elem, request, response){
+	function consultarNBC(elem, request, response){	
 		  $.ajax({
 		    url: "<?php echo $urlFinal23?>",
 		    dataType: "json",

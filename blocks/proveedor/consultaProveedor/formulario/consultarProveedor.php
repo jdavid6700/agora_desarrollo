@@ -61,26 +61,49 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 
 
 if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
-	$NIT = $_REQUEST ['id_proveedor'];
-} else {
-	$NIT = '';
+	//-------------------------------------------------
+	//-------------------------------------------------
+	//Validación Petición POST Parametro SQL Injection
+	if(isset($_REQUEST ['id_proveedor']) && is_numeric($_REQUEST ['id_proveedor'])){
+		settype($_REQUEST ['id_proveedor'], 'integer');
+		$secure = true;
+	}else{
+		$secure = false;
+	}
+	//-------------------------------------------------
+	//-------------------------------------------------
+	
+	if($secure){
+		
+		if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
+			$NIT = $_REQUEST ['id_proveedor'];
+		} else {
+			$NIT = '';
+		}
+		
+		if (isset ( $_REQUEST ['nombreEmpresa'] ) && $_REQUEST ['nombreEmpresa'] != '') {
+			$nombreEmpresa = $_REQUEST ['nombreEmpresa'];
+		} else {
+			$nombreEmpresa = '';
+		}
+		
+		$arreglo = array (
+				$NIT,
+				$nombreEmpresa
+		);
+		unset($resultado);
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $arreglo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+	}else{
+		$resultado = false;
+	}
+}
+else{
+	$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedores" );
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 }
 
-if (isset ( $_REQUEST ['nombreEmpresa'] ) && $_REQUEST ['nombreEmpresa'] != '') {
-	$nombreEmpresa = $_REQUEST ['nombreEmpresa'];
-} else {
-	$nombreEmpresa = '';
-}
-
-$arreglo = array (
-		$NIT,
-		$nombreEmpresa 
-);
-unset($resultado);
-$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $arreglo );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-//var_dump($cadena_sql);
 
 if ($resultado) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
@@ -193,7 +216,7 @@ if ($resultado) {
 		echo $this->miFormulario->division ( "inicio", $atributos );
 		
 		// -------------Control Boton-----------------------
-		$esteCampo = "noEncontroProcesos";
+		$esteCampo = "parametrosInvalidos";
 		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
 		$atributos ["etiqueta"] = "";
 		$atributos ["estilo"] = "centrar";

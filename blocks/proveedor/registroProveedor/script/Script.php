@@ -14,9 +14,12 @@ $funcion [$indice++]  = "dataTables.jqueryui.js";
 $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
 
+//$funcion [$indice ++] = "miScript.js";
+
 
 $embebido [$indice] = true;
 $funcion [$indice ++] = "ajax.php";
+
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );

@@ -33,6 +33,6 @@ $this->idioma["descripcionTitulo"]="Digite la descripción";
 
 $this->idioma["noDefinido"] = "No definido";
 
-
+$this->idioma["parametrosInvalidos"] = "Párametros de Consulta Invalidos por favor Revise los Datos Ingresados";
 
 ?>

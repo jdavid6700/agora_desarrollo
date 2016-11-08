@@ -80,41 +80,60 @@ class Sql extends \Sql {
 					break;
 				
 			/* CONSULTAR - PROVEEDOR */					
-				case "consultarProveedor" :			
-					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " id_proveedor, ";
-					$cadenaSql .= " num_documento, ";
-					$cadenaSql .= " nom_proveedor, ";
-					$cadenaSql .= " correo, ";
-					$cadenaSql .= " web, ";
-					$cadenaSql .= " tipopersona,";
-					$cadenaSql .= " id_ciudad_contacto,";
-					$cadenaSql .= " direccion,";
-					$cadenaSql .= " nom_asesor,";
-					$cadenaSql .= " tel_asesor,";
-					$cadenaSql .= " tipo_cuenta_bancaria,";
-					$cadenaSql .= " num_cuenta_bancaria,";
-					$cadenaSql .= " id_entidad_bancaria,";
-// 					$cadenaSql .= " telefono, ";
-// 					$cadenaSql .= " ext1, ";
-// 					$cadenaSql .= " movil, ";
-// 					$cadenaSql .= " primerapellido, ";
-// 					$cadenaSql .= " segundoapellido, ";
-// 					$cadenaSql .= " primernombre, ";
-// 					$cadenaSql .= " segundonombre,  ";
-					$cadenaSql .= " puntaje_evaluacion, ";
-					$cadenaSql .= " clasificacion_evaluacion, ";
-					$cadenaSql .= " estado  ";				
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.informacion_proveedor";
-					$cadenaSql .= " WHERE 1=1 ";
-					if ($variable [0] != '') {
-						$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
-					}
-					if ($variable [1] != '') {
-						$cadenaSql .=" AND nom_proveedor LIKE '%" . $variable [1] . "%'";
-					}
-					break;
+			case "consultarProveedor" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_proveedor, ";
+				$cadenaSql .= " num_documento, ";
+				$cadenaSql .= " nom_proveedor, ";
+				$cadenaSql .= " correo, ";
+				$cadenaSql .= " web, ";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " id_ciudad_contacto,";
+				$cadenaSql .= " direccion,";
+				$cadenaSql .= " nom_asesor,";
+				$cadenaSql .= " tel_asesor,";
+				$cadenaSql .= " tipo_cuenta_bancaria,";
+				$cadenaSql .= " num_cuenta_bancaria,";
+				$cadenaSql .= " id_entidad_bancaria,";
+				$cadenaSql .= " puntaje_evaluacion, ";
+				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor";
+				$cadenaSql .= " WHERE 1=1 ";
+				if ($variable [0] != '') {
+					$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
+				}
+				if ($variable [1] != '') {
+					$cadenaSql .= " AND nom_proveedor LIKE '%" . $variable [1] . "%'";
+				}
+				$cadenaSql .= " AND tipopersona != 'UNION TEMPORAL' AND tipopersona != 'CONSORCIO'";
+				break;
+					
+					
+					case "consultarProveedores" :
+						$cadenaSql = "SELECT  ";
+						$cadenaSql .= " id_proveedor, ";
+						$cadenaSql .= " num_documento, ";
+						$cadenaSql .= " nom_proveedor, ";
+						$cadenaSql .= " correo, ";
+						$cadenaSql .= " web, ";
+						$cadenaSql .= " tipopersona,";
+						$cadenaSql .= " id_ciudad_contacto,";
+						$cadenaSql .= " direccion,";
+						$cadenaSql .= " nom_asesor,";
+						$cadenaSql .= " tel_asesor,";
+						$cadenaSql .= " tipo_cuenta_bancaria,";
+						$cadenaSql .= " num_cuenta_bancaria,";
+						$cadenaSql .= " id_entidad_bancaria,";
+						$cadenaSql .= " puntaje_evaluacion, ";
+						$cadenaSql .= " clasificacion_evaluacion, ";
+						$cadenaSql .= " estado  ";
+						$cadenaSql .= " FROM ";
+						$cadenaSql .= " agora.informacion_proveedor";
+						$cadenaSql .= " WHERE 1=1 ";
+						$cadenaSql .= " AND tipopersona != 'UNION TEMPORAL' AND tipopersona != 'CONSORCIO'";
+						break;
 					
 					
 			case "consultarContactoTelProveedor" :
