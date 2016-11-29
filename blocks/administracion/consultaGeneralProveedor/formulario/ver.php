@@ -21,8 +21,34 @@ class Formulario {
 	function formulario() {
 
 		// Rescatar los datos de este bloque
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
             
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -82,10 +108,8 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $_REQUEST["idProveedor"] );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$_REQUEST['usuario'] = $resultado[0]['id_usuario'];
-		
-		if(isset($resultado[0][1])){//CAST genero tipoCuenta
-			switch($resultado[0][1]){
+		if(isset($resultado[0][0])){//CAST genero tipoCuenta
+			switch($resultado[0][0]){
 				case 'NATURAL' :
 					$_REQUEST['tipoPersona'] = 1;
 					$_TIPO = 1;
@@ -118,7 +142,7 @@ class Formulario {
 				
 				//******************************************************************************************************NATURAL****************************************
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento',  $resultado[0]['num_documento'] );
 				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
@@ -196,9 +220,9 @@ class Formulario {
 				$_REQUEST ['padresHermanosDependienteNat'] = $resultadoPersonaNaturalInfo[0]['dependiente_padre_o_hermano'];
 				
 				
-				$_REQUEST ['afiliacionEPSNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_eps"];
-				$_REQUEST ['afiliacionPensionNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_fondo_pension"];
-				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_caja_compensacion"];
+				$_REQUEST ['afiliacionEPSNat'] = $resultadoPersonaNaturalInfo[0]["id_eps"];
+				$_REQUEST ['afiliacionPensionNat'] = $resultadoPersonaNaturalInfo[0]["id_fondo_pension"];
+				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_caja_compensacion"];
 				
 				if(isset($_REQUEST['perfilNat'])){//CAST
 					switch($_REQUEST['perfilNat']){
@@ -498,7 +522,7 @@ class Formulario {
 				//*******************************************************************************************************************JURIDICA******************
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento',  $resultado[0]['num_documento'] );
 				$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];
@@ -2210,7 +2234,7 @@ class Formulario {
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 			$atributos ['deshabilitado'] = true;
-			$atributos ['tamanno'] = 15;
+			$atributos ['tamanno'] = 50;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 160;
 			$tab ++;
@@ -5519,7 +5543,7 @@ class Formulario {
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = true;
-				$atributos ['tamanno'] = 15;
+				$atributos ['tamanno'] = 50;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 160;
 				$tab ++;
