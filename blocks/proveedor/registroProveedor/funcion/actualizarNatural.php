@@ -27,8 +27,33 @@ class Formulario {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -37,6 +62,16 @@ class Formulario {
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
 
+		if(isset($_REQUEST['primerApellidoNat'])){$_REQUEST['primerApellidoNat']=mb_strtoupper($_REQUEST['primerApellidoNat'],'utf-8');}
+		if(isset($_REQUEST['segundoApellidoNat'])){$_REQUEST['segundoApellidoNat']=mb_strtoupper($_REQUEST['segundoApellidoNat'],'utf-8');}
+		if(isset($_REQUEST['primerNombreNat'])){$_REQUEST['primerNombreNat']=mb_strtoupper($_REQUEST['primerNombreNat'],'utf-8');}
+		if(isset($_REQUEST['segundoNombreNat'])){$_REQUEST['segundoNombreNat']=mb_strtoupper($_REQUEST['segundoNombreNat'],'utf-8');}
+		if(isset($_REQUEST['profesionNat'])){$_REQUEST['profesionNat']=mb_strtoupper($_REQUEST['profesionNat'],'utf-8');}
+		if(isset($_REQUEST['especialidadNat'])){$_REQUEST['especialidadNat']=mb_strtoupper($_REQUEST['especialidadNat'],'utf-8');}
+		if(isset($_REQUEST['asesorComercialNat'])){$_REQUEST['asesorComercialNat']=mb_strtoupper($_REQUEST['asesorComercialNat'],'utf-8');}
+		if(isset($_REQUEST['descripcionNat'])){$_REQUEST['descripcionNat']=mb_strtoupper($_REQUEST['descripcionNat'],'utf-8');}
+		
+		
 		unset($resultado);
 			
 			// Guardar el archivo
@@ -451,9 +486,9 @@ class Formulario {
 						'dependiente_hijo_mas23_discapacitado' => $_REQUEST ['hijosMayoresEdadMas23Nat'],
 						'dependiente_conyuge' => $_REQUEST ['conyugeDependienteNat'],
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
-						'id_nit_eps' => $_REQUEST ['afiliacionEPSNat'],
-						'id_nit_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_nit_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
+						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
 				);
 				
 				

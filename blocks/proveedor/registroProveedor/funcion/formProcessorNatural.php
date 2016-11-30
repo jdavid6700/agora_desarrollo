@@ -28,8 +28,31 @@ class Formulario {
 	}
 	
 	function procesarFormulario() {
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -487,10 +510,11 @@ class Formulario {
 						'dependiente_hijo_mas23_discapacitado' => $_REQUEST ['hijosMayoresEdadMas23Nat'],
 						'dependiente_conyuge' => $_REQUEST ['conyugeDependienteNat'],
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
-						'id_nit_eps' => $_REQUEST ['afiliacionEPSNat'],
-						'id_nit_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_nit_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
+						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
 				);
+				
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
@@ -525,7 +549,7 @@ class Formulario {
 						);
 		
 						$cadenaSql = $this->miSql->getCadenaSql ( "registrarUsuario", $datosRegistroUsuario );
-						$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+						$resultado = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
 		
 								redireccion::redireccionar ( 'registroProveedor',  $datosRegistroUsuario);
 								exit();

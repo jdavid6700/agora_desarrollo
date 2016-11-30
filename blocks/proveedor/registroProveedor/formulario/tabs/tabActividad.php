@@ -31,8 +31,34 @@ class FormularioRegistro {
 		 * que lo complementan.
 		 */
 		
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
+		
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -88,7 +114,12 @@ class FormularioRegistro {
 		echo $this->miFormulario->formulario ( $atributos );
                 //DATOS DEL PROVEEDOR 
                 if(isset($_REQUEST['usuario'])){
-                    $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST['usuario']  );
+                	
+                	$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+                	$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                	
+                    $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
+				
                 }else{
                     $cadenaSql = $this->miSql->getCadenaSql ( 'verificarNIT', $_REQUEST['nit']  );
                 }
@@ -119,7 +150,6 @@ class FormularioRegistro {
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
         $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
         
 		if( $resultadoActividades ){
 			

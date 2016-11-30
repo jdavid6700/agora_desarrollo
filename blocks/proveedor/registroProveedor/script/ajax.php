@@ -753,7 +753,8 @@ function consultarDepartamentoLug(elem, request, response){
 		};	
 		
 		
-	function consultarNBC(elem, request, response){	
+	function consultarNBC(elem, request, response){		
+			
 		  $.ajax({
 		    url: "<?php echo $urlFinal23?>",
 		    dataType: "json",

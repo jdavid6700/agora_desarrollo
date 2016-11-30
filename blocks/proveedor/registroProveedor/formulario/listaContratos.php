@@ -20,14 +20,34 @@ $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 
 $nombreFormulario = $esteBloque ["nombre"];
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-$conexion = "argo_contratos";
-$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-$conexion = "sicapital";
-$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+
+
 
 {
 	$tab = 1;
@@ -65,7 +85,11 @@ $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $
 }
 
 unset ( $resultado );
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContratos", $_REQUEST ['usuario'] );
+
+$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarContratos", $resultadoDoc[0][0] );
 $resultadoCont = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 //var_dump(count($resultadoCont));
@@ -109,6 +133,7 @@ while($i < count($resultadoCont)){
 	
 	$cadena_sql = $this->sql->getCadenaSql ( "listaContratoXNumContrato", $datosContrato);
 	$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
 	
 	array_push($contratos, $resultado[0]);
 	
@@ -160,7 +185,9 @@ if ($contratos && $resultadoCont) {
 		
 		$hoy = date ( "Y-m-d" );
 		$msj = '';
-		if ($hoy > $fechaFin[$j]) {
+		
+		if (strtotime($hoy) > strtotime($fechaFin[$j])) {
+			
 			$certUniversidadImagen = 'pdf.png';
 			
 			switch ($dato ['estado']) {

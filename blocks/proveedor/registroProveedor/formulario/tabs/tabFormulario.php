@@ -37,8 +37,39 @@ class registrarForm {
 		$_REQUEST ['tiempo'] = time ();
 		$tiempo = $_REQUEST ['tiempo'];
 		
+		
+		
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
 		$conexion = 'estructura';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
+		
+		
+		
+		
 		               
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -313,7 +344,7 @@ class registrarForm {
 							$atributos ['validar'] = 'required';
 							
 							$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarPais" );
-							$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+							$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 							
 							$atributos['matrizItems'] = $matrizItems;
 							
@@ -675,7 +706,7 @@ class registrarForm {
 						$atributos ['validar'] = 'required';
 							
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamento" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 							
 						$atributos['matrizItems'] = $matrizItems;
 							
@@ -1662,7 +1693,7 @@ class registrarForm {
 						$atributos ['miEvento'] = '';
 						
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarPaises" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						/* Valores a mostrar en el control
 						 $matrizItems = array (
 						 array ( 1, 'Ahorros' ),
@@ -1757,7 +1788,7 @@ class registrarForm {
 							$atributos ['validar'] = 'required';
 							
 							$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarAreaConocimiento" );
-							$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+							$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 							
 							$atributos['matrizItems'] = $matrizItems;
 							
@@ -2022,7 +2053,7 @@ class registrarForm {
 						$atributos ['miEvento'] = '';
 						
 						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
-						$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						/* Valores a mostrar en el control
 						$matrizItems = array (
 								array ( 1, 'Ahorros' ),
@@ -2887,7 +2918,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['miEvento'] = '';
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarPaises" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				/* Valores a mostrar en el control
 				 $matrizItems = array (
 				 array ( 1, 'Ahorros' ),
@@ -2980,7 +3011,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					$atributos ['validar'] = 'required';
 						
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarAreaConocimiento" );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 						
 					$atributos['matrizItems'] = $matrizItems;
 						
@@ -3648,7 +3679,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					$atributos ['miEvento'] = '';
 					
 					$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+					$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
 					echo $this->miFormulario->campoCuadroLista ( $atributos );
@@ -3978,7 +4009,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['validar'] = 'required';
 					
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarDepartamento" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 					
 				$atributos['matrizItems'] = $matrizItems;
 					
@@ -4644,7 +4675,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['miEvento'] = '';
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarEPS" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -4677,7 +4708,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['miEvento'] = '';
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarFondoPension" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -4709,7 +4740,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['miEvento'] = '';
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarCaja" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 
 				$atributos ['matrizItems'] = $matrizItems;
 				$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -4847,7 +4878,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['miEvento'] = '';
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				/* Valores a mostrar en el control
 				 $matrizItems = array (
 				 array ( 1, 'Ahorros' ),

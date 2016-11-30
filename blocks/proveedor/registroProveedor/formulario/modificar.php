@@ -22,8 +22,32 @@ class Formulario {
 	function formulario() {
 
 		// Rescatar los datos de este bloque
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
             
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -75,17 +99,26 @@ class Formulario {
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+				
+				// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+				
+			// ---------------- INICIO: Lista Variables Modificar--------------------------------------------------------
 			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-
-		// ---------------- INICIO: Lista Variables Modificar--------------------------------------------------------
+			
+			
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+			$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $resultadoDoc[0][0] );
+			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 			
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $_REQUEST["usuario"] );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		if(isset($resultado[0][1])){//CAST genero tipoCuenta
-			switch($resultado[0][1]){
+			
+			
+			
+		if(isset($resultado[0][0])){//CAST genero tipoCuenta
+			switch($resultado[0][0]){
 				case 'NATURAL' :
 					$_REQUEST['tipoPersona'] = 1;
 					$_TIPO = 1;
@@ -118,7 +151,7 @@ class Formulario {
 				
 				//******************************************************************************************************NATURAL****************************************
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
 				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
@@ -198,9 +231,9 @@ class Formulario {
 				
 				
 				
-				$_REQUEST ['afiliacionEPSNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_eps"];
-				$_REQUEST ['afiliacionPensionNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_fondo_pension"];
-				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_nit_caja_compensacion"];
+				$_REQUEST ['afiliacionEPSNat'] = $resultadoPersonaNaturalInfo[0]["id_eps"];
+				$_REQUEST ['afiliacionPensionNat'] = $resultadoPersonaNaturalInfo[0]["id_fondo_pension"];
+				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_caja_compensacion"];
 				
 				
 				
@@ -507,7 +540,7 @@ class Formulario {
 				//*******************************************************************************************************************JURIDICA******************
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST["usuario"] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
 				$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];
@@ -549,7 +582,7 @@ class Formulario {
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorNatural', $resultadoRepr[0]['id_representante'] );
 				$resultadoPersonaNaturalInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
+
 				$_REQUEST['numeroDocumento'] =  $resultadoPersonaNaturalInfo[0]["num_documento_persona"];
 				$_REQUEST['tipoDocumento'] =  $resultadoPersonaNaturalInfo[0]["tipo_documento"];
 				$_REQUEST['primerApellido'] =  $resultadoPersonaNaturalInfo[0]["primer_apellido"];
@@ -934,7 +967,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -2224,7 +2257,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -2241,7 +2274,7 @@ class Formulario {
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 15;
+				$atributos ['tamanno'] = 50;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 160;
 				$tab ++;
@@ -2411,7 +2444,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -2444,7 +2477,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = false;
@@ -2477,7 +2510,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -2510,7 +2543,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = false;
@@ -2579,7 +2612,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -2835,7 +2868,7 @@ class Formulario {
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['tipo'] = 'text';
-					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['estilo'] = 'jqueryui mayuscula';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
 					$atributos ["etiquetaObligatorio"] = true;
@@ -2875,7 +2908,7 @@ class Formulario {
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['tipo'] = 'text';
-					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['estilo'] = 'jqueryui mayuscula';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
 					$atributos ["etiquetaObligatorio"] = true;
@@ -3669,7 +3702,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -3702,7 +3735,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = false;
@@ -3735,7 +3768,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -3768,7 +3801,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = false;
@@ -4105,7 +4138,7 @@ class Formulario {
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['tipo'] = 'text';
-					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['estilo'] = 'jqueryui mayuscula';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
 					$atributos ["etiquetaObligatorio"] = true;
@@ -4145,7 +4178,7 @@ class Formulario {
 					$atributos ['id'] = $esteCampo;
 					$atributos ['nombre'] = $esteCampo;
 					$atributos ['tipo'] = 'text';
-					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['estilo'] = 'jqueryui mayuscula';
 					$atributos ['marco'] = true;
 					$atributos ['estiloMarco'] = '';
 					$atributos ["etiquetaObligatorio"] = true;
@@ -5602,7 +5635,7 @@ class Formulario {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = false;
@@ -5619,7 +5652,7 @@ class Formulario {
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
-				$atributos ['tamanno'] = 15;
+				$atributos ['tamanno'] = 50;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 160;
 				$tab ++;

@@ -27,8 +27,33 @@ class Formulario {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -36,7 +61,22 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
-		//Guardar RUT adjuntado Persona Natural
+		
+		
+		
+		if(isset($_REQUEST['nombreEmpresa'])){$_REQUEST['nombreEmpresa']=mb_strtoupper($_REQUEST['nombreEmpresa'],'utf-8');}
+		if(isset($_REQUEST['asesorComercial'])){$_REQUEST['asesorComercial']=mb_strtoupper($_REQUEST['asesorComercial'],'utf-8');}
+		if(isset($_REQUEST['primerApellido'])){$_REQUEST['primerApellido']=mb_strtoupper($_REQUEST['primerApellido'],'utf-8');}
+		if(isset($_REQUEST['segundoApellido'])){$_REQUEST['segundoApellido']=mb_strtoupper($_REQUEST['segundoApellido'],'utf-8');}
+		if(isset($_REQUEST['primerNombre'])){$_REQUEST['primerNombre']=mb_strtoupper($_REQUEST['primerNombre'],'utf-8');}
+		if(isset($_REQUEST['segundoNombre'])){$_REQUEST['segundoNombre']=mb_strtoupper($_REQUEST['segundoNombre'],'utf-8');}
+		if(isset($_REQUEST['cargo'])){$_REQUEST['cargo']=mb_strtoupper($_REQUEST['cargo'],'utf-8');}
+		if(isset($_REQUEST['profesion'])){$_REQUEST['profesion']=mb_strtoupper($_REQUEST['profesion'],'utf-8');}
+		if(isset($_REQUEST['especialidad'])){$_REQUEST['especialidad']=mb_strtoupper($_REQUEST['especialidad'],'utf-8');}
+		if(isset($_REQUEST['descripcion'])){$_REQUEST['descripcion']=mb_strtoupper($_REQUEST['descripcion'],'utf-8');}
+		
+		
+		//Guardar RUT adjuntado Persona Juridica*********************************************************************
 		$_REQUEST ['destino'] = '';
 		// Guardar el archivo
 		if ($_FILES) {			
@@ -69,7 +109,10 @@ class Formulario {
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
 		}
-
+		//************************************************************************************************************
+		
+		
+		
 
 		unset($resultado);
 		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
@@ -210,6 +253,36 @@ class Formulario {
 				
 				
 				
+				
+				//****************************************************************************************************************************
+				$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
+				
+				$datosInformacionProveedorPersonaNaturalRepresentante = array (
+						'tipoPersona' => 'NATURAL',
+						'numero_documento' => $_REQUEST['numeroDocumento'],
+						'nombre_proveedor' => $nombrePersonaRepre,
+						'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
+						'direccion_contacto' => $_REQUEST['direccion'],
+						'correo_contacto' => $_REQUEST['correoPer'],
+						'web_contacto' => '',
+						'nom_asesor_comercial_contacto' => '',
+						'tel_asesor_comercial_contacto' => '',
+						'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],//**** INICIAL = al de la EMPRESA ****
+						'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
+						'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
+						'anexo_rut' => null,
+						'descripcion_proveedor' => '',
+						'fecha_registro' => $fechaActual,
+						'fecha_modificación' => $fechaActual,
+						'id_estado' => '2' //Estado Inactivo
+				);
+				//Guardar datos PROVEEDOR Representante
+				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
+				$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
+				//****************************************************************************************************************************
+				
+				
+				
 				$datosInformacionPersonaNaturalRepresentante = array (
 						'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
 						'fki_numero_documento' => $_REQUEST['numeroDocumento'],
@@ -246,9 +319,9 @@ class Formulario {
 						'dependiente_hijo_mas23_discapacitado' => 'FALSE',
 						'dependiente_conyuge' => 'FALSE',
 						'dependiente_padre_o_hermano' => 'FALSE',
-						'id_nit_eps' => null,
-						'id_nit_fondo_pension' => null,
-						'id_nit_caja_compensacion' => null
+						'id_eps' => null,
+						'id_fondo_pension' => null,
+						'id_caja_compensacion' => null
 				);
 				
 				
@@ -442,7 +515,7 @@ class Formulario {
 				//var_dump($resultado);
 				//exit();
 				
-				if ( $id_proveedor && $id_TelefonoFijo && $resultadoTelefonoFijo && $resultadoPersonaNatural && $resultadoProveedorxRepresentante && $resultadoPersonaJuridica) {
+				if ( $id_proveedor && $id_representante && $id_TelefonoFijo && $resultadoTelefonoFijo && $resultadoPersonaNatural && $resultadoProveedorxRepresentante && $resultadoPersonaJuridica) {
 						
 						//Insertar datos en la tabla USUARIO
 						
@@ -473,7 +546,7 @@ class Formulario {
 						
 						
 						$cadenaSql = $this->miSql->getCadenaSql ( "registrarUsuario", $datosRegistroUsuario );
-						$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+						$resultado = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso');
 						
 
 		
