@@ -25,10 +25,36 @@ $fechaHoy = utf8_encode(ucwords($fecha));
         <h2>¡Bienvenido al Sistema de Registro Único de Proveedores!</h2>
         <?php 
         
-        $conexion = "estructura";
-        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
         
-        if (! $esteRecursoDB) {
+        
+        //*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
+        
+        $conexion = 'estructura';
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'sicapital';
+        $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'centralUD';
+        $centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'argo_contratos';
+        $argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'core_central';
+        $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        //*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
+        
+        
+        
+        
+        if (! $frameworkRecursoDB) {
         
         	// Este se considera un error fatal
         	exit ();
@@ -36,7 +62,7 @@ $fechaHoy = utf8_encode(ucwords($fecha));
         
         $cadena_sql = $this->sql->cadena_sql ( 'rolUsuario', $_REQUEST['usuario'] );
         
-        $registro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+        $registro = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
         
         if($registro[0]['rolmenu'] == '1' || $registro[0]['rolmenu'] == '10'){
         ?>

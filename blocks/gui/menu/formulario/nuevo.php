@@ -12,8 +12,33 @@ $directorio = $this->miConfigurador->getVariableConfiguracion("host");
 $directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
 $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
-$conexion = "estructura";
+
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$conexion = 'estructura';
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+
 
 $miSesion = Sesion::singleton();
 
@@ -26,12 +51,13 @@ $id_usuario = $miSesion->getSesionUsuarioId();
 
 $_REQUEST ['usuario'] = $id_usuario;
 $cadena_sql = $miSql->getCadenaSql("datosUsuario", $id_usuario);
-$regUser = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+$regUser = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
 
 //CONSULTAR MENU
 $cadena_sql = $miSql->getCadenaSql("consultarMenu", $regUser [0] ['rolmenu']);
-$resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+$resultado = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+
 
 
 // Fin de la sesión

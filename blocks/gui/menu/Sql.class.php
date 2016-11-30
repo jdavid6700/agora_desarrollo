@@ -39,7 +39,7 @@ class Sqlmenu extends sql {
 				$cadena_sql .= "tooltip, ";
 				$cadena_sql .= "parametros ";
 				$cadena_sql .= "FROM ";
-				$cadena_sql .= "agora.menu M ";
+				$cadena_sql .= "prov_menu M ";
 				$cadena_sql .= "JOIN prov_pagina P ON P.id_pagina = M.id_pagina ";
 				$cadena_sql .= "WHERE ";
 				$cadena_sql .= "rolmenu ='" . $variable . "' ";
