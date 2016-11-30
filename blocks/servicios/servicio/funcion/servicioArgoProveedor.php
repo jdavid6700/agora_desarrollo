@@ -2,14 +2,39 @@
 use servicios\servicio\Funcion;
 use core\general\ValidadorCampos;
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
 
 
 if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 	
 	//header("Content-Type:application/json");
+	
+	
+	
+	//*************************************************************************** DBMS *******************************
+	//****************************************************************************************************************
+	
+	$conexion = 'estructura';
+	$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	$conexion = 'sicapital';
+	$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	$conexion = 'centralUD';
+	$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	$conexion = 'argo_contratos';
+	$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	$conexion = 'core_central';
+	$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	$conexion = 'framework';
+	$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	
+	//*************************************************************************** DBMS *******************************
+	//****************************************************************************************************************
+	
+	
 	
 	
 	//-------------------------------------------------
@@ -29,12 +54,12 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 		
 		
 		$cadena_sql = $this->sql->getCadenaSql ( "consultar_tipo_proveedor", $_REQUEST['parametro1'] );
-		$resultadoTipo = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		$resultadoTipo = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 		
 		if($resultadoTipo[0]['tipopersona'] == 'JURIDICA'){
 		
 			$cadena_sql = $this->sql->getCadenaSql ( "informacion_por_proveedor_juridica", $_REQUEST['parametro1'] );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$resultado = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 		
 			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $_REQUEST['parametro1'] );
 			$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
@@ -45,7 +70,7 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 		
 		
 			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $_REQUEST['parametro1'] );
-			$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$resultadoMovil = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			$resultado[0][48] = $resultadoMovil[0]['numero_tel'];
 			$resultado[0]['movil_empresa'] = $resultadoMovil[0]['numero_tel'];
 		
@@ -60,10 +85,10 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 		
 		}else if($resultadoTipo[0]['tipopersona'] == 'NATURAL'){
 			$cadena_sql = $this->sql->getCadenaSql ( "informacion_por_proveedor_natural", $_REQUEST['parametro1'] );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$resultado = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 		
 			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $_REQUEST['parametro1'] );
-			$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$resultadoTel = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			$resultado[0][26] = $resultadoTel[0]['numero_tel'];
 			$resultado[0]['telefono_persona_natural'] = $resultadoTel[0]['numero_tel'];
 			$resultado[0][27] = $resultadoTel[0]['extension'];
@@ -71,7 +96,7 @@ if ( isset($_REQUEST ['servicio']) && $_REQUEST ['servicio'] != '') {
 		
 		
 			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $_REQUEST['parametro1'] );
-			$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$resultadoMovil = $centralUDRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			$resultado[0][28] = $resultadoMovil[0]['numero_tel'];
 			$resultado[0]['movil_persona_natural'] = $resultadoMovil[0]['numero_tel'];
 		

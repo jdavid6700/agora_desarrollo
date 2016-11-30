@@ -42,8 +42,36 @@ class registrarForm {
 		$tiempo = $_REQUEST ['tiempo'];
 		
 		// lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
+		
+		
 
                 $seccion ['tiempo'] = $tiempo;
 		
@@ -52,7 +80,7 @@ class registrarForm {
                 $_REQUEST['usuario']=isset($_REQUEST['usuario'])?$_REQUEST['usuario']:$_REQUEST['id_usuario'];
                 $parametro['id_usuario']=$_REQUEST['usuario'];
                 $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $parametro);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
