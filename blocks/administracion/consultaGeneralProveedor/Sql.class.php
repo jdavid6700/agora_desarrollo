@@ -1083,31 +1083,31 @@ class Sql extends \Sql {
 					/* CIIU */
 				case "ciiuDivision" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_division,";
-					$cadenaSql .= "	nombre";
+					$cadenaSql .= " id_division AS id_division,";
+					$cadenaSql .= "	id_division||' - ('||nombre||')' AS  nombre";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " core.ciiu_division";
-					$cadenaSql .= " ORDER BY nombre";
+					$cadenaSql .= " ORDER BY id_division";
 					break;
-						
+				
 				case "ciiuGrupo" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_clase,";
-					$cadenaSql .= "	nombre";
+					$cadenaSql .= " id_clase AS id_clase,";
+					$cadenaSql .= "	id_clase||' - ('||nombre||')' AS  nombre";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " core.ciiu_clase";
-					$cadenaSql .= " WHERE division ='" . $variable . "'";
-					$cadenaSql .= " ORDER BY nombre";
+					$cadenaSql .= " WHERE (division)::int ='" . $variable . "'";
+					$cadenaSql .= " ORDER BY id_clase";
 					break;
-						
+				
 				case "ciiuClase" :
 					$cadenaSql = "SELECT";
-					$cadenaSql .= " id_subclase,";
-					$cadenaSql .= "	nombre";
+					$cadenaSql .= " id_subclase AS id_subclase,";
+					$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " core.ciiu_subclase";
-					$cadenaSql .= " WHERE clase ='" . $variable . "'";
-					$cadenaSql .= " ORDER BY nombre";
+					$cadenaSql .= " WHERE (clase)::int ='" . $variable . "'";
+					$cadenaSql .= " ORDER BY id_subclase";
 					break;
 						
 				case 'buscarPais' :
