@@ -69,14 +69,14 @@ class Configurador {
 
         $this->setMainConfig();
         $this->fabricaConexiones->setConfiguracion($this->configuracion);
-
+		
         // Crear un recurso llamado "configuracion"
         $resultado = $this->fabricaConexiones->setRecursoDB('', 'configuracion');
-
+		
         if ($resultado) {
             $this->conexionDB = $this->fabricaConexiones->getRecursoDB('configuracion');
         }
-
+		
         if ($this->conexionDB && $this->rescatarVariablesDB()) {
             return true;
         }
