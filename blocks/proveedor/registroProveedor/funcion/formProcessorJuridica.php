@@ -1,8 +1,8 @@
 <?php
 
-namespace hojaDeVida\crearDocente\funcion;
+namespace proveedor\registroProveedor\funcion;
 
-use hojaDeVida\crearDocente\funcion\redireccionar;
+use proveedor\registroProveedor\funcion\redireccionar;
 
 include_once ('redireccionar.php');
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -17,18 +17,46 @@ class Formulario {
 	var $miFuncion;
 	var $miSql;
 	var $conexion;
+	var $miLogger;
 	
-	function __construct($lenguaje, $sql, $funcion) {
+	function __construct($lenguaje, $sql, $funcion, $miLogger) {
 		
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
 		$this->lenguaje = $lenguaje;
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
+		$this->miLogger= $miLogger;
+
 	}
 	function procesarFormulario() {
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -36,7 +64,32 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
-		//Guardar RUT adjuntado Persona Natural
+		
+		
+		
+		if(isset($_REQUEST['nombreEmpresa'])){$_REQUEST['nombreEmpresa']=mb_strtoupper($_REQUEST['nombreEmpresa'],'utf-8');}
+		if(isset($_REQUEST['asesorComercial'])){$_REQUEST['asesorComercial']=mb_strtoupper($_REQUEST['asesorComercial'],'utf-8');}
+		if(isset($_REQUEST['primerApellido'])){$_REQUEST['primerApellido']=mb_strtoupper($_REQUEST['primerApellido'],'utf-8');}
+		if(isset($_REQUEST['segundoApellido'])){$_REQUEST['segundoApellido']=mb_strtoupper($_REQUEST['segundoApellido'],'utf-8');}
+		if(isset($_REQUEST['primerNombre'])){$_REQUEST['primerNombre']=mb_strtoupper($_REQUEST['primerNombre'],'utf-8');}
+		if(isset($_REQUEST['segundoNombre'])){$_REQUEST['segundoNombre']=mb_strtoupper($_REQUEST['segundoNombre'],'utf-8');}
+		if(isset($_REQUEST['cargo'])){$_REQUEST['cargo']=mb_strtoupper($_REQUEST['cargo'],'utf-8');}
+		if(isset($_REQUEST['profesion'])){$_REQUEST['profesion']=mb_strtoupper($_REQUEST['profesion'],'utf-8');}
+		if(isset($_REQUEST['especialidad'])){$_REQUEST['especialidad']=mb_strtoupper($_REQUEST['especialidad'],'utf-8');}
+		if(isset($_REQUEST['descripcion'])){$_REQUEST['descripcion']=mb_strtoupper($_REQUEST['descripcion'],'utf-8');}
+		
+
+		/*
+		$id_proveedor = true; 
+				 $id_representante = true; 
+				 $id_TelefonoFijo = true; 
+				 $resultadoTelefonoFijo = true; 
+				 $resultadoPersonaNatural = true; 
+				 $resultadoProveedorxRepresentante = true; 
+		$resultadoPersonaJuridica = true; 
+		*/
+
+		//Guardar RUT adjuntado Persona Juridica*********************************************************************
 		$_REQUEST ['destino'] = '';
 		// Guardar el archivo
 		if ($_FILES) {			
@@ -69,14 +122,17 @@ class Formulario {
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
 		}
-
+		//************************************************************************************************************
+		
+		
+		
 
 		unset($resultado);
 		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
 		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['nit']);
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 
-		if ($resultado) {
+		if ($resultadoVerificar) {
 			//El proveedor ya existe
 			redireccion::redireccionar ( 'existeProveedor',  $_REQUEST ['nit']);
 			exit();    
@@ -181,7 +237,8 @@ class Formulario {
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
 				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
 				
-				/*$datosTelefonoMovilPersonaProveedor = array (
+				/*
+				$datosTelefonoMovilPersonaProveedor = array (
 						'num_telefono' => $_REQUEST['movil'],
 						'extension_telefono' => null,
 						'tipo' => '2'
@@ -196,7 +253,7 @@ class Formulario {
 				);
 				
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoA);
-				$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				$resultadoTelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				/*
 				$datosTelefonoProveedorTipoB = array (
 						'fki_id_tel' => $id_TelefonoMovil[0][0],
@@ -207,6 +264,36 @@ class Formulario {
 				$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				*/
 				
+				
+				
+				
+				
+				//****************************************************************************************************************************
+				$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
+				
+				$datosInformacionProveedorPersonaNaturalRepresentante = array (
+						'tipoPersona' => 'NATURAL',
+						'numero_documento' => $_REQUEST['numeroDocumento'],
+						'nombre_proveedor' => $nombrePersonaRepre,
+						'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
+						'direccion_contacto' => $_REQUEST['direccion'],
+						'correo_contacto' => $_REQUEST['correoPer'],
+						'web_contacto' => '',
+						'nom_asesor_comercial_contacto' => '',
+						'tel_asesor_comercial_contacto' => '',
+						'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],//**** INICIAL = al de la EMPRESA ****
+						'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
+						'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
+						'anexo_rut' => null,
+						'descripcion_proveedor' => '',
+						'fecha_registro' => $fechaActual,
+						'fecha_modificación' => $fechaActual,
+						'id_estado' => '2' //Estado Inactivo
+				);
+				//Guardar datos PROVEEDOR Representante
+				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
+				$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
+				//****************************************************************************************************************************
 				
 				
 				
@@ -245,13 +332,16 @@ class Formulario {
 						'dependiente_hijo_menos23_estudiando' => 'FALSE',
 						'dependiente_hijo_mas23_discapacitado' => 'FALSE',
 						'dependiente_conyuge' => 'FALSE',
-						'dependiente_padre_o_hermano' => 'FALSE'
+						'dependiente_padre_o_hermano' => 'FALSE',
+						'id_eps' => null,
+						'id_fondo_pension' => null,
+						'id_caja_compensacion' => null
 				);
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
 				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
-				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
 				
 				
@@ -264,7 +354,7 @@ class Formulario {
 				 );
 				
 				 $cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-				 $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				 $resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				 
 				
 				 
@@ -433,41 +523,139 @@ class Formulario {
 				 
 				 //Guardar datos PROVEEDOR JURIDICA
 				 $cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
-				 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
+				 $resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
-				if ($resultado) {
-						//Insertar datos en la tabla USUARIO
-						$_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['nit'] );
-						$_REQUEST ["tipo"] = 2;//usuario Normal
-						$_REQUEST ["rolMenu"] = 9;//MENU usuario proveedor
-						$_REQUEST ["estado"] = 2;//Para solicitar cambio de contraseña
-						$_REQUEST ["nombre"] = $_REQUEST['nombreEmpresa'];
-						$_REQUEST ["apellido"] = 'EMPRESA';
+				 /*
+				 $id_proveedor = true; 
+				 $id_representante = true; 
+				 $id_TelefonoFijo = true; 
+				 $resultadoTelefonoFijo = true; 
+				 $resultadoPersonaNatural = true; 
+				 $resultadoProveedorxRepresentante = true; 
+				 $resultadoPersonaJuridica = true; 
+				 */
+
+				if ( $id_proveedor && $id_representante && $id_TelefonoFijo && $resultadoTelefonoFijo && $resultadoPersonaNatural && $resultadoProveedorxRepresentante && $resultadoPersonaJuridica) {
+										
+
 								
-								//FALTA EL CAMPO DEL MENU
-		
+								//****************************************************************
+								$_REQUEST['identificacion'] = $_REQUEST['nit'];
+								$_REQUEST['tipo_identificacion'] = "NIT";
+								$_REQUEST['nombres'] = "EMPRESA";
+								$_REQUEST['apellidos'] = $_REQUEST['nombreEmpresa'];
+							    //$_REQUEST['correo'] = $_REQUEST['correo'];
+							    //$_REQUEST['telefono'] = $_REQUEST['telefono'];
+							    $_REQUEST['subsistema'] = 2;
+							    $_REQUEST['perfil'] = 7;
+								$_REQUEST['fechaFin'] = "2020-12-12";
+								//****************************************************************
+
+
 						
-						$datosRegistroUsuario = array (
-								'num_documento' => $_REQUEST ['nit'],
-								'contrasena' => $_REQUEST ["contrasena"],
-								'tipo' => $_REQUEST ["tipo"],
-								'rolMenu' => $_REQUEST ["rolMenu"],
-								'estado' => $_REQUEST ["estado"],
-								'nombre' => $_REQUEST ["nombre"],
-								'apellido' => $_REQUEST ["apellido"],
-								'correo' => $_REQUEST['correo'],
-								'telefono' => $_REQUEST['telefono']
-						);
-						
-						
-						$cadenaSql = $this->miSql->getCadenaSql ( "registrarUsuario", $datosRegistroUsuario );
-						$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso'); 
+								$caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
+						        $num = '1234567890';
+						        $caracter = '=_#$-';
+						        $numerodeletras=5; 
+						        $pass = "";
+						        $keycar=$keyNum= "";
+						        for($i=0;$i<$numerodeletras;$i++)
+						            {$pass .= substr($caracteres,rand(0,strlen($caracteres)),1); }
+
+						        $maxCar = strlen($caracter)-1;
+						        $maxNum = strlen($num)-1;
+
+						        for($j=0;$j < 1;$j++)
+						               { $keycar .= $caracter{mt_rand(0,$maxCar)};}       
+						        for($k=0;$k < 2;$k++)
+						               { $keyNum .= $num{mt_rand(0,$maxNum)};}       
+						        $pass=$pass.$keycar.$keyNum;       
+						        $password = $this->miConfigurador->fabricaConexiones->crypto->codificarClave ( $pass );
+						        $hoy = date("Y-m-d");
+
+								$arregloDatos = array(
+							                              'id_usuario'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],
+							                              'nombres'=>$_REQUEST['nombres'],
+							                              'apellidos'=>$_REQUEST['apellidos'],
+							                              'correo'=>$_REQUEST['correo'],
+							                              'telefono'=>$_REQUEST['telefono'],
+							                              'subsistema'=>$_REQUEST['subsistema'],
+							                              'perfil'=>$_REQUEST['perfil'],
+							                              'password'=>$password,
+							                              'pass'=>$pass,
+							                              'fechaIni'  =>$hoy,
+							                              'fechaFin'  =>$_REQUEST['fechaFin'],  
+							                              'identificacion'=>$_REQUEST['identificacion'],
+							                              'tipo_identificacion'=>$_REQUEST['tipo_identificacion'],  );
+
+
+					
+						            
+
+						        $this->cadena_sql = $this->miSql->getCadenaSql("insertarUsuario", $arregloDatos);
+						        $resultadoEstado = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+
+
+						        $this->cadena_sql = $this->miSql->getCadenaSql("insertarPerfilUsuario", $arregloDatos);
+						        $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+						                
+						                
+						        $parametro['id_usuario'] = $arregloDatos['id_usuario'];
+						        $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
+						        $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+						                
+						                $log = array('accion'=>"REGISTRO PERSONA JURIDICA",
+						                            'id_registro'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],
+						                            'tipo_registro'=>"GESTION USUARIO JURIDICA",
+						                            'nombre_registro'=>"id_usuario=>".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'].
+						                                               "|identificacion=>".$_REQUEST['identificacion'].
+						                                               "|tipo_identificacion=>".$_REQUEST['tipo_identificacion'].
+						                                               "|nombres=>".$_REQUEST['nombres'].
+						                                               "|apellidos=>".$_REQUEST['apellidos'].
+						                                               "|correo=>".$_REQUEST['correo'].
+						                                               "|telefono=>".$_REQUEST['telefono'].
+						                                               "|subsistema=>".$_REQUEST['subsistema'].
+						                                               "|perfil=>".$_REQUEST['perfil'].
+						                                               "|fechaIni=>".$hoy.
+						                                               "|fechaFin=>".$_REQUEST['fechaFin'],
+						                            'descripcion'=>"Registro de nuevo Usuario ".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion']." con perfil ".$resultadoPerfil[0]['rol_alias'],
+						                           );
+								
+								
+
+						        $this->miLogger->log_usuario($log);
+
+						        $arregloDatos['perfilUs'] = $resultadoPerfil[0]['rol_alias'];
+
+								 $datosRegistroUsuario = array (
+								 		'tipo_identificacion'=>$_REQUEST['tipo_identificacion'],
+										'num_documento' => $_REQUEST ['nit'],
+										'contrasena' => $password,
+										'generadaPass' => $pass,
+										'tipo' => "Tercero",
+										'rolMenu' => "Proveedor",
+										'estado' => "Inactivo",
+										'nombre' => $_REQUEST ["nombres"],
+										'apellido' => $_REQUEST ["apellidos"],
+										'correo' => $_REQUEST['correo'],
+										'telefono' => $_REQUEST['telefono'],
+										'id_usuario' => $arregloDatos['id_usuario']
+								);
 						
 
 		
-								redireccion::redireccionar ( 'registroProveedor',  $datosRegistroUsuario);
-								exit();
+								if($resultadoEstado && $resultadoPerfil){
+
+									redireccion::redireccionar ( 'registroProveedor',  $datosRegistroUsuario);
+									exit();
+
+								}else{
+
+									redireccion::redireccionar ( 'noregistroUsuario',  $_REQUEST['usuario']);
+									exit();
+
+								}
+								
 				} else {
 								redireccion::redireccionar ( 'noregistro',  $_REQUEST['usuario']);
 								exit();
@@ -490,8 +678,7 @@ class Formulario {
 	}
 }
 
-$miRegistrador = new Formulario ( $this->lenguaje, $this->sql, $this->funcion );
-
+$miRegistrador = new Formulario ( $this->lenguaje, $this->sql, $this->funcion,$this->miLogger );
 $resultado = $miRegistrador->procesarFormulario ();
 
 ?>

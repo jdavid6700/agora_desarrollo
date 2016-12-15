@@ -20,8 +20,34 @@ $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 
 $nombreFormulario = $esteBloque ["nombre"];
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+
+
 
 {
 	$tab = 1;
@@ -59,10 +85,63 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 }
 
 unset ( $resultado );
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContratos", $_REQUEST ['usuario'] );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
-if ($resultado) {
+$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarContratos", $resultadoDoc[0][0] );
+$resultadoCont = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+//var_dump(count($resultadoCont));
+$i = 0;
+$contratos = array();
+
+while($i < count($resultadoCont)){
+	
+	$datosContrato = array (
+			'num_contrato' => $resultadoCont[$i]['numero_contrato'],
+			'vigencia' => $resultadoCont[$i]['vigencia'],
+			'unidad_ejecutora' => $resultadoCont[$i]['unidad_ejecutora']
+	);
+	
+	$datosSolicitudNecesidad = array (
+			'idSolicitud' => $resultadoCont[$i]['id_objeto'],
+			'vigencia' => $resultadoCont[$i]['vigencia']
+	);
+	
+	
+	//*********************************************************************************************************************************
+	$cadena_sql = $this->sql->getCadenaSql ( "estadoContratoAgora", $datosContrato);
+	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	if(isset($resultado)) {
+		$estadoSolicitud = $resultadoCont[$i]['estado'];
+	
+	
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarActaInicio", $datosContrato);
+		$resultadoActaInicio = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+		$fechaInicio[$i] = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_inicio']));
+		$fechaFin[$i] = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_fin']));
+	
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarNovedadesContrato", $datosContrato);
+		$resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	}
+	//***************CONTRATOS RELACIONADOS******************************************************************************************
+	
+	
+	$cadena_sql = $this->sql->getCadenaSql ( "listaContratoXNumContrato", $datosContrato);
+	$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	
+	array_push($contratos, $resultado[0]);
+	
+	$i++;
+}
+
+
+if ($contratos && $resultadoCont) {
 	
 	// -----------------Inicio de Conjunto de Controles----------------------------------------
 	$esteCampo = "marcoDatosResultadoParametrizar";
@@ -90,7 +169,9 @@ if ($resultado) {
 			
 			
 <?php
-	foreach ( $resultado as $dato ) :
+	$j = 0;
+	foreach ( $resultadoCont as $dato ) :
+		
 		
 		$variable = "pagina=" . $miPaginaActual;
 		$variable .= "&action=" . $esteBloque ["nombre"];
@@ -98,11 +179,15 @@ if ($resultado) {
 		$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 		$variable .= "&opcion=certContrato";
 		$variable .= "&idContrato=" . $dato ['id_contrato'];
+		$variable .= "&docProveedor=" . $dato ['num_documento'];
+		$variable .= "&nomProveedor=" . $dato ['nom_proveedor'];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$hoy = date ( "Y-m-d" );
 		$msj = '';
-		if ($hoy > $dato ['fecha_finalizacion']) {
+		
+		if (strtotime($hoy) > strtotime($fechaFin[$j])) {
+			
 			$certUniversidadImagen = 'pdf.png';
 			
 			switch ($dato ['estado']) {
@@ -144,10 +229,10 @@ if ($resultado) {
 		
 		echo "<tr>";
 		echo "<td>" . $dato ['numero_contrato'] . "</td>";
-		echo "<td align='center'>" . $dato ['fecha_inicio'] . "</td>";
-		echo "<td align='center'>" . $dato ['fecha_finalizacion'] . "</td>";
-		$valorContrto = number_format ( $resultado [0] ['valor'] );
-		echo "<td align='right'>$ " . $valorContrto . "</td>";
+		echo "<td align='center'>" . $fechaInicio[$j] . "</td>";
+		echo "<td align='center'>" . $fechaFin[$j] . "</td>";
+		/*$valorContrto = number_format ( $resultado [0] ['valor'] );*/
+		echo "<td align='right'>$ " . 0/*$valorContrto*/ . "</td>";
 		echo "<td class='text-center'>";
 		echo "<a href='" . $variable . "'>                        
 														<img src='" . $rutaBloque . "/images/" . $certUniversidadImagen . "' width='15px'> 
@@ -162,6 +247,7 @@ if ($resultado) {
 		 */
 		echo "<td align='left'>" . $msj . "</td>";
 		echo "</tr>";
+		$j++;
 	endforeach
 	;
 

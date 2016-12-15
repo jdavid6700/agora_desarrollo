@@ -80,6 +80,31 @@ class Frontera {
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
+
+                case "historicos":
+                     include_once($this->ruta . "/formulario/tabs/tabHistoricoAnual.php");
+                    break;
+
+                case "proSelec":
+                     include_once($this->ruta . "/formulario/tabs/tabProvSeleccionados.php");
+                    break;   
+                
+                case "proTipA":
+                     include_once($this->ruta . "/formulario/tabs/tabProveedorTipo.php");
+                    break;   
+
+                case "proTipB":
+                     include_once($this->ruta . "/formulario/tabs/tabProveedorTipoB.php");
+                    break;   
+                    
+                case "proTipC":
+                     include_once($this->ruta . "/formulario/tabs/tabProveedorTipoC.php");
+                    break;  
+
+                case "proContra":
+                     include_once($this->ruta . "/formulario/tabs/tabProcesoContratacion.php");
+                    break;       
+
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";

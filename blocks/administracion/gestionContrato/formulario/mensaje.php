@@ -249,7 +249,29 @@ $solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqued
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
-    }
+     } else if($_REQUEST['mensaje'] == 'noSupervisor') {
+        	$tipo = 'error';
+        	$mensaje = "No se pudo relacionar
+        		correctamente el CONTRATO en <b>AGORA</b> </br> El Supervisor no se encuentra registrado en el Sistema. <br>";
+        	$boton = "regresar";
+        
+        	$valorCodificado = "pagina=".$miPaginaActual;
+        	$valorCodificado.="&opcion=nuevo";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        	 
+     } else if($_REQUEST['mensaje'] == 'noNecesidad') {
+        	$tipo = 'error';
+        	$mensaje = "No se pudo relacionar
+        		correctamente el CONTRATO en <b>AGORA</b> </br> La Necesidad no se encuentra relacionada en el Sistema. <br>";
+        	$boton = "regresar";
+        
+        	$valorCodificado = "pagina=".$miPaginaActual;
+        	$valorCodificado.="&opcion=nuevo";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        	 
+     }
     
     
 

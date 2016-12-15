@@ -31,65 +31,47 @@ class Sql extends \Sql {
 			/**
 			 * Clausulas específicas
 			 */
-			case "idioma" :
-				
+                        case "idioma":
+
 				$cadenaSql = "SET lc_time_names = 'es_ES' ";
-				break;
-				
-			case "buscarUsuario" :
-				$cadenaSql = 'SELECT ';
-				$cadenaSql .= 'id_usuario, ';
-				$cadenaSql .= 'nombre, ';
-				$cadenaSql .= 'apellido, ';
-				$cadenaSql .= 'correo, ';
-				$cadenaSql .= 'telefono, ';
-				$cadenaSql .= 'imagen, ';
-				$cadenaSql .= 'clave, ';
-				$cadenaSql .= 'tipo, ';
-				$cadenaSql .= 'estilo, ';
-				$cadenaSql .= 'idioma, ';
-				$cadenaSql .= 'estado ';
-				$cadenaSql .= 'FROM ';
-				$cadenaSql .= $prefijo . 'usuario ';
-				$cadenaSql .= "WHERE ";
-				$cadenaSql .= "id_usuario = '" . trim ( $variable ["id_usuario"] ) . "' ";
-				break;
-			
-			case "consultarUsuarios" :
-				
+			break;
+                    
+                        case "consultarUsuarios":
+                                
 				$cadenaSql = "SELECT usu.id_usuario, ";
-				$cadenaSql .= "usu.nombre, ";
-				$cadenaSql .= "usu.apellido, ";
-				$cadenaSql .= " usu.correo, ";
-				$cadenaSql .= " usu.telefono, ";
-				$cadenaSql .= " usu.tipo ,";
-				$cadenaSql .= " (CASE WHEN usu.tipo='0' THEN 'Anonimo' ELSE 'Conocido' END) nivel, ";
-				$cadenaSql .= " est.estado_registro_alias estado, ";
-				$cadenaSql .= " usu.identificacion, ";
-				$cadenaSql .= " usu.tipo_identificacion, ";
-				$cadenaSql .= " tiden.tipo_nombre, ";
-				$cadenaSql .= " usu.fecha_registro, ";
-				$cadenaSql .= " usu.clave  ";
-				$cadenaSql .= "FROM " . $prefijo . "usuario usu ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "estado_registro est ";
-				$cadenaSql .= "ON est.estado_registro_id=usu.estado ";
-				$cadenaSql .= "INNER JOIN " . $prefijo . "tipo_identificacion tiden ";
-				$cadenaSql .= "ON tiden.tipo_identificacion=usu.tipo_identificacion ";
-				if (isset ( $variable ['id_usuario'] ) && $variable ['id_usuario'] != '') {
-					$cadenaSql .= " WHERE ";
-					$cadenaSql .= " usu.id_usuario='" . $variable ['id_usuario'] . "'";
-				}
-				$cadenaSql .= " ORDER BY id_usuario";
-				break;
-			
+                            	$cadenaSql .= "usu.nombre, ";
+                            	$cadenaSql .= "usu.apellido, ";
+                                $cadenaSql .= " usu.correo, ";
+                                $cadenaSql .= " usu.telefono, ";
+                                $cadenaSql .= " usu.tipo ,";
+                                $cadenaSql .= " (CASE WHEN usu.tipo='0' THEN 'Anonimo' ELSE 'Conocido' END) nivel, ";
+                                $cadenaSql .= " est.estado_registro_alias estado, ";
+                                $cadenaSql .= " usu.identificacion, ";
+                                $cadenaSql .= " usu.tipo_identificacion, ";
+                                $cadenaSql .= " tiden.tipo_nombre, ";
+                                $cadenaSql .= " usu.fecha_registro, ";
+                                $cadenaSql .= " usu.clave  ";
+                                $cadenaSql .= "FROM ".$prefijo."usuario usu ";
+                                $cadenaSql .= "INNER JOIN ".$prefijo."estado_registro est ";
+                                $cadenaSql .= "ON est.estado_registro_id=usu.estado ";
+                                $cadenaSql .= "INNER JOIN ".$prefijo."tipo_identificacion tiden ";
+                                $cadenaSql .= "ON tiden.tipo_identificacion=usu.tipo_identificacion ";
+                                if(isset($variable['id_usuario']) && $variable['id_usuario']!='')
+                                    { $cadenaSql .= " WHERE ";
+                                      $cadenaSql .= " usu.id_usuario='".$variable['id_usuario']."'"; 
+                                    }    
+                                $cadenaSql .= " ORDER BY id_usuario";
+			break;                       
+                    
+                    
 			case "modificaClave" :
-				$cadenaSql = "UPDATE ";
-				$cadenaSql .= $prefijo . "usuario ";
-				$cadenaSql .= "SET ";
-				$cadenaSql .= "clave='" . $variable ['contrasena'] . "', ";
-				$cadenaSql .= "estado = 1 ";
-				$cadenaSql .= "WHERE ";
-				$cadenaSql .= "id_usuario = '" . $variable ['id_usuario'] . "' ";
+				 $cadenaSql = "UPDATE ";
+				 $cadenaSql .= $prefijo."usuario ";
+				 $cadenaSql .= "SET ";
+				 $cadenaSql .= "clave='".$variable['contrasena']."', ";
+				 $cadenaSql .= "estado = 1 ";
+				 $cadenaSql .= "WHERE ";
+				 $cadenaSql .= "id_usuario = '".$variable['id_usuario']."' ";
 				break;
                             			
 			case "rescatarValorSesion" :

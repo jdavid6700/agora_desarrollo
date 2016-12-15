@@ -32,8 +32,8 @@ class CambiarEstado {
 
     function procesarFormulario() {
 // 		var_dump ( $_REQUEST );
-        $conexion="estructura";
-        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         //$miSesion = Sesion::singleton();
 	//$usuarioSoporte = $miSesion->getSesionUsuarioId(); 
@@ -43,7 +43,7 @@ class CambiarEstado {
         $parametro['id_subsistema']=$_REQUEST['id_subsistema'];
         $parametro['rol_id']=$_REQUEST['rol_id'];
         $this->cadena_sql = $this->miSql->getCadenaSql("CambiarEstadoPerfil", $parametro);
-	$resultadoEstado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+	$resultadoEstado = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
 	
         if($resultadoEstado)
 	{	

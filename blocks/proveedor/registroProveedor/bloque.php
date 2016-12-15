@@ -1,6 +1,6 @@
 <?php
 
-namespace hojaDeVida\crearDocente;
+namespace proveedor\registroProveedor;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");

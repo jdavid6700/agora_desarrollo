@@ -124,6 +124,13 @@ class HtmlBase {
     
     const ANCHOCAJA = 'anchoCaja';
     
+    const TEXTOFONDO = 'textoFondo';
+    
+    const POSICIONIMAGEN = 'posicionImagen';
+    
+    const ENLACEIMAGEN = 'enlaceImagen';
+    
+    const SALTOLINEA = 'saltoLinea';
     /**
      * Atributos HTML
      * Se definen como constantes para evitar errores al duplicar
@@ -204,7 +211,8 @@ class HtmlBase {
     function campoSeguro($campo = '') {
         
         if (isset ( $_REQUEST ['tiempo'] )) {
-            $this->atributos ['tiempo'] = $_REQUEST ['tiempo'];
+            $this->atributos ['tiempo'] = (int) substr($_REQUEST['tiempo'], 0, -2);
+            $this->atributos ['tiempo'] =  $this->atributos ['tiempo'] * pow(10, 2);
         }else{
         	$this->atributos ['tiempo'] = '';
         }

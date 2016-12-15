@@ -42,10 +42,10 @@ class registrarForm {
 		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		// Limpia Items Tabla temporal
 		
@@ -109,7 +109,7 @@ class registrarForm {
 						' ' 
 				) 
 		);
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		// $atributos['miniRegistro']=;
 		$atributos ['baseDatos'] = "inventarios";
@@ -144,7 +144,7 @@ class registrarForm {
 		}
 		
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "sede" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -177,7 +177,7 @@ class registrarForm {
 		}
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "dependencias" );
 		
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		$atributos ['matrizItems'] = $matrizItems;
 		
 		// Utilizar lo siguiente cuando no se pase un arreglo:
@@ -258,7 +258,7 @@ class registrarForm {
 		$atributos ['anchoCaja'] = 24;
 		$atributos ['miEvento'] = '';
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscar_placa" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		
 		$arreglo = array (
 				array (
@@ -303,7 +303,7 @@ class registrarForm {
 		$atributos ['anchoCaja'] = 24;
 		$atributos ['miEvento'] = '';
 		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscar_serie" );
-		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+		$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 		
 		$arreglo = array (
 				array (

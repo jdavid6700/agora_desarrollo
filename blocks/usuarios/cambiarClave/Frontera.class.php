@@ -47,7 +47,7 @@ class Frontera {
 			switch ($_REQUEST ['opcion']) {
 
                             case "cambiarClave":
-                                include_once($this->ruta . "formulario/nuevo.php");
+                                include_once($this->ruta . "formulario/tabs/edita.php");
                                 break;
 
                             case "mensaje" :
@@ -56,7 +56,7 @@ class Frontera {
         		}
 		} else {
 			$_REQUEST ['opcion'] = "cambiarClave";
-			include_once ($this->ruta . "/formulario/nuevo.php");
+			include_once ($this->ruta . "/formulario/tabs/edita.php");
 		}
 	}
 }

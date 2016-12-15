@@ -128,7 +128,7 @@ function addClickEvent2(elem){
 }
 
 /**
- * a partir de un tipo de elemento con valores, retorna el nodo con la estructura definida
+ * a partir de un tipo de elemento con valores, retorna el nodo con la framework definida
  * en este caso el nodo son varias tablas con parámetros de configuración
  * @param {Object} elemento del DOM exactamente de la clase .icon-config.
  */

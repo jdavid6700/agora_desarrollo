@@ -42,8 +42,8 @@ class registrarForm {
 		$tiempo = $_REQUEST ['tiempo'];
 		
 		// lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexion = "framework";
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
                 $seccion ['tiempo'] = $tiempo;
 		
@@ -51,8 +51,8 @@ class registrarForm {
 
                 $_REQUEST['usuario']=isset($_REQUEST['usuario'])?$_REQUEST['usuario']:$_REQUEST['id_usuario'];
                 $parametro['id_usuario']=$_REQUEST['usuario'];
-                $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $parametro);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -67,7 +67,7 @@ class registrarForm {
 		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
-		$atributos ['marco'] = false;
+		$atributos ['marco'] = true;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -124,7 +124,7 @@ class registrarForm {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar']="required, minSize[1]";
+				$atributos ['validar']="required, minSize[5]";
                                 $atributos ['valor'] = $resultadoUsuarios[0]['id_usuario'];
 				//$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = true;
@@ -309,6 +309,7 @@ class registrarForm {
 			// ------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division ( "fin" );
 			
+			
 			// ------------------- SECCION: Paso de variables ------------------------------------------------
 			
 			/**
@@ -345,7 +346,7 @@ class registrarForm {
 			$atributos ["tipo"] = "hidden";
 			$atributos ['estilo'] = '';
 			$atributos ["obligatorio"] = false;
-			$atributos ['marco'] = true;
+			$atributos ['marco'] = false;
 			$atributos ["etiqueta"] = "";
 			$atributos ["valor"] = $valorCodificado;
 			echo $this->miFormulario->campoCuadroTexto ( $atributos );

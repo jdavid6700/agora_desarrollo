@@ -42,8 +42,8 @@ class registrarForm {
 		$tiempo = $_REQUEST ['tiempo'];
 		
 		// lineas para conectar base de d atos-------------------------------------------------------------------------------------------------
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexion = "framework";
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
                 $seccion ['tiempo'] = $tiempo;
 		
@@ -66,7 +66,7 @@ class registrarForm {
                 //datos usuario
                 $parametro['id_usuario']=$_REQUEST['id_usuario'];
                 $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 
                 // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -227,7 +227,7 @@ class registrarForm {
                                     {$atributos ['seleccion'] = $_REQUEST [$esteCampo];}
                                 else {	$atributos ['seleccion'] = - 1;}
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "subsistema",$app );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				// Utilizar lo siguiente cuando no se pase un arreglo:
 				// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';
@@ -257,7 +257,7 @@ class registrarForm {
                                     {$atributos ['seleccion'] = $_REQUEST [$esteCampo];}
                                 else {	$atributos ['seleccion'] = - 1;}
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultaPerfiles" );
-				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				$matrizItems = $frameworkRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
 				$atributos ['matrizItems'] = $matrizItems;
 				// Utilizar lo siguiente cuando no se pase un arreglo:
 				// $atributos['baseDatos']='ponerAquiElNombreDeLaConexión';

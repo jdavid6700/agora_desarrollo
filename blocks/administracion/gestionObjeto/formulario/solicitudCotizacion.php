@@ -22,6 +22,9 @@ $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 $valorCodificado = $cripto->codificar ( $valorCodificado );
 $directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" ) . "/imagen/";
 
+$conexion = "estructura";
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+
 // ------------------Division para las pestañas-------------------------
 $atributos ["id"] = "tabs";
 $atributos ["estilo"] = "";
@@ -31,9 +34,40 @@ unset ( $atributos );
 {
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
 	
+	
+	
+	if(isset($_REQUEST['tipoNecesidad'])){
+		
+		if($_REQUEST['tipoNecesidad'] == "SERVICIO"){
+			$tabMensaje = "tabConsultarConv";
+		}else{
+			$tabMensaje = "tabConsultar";
+		}
+		
+	}else{
+		
+		$datosSolicitudNecesidad = array (
+				'idSolicitud' => $_REQUEST['idSolicitud'],
+				'vigencia' => $_REQUEST['vigencia'],
+				'unidadEjecutora' => $_REQUEST['unidadEjecutora']
+		);
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
+		$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		if($resultadoNecesidadRelacionada[0]['tipo_necesidad'] == "SERVICIO"){
+			$tabMensaje = "tabConsultarConv";
+		}else{
+			$tabMensaje = "tabConsultar";
+		}
+		
+	}
+	
+	
+	
 	$items = array (
 			
-			"tabConsultar" => $this->lenguaje->getCadena ( "tabConsultar" )
+			"tabConsultar" => $this->lenguaje->getCadena ( $tabMensaje )
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";

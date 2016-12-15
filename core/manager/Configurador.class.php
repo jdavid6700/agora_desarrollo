@@ -28,7 +28,7 @@ class Configurador {
     public $configuracion;
 
     /**
-     * Fabrica de Conexiones a la base de datos de estructura
+     * Fabrica de Conexiones a la base de datos de framework
      *
      * @var ConectorBasicoDB
      */
@@ -138,7 +138,7 @@ class Configurador {
 
     /**
      * Método.
-     * Accede a la base de datos de estructura y rescata los valores
+     * Accede a la base de datos de framework y rescata los valores
      * almacenados en la tabla de configuración.
      *
      * @return number

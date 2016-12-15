@@ -39,7 +39,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $atributos["metodo"] = "POST";
     $atributos["nombreFormulario"] = $nombreFormulario;
     $atributos["tipoEtiqueta"] = 'inicio';
-    $atributos ['titulo'] = $this->lenguaje->getCadena ( $nombreFormulario );
+    $atributos ['titulo'] = '';
     $verificarFormulario = "1";
     echo $this->miFormulario->formulario($atributos);
 
@@ -82,6 +82,7 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         	
         	$Proceso = "la <b>Modificación</b>";
@@ -94,6 +95,7 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         	
         	$Proceso = "la <b>Modificación</b>";
@@ -111,6 +113,7 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         	
         }
@@ -127,18 +130,54 @@ if (!isset($GLOBALS["autorizado"])) {
         
  
     } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {
-        $tipo = 'success';
-        $mensaje =  $this->lenguaje->getCadena('mensajeCotizacion');
-        $boton = "regresar";
+            
         
-//INICIO enlace boton descargar resumen	
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
+		$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
+		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$datos = array (
+				'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+				'vigencia' => $objetoEspecifico[0]['vigencia'],
+				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+		);
+		
+		$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		 
+		 
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
+		$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		
+		$tipo = 'success';
+		if($objetoEspecifico[0]['tipo_necesidad'] == 'SERVICIO'){
+			$convocatoria = true;
+			$mensaje =  $this->lenguaje->getCadena('mensajeConvocatoria');
+			
+			$cadenaSql = $this->sql->getCadenaSql ( 'consultarNBCImp', $_REQUEST["idObjeto"]  );
+			$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		}else{
+			$convocatoria = false;
+			$mensaje =  $this->lenguaje->getCadena('mensajeCotizacion');
+		}
+		$boton = "regresar";
+		
+		//INICIO enlace boton descargar resumen
 		$variableResumen = "pagina=" . $miPaginaActual;
 		$variableResumen.= "&action=".$esteBloque["nombre"];
 		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
 		$variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
-        $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
+		$variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------
@@ -147,136 +186,127 @@ if (!isset($GLOBALS["autorizado"])) {
 		echo $this->miFormulario->division("inicio",$atributos);
 		
 		$enlace = "<a href='".$variableResumen."'>";
-		$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
-		$enlace.="</a><br><br>";       
+		if($convocatoria){
+			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Información Convocatoria ";
+		}else{
+			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
+		}
+		$enlace.="</a><br><br>";
 		echo $enlace;
 		//------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division("fin"); 		
-//FIN enlace boton descargar resumen        
-        
+		echo $this->miFormulario->division("fin");
+		//FIN enlace boton descargar resumen
 		
-//Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
-$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-//Buscar usuario para enviar correo
-$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
-$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-$datos = array (
-		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
-		'vigencia' => $objetoEspecifico[0]['vigencia'],
-		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
-);
-
-$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
-$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
- 
- 
-$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
-$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-$contenidoAct = '<br>';
-
-foreach ($resultadoActividades as $dato):
-	$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
-	$contenidoAct .= "<br>";
-endforeach;
-
-if(!isset($solicitudNecesidad [0]['OBJETO'])) $solicitudNecesidad [0]['OBJETO'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['JUSTIFICACION'])) $solicitudNecesidad [0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
-
-//INICIO ENVIO DE CORREO AL USUARIO
-    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
-
-    include_once($rutaClases."/mail/class.phpmailer.php");
-    include_once($rutaClases."/mail/class.smtp.php");
-    
-	$mail = new PHPMailer();     
-
-	//configuracion de cuenta de envio
-	$mail->Host     = "200.69.103.49";
-	$mail->Mailer   = "smtp";
-	$mail->SMTPAuth = true;
-	$mail->Username = "condor@udistrital.edu.co";
-	$mail->Password = "CondorOAS2012";
-	$mail->Timeout  = 1200;
-	$mail->Charset  = "utf-8";
-	$mail->IsHTML(true);
-
-        $mail->From='agora@udistrital.edu.co';
-        $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
-        $mail->Subject="Solicitud de Cotización BANCO PROVEEDORES UDISTRITAL";
-        
-        
-        $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
-        $contenido.= "<b>Objeto Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['OBJETO'] . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Justificación Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['JUSTIFICACION'] . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Dependencia Solicitante : </b>" . $solicitudNecesidad [0]['DEPENDENCIA']. "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Responsable : </b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'];
-        $contenido.= "<br>";
-        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado, para lo cual 
-        		         puede ingresar al Banco de Proveedores.</p>";
-        $contenido.= "<br>";
-        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
-        $contenido.= "<br>";
-        $contenido.= "<br>";
-        $contenido.= "Cordialmente :<br>";
-		$contenido.= "<b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "</b>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
 		
-        $mail->Body=$contenido;
-        
-		foreach ($resultadoProveedor as $dato):
-			//$to_mail=$dato ['correo'];
-		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
-			$mail->AddAddress($to_mail);
-			//$mail->Send();
-			
-			if(!$mail->Send()) {
-    			echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
-		    }
-			
+		
+		
+		$contenidoAct = '<br>';
+		
+		foreach ($resultadoActividades as $dato):
+			$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
+			$contenidoAct .= "<br>";
 		endforeach;
 		
-        $mail->ClearAllRecipients();
-        $mail->ClearAttachments();
-        
-        /*
-        $name = "JOSE";
-        $email_address = "davidencolr6700@hotmail.com";
-        $phone = "4565845";
-        $message = $contenido;
-        
-        // Create the email and send the message
-        $to = 'jdavid.6700@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
-        $email_subject = "Formulario de contacto:  $name";
-        $email_body = "Ha recibido un nuevo mensaje de su formulario de contacto.\n\n"."Aqui tienes los detalles:\n\nNombre: $name\n\nEmail: $email_address\n\nMensaje:\n$message";
-        $headers = "From: agora@udistrital.edu.co"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-        $headers .= "Reply-To: $email_address";
-        mail($to,$email_subject,$email_body,$headers);
-        */
-        
-        
-//FIN ENVIO DE CORREO AL USUARIO                
+		if(!isset($solicitudNecesidad [0]['OBJETO'])) $solicitudNecesidad [0]['OBJETO'] = "SIN INFORMACIÓN ";
+		if(!isset($solicitudNecesidad [0]['JUSTIFICACION'])) $solicitudNecesidad [0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
+		if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
+		if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+		if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
+		
+		//INICIO ENVIO DE CORREO AL USUARIO
+		    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+		
+		    include_once($rutaClases."/mail/class.phpmailer.php");
+		    include_once($rutaClases."/mail/class.smtp.php");
+		    
+			$mail = new PHPMailer();     
+		
+			//configuracion de cuenta de envio
+			$mail->Host     = "200.69.103.49";
+			$mail->Mailer   = "smtp";
+			$mail->SMTPAuth = true;
+			$mail->Username = "condor@udistrital.edu.co";
+			$mail->Password = "CondorOAS2012";
+			$mail->Timeout  = 1200;
+			$mail->Charset  = "utf-8";
+			$mail->IsHTML(true);
+		
+		        $mail->From='agora@udistrital.edu.co';
+		        $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
+		        $mail->Subject="Solicitud de Cotización BANCO PROVEEDORES UDISTRITAL";
+		        
+		        
+		        $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
+		        $contenido.= "<b>Objeto Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['OBJETO'] . "<br>";
+		        $contenido.= "<br>";
+		        $contenido.= "<b>Justificación Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['JUSTIFICACION'] . "<br>";
+		        $contenido.= "<br>";
+		        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
+		        $contenido.= "<br>";
+		        
+		        if($convocatoria){
+		        	$contenido.= "<b>Profesión Relacionada en la Convocatoria (Núcleo Básico de Conocimiento SNIES): </b><br>" . $resultadoNBC[0]['id_nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
+		        	$contenido.= "<br>";
+		        }
+		        	
+		        $contenido.= "<b>Dependencia Solicitante : </b>" . $solicitudNecesidad [0]['DEPENDENCIA']. "<br>";
+		        $contenido.= "<br>";
+		        $contenido.= "<b>Responsable : </b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'];
+		        $contenido.= "<br>";
+		        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado, para lo cual 
+		        		         puede ingresar al Banco de Proveedores.</p>";
+		        $contenido.= "<br>";
+		        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
+		        $contenido.= "<br>";
+		        $contenido.= "<br>";
+		        $contenido.= "Cordialmente :<br>";
+				$contenido.= "<b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "</b>";
+				$contenido.= "<br>";
+				$contenido.= "<br>";
+				$contenido.= "<br>";
+				$contenido.= "<br>";
+				$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
+				
+		        $mail->Body=$contenido;
 
-        $valorCodificado = "pagina=".$miPaginaActual;
-        $valorCodificado.="&opcion=nuevo";
-        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        
+				foreach ($resultadoProveedor as $dato):
+					$to_mail=$dato ['correo'];
+				    //$to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
+					$mail->AddAddress($to_mail);
+					//$mail->Send();
+					
+					if(!$mail->Send()) {
+		    			echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
+				    }
+					
+				endforeach;
+				
+		        $mail->ClearAllRecipients();
+		        $mail->ClearAttachments();
+		        
+		        /*
+		        $name = "JOSE";
+		        $email_address = "davidencolr6700@hotmail.com";
+		        $phone = "4565845";
+		        $message = $contenido;
+		        
+		        // Create the email and send the message
+		        $to = 'jdavid.6700@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
+		        $email_subject = "Formulario de contacto:  $name";
+		        $email_body = "Ha recibido un nuevo mensaje de su formulario de contacto.\n\n"."Aqui tienes los detalles:\n\nNombre: $name\n\nEmail: $email_address\n\nMensaje:\n$message";
+		        $headers = "From: agora@udistrital.edu.co"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
+		        $headers .= "Reply-To: $email_address";
+		        mail($to,$email_subject,$email_body,$headers);
+		        */
+		        
+		        
+		//FIN ENVIO DE CORREO AL USUARIO                
+		
+		        $valorCodificado = "pagina=".$miPaginaActual;
+		        $valorCodificado.="&opcion=nuevo";
+		        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+		        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+		        
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
         $mensaje =  $this->lenguaje->getCadena('mensajeError');
@@ -323,6 +353,7 @@ if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad
         $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         
     }else if($_REQUEST['mensaje'] == 'registroActividad') {
@@ -330,8 +361,14 @@ if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad
         $mensaje = "Se registro la Actividad Económica<br >";
 		$mensaje .= "<strong>" . $_REQUEST['actividad'] . "</strong><br >";
         $boton = "regresar";
-        
+
         $actividades = true;
+        
+        if($_REQUEST['tipoNecesidad'] == 'SERVICIO'){
+        	$faltaNBC = true;
+        }else{
+        	$faltaNBC = false;
+        }
 
         $valorCodificado = "pagina=". $miPaginaActual;
         $valorCodificado.="&opcion=actividad";
@@ -342,7 +379,39 @@ if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad
         $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
         $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+        $valorCodificado.="&sigueNBC=".$faltaNBC;
+        
+    }else if($_REQUEST['mensaje'] == 'registroNucleo') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarNBC', $_REQUEST['nucleo']  );
+    	$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
+    	if($_REQUEST['modificarNBC']){
+    		$mensaje = "Se <b>Modificó</b> el Núcleo Básico de Conocimiento Relacionado<br >";
+    	}else{
+    		$mensaje = "Se <b>Registró</b> el Núcleo Básico de Conocimiento Relacionado<br >";
+    	}
+    	
+        $tipo = 'success';
+		$mensaje .= "<strong>" . $_REQUEST['nucleo'] ." - ". $resultadoNBC[0]['nombre'] . "</strong><br >";
+        $boton = "regresar";
+        
+        //$actividades = false;
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=actividad";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
+        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
+        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
+        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
+        $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
+        $valorCodificado.="&objetoNBC=".$_REQUEST['nucleo'];
+        $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES Y NBC";
     }
     
     

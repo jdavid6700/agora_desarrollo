@@ -22,7 +22,7 @@ class logger extends loggerBase {
         $this->miSql = new loggerSql (); 
         $this->miConfigurador = \Configurador::singleton ();
         $this->setPrefijoTablas($this->miConfigurador->getVariableConfiguracion ("prefijo"));
-        $this->setConexion($this->miConfigurador->fabricaConexiones->getRecursoDB("estructura"));
+        $this->setConexion($this->miConfigurador->fabricaConexiones->getRecursoDB("framework"));
   
     }
 
@@ -46,7 +46,14 @@ class logger extends loggerBase {
     function log_usuario($log) {
        
         $miSesion = Sesion::singleton();
-        $log['id_usuario']=trim($miSesion->idUsuario());
+
+        if($miSesion->idUsuario() == null){//Ajuste para Log Registro Información TERCERO de Cualquier Persona Sin LOGIN 
+            $log['id_usuario']=$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'];
+        }else{
+            $log['id_usuario']=trim($miSesion->idUsuario());
+        }
+
+        
         $log['fecha_log']=date("F j, Y, g:i:s a");         
         $log['host']=$this->obtenerIP(); 
         $cadenaSql = $this->miSql->getCadenaSql("registroLogUsuario", $log);

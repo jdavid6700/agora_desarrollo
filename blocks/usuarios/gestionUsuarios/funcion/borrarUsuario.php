@@ -32,13 +32,13 @@ class BorrarUsuario {
 
     function procesarFormulario() {
 // 		var_dump ( $_REQUEST );
-        $conexion="estructura";
-        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         $parametro['id_usuario']=$_REQUEST['id_usuario'];
         
         $cadena_sql = $this->miSql->getCadenaSql("consultarLogUsuario", $parametro);
-        $resultadoLog = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+        $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
         
         if($resultadoLog)
             {
@@ -47,15 +47,15 @@ class BorrarUsuario {
             } 
         else{
                 $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
                 $this->cadena_sql = $this->miSql->getCadenaSql("borrarPerfil", $parametro);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
                 
                 if($resultadoPerfil)
                         {
                          $this->cadena_sql = $this->miSql->getCadenaSql("borrarUsuario", $parametro);
-                         $resultadoBorra = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+                         $resultadoBorra = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
 
                         if($resultadoBorra)
                         {	

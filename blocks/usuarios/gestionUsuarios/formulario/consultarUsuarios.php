@@ -52,8 +52,8 @@ class consultarForm {
 		$_REQUEST ['tiempo'] = time ();
 		
 		// -------------------------------------------------------------------------------------------------
-                $conexion="estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+                $conexion="framework";
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	
 		$valorCodificado = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 		$valorCodificado .= "&opcion=nuevo";
@@ -91,7 +91,7 @@ class consultarForm {
                         }      
                 }
                 $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
  
             $esteCampo = "marcoDatosBasicos";
             $atributos ['id'] = $esteCampo;
@@ -158,7 +158,7 @@ class consultarForm {
                                 $parametro['id_usuario']=$resultadoUsuarios[$key]['id_usuario'];
                                 $parametro['tipo']='unico';
                                 $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
-                                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                                 //var_dump($resultadoPerfil);
                                 $perfil[$key]['perfil']='';
                                 if($resultadoPerfil)

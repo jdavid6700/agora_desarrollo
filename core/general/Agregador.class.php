@@ -13,6 +13,7 @@ class Agregador
      *
      */
     private $aggregated = array();
+    
     /**
      * Aggregates objects
      *
@@ -27,7 +28,7 @@ class Agregador
         }
         
         // Add a new instance of the class to the store
-        $this->aggregated[$class] = new $class($this);
+        $this->aggregated[$class] = new $class();
     }
     
     /**

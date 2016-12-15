@@ -38,12 +38,12 @@ class registrarForm {
 		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		// Limpia Items Tabla temporal
 		
 		// $cadenaSql = $this->miSql->getCadenaSql ( 'limpiar_tabla_items' );
-		// $resultado_secuancia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
+		// $resultado_secuancia = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "acceso" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];

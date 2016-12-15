@@ -31,7 +31,7 @@ class RegistradorBloque {
             	$resultado = false;
         	}else        
         	{
-            	$this->conexion = $this->miConfigurador->fabricaConexiones->getRecursoDB ( 'estructura' );
+            	$this->conexion = $this->miConfigurador->fabricaConexiones->getRecursoDB ( 'framework' );
             	if (! $this->conexion) {
                 	error_log ( "No se conectó" );
                 	$resultado = false;

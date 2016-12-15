@@ -1,6 +1,6 @@
 <?php
 
-namespace hojaDeVida\crearDocente\funcion;
+namespace proveedor\registroProveedor\funcion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("index.php");
@@ -13,14 +13,18 @@ class redireccion {
 
 		
 		switch ($opcion) {
-
-                        case "registroProveedor":
-                            $variable = "pagina=" . $miPaginaActual;
-                            $variable.="&opcion=mensaje";
-                            $variable.="&mensaje=confirma";
-                            $variable.="&nit=" . $valor['num_documento'];
-							$variable.="&correo=" . $valor['correo'];
-                            break;				
+			
+			case "registroProveedor" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=confirma";
+				$variable .= "&nit=" . $valor ['num_documento'];
+				$variable .= "&correo=" . $valor ['correo'];
+				$variable .= "&clave=" . $valor ['contrasena'];
+				$variable .= "&generada=" . $valor ['generadaPass'];
+				$variable .= "&id_usuario=" . $valor ['id_usuario'];
+				$variable .= "&tipo_identificacion=" . $valor ['tipo_identificacion'];
+				break;				
 	
 			case "registroActividad" :
 				$variable = "pagina=" . $miPaginaActual;
@@ -43,6 +47,12 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
 				break;
+
+			case "noregistroUsuario" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=errorUsuario";
+				break;	
 			
 			case "mensajeExisteActividad" :
 				$variable = "pagina=" . $miPaginaActual;

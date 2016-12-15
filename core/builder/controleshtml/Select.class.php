@@ -120,6 +120,10 @@ class Select extends HtmlBase {
     function armarSelect() {
         $this->cadena_html = "<select ";
 
+	if (isset($this->atributos [self::MULTIPLE]) && $this->atributos [self::MULTIPLE]) { 
+	    $this->cadena_html .= " multiple \n"; 
+	}
+
         if (isset($this->atributos [self::DESHABILITADO]) && $this->atributos [self::DESHABILITADO]) {
             $this->cadena_html .= "disabled ";
         }

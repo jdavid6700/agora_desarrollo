@@ -43,11 +43,53 @@ class Link  extends HtmlBase {
             }
         }
         $this->cadenaHTML .= ">\n";
+        
+        
+        
+        if (isset ( $atributos ["enlaceImagen"] )) {
+        	$imagen = "<img src=" . $atributos ["enlaceImagen"] . " ";
+        		
+        	if (isset ( $atributos [self::ANCHO] )) {
+        		if ($atributos [self::ANCHO] != "") {
+        			$imagen .= "width='" . $atributos [self::ANCHO] . "' ";
+        		}
+        	} else {
+        		$imagen .= "width='10px' ";
+        	}
+        		
+        	if (isset ( $atributos ["alto"] )) {
+        		if ($atributos ["alto"] != "") {
+        			$imagen .= "height='" . $atributos [self::ALTO] . "' ";
+        		}
+        	} else {
+        		$imagen .= "height='10px' ";
+        	}
+        		
+        	$imagen .= " />";
+        }
+        
+        
         if (isset ( $atributos ["enlaceTexto"] )) {
             $this->cadenaHTML .= "<span>" . $atributos ["enlaceTexto"] . "</span>";
         }
-        $this->cadenaHTML .= "</a>\n";
-    
+        
+
+        if (isset ( $atributos ["enlaceImagen"] ) && isset ( $atributos [self::POSICIONIMAGEN] ) && $atributos [self::POSICIONIMAGEN] == 'adelante') {
+        	$this->cadenaHTML .= $imagen;
+        } elseif (isset ( $atributos ["enlaceImagen"] ) && ! isset ( $atributos [self::POSICIONIMAGEN] )) {
+        	$this->cadenaHTML .= $imagen;
+        }
+        
+        $this->cadenaHTML .= "</a>";
+        
+        if (isset ( $atributos [self::SALTOLINEA] )) {
+        	if ($atributos [self::SALTOLINEA] == true) {
+        		$this->cadenaHTML .= " <br>";
+        	}
+        }
+        
+        
+        
         return $this->cadenaHTML;
     
     }

@@ -108,23 +108,6 @@ class TextArea  extends HtmlBase{
         } else {
             $cadena .= "rows='2' ";
         }
-        
-        if (isset ( $this->atributos ["correccion"] )) {
-        	if($this->atributos ["correccion"]){
-        		$cadena .= "spellcheck='true'";
-        	}else{
-        		$cadena .= "spellcheck='false'";
-        	}
-        }
-        
-        // Si se utiliza jQuery-Validation-Engine
-        if (isset ( $this->atributos ["validar"] )) {
-        	$cadena .= " validate[" . $this->atributos ["validar"] . "] ";
-        	// Si se utiliza jQuery-Validation-Engine
-        	if (isset ( $this->atributos ["categoria"] ) && $this->atributos ["categoria"] = "fecha") {
-        		$cadena .= "datepicker ";
-        	}
-        }
     
         return $cadena;
     

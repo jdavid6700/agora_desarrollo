@@ -1,10 +1,18 @@
 <?php
 $indice=0;
+
+if(isset($_REQUEST['opcion'])){
+	if($_REQUEST['opcion'] == "modificarPro"){
+		$estilo[$indice++]="bootstrap.min.css";
+		$estilo[$indice++]="miestiloInput.css";
+	}
+}
+
 $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
-$estilo[$indice++]="miestilo.css";
+//$estilo[$indice++]="miestilo.css";
 // $estilo[$indice++]="formToWizard.css";
 
 // Tablas

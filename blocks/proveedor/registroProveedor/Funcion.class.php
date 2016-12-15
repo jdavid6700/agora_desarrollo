@@ -1,8 +1,8 @@
 <?php
 
-namespace hojaDeVida\crearDocente;
+namespace proveedor\registroProveedor;
 
-use hojaDeVida\crearDocente\funcion\redireccion;
+use proveedor\registroProveedor\funcion\redireccion;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -28,6 +28,7 @@ class Funcion {
 	var $error;
 	var $miRecursoDB;
 	var $crypto;
+	var $miLogger; 
 	// function verificarCampos() {
 	// include_once ($this->ruta . "/funcion/verificarCampos.php");
 	// if ($this->error == true) {
@@ -170,6 +171,8 @@ class Funcion {
 		$this->ruta = $this->miConfigurador->getVariableConfiguracion ( "rutaBloque" );
 		
 		$this->miMensaje = \Mensaje::singleton ();
+
+		$this->miLogger = \logger::singleton();
 		
 		$conexion = "aplicativo";
 		$this->miRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );

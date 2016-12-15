@@ -40,6 +40,9 @@ class FormularioRegistro {
 		$conexion = "argo_contratos";
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
+		$conexion = "centralUD";
+		$centralRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -134,14 +137,17 @@ class FormularioRegistro {
 			$estadoSolicitud = $resultado[0]['estado'];
 			
 			
-			$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
-			$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$cadena_sql = $this->miSql->getCadenaSql ( "consultarActaInicio", $datosContrato);
+			$resultadoActaInicio = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
+			$fechaInicio = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_inicio']));
+			$fechaFin = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_fin']));
 			
-			$cadena_sql = $this->miSql->getCadenaSql ( "informacionCIIURelacionada", $datosSolicitudNecesidad);
-			$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			$cadena_sql = $this->miSql->getCadenaSql ( "consultarNovedadesContrato", $datosContrato);
+			$resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
 		}
-		//***************SOLICITUDES RELACIONADAS******************************************************************************************
+		//***************CONTRATOS RELACIONADOS******************************************************************************************
 		
 		
 		
@@ -257,7 +263,13 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = $resultado[0]['unidad_ejecutora'];
+		if($resultado[0]['unidad_ejecutora'] == 1){
+			$unidad = "1 - RECTORÍA - ADMINISTRATIVA";
+		}else if($resultado[0]['unidad_ejecutora'] == 2){
+			$unidad = "2 - IDEXUD";
+		}
+		
+		$atributos ['valor'] = $unidad;
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -291,7 +303,7 @@ class FormularioRegistro {
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 90;
+		$atributos ['tamanno'] = 10;
 		$atributos ['maximoTamanno'] = '10';
 		$atributos ['anchoEtiqueta'] = 200;
 		$tab ++;
@@ -303,7 +315,7 @@ class FormularioRegistro {
 		// ----------------FIN CONTROL: Campo de Texto DEPENDENCIA--------------------------------------------------------
 		
 		// ----------------INICIO CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
-		$esteCampo = 'funcionario';
+		$esteCampo = 'numCDP';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['tipo'] = 'text';
@@ -311,17 +323,17 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = "";//$resultado[0]['FUNCIONARIO'];
+		$atributos ['valor'] = $resultado[0]['numero_cdp'];
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 50;
+		$atributos ['tamanno'] = 40;
 		$atributos ['maximoTamanno'] = '10';
 		$atributos ['anchoEtiqueta'] = 200;
 		$tab ++;
@@ -331,6 +343,126 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		$esteCampo = 'fechaNumCDP';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 2;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		$datosCDP = array (
+				'numeroDisponibilidad' => $resultado[0]['numero_cdp'],
+				'vigencia' => $_REQUEST['vigencia'],
+				'unidadEjecutora' => $resultado[0]['unidad_ejecutora']
+		);
+		
+		$cadena_sql = $this->miSql->getCadenaSql ( "informacionCDP", $datosCDP);
+		$resultadoCDP = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		$atributos ['valor'] = date("d/m/Y", strtotime($resultadoCDP[0]['FECHA_REGISTRO']));
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 40;
+		$atributos ['maximoTamanno'] = '10';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		$esteCampo = 'numRP';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 2;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		
+		if(isset($resultado[0]['numero_rp'])){	
+			$atributos ['valor'] = $resultado[0]['numero_rp'];
+		}else{
+			$atributos ['valor'] = 'SIN RELACIONAR';
+		}
+		
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 40;
+		$atributos ['maximoTamanno'] = '10';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		$esteCampo = 'fechaNumRP';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 2;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		if(isset($resultado[0]['numero_rp'])){
+			
+			$datosRP = array (
+					'numeroRegistroPresupuestal' => $resultado[0]['numero_rp'],
+					'vigencia' => $_REQUEST['vigencia'],
+					'unidadEjecutora' => $resultado[0]['unidad_ejecutora']
+			);
+			
+			$cadena_sql = $this->miSql->getCadenaSql ( "informacionRP", $datosRP);
+			$resultadoRP = $siCapitalRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+			$atributos ['valor'] = date("d/m/Y", strtotime($resultadoRP[0]['FECHA_REGISTRO']));
+		}else{
+			$atributos ['valor'] = 'SIN RELACIONAR';
+		}
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 40;
+		$atributos ['maximoTamanno'] = '10';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto FUNCIONARIO--------------------------------------------------------
+		
 		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'objetoContrato';
@@ -353,7 +485,7 @@ class FormularioRegistro {
 		$atributos ['maximoTamanno'] = '';
 		$atributos ['anchoEtiqueta'] = 220;
 		
-		$atributos ['valor'] = $resultado[0]['objeto_contrato'];
+		$atributos ['valor'] = strtoupper($resultado[0]['objeto_contrato']);
 		
 		$tab ++;
 		
@@ -362,69 +494,6 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoTextArea ( $atributos );
 		unset ( $atributos );
 		
-		
-		
-		// ----------------INICIO CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
-		$esteCampo = 'fechaSolicitud';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['tipo'] = 'text';
-		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['marco'] = true;
-		$atributos ['estiloMarco'] = '';
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
-		$atributos ['dobleLinea'] = 0;
-		$atributos ['tabIndex'] = $tab;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = '';
-		
-		//$newDate = date("d/m/Y", strtotime($resultado[0]['FECHA_SOLICITUD']));
-		
-		$atributos ['valor'] = "";//$newDate;
-		
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 15;
-		$atributos ['maximoTamanno'] = '30';
-		$atributos ['anchoEtiqueta'] = 200;
-		$tab ++;
-		
-		// Aplica atributos globales al control
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
-		
-		// ----------------INICIO CONTROL: Campo de Texto ORIGEN SOLICITUD--------------------------------------------------------
-		$esteCampo = 'origenSolicitud';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['tipo'] = 'text';
-		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['marco'] = true;
-		$atributos ['estiloMarco'] = '';
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
-		$atributos ['dobleLinea'] = 0;
-		$atributos ['tabIndex'] = $tab;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = '';
-		
-		$atributos ['valor'] = "";//$resultado[0]['ORIGEN_SOLICITUD'];
-		
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 15;
-		$atributos ['maximoTamanno'] = '30';
-		$atributos ['anchoEtiqueta'] = 200;
-		$tab ++;
-		
-		// Aplica atributos globales al control
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Campo de Texto ORIGEN SOLICITUD--------------------------------------------------------
 		
 		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
 		$esteCampo = 'dependenciaDestino';
@@ -452,7 +521,7 @@ class FormularioRegistro {
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		//echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
 		
@@ -479,7 +548,7 @@ class FormularioRegistro {
 		$atributos ['maximoTamanno'] = '';
 		$atributos ['anchoEtiqueta'] = 220;
 		
-		$atributos ['valor'] = "";//$resultado[0]['JUSTIFICACION'];
+		$atributos ['valor'] = strtoupper($resultado[0]['justificacion']);
 		
 		$tab ++;
 		
@@ -490,7 +559,7 @@ class FormularioRegistro {
 		
 		
 		
-		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'condiciones';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
@@ -499,26 +568,26 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 2;
+		$atributos ['columnas'] = 120;
+		$atributos ['filas'] = 8;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
-		
-		$atributos ['valor'] = "";//$resultado[0]['CONDICIONES'];
-		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 50;
-		$atributos ['maximoTamanno'] = '30';
-		$atributos ['anchoEtiqueta'] = 200;
+		$atributos ['tamanno'] = 20;
+		$atributos ['maximoTamanno'] = '';
+		$atributos ['anchoEtiqueta'] = 220;
+		
+		$atributos ['valor'] = strtoupper($resultado[0]['condiciones']);
+		
 		$tab ++;
 		
 		// Aplica atributos globales al control
 		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		echo $this->miFormulario->campoTextArea ( $atributos );
 		unset ( $atributos );
-		// ----------------FIN CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
 		
 		
 		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
@@ -567,7 +636,7 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = "";//$resultado[0]['TIPO_CONTRATACION'];
+		$atributos ['valor'] = strtoupper($resultado[0]['clase_contratista']);
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -627,7 +696,7 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = "";//$resultado[0]['ORDENADOR_GASTO'];
+		$atributos ['valor'] = $resultado[0]['nombre_ordenador_gasto'];
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -657,7 +726,7 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = "";//$resultado[0]['CARGO_ORDENADOR_GASTO'];
+		$atributos ['valor'] = $resultado[0]['cargo_ordenador_gasto'];
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -674,7 +743,7 @@ class FormularioRegistro {
 		
 		
 		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
-		$esteCampo = 'estado';
+		$esteCampo = 'tipoControl';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['tipo'] = 'text';
@@ -688,11 +757,11 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = "";//$resultado[0]['ESTADO'];
+		$atributos ['valor'] = strtoupper($resultado[0]['tipo_control']);
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 20;
+		$atributos ['tamanno'] = 50;
 		$atributos ['maximoTamanno'] = '30';
 		$atributos ['anchoEtiqueta'] = 200;
 		$tab ++;
@@ -702,6 +771,68 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
+		
+		// ----------------INICIO CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
+		$esteCampo = 'formaPago';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 1;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		
+		$atributos ['valor'] = strtoupper($resultado[0]['forma_pago']);
+		
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 50;
+		$atributos ['maximoTamanno'] = '30';
+		$atributos ['anchoEtiqueta'] = 200;
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Campo de Texto DEPENDENCIA DESTINO--------------------------------------------------------
+		
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+		$esteCampo = 'descripcionPago';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'text';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['marco'] = true;
+		$atributos ['estiloMarco'] = '';
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['columnas'] = 120;
+		$atributos ['filas'] = 8;
+		$atributos ['dobleLinea'] = 0;
+		$atributos ['tabIndex'] = $tab;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['validar'] = '';
+		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 20;
+		$atributos ['maximoTamanno'] = '';
+		$atributos ['anchoEtiqueta'] = 220;
+		
+		$atributos ['valor'] = strtoupper($resultado[0]['descripcion_forma_pago']);
+		
+		$tab ++;
+		
+		// Aplica atributos globales al control
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoTextArea ( $atributos );
+		unset ( $atributos );
+		
+		
 		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -804,7 +935,7 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = '';
+		$atributos ['valor'] = $fechaInicio;
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -834,7 +965,7 @@ class FormularioRegistro {
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
-		$atributos ['valor'] = '';
+		$atributos ['valor'] = $fechaFin;
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 		$atributos ['deshabilitado'] = true;
@@ -865,7 +996,7 @@ class FormularioRegistro {
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo OCULTO --------------------------------------------------------*********************
 		
-		
+		//var_dump($resultado);
 		//$resultado[0]['identificacion_sociedad_temporal'] = 968774212;
 		
 			if($resultado[0]['clase_contratista'] == 'Único Contratista'){
@@ -1001,8 +1132,10 @@ class FormularioRegistro {
 			}else{
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratoGrupal', $resultado[0]['identificacion_contratista'] );
-				$resultadoContratoGrupal = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
+				$resultadoContratoGrupal = $centralRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				//var_dump($cadenaSql);
+				//var_dump($resultadoContratoGrupal);
 				$numeroProveedoresConsorcio = count($resultadoContratoGrupal);
 				$i = 0;
 				

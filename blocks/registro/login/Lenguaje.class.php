@@ -1,6 +1,6 @@
 <?php
 
-namespace registro\loginTitan;
+namespace blocks\registro\login;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

@@ -23,7 +23,8 @@ $valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 
 $valorCodificado = $cripto->codificar ( $valorCodificado );
 $directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" ) . "/imagen/";
-
+//var_dump($_REQUEST);
+//exit();
 // ------------------Division para las pestañas-------------------------
 $atributos ["id"] = "tabs";
 $atributos ["estilo"] = "";

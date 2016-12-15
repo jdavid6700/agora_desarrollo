@@ -1,17 +1,11 @@
 <?php
-$this->idioma ['nombreCampo'] = 'Valor:';
-$this->idioma ['botonAceptar'] = 'Aceptar';
-$this->idioma ['botonIngresar'] = 'Ingresar';
-$this->idioma ['botonCancelar'] = 'Cancelar';
-$this->idioma ['noDefinido'] = 'Etiqueta No definida';
-$this->idioma ['usuario'] = 'Usuario : ';
-$this->idioma ['clave'] = 'Contraseña : ';
-
-
-$this->idioma ['claveNoValida'] = '<center>Contraseña No Valida<br>Verifique los Datos Ingresados</center>';
-$this->idioma ['usuarioNoValido'] = '<center>Usuario No Valido<br>Verifique los Datos Ingresados</center>';
-$this->idioma ['formularioExpirado'] = '<center>Su Sesión Ha Expirado<br>Ingrese de Nuevo a Sistema</center>';
-
-
+$this->idioma["usuario"]="Identificación:";
+$this->idioma["clave"]="Clave:";
+$this->idioma["usuarioTitulo"]="Número de documento";
+$this->idioma["claveTitulo"]="Clave de Acceso";
+$this->idioma["botonAceptar"]="Aceptar";
+$this->idioma["botonCancelar"]="Cancelar";
+$this->idioma["noDefinido"]="No definido";
+$this->idioma["botonIngresar"]="Ingresar";
 
 ?>

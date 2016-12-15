@@ -84,10 +84,26 @@ class Frontera {
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
+
+
+
+                case "contratos":
+                     include_once($this->ruta . "/formulario/seleccionarA.php");
+                    break;
+                    
+                case "consultaCon":
+                     include_once($this->ruta . "/formulario/seleccionarB.php");
+                    break;   
+
+                case "consultaPro":
+                     include_once($this->ruta . "/formulario/seleccionarC.php");
+                    break;    
+
+
             }
         } else {
             $_REQUEST['opcion'] = "mostrar";
-            include_once($this->ruta . "/formulario/seleccionar.php");
+            include_once($this->ruta . "/formulario/seleccionarA.php");
         }
     }
 

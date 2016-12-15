@@ -31,8 +31,34 @@ class FormularioRegistro {
 		 * que lo complementan.
 		 */
 		
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
+		
 		
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -86,10 +112,17 @@ class FormularioRegistro {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 				// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
-		
+
+			//var_dump($_REQUEST);
+
                 //DATOS DEL PROVEEDOR 
-                if(isset($_REQUEST['usuario'])){
-                    $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUsuario', $_REQUEST['usuario']  );
+                if(isset($_REQUEST['usuario']) && $_REQUEST['usuario'] != 'REG777'){
+                	
+                	$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+                	$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+                	
+                    $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
+				
                 }else{
                     $cadenaSql = $this->miSql->getCadenaSql ( 'verificarNIT', $_REQUEST['nit']  );
                 }
@@ -107,9 +140,9 @@ class FormularioRegistro {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
 			//INICIO INFORMACION 
-				echo "<span class='textoElegante textoEnorme textoAzul'>NIT : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Identificación : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre de la Empresa : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre del Proveedor : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";                 
@@ -120,7 +153,6 @@ class FormularioRegistro {
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
         $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
         
 		if( $resultadoActividades ){
 			

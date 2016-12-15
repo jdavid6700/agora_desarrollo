@@ -32,8 +32,8 @@ class RegistradorUsuarios {
 
     function procesarFormulario() {
 
-        $conexion="estructura";
-	$esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+	       $frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         
         $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
         $num = '1234567890';
@@ -70,18 +70,18 @@ class RegistradorUsuarios {
                               'tipo_identificacion'=>$_REQUEST['tipo_identificacion'],  );
 
         $this->cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $arregloDatos);
-	$resultadoUsuario = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
+	$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "busqueda");
         if(!$resultadoUsuario)
 	{
             $this->cadena_sql = $this->miSql->getCadenaSql("insertarUsuario", $arregloDatos);
-            $resultadoEstado = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+            $resultadoEstado = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
             if($resultadoEstado)
             {	$this->cadena_sql = $this->miSql->getCadenaSql("insertarPerfilUsuario", $arregloDatos);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
                 
                 $parametro['id_usuario']=$arregloDatos['id_usuario'];
                 $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 
                 $log=array('accion'=>"REGISTRO",
                             'id_registro'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],

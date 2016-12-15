@@ -40,11 +40,11 @@ class mensajeForm {
 		
 		// -------------------------------------------------------------------------------------------------
 		
-                $conexion="estructura";
-                $esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+                $conexion="framework";
+                $frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
                 $identificacion = $_REQUEST['id_usuario'];
                 $cadena_sql = $this->miSql->getCadenaSql("consultarUsuariosEditar", $identificacion);
-                $resultadoUsuarios = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------

@@ -37,20 +37,18 @@ class RegistradorUsuarios {
             $_REQUEST ["contrasena"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['contrasena'] );
             $_REQUEST ["contrasenaActual"]= $this->miConfigurador->fabricaConexiones->crypto->codificarClave($_REQUEST ['contrasenaActual'] );
 
-            $conexion = "estructura";
-            $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+            $conexion = "framework";
+            $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
             $_REQUEST['usuario']=isset($_REQUEST['usuario'])?$_REQUEST['usuario']:$_REQUEST['id_usuario'];
             $parametro['id_usuario']=$_REQUEST['usuario'];
-            $cadena_sql = $this->miSql->getCadenaSql("buscarUsuario", $parametro);
-            $resultadoUs = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+            $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
+            $resultadoUs = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
             if($resultadoUs)
                 {   if ($resultadoUs && $_REQUEST ['contrasenaActual']==$resultadoUs[0]['clave'])
-                      { 
-						//MODIFICAR CLAVE
-						$parametro['contrasena']=$_REQUEST ["contrasena"];
+                      { $parametro['contrasena']=$_REQUEST ["contrasena"];
                         $cadena_sql = $this->miSql->getCadenaSql ( "modificaClave", $parametro );
-                        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "acceso" );
+                        $resultado = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "acceso" );
                         if ($resultado == true) {
                             $log=array('accion'=>"ACTUALIZAR",
                                         'id_registro'=>$resultadoUs[0]["id_usuario"],

@@ -331,6 +331,9 @@ class ArmadorPagina {
     private function campoSeguro($campo = '') {
 
         if (isset($_REQUEST['tiempo'])) {
+            $_REQUEST['tiempo'] = (int) substr($_REQUEST['tiempo'], 0, -2);
+            $_REQUEST['tiempo'] = $_REQUEST['tiempo'] * pow(10, 2);
+            
             return $this->miConfigurador->fabricaConexiones->crypto->codificar($campo . $_REQUEST ['tiempo']);
         }
         return false;

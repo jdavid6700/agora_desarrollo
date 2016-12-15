@@ -32,8 +32,8 @@ class RegistradorUsuarios {
 
     function procesarFormulario() {
 
-        $conexion="estructura";
-	$esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+	$frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         
         $arregloDatos = array(
                               'id_usuario'=>$_REQUEST['id_usuario'],
@@ -43,7 +43,7 @@ class RegistradorUsuarios {
                               'telefono'=>$_REQUEST['telefono'],  );
 
         $this->cadena_sql = $this->miSql->getCadenaSql("actualizarUsuario", $arregloDatos);
-        $resultadoUsuario = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+        $resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
         if($resultadoUsuario)
         {
             $log=array('accion'=>"ACTUALIZAR",

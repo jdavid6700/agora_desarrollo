@@ -9,14 +9,45 @@ $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" 
 $rutaBloque .= $esteBloque ['nombre'];
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/" . $esteBloque ['nombre'];
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-$resultado = '';
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+
+
+
+//CAST****************************************************************
+$cadena_fecha = $_REQUEST ['fecha'];
+$objeto_DateTime = DateTime::createFromFormat('d/m/Y', $cadena_fecha);
+$cadena_nuevo_formato = date_format($objeto_DateTime, "Y-m-d");
+$_REQUEST ['fecha'] = $cadena_nuevo_formato;
+//********************************************************************
+
+
 
 $fechaActual = date ( 'Y-m-d' . ' - ' .'h:i:s A');
 
-				
 //Cargo array con los datos para insertar en la table INHABILIDAD
 $arreglo = array (
 		$_REQUEST ['idProveedor'],
@@ -28,16 +59,15 @@ $arreglo = array (
 
 
 //Guardar datos de la inhabilidad
-//$cadenaSql = $this->sql->getCadenaSql ( "ingresarInhabilidad", $arreglo );
-//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-$resultado = true;
+$cadenaSql = $this->sql->getCadenaSql ( "ingresarInhabilidad", $arreglo );
+$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 
 if ($resultado) {
 		//Actualizo el estado del proveedor a INHABILITADO
 		$valores = array (
 				'idProveedor' => $_REQUEST ['idProveedor'],
-				'estado' => 2,
+				'estado' => 3,
 				'fecha_modificacion' => $fechaActual
 		);
 		

@@ -5,6 +5,11 @@
     Description:
         Purpose of the stylesheet follows.
 */
+
+#pie {
+     width: 95%;
+}
+
 #scroll {
      width:600px;
      height:270px;

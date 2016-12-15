@@ -32,8 +32,8 @@ class RegistradorPerfil {
 
     function procesarFormulario() {
 
-        $conexion="estructura";
-	$esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+	$frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         $hoy = date("Y-m-d");   
         
 	$arregloDatos = array(
@@ -44,14 +44,14 @@ class RegistradorPerfil {
                               'fechaFin'  =>$_REQUEST['fechaFin'], );
 
         $this->cadena_sql = $this->miSql->getCadenaSql("insertarPerfilUsuario", $arregloDatos);
-        $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+        $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
 
         if($resultadoPerfil)
             {    
                 $parametro['id_usuario']=$arregloDatos['id_usuario'];
                 $parametro['rol_id']=$arregloDatos['perfil'];
                 $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
                 $log=array('accion'=>"REGISTRO",
                             'id_registro'=>$_REQUEST['id_usuario']."|".$_REQUEST['subsistema']."|".$_REQUEST['perfil'],

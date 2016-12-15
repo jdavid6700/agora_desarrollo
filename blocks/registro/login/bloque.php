@@ -1,6 +1,6 @@
 <?php
 
-namespace registro\loginTitan;
+namespace blocks\registro\login;
 
 // Evitar un acceso directo a este archivo
 if (! isset ( $GLOBALS ["autorizado"] )) {
@@ -29,9 +29,8 @@ include_once ("Lenguaje.class.php");
 
 // Esta clase actua como control del bloque en un patron FCE
 
-if (! class_exists ( '\\registro\\loginTitan' )) {
+if (! class_exists ( '\\blocks\\registro\\login\\Bloque' )) {
     
-	
     class Bloque implements \Bloque {
         var $nombreBloque;
         var $miFuncion;
@@ -87,10 +86,23 @@ if (! class_exists ( '\\registro\\loginTitan' )) {
                 $this->miFuncion->setLenguaje ( $this->miLenguaje );
                 
                 if (! isset ( $_REQUEST ['action'] )) {
+                    
                     $this->miFrontera->frontera ();
                 } else {
                     
                     $respuesta = $this->miFuncion->action ();
+                    
+                    // Si $respuesta==false, entonces se debe recargar el formulario y mostrar un mensaje de error.
+                    if (! $respuesta) {
+                        
+                        $miBloque = $this->miConfigurador->getVariableConfiguracion ( 'esteBloque' );
+                        $this->miConfigurador->setVariableConfiguracion ( 'errorFormulario', $miBloque ['nombre'] );
+                    
+                    }
+                    if (! isset ( $_REQUEST ['procesarAjax'] )) {
+                       $this->miFrontera->frontera ();
+                    }
+                
                 }
             }
         }

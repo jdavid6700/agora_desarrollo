@@ -90,3 +90,7 @@ label {
     max-width: 96%;
 }
 
+.mayuscula {
+	text-transform: uppercase; 
+}
+

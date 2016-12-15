@@ -283,7 +283,7 @@ class FormularioRegistro {
 			
 			
 			$variableViewCon = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableViewCon .= "&opcion=verSolicitud";
+			$variableViewCon .= "&opcion=verSolicitudRelacionada";
 			$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
 			$variableViewCon .= "&vigencia=" . $dato['vigencia'];
 			$variableViewCon .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];

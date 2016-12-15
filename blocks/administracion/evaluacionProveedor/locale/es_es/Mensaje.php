@@ -1,6 +1,6 @@
 <?php
 
-$this->idioma["tabSelectContrato"] = "Seleccionar Contrato para Evaluar ";
+$this->idioma["tabSelectContrato"] = "Contratos para Evaluar ";
 $this->idioma["tabEvaluar"] = "Evaluar Contrato ";
 $this->idioma["tabConsultar"] = "Consultar Evaluación por Contrato";
 $this->idioma["tabConsultarProveedor"] = "Consultar Evaluación por Proveedor";

@@ -26,8 +26,35 @@ class Formulario {
 		 * que lo complementan.
 		 */
 		// Rescatar los datos de este bloque
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		
+		
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
+		
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -57,11 +84,11 @@ class Formulario {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
-		$atributos ['marco'] = true;
+		$atributos ['marco'] = false;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -82,9 +109,9 @@ class Formulario {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
 			//INICIO INFORMACION OBJETO A CONTRATAR
-				echo "<span class='textoElegante textoEnorme textoAzul'>Empresa Proveedor : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Proveedor : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["nom_proveedor"] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>NIT : </span>"; 
+				echo "<span class='textoElegante textoEnorme textoAzul'>Documento : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["num_documento"] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
 				echo "<span class='textoElegante textoMediano textoGris'>". $proveedorEspecifico[0]["correo"] . "</span></br>";                 
@@ -326,7 +353,7 @@ class Formulario {
 		// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
 		// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
 		// Se debe declarar el mismo atributo de marco con que se inició el formulario.
-		$atributos ['marco'] = true;
+		$atributos ['marco'] = false;
 		$atributos ['tipoEtiqueta'] = 'fin';
 		echo $this->miFormulario->formulario ( $atributos );
 		

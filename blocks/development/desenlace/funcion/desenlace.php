@@ -18,13 +18,13 @@ if (isset ( $_REQUEST ['botonAceptar'] )) {
 		$pagina = $_REQUEST ["pagina"];
 		
 		$conexion = "configuracion";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		echo "<span class='textoElegante textoEnorme textoAzul'>P&aacute;gina</span><hr>";
 		echo '<table style="width:100%">';
 		echo '<tr><td style="width:20%"><span class="textoAzul">Nombre</td><td><span class="textoGris">' . $pagina . "</span></td></tr>";
 		$cadenaSql = "SELECT id_pagina,parametro FROM " . $this->miConfigurador->getVariableConfiguracion ( 'prefijo' ) . "pagina WHERE nombre='" . $pagina . "' LIMIT 1";
-		$registro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+		$registro = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 		if ($registro) {
 			
 			echo "<tr><td style='width:20%'><span class='textoAzul'>id_pagina</span></td><td><span class='textoGris'>" . $registro [0] [0] . "</span></td></tr>";
@@ -47,7 +47,7 @@ if (isset ( $_REQUEST ['botonAceptar'] )) {
 			$cadenaSql .= "AND ";
 			$cadenaSql .= "" . $prefijo . "bloque_pagina.id_bloque=" . $prefijo . "bloque.id_bloque";
 			
-			$registro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+			$registro = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 			if ($registro) {
 				?>
 <table border="0" align="center" cellpadding="5" cellspacing="1">

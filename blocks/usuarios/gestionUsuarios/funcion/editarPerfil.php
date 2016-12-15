@@ -32,8 +32,8 @@ class RegistradorPerfil {
 
     function procesarFormulario() {
 
-        $conexion="estructura";
-	$esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion="framework";
+	$frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
         
 	$arregloDatos = array(
                               'id_usuario'=>$_REQUEST['id_usuario'],
@@ -43,13 +43,13 @@ class RegistradorPerfil {
                               'estado'  => 1,  );
 
         $this->cadena_sql = $this->miSql->getCadenaSql("editarPerfilUsuario", $arregloDatos);
-        $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
+        $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($this->cadena_sql, "acceso");
         if($resultadoPerfil)
             {    
                 $parametro['id_usuario']=$arregloDatos['id_usuario'];
                 $parametro['rol_id']=$arregloDatos['rol_id'];
                 $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
                 $log=array('accion'=>"ACTUALIZAR",
                             'id_registro'=>$_REQUEST['id_usuario']."|".$_REQUEST['subsistema']."|".$_REQUEST['perfil'],

@@ -1,5 +1,5 @@
 <?php
-namespace inventarios\gestionContrato;
+namespace administracion\consultaGeneralProveedor;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
     include ("../index.php");

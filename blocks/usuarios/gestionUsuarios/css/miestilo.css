@@ -5,6 +5,11 @@
     Description:
         Purpose of the stylesheet follows.
 */
+
+#pie {
+     width: 95%;
+}
+
 #scroll {
      width:600px;
      height:270px;
@@ -34,3 +39,7 @@ display: table-cell;
 #tablaCandidatos tbody tr{ background: #E0F0FA; }
 .fila-base{ display: none; } /* fila base oculta */
 .eliminar{ cursor: pointer; color: #000; }
+
+
+
+

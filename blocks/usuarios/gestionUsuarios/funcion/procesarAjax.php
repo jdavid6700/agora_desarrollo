@@ -1,8 +1,8 @@
 <?php
 use usuarios\gestionUsuarios\Sql;
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+$conexion = "framework";
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 if ($_REQUEST ['funcion'] == 'consultarPerfil') {
         
@@ -11,7 +11,7 @@ if ($_REQUEST ['funcion'] == 'consultarPerfil') {
             {   $parametro['id_usuario']=$_REQUEST['id_usuario'];
                 //datos perfiles
                 $cadena_sql = $this->sql->getCadenaSql("consultarPerfilUsuario", $parametro);
-                $resultadoPerfil = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+                $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
                 if($resultadoPerfil)
                     {
                     $tam=count($resultadoPerfil);
@@ -25,7 +25,7 @@ if ($_REQUEST ['funcion'] == 'consultarPerfil') {
             }
     
 	$cadenaSql = $this->sql->getCadenaSql ( 'consultaPerfiles', $parametro );
-	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultado = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	$resultado = json_encode ( $resultado );
 	echo $resultado;
 }

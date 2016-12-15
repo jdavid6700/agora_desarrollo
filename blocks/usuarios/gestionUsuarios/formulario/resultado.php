@@ -46,10 +46,10 @@ class registrarForm {
 		
 		// -------------------------------------------------------------------------------------------------
 		$conexion = "inventarios";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$conexion = "sicapital";
-		$esteRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$frameworkRecursoDBO = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		if (isset ( $_REQUEST ['responsable'] ) && $_REQUEST ['responsable'] != '') {
 			$funcionario = $_REQUEST ['responsable'];
@@ -97,7 +97,7 @@ class registrarForm {
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarElemento', $arreglo );
-		$elemento = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$elemento = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
 		$esteCampo = $esteBloque ['nombre'];
@@ -222,7 +222,7 @@ class registrarForm {
 			for($i = 0; $i < count ( $elemento ); $i ++) {
 				
 // 				$cadenaSql = $this->miSql->getCadenaSql ( 'funcionario_informacion', $elemento [$i] [3] );
-// 				$funcionario = $esteRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// 				$funcionario = $frameworkRecursoDBO->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$mostrarHtml = "<tr>
                     <td><center>" . $elemento [$i] [1] . "</center></td>

@@ -61,9 +61,9 @@ if (!isset($GLOBALS["autorizado"])) {
 
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
-        $mensaje = "Se registro el Proveeedor. Continuar para ingresar Actividad Económica<br >";
-	$mensaje .= "<strong>Usuario:</strong>" . $_REQUEST['nit'] . "<br >";
-	$mensaje .= "<strong>Clave:</strong> " . $_REQUEST['nit']. "<br >";
+        $mensaje = "Se registro el Proveeedor, continuar para ingresar Actividad Económica<br >";
+	$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
+	$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
         $boton = "continuar";
 
 //INICIO ENVIO DE CORREO AL USUARIO
@@ -73,7 +73,6 @@ if (!isset($GLOBALS["autorizado"])) {
     include_once($rutaClases."/mail/class.smtp.php");
 	
 	$mail = new PHPMailer();     
-
 	
 	//configuracion de cuenta de envio
 	$mail->Host     = "200.69.103.49";
@@ -96,8 +95,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $contenido="<p>Fecha de envio: " . $fecha . "</p>";
         $contenido.= "<p>Señor usuario, bienvenido al banco de proveedores de la Universidad Distrital Francisco José de Caldas. </p>";
         $contenido.= "<p>Sus datos de acceso son los siguientes:</p>";
-        $contenido.= "Usuario:" . $_REQUEST ['nit'] . "<br>";
-		$contenido.= "Clave de acceso:" . $_REQUEST ['nit'];
+        $contenido.= "Usuario: " . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br>";
+		$contenido.= "Clave de acceso: " . $_REQUEST ['generada'];
         $contenido.= "<p>Este es su usuario y clave para ingresar al Banco de proveedores de la Universidad Distrital. Al ingresar el sistema le solicitará cambar su clave de acceso.</p>";
 		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";		
 		
@@ -124,25 +123,13 @@ $mail->ClearAllRecipients();
 $mail->ClearAttachments();
 
 //FIN ENVIO DE CORREO AL USUARIO		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-
+        
         $valorCodificado = "pagina=" . $miPaginaActual;
 		$valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&nit=" . $_REQUEST['nit'];
+        $valorCodificado.="&id_usuario=" . $_REQUEST['id_usuario'];
         
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
@@ -175,6 +162,16 @@ $mail->ClearAttachments();
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+
+    }else if($_REQUEST['mensaje'] == 'errorUsuario') {
+        $tipo = 'error';
+        $mensaje = "Se Registro Información. <br>PROBLEMA (No se Registro USUARIO en el Sistema AGORA.)";
+        $boton = "regresar";
+
+        $valorCodificado = "pagina=". $miPaginaActual;
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];    
        
     } else if($_REQUEST['mensaje'] == 'registroActividad') {
         $tipo = 'success';
@@ -249,7 +246,7 @@ $mail->ClearAttachments();
 
     // Si no se coloca, entonces toma el valor predeterminado.
     $atributos ['estilo'] = '';
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $tab = 1;
     // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
     // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -308,7 +305,7 @@ $mail->ClearAttachments();
     $atributos ["tipo"] = "hidden";
     $atributos ['estilo'] = '';
     $atributos ["obligatorio"] = false;
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $atributos ["etiqueta"] = "";
     $atributos ["valor"] = $valorCodificado;
     echo $this->miFormulario->campoCuadroTexto($atributos);
@@ -318,7 +315,7 @@ $mail->ClearAttachments();
     // ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
     // ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
     // Se debe declarar el mismo atributo de marco con que se inició el formulario.
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $atributos ['tipoEtiqueta'] = 'fin';
     echo $this->miFormulario->formulario($atributos);
 

@@ -51,6 +51,34 @@ $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
 $cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
 $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
+
+if($resultadoObjeto[0]['tipo_necesidad'] == 'SERVICIO'){
+	$convocatoria = true;
+	
+		
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarNBCImp', $_REQUEST["idObjeto"]  );
+	$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	
+	$contentConv = "
+						<tr>
+			                <td align='center' style='width:20%;background:#BDD6EE'>
+			                    <b>Profesión Relacionada (Núcleo Básico de Conocimiento SNIES)</b>
+			                </td>
+			                <td align='left' style='width:80%;'>		
+			                    " . $resultadoNBC[0]['id_nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "
+			                </td>
+			            </tr>	
+				    ";
+	$titulo = "OBJETO SOLICITUD DE NECESIDAD PARA CONVOCATORIA";
+		
+}else{
+	$convocatoria = false;
+	$contentConv = "";
+	$titulo = "OBJETO SOLICITUD DE NECESIDAD A COTIZAR";
+}
+
+
 $contenidoAct = '';
 
 foreach ($resultadoActividades as $dato):
@@ -64,11 +92,72 @@ if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPE
 if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
 if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
 
+$listProv = "";
+
+if($resultadoProveedor){
+
+	$listProv .= "<table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
+    style='width:100%;border-collapse:collapse;border:none;'>
+
+            <tr>
+                <td align='center' style='background:#BDD6EE'>
+                    <b>Documento</b>
+                </td>
+				<td align='center' style='background:#BDD6EE'>
+                    <b>Tipo</b>
+                </td>
+                <td align='center' style='background:#BDD6EE'>
+                    <b>Proveedor</b>
+                </td>
+                <td align='center' style='background:#BDD6EE'>
+                    <b>Puntaje Evaluación</b>
+                </td>
+                <td align='center' style='background:#BDD6EE'>
+                    <b>Clasificación</b>
+                </td>
+            </tr>";
+
+	foreach ($resultadoProveedor as $dato):
+	$listProv .= "
+            <tr>
+                <td align='center' >
+                    " . $dato['num_documento'] . "
+                </td>
+                 <td align='center' >
+                    " . " ". $dato['tipopersona'] . " " . "
+                </td>
+                <td align='center' >
+                    " . $dato['nom_proveedor'] . "
+                </td>
+                <td align='center' >
+                    " . $dato['puntaje_evaluacion'] . "
+                </td>
+                <td align='center' >
+                    " . $dato['clasificacion_evaluacion'] . "
+                </td>
 
 
-$contenidoPagina = "<page backtop='60mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
-$contenidoPagina .= "<page_header>
-        <table align='center' style='width: 100%;'>
+
+            </tr>";
+	endforeach;
+
+	$listProv .= "</table></div>";
+
+}else{
+
+	$listProv .= "
+
+                NO EXISTEN PROVEEDORES RELACIONADOS
+            </div>";
+
+}
+
+
+$contenidoPagina = "<page backtop='10mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
+    
+    $contenidoPagina .= "
+
+<table align='center' style='width: 100%;'>
 			<tr>
 				<td align='center' >
 					<img src='" . $directorio . "/images/" . $certUniversidadImagen . "' width='120' height='150'/>
@@ -84,32 +173,10 @@ $contenidoPagina .= "<page_header>
                 </td>
             </tr>
         </table>
-    </page_header>
-    <page_footer>
-        <table align='center' width = '100%'>
-
-            <tr>
-                <td align='center'>
-                    Universidad Distrital Francisco Jos&eacute; de Caldas
-                    <br>
-                    Todos los derechos reservados.
-                    <br>
-                    Carrera 8 N. 40-78 Piso 1 / PBX 3238400 - 3239300
-                    <br>
-                    Codigo de Validación : " . $_REQUEST['idCodigo']  . "
-                   
-                </td>
-            </tr>
-        </table>
-    </page_footer>";
-    
-    $contenidoPagina .= "
-
-
 
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>OBJETO SOLICITUD DE NECESIDAD A COTIZAR</span></b></p>
+107%'>" . $titulo . "</span></b></p>
 
 
 
@@ -144,6 +211,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     " . $contenidoAct . "
                 </td>
             </tr>
+            . $contentConv .        		
             <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Justificación</b>
@@ -198,67 +266,27 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'> &nbsp; </sp
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 107%'>PROVEEDORES SELECCIONADOS</span></b></p>
 
-<div align=center>";
-            
-if($resultadoProveedor){
-	
-	$contenidoPagina .= "<table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
-    style='width:100%;border-collapse:collapse;border:none;'> 
+<div align=center>"
+                    . $listProv .		
+   "<page_footer>
+        <table align='center' width = '100%'>
 
             <tr>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Documento</b>
+                <td align='center'>
+                    Universidad Distrital Francisco Jos&eacute; de Caldas
+                    <br>
+                    Todos los derechos reservados.
+                    <br>
+                    Carrera 8 N. 40-78 Piso 1 / PBX 3238400 - 3239300
+                    <br>
+                    Codigo de Validación : " . $_REQUEST['idCodigo']  . "
+                   
                 </td>
-				<td align='center' style='background:#BDD6EE'>
-                    <b>Tipo</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Proveedor</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Puntaje Evaluación</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Clasificación</b>
-                </td>
-            </tr>";
-	
-	foreach ($resultadoProveedor as $dato):
-	$contenidoPagina .= "
-            <tr>
-                <td align='center' >
-                    " . $dato['num_documento'] . "
-                </td>
-                 <td align='center' >
-                    " . " ". $dato['tipopersona'] . " " . "
-                </td>    		
-                <td align='center' >
-                    " . $dato['nom_proveedor'] . "
-                </td>
-                <td align='center' >
-                    " . $dato['puntaje_evaluacion'] . "
-                </td>
-                <td align='center' >
-                    " . $dato['clasificacion_evaluacion'] . "
-                </td>
-	
-	
-	
-            </tr>";
-	endforeach;
-	
-	$contenidoPagina .= "</table></div></page>";
-	
-}else{
-	
-	$contenidoPagina .= "
-            
-                NO EXISTEN PROVEEDORES RELACIONADOS
-            </div></page>";
-	
-}
-    
+            </tr>
+        </table>
+    </page_footer>
 			
+			</page>";			
 
 
 

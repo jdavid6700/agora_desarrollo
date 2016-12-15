@@ -75,7 +75,7 @@ class FormularioRegistro {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -83,11 +83,8 @@ class FormularioRegistro {
 		$tab = 1;
 		
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
-		
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
-		
 		$atributos ['tipoEtiqueta'] = 'inicio';
-				// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
 		
                 //DATOS NECESIDAD
@@ -333,6 +330,23 @@ class FormularioRegistro {
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
+		
+		$esteCampo = 'tipoNecesidad';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['valor'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['valor'] = '';
+		}
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
 		
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "botones";

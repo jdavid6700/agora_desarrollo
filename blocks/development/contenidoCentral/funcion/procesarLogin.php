@@ -7,13 +7,13 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	// 1. Verificar que el usuario esté registrado en el sistema
 	
 	/*
-	 * $conexion="aplicativo"; $esteRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+	 * $conexion="aplicativo"; $frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 	 */
 	
-	$conexion = "estructura";
-	$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+	$conexion = "framework";
+	$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 	
-	if (! $esteRecursoDB) {
+	if (! $frameworkRecursoDB) {
 		
 		// Este se considera un error fatal
 		exit ();
@@ -21,7 +21,7 @@ if (! isset ( $GLOBALS ["autorizado"] )) {
 	
 	$cadena_sql = $this->sql->cadena_sql ( 'buscarUsuario', '' );
 	
-	$registro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	$registro = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 	
 	if ($registro) {
 		

@@ -17,7 +17,7 @@ $urlBloque = $this->miConfigurador->getVariableConfiguracion ( 'rutaUrlBloque' )
 			 <div class="cuerpoPanelCentral">
 			 <p>
 			 SARA es un marco de trabajo para crear aplicaciones en PHP. Tiene los elemento necesarios para crear aplicaciones
-			 de manera ágil, gestionando varios aspectos relacionados con la seguridad, la estructura y la integración de módulos. 
+			 de manera ágil, gestionando varios aspectos relacionados con la seguridad, la framework y la integración de módulos. 
 			 </p>			 
 			 </div>
 		</div>

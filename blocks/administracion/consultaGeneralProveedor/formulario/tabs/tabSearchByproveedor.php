@@ -54,7 +54,7 @@ class Formulario {
         $atributos ['metodo'] = 'POST';
         // Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
         $atributos ['action'] = 'index.php';
-        $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+        $atributos ['titulo'] = '';
         // Si no se coloca, entonces toma el valor predeterminado.
         $atributos ['estilo'] = '';
         $atributos ['marco'] = true;
