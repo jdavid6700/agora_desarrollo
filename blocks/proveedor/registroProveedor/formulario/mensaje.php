@@ -61,7 +61,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
-        $mensaje = "Se registro el Proveeedor, continuar para ingresar Actividad Económica<br >";
+        $mensaje = "Se registro la PERSONA, continuar para ingresar Actividad Económica<br >";
 	$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
 	$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
         $boton = "continuar";
@@ -91,14 +91,14 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail->AddAddress($to_mail);
         $mail->From='agora@udistrital.edu.co';
         $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
-        $mail->Subject="Datos de Acceso - Registro de proveedores";
+        $mail->Subject="Datos de Acceso - Registro de Personas";
         $contenido="<p>Fecha de envio: " . $fecha . "</p>";
-        $contenido.= "<p>Señor usuario, bienvenido al banco de proveedores de la Universidad Distrital Francisco José de Caldas. </p>";
+        $contenido.= "<p>Señor usuario, Bienvenido al <b>Sistema de Registro Único de Personas ÁGORA</b> de la Universidad Distrital Francisco José de Caldas. </p>";
         $contenido.= "<p>Sus datos de acceso son los siguientes:</p>";
-        $contenido.= "Usuario: " . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br>";
-		$contenido.= "Clave de acceso: " . $_REQUEST ['generada'];
-        $contenido.= "<p>Este es su usuario y clave para ingresar al Banco de proveedores de la Universidad Distrital. Al ingresar el sistema le solicitará cambar su clave de acceso.</p>";
-		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";		
+        $contenido.= "<b>Usuario:</b> " . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br>";
+		$contenido.= "<b>Clave de acceso:</b> " . $_REQUEST ['generada'];
+        $contenido.= "<p>Este es su usuario y clave para ingresar al Sistema ÁGORA de la Universidad Distrital. Al ingresar el sistema le solicitará cambiar su clave de acceso.</p>";
+		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder.</p>";		
 		
         $mail->Body=$contenido;
         
@@ -134,7 +134,7 @@ $mail->ClearAttachments();
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>El número de NIT ya se encuentra registrado.";
+        $mensaje = "Error en el cargue. <br>El número de Documento ya se encuentra Registrado.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -144,7 +144,7 @@ $mail->ClearAttachments();
        
     }else if($_REQUEST['mensaje'] == 'mensajeExisteActividad') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>La Actividad ya se encuentra registrada.";
+        $mensaje = "Error en el cargue. <br>La Actividad ya se encuentra Registrada.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -155,7 +155,7 @@ $mail->ClearAttachments();
        
     }else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>No se subió la informaciòn correctamente.";
+        $mensaje = "Error en el cargue. <br>No se subió la informaciòn Correctamente, Por Favor Comuniquese con el Administrador del Sistema";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -165,7 +165,7 @@ $mail->ClearAttachments();
 
     }else if($_REQUEST['mensaje'] == 'errorUsuario') {
         $tipo = 'error';
-        $mensaje = "Se Registro Información. <br>PROBLEMA (No se Registro USUARIO en el Sistema AGORA.)";
+        $mensaje = "Se Registro Información Personal. <br>Existe un PROBLEMA (No se Registro USUARIO en el Sistema AGORA.), Por Favor Comuniquese con el Administrador del Sistema";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -187,7 +187,7 @@ $mail->ClearAttachments();
        
     }else if($_REQUEST['mensaje'] == 'actualizo') {
         $tipo = 'success';
-        $mensaje = "Se guardaron los datos del Proveedor.<br >";
+        $mensaje = "Se guardaron los datos de la Persona.<br >";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -197,7 +197,7 @@ $mail->ClearAttachments();
        
     }else if($_REQUEST['mensaje'] == 'noActualizo') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>No se actualizaron los datos.";
+        $mensaje = "Error en el cargue. <br>No se Actualizaron los Datos.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;

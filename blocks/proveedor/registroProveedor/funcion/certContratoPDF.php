@@ -17,18 +17,46 @@ $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->co
 $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
 
-$conexion = "argo_contratos";
-$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$datosContrato = array (
+		'numeroContrato' => $_REQUEST['numeroContrato'],
+		'vigenciaContrato' => $_REQUEST['vigenciaContrato']
+);
 
 //CONSULTAR USUARIO
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContratoByID", $_REQUEST['idContrato'] );
-$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+$cadena_sql = $this->sql->getCadenaSql ( "consultarContratosARGOByNum",  $datosContrato);
+$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 $numeroContratistas = count($resultado);
+
+
+// echo $cadena_sql;
+// var_dump($_REQUEST);
+
+// var_dump($resultado);
 
 $datosContrato = array (
 		'num_contrato' => $resultado[0]['numero_contrato'],
@@ -54,6 +82,9 @@ $resultadoContrato = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 $resultado[0]['nom_proveedor'] = $_REQUEST['nomProveedor'];
 $resultado[0]['num_documento'] = $_REQUEST['docProveedor'];
+
+$resultado[0]['tipo_persona'] = $_REQUEST['tipoProveedor'];
+$resultado[0]['tipo_documento'] = 'NIT';
 
 $resultado[0]['numero_cdp'] = $resultadoContrato[0]['numero_cdp'];
 $resultado[0]['numero_rp'] = $resultadoContrato[0]['numero_rp'];
@@ -212,8 +243,8 @@ UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</span>
 
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'>Que el proveedor <b>".$resultado[0]['nom_proveedor']."</b>, con
-NIT (o CC) No. <b>".$resultado[0]['num_documento'].",</b> prestó sus servicios en calidad de contratista con la 
+mso-bidi-font-size:11.0pt;line-height:107%'>Que la persona <b>".$resultado[0]['nom_proveedor']."</b>, en su calidad de PERSONA <b>".$resultado[0]['tipo_persona']."</b> con
+<b>".$resultado[0]['tipo_documento']."</b> No. <b>".$resultado[0]['num_documento'].",</b> prestó sus servicios en calidad de contratista con la 
 		Universidad Distrital Francisco José de Caldas, respaldada con la Disponibilidad Presupuestal 
 		No. <b>".$resultado[0]['numero_cdp']."</b> y Registro Presupuestal No. <b>".$resultado[0]['numero_rp']."</b>  
 				con fecha de <b>".$date[2]."</b> de <b>".$date[1]."</b> del <b>".$date[0]."</b> y en virtud 

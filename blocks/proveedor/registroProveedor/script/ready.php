@@ -1,5 +1,14 @@
 
 
+$("#dialogo").dialog({
+      modal: true,
+      title: "Caja con opciones",
+      width: 550,
+      minWidth: 400,
+      maxWidth: 650,
+      show: "fold",
+      hide: "scale"
+   });
 
 
 $("#registroProveedor").validationEngine({
@@ -50,10 +59,6 @@ $("#crearDocenteModificar").validationEngine({
 	scroll: false,
 	autoHidePrompt: true,
 	autoHideDelay: 2000
-});
-
-$('#tablaTitulos').dataTable( {
-	"sPaginationType": "full_numbers"
 });
         
 /*
@@ -328,7 +333,6 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$("#tablaReporteCont").dataTable().fnDestroy();
 
 $('#tablaReporteCont').DataTable({
         

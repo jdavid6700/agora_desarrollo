@@ -137,16 +137,20 @@ class FormularioRegistro {
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
-                
-			//INICIO INFORMACION 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Identificación : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre del Proveedor : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";                 
-			//FIN INFORMACION 
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                 
+			
+				//INICIO INFORMACION
+				echo "<span class='textoElegante textoGrande textoAzul'>Nombre de la Persona: </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Documento : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Tipo Persona : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['tipopersona'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Dirección : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['direccion'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Correo : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";
+				//FIN INFORMACION
 			
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );		
 

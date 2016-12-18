@@ -263,9 +263,9 @@ $this->idioma["marcoDatosNaturalUP"] = "Actualizar Datos de Persona Natural";
 $this->idioma["marcoDatosJuridicaUP"] = "Actualizar Datos de Persona Juridica";
 
 $this->idioma["marcoPersona"] = "Información de la Persona";
-$this->idioma["marcoEmpresa"] = "Información de la Empresa";
+$this->idioma["marcoEmpresa"] = "Información de la Persona";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
-
+$this->idioma["marcoInfoCont"] = "Información de la Persona";
 
 
 
@@ -328,7 +328,8 @@ $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
-$this->idioma["marcoContratos"] = "Contratos";
+$this->idioma["marcoContratos"] = "Información de Contratos";
+$this->idioma["marcoContratosTabla"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario ";
 
 

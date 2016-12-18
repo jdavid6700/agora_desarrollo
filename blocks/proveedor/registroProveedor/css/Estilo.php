@@ -15,15 +15,23 @@ $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
-$estilo[$indice++]="miestilo.css";
+//$estilo[$indice++]="miestilo.css";
 // $estilo[$indice++]="formToWizard.css";
+
+// Tablas
+//$estilo[$indice++]="demo_table.css";
+//$estilo[$indice++]="jquery.dataTables.css";
+//$estilo[$indice++]="jquery.dataTables.min.css";
+//$estilo[$indice++]="dataTables.bootstrap4.css";
+//$estilo[$indice++]="dataTables.bootstrap4.min.css";
+$estilo[$indice++]="jquery.dataTables_themeroller.css";
 
 
 
 // Tablas
 $estilo[$indice++]="demo_page.css";
 // $estilo[$indice++]="demo_table.css";
-$estilo[$indice++]="jquery.dataTables.css";
+//$estilo[$indice++]="jquery.dataTables.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
