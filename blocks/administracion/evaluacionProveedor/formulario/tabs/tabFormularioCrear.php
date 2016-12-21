@@ -1,4 +1,7 @@
 <?php
+
+namespace administracion\evaluacionProveedor\formulario\tabs;
+
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();
@@ -23,11 +26,31 @@ class registrarForm {
 		 * que lo complementan.
 		 */
 		// Rescatar los datos de este bloque
-		$conexion = "estructura";
-		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
 		
-		$conexion = "argo_contratos";
-		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+		$conexion = 'estructura';
+		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'sicapital';
+		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'argo_contratos';
+		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'core_central';
+		$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		$conexion = 'framework';
+		$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		
+		//*************************************************************************** DBMS *******************************
+		//****************************************************************************************************************
+		
+		
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
@@ -57,7 +80,7 @@ class registrarForm {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -68,23 +91,31 @@ class registrarForm {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
+		
+		
+		
+		//var_dump($_REQUEST);
+		
+		
+		
 		//DATOS DEL CONTRATO
-		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
-		$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		//$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByID', $_REQUEST["idContrato"] );
+		//$consulta = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datosContrato = array (
-				'num_contrato' => $consulta[0]['numero_contrato'],
-				'vigencia' => $consulta[0]['vigencia']
+				'numeroContrato' => $_REQUEST["numeroContrato"],
+				'vigenciaContrato' => $_REQUEST["vigenciaContrato"]
 		);
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'listaContratoXNumContrato', $datosContrato );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarContratosARGOByNum', $datosContrato );
 		$consulta2 = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByProveedor', $_REQUEST["idContrato"] );
-		$consulta3 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		//$cadenaSql = $this->miSql->getCadenaSql ( 'contratoByProveedor', $_REQUEST["idContrato"] );
+		//$consulta3 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		//var_dump($consulta2);
 		
-		if(count($consulta3) > 1){
+		if($consulta2[0]['clase_contratista'] != "Único Contratista"){
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
 			$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -96,11 +127,11 @@ class registrarForm {
 			$numeroPro = count($consulta3);
 			
 		}else{
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorByID', $consulta3[0]['id_proveedor'] );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorByID', $consulta2[0]['identificacion_contratista'] );
 			$consulta4 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$cantidad = "individual";
-			$numeroPro = count($consulta3);
+			$numeroPro = 1;
 		}
 		
 		
@@ -117,7 +148,7 @@ class registrarForm {
                 
 				//INICIO INFO CONTRATO
 				echo "<span class='textoElegante textoEnorme textoAzul'>Número Contrato : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $consulta[0]['numero_contrato']  . " - " . $consulta[0]['vigencia'] . "</span></br>"; 
+                echo "<span class='textoElegante textoMediano textoGris'>". $consulta2[0]['numero_contrato']  . " - " . $consulta2[0]['vigencia'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Objeto de Contrato : </span>"; 
                 echo "<span class='textoElegante textoMediano textoGris'>". $consulta2[0]['objeto_contrato'] . "</span></br>"; 
 				echo "<span class='textoElegante textoEnorme textoAzul'>Proveedor : </span><br><b>";
@@ -135,7 +166,7 @@ class registrarForm {
                 echo $this->miFormulario->marcoAgrupacion ( 'fin' );
                 
 		if ($cantidad == "individual") {
-			$_REQUEST["idProveedor"] = $consulta3[0]["id_proveedor"];
+			$_REQUEST["idProveedor"] = $consulta2[0]['identificacion_contratista'];
 		} else {
 			$_REQUEST["idProveedor"] = 0;
 			$i = 0;

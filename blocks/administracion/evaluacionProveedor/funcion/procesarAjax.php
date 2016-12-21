@@ -1,5 +1,6 @@
 <?php
-use inventarios\gestionContrato\Sql;
+
+use administracion\evaluacionProveedor\Sql;
 
 
 $conexion = "inventarios";

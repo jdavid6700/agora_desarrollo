@@ -1,7 +1,7 @@
 <?php 
-namespace bloquesModelo\bloqueModelo1\formulario;
 
 
+namespace administracion\evaluacionProveedor\formulario\tabs;
 
 if(!isset($GLOBALS["autorizado"])) {
 	include("../index.php");

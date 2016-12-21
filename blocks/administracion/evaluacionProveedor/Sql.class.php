@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionContrato;
+namespace administracion\evaluacionProveedor;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
@@ -27,6 +27,198 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			case "consultarContratosARGOByNum" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
+				$cadenaSql.=" CG.vigencia as vigencia, ";
+				$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
+				$cadenaSql.=" upper(CG.objeto_contrato) as objeto_contrato,";
+				$cadenaSql.=" cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
+				$cadenaSql.=" upper(FP.descripcion) as forma_pago,";
+				$cadenaSql.=" OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ESTADO\" as estado_ordenador_gasto,";
+				$cadenaSql.=" CG.supervisor as identificacion_supervisor,";
+				$cadenaSql.=" CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
+				$cadenaSql.=" CG.numero_cdp as numero_cdp,";
+				$cadenaSql.=" CG.resgistro_presupuestal as numero_rp,";
+				$cadenaSql.=" CG.contratista as identificacion_contratista,";
+				$cadenaSql.=" CG.convenio as convenio,";
+				$cadenaSql.=" CG.valor_contrato as valor_contrato,";
+				$cadenaSql.=" upper(CG.justificacion) as justificacion,";
+				$cadenaSql.=" upper(CG.condiciones) as condiciones,";
+				$cadenaSql.=" upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
+				$cadenaSql.=" CG.fecha_registro as fecha_registro,";
+				$cadenaSql.=" CC.descripcion as clase_contratista, ";
+				$cadenaSql.=" upper(TC.descripcion) as tipo_control,";
+				
+				$cadenaSql.=" SC.nombre as nombre_supervisor,";
+				$cadenaSql.=" SC.documento as documento_supervisor,";
+				$cadenaSql.=" SC.digito_verificacion as digito_verificacion_supervisor,";
+				$cadenaSql.=" SC.cargo as cargo_supervisor,";
+				$cadenaSql.=" SC.tipo as tipo_supervisor,";
+				$cadenaSql.=" SSI.\"ESF_SEDE\" as sede_supervisor,";
+				
+				$cadenaSql.=" EC.nombre_estado as estado";
+				$cadenaSql.=" FROM argo.contrato_general CG";
+				$cadenaSql.=" JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
+				$cadenaSql.=" JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
+				$cadenaSql.=" JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
+				$cadenaSql.=" JOIN argo.parametros TC ON TC.id_parametro = CG.tipo_control";
+				$cadenaSql.=" JOIN argo.parametros CC ON CC.id_parametro = CG.clase_contratista";
+				$cadenaSql.=" JOIN argo.contrato_estado CE ON CE.numero_contrato = CG.numero_contrato AND CE.vigencia = CG.vigencia";
+				$cadenaSql.=" JOIN argo.estado_contrato EC ON EC.id = CE.estado";
+				
+				$cadenaSql.=" JOIN argo.supervisor_contrato SC ON SC.id = CG.supervisor ";
+				$cadenaSql.=" JOIN argo.\"sedes_SIC\" SSI ON SSI.\"ESF_ID_SEDE\" = SC.sede_supervisor ";
+				
+				$cadenaSql .= " WHERE CG.numero_contrato = '" . $variable['numeroContrato'] . "' AND CG.vigencia = " . $variable['vigenciaContrato'];
+				$cadenaSql .= " AND CE.fecha_registro IN (SELECT fecha_registro FROM argo.contrato_estado WHERE numero_contrato = CG.numero_contrato ORDER BY fecha_registro DESC LIMIT 1)";
+				$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\", CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro, SC.nombre, SC.documento, SC.digito_verificacion, SC.cargo, SC.tipo, SSI.\"ESF_SEDE\"";
+				break;
+			
+			case "consultarIdSuperInter" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" string_agg(cast(id as text),',' ";
+				$cadenaSql.=" ORDER BY ";
+				$cadenaSql.=" id) ";
+				$cadenaSql.=" FROM ";
+				$cadenaSql.=" argo.supervisor_contrato ";
+				$cadenaSql.=" WHERE ";
+				$cadenaSql.=" documento = " . $variable;
+				break;
+			
+			case "consultarContratosARGOBySupInt" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
+				$cadenaSql.=" CG.vigencia as vigencia, ";
+				$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
+				$cadenaSql.=" upper(CG.objeto_contrato) as objeto_contrato,";
+				$cadenaSql.=" cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
+				$cadenaSql.=" upper(FP.descripcion) as forma_pago,";
+				$cadenaSql.=" OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ESTADO\" as estado_ordenador_gasto,";
+				$cadenaSql.=" CG.supervisor as identificacion_supervisor,";
+				$cadenaSql.=" CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
+				$cadenaSql.=" CG.numero_cdp as numero_cdp,";
+				$cadenaSql.=" CG.resgistro_presupuestal as numero_rp,";
+				$cadenaSql.=" CG.contratista as identificacion_contratista,";
+				$cadenaSql.=" CG.convenio as convenio,";
+				$cadenaSql.=" CG.valor_contrato as valor_contrato,";
+				$cadenaSql.=" upper(CG.justificacion) as justificacion,";
+				$cadenaSql.=" upper(CG.condiciones) as condiciones,";
+				$cadenaSql.=" upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
+				$cadenaSql.=" CG.fecha_registro as fecha_registro,";
+				$cadenaSql.=" CC.descripcion as clase_contratista, ";
+				$cadenaSql.=" upper(TC.descripcion) as tipo_control,";
+				
+				$cadenaSql.=" SC.nombre as nombre_supervisor,";
+				$cadenaSql.=" SC.documento as documento_supervisor,";
+				$cadenaSql.=" SC.digito_verificacion as digito_verificacion_supervisor,";
+				$cadenaSql.=" SC.cargo as cargo_supervisor,";
+				$cadenaSql.=" SC.tipo as tipo_supervisor,";
+				$cadenaSql.=" SSI.\"ESF_SEDE\" as sede_supervisor,";
+				
+				$cadenaSql.=" EC.nombre_estado as estado";
+				$cadenaSql.=" FROM argo.contrato_general CG";
+				$cadenaSql.=" JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
+				$cadenaSql.=" JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
+				$cadenaSql.=" JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
+				$cadenaSql.=" JOIN argo.parametros TC ON TC.id_parametro = CG.tipo_control";
+				$cadenaSql.=" JOIN argo.parametros CC ON CC.id_parametro = CG.clase_contratista";
+				$cadenaSql.=" JOIN argo.contrato_estado CE ON CE.numero_contrato = CG.numero_contrato AND CE.vigencia = CG.vigencia";
+				$cadenaSql.=" JOIN argo.estado_contrato EC ON EC.id = CE.estado";
+				
+				$cadenaSql.=" JOIN argo.supervisor_contrato SC ON SC.id = CG.supervisor ";
+				$cadenaSql.=" JOIN argo.\"sedes_SIC\" SSI ON SSI.\"ESF_ID_SEDE\" = SC.sede_supervisor ";
+				
+				$cadenaSql .= " WHERE CG.supervisor IN (" . $variable . ")";
+				$cadenaSql .= " AND CE.fecha_registro IN (SELECT fecha_registro FROM argo.contrato_estado WHERE numero_contrato = CG.numero_contrato ORDER BY fecha_registro DESC LIMIT 1)";
+				$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\", CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro, SC.nombre, SC.documento, SC.digito_verificacion, SC.cargo, SC.tipo, SSI.\"ESF_SEDE\"";
+				$cadenaSql .= " ORDER BY CG.numero_contrato ASC";
+				break;
+			
+			case "consultarContratosARGOADM" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
+				$cadenaSql.=" CG.vigencia as vigencia, ";
+				$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
+				$cadenaSql.=" upper(CG.objeto_contrato) as objeto_contrato,";
+				$cadenaSql.=" cast(CG.plazo_ejecucion as text) || ' ' || UE.descripcion as plazo_ejecucion,";
+				$cadenaSql.=" upper(FP.descripcion) as forma_pago,";
+				$cadenaSql.=" OG.\"ORG_NOMBRE\" as nombre_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_IDENTIFICACION\" as identificacion_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ORDENADOR_GASTO\" as cargo_ordenador_gasto,";
+				$cadenaSql.=" OG.\"ORG_ESTADO\" as estado_ordenador_gasto,";
+				$cadenaSql.=" CG.supervisor as identificacion_supervisor,";
+				$cadenaSql.=" CG.numero_solicitud_necesidad as numero_solicitud_necesidad,";
+				$cadenaSql.=" CG.numero_cdp as numero_cdp,";
+				$cadenaSql.=" CG.resgistro_presupuestal as numero_rp,";
+				$cadenaSql.=" CG.contratista as identificacion_contratista,";
+				$cadenaSql.=" CG.convenio as convenio,";
+				$cadenaSql.=" CG.valor_contrato as valor_contrato,";
+				$cadenaSql.=" upper(CG.justificacion) as justificacion,";
+				$cadenaSql.=" upper(CG.condiciones) as condiciones,";
+				$cadenaSql.=" upper(CG.descripcion_forma_pago) as descripcion_forma_pago,";
+				$cadenaSql.=" CG.fecha_registro as fecha_registro,";
+				$cadenaSql.=" CC.descripcion as clase_contratista, ";
+				$cadenaSql.=" upper(TC.descripcion) as tipo_control,";
+				
+				$cadenaSql.=" SC.nombre as nombre_supervisor,";
+				$cadenaSql.=" SC.documento as documento_supervisor,";
+				$cadenaSql.=" SC.digito_verificacion as digito_verificacion_supervisor,";
+				$cadenaSql.=" SC.cargo as cargo_supervisor,";
+				$cadenaSql.=" SC.tipo as tipo_supervisor,";
+				$cadenaSql.=" SSI.\"ESF_SEDE\" as sede_supervisor,";
+				
+				$cadenaSql.=" EC.nombre_estado as estado";
+				$cadenaSql.=" FROM argo.contrato_general CG";
+				$cadenaSql.=" JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
+				$cadenaSql.=" JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
+				$cadenaSql.=" JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
+				$cadenaSql.=" JOIN argo.parametros TC ON TC.id_parametro = CG.tipo_control";
+				$cadenaSql.=" JOIN argo.parametros CC ON CC.id_parametro = CG.clase_contratista";
+				$cadenaSql.=" JOIN argo.contrato_estado CE ON CE.numero_contrato = CG.numero_contrato AND CE.vigencia = CG.vigencia";
+				$cadenaSql.=" JOIN argo.estado_contrato EC ON EC.id = CE.estado";
+				
+				$cadenaSql.=" JOIN argo.supervisor_contrato SC ON SC.id = CG.supervisor ";
+				$cadenaSql.=" JOIN argo.\"sedes_SIC\" SSI ON SSI.\"ESF_ID_SEDE\" = SC.sede_supervisor ";
+				
+				$cadenaSql .= " WHERE CE.fecha_registro IN (SELECT fecha_registro FROM argo.contrato_estado WHERE numero_contrato = CG.numero_contrato ORDER BY fecha_registro DESC LIMIT 1)";
+				$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\", CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro, SC.nombre, SC.documento, SC.digito_verificacion, SC.cargo, SC.tipo, SSI.\"ESF_SEDE\"";
+				$cadenaSql .= " ORDER BY CG.numero_contrato ASC";
+				break;
+			
+			case "consultar_proveedor" :
+				$cadenaSql = " SELECT U.identificacion, U.tipo_identificacion FROM prov_usuario U";
+				$cadenaSql .= " WHERE U.id_usuario = '" . $variable . "'";
+				break;
+					
+			case "consultar_DatosProveedor" :
+				$cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
+				$cadenaSql .= " WHERE num_documento = " . $variable . ";";
+				break;
+			
+			case "Roles" :
+				$cadenaSql = "SELECT DISTINCT  ";
+				$cadenaSql.= " perfil.id_usuario usuario, ";
+				$cadenaSql.= " perfil.id_subsistema cod_app, ";
+				$cadenaSql.= " perfil.rol_id cod_rol, ";
+				$cadenaSql.= " rol.rol_alias rol, ";
+				$cadenaSql.= " perfil.fecha_caduca fecha_caduca, ";
+				$cadenaSql.= " perfil.estado estado ";
+				$cadenaSql.= " FROM ".$prefijo."usuario_subsistema perfil ";
+				$cadenaSql.= " INNER JOIN ".$prefijo."rol rol  ";
+				$cadenaSql.= " ON rol.rol_id=perfil.rol_id  ";
+				$cadenaSql.= " AND rol.estado_registro_id=1 ";
+				$cadenaSql.= " WHERE ";
+				$cadenaSql.= " id_usuario='" . $variable . "'; ";
+			
+				break;
 			
 			case "listaContratoXNumContratoFechas" :
 				$cadenaSql = " SELECT ";

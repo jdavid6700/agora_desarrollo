@@ -1,5 +1,12 @@
 <?php
 
+namespace administracion\evaluacionProveedor\funcion;
+
+if (!isset($GLOBALS["autorizado"])) {
+	include("index.php");
+	exit;
+}
+
 /*
  * To change this license header, choose License Headers in Project Properties. To change this template file, choose Tools | Templates and open the template in the editor.
  */
@@ -43,6 +50,11 @@ $clasificacion = clasificacion ( $puntajeTotal );
 // FIN CALCULO CLASIFICACION
 
 // Cargo array con los datos para insertar en la table evaluacionProveedor
+
+$_REQUEST ['idContrato'] = 29;
+
+
+
 $arreglo = array (
 		$_REQUEST ['idContrato'],
 		$fechaActual,
@@ -59,6 +71,9 @@ $arreglo = array (
 		$puntajeTotal,
 		$clasificacion 
 );
+
+
+
 
 
 // Guardar datos de la evaluacion

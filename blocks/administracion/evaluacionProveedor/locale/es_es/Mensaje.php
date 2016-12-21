@@ -16,6 +16,8 @@ $this->idioma["marcoContrato"]="Contrato - Información general";
 $this->idioma["marcoProveedor"]="Proveedor - Información general";
 $this->idioma["marcoEvaluacion"]="Evaluaciones realizadas al Proveedor";
 $this->idioma["mensaNoEvaluado"] = "Este contrato no se encuentra evaluado.";
+$this->idioma["marcoContratosTabla"]="Contratos";
+
 
 
 

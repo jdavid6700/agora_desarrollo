@@ -1,6 +1,6 @@
 <?php
 
-namespace desarrollo\bloqueBase\formulario;
+namespace administracion\evaluacionProveedor\formulario;
 
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");

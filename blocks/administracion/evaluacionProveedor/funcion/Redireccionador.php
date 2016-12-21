@@ -1,6 +1,6 @@
 <?php
 
-namespace inventarios\gestionContrato\funcion;
+namespace administracion\evaluacionProveedor\funcion;
 
 if (!isset($GLOBALS ["autorizado"])) {
     include ("index.php");
