@@ -1038,7 +1038,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 					$cadenaSql .= 'abreviatura as ABREVIATURA ';
 					$cadenaSql .= 'FROM ';
-					$cadenaSql .= 'agora.nomenclatura_dian ';
+					$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 					$cadenaSql .= 'WHERE ';
 					$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
 					$cadenaSql .= 'ORDER BY NOMENCLATURA';
@@ -1048,7 +1048,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 					$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
 					$cadenaSql .= 'FROM ';
-					$cadenaSql .= 'agora.nomenclatura_dian ';
+					$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 					$cadenaSql .= 'ORDER BY NOMENCLATURA';
 					break;
 						
@@ -1077,7 +1077,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_conformacion,";
 					$cadenaSql .= "	nombre";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.tipo_conformacion";
+					$cadenaSql .= " agora.parametro_tipo_conformacion";
 					$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 					$cadenaSql .= " ORDER BY nombre";
 					break;
