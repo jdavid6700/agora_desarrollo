@@ -196,7 +196,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_dependencia,";
 					$cadenaSql .= "	dependencia";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.dependencia";
+					$cadenaSql .= " agora.parametro_dependencia";
 					$cadenaSql .= " ORDER BY dependencia";
 					break;
 					
@@ -206,7 +206,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" S.id_supervisor, S.id_proveedor, P.num_documento, P.nom_proveedor, D.dependencia, P.correo, S.estado";
 					$cadenaSql.=" FROM ";
 					$cadenaSql.=" agora.informacion_supervisor S";
-					$cadenaSql.=" JOIN agora.dependencia D ON D.id_dependencia = S.id_dependencia";
+					$cadenaSql.=" JOIN agora.parametro_dependencia D ON D.id_dependencia = S.id_dependencia";
 					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
 					$cadenaSql.=" WHERE 1=1 ";
 					if ($variable != '') {
