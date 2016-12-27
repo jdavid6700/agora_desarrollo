@@ -128,9 +128,9 @@ echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 ?>
 
 <div id="dialogo">
-	<p>Esta es la caja de diálogo más básica, que se puede redimensionar y
-		arrastrar a otra posición. Además, se puede cerrar con el icono del
-		aspa "X" que aparece en el titular de la caja.</p>
+	<p>A continuación podra observar todos los distintos contratos en lo que ha participado o esta 
+	participando en la Universidad, con lo cual obtener sus Certificados, solo
+	si estos ya se han culminado satisfactoriamente.</p>
 </div>
 
 
@@ -276,6 +276,7 @@ if ($resultadoCont) {
 		$variable .= "&docProveedor=" . $numeroDocumento;
 		$variable .= "&nomProveedor=" . $nombrePersona;
 		$variable .= "&tipoProveedor=" . $tipoPersona;
+		$variable .= "&usuario=" . $_REQUEST ["usuario"];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
 		$hoy = date ( "Y-m-d" );

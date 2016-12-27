@@ -78,13 +78,16 @@ $resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" )
 $cadena_sql = $this->sql->getCadenaSql ( "listaContratoXNumContrato", $datosContrato);
 $resultadoContrato = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
+$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
 
 
 $resultado[0]['nom_proveedor'] = $_REQUEST['nomProveedor'];
 $resultado[0]['num_documento'] = $_REQUEST['docProveedor'];
 
 $resultado[0]['tipo_persona'] = $_REQUEST['tipoProveedor'];
-$resultado[0]['tipo_documento'] = 'NIT';
+$resultado[0]['tipo_documento'] = $resultadoDoc[0]['tipo_identificacion'];
 
 $resultado[0]['numero_cdp'] = $resultadoContrato[0]['numero_cdp'];
 $resultado[0]['numero_rp'] = $resultadoContrato[0]['numero_rp'];

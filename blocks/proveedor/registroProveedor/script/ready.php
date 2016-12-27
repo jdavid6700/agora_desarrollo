@@ -1,4 +1,10 @@
 
+window.onload = detectarCarga;
+function detectarCarga(){
+
+	$('#marcoGeneral').show('slow');
+}
+
 
 $("#dialogo").dialog({
       modal: true,

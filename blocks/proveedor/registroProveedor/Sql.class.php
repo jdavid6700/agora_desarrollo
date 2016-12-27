@@ -489,7 +489,7 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultar_proveedor" :
-				$cadenaSql = " SELECT U.identificacion FROM prov_usuario U";
+				$cadenaSql = " SELECT U.identificacion, U.tipo_identificacion FROM prov_usuario U";
 				$cadenaSql .= " WHERE U.id_usuario = '" . $variable . "'";
 				break;
 			
@@ -926,6 +926,8 @@ class Sql extends \Sql {
 			case "verificarNIT" : // ******************************************************************************
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " direccion,";
 				$cadenaSql .= " nom_proveedor,";
 				$cadenaSql .= " correo,";
 				$cadenaSql .= " id_proveedor,";
@@ -1133,7 +1135,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'abreviatura as ABREVIATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'agora.nomenclatura_dian ';
+				$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 				$cadenaSql .= 'WHERE ';
 				$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
@@ -1144,7 +1146,7 @@ class Sql extends \Sql {
 				$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
 				$cadenaSql .= 'FROM ';
-				$cadenaSql .= 'agora.nomenclatura_dian ';
+				$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 				$cadenaSql .= 'ORDER BY NOMENCLATURA';
 				break;
 			
@@ -1173,7 +1175,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_conformacion,";
 				$cadenaSql .= "	nombre";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.tipo_conformacion";
+				$cadenaSql .= " agora.parametro_tipo_conformacion";
 				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 				$cadenaSql .= " ORDER BY nombre";
 				break;
