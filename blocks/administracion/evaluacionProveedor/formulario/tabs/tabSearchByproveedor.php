@@ -1,7 +1,5 @@
 <?php 
 
-namespace administracion\evaluacionProveedor\formulario\tabs;
-
 if(!isset($GLOBALS["autorizado"])) {
 	include("../index.php");
 	exit;
@@ -88,7 +86,7 @@ class Formulario {
 					$atributos ['dobleLinea'] = 0;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ['validar'] = 'required, minSize[1],maxSize[6],custom[onlyNumberSp]';
+					$atributos ['validar'] = 'maxSize[50]';
 					
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
