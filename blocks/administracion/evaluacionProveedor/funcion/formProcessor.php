@@ -16,8 +16,29 @@ $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" 
 $rutaBloque .= $esteBloque ['nombre'];
 $host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/inventarios/" . $esteBloque ['nombre'];
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
 
 $resultado = '';
 
@@ -51,12 +72,105 @@ $clasificacion = clasificacion ( $puntajeTotal );
 
 // Cargo array con los datos para insertar en la table evaluacionProveedor
 
-$_REQUEST ['idContrato'] = 29;
+//$_REQUEST ['idContrato'] = 29;
+
+
+$datosContrato = array (
+		'numeroContrato' => $_REQUEST['numeroContrato'],
+		'vigenciaContrato' => $_REQUEST['vigenciaContrato']
+);
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarContratosARGOByNum", $datosContrato);
+$resultadoContrato = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+
+
+
+//****************************************************************************************************************
+//************************************************************** RELACIONAR CONTRATO *****************************
+
+$fechaActual = date ( 'Y-m-d' );
+$annnoActual = date ( 'Y' );
+
+
+if(isset($_REQUEST ['idProveedor']) && $_REQUEST ['idProveedor'] != 0){
+	
+	$datosIdenContrato = array (
+			'numero_contrato' => $resultadoContrato[0]['numero_contrato'],
+			'unidad_ejecutora' => $resultadoContrato[0]['unidad_ejecutora'],
+			'numero_necesidad' => $resultadoContrato[0]['numero_solicitud_necesidad'],
+			'fecha_registro' => $fechaActual,
+			'documento_evaluador' => $resultadoContrato[0]['documento_supervisor'],
+			'id_proveedor' => $_REQUEST ['idProveedor'],
+			'vigencia_contrato' => $resultadoContrato[0]['vigencia'],
+			'estado' => 'RELACIONADO'
+	);
+	 
+	 
+	$cadenaSql = $this->sql->getCadenaSql("registroContrato",$datosIdenContrato);
+	$id_contrato = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosIdenContrato, "registroContrato");
+	 
+	$datosIdenProveedorContrato = array (
+			'id_contrato' => $id_contrato[0][0],
+			'id_proveedor' => $_REQUEST ['idProveedor'],
+			'vigencia' => $resultadoContrato[0]['vigencia']
+	);
+	 
+	$cadenaSql = $this->sql->getCadenaSql ( 'registroProveedorContrato', $datosIdenProveedorContrato );
+	$resultadoContRel = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+	 
+	 
+}else{
+	
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultarContratoGrupal', $_REQUEST ['idTitular'] );
+	$resultadoContratoGrupal = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	 
+	$datosIdenContrato = array (
+			'numero_contrato' => $resultadoContrato[0]['numero_contrato'],
+			'unidad_ejecutora' => $resultadoContrato[0]['unidad_ejecutora'],
+			'numero_necesidad' => $resultadoContrato[0]['numero_solicitud_necesidad'],
+			'fecha_registro' => $fechaActual,
+			'documento_evaluador' => $resultadoContrato[0]['documento_supervisor'],
+			'id_proveedor' => $_REQUEST ['idProveedor'],
+			'vigencia_contrato' => $resultadoContrato[0]['vigencia'],
+			'estado' => 'RELACIONADO'
+	);
+
+
+	$cadenaSql = $this->sql->getCadenaSql("registroContrato",$datosIdenContrato);
+	$id_contrato = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosIdenContrato, "registroContrato");
+	 
+	$i = 0;
+	while($i < count($resultadoContratoGrupal)){
+
+
+		$datosIdenProveedorContrato = array (
+				'id_contrato' => $id_contrato[0][0],
+				'id_proveedor' => $resultadoContratoGrupal[$i]['id_contratista'],
+				'vigencia' => $resultadoContrato[0]['vigencia']
+		);
+
+		$cadenaSql = $this->sql->getCadenaSql ( 'registroProveedorContrato', $datosIdenProveedorContrato );
+		$resultadoContRel = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+
+		$i++;
+	}
+	 
+	 
+}
+
+
+
+
+
+//****************************************************************************************************************
+//****************************************************************************************************************
+
 
 
 
 $arreglo = array (
-		$_REQUEST ['idContrato'],
+		$id_contrato[0][0],
 		$fechaActual,
 		$_REQUEST ['tiempoEntrega'],
 		$_REQUEST ['cantidades'],
@@ -81,23 +195,26 @@ $cadenaSql = $this->sql->getCadenaSql ( "registroEvaluacion", $arreglo );
 $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 
-if ($resultado) {
+if ($resultado && $resultadoContRel && $id_contrato) {
 	// Actualizar estado del CONTRATO A EVALUADO
 	$parametros = array (
-			'idContrato' => $_REQUEST ['idContrato'],
+			'idContrato' => $id_contrato[0][0],
 			'estado' => 'EVALUADO' //Evaluado
 	);
 	
 	$cadenaSql = $this->sql->getCadenaSql ( "actualizarContrato", $parametros );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 	
-	// Actualizar PUNTAJE TOTAL DEL PROVEEDOR Y SU CLASIFICACION
+	
+	
+	// Actualizar PUNTAJE TOTAL DEL PROVEEDOR Y SU CLASIFICACION ********************************************
+	//*******************************************************************************************************
 	
 	
 	// Se hace una consulta del Proveedor Evaluado
 	if($_REQUEST ["idProveedor"] == 0){
 			
-		$cadenaSql = $this->sql->getCadenaSql ( 'listarProveedoresXContrato', $_REQUEST["idContrato"] );
+		$cadenaSql = $this->sql->getCadenaSql ( 'listarProveedoresXContrato', $id_contrato[0][0] );
 		$consulta3_1 = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 		$cadenaSql = $this->sql->getCadenaSql ( 'consultarProveedoresByID', $consulta3_1[0][0] );
@@ -113,6 +230,9 @@ if ($resultado) {
 		$cantidad = "individual";
 		$numeroPro = count($proveedor);
 	}
+	
+	//*******************************************************************************************************
+	//*******************************************************************************************************
 	
 	
 	
@@ -146,7 +266,7 @@ if ($resultado) {
 		);
 		
 		$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+		$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 		
 	} else {
 		
@@ -171,7 +291,7 @@ if ($resultado) {
 			);
 			
 			$cadenaSql = $this->sql->getCadenaSql ( "actualizarProveedor", $valores );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 			
 			
 			$i ++;
@@ -180,18 +300,18 @@ if ($resultado) {
 	
 	
 	$parametros2 = array (
-			'idTabla' => $_REQUEST ['idContrato'],
+			'idTabla' => $id_contrato[0][0],
 			'tipo' => 1, // evaluacion
 			'fecha' => date ( "Y-m-d H:i:s" ) 
 	);
 	// Inserto codigo de validacion
 	$cadenaSql = $this->sql->getCadenaSql ( 'ingresarCodigo', $parametros2 );
-	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$resultadoCod = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 	
 
 	$datos = array (
-			'idContrato' => $_REQUEST ['idContrato'],
+			'idContrato' => $id_contrato[0][0],
 			'idCodigo' => $resultado [0] ['id_codigo_validacion'] 
 	);
 	

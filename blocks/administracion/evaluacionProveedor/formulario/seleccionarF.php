@@ -31,16 +31,16 @@ echo $this->miFormulario->division ( "inicio", $atributos );
 unset ( $atributos );
 {
 	// -------------------- Listado de Pestañas (Como lista No Ordenada) -------------------------------
-	
+
 	$items = array (
-			"tabEvaluar" => $this->lenguaje->getCadena ( "tabEvaluar" )		
+			"tabEvaluar" => $this->lenguaje->getCadena ( "tabEvaluar" ) . "N° (" . $_REQUEST['numeroContrato'] . ") - Vigencia (" .  $_REQUEST['vigenciaContrato'] .")"
 	);
 	$atributos ["items"] = $items;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ["pestañas"] = "true";
 	echo $this->miFormulario->listaNoOrdenada ( $atributos );
 
-	// -----------------INICIO Division para la pestaña 1-------------------------
+	// -----------------INICIO Division para la pestaña 3-------------------------
 		$esteCampo = "tabEvaluar";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -49,17 +49,10 @@ unset ( $atributos );
 		echo $this->miFormulario->agrupacion ( 'inicio', $atributos );
 		unset ( $atributos );
 		{
-			include ($this->ruta . "formulario/tabs/tabFormularioCrear.php");
+			include ($this->ruta . "formulario/tabs/tabFormularioEvaluacion.php");
 		}
-		echo $this->miFormulario->agrupacion ( 'fin' );
-	// -----------------FIN Division para la pestaña 1-------------------------
-	
-	
-	
-	
-	
-	
-	
+		echo $this->miFormulario->agrupacion ( 'fin' );	
+	// -----------------FIN Division para la pestaña 3-------------------------
 	
 }
 echo $this->miFormulario->division ( "fin" );
