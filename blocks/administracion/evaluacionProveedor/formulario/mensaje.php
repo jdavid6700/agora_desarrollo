@@ -1,7 +1,5 @@
 <?php
 
-namespace administracion\evaluacionProveedor\formulario;
-
 if (!isset($GLOBALS["autorizado"])) {
     include("../index.php");
     exit;
@@ -94,7 +92,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		
 		//------------------Division para los botones-------------------------
 		$atributos["id"]="botones";
-		$atributos["estilo"]="marcoBotones";
+		$atributos["estilo"]="marcoBotones widget";
 		echo $this->miFormulario->division("inicio",$atributos);
 		
 		$enlace = "<a href='".$variableResumen."'>";
@@ -168,7 +166,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
     // Si no se coloca, entonces toma el valor predeterminado.
     $atributos ['estilo'] = '';
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $tab = 1;
     // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
     // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
