@@ -2,18 +2,18 @@
 $indice = 0;
 $funcion [$indice ++] = "select2.js";
 $funcion [$indice ++] = "select2_locale_es.js";
-$funcion [$indice ++] = "jquery.dataTables.js";
+
 $funcion [$indice ++] = "jquery.autocomplete.js";
 $funcion [$indice ++] = "jquery.autocomplete.min.js";
 
+$funcion [$indice ++] = "jquery.dataTables.js";
 $funcion [$indice++]  = "jquery.dataTables.min.js";
 
-$funcion [$indice++]  = "dataTables.bootstrap.min.js";
-$funcion [$indice++]  = "dataTables.bootstrap.js";
+//$funcion [$indice++]  = "dataTables.bootstrap.min.js";
+//$funcion [$indice++]  = "dataTables.bootstrap.js";
 $funcion [$indice++]  = "dataTables.jqueryui.js";
 $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
-
 
 $rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 $rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" );

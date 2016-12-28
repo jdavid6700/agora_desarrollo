@@ -1,18 +1,31 @@
 <?php
 $indice=0;
+
 $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
+
 //$estilo[$indice++]="miestilo.css";
 // $estilo[$indice++]="formToWizard.css";
 
 // Tablas
-$estilo[$indice++]="demo_page.css";
-// $estilo[$indice++]="demo_table.css";
-//$estilo[$indice++]="jquery.dataTables.css";
-//$estilo[$indice++]="jquery.dataTables.min.css";
+
+//$estilo[$indice++]="bootstrap.css";
+//$estilo[$indice++]="dataTables.bootstrap4.min.css";
+
+//$estilo[$indice++]="demo_page.css";
+//$estilo[$indice++]="demo_table.css";
+//$estilo[$indice++]="dataTables.jqueryui.css";
+//$estilo[$indice++]="dataTables.jqueryui.min.css";
+$estilo[$indice++]="jquery.dataTables.css";
+$estilo[$indice++]="jquery.dataTables.min.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
+//$estilo[$indice++]="dataTables.jqueryui.min.css";
+
+if(isset($_REQUEST['opcion']) && $_REQUEST['opcion'] == "consultar"){
+	$estilo[$indice++]="miestilo.css";
+}
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

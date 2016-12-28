@@ -66,7 +66,7 @@ class Frontera {
                     break;
                 
                 case "consultar":
-                    include_once($this->ruta . "/formulario/consultarForm.php");
+                    include_once($this->ruta . "/formulario/seleccionarG.php");
                     break;
 					
                 case "mostrar":
@@ -74,18 +74,27 @@ class Frontera {
                     break;					
 					
                 case "consultarProveedor":
-                    include_once($this->ruta . "/formulario/consultarEvalProveedor.php");
+                    include_once($this->ruta . "/formulario/seleccionarH.php");
                     break;
                 
                 case "nuevo":
-                     include_once($this->ruta . "/formulario/nuevo.php");
+                     include_once($this->ruta . "/formulario/seleccionarF.php");
                     break;
                 
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
-
-
+                    
+                    
+				case "verSolicitud" :
+					include_once ($this->ruta . "/formulario/seleccionarD.php");
+					break;
+				
+				case "verContrato" :
+					include_once ($this->ruta . "/formulario/seleccionarE.php");
+					break;
+				
+                    		
 
                 case "contratos":
                      include_once($this->ruta . "/formulario/seleccionarA.php");

@@ -35,6 +35,46 @@ $urlFinalProveedor = $url . $cadena;
 
 <script type='text/javascript'>
 
+
+$("#dialogo").dialog({
+	autoOpen: false,
+    modal: true,
+    title: "Contratista(s) del Contrato",
+    width: 1200,
+    minWidth: 600,
+    maxWidth: 1200,
+    show: "fold",
+    hide: "scale"
+ });
+
+
+$("#botonContratista").click(function(){
+	$('#dialogo').dialog('open');
+});
+
+
+
+$("#dialogoEval").dialog({
+	autoOpen: false,
+    modal: true,
+    title: "Contratista(s) del Contrato",
+    width: 1200,
+    minWidth: 600,
+    maxWidth: 1200,
+    show: "fold",
+    hide: "scale"
+ });
+
+
+$("#botonContratistaEval").click(function(){
+	$('#dialogoEval').dialog('open');
+});
+
+
+
+
+
+
 $(function () {
 	    $( "#<?php echo $this->campoSeguro('nombre_contratista')?>" ).keyup(function() {
     	$('#<?php echo $this->campoSeguro('nombre_contratista') ?>').val($('#<?php echo $this->campoSeguro('nombre_contratista') ?>').val().toUpperCase());
@@ -79,19 +119,7 @@ $("#<?php echo $this->campoSeguro('garantia')?>").change(function() {
 });
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+              
         
 });
 

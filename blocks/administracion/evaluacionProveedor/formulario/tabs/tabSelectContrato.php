@@ -34,7 +34,7 @@ class listarDatos {
 		
 		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
 		$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
-		$rutaBloque .= $esteBloque ['grupo'] . $esteBloque ['nombre'];
+		$rutaBloque .= $esteBloque ['grupo'] ."/". $esteBloque ['nombre'];
 		
 		// ---------------- SECCION: Par�metros Globales del Formulario ----------------------------------
 		/**
@@ -166,7 +166,6 @@ class listarDatos {
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		{
         
-		
 		if( $resultado ){
 			// -----------------Inicio de Conjunto de Controles----------------------------------------
 	$esteCampo = "marcoDatosResultadoParametrizar";
@@ -179,16 +178,20 @@ class listarDatos {
 <table id="tablaReporteContEval" class="display" cellspacing="0" width="100%">
 	<thead>
 		<tr>
-			<td align="center" width='8%'><strong>No. Contrato</strong></td>
-								<td align="center"width='5%'><strong>Vigencia </strong></td>	
-								<td align="center" width='10%'><strong>No. Solicitud de Necesidad </strong></td>
-								<td align="center"><strong>Fecha Registro </strong></td>
-								<td align="center"><strong>Nombre Evaluador</strong></td>
-								<td align="center"><strong>Documento Evaluador</strong></td>
-								<td align="center"><strong>Tipo Evaluador</strong></td>
-								<td align="center"><strong>Sede</strong></td>
-								<td align="center" width='10%'><strong>Estado</strong></td>
-								<td align="center" width='9%'><strong>Gestión</strong></td>
+								<th width='8%'><strong>No. Contrato</strong></th>
+								<th width='5%'><strong>Vigencia </strong></th>	
+								<th align="center"width='5%'><strong>Tipo </strong></th>
+								<th align="center" width='10%'><strong>No. Solicitud de Necesidad </strong></th>
+								<th align="center"><strong>Fecha Registro </strong></th>
+								<th align="center"><strong>Nombre Evaluador</strong></th>
+								<th align="center"><strong>Documento Evaluador</strong></th>
+								<th align="center"><strong>Tipo Evaluador</strong></th>
+								<th align="center"><strong>Sede</strong></th>
+								<th align="center" width='10%'><strong>Estado</strong></th>
+								<th align="center"><strong>Necesidad</strong></th>
+								<th align="center"><strong>Contrato</strong></th>
+								<th align="center" width='9%'><strong>Evaluacion</strong></th>
+								<th align="center" width='9%'><strong>Gestión</strong></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -201,6 +204,76 @@ class listarDatos {
 
 	foreach ( $resultado as $dato ) :
 	
+	
+	
+						$datosCon = array (//Datos
+								'numero_contrato' => $dato['numero_contrato'],
+								'vigencia' => $dato['vigencia']
+						);
+						$cadena_sql = $this->miSql->getCadenaSql ( "consultarContratoRelacionado", $datosCon);
+						$estadoCont = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+						
+						
+						$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+						$variableView .= "&opcion=verSolicitud";
+						$variableView .= "&idSolicitud=" . $dato['numero_solicitud_necesidad'];
+						$variableView .= "&vigencia=" . $dato['vigencia'];
+						$variableView .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+						$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
+						$imagenView = 'verPro.png';
+						
+						
+						$variableViewCon = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+						$variableViewCon .= "&opcion=verContrato";
+						$variableViewCon .= "&idSolicitud=" . $dato['numero_contrato'];
+						$variableViewCon .= "&vigencia=" . $dato['vigencia'];
+						$variableViewCon .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+						$variableViewCon = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewCon, $directorio );
+						$imagenViewCon = 'cotPro.png';
+						
+						
+							
+							
+							
+						$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+						$variableEdit .= "&opcion=modificarSolicitud";
+						$variableEdit .= "&idSolicitud=" . $dato['numero_contrato'];
+						$variableEdit .= "&vigencia=" . $dato['vigencia'];
+						$variableEdit .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+						$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+							
+							
+							
+						if(strtoupper ( $estadoCont[0]['estado'] ) == "EVALUADO"){
+							$variableEdit = "#";
+							$imagenEdit = 'check.png';
+							$textEst = "EVALUADO ";
+						}else{
+							$variableEdit = "#";
+							$imagenEdit = 'cancel.png';
+							$textEst = "SIN EVALUAR ";
+						}
+						
+						
+						
+						if($dato['clase_contratista'] == 'Unión Temporal'){
+							//$dato['identificacion_contratista'] = $dato['identificacion_sociedad_temporal'];
+							$tipoSoc = "UNION TEMPORAL";
+						}else if($dato['clase_contratista'] == 'Consorcio'){
+							$tipoSoc = "CONSORCIO";
+						}else if($dato['clase_contratista'] == 'Único Contratista'){
+							$tipoSoc = "INDIVIDUAL";
+							//$dato['identificacion_contratista'] = $dato['convenio'];
+						}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 						if( $dato['tipo_supervisor'] == 1){
 							$tipo = "SUPERVISOR";
 						}else{
@@ -210,6 +283,7 @@ class listarDatos {
 						echo "<tr>";
 						echo "<td align='center'><b>" . $dato['numero_contrato']. "</b></td>";
 						echo "<td align='center'><b>" . $dato['vigencia'] . "</b></td>";
+						echo "<td align='center'><b>" . $tipoSoc . "</b></td>";
 						echo "<td align='center'>" . $dato['numero_solicitud_necesidad'] . "</td>";
 						echo "<td align='center'>" . $dato['fecha_registro'] . "</td>";
 						echo "<td align='center'>" . $dato['nombre_supervisor'] . "</td>";
@@ -217,7 +291,29 @@ class listarDatos {
 						echo "<td align='center'>" . $tipo . "</td>";
 						echo "<td align='center'>" . $dato['sede_supervisor'] . "</td>";
 						echo "<td align='center'>" . $dato['estado'] . "</td>";
-						echo "<td class='text-center'>";
+						
+						echo "
+					
+							<td><center>
+								<a href='" . $variableView . "'>
+									<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
+								</a>
+							</center></td>
+						    <td><center>
+								<a href='" . $variableViewCon . "'>
+									<img src='" . $rutaBloque . "/images/" . $imagenViewCon . "' width='15px'>
+								</a>
+							</center></td>
+							<td><center>
+								" . $textEst . " 
+								<a href='" . $variableEdit . "'>
+									<img src='" . $rutaBloque . "/images/" . $imagenEdit . "' width='15px'>
+								</a>
+							</center></td>
+					
+						";
+						
+						echo "<td align='center'>";
 							$variable = "pagina=" . $miPaginaActual;
 							$variable.="&opcion=nuevo";
 							$variable .= "&numeroContrato=".$dato["numero_contrato"];
@@ -227,24 +323,35 @@ class listarDatos {
 							$url = $directorio . '=' . $variable;
 						if($admin){
 							
-							if( $dato['estado'] == 'CREADO'){
-								$valor = 'Sin Evaluar';
-								$clase = "btn btn-default";
+							if( !$estadoCont[0]['estado'] == 'EVALUADO'){
+								$valor = 'Alerta';
+								$clase = "ui-button ui-widget ui-corner-all";
+								//$url = "#"; //Generar Alerta	
 							}else{
-								$valor = 'Evaluado';
-								$clase = "btn btn-danger";
+								$valor = 'Detalle';
+								$clase = "ui-button-disabled ui-widget ui-corner-all";
+								$url = "#"; //Ir a Detalles
 							}
-							echo $valor;
+							echo '<div class="widget">';
+							echo '	<a class="' . $clase . '" href="' . $url . '">' .  $valor . '</a>';
+							echo '</div>';
+							
+							
 							
 						}else{
-							if( $dato['estado'] == 'CREADO'){
+							if( !$estadoCont[0]['estado'] == 'EVALUADO'){
 								$valor = 'Seleccionar';
-								$clase = "btn btn-default";
+								$clase = "ui-button ui-widget ui-corner-all";
 							}else{
-								$valor = 'Inactivo';
-								$clase = "btn btn-danger";
+								$valor = 'Detalle';
+								$clase = "ui-button-disabled ui-widget ui-corner-all";
+								$url = "#"; //Ir a Detalles
 							}
-							echo '<a class="' . $clase . '" href="' . $url . '">' .  $valor . ' </span></a>';
+							echo '<div class="widget">';								 
+							echo '	<a class="' . $clase . '" href="' . $url . '">' .  $valor . '</a>';
+							echo '</div>';
+							
+							
 						}
 						
 						echo "</td>";			
