@@ -8,7 +8,7 @@ function detectarCarga(){
 
 $("#dialogo").dialog({
       modal: true,
-      title: "Caja con opciones",
+      title: "Certificaciones",
       width: 550,
       minWidth: 400,
       maxWidth: 650,
