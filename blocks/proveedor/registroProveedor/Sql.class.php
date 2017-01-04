@@ -1166,7 +1166,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "	nombre_banco";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " core.banco";
-				$cadenaSql .= " WHERE estado != 'INACTIVO' ";
+				$cadenaSql .= " WHERE estado_activo != 'FALSE' ";
 				$cadenaSql .= " ORDER BY nombre_banco";
 				break;
 			

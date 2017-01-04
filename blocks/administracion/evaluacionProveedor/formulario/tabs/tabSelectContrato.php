@@ -326,7 +326,7 @@ class listarDatos {
 							if( !$estadoCont[0]['estado'] == 'EVALUADO'){
 								$valor = 'Alerta';
 								$clase = "ui-button ui-widget ui-corner-all";
-								//$url = "#"; //Generar Alerta	
+								$url = "#"; //Generar Alerta	
 							}else{
 								$valor = 'Detalle';
 								$clase = "ui-button-disabled ui-widget ui-corner-all";
