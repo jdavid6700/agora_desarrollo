@@ -423,6 +423,8 @@ class Sql extends \Sql {
 				if ($variable ['id_caja_compensacion'] != null) {
 					$cadenaSql .= " id_caja_compensacion,";
 				}
+				$cadenaSql .= " fecha_expedicion_documento,";
+				$cadenaSql .= " id_ciudad_expedicion_documento,";
 				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
@@ -484,6 +486,8 @@ class Sql extends \Sql {
 				if ($variable ['id_caja_compensacion'] != null) {
 					$cadenaSql .= " " . $variable ['id_caja_compensacion'] . ",";
 				}
+				$cadenaSql .= " '" . $variable ['fecha_expedicion_doc'] . "',";
+				$cadenaSql .= " " . $variable ['id_lugar_expedicion_doc'] . ",";
 				$cadenaSql .= " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " ); ";
 				break;

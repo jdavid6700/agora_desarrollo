@@ -418,6 +418,15 @@ class Formulario {
 				
 				//***********************************************************************************************
 				
+				
+				//CAST****************************************************************
+				$cadena_fecha = $_REQUEST ['fechaExpeNat'];
+				$objeto_DateTime = DateTime::createFromFormat('d/m/Y', $cadena_fecha);
+				$cadena_nuevo_formato = date_format($objeto_DateTime, "Y-m-d");
+				$_REQUEST ['fechaExpeNat'] = $cadena_nuevo_formato;
+				//********************************************************************
+				
+				
 
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
@@ -522,7 +531,9 @@ class Formulario {
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
 						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
 						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat'],
+						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeNat'],
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat']
 				);
 				
 				

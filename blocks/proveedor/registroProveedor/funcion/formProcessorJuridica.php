@@ -265,7 +265,12 @@ class Formulario {
 				*/
 				
 				
-				
+				//CAST****************************************************************
+				$cadena_fecha = $_REQUEST ['fechaExpeRep'];
+				$objeto_DateTime = DateTime::createFromFormat('d/m/Y', $cadena_fecha);
+				$cadena_nuevo_formato = date_format($objeto_DateTime, "Y-m-d");
+				$_REQUEST ['fechaExpeRep'] = $cadena_nuevo_formato;
+				//********************************************************************
 				
 				
 				//****************************************************************************************************************************
@@ -335,7 +340,9 @@ class Formulario {
 						'dependiente_padre_o_hermano' => 'FALSE',
 						'id_eps' => null,
 						'id_fondo_pension' => null,
-						'id_caja_compensacion' => null
+						'id_caja_compensacion' => null,
+						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
 				);
 				
 				
