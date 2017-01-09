@@ -48,6 +48,38 @@ $this->idioma["afiliacionCajaTitulo"]="Digite la Entidad de Caja de Compensacion
 
 
 
+
+$this->idioma["marcoExpRep"] = "Documento de Identificación";
+$this->idioma["marcoExpLugRep"] = "Lugar de Expedición";
+
+$this->idioma["fechaExpeRep"]="Fecha Expedición :";
+$this->idioma["fechaExpeRepTitulo"]="Digite Fecha Expedición Documento";
+
+$this->idioma["ciudadExpeRep"]="Ciudad Expedición :";
+$this->idioma["ciudadExpeRepTitulo"]="Digite Ciudad Expedición";
+$this->idioma["departamentoExpeRep"]="Departamento Expedición :";
+$this->idioma["departamentoExpeRepTitulo"]="Digite Departamento Expedición";
+$this->idioma["paisExpeRep"]="Pais Expedición :";
+$this->idioma["paisExpeRepTitulo"]="Digite Pais Expedición";
+
+
+
+
+$this->idioma["marcoExp"] = "Documento de Identificación";
+$this->idioma["marcoExpLug"] = "Lugar de Expedición";
+
+$this->idioma["fechaExpeNat"]="Fecha Expedición :";
+$this->idioma["fechaExpeNatTitulo"]="Digite Fecha Expedición Documento";
+
+$this->idioma["ciudadExpeNat"]="Ciudad Expedición :";
+$this->idioma["ciudadExpeNatTitulo"]="Digite Ciudad Expedición";
+$this->idioma["departamentoExpeNat"]="Departamento Expedición :";
+$this->idioma["departamentoExpeNatTitulo"]="Digite Departamento Expedición";
+$this->idioma["paisExpeNat"]="Pais Expedición :";
+$this->idioma["paisExpeNatTitulo"]="Digite Pais Expedición";
+
+
+
 //Formulario
 $this->idioma["tipoPersona"] = "Tipo de Persona : ";
 $this->idioma["tipoPersonaTitulo"]="Seleccione Tipo de Persona";

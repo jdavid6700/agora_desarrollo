@@ -26,9 +26,48 @@ $(function() {
  */
 
 
+$('#<?php echo $this->campoSeguro('fechaExpeNat')?>').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+});	
+
+
+$('#<?php echo $this->campoSeguro('fechaExpeRep')?>').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+});	
+
+
 // Asociar el widget de validación al formulario
 
 /////////Se define el ancho de los campos de listas desplegables///////
+
+$('#<?php echo $this->campoSeguro('paisExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisExpeNat')?>").select2();
+$('#<?php echo $this->campoSeguro('departamentoExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").select2();
+$('#<?php echo $this->campoSeguro('ciudadExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").select2();
+
+
+$('#<?php echo $this->campoSeguro('paisExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisExpeRep')?>").select2();
+$('#<?php echo $this->campoSeguro('departamentoExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").select2();
+$('#<?php echo $this->campoSeguro('ciudadExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").select2();
+
+
 $('#<?php echo $this->campoSeguro('afiliacionEPSNat')?>').width(300);
 $("#<?php echo $this->campoSeguro('afiliacionEPSNat')?>").select2();
 $('#<?php echo $this->campoSeguro('afiliacionPensionNat')?>').width(300);

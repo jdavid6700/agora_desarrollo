@@ -578,6 +578,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_eps,";
 					$cadenaSql .= " id_fondo_pension,";
 					$cadenaSql .= " id_caja_compensacion,";
+					$cadenaSql .= " fecha_expedicion_documento,";
+					$cadenaSql .= " id_ciudad_expedicion_documento,";
 					$cadenaSql .= " declarante_renta";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.informacion_persona_natural";
@@ -1124,6 +1126,17 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_pais != 112 ';
 					$cadenaSql .= 'ORDER BY NOMBRE';
 					break;
+					
+					case 'buscarPaises' :
+					
+						$cadenaSql = 'SELECT ';
+						$cadenaSql .= 'id_pais as ID_PAIS, ';
+						$cadenaSql .= 'nombre_pais as NOMBRE, ';
+						$cadenaSql .= 'codigo_pais as COD_PAIS ';
+						$cadenaSql .= 'FROM ';
+						$cadenaSql .= 'core.pais ';
+						$cadenaSql .= 'ORDER BY NOMBRE';
+						break;
 				
 				case 'buscarPaisXDepa' :
 				
