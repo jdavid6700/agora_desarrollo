@@ -3019,7 +3019,7 @@ class Formulario {
 					$atributos['limitar']= 50;
 					$atributos['tamanno']= 1;
 					$atributos['columnas']= 1;
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 						
 					$atributos ['obligatorio'] = true;
 					$atributos ['etiquetaObligatorio'] = true;
@@ -3073,7 +3073,7 @@ class Formulario {
 					$atributos['limitar']= 50;
 					$atributos['tamanno']= 1;
 					$atributos['columnas']= 1;
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 						
 					$atributos ['obligatorio'] = true;
 					$atributos ['etiquetaObligatorio'] = true;
@@ -3121,7 +3121,7 @@ class Formulario {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 40;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 					$tab ++;
 						
 					// Aplica atributos globales al control
@@ -3161,7 +3161,7 @@ class Formulario {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 40;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 					$tab ++;
 						
 					// Aplica atributos globales al control
@@ -4446,7 +4446,7 @@ class Formulario {
 					$atributos['limitar']= 50;
 					$atributos['tamanno']= 1;
 					$atributos['columnas']= 1;
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 			
 					$atributos ['obligatorio'] = true;
 					$atributos ['etiquetaObligatorio'] = true;
@@ -4518,7 +4518,7 @@ class Formulario {
 					$atributos['limitar']= 50;
 					$atributos['tamanno']= 1;
 					$atributos['columnas']= 1;
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 			
 					$atributos ['obligatorio'] = true;
 					$atributos ['etiquetaObligatorio'] = true;
@@ -4562,7 +4562,7 @@ class Formulario {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 40;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 					$tab ++;
 			
 					// Aplica atributos globales al control
@@ -4602,7 +4602,7 @@ class Formulario {
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 40;
 					$atributos ['maximoTamanno'] = '';
-					$atributos ['anchoEtiqueta'] = 300;
+					$atributos ['anchoEtiqueta'] = 350;
 					$tab ++;
 			
 					// Aplica atributos globales al control
