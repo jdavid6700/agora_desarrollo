@@ -264,12 +264,10 @@ class Formulario {
 				$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				*/
 				
-				
 				//CAST****************************************************************
-				$cadena_fecha = $_REQUEST ['fechaExpeRep'];
-				$objeto_DateTime = DateTime::createFromFormat('d/m/Y', $cadena_fecha);
-				$cadena_nuevo_formato = date_format($objeto_DateTime, "Y-m-d");
-				$_REQUEST ['fechaExpeRep'] = $cadena_nuevo_formato;
+				$dateExp = explode("/", $_REQUEST ['fechaExpeRep']);
+				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+				$_REQUEST ['fechaExpeRep'] = $cadena_fecha;
 				//********************************************************************
 				
 				

@@ -22,34 +22,34 @@ $this->idioma["digitoRepreTitulo"]="Digito de Verificaci贸n";
 
 
 
-$this->idioma["marcoExpRep"] = "Documento de Identificaci髇";
-$this->idioma["marcoExpLugRep"] = "Lugar de Expedici髇";
+$this->idioma["marcoExpRep"] = "Documento de Identificaci贸n";
+$this->idioma["marcoExpLugRep"] = "Lugar de Expedici贸n";
 
-$this->idioma["fechaExpeRep"]="Fecha Expedici髇 :";
-$this->idioma["fechaExpeRepTitulo"]="Digite Fecha Expedici髇 Documento";
+$this->idioma["fechaExpeRep"]="Fecha Expedici贸n :";
+$this->idioma["fechaExpeRepTitulo"]="Digite Fecha Expedici贸n Documento";
 
-$this->idioma["ciudadExpeRep"]="Ciudad Expedici髇 :";
-$this->idioma["ciudadExpeRepTitulo"]="Digite Ciudad Expedici髇";
-$this->idioma["departamentoExpeRep"]="Departamento Expedici髇 :";
-$this->idioma["departamentoExpeRepTitulo"]="Digite Departamento Expedici髇";
-$this->idioma["paisExpeRep"]="Pais Expedici髇 :";
-$this->idioma["paisExpeRepTitulo"]="Digite Pais Expedici髇";
-
-
+$this->idioma["ciudadExpeRep"]="Ciudad Expedici贸n :";
+$this->idioma["ciudadExpeRepTitulo"]="Digite Ciudad Expedici贸n";
+$this->idioma["departamentoExpeRep"]="Departamento Expedici贸n :";
+$this->idioma["departamentoExpeRepTitulo"]="Digite Departamento Expedici贸n";
+$this->idioma["paisExpeRep"]="Pais Expedici贸n :";
+$this->idioma["paisExpeRepTitulo"]="Digite Pais Expedici贸n";
 
 
-$this->idioma["marcoExp"] = "Documento de Identificaci髇";
-$this->idioma["marcoExpLug"] = "Lugar de Expedici髇";
 
-$this->idioma["fechaExpeNat"]="Fecha Expedici髇 :";
-$this->idioma["fechaExpeNatTitulo"]="Digite Fecha Expedici髇 Documento";
 
-$this->idioma["ciudadExpeNat"]="Ciudad Expedici髇 :";
-$this->idioma["ciudadExpeNatTitulo"]="Digite Ciudad Expedici髇";
-$this->idioma["departamentoExpeNat"]="Departamento Expedici髇 :";
-$this->idioma["departamentoExpeNatTitulo"]="Digite Departamento Expedici髇";
-$this->idioma["paisExpeNat"]="Pais Expedici髇 :";
-$this->idioma["paisExpeNatTitulo"]="Digite Pais Expedici髇";
+$this->idioma["marcoExp"] = "Documento de Identificaci贸n";
+$this->idioma["marcoExpLug"] = "Lugar de Expedici贸n";
+
+$this->idioma["fechaExpeNat"]="Fecha Expedici贸n :";
+$this->idioma["fechaExpeNatTitulo"]="Digite Fecha Expedici贸n Documento";
+
+$this->idioma["ciudadExpeNat"]="Ciudad Expedici贸n :";
+$this->idioma["ciudadExpeNatTitulo"]="Digite Ciudad Expedici贸n";
+$this->idioma["departamentoExpeNat"]="Departamento Expedici贸n :";
+$this->idioma["departamentoExpeNatTitulo"]="Digite Departamento Expedici贸n";
+$this->idioma["paisExpeNat"]="Pais Expedici贸n :";
+$this->idioma["paisExpeNatTitulo"]="Digite Pais Expedici贸n";
 
 
 

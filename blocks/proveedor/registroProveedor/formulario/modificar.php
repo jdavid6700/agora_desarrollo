@@ -729,7 +729,7 @@ class Formulario {
 							$_REQUEST['paisEmpresa'] = 1;
 							break;
 						case 'EXTRANJERO' :
-// 							$_REQUEST['paisEmpresa'] = 2;
+ 							$_REQUEST['paisEmpresa'] = 2;
 							break;
 					}
 				}

@@ -420,10 +420,9 @@ class Formulario {
 				
 				
 				//CAST****************************************************************
-				$cadena_fecha = $_REQUEST ['fechaExpeNat'];
-				$objeto_DateTime = DateTime::createFromFormat('d/m/Y', $cadena_fecha);
-				$cadena_nuevo_formato = date_format($objeto_DateTime, "Y-m-d");
-				$_REQUEST ['fechaExpeNat'] = $cadena_nuevo_formato;
+				$dateExp = explode("/", $_REQUEST ['fechaExpeNat']);
+				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+				$_REQUEST ['fechaExpeNat'] = $cadena_fecha;
 				//********************************************************************
 				
 				
