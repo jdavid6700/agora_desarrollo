@@ -20,6 +20,8 @@ $this->idioma["digitoRepreTitulo"]="Digito de Verificación";
 
 
 
+$this->idioma["marcoInfoReg"] = "Certificación";
+$this->idioma["marcoCertReg"] = "Certificado";
 
 
 $this->idioma["marcoExpRep"] = "Documento de Identificación";

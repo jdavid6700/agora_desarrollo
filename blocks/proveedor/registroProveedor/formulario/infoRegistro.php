@@ -75,7 +75,7 @@ $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($co
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 	
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-	$esteCampo = "marcoContratos";
+	$esteCampo = "marcoInfoReg";
 	$atributos ['id'] = $esteCampo;
 	$atributos ["estilo"] = "jqueryui";
 	$atributos ['tipoEtiqueta'] = 'inicio';
@@ -139,262 +139,53 @@ echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 echo $this->miFormulario->marcoAgrupacion ( 'fin', $atributos );
 
 
+$valorCodificado = "pagina=" . $miPaginaActual;
+$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
 
-$esteCampo = "marcoContratosTabla";
-$atributos ['id'] = $esteCampo;
-$atributos ["estilo"] = "jqueryui";
-$atributos ['tipoEtiqueta'] = 'inicio';
-$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-{
-
-	
-//*************** $numeroDocumento
-//*************** $idProveedor
-
-	
-//********** CONSULTAR Consorcios y Uniones Temporales en las que Participa **********
-
-$cadena_sql = $this->sql->getCadenaSql ( "consultarConsorciosUniones", $idProveedor );
-$resultadoConsorUnion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-if($resultadoConsorUnion[0][0] != null){
-	$cadenaIdContratista = $resultadoConsorUnion[0][0] . "," . $idProveedor;
-}else{
-	$cadenaIdContratista = $idProveedor;
-}
-
-//********** CONSULTAR Contratos **********
-
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContratosARGO", $cadenaIdContratista );
-$resultadoCont = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-//echo $cadena_sql;
-//var_dump(count($resultadoCont));
-$i = 0;
-$contratos = array();
-
-while($i < count($resultadoCont)){
-	
-	$datosContrato = array (
-			'num_contrato' => $resultadoCont[$i]['numero_contrato'],
-			'vigencia' => $resultadoCont[$i]['vigencia'],
-			'unidad_ejecutora' => $resultadoCont[$i]['unidad_ejecutora']
-	);
-	
-	$datosSolicitudNecesidad = array (
-			'num_necesidad' => $resultadoCont[$i]['numero_solicitud_necesidad'],
-			'vigencia' => $resultadoCont[$i]['vigencia']
-	);
-	
-	
-	//*********************************************************************************************************************************
-	//$cadena_sql = $this->sql->getCadenaSql ( "estadoContratoAgora", $datosContrato);
-	//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-	
-	//if(isset($resultado)) {
-		$estadoSolicitud = $resultadoCont[$i]['estado'];
-		//var_dump($estadoSolicitud);
-	
-		$cadena_sql = $this->sql->getCadenaSql ( "consultarActaInicio", $datosContrato);
-		$resultadoActaInicio = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-		
-		
-		if(!$resultadoActaInicio){
-			$fechaInicio[$i] = "--/--/----";
-			$fechaFin[$i] = "--/--/----";
-			$fechas[$i] = false;
-		}else{
-			$fechaInicio[$i] = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_inicio']));
-			$fechaFin[$i] = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_fin']));
-			$fechas[$i] = true;
-		}
-	
-		$cadena_sql = $this->sql->getCadenaSql ( "consultarNovedadesContrato", $datosContrato);
-		$resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-	//}
-	//***************CONTRATOS RELACIONADOS******************************************************************************************
-	
-	
-	//$cadena_sql = $this->sql->getCadenaSql ( "listaContratoXNumContrato", $datosContrato);
-	//$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-	
-	
-	//array_push($contratos, $resultado[0]);
-	
-	$i++;
-}
+//INICIO enlace boton descargar resumen
+$variableResumen = "pagina=" . $miPaginaActual;
+$variableResumen.= "&action=".$esteBloque["nombre"];
+$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
+$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
+$variableResumen.= "&opcion=certRegistro";
+$variableResumen.= "&nomPersona=" . $nombrePersona;
+$variableResumen.= "&numDocumento=" . $numeroDocumento;
+$variableResumen.= "&tipoPersona=" . $tipoPersona;
+$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 
 
 
-if ($resultadoCont) {
-	
-	// -----------------Inicio de Conjunto de Controles----------------------------------------
-	$esteCampo = "marcoDatosResultadoParametrizar";
-	$atributos ["estilo"] = "jqueryui";
-	//echo $this->miFormulario->marcoAgrupacion ( "inicio", $atributos );
-	unset ( $atributos );
-	?>
-<br>
 
-<table id="tablaReporteCont" class="display" cellspacing="0" width="100%">
-	<thead>
-		<tr>
-			<th>Número Contrato</th>
-			<th>Vigencia</th>
-			<th>N° CDP</th>
-			<th>N° RP</th>
-			<th>Fecha Inicio</th>
-			<th>Fecha Final</th>
-			<th>Valor</th>
-			<th>Plazo de Ejecución</th>
-			<th>Clase</th>
-			<th>Certificado</th>
-			<th>Estado</th>
-			<th>Seguimiento</th>
-		</tr>
-	</thead>
-	<tbody>
-                    
-
-			
-			
-			
-<?php
-	$j = 0;
-	foreach ( $resultadoCont as $dato ) :
-		
-		
-		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&action=" . $esteBloque ["nombre"];
-		$variable .= "&bloque=" . $esteBloque ['nombre'];
-		$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-		$variable .= "&opcion=certContrato";
-		$variable .= "&numeroContrato=" . $dato ['numero_contrato'];
-		$variable .= "&vigenciaContrato=" . $dato ['vigencia'];
-		$variable .= "&docProveedor=" . $numeroDocumento;
-		$variable .= "&nomProveedor=" . $nombrePersona;
-		$variable .= "&tipoProveedor=" . $tipoPersona;
-		$variable .= "&usuario=" . $_REQUEST ["usuario"];
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		
-		$hoy = date ( "Y-m-d" );
-		$msj = '';
-		
-		if($fechas[$j]){
-			
-			
-			if (strtotime($hoy) > strtotime($fechaFin[$j])) {
+				$esteCampo = "marcoCertReg";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				{
 					
-				$certUniversidadImagen = 'pdf.png';
-					
-				switch ($dato ['estado']) {
-					case 'CREADO' :
-						$msj = 'No se ha realizado el proceso de evaluaci&oacute;n';
-						$varSatisfaccion = '#';
-						$certSatisImagen = 'cancel.png';
-						break;
-					case 'EVALUADO' :
-						$cadena_sql = $this->sql->getCadenaSql ( "evalaucionByIdContrato", $dato ['id_contrato'] );
-						$evaluacion = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-							
-						if ($evaluacion [0] ['puntaje_total'] > 45) {
-							$msj = 'Evaluado';
+				//INICIO enlace boton descargar RUT
+				//------------------Division para los botones-------------------------
+				$atributos["id"]="botones";
+				$atributos["estilo"]="marcoBotones widget";
+				echo $this->miFormulario->division("inicio",$atributos);
 			
-							//$variable = "pagina=" . $miPaginaActual;
-							//$variable .= "&action=" . $esteBloque ["nombre"];
-							//$variable .= "&bloque=" . $esteBloque ['nombre'];
-							//$variable .= "&bloqueGrupo=" . $esteBloque ["grupo"];
-							//$variable .= "&opcion=certContrato";
-							//$variable .= "&idContrato=" . $dato ['id_contrato'];
-							//$varSatisfaccion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-							$certSatisImagen = 'pdf.png';
-						} else {
-							$msj = 'Evaluado, pero no cumplio a satisfacción';
-							$varSatisfaccion = '#';
-							$certSatisImagen = 'cancel.png';
-						}
-							
-						break;
+				$enlace = "<a href='".$variableResumen."'>";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Certificado de Registro ";
+				$enlace.="</a><br><br>";       
+				echo $enlace;
+				//------------------Fin Division para los botones-------------------------
+				echo $this->miFormulario->division("fin");
+				//FIN enlace boton descargar RUT
+				
+				
 				}
-			} else {
-				$msj = 'El contrato no se ha terminado';
-				//$certUniversidadImagen = 'cancel.png';
-				$certUniversidadImagen = 'pdf.png';
-				$certSatisImagen = 'cancel.png';
-				//$variable = '#';
-				$varSatisfaccion = '#';
-			}
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
-		}else{
-			$msj = 'El contrato no tiene Acta de Inicio';
-			$certUniversidadImagen = 'cancel.png';
-			$certSatisImagen = 'cancel.png';
-			$variable = '#';
-			$varSatisfaccion = '#';
-		}
-		
-		
-		
-		echo "<tr>";
-		echo "<td align='center' width='5%'>" . $dato ['numero_contrato'] . "</td>";
-		echo "<td align='center'>" . $dato ['vigencia'] . "</td>";
-		echo "<td align='center'>" . $dato ['numero_cdp'] . "</td>";
-		echo "<td align='center'>" . $dato ['numero_rp'] . "</td>";
-		echo "<td align='center'>" . $fechaInicio[$j] . "</td>";
-		echo "<td align='center'>" . $fechaFin[$j] . "</td>";
-		$valorContrto = number_format ( $dato ['valor_contrato'] );
-		echo "<td align='right' width='13%'>$ " . $valorContrto . "</td>";
-		echo "<td align='center'>" . $dato ['plazo_ejecucion'] . "</td>";
-		echo "<td align='center'>" . $dato ['clase_contratista'] . "</td>";
-		echo "<td align='center'>";
-		echo "<a href='" . $variable . "'>                        
-														<img src='" . $rutaBloque . "/images/" . $certUniversidadImagen . "' width='15px'> 
-													</a>";
-		echo "</td>";
-		/*
-		 * echo "<td class='text-center'>";
-		 * echo "<a href='" . $varSatisfaccion . "'>
-		 * <img src='" . $rutaBloque . "/images/" . $certSatisImagen . "' width='15px'>
-		 * </a>";
-		 * echo "</td>";
-		 */
-		echo "<td align='left'>" . $dato ['estado'] . "</td>";
-		echo "<td align='left'>" . $msj . "</td>";
-		echo "</tr>";
-		$j++;
-	endforeach
-	;
-
-?>
 			
-			           			</tbody>
-</table>
 
-<?php
-	
-	//echo $this->miFormulario->agrupacion ( 'fin' );
-	unset ( $atributos );
-} else {
-	
-	$atributos ["id"] = "divNoEncontroEgresado";
-	$atributos ["estilo"] = "marcoBotones";
-	echo $this->miFormulario->division ( "inicio", $atributos );
-	
-	// -------------Control Boton-----------------------
-	$esteCampo = "noEncontroContrato";
-	$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-	$atributos ["etiqueta"] = "";
-	$atributos ["estilo"] = "centrar";
-	$atributos ["tipo"] = 'error';
-	$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-	
-	echo $this->miFormulario->cuadroMensaje ( $atributos );
-	unset ( $atributos );
-	
-	// ------------------Fin Division para los botones-------------------------
-	echo $this->miFormulario->division ( "fin" );
-}
+
 
 $atributos ['marco'] = true;
 $atributos ['tipoEtiqueta'] = 'fin';
@@ -402,7 +193,6 @@ echo $this->miFormulario->formulario ( $atributos );
 unset ( $atributos );
 
 
-}
-echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+
 
 ?>

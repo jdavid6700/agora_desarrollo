@@ -5,6 +5,7 @@ function detectarCarga(){
 	$('#marcoGeneral').show('slow');
 }
 
+$( ".widget input[type=submit], .widget a, .widget button" ).button();
 
 $("#dialogo").dialog({
       modal: true,
