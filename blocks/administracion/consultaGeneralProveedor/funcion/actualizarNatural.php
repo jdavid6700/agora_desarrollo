@@ -400,6 +400,16 @@ class Formulario {
 					}
 				}
 				
+				
+				//CAST****************************************************************
+				$dateExp = explode("/", $_REQUEST ['fechaExpeNat']);
+				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+				$_REQUEST ['fechaExpeNat'] = $cadena_fecha;
+				//********************************************************************
+				
+				
+				
+				
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
 				$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
@@ -487,7 +497,9 @@ class Formulario {
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
 						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
 						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat'],
+						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeNat'],
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat']
 				);
 				
 				

@@ -219,6 +219,13 @@ class Formulario {
 		$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 		
 		
+		//CAST****************************************************************
+		$dateExp = explode("/", $_REQUEST ['fechaExpeRep']);
+		$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+		$_REQUEST ['fechaExpeRep'] = $cadena_fecha;
+		//********************************************************************
+		
+		
 		
 		$datosInformacionPersonaNatural = array (
 				'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
@@ -258,7 +265,9 @@ class Formulario {
 				'dependiente_padre_o_hermano' => 'FALSE',
 				'id_eps' => null,
 				'id_fondo_pension' => null,
-				'id_caja_compensacion' => null
+				'id_caja_compensacion' => null,
+				'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
+				'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
 		);
 		
 		
