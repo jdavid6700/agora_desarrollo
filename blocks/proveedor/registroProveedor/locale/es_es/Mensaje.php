@@ -149,6 +149,14 @@ $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
+
+$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
+$this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUPNatTitulo"]="Seleccionar documento";
+
+
+
 $this->idioma["DocumentoRUT"] = "Adjuntar PDF Registro Único Tributario :";
 $this->idioma["DocumentoRUTTitulo"]="Seleccionar documento";
 $this->idioma["DocumentoRUTNat"] = "Adjuntar PDF Registro Único Tributario :";
@@ -369,8 +377,9 @@ $this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
 $this->idioma["marcoContratos"] = "Información de Contratos";
 $this->idioma["marcoContratosTabla"] = "Contratos";
-$this->idioma["marcoRUT"] = "Registro Único Tributario ";
+$this->idioma["marcoRUT"] = "Registro Único Tributario (RUT) ";
 
+$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) ";
 
 
 $this->idioma["tabProveedor"] = "Registro Proveedor";
