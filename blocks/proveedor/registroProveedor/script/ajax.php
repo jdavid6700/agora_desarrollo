@@ -1460,7 +1460,29 @@ function consultarDepartamentoLug(elem, request, response){
 		});
 		
 		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUPNat')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
 		
+		
+		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUP')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
 		
 		
 		

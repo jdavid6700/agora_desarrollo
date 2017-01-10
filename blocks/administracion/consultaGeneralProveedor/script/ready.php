@@ -17,6 +17,9 @@ $(function() {
 	$("#tabs").tabs();
 }); 
 
+$( ".widget input[type=submit], .widget a, .widget button" ).button();
+
+
 /*
  * Asociar el widget de validación al formulario
  */

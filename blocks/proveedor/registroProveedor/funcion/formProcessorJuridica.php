@@ -125,6 +125,40 @@ class Formulario {
 		//************************************************************************************************************
 		
 		
+		//Guardar RUP adjuntado Persona Juridica*********************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[1];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+				
+			if ($archivo1 != "") {
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//************************************************************************************************************
 		
 
 		unset($resultado);
@@ -217,6 +251,7 @@ class Formulario {
 						'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
 						'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
 						'anexo_rut' => $_REQUEST ['destino'],
+						'anexo_rup' => $_REQUEST ['destino2'],
 						'descripcion_proveedor' => $_REQUEST['descripcion'],
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,
@@ -288,6 +323,7 @@ class Formulario {
 						'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
 						'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
 						'anexo_rut' => null,
+						'anexo_rup' => null,
 						'descripcion_proveedor' => '',
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,

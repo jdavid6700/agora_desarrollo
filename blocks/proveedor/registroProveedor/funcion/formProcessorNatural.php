@@ -81,24 +81,27 @@ class Formulario {
 		$resultadoPersonaNatural = true;
 		*/
 
-		//Guardar RUT adjuntado Persona Natural
+		//Guardar RUT adjuntado Persona Natural*********************************************************************
 		$_REQUEST ['destino'] = '';
-		
+		// Guardar el archivo
 		if ($_FILES) {
+			$i = 0;
 			foreach ( $_FILES as $key => $values ) {
-				$archivo = $_FILES [$key];
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
 			}
+			$archivo = $archivoCarga[2];
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
 			$archivo1 = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
 			$nombreDoc = $prefijo . "-" . $archivo1;
-			
+		
 			if ($archivo1 != "") {
 				// guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
-				
+		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
@@ -110,8 +113,45 @@ class Formulario {
 			}
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
-		}		
+		}
+		//************************************************************************************************************		
 
+		
+		
+		//Guardar RUP adjuntado Persona Natural*********************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[3];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//************************************************************************************************************
 
 
 		unset($resultado);
@@ -445,6 +485,7 @@ class Formulario {
 						'num_cuenta_bancaria' => $_REQUEST['numeroCuentaNat'],
 						'id_entidad_bancaria' => $_REQUEST['entidadBancariaNat'],
 						'anexo_rut' => $_REQUEST ['destino'],
+						'anexo_rup' => $_REQUEST ['destino2'],
 						'descripcion_proveedor' => $_REQUEST['descripcionNat'],
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,

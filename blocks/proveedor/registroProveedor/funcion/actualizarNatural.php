@@ -74,39 +74,90 @@ class Formulario {
 		
 		unset($resultado);
 			
-			// Guardar el archivo
+		//Guardar RUT adjuntado Persona Natural*************************************************************************************
+		$_REQUEST ['destino'] = '';
+		// Guardar el archivo
 		if ($_FILES) {
+			$i = 0;
 			foreach ( $_FILES as $key => $values ) {
-				$archivo = $_FILES [$key];
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
 			}
+			$archivo = $archivoCarga[0];
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
 			$archivo1 = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
 			$nombreDoc = $prefijo . "-" . $archivo1;
-			
+				
 			if ($archivo1 != "") {
+				$CambioARCHIVO = true;
 				// guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
-				
+		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
 					
-					// Actualizar RUT
+					//Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
 					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+					
 				} else {
 					$status = "<br>Error al subir el archivo1";
 				}
 			} else {
+				$CambioARCHIVO = false;
 				$status = "<br>Error al subir archivo2";
 			}
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
-		}		
+		}
+		//***************************************************************************************************************************
 		
+		
+		//Guardar RUP adjuntado Persona Natural*************************************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[1];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				$CambioARCHIVO2 = true;
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+						
+					//Actualizar RUP
+					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUP", $_REQUEST );
+					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+						
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$CambioARCHIVO2 = false;
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//***************************************************************************************************************************
 		
 		
 				if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
