@@ -294,6 +294,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " tel_asesor,";
 				$cadenaSql .= " descripcion,";
 				$cadenaSql .= " anexorut,";
+				$cadenaSql .= " anexorup,";
 				$cadenaSql .= " tipo_cuenta_bancaria,";
 				$cadenaSql .= " num_cuenta_bancaria,";
 				$cadenaSql .= " id_entidad_bancaria,";
@@ -314,6 +315,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
 				$cadenaSql .= " '" . $variable ['descripcion_proveedor'] . "', ";
 				$cadenaSql .= " '" . $variable ['anexo_rut'] . "', ";
+				$cadenaSql .= " '" . $variable ['anexo_rup'] . "', ";
 				$cadenaSql .= " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
 				$cadenaSql .= " '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= $variable ['id_entidad_bancaria'] . ", ";
@@ -929,7 +931,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
 				break;
-			
+				
+				/* ACTUALIZAR - PROVEEEDOR DATOS */
+			case 'actualizarRUP' :
+				$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
+				$cadenaSql .= "anexorup='" . $variable ['destino2'] . "'";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
+				break;
+				
 			/* VERIFICAR NUMERO DE NIT */
 			case "verificarNIT" : // ******************************************************************************
 				$cadenaSql = " SELECT";
@@ -963,6 +973,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " P.id_entidad_bancaria,";
 				$cadenaSql .= " P.descripcion,";
 				$cadenaSql .= " P.anexorut,";
+				$cadenaSql .= " P.anexorup,";
 				$cadenaSql .= " P.fecha_registro,";
 				$cadenaSql .= " P.fecha_ultima_modificacion,";
 				$cadenaSql .= " P.estado";
