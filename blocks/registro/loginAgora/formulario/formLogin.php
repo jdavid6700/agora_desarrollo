@@ -237,9 +237,9 @@ class Formulario {
             <div id="fondo_texto">
                 <div id="texto">
 
-                        <h2>¡Bienvenido al Sistema de Registro Único de Personas! </h2>
+                        <h2>¡Bienvenido al Sistema de Registro Único de Personas y Banco de Proveedores! </h2>
                          <h2>ÁGORA</h2><br>     
-                        <p>La Vicerrectoría Administrativa y Financiera y la Sección de Compras  de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
+                        <p>La Vicerrectoría Administrativa y Financiera de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
                         <p>
                             <a class="btn btn-lg btn-warning" href="<?php echo $urlCodificada; ?>" role="button">Registro Persona</a>
                         </p>
