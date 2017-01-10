@@ -1199,6 +1199,31 @@ function consultarDepartamentoLug(elem, request, response){
 		  		$("#<?php echo $this->campoSeguro('digitoRepre')?>").val(digito_verificacion);
 		  }
 	};
+	
+	
+	function clearFileInput($input) {
+	    if ($input.val() == '') {
+	        return;
+	    }
+	    // Fix for IE ver < 11, that does not clear file inputs
+	    // Requires a sequence of steps to prevent IE crashing but
+	    // still allow clearing of the file input.
+	    if (/MSIE/.test(navigator.userAgent)) {
+	        var $frm1 = $input.closest('form');
+	        if ($frm1.length) { // check if the input is already wrapped in a form
+	            $input.wrap('<form>');
+	            var $frm2 = $input.closest('form'), // the wrapper form
+	                $tmpEl = $(document.createElement('div')); // a temporary placeholder element
+	            $frm2.before($tmpEl).after($frm1).trigger('reset');
+	            $input.unwrap().appendTo($tmpEl).unwrap();
+	        } else { // no parent form exists - just wrap a form element
+	            $input.wrap('<form>').closest('form').trigger('reset').unwrap();
+	        }   
+	    } else { // normal reset behavior for other sane browsers
+	        $input.val('');
+	    }
+	}
+	
 		
       $(function () {
       
@@ -1364,7 +1389,8 @@ function consultarDepartamentoLug(elem, request, response){
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
-				$fileupload.replaceWith($fileupload.clone(true));
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
 			}
 		});
 		
@@ -1376,7 +1402,8 @@ function consultarDepartamentoLug(elem, request, response){
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
-				$fileupload.replaceWith($fileupload.clone(true));
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
 			}
 		});
  
