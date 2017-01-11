@@ -9,6 +9,8 @@ $funcion [$indice ++] = "jquery.autocomplete.min.js";
 $funcion [$indice++]  = "jquery.dataTables.min.js";
 $funcion [$indice++]  = "masonry.pkgd.min.js";
 
+$funcion [$indice++]  = "bootstrap-checkbox.js";
+
 
 
 //$funcion [$indice++]  = "dataTables.bootstrap4.min.js";

@@ -5,6 +5,11 @@ function detectarCarga(){
 	$('#marcoGeneral').show('slow');
 }
 
+$(':checkbox').checkboxpicker();
+
+$("#botonesJur").hide("fast");
+$("#botonesNat").hide("fast");
+
 $( ".widget input[type=submit], .widget a, .widget button" ).button();
 
 $("#dialogo").dialog({

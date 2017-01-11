@@ -2684,8 +2684,36 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
                                 
 				// ---------------- FIN CONTROL: Cuadro de Texto --------------------------------------------------------				
        				
+				
+				
+				
+				?>
+								
+								<div class="panel panel-primary">
+								    <div class="panel-heading">
+								      <h3 class="panel-title">Términos de Registro</h3>
+								    </div>
+								    <div class="panel-body">
+									      <div class="alert alert-success">
+											<center><label for="condiciones">
+								                            <strong>Acepta y reconoce bajo consentimiento propio el registro de información 
+								                            personal en el Sistema de Registro Único y Banco de Proveedores de la
+								                            Universidad Distrital Francisco Jóse de Caldas</strong>
+								            </label></center>
+							                <center><input id="condicionesCheckJur" type="checkbox"></center>
+										 </div>
+								    </div>
+								</div>
+								
+								
+								<?php
+				
+				
+				
+				
+				
 				// ------------------Division para los botones-------------------------
-				$atributos ["id"] = "botones";
+				$atributos ["id"] = "botonesJur";
 				$atributos ["estilo"] = "marcoBotones";
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );
@@ -5437,9 +5465,31 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				unset ( $atributos );
 				
 				// ---------------- FIN CONTROL: Cuadro de Texto --------------------------------------------------------
+				
+				
+				?>
+				
+				<div class="panel panel-primary">
+				    <div class="panel-heading">
+				      <h3 class="panel-title">Términos de Registro</h3>
+				    </div>
+				    <div class="panel-body">
+					      <div class="alert alert-success">
+							<center><label for="condiciones">
+				                            <strong>Acepta y reconoce bajo consentimiento propio el registro de información 
+				                            personal en el Sistema de Registro Único y Banco de Proveedores de la
+				                            Universidad Distrital Francisco Jóse de Caldas</strong>
+				            </label></center>
+			                <center><input id="condicionesCheckNat" type="checkbox"></center>
+						 </div>
+				    </div>
+				</div>
+				
+				
+				<?php
 				 
 				// ------------------Division para los botones-------------------------
-				$atributos ["id"] = "botones";
+				$atributos ["id"] = "botonesNat";
 				$atributos ["estilo"] = "marcoBotones";
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );

@@ -1486,7 +1486,26 @@ function consultarDepartamentoLug(elem, request, response){
 		
 		
 		
+		$("#condicionesCheckNat").change(function(){
 		
+			if(this.checked) {
+		        $("#botonesNat").show("slow");
+		    }else{
+		    	$("#botonesNat").hide("fast");
+		    }
+			
+		});
+		
+		
+		$("#condicionesCheckJur").change(function(){
+		
+			if(this.checked) {
+		        $("#botonesJur").show("slow");
+		    }else{
+		    	$("#botonesJur").hide("fast");
+		    }
+			
+		});
 		
 		
 		
