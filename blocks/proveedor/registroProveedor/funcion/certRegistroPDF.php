@@ -41,127 +41,55 @@ $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($co
 //*************************************************************************** DBMS *******************************
 //****************************************************************************************************************
 
-$datosContrato = array (
-		'numeroContrato' => $_REQUEST['numeroContrato'],
-		'vigenciaContrato' => $_REQUEST['vigenciaContrato']
-);
-
-//CONSULTAR USUARIO
-$cadena_sql = $this->sql->getCadenaSql ( "consultarContratosARGOByNum",  $datosContrato);
-$resultado = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-$numeroContratistas = count($resultado);
-
-
-// echo $cadena_sql;
-// var_dump($_REQUEST);
-
-// var_dump($resultado);
-
-$datosContrato = array (
-		'num_contrato' => $resultado[0]['numero_contrato'],
-		'vigencia' => $resultado[0]['vigencia'],
-		'unidad_ejecutora' => $resultado[0]['unidad_ejecutora']
-);
-
-
-$cadena_sql = $this->sql->getCadenaSql ( "consultarActaInicio", $datosContrato);
-$resultadoActaInicio = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-$fechaInicio = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_inicio']));
-$fechaFin = date("d/m/Y", strtotime($resultadoActaInicio[0]['fecha_fin']));
-	
-$cadena_sql = $this->sql->getCadenaSql ( "consultarNovedadesContrato", $datosContrato);
-$resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-
-
-$cadena_sql = $this->sql->getCadenaSql ( "listaContratoXNumContrato", $datosContrato);
-$resultadoContrato = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
 $cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
 $resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedorByID', $_REQUEST ["idProveedor"] );
+$resultadoPro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$resultado[0]['nom_proveedor'] = $_REQUEST['nomProveedor'];
-$resultado[0]['num_documento'] = $_REQUEST['docProveedor'];
+//echo $cadenaSql;
 
-$resultado[0]['tipo_persona'] = $_REQUEST['tipoProveedor'];
-$resultado[0]['tipo_documento'] = $resultadoDoc[0]['tipo_identificacion'];
+//var_dump($_REQUEST);
 
-$resultado[0]['numero_cdp'] = $resultadoContrato[0]['numero_cdp'];
-$resultado[0]['numero_rp'] = $resultadoContrato[0]['numero_rp'];
-$resultado[0]['numero_contrato'] = $resultadoContrato[0]['numero_contrato'];
-$resultado[0]['vigencia'] = $resultadoContrato[0]['vigencia'];
-$resultado[0]['objetocontratar'] = $resultadoContrato[0]['objeto_contrato'];
+//var_dump($resultadoPro);
 
-
-$valorContrto = number_format($resultadoContrato[0]['valor_contrato']);
+//exit();
 
 $certUniversidadImagen = 'sabio_caldas.png';
-
-//$date = explode("-", $resultado[0]['fecha_rp']);
-$date = explode("-", $resultadoContrato[0]['fecha_registro']);
-
-$dateIn = explode("-", $resultadoActaInicio[0]['fecha_inicio']);
-$dateFi = explode("-", $resultadoActaInicio[0]['fecha_fin']);
-
-$resultadoActaInicio[0]['fecha_inicio'] = $dateIn[2]."/".$dateIn[1]."/".$dateIn[0];
-$resultadoActaInicio[0]['fecha_fin'] = $dateFi[2]."/".$dateFi[1]."/".$dateFi[0];
-
-switch ($date[1]) {
-	case '01' :
-		$date[1] = "Enero";
-		break;
-
-	case '02' :
-		$date[1] = "Febrero";
-		break;
-
-	case '03' :
-		$date[1] = "Marzo";
-		break;
-			
-	case "04":
-		$date[1] = "Abril";
-		break;
-			
-	case "05":
-		$date[1] = "Mayo";
-		break;
-		
-	case '06':
-		$date[1] = "Junio";
-		break;
-		
-	case '07' :
-		$date [1] = "Julio";
-		break;
-	
-	case '08' :
-		$date [1] = "Agosto";
-		break;
-	
-	case '09' :
-		$date [1] = "Septiembre";
-		break;
-	
-	case "10" :
-		$date [1] = "Octubre";
-		break;
-	
-	case "11" :
-		$date [1] = "Noviembre";
-		break;
-	
-	case '12' :
-		$date [1] = "Diciembre";
-		break;
-}
 
 setlocale(LC_ALL, "es_ES");
 $dia = strftime("%d");
 $fecha = strftime("de %B del %Y");
+
+
+$resultado[0]['nom_proveedor'] = $_REQUEST['nomPersona'];
+$resultado[0]['num_documento'] = $_REQUEST['numDocumento'];
+
+$resultado[0]['tipo_persona'] = $_REQUEST['tipoPersona'];
+$resultado[0]['tipo_documento'] = $resultadoDoc[0]['tipo_identificacion'];
+
+
+
+$dateP = explode(" ", $resultadoPro[0]['fecha_registro']);
+$date = explode("-", $dateP[0]);
+
+
+$resultadoDate[0]['fecha_reg'] = $date[2]."/".$date[1]."/".$date[0];
+
+//var_dump($date);
+//var_dump($date2);
+
+$resultado[0]['numero_cdp'] = "2211";
+$resultado[0]['numero_contrato'] = 12;
+$resultado[0]['vigencia'] = 245;
+$resultado[0]['objetocontratar'] = 255;
+$valorContrto = "1001";
+
+$resultadoActaInicio[0]['fecha_inicio'] = "12/12/2017";
+$resultadoActaInicio[0]['fecha_fin'] = "12/12/2017";
+
 
 $contenidoPagina = "<page backtop='20mm' backbottom='20mm' backleft='20mm' backright='20mm'>";
 // $contenidoPagina .= "<page_header>
@@ -228,7 +156,7 @@ $contenidoPagina = "<page backtop='20mm' backbottom='20mm' backleft='20mm' backr
             <tr>
                 <td align='center' >
     				<span style='font-size:15.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>EL SUSCRITO JEFE DE LA OFICINA ASESORA DE JURÍDICA DE LA
+107%'>EL SISTEMA ÚNICO DE PERSONAS Y BANCO DE PROVEEDORES \"ÁGORA\" DE LA
 UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</span>
                 </td>
             </tr>
@@ -247,28 +175,12 @@ UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</span>
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
 mso-bidi-font-size:11.0pt;line-height:107%'>Que la persona <b>".$resultado[0]['nom_proveedor']."</b>, en su calidad de PERSONA <b>".$resultado[0]['tipo_persona']."</b> con
-<b>".$resultado[0]['tipo_documento']."</b> No. <b>".$resultado[0]['num_documento'].",</b> prestó sus servicios en calidad de contratista con la 
-		Universidad Distrital Francisco José de Caldas, respaldada con la Disponibilidad Presupuestal 
-		No. <b>".$resultado[0]['numero_cdp']."</b> y Registro Presupuestal No. <b>".$resultado[0]['numero_rp']."</b>  
-				con fecha de <b>".$date[2]."</b> de <b>".$date[1]."</b> del <b>".$date[0]."</b> y en virtud 
-						del siguiente contrato:</span>
+<b>".$resultado[0]['tipo_documento']."</b> No. <b>".$resultado[0]['num_documento'].",</b> se encuentra registrado en la Base de Datos del Sistema de Registro Único de Personas y Banco de Proveedores de la 
+		Universidad Distrital Francisco José de Caldas, con fecha de registro 
+		 <b>".$resultadoDate[0]['fecha_reg']."</b> y su información se encuentra disponible para los procesos que la Universidad requiera.</span>
 		</p>
 
-<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'><b>CONTRATO No. " . $resultado[0]['numero_contrato'] . " DE " . $resultado[0]['vigencia'] . "</b>  </span></p>
 
-<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'><b>OBJETO : </b><br> <br>
-" . $resultado[0]['objetocontratar'] . "  </span></p>
-		<br>
-		<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'> <b>VALOR DEL CONTRATO : $</b>
-" . $valorContrto . "  </span></p>
-
-<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'><b>FECHA DE INICIO: </b>
-" . $resultadoActaInicio[0]['fecha_inicio'] . "  <br><b>FECHA DE FINALIZACIÓN: </b>
-" . $resultadoActaInicio[0]['fecha_fin'] . "  </span></p>
 		
 		<p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
 mso-bidi-font-size:11.0pt;line-height:107%'>La presente certificación se expide en la 
@@ -280,8 +192,8 @@ mso-bidi-font-size:11.0pt;line-height:107%'>La presente certificación se expide
 	<page_footer>
 		
  		<p class=MsoNormal style='text-align:center'><span style='font-size:14.0pt;
-   mso-bidi-font-size:11.0pt;line-height:107%'> <b> CAMILO ANDRÉS BUSTOS PARRA </b></span> <span style='font-size:10.0pt;
-   mso-bidi-font-size:11.0pt;line-height:107%'> <br> <b> Jefe Oficina Asesora Jurídica  </b> </span></p>
+   mso-bidi-font-size:11.0pt;line-height:107%'> <b> ÁGORA </b></span> <span style='font-size:10.0pt;
+   mso-bidi-font-size:11.0pt;line-height:107%'> <br> <b> Sistema de Registro Único de Personas y Banco de Proveedores  </b> </span></p>
     
  		<br>
          <table align='center' width = '100%'>

@@ -152,6 +152,8 @@ $variableResumen.= "&opcion=certRegistro";
 $variableResumen.= "&nomPersona=" . $nombrePersona;
 $variableResumen.= "&numDocumento=" . $numeroDocumento;
 $variableResumen.= "&tipoPersona=" . $tipoPersona;
+$variableResumen.= "&usuario=" . $_REQUEST ["usuario"];
+$variableResumen.= "&idProveedor=" . $idProveedor;
 $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 
 

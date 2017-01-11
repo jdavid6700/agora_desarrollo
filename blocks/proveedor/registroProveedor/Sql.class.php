@@ -954,6 +954,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " WHERE num_documento = " . $variable;
 				break;
+				
+				/* DATOS DEL PROVEEDOR POR USUARIO */
+				case "buscarProveedorByID" : // ****************************************************************************
+					$cadenaSql = " SELECT";
+					$cadenaSql .= " * ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.informacion_proveedor ";
+					$cadenaSql .= " WHERE id_proveedor = " . $variable . ";";
+					break;
 			
 			/* DATOS DEL PROVEEDOR POR USUARIO */
 			case "buscarProveedorByDocumento" : // ****************************************************************************
@@ -1589,11 +1598,76 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_usuario = '" . $variable ['id_usuario'] . "' ";
 				break;
 		
-		/**
-		 * Clausulas genéricas.
-		 * se espera que estén en todos los formularios
-		 * que utilicen esta plantilla
-		 */
+				
+				
+				
+		     /**
+             * Clausulas genéricas.
+             * se espera que estén en todos los formularios
+             * que utilicen esta plantilla
+             */
+            case "iniciarTransaccion" :
+                $cadenaSql = "START TRANSACTION";
+                break;
+
+            case "finalizarTransaccion" :
+                $cadenaSql = "COMMIT";
+                break;
+
+            case "cancelarTransaccion" :
+                $cadenaSql = "ROLLBACK";
+                break;
+
+            case "eliminarTemp" :
+
+                $cadenaSql = "DELETE ";
+                $cadenaSql .= "FROM ";
+                $cadenaSql .= $prefijo . "tempFormulario ";
+                $cadenaSql .= "WHERE ";
+                $cadenaSql .= "id_sesion = '" . $variable . "' ";
+                break;
+
+            case "insertarTemp" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "tempFormulario ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "id_sesion, ";
+                $cadenaSql .= "formulario, ";
+                $cadenaSql .= "campo, ";
+                $cadenaSql .= "valor, ";
+                $cadenaSql .= "fecha ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+
+                foreach ($_REQUEST as $clave => $valor) {
+                    $cadenaSql .= "( ";
+                    $cadenaSql .= "'" . $idSesion . "', ";
+                    $cadenaSql .= "'" . $variable ['formulario'] . "', ";
+                    $cadenaSql .= "'" . $clave . "', ";
+                    $cadenaSql .= "'" . $valor . "', ";
+                    $cadenaSql .= "'" . $variable ['fecha'] . "' ";
+                    $cadenaSql .= "),";
+                }
+
+                $cadenaSql = substr($cadenaSql, 0, (strlen($cadenaSql) - 1));
+                break;
+
+            case "rescatarTemp" :
+                $cadenaSql = "SELECT ";
+                $cadenaSql .= "id_sesion, ";
+                $cadenaSql .= "formulario, ";
+                $cadenaSql .= "campo, ";
+                $cadenaSql .= "valor, ";
+                $cadenaSql .= "fecha ";
+                $cadenaSql .= "FROM ";
+                $cadenaSql .= $prefijo . "tempFormulario ";
+                $cadenaSql .= "WHERE ";
+                $cadenaSql .= "id_sesion='" . $idSesion . "'";
+                break;
+
+            /**
+             * 
+             */
 		}
 		
 		return $cadenaSql;
