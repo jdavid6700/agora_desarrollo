@@ -3580,6 +3580,28 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				
 				
+				
+				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				$esteCampo = 'mensaje';
+					
+				$tipo = 'warning';
+					
+				$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos["etiqueta"] = "";
+				$atributos["estilo"] = "centrar";
+				$atributos["tipo"] = $tipo;
+					
+				$mensajeLey = "<b>Recuerde que el Registro y Tratamiento de Información sensible se realizará mediante lo establecido
+											según la Ley 1581 de 2012 y la Sentencia 334 de 2010 de la Corte Constitucional</b>";
+					
+				$atributos["mensaje"] = $mensajeLey;
+				echo $this->miFormulario->cuadroMensaje($atributos);
+				unset($atributos);
+					
+				
+				
+				
+				
 				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
 				$esteCampo = "grupoEtnico";
 				$atributos ['nombre'] = $esteCampo;
