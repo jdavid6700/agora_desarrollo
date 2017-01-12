@@ -2164,7 +2164,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, custom[email], maxSize[40]';
+			$atributos ['validar'] = 'required, custom[email], maxSize[320]';
 				
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2174,7 +2174,7 @@ class Formulario {
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 30;
-			$atributos ['maximoTamanno'] = '30';
+			$atributos ['maximoTamanno'] = '320';
 			$atributos ['anchoEtiqueta'] = 160;
 			$tab ++;
 				
@@ -2896,7 +2896,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required, custom[email], maxSize[40]';
+			$atributos ['validar'] = 'required, custom[email], maxSize[320]';
 		
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2906,7 +2906,7 @@ class Formulario {
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 30;
-			$atributos ['maximoTamanno'] = '';
+			$atributos ['maximoTamanno'] = '320';
 			$atributos ['anchoEtiqueta'] = 200;
 			$tab ++;
 		
@@ -5912,7 +5912,7 @@ class Formulario {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, custom[email], maxSize[40]';
+				$atributos ['validar'] = 'required, custom[email], maxSize[320]';
 					
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5922,7 +5922,7 @@ class Formulario {
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 30;
-				$atributos ['maximoTamanno'] = '30';
+				$atributos ['maximoTamanno'] = '320';
 				$atributos ['anchoEtiqueta'] = 160;
 				$tab ++;
 					
