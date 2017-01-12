@@ -28,6 +28,17 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "verificarEnvio" :
+				$cadenaSql = " SELECT identificacion, tipo_identificacion, informado, correo, fecha_registro, estado FROM prov_usuario ";
+				$cadenaSql .= " WHERE id_usuario = '" . $variable . "'";
+				break;
+				
+			case "actualizarEstadoInformado" :
+				$cadenaSql = "UPDATE " . $prefijo . "usuario SET ";
+				$cadenaSql .= " informado = 'TRUE' ";
+				$cadenaSql .= " WHERE id_usuario = '" . $variable . "' ";
+				break;
+			
 			case "consultarContratosARGO" :
 				$cadenaSql = " SELECT ";
 				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
@@ -1518,7 +1529,7 @@ class Sql extends \Sql {
 			
 			case "insertarUsuario" :
 				
-				$cadenaSql = "INSERT INTO " . $prefijo . "usuario(id_usuario, nombre, apellido, correo, telefono, imagen, clave, tipo, estilo, idioma, estado, fecha_registro, identificacion,tipo_identificacion) ";
+				$cadenaSql = "INSERT INTO " . $prefijo . "usuario(id_usuario, nombre, apellido, correo, telefono, imagen, clave, tipo, estilo, idioma, estado, fecha_registro, identificacion,tipo_identificacion,informado) ";
 				$cadenaSql .= " VALUES ( ";
 				$cadenaSql .= " '" . $variable ['id_usuario'] . "', ";
 				$cadenaSql .= " '" . $variable ['nombres'] . "', ";
@@ -1533,7 +1544,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " 2, ";
 				$cadenaSql .= " '" . $variable ['fechaIni'] . "', ";
 				$cadenaSql .= " " . $variable ['identificacion'] . ", ";
-				$cadenaSql .= " '" . $variable ['tipo_identificacion'] . "' ";
+				$cadenaSql .= " '" . $variable ['tipo_identificacion'] . "', ";
+				$cadenaSql .= " 'FALSE' ";
 				$cadenaSql .= " )";
 				
 				break;
