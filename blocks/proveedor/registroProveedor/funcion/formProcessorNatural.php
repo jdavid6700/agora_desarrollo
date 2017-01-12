@@ -238,7 +238,10 @@ class Formulario {
 						case 26 :
 							$_REQUEST['grupoEtnico']='ROM';
 							break;
-					}
+						case 40 :
+							$_REQUEST ['grupoEtnico']=null;
+							break;
+						}
 				}
 				
 				if(isset($_REQUEST['estadoCivil'])){//CAST genero tipoCuenta
