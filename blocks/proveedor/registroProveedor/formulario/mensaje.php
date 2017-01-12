@@ -62,17 +62,17 @@ if (!isset($GLOBALS["autorizado"])) {
     if ($_REQUEST['mensaje'] == 'confirma') {
         $tipo = 'success';
         $mensaje = "Se registro la PERSONA, continuar para ingresar Actividad Económica<br >";
-	$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
-	$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
+		$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
+		$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
         $boton = "continuar";
 
-//INICIO ENVIO DE CORREO AL USUARIO
-    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+		//INICIO ENVIO DE CORREO AL USUARIO
+   		$rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
 
-    include_once($rutaClases."/mail/class.phpmailer.php");
-    include_once($rutaClases."/mail/class.smtp.php");
+    	include_once($rutaClases."/mail/class.phpmailer.php");
+    	include_once($rutaClases."/mail/class.smtp.php");
 	
-	$mail = new PHPMailer();     
+		$mail = new PHPMailer();     
 	
 		$mail->SMTPOptions = array (
 				'ssl' => array (
@@ -88,7 +88,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		$mail->Port = 587;
 		$mail->Mailer = "smtp";
 		$mail->SMTPAuth = true;
-		$mail->Username = "condor@udistrital.edu.co";
+		$mail->Username = "agora@udistrital.edu.co";
 		$mail->Password = "CondorOAS2012";
 		$mail->Timeout = 1200;
 		$mail->Charset = "utf-8";
@@ -130,10 +130,10 @@ if (!isset($GLOBALS["autorizado"])) {
 			<?php
 		}    
 
-$mail->ClearAllRecipients();
-$mail->ClearAttachments();
+		$mail->ClearAllRecipients();
+		$mail->ClearAttachments();
 
-//FIN ENVIO DE CORREO AL USUARIO		
+		//FIN ENVIO DE CORREO AL USUARIO		
         
         $valorCodificado = "pagina=" . $miPaginaActual;
 		$valorCodificado.="&opcion=actividad";
@@ -145,13 +145,22 @@ $mail->ClearAttachments();
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>El número de Documento ya se encuentra Registrado.";
+        $mensaje = "Error en el cargue. <br>El número de Documento ".$_REQUEST['nit']." ya se encuentra Registrado.";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
         $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedorLegal') {
+        	$tipo = 'error';
+        	$mensaje = "Error en el cargue. <br>El número de Documento del Representante Legal ".$_REQUEST['nit']." ya se encuentra Registrado.";
+        	$boton = "regresar";
+        
+        	$valorCodificado = "pagina=". $miPaginaActual;
+        	$valorCodificado.="&opcion=mostrar";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
     }else if($_REQUEST['mensaje'] == 'mensajeExisteActividad') {
         $tipo = 'error';
@@ -166,7 +175,7 @@ $mail->ClearAttachments();
        
     }else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>No se subió la informaciòn Correctamente, Por Favor Comuniquese con el Administrador del Sistema";
+        $mensaje = "Error al Cargar los Datos. <br>La Informaciòn no se diligenció Correctamente, Por Favor Vuelva a Intertarlo";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;

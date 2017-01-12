@@ -128,9 +128,9 @@ echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 ?>
 
 <div id="dialogo">
-	<p>A continuación podra observar todos los distintos contratos en lo que ha participado o esta 
-	participando en la Universidad, con lo cual obtener sus Certificados, solo
-	si estos ya se han culminado satisfactoriamente.</p>
+	<p>A continuación podrá observar todos los distintos contratos en lo que ha participado o 
+	esta participando en la Universidad; Usted podrá obtener sus Certificados, 
+	solo si estos ya se han culminado satisfactoriamente.</p>
 </div>
 
 

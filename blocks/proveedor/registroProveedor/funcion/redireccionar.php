@@ -39,8 +39,14 @@ class redireccion {
 				$variable.= "&opcion=mensaje";
 				$variable.= "&mensaje=mensajeExisteProveedor";
 				$variable.="&nit=" . $valor;
-				break;                           
-                            
+				break;
+				
+			case "existeProveedorLegal" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=mensajeExisteProveedorLegal";
+				$variable .= "&nit=" . $valor;
+				break;
 			
 			case "noregistro" :
 				$variable = "pagina=" . $miPaginaActual;

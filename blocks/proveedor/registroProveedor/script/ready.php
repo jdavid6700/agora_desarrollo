@@ -89,6 +89,7 @@ $(function() {
  */
 
 $('#<?php echo $this->campoSeguro('fechaExpeNat')?>').datepicker({
+		yearRange: '-99:+0',
         dateFormat: 'dd/mm/yy',
         changeYear: true,
         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
@@ -100,6 +101,7 @@ $('#<?php echo $this->campoSeguro('fechaExpeNat')?>').datepicker({
 
 
 $('#<?php echo $this->campoSeguro('fechaExpeRep')?>').datepicker({
+		yearRange: '-99:+0',
         dateFormat: 'dd/mm/yy',
         changeYear: true,
         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],

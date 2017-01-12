@@ -208,8 +208,8 @@ $this->idioma["correoNatTitulo"]="Digite el correo";
 $this->idioma["sitioWebNat"] = "Sitio Web : ";
 $this->idioma["sitioWebNatTitulo"]="Digite el Sitio Web";
 
-$this->idioma["telefonoNat"] = "Teléfono : ";
-$this->idioma["telefonoNatTitulo"]="Digite el teléfono";
+$this->idioma["telefonoNat"] = "Otro (Movil/Fijo) : ";
+$this->idioma["telefonoNatTitulo"]="Digite otro número de Contacto Movil o Fijo";
 
 $this->idioma["extensionNat"] = "Extensión : ";
 $this->idioma["extensionNatTitulo"]="Digite la Extensión";
