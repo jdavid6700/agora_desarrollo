@@ -73,6 +73,7 @@ class Formulario {
         <section>
             <article id = "fondo_login">
                 <?php
+                
                 $atributosGlobales ['campoSeguro'] = 'false';
                 $_REQUEST ['tiempo'] = time();
 
@@ -272,12 +273,15 @@ class Formulario {
     }
 
     function mensaje() {
-
+ 
+		
         // Si existe algun tipo de error en el login aparece el siguiente mensaje
         $mensaje = $this->miConfigurador->getVariableConfiguracion('mostrarMensaje');
         $this->miConfigurador->setVariableConfiguracion('mostrarMensaje', null);
 
         if (isset($_REQUEST ['error'])) {
+        	
+           	
             if ($_REQUEST ['error'] == 'formularioExpirado') {
                 $atributos ["estilo"] = 'information';
             } else {
@@ -292,7 +296,10 @@ class Formulario {
             $atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
             $atributos ['mensaje'] = $this->lenguaje->getCadena($_REQUEST ['error']);
             echo $this->miFormulario->campoMensaje($atributos);
-            unset($atributos);
+            
+            //echo "<script>alert('".$atributos ['mensaje']."');</script>";
+            
+            //unset($atributos);
         }
         return true;
     }

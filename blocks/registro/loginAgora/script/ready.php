@@ -30,6 +30,6 @@ $('#<?php echo sha1('clave'.$_REQUEST['tiempo']);?>').keydown(function(e) {
     
 setTimeout(function() {
     $('#divMensaje').hide( "drop", { direction: "up" }, "slow" );
-}, 10000); // <-- time in milliseconds
+}, 100000000000); // <-- time in milliseconds
 
 
