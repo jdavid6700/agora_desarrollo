@@ -176,8 +176,8 @@ if ($resultado) {
 			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['num_documento'] . "</center></td>
-						<td><center>" . utf8_encode($dato['nom_proveedor']) . "</center></td>
-						<td><center>" . utf8_encode($dato['tipopersona']) . "</center></td>
+						<td><center>" . $dato['nom_proveedor'] . "</center></td>
+						<td><center>" . $dato['tipopersona'] . "</center></td>
 						<td><center>" . $dato['correo'] . "</center></td>
 						<td><center>" . $resultadoTel[0]['numero_tel'] . "</center></td>                                                    
 						<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>

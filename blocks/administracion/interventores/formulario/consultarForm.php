@@ -152,7 +152,7 @@ if ($resultado) {
 			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['num_documento'] . "</center></td>
-						<td><center>" . utf8_encode($dato['nom_proveedor']) . "</center></td>
+						<td><center>" . $dato['nom_proveedor'] . "</center></td>
 						<td><center>" . $dato['correo'] . "</center></td>
 						<td><center>" . $dato['dependencia'] . "</center></td>
 						<td><center>" . $estado . "</center></td>
