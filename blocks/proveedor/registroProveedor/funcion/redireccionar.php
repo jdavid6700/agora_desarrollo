@@ -27,6 +27,8 @@ class redireccion {
 				$variable .= "&tipo=" . $valor ['tipo'];
 				$variable .= "&rol_menu=" . $valor ['rolMenu'];
 				$variable .= "&telefono=" . $valor ['telefono'];
+				$variable .= "&nombres=" . $valor ['nombre'];
+				$variable .= "&apellidos=" . $valor ['apellido'];
 				break;				
 	
 			case "registroActividad" :

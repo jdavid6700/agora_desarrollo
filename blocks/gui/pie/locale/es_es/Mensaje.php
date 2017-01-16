@@ -1,7 +1,7 @@
 <?php
 $this->idioma["mensajePie"]="
 		Universidad Distrital Francisco José de Caldas
-		Carrera 8 N. 40-78 Piso 1 / PBX 3238400 - 3239300";
+		Carrera 8 N. 40-78 Piso 1 / PBX 3239300";
 
 $this->idioma["mensajeResolucion"]="Si desea consultar la Resolución No.001 de 2001.
 		 Dirijase al Siguiente link :";

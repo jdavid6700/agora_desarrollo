@@ -83,10 +83,42 @@ if (!isset($GLOBALS["autorizado"])) {
     echo $this->miFormulario->division("inicio", $atributos);
 
     if ($_REQUEST['mensaje'] == 'confirma') {
+    	
+    	$variableResumen = "pagina=gestionUsuarios"; //pendiente la pagina para modificar parametro
+    	$variableResumen.= "&action=".'gestionUsuarios';
+    	$variableResumen.= "&bloque=" . '6';
+    	$variableResumen.= "&bloqueGrupo=" . 'usuarios';
+    	$variableResumen.= "&opcion=resumen";
+    	$variableResumen.= "&identificacion=" . $_REQUEST['nit'];
+    	$variableResumen.= "&nombres=" .$_REQUEST['nombres'];
+    	$variableResumen.= "&apellidos=" .$_REQUEST['apellidos'];
+    	$variableResumen.= "&correo=" .$_REQUEST['correo'];
+    	$variableResumen.= "&telefono=" .$_REQUEST['telefono'];
+    	$variableResumen.= "&id_usuario=" .$_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'];
+    	$variableResumen.= "&perfilUs=" .'Persona Natural o Jurídica';
+    	$variableResumen.= "&password=" .$_REQUEST['generada'];
+    	$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+    	
+    	//------------------Division para los botones-------------------------
+    	$atributos["id"]="botones";
+    	$atributos["estilo"]="marcoBotones widget";
+    	echo $this->miFormulario->division("inicio",$atributos);
+    	
+    	$enlace = "<a href='".$variableResumen."'>";
+    	$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Credenciales ";
+    	$enlace.="</a><br><br>";
+    	echo $enlace;
+    	//------------------Fin Division para los botones-------------------------
+    	echo $this->miFormulario->division("fin");
+    	
+    	
         $tipo = 'success';
-        $mensaje = "Se registro la PERSONA, continuar para ingresar Actividad Económica<br >";
+        $mensaje = "Se registro la PERSONA, continuar para ingresar Actividades Económicas (IMPORTANTE)<br >";
 		$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
+		$mensaje .= "<strong><br >";
 		$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
+		$mensaje .= "<strong><br >";
+		$mensaje .= "<strong>Igualmente puede descargar sus credenciales de ACCESO en el enlace superior, si así lo prefiere o si se presentó algún problema con el envió a su correo.<br >";
         $boton = "continuar";
         
         if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
@@ -224,8 +256,9 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
 
     }else if($_REQUEST['mensaje'] == 'errorUsuario') {
-        $tipo = 'error';
-        $mensaje = "Se Registro Información Personal. <br>Existe un PROBLEMA (No se Registro USUARIO en el Sistema AGORA.), Por Favor Comuniquese con el Administrador del Sistema";
+        $tipo = 'warning';
+        $mensaje = "Se Registro Información Personal. <br>Existe un PROBLEMA (No se Registro USUARIO en el Sistema AGORA.), Por Favor Comuniquese con el 
+    		Administrador del Sistema para solicitar un Usuario. No debe volver a Registrarse";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;

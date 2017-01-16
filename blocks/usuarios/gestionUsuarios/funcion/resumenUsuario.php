@@ -15,6 +15,7 @@ $aplicativo=$this->miConfigurador->getVariableConfiguracion("nombreAplicativo");
 $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->configuracion ["site"];
 $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 
+if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
 
 $contenidoPagina = "<page backtop='30mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
 $contenidoPagina .= "<page_header>
@@ -48,7 +49,7 @@ $contenidoPagina .= "<page_header>
                     <br>
                     Todos los derechos reservados.
                     <br>
-                    Carrera 8 N. 40-78 Piso 1 / PBX 3238400 - 3239300
+                    Carrera 8 N. 40-78 Piso 1 / PBX 3239300
                     <br>
                     ".$correo."                    
                 </td>
@@ -62,7 +63,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 107%'>".$aplicativo."</span></b></p>
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:14.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>REGISTRO DE USUARIO EXITOSO</span></b></p>
+107%'>REGISTRO DE USUARIO EN ÁGORA EXITOSO</span></b></p>
 
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
