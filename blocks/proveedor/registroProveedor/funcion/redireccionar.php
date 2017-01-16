@@ -24,6 +24,9 @@ class redireccion {
 				$variable .= "&generada=" . $valor ['generadaPass'];
 				$variable .= "&id_usuario=" . $valor ['id_usuario'];
 				$variable .= "&tipo_identificacion=" . $valor ['tipo_identificacion'];
+				$variable .= "&tipo=" . $valor ['tipo'];
+				$variable .= "&rol_menu=" . $valor ['rolMenu'];
+				$variable .= "&telefono=" . $valor ['telefono'];
 				break;				
 	
 			case "registroActividad" :
