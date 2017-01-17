@@ -25,10 +25,10 @@ if (!isset($GLOBALS["autorizado"])) {
 
     $miPaginaActual = $this->miConfigurador->getVariableConfiguracion("pagina");
 
-    $conexion = "estructura";
+    $conexion = "framework";
     $esteRecursoDBE = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
-    $conexion = "agora";
+    $conexion = "estructura";
     $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
     
     $conexion = "sicapital";
@@ -458,7 +458,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
     // Si no se coloca, entonces toma el valor predeterminado.
     $atributos ['estilo'] = '';
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $tab = 1;
     // ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
     // ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
@@ -565,7 +565,7 @@ if (!isset($GLOBALS["autorizado"])) {
     $atributos ["tipo"] = "hidden";
     $atributos ['estilo'] = '';
     $atributos ["obligatorio"] = false;
-    $atributos ['marco'] = true;
+    $atributos ['marco'] = false;
     $atributos ["etiqueta"] = "";
     $atributos ["valor"] = $valorCodificado;
     echo $this->miFormulario->campoCuadroTexto($atributos);

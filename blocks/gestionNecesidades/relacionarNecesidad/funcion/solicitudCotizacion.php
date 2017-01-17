@@ -30,7 +30,7 @@ class SolicitudCotizacion {
 	}
 	function procesarFormulario() {
 		
-		$conexion = "agora";
+		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );

@@ -645,7 +645,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_unidad,";
 				$cadenaSql .= "	(tipo || '-' || unidad) AS unidad";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.unidad";
+				$cadenaSql .= " agora.parametro_unidad";
 				$cadenaSql .= " ORDER BY tipo";
 				break;
 				

@@ -27,7 +27,7 @@ class Registrar {
 		$this->miFuncion = $funcion;
 	}
 	function procesarFormulario() {
-		$conexion = "agora";
+		$conexion = "estructura";
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
@@ -66,7 +66,7 @@ class Registrar {
         
         
         
-        if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "CREADO" ) {
+        if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "RELACIONADO" ) {
         	//Actualizar datos del Objeto a contratar
         	$cadenaSql = $this->miSql->getCadenaSql ( 'actualizar', $datosSolicitud );
         	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
@@ -78,7 +78,7 @@ class Registrar {
 		
 		if ($resultado) {
 			
-			if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "CREADO" ) {
+			if (isset($_REQUEST['estadoSolicitudRelacionada']) && $_REQUEST['estadoSolicitudRelacionada'] == "RELACIONADO" ) {
 				
 				$datosSolicitudNecesidad = array (
 						'idSolicitud' => $_REQUEST['numSolicitud'],

@@ -1,7 +1,7 @@
 <?php
 use asignacionPuntajes\salariales\premiosDocente\Sql;
 
-$conexion = "agora";
+$conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
