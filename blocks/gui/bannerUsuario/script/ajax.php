@@ -27,7 +27,7 @@ $cadena = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cad
 $(document).ready(function procesarNotificador() {
 		//Quien procesará la petición ajax	
 	  $.ajax({ 
-		  url: "<?php echo $urlFinal?>",
+		  url: "<?php echo $url?>",
 		  data: {opcion : $( "#procesador" ).val()}, 
 		  dataType: "html"	  
 	    })

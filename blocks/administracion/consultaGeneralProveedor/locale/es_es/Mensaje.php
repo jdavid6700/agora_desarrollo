@@ -394,13 +394,13 @@ $this->idioma["tipoDiscapacidadTitulo"]="Tipo de Discapacidad";
 $this->idioma["marcoBeneficiosTributarios"] = "Información para Beneficios Tributarios";
 $this->idioma["marcoDetalleDependientes"] = "Información requerida si tiene Personas a Cargo (Dependientes)";
 
-$this->idioma["declaranteRentaNat"] = "Como Persona Natural, usted es declarante de Renta ? : ";
+$this->idioma["declaranteRentaNat"] = "¿ Como Persona Natural, usted es declarante de Renta ? : ";
 $this->idioma["declaranteRentaNatTitulo"]="¿ Es declarante de Renta ?";
-$this->idioma["medicinaPrepagadaNat"] = "Posee Medicina Prepagada actualmente ? : ";
+$this->idioma["medicinaPrepagadaNat"] = "¿ Posee Medicina Prepagada actualmente ? : ";
 $this->idioma["medicinaPrepagadaNatTitulo"]="¿ Posee Medicina Prepagada actualmente ?";
 $this->idioma["numeroUVTNat"] = "Valor UVT Medicina Prepagada : ";
 $this->idioma["numeroUVTNatTitulo"]="Valor UVT Medicina Prepagada";
-$this->idioma["cuentaAFCNat"] = "Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
+$this->idioma["cuentaAFCNat"] = "¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
 $this->idioma["cuentaAFCNatTitulo"]="¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ?";
 $this->idioma["numeroCuentaAFCNat"] = "Número de Cuenta : ";
 $this->idioma["numeroCuentaAFCNatTitulo"]="Digite el Número de Cuenta";
