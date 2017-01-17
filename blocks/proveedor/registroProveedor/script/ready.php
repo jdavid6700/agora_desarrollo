@@ -5,6 +5,70 @@ function detectarCarga(){
 	$('#marcoGeneral').show('slow');
 }
 
+$('*').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+});
+
+$('*').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+});
+
+
+
+
+
+$('#<?php echo $this->campoSeguro('direccionNat')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoNat')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoNatConfirm')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+
+
+
+
+
+$('#<?php echo $this->campoSeguro('direccion')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correo')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoConfirm')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+
+
+
+$('#<?php echo $this->campoSeguro('correoNatConfirm')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, custom[email], maxSize[320], correoEquals[<?php echo $this->campoSeguro('correoNat')?>]]"
+});
+
+
+$('#<?php echo $this->campoSeguro('correoConfirm')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, custom[email], maxSize[320], correoEquals[<?php echo $this->campoSeguro('correo')?>]]"
+});
+ 
+ 
+ 
+ 
+ 
+
 $(':checkbox').checkboxpicker();
 
 $("#botonesJur").hide("fast");
@@ -30,6 +94,8 @@ $("#registroProveedor").validationEngine({
 	autoHidePrompt: true,
 	autoHideDelay: 2000
 });
+
+
 
 $("#crearDocente").submit(function() {
 	$resultado=$("#crearDocente").validationEngine("validate");

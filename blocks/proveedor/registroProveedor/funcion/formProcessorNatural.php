@@ -676,14 +676,19 @@ class Formulario {
 							    $_REQUEST['telefono'] = $_REQUEST['telefonoNat'];
 							    $_REQUEST['subsistema'] = 2;
 							    $_REQUEST['perfil'] = 7;
-								$_REQUEST['fechaFin'] = "2020-12-12";
+							    
+							    $fechaEnd = date('Y-m-j');
+							    $nuevafechaEnd = strtotime ( '+2 year' , strtotime ( $fechaEnd ) ) ;
+							    $nuevafechaEnd = date ( 'Y-m-j' , $nuevafechaEnd );
+							    
+								$_REQUEST['fechaFin'] = $nuevafechaEnd;
 								//****************************************************************
 
 
 						
 								$caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
 						        $num = '1234567890';
-						        $caracter = '=#$';
+						        $caracter = '=$';
 						        $numerodeletras=5; 
 						        $pass = "";
 						        $keycar=$keyNum= "";

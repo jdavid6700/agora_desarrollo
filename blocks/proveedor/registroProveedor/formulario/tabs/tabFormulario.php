@@ -1081,6 +1081,14 @@ class registrarForm {
 					*/
 						
 						
+						$esteCampo = "marcoDatosNotificar";
+						$atributos ['id'] = $esteCampo;
+						$atributos ["estilo"] = "jqueryui";
+						$atributos ['tipoEtiqueta'] = 'inicio';
+						$atributos ["leyenda"] = "Información Contacto Directo";
+						echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+						
+						
 					// ---------------- CONTROL: Cuadro de Texto Correo--------------------------------------------------------
 						$esteCampo = 'correo';
 						$atributos ['id'] = $esteCampo;
@@ -1113,6 +1121,43 @@ class registrarForm {
 						echo $this->miFormulario->campoCuadroTexto ( $atributos );
 						unset ( $atributos );
 					// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+					
+						// ---------------- CONTROL: Cuadro de Texto Correo--------------------------------------------------------
+						$esteCampo = 'correoConfirm';
+						$atributos ['id'] = $esteCampo;
+						$atributos ['nombre'] = $esteCampo;
+						$atributos ['tipo'] = 'text';
+						$atributos ['estilo'] = 'jqueryui';
+						$atributos ['marco'] = true;
+						$atributos ['estiloMarco'] = '';
+						$atributos ["etiquetaObligatorio"] = true;
+						$atributos ['columnas'] = 1;
+						$atributos ['dobleLinea'] = 0;
+						$atributos ['tabIndex'] = $tab;
+						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+						$atributos ['validar'] = 'required, custom[email], maxSize[320], equals[correo]';
+							
+						if (isset ( $_REQUEST [$esteCampo] )) {
+							$atributos ['valor'] = $_REQUEST [$esteCampo];
+						} else {
+							$atributos ['valor'] = '';
+						}
+						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+						$atributos ['deshabilitado'] = false;
+						$atributos ['tamanno'] = 30;
+						$atributos ['maximoTamanno'] = '320';
+						$atributos ['anchoEtiqueta'] = 160;
+						$tab ++;
+							
+						// Aplica atributos globales al control
+						$atributos = array_merge ( $atributos, $atributosGlobales );
+						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+						unset ( $atributos );
+						// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+						
+						
+						echo $this->miFormulario->marcoAgrupacion ( 'fin');
+						
 		
 					// ---------------- CONTROL: Cuadro de Texto  Sitio Web--------------------------------------------------------
 						$esteCampo = 'sitioWeb';
@@ -1599,7 +1644,7 @@ class registrarForm {
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'minSize[1],maxSize[10],custom[date]';
+						$atributos ['validar'] = 'required,minSize[1],maxSize[10],custom[date]';
 							
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3061,7 +3106,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'minSize[1],maxSize[10],custom[date]';
+				$atributos ['validar'] = 'required,minSize[1],maxSize[10],custom[date]';
 					
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -4391,10 +4436,11 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 					$atributos["estilo"] = "centrar";
 					$atributos["tipo"] = $tipo;
 					
-					$mensajeLey = "<b>Recuerde que la información aqui señalada esta sujeta a presentación de los certificados pertinenetes a cada caso, para su justificación, además
-							recuerde que la información indicada esta bajo la gravedad de juramento de que la deducción para la base de la retención en la fuente solicitada
-							por concepto de dependientes, no ha sido ni sera solicitada por más de un contribuyente en relación con un mismo dependiente
-							(Art. 3 del Decreto 99 de 2013)</b>";
+					$mensajeLey = "<b>Recuerde que la información aquí señalada está sujeta a presentación de los certificados pertinentes a 
+								cada caso, para su justificación, además recuerde que la información indicada está bajo la gravedad de 
+								juramento de que la deducción para la base de la retención en la fuente solicitada por concepto de dependientes, 
+								no ha sido ni será solicitada por más de un contribuyente en relación con un mismo dependiente.
+								(Art. 3 del Decreto 99 de 2013)</b>";
 					
 					$atributos["mensaje"] = $mensajeLey;
 					echo $this->miFormulario->cuadroMensaje($atributos);
@@ -4574,7 +4620,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 						$atributos ['anchoEtiqueta'] = 150;
-						$atributos ['deshabilitado'] =false;
+						$atributos ['deshabilitado'] = false;
 							
 						$atributos ['obligatorio'] = true;
 						$atributos ['etiquetaObligatorio'] = true;
@@ -4849,6 +4895,15 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------*/
+				
+				
+				$esteCampo = "marcoDatosNotificar";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = "Información Contacto Directo";
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
 					
 				// ---------------- CONTROL: Cuadro de Texto Correo--------------------------------------------------------
 				$esteCampo = 'correoNat';
@@ -4882,6 +4937,45 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				echo $this->miFormulario->campoCuadroTexto ( $atributos );
 				unset ( $atributos );
 				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+				
+				
+				// ---------------- CONTROL: Cuadro de Texto Correo--------------------------------------------------------
+				$esteCampo = 'correoNatConfirm';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 1;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required, custom[email], maxSize[320], equals[correoNat]';
+					
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 30;
+				$atributos ['maximoTamanno'] = '320';
+				$atributos ['anchoEtiqueta'] = 160;
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+				
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
 				
 				// ---------------- CONTROL: Cuadro de Texto  Sitio Web--------------------------------------------------------
 				$esteCampo = 'sitioWebNat';

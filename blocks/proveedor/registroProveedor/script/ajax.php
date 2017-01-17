@@ -1681,16 +1681,13 @@ function consultarDepartamentoLug(elem, request, response){
 		
 		
 		
-		
-		
-		
-		
-		
 		$( '#<?php echo $this->campoSeguro('direccionNat')?>' ).keypress(function(tecla) {
+		
+			
 			 if(tecla.charCode != 48  && tecla.charCode != 49 && tecla.charCode != 50 && 
 			    tecla.charCode != 51  && tecla.charCode != 52 && tecla.charCode != 53 && 
 			    tecla.charCode != 54  && tecla.charCode != 55 && tecla.charCode != 56 && 
-			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32) return false;
+			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32 ) return false;
 		});
 		
 		$(function () {

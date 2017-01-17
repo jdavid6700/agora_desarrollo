@@ -11,8 +11,6 @@ $funcion [$indice++]  = "masonry.pkgd.min.js";
 
 $funcion [$indice++]  = "bootstrap-checkbox.js";
 
-
-
 //$funcion [$indice++]  = "dataTables.bootstrap4.min.js";
 //$funcion [$indice++]  = "dataTables.bootstrap4.js";
 $funcion [$indice++]  = "dataTables.jqueryui.js";
