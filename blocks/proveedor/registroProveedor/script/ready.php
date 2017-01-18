@@ -9,13 +9,6 @@ $('*').bind("cut copy paste",function(e) {
 	      e.preventDefault();
 });
 
-$('*').bind("cut copy paste",function(e) {
-	      e.preventDefault();
-});
-
-
-
-
 
 $('#<?php echo $this->campoSeguro('direccionNat')?>').bind("cut copy paste",function(e) {
 	      e.preventDefault();

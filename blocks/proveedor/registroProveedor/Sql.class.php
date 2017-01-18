@@ -1248,6 +1248,17 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE (clase)::int ='" . $variable . "'";
 				$cadenaSql .= " ORDER BY id_subclase";
 				break;
+				
+			
+				case "ciiuSubClase" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " id_subclase AS id_subclase,";
+					$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " core.ciiu_subclase";
+					$cadenaSql .= " ORDER BY id_subclase";
+					break;
+				
 			
 			case 'buscarPais' :
 				

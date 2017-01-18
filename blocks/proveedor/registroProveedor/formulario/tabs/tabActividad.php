@@ -98,7 +98,7 @@ class FormularioRegistro {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -210,7 +210,7 @@ class FormularioRegistro {
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					//echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Lista division CIIU--------------------------------------------------------
 					
@@ -242,7 +242,7 @@ class FormularioRegistro {
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					//echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Lista grupo CIIU--------------------------------------------------------
 
@@ -270,7 +270,8 @@ class FormularioRegistro {
 					$atributos ['limitar'] = false;
 					$atributos ['anchoCaja'] = 60;
 					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClase', '011' );
+					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );

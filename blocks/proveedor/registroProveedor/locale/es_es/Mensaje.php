@@ -146,8 +146,8 @@ $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 $this->idioma["grupoCIIU"] = "Grupo :";
 $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 
-$this->idioma["claseCIIU"] = "Clase :";
-$this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
+$this->idioma["claseCIIU"] = "Código CIIU :";
+$this->idioma["claseCIIUTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
 
 
 $this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
