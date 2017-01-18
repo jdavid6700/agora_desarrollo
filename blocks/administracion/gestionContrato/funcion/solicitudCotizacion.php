@@ -69,15 +69,26 @@ class SolicitudCotizacion {
 				$mail = new PHPMailer();
 				
 				
-				//configuracion de cuenta de envio
-				$mail->Host     = "200.69.103.49";
-				$mail->Mailer   = "smtp";
-				$mail->SMTPAuth = true;
-				$mail->Username = "condor@udistrital.edu.co";
-				$mail->Password = "CondorOAS2012";
-				$mail->Timeout  = 1200;
-				$mail->Charset  = "utf-8";
-				$mail->IsHTML(true);
+				$mail->SMTPOptions = array(
+                    'ssl' => array(
+                        'verify_peer' => false,
+                        'verify_peer_name' => false,
+                        'allow_self_signed' => true
+                    )
+                );
+
+                //configuracion de cuenta de envio
+                $mail->SMTPSecure = 'tls';
+                $mail->Host = "mail.udistrital.edu.co";
+                $mail->Port = 587;
+                $mail->Mailer = "smtp";
+                $mail->SMTPAuth = true;
+                $mail->Username = "condor@udistrital.edu.co";
+                $mail->Password = "CondorOAS2012";
+                $mail->Timeout = 1200;
+                $mail->Charset = "utf-8";
+                $mail->SMTPDebug  = 1;
+                $mail->IsHTML(true);
 				
 				//remitente
 				$fecha = date("d-M-Y g:i:s A");

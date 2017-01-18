@@ -73,6 +73,7 @@ class Formulario {
         <section>
             <article id = "fondo_login">
                 <?php
+                
                 $atributosGlobales ['campoSeguro'] = 'false';
                 $_REQUEST ['tiempo'] = time();
 
@@ -237,9 +238,9 @@ class Formulario {
             <div id="fondo_texto">
                 <div id="texto">
 
-                        <h2>¡Bienvenido al Sistema de Registro Único de Personas! </h2>
+                        <h2>¡Bienvenido al Sistema de Registro Único de Personas y Banco de Proveedores! </h2>
                          <h2>ÁGORA</h2><br>     
-                        <p>La vicerrectoría administrativa y financiera y la Sección de compras  de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
+                        <p>La Vicerrectoría Administrativa y Financiera de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
                         <p>
                             <a class="btn btn-lg btn-warning" href="<?php echo $urlCodificada; ?>" role="button">Registro Persona</a>
                         </p>
@@ -272,12 +273,15 @@ class Formulario {
     }
 
     function mensaje() {
-
+ 
+		
         // Si existe algun tipo de error en el login aparece el siguiente mensaje
         $mensaje = $this->miConfigurador->getVariableConfiguracion('mostrarMensaje');
         $this->miConfigurador->setVariableConfiguracion('mostrarMensaje', null);
 
         if (isset($_REQUEST ['error'])) {
+        	
+           	
             if ($_REQUEST ['error'] == 'formularioExpirado') {
                 $atributos ["estilo"] = 'information';
             } else {
@@ -292,7 +296,10 @@ class Formulario {
             $atributos ["columnas"] = ''; // El control ocupa 47% del tamaño del formulario
             $atributos ['mensaje'] = $this->lenguaje->getCadena($_REQUEST ['error']);
             echo $this->miFormulario->campoMensaje($atributos);
-            unset($atributos);
+            
+            //echo "<script>alert('".$atributos ['mensaje']."');</script>";
+            
+            //unset($atributos);
         }
         return true;
     }

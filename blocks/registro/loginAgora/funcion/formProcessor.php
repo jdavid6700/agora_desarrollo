@@ -112,6 +112,9 @@ class FormProcessor {
                         $_SERVER ['REMOTE_ADDR'],
                         $_SERVER ['HTTP_USER_AGENT']
                     );
+                    
+                    $message = 'Contraseña No Valida, Verifique los Datos Ingresados';
+                    echo "<script>alert('".$message."');</script>";
                 }
             } else {
 
@@ -122,6 +125,9 @@ class FormProcessor {
                     $_SERVER ['REMOTE_ADDR'],
                     $_SERVER ['HTTP_USER_AGENT']
                 );
+                
+                $message = 'Usuario No Valido, Verifique los Datos Ingresados';
+                echo "<script>alert('".$message."');</script>";
             }
         } else {
 
@@ -132,6 +138,9 @@ class FormProcessor {
                 $_SERVER ['REMOTE_ADDR'],
                 $_SERVER ['HTTP_USER_AGENT']
             );
+            
+            $message = 'Su Sesión Ha Expirado, Ingrese de Nuevo al Sistema';
+            echo "<script>alert('".$message."');</script>";
         }
 
 

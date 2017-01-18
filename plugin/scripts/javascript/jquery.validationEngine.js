@@ -653,6 +653,9 @@
 					case "equals":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._equals);
 						break;
+					case "correoEquals":
+						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._correoEquals);
+						break;	
 					case "funcCall":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._funcCall);
 						break;
@@ -881,6 +884,7 @@
 			 "maxCheckbox": "range-overflow",
 			 "minCheckbox": "range-underflow",
 			 "equals": "pattern-mismatch",
+			 "correoEquals": "pattern-mismatch",
 			 "funcCall": "custom-error",
 			 "creditCard": "pattern-mismatch",
 			 "condRequired": "value-missing"
@@ -1050,6 +1054,13 @@
 
 			if (field.val() != $("#" + equalsField).val())
 				return options.allrules.equals.alertText;
+		},
+		
+		_correoEquals: function(field, rules, i, options) {
+			var equalsField = rules[i + 1];
+
+			if (field.val() != $("#" + equalsField).val())
+				return options.allrules.correoEquals.alertText;
 		},
 		/**
 		* Check the maximum size (in characters)

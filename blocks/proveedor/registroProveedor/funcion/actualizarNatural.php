@@ -61,6 +61,10 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
+		
+		if(isset($_REQUEST['correoNat'])){$_REQUEST['correoNat'] = str_replace('\\', "", $_REQUEST['correoNat']);}
+		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
+		
 
 		if(isset($_REQUEST['primerApellidoNat'])){$_REQUEST['primerApellidoNat']=mb_strtoupper($_REQUEST['primerApellidoNat'],'utf-8');}
 		if(isset($_REQUEST['segundoApellidoNat'])){$_REQUEST['segundoApellidoNat']=mb_strtoupper($_REQUEST['segundoApellidoNat'],'utf-8');}
@@ -74,39 +78,90 @@ class Formulario {
 		
 		unset($resultado);
 			
-			// Guardar el archivo
+		//Guardar RUT adjuntado Persona Natural*************************************************************************************
+		$_REQUEST ['destino'] = '';
+		// Guardar el archivo
 		if ($_FILES) {
+			$i = 0;
 			foreach ( $_FILES as $key => $values ) {
-				$archivo = $_FILES [$key];
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
 			}
+			$archivo = $archivoCarga[0];
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
 			$archivo1 = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
 			$nombreDoc = $prefijo . "-" . $archivo1;
-			
+				
 			if ($archivo1 != "") {
+				$CambioARCHIVO = true;
 				// guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
-				
+		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
 					
-					// Actualizar RUT
+					//Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
 					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+					
 				} else {
 					$status = "<br>Error al subir el archivo1";
 				}
 			} else {
+				$CambioARCHIVO = false;
 				$status = "<br>Error al subir archivo2";
 			}
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
-		}		
+		}
+		//***************************************************************************************************************************
 		
+		
+		//Guardar RUP adjuntado Persona Natural*************************************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[1];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				$CambioARCHIVO2 = true;
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+						
+					//Actualizar RUP
+					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUP", $_REQUEST );
+					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+						
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$CambioARCHIVO2 = false;
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//***************************************************************************************************************************
 		
 		
 				if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
@@ -184,6 +239,9 @@ class Formulario {
 							break;
 						case 26 :
 							$_REQUEST['grupoEtnico']='ROM';
+							break;
+						case 40 :
+							$_REQUEST ['grupoEtnico']=null;
 							break;
 					}
 				}
@@ -397,6 +455,15 @@ class Formulario {
 					}
 				}
 				
+				
+				//CAST****************************************************************
+				$dateExp = explode("/", $_REQUEST ['fechaExpeNat']);
+				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+				$_REQUEST ['fechaExpeNat'] = $cadena_fecha;
+				//********************************************************************
+				
+				
+				
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
 				$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
@@ -488,7 +555,9 @@ class Formulario {
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
 						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
 						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat'],
+						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeNat'],
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat']
 				);
 				
 				

@@ -18,6 +18,45 @@ $this->idioma["digitoNatTitulo"]="Digito de Verificación";
 $this->idioma["digitoRepre"] = "Digito de Verificación : ";
 $this->idioma["digitoRepreTitulo"]="Digito de Verificación";
 
+
+
+$this->idioma["marcoInfoReg"] = "Certificación";
+$this->idioma["marcoCertReg"] = "Certificado";
+
+
+$this->idioma["marcoExpRep"] = "Documento de Identificación";
+$this->idioma["marcoExpLugRep"] = "Lugar de Expedición";
+
+$this->idioma["fechaExpeRep"]="Fecha Expedición :";
+$this->idioma["fechaExpeRepTitulo"]="Digite Fecha Expedición Documento";
+
+$this->idioma["ciudadExpeRep"]="Ciudad Expedición :";
+$this->idioma["ciudadExpeRepTitulo"]="Digite Ciudad Expedición";
+$this->idioma["departamentoExpeRep"]="Departamento Expedición :";
+$this->idioma["departamentoExpeRepTitulo"]="Digite Departamento Expedición";
+$this->idioma["paisExpeRep"]="Pais Expedición :";
+$this->idioma["paisExpeRepTitulo"]="Digite Pais Expedición";
+
+
+
+
+$this->idioma["marcoExp"] = "Documento de Identificación";
+$this->idioma["marcoExpLug"] = "Lugar de Expedición";
+
+$this->idioma["fechaExpeNat"]="Fecha Expedición :";
+$this->idioma["fechaExpeNatTitulo"]="Digite Fecha Expedición Documento";
+
+$this->idioma["ciudadExpeNat"]="Ciudad Expedición :";
+$this->idioma["ciudadExpeNatTitulo"]="Digite Ciudad Expedición";
+$this->idioma["departamentoExpeNat"]="Departamento Expedición :";
+$this->idioma["departamentoExpeNatTitulo"]="Digite Departamento Expedición";
+$this->idioma["paisExpeNat"]="Pais Expedición :";
+$this->idioma["paisExpeNatTitulo"]="Digite Pais Expedición";
+
+
+
+
+
 $this->idioma["nombreEmpresa"]="Nombre de la Empresa";
 $this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
 
@@ -107,8 +146,16 @@ $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 $this->idioma["grupoCIIU"] = "Grupo :";
 $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 
-$this->idioma["claseCIIU"] = "Clase :";
-$this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
+$this->idioma["claseCIIU"] = "Código CIIU :";
+$this->idioma["claseCIIUTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
+
+
+$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
+$this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUPNatTitulo"]="Seleccionar documento";
+
+
 
 $this->idioma["DocumentoRUT"] = "Adjuntar PDF Registro Único Tributario :";
 $this->idioma["DocumentoRUTTitulo"]="Seleccionar documento";
@@ -161,8 +208,8 @@ $this->idioma["correoNatTitulo"]="Digite el correo";
 $this->idioma["sitioWebNat"] = "Sitio Web : ";
 $this->idioma["sitioWebNatTitulo"]="Digite el Sitio Web";
 
-$this->idioma["telefonoNat"] = "Teléfono : ";
-$this->idioma["telefonoNatTitulo"]="Digite el teléfono";
+$this->idioma["telefonoNat"] = "Otro (Movil/Fijo) : ";
+$this->idioma["telefonoNatTitulo"]="Digite otro número de Contacto Movil o Fijo";
 
 $this->idioma["extensionNat"] = "Extensión : ";
 $this->idioma["extensionNatTitulo"]="Digite la Extensión";
@@ -205,6 +252,10 @@ $this->idioma["paisNacimientoTitulo"]="Digite el Pais de Nacimiento";
 
 $this->idioma["cargoNat"] = "Cargo : ";
 $this->idioma["cargoNatTitulo"]="Digite el Cargo";
+$this->idioma["correoNatConfirm"] = "Confirmar Correo : ";
+$this->idioma["correoNatConfirmTitulo"]="Digite Nuevamente el Cargo";
+$this->idioma["correoConfirm"] = "Confirmar Correo : ";
+$this->idioma["correoConfirmTitulo"]="Digite Nuevamente el Cargo";
 $this->idioma["perfilNat"] = "Perfil : ";
 $this->idioma["perfilNatTitulo"]="Digite el Perfil";
 $this->idioma["profesionNat"] = "Titulo Obtenido : ";
@@ -263,9 +314,9 @@ $this->idioma["marcoDatosNaturalUP"] = "Actualizar Datos de Persona Natural";
 $this->idioma["marcoDatosJuridicaUP"] = "Actualizar Datos de Persona Juridica";
 
 $this->idioma["marcoPersona"] = "Información de la Persona";
-$this->idioma["marcoEmpresa"] = "Información de la Empresa";
+$this->idioma["marcoEmpresa"] = "Información de la Persona";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
-
+$this->idioma["marcoInfoCont"] = "Información de la Persona";
 
 
 
@@ -285,13 +336,13 @@ $this->idioma["afiliacionCajaTitulo"]="Digite la Entidad de Caja de Compensacion
 $this->idioma["marcoBeneficiosTributarios"] = "Información para Beneficios Tributarios";
 $this->idioma["marcoDetalleDependientes"] = "Información requerida si tiene Personas a Cargo (Dependientes)";
 
-$this->idioma["declaranteRentaNat"] = "Como Persona Natural, usted es declarante de Renta ? : ";
+$this->idioma["declaranteRentaNat"] = "¿ Como Persona Natural, usted es declarante de Renta ? : ";
 $this->idioma["declaranteRentaNatTitulo"]="¿ Es declarante de Renta ?";
-$this->idioma["medicinaPrepagadaNat"] = "Posee Medicina Prepagada actualmente ? : ";
+$this->idioma["medicinaPrepagadaNat"] = "¿ Posee Medicina Prepagada actualmente ? : ";
 $this->idioma["medicinaPrepagadaNatTitulo"]="¿ Posee Medicina Prepagada actualmente ?";
 $this->idioma["numeroUVTNat"] = "Valor UVT Medicina Prepagada : ";
 $this->idioma["numeroUVTNatTitulo"]="Valor UVT Medicina Prepagada";
-$this->idioma["cuentaAFCNat"] = "Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
+$this->idioma["cuentaAFCNat"] = "¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ? : ";
 $this->idioma["cuentaAFCNatTitulo"]="¿ Posee cuenta de Ahorro para el Fomento de la Construcción, AFC ?";
 $this->idioma["numeroCuentaAFCNat"] = "Número de Cuenta : ";
 $this->idioma["numeroCuentaAFCNatTitulo"]="Digite el Número de Cuenta";
@@ -306,16 +357,16 @@ $this->idioma["hijosMayoresEdadEstudiandoNat"] = "Entre las personas a Cargo (De
 		                                         "su educación en instituciones acreditadas, en niveles de educación certificadas por el ICFES: ";
 $this->idioma["hijosMayoresEdadEstudiandoNatTitulo"]="Indique para hijos mayores de 18 años y menores de 23 años";
 
-$this->idioma["hijosMayoresEdadMas23Nat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) mayores de 23 años, que se ecuentre(n) en situación " .
-											"de dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["hijosMayoresEdadMas23Nat"] = "Entre las personas a Cargo (Dependientes), tiene hijo(s) mayores de 23 años, que se encuentre(n) en situación " .
+											"de dependencia originada en factores físicos o psicológicos: ";
 $this->idioma["hijosMayoresEdadMas23NatTitulo"]="Indique para hijos mayores de 23 años dependientes";
 
-$this->idioma["conyugeDependienteNat"] = "Entre las personas a Cargo (Dependientes), esta su conyuge o compañero permanente, que se encuentre en situación de dependencia sea " .
-									     "por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["conyugeDependienteNat"] = "Entre las personas a Cargo (Dependientes), esta su cónyuge o compañero permanente, que se encuentre en situación de dependencia sea " .
+									     "por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores físicos o psicológicos: ";
 $this->idioma["conyugeDependienteNatTitulo"]="Indique para conyuge o compañero permanente dependiente";
 
-$this->idioma["padresHermanosDependienteNat"] = "Entre las personas a Cargo (Dependientes), estan sus Padres y/o Hermanos(s), que se encuentre en situación de dependencia sea " .
-												"por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores fisicos o psicológicos: ";
+$this->idioma["padresHermanosDependienteNat"] = "Entre las personas a Cargo (Dependientes), están sus Padres y/o Hermanos(s), que se encuentre en situación de dependencia sea " .
+												"por falta de ingresos o por ingresos inferiores a (260 UVT) en el año o por dependencia originada en factores físicos o psicológicos: ";
 $this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o hermanos dependientes";
 
 
@@ -328,9 +379,11 @@ $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
-$this->idioma["marcoContratos"] = "Contratos";
-$this->idioma["marcoRUT"] = "Registro Único Tributario ";
+$this->idioma["marcoContratos"] = "Información de Contratos";
+$this->idioma["marcoContratosTabla"] = "Contratos";
+$this->idioma["marcoRUT"] = "Registro Único Tributario (RUT) ";
 
+$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) ";
 
 
 $this->idioma["tabProveedor"] = "Registro Proveedor";

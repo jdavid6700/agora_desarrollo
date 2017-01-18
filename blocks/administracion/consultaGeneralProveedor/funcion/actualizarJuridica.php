@@ -64,6 +64,10 @@ class Formulario {
 		$hostFiles = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/registroProveedor";
 		
 		
+		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
+		if(isset($_REQUEST['correoPer'])){$_REQUEST['correoPer'] = str_replace('\\', "", $_REQUEST['correoPer']);}
+		
+		
 		if(isset($_REQUEST['nombreEmpresa'])){$_REQUEST['nombreEmpresa']=mb_strtoupper($_REQUEST['nombreEmpresa'],'utf-8');}
 		if(isset($_REQUEST['asesorComercial'])){$_REQUEST['asesorComercial']=mb_strtoupper($_REQUEST['asesorComercial'],'utf-8');}
 		if(isset($_REQUEST['primerApellido'])){$_REQUEST['primerApellido']=mb_strtoupper($_REQUEST['primerApellido'],'utf-8');}
@@ -77,7 +81,7 @@ class Formulario {
 
 		unset($resultado);
 		
-		//Guardar RUT adjuntado Persona Natural
+		//Guardar RUT adjuntado Persona Juridica*************************************************************************************
 		$_REQUEST ['destino'] = '';
 		// Guardar el archivo
 		if ($_FILES) {
@@ -97,11 +101,17 @@ class Formulario {
 			if ($archivo1 != "") {
 				$CambioARCHIVO = true;
 				// guardamos el archivo a la carpeta files
-				$destino = "/usr/local/apache/htdocs/agora/blocks/proveedor/registroProveedor/files/" . $nombreDoc;
+				
+				$rutaBloqueChange = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/registroProveedor";
+				
+				$destino = $rutaBloqueChange . "/files/" . $nombreDoc;
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
+					
+					$hostChange = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/registroProveedor";
+					
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $hostFiles . "/files/" . $prefijo . "-" . $archivo1;
+					$_REQUEST ['destino'] = $hostChange . "/files/" . $prefijo . "-" . $archivo1;
 					
 					//Actualizar RUT
 					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUT", $_REQUEST );
@@ -117,6 +127,57 @@ class Formulario {
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
 		}
+		//***************************************************************************************************************************
+		
+		
+		//Guardar RUP adjuntado Persona Juridica*************************************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[1];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				$CambioARCHIVO2 = true;
+				// guardamos el archivo a la carpeta files
+				
+				$rutaBloqueChange = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/registroProveedor";
+				
+				$destino = $rutaBloqueChange . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					
+					$hostChange = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/registroProveedor";
+					
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $hostChange . "/files/" . $prefijo . "-" . $archivo1;
+						
+					//Actualizar RUP
+					$cadenaSql = $this->miSql->getCadenaSql ( "actualizarRUP", $_REQUEST );
+					$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+						
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$CambioARCHIVO2 = false;
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//***************************************************************************************************************************
+		
 		
 		
 		if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
@@ -219,6 +280,13 @@ class Formulario {
 		$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 		
 		
+		//CAST****************************************************************
+		$dateExp = explode("/", $_REQUEST ['fechaExpeRep']);
+		$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+		$_REQUEST ['fechaExpeRep'] = $cadena_fecha;
+		//********************************************************************
+		
+		
 		
 		$datosInformacionPersonaNatural = array (
 				'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
@@ -258,7 +326,9 @@ class Formulario {
 				'dependiente_padre_o_hermano' => 'FALSE',
 				'id_eps' => null,
 				'id_fondo_pension' => null,
-				'id_caja_compensacion' => null
+				'id_caja_compensacion' => null,
+				'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
+				'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
 		);
 		
 		

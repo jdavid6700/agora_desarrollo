@@ -24,6 +24,11 @@ class redireccion {
 				$variable .= "&generada=" . $valor ['generadaPass'];
 				$variable .= "&id_usuario=" . $valor ['id_usuario'];
 				$variable .= "&tipo_identificacion=" . $valor ['tipo_identificacion'];
+				$variable .= "&tipo=" . $valor ['tipo'];
+				$variable .= "&rol_menu=" . $valor ['rolMenu'];
+				$variable .= "&telefono=" . $valor ['telefono'];
+				$variable .= "&nombres=" . $valor ['nombre'];
+				$variable .= "&apellidos=" . $valor ['apellido'];
 				break;				
 	
 			case "registroActividad" :
@@ -39,8 +44,14 @@ class redireccion {
 				$variable.= "&opcion=mensaje";
 				$variable.= "&mensaje=mensajeExisteProveedor";
 				$variable.="&nit=" . $valor;
-				break;                           
-                            
+				break;
+				
+			case "existeProveedorLegal" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=mensajeExisteProveedorLegal";
+				$variable .= "&nit=" . $valor;
+				break;
 			
 			case "noregistro" :
 				$variable = "pagina=" . $miPaginaActual;

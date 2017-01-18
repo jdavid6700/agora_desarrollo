@@ -98,7 +98,7 @@ class FormularioRegistro {
 		
 		// Si no se coloca, entonces toma el valor predeterminado 'index.php' (Recomendado)
 		$atributos ['action'] = 'index.php';
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['titulo'] = '';
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
@@ -137,16 +137,20 @@ class FormularioRegistro {
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
-                
-			//INICIO INFORMACION 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Identificación : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Nombre del Proveedor : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>"; 
-				echo "<span class='textoElegante textoEnorme textoAzul'>Correo : </span>"; 
-				echo "<span class='textoElegante textoMediano textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";                 
-			//FIN INFORMACION 
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                 
+			
+				//INICIO INFORMACION
+				echo "<span class='textoElegante textoGrande textoAzul'>Nombre de la Persona: </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Documento : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Tipo Persona : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['tipopersona'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Dirección : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['direccion'] . "</span></br>";
+				echo "<span class='textoElegante textoGrande textoAzul'>Correo : </span>";
+				echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";
+				//FIN INFORMACION
 			
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );		
 
@@ -206,7 +210,7 @@ class FormularioRegistro {
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					//echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Lista division CIIU--------------------------------------------------------
 					
@@ -238,7 +242,7 @@ class FormularioRegistro {
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					//echo $this->miFormulario->campoCuadroLista ( $atributos );
 					unset ( $atributos );
 				// ----------------FIN CONTROL: Lista grupo CIIU--------------------------------------------------------
 
@@ -266,7 +270,8 @@ class FormularioRegistro {
 					$atributos ['limitar'] = false;
 					$atributos ['anchoCaja'] = 60;
 					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClase', '011' );
+					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
 					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					$atributos ['matrizItems'] = $matrizItems;
 					$atributos = array_merge ( $atributos, $atributosGlobales );

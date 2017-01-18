@@ -520,6 +520,114 @@ $urlFinal24 = $url . $cadena24;
 //echo $urlFinal23; exit;
 
 
+
+
+
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar25 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar25 .= "&procesarAjax=true";
+$cadenaACodificar25 .= "&action=index.php";
+$cadenaACodificar25 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar25 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar25 .= $cadenaACodificar25 . "&funcion=consultarDepartamentoAjax";
+$cadenaACodificar25 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena25 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar25, $enlace );
+
+// URL definitiva
+$urlFinal25 = $url . $cadena25;
+//echo $urlFinal16; exit;
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar26 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar26 .= "&procesarAjax=true";
+$cadenaACodificar26 .= "&action=index.php";
+$cadenaACodificar26 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar26 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar26 .= $cadenaACodificar26 . "&funcion=consultarCiudadAjax";
+$cadenaACodificar26 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena26 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar26, $enlace );
+
+// URL definitiva
+$urlFinal26 = $url . $cadena26;
+//echo $urlFinal16; exit;
+
+
+
+
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar27 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar27 .= "&procesarAjax=true";
+$cadenaACodificar27 .= "&action=index.php";
+$cadenaACodificar27 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar27 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar27 .= $cadenaACodificar27 . "&funcion=consultarDepartamentoAjax";
+$cadenaACodificar27 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena27 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar27, $enlace );
+
+// URL definitiva
+$urlFinal27 = $url . $cadena27;
+//echo $urlFinal16; exit;
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar28 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar28 .= "&procesarAjax=true";
+$cadenaACodificar28 .= "&action=index.php";
+$cadenaACodificar28 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar28 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar28 .= $cadenaACodificar28 . "&funcion=consultarCiudadAjax";
+$cadenaACodificar28 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena28 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar28, $enlace );
+
+// URL definitiva
+$urlFinal28 = $url . $cadena28;
+//echo $urlFinal16; exit;
+
+
+
 ?>
 
 function consultarCiudad(elem, request, response){
@@ -556,6 +664,156 @@ function hora(){
 
 fecha = new Date(); 
 hora();
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+
+function consultarDepartamentoExp(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal25?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('paisExpeNat')?>").val()},
+	    success: function(data){
+	        if(data[0]!=" "){
+	            $("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('departamentoExpeNat')?>");
+	            $.each(data , function(indice,valor){
+	            	$("<option value='"+data[ indice ].id_departamento+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('departamentoExpeNat')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").removeAttr('disabled');
+	            
+	            //$('#<?php echo $this->campoSeguro('departamentoExpeNat')?>').width(250);
+	            $("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").select2();
+	            
+	            $("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").removeClass("validate[required]");
+	            $("#<?php echo $this->campoSeguro('paisExpeNat')?>").removeClass("validate[required]");
+	            
+		    }
+		    
+	  			
+	    }
+		                    
+	   });
+	};
+	
+	
+	
+		function consultarCiudadExp(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal26?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('ciudadExpeNat')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_ciudad+"'>"+data[ indice ].nombreciudad+"</option>").appendTo("#<?php echo $this->campoSeguro('ciudadExpeNat')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('ciudadExpeNat')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+
+function consultarDepartamentoRep(elem, request, response){
+	  $.ajax({
+	    url: "<?php echo $urlFinal27?>",
+	    dataType: "json",
+	    data: { valor:$("#<?php echo $this->campoSeguro('paisExpeRep')?>").val()},
+	    success: function(data){
+	        if(data[0]!=" "){
+	            $("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").html('');
+	            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('departamentoExpeRep')?>");
+	            $.each(data , function(indice,valor){
+	            	$("<option value='"+data[ indice ].id_departamento+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('departamentoExpeRep')?>");
+	            	
+	            });
+	            
+	            $("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").removeAttr('disabled');
+	            
+	            //$('#<?php echo $this->campoSeguro('departamentoExpeRep')?>').width(250);
+	            $("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").select2();
+	            
+	            $("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").removeClass("validate[required]");
+	            $("#<?php echo $this->campoSeguro('paisExpeRep')?>").removeClass("validate[required]");
+	            
+		    }
+		    
+	  			
+	    }
+		                    
+	   });
+	};
+	
+	
+	
+		function consultarCiudadRep(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal28?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").val()},
+		    success: function(data){ 
+		        if(data[0]!=" "){
+		            $("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").html('');
+		            $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('ciudadExpeRep')?>");
+		            $.each(data , function(indice,valor){
+		            	$("<option value='"+data[ indice ].id_ciudad+"'>"+data[ indice ].nombreciudad+"</option>").appendTo("#<?php echo $this->campoSeguro('ciudadExpeRep')?>");
+		            	
+		            });
+		            
+		            $("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").removeAttr('disabled');
+		            
+		            //$('#<?php echo $this->campoSeguro('ciudadExpeRep')?>').width(250);
+		            $("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").select2();
+		            
+		            $("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").removeClass("validate[required]");
+		            
+			        }
+		    			
+		    }
+			                    
+		   });
+		};
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -948,8 +1206,72 @@ function consultarDepartamentoLug(elem, request, response){
 		  		$("#<?php echo $this->campoSeguro('digitoRepre')?>").val(digito_verificacion);
 		  }
 	};
+	
+	
+	
+	function clearFileInput($input) {
+	    if ($input.val() == '') {
+	        return;
+	    }
+	    // Fix for IE ver < 11, that does not clear file inputs
+	    // Requires a sequence of steps to prevent IE crashing but
+	    // still allow clearing of the file input.
+	    if (/MSIE/.test(navigator.userAgent)) {
+	        var $frm1 = $input.closest('form');
+	        if ($frm1.length) { // check if the input is already wrapped in a form
+	            $input.wrap('<form>');
+	            var $frm2 = $input.closest('form'), // the wrapper form
+	                $tmpEl = $(document.createElement('div')); // a temporary placeholder element
+	            $frm2.before($tmpEl).after($frm1).trigger('reset');
+	            $input.unwrap().appendTo($tmpEl).unwrap();
+	        } else { // no parent form exists - just wrap a form element
+	            $input.wrap('<form>').closest('form').trigger('reset').unwrap();
+	        }   
+	    } else { // normal reset behavior for other sane browsers
+	        $input.val('');
+	    }
+	}
+	
 		
       $(function () {
+      
+      			 $("#<?php echo $this->campoSeguro('paisExpeNat')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('paisExpeNat')?>").val()!=''){
+						consultarDepartamentoExp();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").attr('disabled','');
+		    			}
+		    	      });
+		    	      
+		        $("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").val()!=''){
+		            	consultarCiudadExp();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").attr('disabled','');
+		    			}
+		    	      });
+      
+      
+      
+      			 $("#<?php echo $this->campoSeguro('paisExpeRep')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('paisExpeRep')?>").val()!=''){
+						consultarDepartamentoRep();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").attr('disabled','');
+		    			}
+		    	      });
+		    	      
+		        $("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").val()!=''){
+		            	consultarCiudadRep();
+		    		}else{
+		    			$("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").attr('disabled','');
+		    			}
+		    	      });
+            
+      
+      
+      
 		        $("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").change(function(){
 		        	if($("#<?php echo $this->campoSeguro('personaJuridicaPais')?>").val()!=''){
 						consultarDepartamentoLug();
@@ -1110,6 +1432,82 @@ function consultarDepartamentoLug(elem, request, response){
 			$("#<?php echo $this->campoSeguro('seccionParametros')?>").removeAttr('disabled');
 		    $("#<?php echo $this->campoSeguro('seccionParametros')?>").select2();
 		});
+		
+		
+		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUTNat')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUTNat')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUTNat')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+		
+		
+		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUT')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUT')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUT')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+		
+		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUPNat')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+		
+		
+		
+		$( '#<?php echo $this->campoSeguro('DocumentoRUP')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+		
+		
+		
+		$("#condicionesCheckNat").change(function(){
+		
+			if(this.checked) {
+		        $("#botonesNat").show("slow");
+		    }else{
+		    	$("#botonesNat").hide("fast");
+		    }
+			
+		});
+		
+		
+		$("#condicionesCheckJur").change(function(){
+		
+			if(this.checked) {
+		        $("#botonesJur").show("slow");
+		    }else{
+		    	$("#botonesJur").hide("fast");
+		    }
+			
+		});
+		
+		
 		
 		
 		$("#btOper1").click(function(){
@@ -1283,16 +1681,13 @@ function consultarDepartamentoLug(elem, request, response){
 		
 		
 		
-		
-		
-		
-		
-		
 		$( '#<?php echo $this->campoSeguro('direccionNat')?>' ).keypress(function(tecla) {
+		
+			
 			 if(tecla.charCode != 48  && tecla.charCode != 49 && tecla.charCode != 50 && 
 			    tecla.charCode != 51  && tecla.charCode != 52 && tecla.charCode != 53 && 
 			    tecla.charCode != 54  && tecla.charCode != 55 && tecla.charCode != 56 && 
-			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32) return false;
+			    tecla.charCode != 57  && tecla.charCode != 0  && tecla.charCode != 32 ) return false;
 		});
 		
 		$(function () {

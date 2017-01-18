@@ -1,5 +1,83 @@
 
+window.onload = detectarCarga;
+function detectarCarga(){
 
+	$('#marcoGeneral').show('slow');
+}
+
+$('*').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+});
+
+
+$('#<?php echo $this->campoSeguro('direccionNat')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoNat')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoNatConfirm')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+
+
+
+
+
+$('#<?php echo $this->campoSeguro('direccion')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correo')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+$('#<?php echo $this->campoSeguro('correoConfirm')?>').bind("cut copy paste",function(e) {
+	      e.preventDefault();
+	      alert('Lo sentimos, pero no puede realizar dicha acción, por motivos de seguridad la hemos bloqueado.');
+});
+
+
+
+
+$('#<?php echo $this->campoSeguro('correoNatConfirm')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, custom[email], maxSize[320], correoEquals[<?php echo $this->campoSeguro('correoNat')?>]]"
+});
+
+
+$('#<?php echo $this->campoSeguro('correoConfirm')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, custom[email], maxSize[320], correoEquals[<?php echo $this->campoSeguro('correo')?>]]"
+});
+ 
+ 
+ 
+ 
+ 
+
+$(':checkbox').checkboxpicker();
+
+$("#botonesJur").hide("fast");
+$("#botonesNat").hide("fast");
+
+$( ".widget input[type=submit], .widget a, .widget button" ).button();
+
+$("#dialogo").dialog({
+      modal: true,
+      title: "Certificaciones",
+      width: 550,
+      minWidth: 400,
+      maxWidth: 650,
+      show: "fold",
+      hide: "scale"
+   });
 
 
 $("#registroProveedor").validationEngine({
@@ -9,6 +87,8 @@ $("#registroProveedor").validationEngine({
 	autoHidePrompt: true,
 	autoHideDelay: 2000
 });
+
+
 
 $("#crearDocente").submit(function() {
 	$resultado=$("#crearDocente").validationEngine("validate");
@@ -51,10 +131,6 @@ $("#crearDocenteModificar").validationEngine({
 	autoHidePrompt: true,
 	autoHideDelay: 2000
 });
-
-$('#tablaTitulos').dataTable( {
-	"sPaginationType": "full_numbers"
-});
         
 /*
  * Función que organiza los tabs en la interfaz gráfica
@@ -71,10 +147,50 @@ $(function() {
  * Se define el ancho de los campos de listas desplegables
  */
 
+$('#<?php echo $this->campoSeguro('fechaExpeNat')?>').datepicker({
+		yearRange: '-99:+0',
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+});	
+
+
+$('#<?php echo $this->campoSeguro('fechaExpeRep')?>').datepicker({
+		yearRange: '-99:+0',
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+});	
+
 
 // Asociar el widget de validación al formulario
 
 /////////Se define el ancho de los campos de listas desplegables///////
+
+$('#<?php echo $this->campoSeguro('paisExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisExpeNat')?>").select2();
+$('#<?php echo $this->campoSeguro('departamentoExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('departamentoExpeNat')?>").select2();
+$('#<?php echo $this->campoSeguro('ciudadExpeNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('ciudadExpeNat')?>").select2();
+
+
+$('#<?php echo $this->campoSeguro('paisExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('paisExpeRep')?>").select2();
+$('#<?php echo $this->campoSeguro('departamentoExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('departamentoExpeRep')?>").select2();
+$('#<?php echo $this->campoSeguro('ciudadExpeRep')?>').width(250);
+$("#<?php echo $this->campoSeguro('ciudadExpeRep')?>").select2();
+
+
 
 $('#<?php echo $this->campoSeguro('afiliacionEPSNat')?>').width(300);
 $("#<?php echo $this->campoSeguro('afiliacionEPSNat')?>").select2();
@@ -328,7 +444,6 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-$("#tablaReporteCont").dataTable().fnDestroy();
 
 $('#tablaReporteCont').DataTable({
         

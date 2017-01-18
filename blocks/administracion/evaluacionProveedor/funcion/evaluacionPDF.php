@@ -16,11 +16,30 @@ $url = $this->miConfigurador->configuracion ["host"] . $this->miConfigurador->co
 $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
 
-$conexion = "argo_contratos";
-$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+$conexion = 'estructura';
+$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'sicapital';
+$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'centralUD';
+$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'argo_contratos';
+$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+//*************************************************************************** DBMS *******************************
+//****************************************************************************************************************
+
 
 //CONSULTAR CONTRATO
 $cadena_sql = $this->sql->getCadenaSql ( "contratoByID", $_REQUEST ['idContrato'] );
@@ -46,122 +65,131 @@ $contratoARGO = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 $cadenaSql = $this->sql->getCadenaSql ( 'listaContratoXNumContratoFechas', $datosContrato );
 $contratoARGOFechas = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$resultadoContrato[0]['fecha_inicio'] = $contratoARGOFechas[0]['inicio'];
-$resultadoContrato[0]['fecha_finalizacion'] = $contratoARGOFechas[0]['fin'];
-
-$dateIn = explode("-", $resultadoContrato[0]['fecha_inicio']);
-$dateFi = explode("-", $resultadoContrato[0]['fecha_finalizacion']);
-
-$resultadoContrato[0]['fecha_inicio'] = $dateIn[2]."/".$dateIn[1]."/".$dateIn[0];
-$resultadoContrato[0]['fecha_finalizacion'] = $dateFi[2]."/".$dateFi[1]."/".$dateFi[0];
-
-switch ($dateIn[1]) {
-	case '01' :
-		$dateIn[1] = "Enero";
-		break;
-
-	case '02' :
-		$dateIn[1] = "Febrero";
-		break;
-
-	case '03' :
-		$dateIn[1] = "Marzo";
-		break;
-			
-	case "04":
-		$dateIn[1] = "Abril";
-		break;
-			
-	case "05":
-		$dateIn[1] = "Mayo";
-		break;
-
-	case '06':
-		$dateIn[1] = "Junio";
-		break;
-
-	case '07' :
-		$dateIn[1] = "Julio";
-		break;
-
-	case '08' :
-		$dateIn[1] = "Agosto";
-		break;
-
-	case '09' :
-		$dateIn[1] = "Septiembre";
-		break;
-
-	case "10" :
-		$dateIn[1] = "Octubre";
-		break;
-
-	case "11" :
-		$dateIn[1] = "Noviembre";
-		break;
-
-	case '12' :
-		$dateIn[1] = "Diciembre";
-		break;
+if($contratoARGOFechas){
+	
+	$resultadoContrato[0]['fecha_inicio'] = $contratoARGOFechas[0]['inicio'];
+	$resultadoContrato[0]['fecha_finalizacion'] = $contratoARGOFechas[0]['fin'];
+	
+	$dateIn = explode("-", $resultadoContrato[0]['fecha_inicio']);
+	$dateFi = explode("-", $resultadoContrato[0]['fecha_finalizacion']);
+	
+	$resultadoContrato[0]['fecha_inicio'] = $dateIn[2]."/".$dateIn[1]."/".$dateIn[0];
+	$resultadoContrato[0]['fecha_finalizacion'] = $dateFi[2]."/".$dateFi[1]."/".$dateFi[0];
+	
+	switch ($dateIn[1]) {
+		case '01' :
+			$dateIn[1] = "Enero";
+			break;
+	
+		case '02' :
+			$dateIn[1] = "Febrero";
+			break;
+	
+		case '03' :
+			$dateIn[1] = "Marzo";
+			break;
+				
+		case "04":
+			$dateIn[1] = "Abril";
+			break;
+				
+		case "05":
+			$dateIn[1] = "Mayo";
+			break;
+	
+		case '06':
+			$dateIn[1] = "Junio";
+			break;
+	
+		case '07' :
+			$dateIn[1] = "Julio";
+			break;
+	
+		case '08' :
+			$dateIn[1] = "Agosto";
+			break;
+	
+		case '09' :
+			$dateIn[1] = "Septiembre";
+			break;
+	
+		case "10" :
+			$dateIn[1] = "Octubre";
+			break;
+	
+		case "11" :
+			$dateIn[1] = "Noviembre";
+			break;
+	
+		case '12' :
+			$dateIn[1] = "Diciembre";
+			break;
+	}
+	
+	switch ($dateFi[1]) {
+		case '01' :
+			$dateFi[1] = "Enero";
+			break;
+	
+		case '02' :
+			$dateFi[1] = "Febrero";
+			break;
+	
+		case '03' :
+			$dateFi[1] = "Marzo";
+			break;
+				
+		case "04":
+			$dateFi[1] = "Abril";
+			break;
+				
+		case "05":
+			$dateFi[1] = "Mayo";
+			break;
+	
+		case '06':
+			$dateFi[1] = "Junio";
+			break;
+	
+		case '07' :
+			$dateFi[1] = "Julio";
+			break;
+	
+		case '08' :
+			$dateFi[1] = "Agosto";
+			break;
+	
+		case '09' :
+			$dateFi[1] = "Septiembre";
+			break;
+	
+		case "10" :
+			$dateFi[1] = "Octubre";
+			break;
+	
+		case "11" :
+			$dateFi[1] = "Noviembre";
+			break;
+	
+		case '12' :
+			$dateFi[1] = "Diciembre";
+			break;
+	}
+	
+	
+	setlocale(LC_ALL, "es_ES");
+	$dia = strftime("%d");
+	$fecha = strftime("de %B del %Y");
+	
+	$resultadoContrato[0]['fecha_inicio'] = $dateIn[2]." de ".$dateIn[1]." de ".$dateIn[0];
+	$resultadoContrato[0]['fecha_finalizacion'] = $dateFi[2]." de ".$dateFi[1]." de ".$dateFi[0];
+	
+}else{
+	
+	$resultadoContrato[0]['fecha_inicio'] = 'SIN INFORMACIÓN';
+	$resultadoContrato[0]['fecha_finalizacion'] = 'SIN INFORMACIÓN';
+	
 }
-
-switch ($dateFi[1]) {
-	case '01' :
-		$dateFi[1] = "Enero";
-		break;
-
-	case '02' :
-		$dateFi[1] = "Febrero";
-		break;
-
-	case '03' :
-		$dateFi[1] = "Marzo";
-		break;
-			
-	case "04":
-		$dateFi[1] = "Abril";
-		break;
-			
-	case "05":
-		$dateFi[1] = "Mayo";
-		break;
-
-	case '06':
-		$dateFi[1] = "Junio";
-		break;
-
-	case '07' :
-		$dateFi[1] = "Julio";
-		break;
-
-	case '08' :
-		$dateFi[1] = "Agosto";
-		break;
-
-	case '09' :
-		$dateFi[1] = "Septiembre";
-		break;
-
-	case "10" :
-		$dateFi[1] = "Octubre";
-		break;
-
-	case "11" :
-		$dateFi[1] = "Noviembre";
-		break;
-
-	case '12' :
-		$dateFi[1] = "Diciembre";
-		break;
-}
-
-
-setlocale(LC_ALL, "es_ES");
-$dia = strftime("%d");
-$fecha = strftime("de %B del %Y");
-
-$resultadoContrato[0]['fecha_inicio'] = $dateIn[2]." de ".$dateIn[1]." de ".$dateIn[0];
-$resultadoContrato[0]['fecha_finalizacion'] = $dateFi[2]." de ".$dateFi[1]." de ".$dateFi[0];
 
 
 
@@ -221,7 +249,7 @@ if ($cantidad == "individual") {
 	  accent1;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
 	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
 	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
-	  mso-bidi-font-size:11.0pt'>NIT </span></b></p>
+	  mso-bidi-font-size:11.0pt'>Documento </span></b></p>
 	  </td>
 	  <td width=236 valign=top style='width:75%;border:solid windowtext 1.0pt;
 	  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:
@@ -262,7 +290,7 @@ if ($cantidad == "individual") {
 	  accent1;mso-background-themetint:102;padding:0cm 5.4pt 0cm 5.4pt'>
 	  <p class=MsoNormal style='margin-bottom:0cm;margin-bottom:.0001pt;line-height:
 	  normal'><b style='mso-bidi-font-weight:normal'><span style='font-size:12.0pt;
-	  mso-bidi-font-size:11.0pt'>NIT " . $item .  "</span></b></p>
+	  mso-bidi-font-size:11.0pt'>Documento " . $item .  "</span></b></p>
 	  </td>
 	  <td width=100 valign=top style='width:55%;border-top:solid windowtext 1.0pt;
 	  border-left:none;mso-border-left-alt:solid windowtext .5pt;mso-border-alt:

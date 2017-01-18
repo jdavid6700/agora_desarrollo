@@ -9,10 +9,10 @@ $funcion [$indice ++] = "jquery.autocomplete.min.js";
 $funcion [$indice++]  = "jquery.dataTables.min.js";
 $funcion [$indice++]  = "masonry.pkgd.min.js";
 
+$funcion [$indice++]  = "bootstrap-checkbox.js";
 
-
-$funcion [$indice++]  = "dataTables.bootstrap.min.js";
-$funcion [$indice++]  = "dataTables.bootstrap.js";
+//$funcion [$indice++]  = "dataTables.bootstrap4.min.js";
+//$funcion [$indice++]  = "dataTables.bootstrap4.js";
 $funcion [$indice++]  = "dataTables.jqueryui.js";
 $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";

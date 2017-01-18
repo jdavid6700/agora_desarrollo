@@ -1,4 +1,7 @@
 <?php
+
+namespace administracion\evaluacionProveedor\funcion;
+
 if (! isset ( $GLOBALS ["autorizado"] )) {
 	include ("../index.php");
 	exit ();

@@ -100,7 +100,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" JOIN core.ciudad JL ON PJ.id_ciudad_origen = JL.id_ciudad";
 				$cadenaSql.=" JOIN core.departamento JLD ON JL.id_departamento = JLD.id_departamento";
 				$cadenaSql.=" JOIN core.pais JLP ON JLD.id_pais = JLP.id_pais";
-				$cadenaSql.=" JOIN agora.tipo_conformacion TC ON TC.id_conformacion = PJ.id_tipo_conformacion";
+				$cadenaSql.=" JOIN agora.parametro_tipo_conformacion TC ON TC.id_conformacion = PJ.id_tipo_conformacion";
 				$cadenaSql.=" WHERE";
 				$cadenaSql.=" num_documento = $variable ";
 				break;

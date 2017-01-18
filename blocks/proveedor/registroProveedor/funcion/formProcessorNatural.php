@@ -63,6 +63,13 @@ class Formulario {
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 
 		
+		$SQLs = [];
+	
+		
+		if(isset($_REQUEST['correoNat'])){$_REQUEST['correoNat'] = str_replace('\\', "", $_REQUEST['correoNat']);}
+		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
+		
+		
 		if(isset($_REQUEST['primerApellidoNat'])){$_REQUEST['primerApellidoNat']=mb_strtoupper($_REQUEST['primerApellidoNat'],'utf-8');}
 		if(isset($_REQUEST['segundoApellidoNat'])){$_REQUEST['segundoApellidoNat']=mb_strtoupper($_REQUEST['segundoApellidoNat'],'utf-8');}
 		if(isset($_REQUEST['primerNombreNat'])){$_REQUEST['primerNombreNat']=mb_strtoupper($_REQUEST['primerNombreNat'],'utf-8');}
@@ -72,33 +79,28 @@ class Formulario {
 		if(isset($_REQUEST['asesorComercialNat'])){$_REQUEST['asesorComercialNat']=mb_strtoupper($_REQUEST['asesorComercialNat'],'utf-8');}
 		if(isset($_REQUEST['descripcionNat'])){$_REQUEST['descripcionNat']=mb_strtoupper($_REQUEST['descripcionNat'],'utf-8');}
 		
-		/*
-		$id_proveedor = true;
-				$id_TelefonoFijo = true;
-				$id_TelefonoMovil = true; 
-				$resultadoTelefonoFijo = true; 
-				$resultadoTelefonoMovil = true; 
-		$resultadoPersonaNatural = true;
-		*/
 
-		//Guardar RUT adjuntado Persona Natural
+		//Guardar RUT adjuntado Persona Natural*********************************************************************
 		$_REQUEST ['destino'] = '';
-		
+		// Guardar el archivo
 		if ($_FILES) {
+			$i = 0;
 			foreach ( $_FILES as $key => $values ) {
-				$archivo = $_FILES [$key];
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
 			}
+			$archivo = $archivoCarga[2];
 			// obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
 			$archivo1 = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
 			$nombreDoc = $prefijo . "-" . $archivo1;
-			
+		
 			if ($archivo1 != "") {
 				// guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
-				
+		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
 					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
@@ -110,8 +112,45 @@ class Formulario {
 			}
 		} else {
 			echo "<br>NO existe el archivo D:!!!";
-		}		
+		}
+		//************************************************************************************************************		
 
+		
+		
+		//Guardar RUP adjuntado Persona Natural*********************************************************************
+		$_REQUEST ['destino2'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[3];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//************************************************************************************************************
 
 
 		unset($resultado);
@@ -204,7 +243,10 @@ class Formulario {
 						case 26 :
 							$_REQUEST['grupoEtnico']='ROM';
 							break;
-					}
+						case 40 :
+							$_REQUEST ['grupoEtnico']=null;
+							break;
+						}
 				}
 				
 				if(isset($_REQUEST['estadoCivil'])){//CAST genero tipoCuenta
@@ -418,6 +460,14 @@ class Formulario {
 				
 				//***********************************************************************************************
 				
+				
+				//CAST****************************************************************
+				$dateExp = explode("/", $_REQUEST ['fechaExpeNat']);
+				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+				$_REQUEST ['fechaExpeNat'] = $cadena_fecha;
+				//********************************************************************
+				
+				
 
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
@@ -437,6 +487,7 @@ class Formulario {
 						'num_cuenta_bancaria' => $_REQUEST['numeroCuentaNat'],
 						'id_entidad_bancaria' => $_REQUEST['entidadBancariaNat'],
 						'anexo_rut' => $_REQUEST ['destino'],
+						'anexo_rup' => $_REQUEST ['destino2'],
 						'descripcion_proveedor' => $_REQUEST['descripcionNat'],
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,
@@ -444,8 +495,11 @@ class Formulario {
 				);
 				
 				//Guardar datos PROVEEDOR
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNatural);
-				$id_proveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNatural, "insertarInformacionProveedor");
+				$cadenaSqlInfoProveedor = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNatural);
+				//$id_proveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNatural, "insertarInformacionProveedor");
+				array_push($SQLs, $cadenaSqlInfoProveedor);
+				//Curval*********************************************
+				
 				
 				
 				$datosTelefonoFijoPersonaProveedor = array (
@@ -457,6 +511,9 @@ class Formulario {
 				
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
 				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
+				//array_push($SQLs, $cadenaSqlTelFijo);
+				
+				
 				
 				$datosTelefonoMovilPersonaProveedor = array (
 						'num_telefono' => $_REQUEST['movilNat'],
@@ -466,22 +523,31 @@ class Formulario {
 				
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
 				$id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoMovilPersonaProveedor, "insertarInformacionProveedorTelefono");
+				//array_push($SQLs, $cadenaSqlTelMovil);
+				
+				
+				
 				
 				$datosTelefonoProveedorTipoA = array (
 						'fki_id_tel' => $id_TelefonoFijo[0][0],
-						'fki_id_Proveedor' => $id_proveedor[0][0]
+						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoA);
-				$resultadoTelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				$cadenaSqlResTelFijo = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoA);
+				//$resultadoTelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				array_push($SQLs, $cadenaSqlResTelFijo);
+				
+				
 				
 				$datosTelefonoProveedorTipoB = array (
 						'fki_id_tel' => $id_TelefonoMovil[0][0],
-						'fki_id_Proveedor' => $id_proveedor[0][0]
+						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoB);
-				$resultadoTelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				$cadenaSqlResTelFijo = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoB);
+				//$resultadoTelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+				array_push($SQLs, $cadenaSqlResTelFijo);
+				
 				
 				
 				$datosInformacionPersonaNatural = array (
@@ -522,25 +588,32 @@ class Formulario {
 						'dependiente_padre_o_hermano' => $_REQUEST ['padresHermanosDependienteNat'],
 						'id_eps' => $_REQUEST ['afiliacionEPSNat'],
 						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
-						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat']
+						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat'],
+						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeNat'],
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat']
 				);
 				
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
-				$cadenaSql = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNatural );
-				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-
+				$cadenaSqlPerNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNatural );
+				//$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+				array_push($SQLs, $cadenaSqlPerNatural);
+				
+				
+				$registroPersona = $esteRecursoDB->transaccion($SQLs);
+				
+				
 				/*
 				$id_proveedor = true;
-				$id_TelefonoFijo = true;
-				$id_TelefonoMovil = true; 
+					$id_TelefonoFijo = true;
+					$id_TelefonoMovil = true; 
 				$resultadoTelefonoFijo = true; 
 				$resultadoTelefonoMovil = true; 
 				$resultadoPersonaNatural = true;
 				*/
 				
-				if ($id_proveedor && $id_TelefonoFijo && $id_TelefonoMovil && $resultadoTelefonoFijo && $resultadoTelefonoMovil && $resultadoPersonaNatural) {
+				if ($registroPersona != false) {
 						
 						
 						
@@ -603,14 +676,19 @@ class Formulario {
 							    $_REQUEST['telefono'] = $_REQUEST['telefonoNat'];
 							    $_REQUEST['subsistema'] = 2;
 							    $_REQUEST['perfil'] = 7;
-								$_REQUEST['fechaFin'] = "2020-12-12";
+							    
+							    $fechaEnd = date('Y-m-j');
+							    $nuevafechaEnd = strtotime ( '+2 year' , strtotime ( $fechaEnd ) ) ;
+							    $nuevafechaEnd = date ( 'Y-m-j' , $nuevafechaEnd );
+							    
+								$_REQUEST['fechaFin'] = $nuevafechaEnd;
 								//****************************************************************
 
 
 						
 								$caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
 						        $num = '1234567890';
-						        $caracter = '=_#$-';
+						        $caracter = '=$';
 						        $numerodeletras=5; 
 						        $pass = "";
 						        $keycar=$keyNum= "";

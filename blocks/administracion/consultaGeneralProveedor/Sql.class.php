@@ -374,6 +374,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " tel_asesor,";
 					$cadenaSql .= " descripcion,";
 					$cadenaSql .= " anexorut,";
+					$cadenaSql .= " anexorup,";
 					$cadenaSql .= " tipo_cuenta_bancaria,";
 					$cadenaSql .= " num_cuenta_bancaria,";
 					$cadenaSql .= " id_entidad_bancaria,";
@@ -394,6 +395,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " '" . $variable ['tel_asesor_comercial_contacto'] . "', ";
 					$cadenaSql .= " '" . $variable ['descripcion_proveedor'] . "', ";
 					$cadenaSql .= " '" . $variable ['anexo_rut'] . "', ";
+					$cadenaSql .= " '" . $variable ['anexo_rup'] . "', ";
 					$cadenaSql .= " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
 					$cadenaSql .= " '" . $variable ['num_cuenta_bancaria'] . "', ";
 					$cadenaSql .= $variable ['id_entidad_bancaria'] . ", ";
@@ -578,6 +580,8 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_eps,";
 					$cadenaSql .= " id_fondo_pension,";
 					$cadenaSql .= " id_caja_compensacion,";
+					$cadenaSql .= " fecha_expedicion_documento,";
+					$cadenaSql .= " id_ciudad_expedicion_documento,";
 					$cadenaSql .= " declarante_renta";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.informacion_persona_natural";
@@ -711,7 +715,9 @@ class Sql extends \Sql {
 						$cadenaSql .= " id_caja_compensacion = " . " " . $variable ['id_caja_compensacion'] . ",";
 					}else{
 						$cadenaSql .= " id_caja_compensacion = null,";
-					}	
+					}
+					$cadenaSql .= " fecha_expedicion_documento = " . " '" . $variable ['fecha_expedicion_doc'] . "',";
+					$cadenaSql .= " id_ciudad_expedicion_documento = " . " " . $variable ['id_lugar_expedicion_doc'] . ",";
 					$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 					$cadenaSql .= " WHERE num_documento_persona = ";
 					$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
@@ -934,7 +940,15 @@ class Sql extends \Sql {
 					$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
 					break;
 				
-					/* VERIFICAR NUMERO DE NIT */
+					/* ACTUALIZAR - PROVEEEDOR DATOS */
+				case 'actualizarRUP' :
+					$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
+					$cadenaSql .= "anexorup='" . $variable ['destino2'] . "'";
+					$cadenaSql .= " WHERE id_proveedor = ";
+					$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
+					break;
+					
+						/* VERIFICAR NUMERO DE NIT */
 				case "verificarNIT" ://******************************************************************************
 					$cadenaSql=" SELECT";
 					$cadenaSql.=" num_documento,";
@@ -965,6 +979,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" P.id_entidad_bancaria,";
 					$cadenaSql.=" P.descripcion,";
 					$cadenaSql.=" P.anexorut,";
+					$cadenaSql.=" P.anexorup,";
 					$cadenaSql.=" P.fecha_registro,";
 					$cadenaSql.=" P.fecha_ultima_modificacion,";
 					$cadenaSql.=" P.estado";
@@ -1038,7 +1053,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 					$cadenaSql .= 'abreviatura as ABREVIATURA ';
 					$cadenaSql .= 'FROM ';
-					$cadenaSql .= 'agora.nomenclatura_dian ';
+					$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 					$cadenaSql .= 'WHERE ';
 					$cadenaSql .= 'id_nomenclatura = ' . $variable . ' ';
 					$cadenaSql .= 'ORDER BY NOMENCLATURA';
@@ -1048,7 +1063,7 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_nomenclatura as ID_NOMENCLATURA, ';
 					$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
 					$cadenaSql .= 'FROM ';
-					$cadenaSql .= 'agora.nomenclatura_dian ';
+					$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
 					$cadenaSql .= 'ORDER BY NOMENCLATURA';
 					break;
 						
@@ -1068,7 +1083,7 @@ class Sql extends \Sql {
 					$cadenaSql .= "	nombre_banco";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " core.banco";
-					$cadenaSql .= " WHERE estado != 'INACTIVO' ";
+					$cadenaSql .= " WHERE estado_activo != 'FALSE' ";
 					$cadenaSql .= " ORDER BY nombre_banco";
 					break;
 				
@@ -1077,7 +1092,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_conformacion,";
 					$cadenaSql .= "	nombre";
 					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.tipo_conformacion";
+					$cadenaSql .= " agora.parametro_tipo_conformacion";
 					$cadenaSql .= " WHERE estado != 'INACTIVO' ";
 					$cadenaSql .= " ORDER BY nombre";
 					break;
@@ -1124,6 +1139,17 @@ class Sql extends \Sql {
 					$cadenaSql .= 'id_pais != 112 ';
 					$cadenaSql .= 'ORDER BY NOMBRE';
 					break;
+					
+					case 'buscarPaises' :
+					
+						$cadenaSql = 'SELECT ';
+						$cadenaSql .= 'id_pais as ID_PAIS, ';
+						$cadenaSql .= 'nombre_pais as NOMBRE, ';
+						$cadenaSql .= 'codigo_pais as COD_PAIS ';
+						$cadenaSql .= 'FROM ';
+						$cadenaSql .= 'core.pais ';
+						$cadenaSql .= 'ORDER BY NOMBRE';
+						break;
 				
 				case 'buscarPaisXDepa' :
 				

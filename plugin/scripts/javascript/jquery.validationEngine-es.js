@@ -65,6 +65,10 @@
                     "alertText": "* Por favor seleccione ",
                     "alertText2": " opciones"
                 },
+                "correoEquals": {
+                    "regex": "none",
+                    "alertText": "* Los correos no coinciden"
+                },
                 "equals": {
                     "regex": "none",
                     "alertText": "* Los campos no coinciden"
