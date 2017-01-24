@@ -61,6 +61,11 @@ class FormProcessor {
             if ($registro) {
 
                 if ($registro [0] ['clave'] == $variable ["clave"]) {
+                	
+					/**
+					  * Se implementa función de guardar hash de clave en una tabla
+					  */
+					$this->registrar_password_hash($_REQUEST['usuario'], $_REQUEST ['clave']);
 
                     // 1. Crear una sesión de trabajo
                     $estaSesion = $this->miSesion->crearSesion($registro [0] ["id_usuario"]);
@@ -155,6 +160,18 @@ class FormProcessor {
 
         $cadena_sql = $this->miSql->getCadenaSql("registrarEvento", $arreglo);
         $registroAcceso = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "acceso");
+    }
+
+	function registrar_password_hash($usuario, $clave) {
+		include 'lib_password.php';	
+		$variable = array(
+			'usuario'=>$usuario,
+			'password_hash'=>password_hash($clave, PASSWORD_BCRYPT)
+		);
+		$conexion = 'appserv';
+        $recursoDBappserv = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		$sql_acceso = $this->miSql->getCadenaSql('guardar_password_hash', $variable);
+		$resultado = @$recursoDBappserv->ejecutarAcceso($sql_acceso, 'busqueda');
     }
 
 }
