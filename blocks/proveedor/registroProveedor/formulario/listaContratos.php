@@ -183,11 +183,12 @@ while($i < count($resultadoCont)){
 			'unidad_ejecutora' => $resultadoCont[$i]['unidad_ejecutora']
 	);
 	
+	/*
 	$datosSolicitudNecesidad = array (
 			'num_necesidad' => $resultadoCont[$i]['numero_solicitud_necesidad'],
 			'vigencia' => $resultadoCont[$i]['vigencia']
 	);
-	
+	*/
 	
 	//*********************************************************************************************************************************
 	//$cadena_sql = $this->sql->getCadenaSql ( "estadoContratoAgora", $datosContrato);
@@ -213,6 +214,23 @@ while($i < count($resultadoCont)){
 	
 		$cadena_sql = $this->sql->getCadenaSql ( "consultarNovedadesContrato", $datosContrato);
 		$resultadoNovedades = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarCDP", $datosContrato);
+		$resultadoCDP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		$cdp[$i] = $resultadoCDP[0]['string_agg'];
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarCantCDP", $datosContrato);
+		$resultadoCantCDP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarRP", $resultadoCantCDP[0]['string_agg']);
+		$resultadoRP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		$rp[$i] = $resultadoRP[0]['string_agg'];
+		
+		
 	//}
 	//***************CONTRATOS RELACIONADOS******************************************************************************************
 	
@@ -279,11 +297,10 @@ if ($resultadoCont) {
 		$variable .= "&usuario=" . $_REQUEST ["usuario"];
 		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
-		$hoy = date ( "Y-m-d" );
+		$hoy = date ( "d/m/Y" );
 		$msj = '';
 		
 		if($fechas[$j]){
-			
 			
 			if (strtotime($hoy) > strtotime($fechaFin[$j])) {
 					
@@ -320,10 +337,10 @@ if ($resultadoCont) {
 				}
 			} else {
 				$msj = 'El contrato no se ha terminado';
-				//$certUniversidadImagen = 'cancel.png';
-				$certUniversidadImagen = 'pdf.png';
+				$certUniversidadImagen = 'cancel.png';
+				//$certUniversidadImagen = 'pdf.png';
 				$certSatisImagen = 'cancel.png';
-				//$variable = '#';
+				$variable = '#';
 				$varSatisfaccion = '#';
 			}
 			
@@ -340,8 +357,8 @@ if ($resultadoCont) {
 		echo "<tr>";
 		echo "<td align='center' width='5%'>" . $dato ['numero_contrato'] . "</td>";
 		echo "<td align='center'>" . $dato ['vigencia'] . "</td>";
-		echo "<td align='center'>" . $dato ['numero_cdp'] . "</td>";
-		echo "<td align='center'>" . $dato ['numero_rp'] . "</td>";
+		echo "<td align='center'>" . $cdp[$j] . "</td>";
+		echo "<td align='center'>" . $rp[$j] . "</td>";
 		echo "<td align='center'>" . $fechaInicio[$j] . "</td>";
 		echo "<td align='center'>" . $fechaFin[$j] . "</td>";
 		$valorContrto = number_format ( $dato ['valor_contrato'] );

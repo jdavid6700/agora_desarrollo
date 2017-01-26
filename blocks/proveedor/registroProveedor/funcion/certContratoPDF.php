@@ -56,7 +56,7 @@ $numeroContratistas = count($resultado);
 // echo $cadena_sql;
 // var_dump($_REQUEST);
 
-// var_dump($resultado);
+//var_dump($resultado);
 
 $datosContrato = array (
 		'num_contrato' => $resultado[0]['numero_contrato'],
@@ -89,9 +89,72 @@ $resultado[0]['num_documento'] = $_REQUEST['docProveedor'];
 $resultado[0]['tipo_persona'] = $_REQUEST['tipoProveedor'];
 $resultado[0]['tipo_documento'] = $resultadoDoc[0]['tipo_identificacion'];
 
-$resultado[0]['numero_cdp'] = $resultadoContrato[0]['numero_cdp'];
-$resultado[0]['numero_rp'] = $resultadoContrato[0]['numero_rp'];
+//$resultado[0]['numero_cdp'] = $resultadoContrato[0]['numero_cdp'];
+//$resultado[0]['numero_rp'] = $resultadoContrato[0]['numero_rp'];
 $resultado[0]['numero_contrato'] = $resultadoContrato[0]['numero_contrato'];
+
+
+
+
+//************************************ MULTIPLES CPS y RPs *********************************
+//******************************************************************************************
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarCDP", $datosContrato);
+$resultadoCDP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+$cdp = $resultadoCDP[0]['string_agg'];
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarCantCDP", $datosContrato);
+$resultadoCantCDP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+$cadena_sql = $this->sql->getCadenaSql ( "consultarRP", $resultadoCantCDP[0]['string_agg']);
+$resultadoRP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+$rp = $resultadoRP[0]['string_agg'];
+
+
+$resultado[0]['numero_cdp'] = $cdp;
+$resultado[0]['numero_rp'] = $rp;
+
+//******************************************************************************
+//******************************************************************************
+
+$cadena_sql = $this->sql->getCadenaSql ( "countCDP", $datosContrato);
+$countCDP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+$cadena_sql = $this->sql->getCadenaSql ( "countRP", $resultadoCantCDP[0]['string_agg']);
+$countRP = $argoRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+
+$cantidadCDP = count($countCDP);
+$cantidadRP = count($countRP);
+
+if($cantidadCDP > 1){
+	
+	$textCDP = "";
+	
+}else{
+	
+	$textCDP = "";
+	
+}
+
+if($cantidadRP > 1){
+	
+	$textRP = "";
+
+}else{
+	
+	$textRP = "";
+
+}
+
+
+//******************************************************************************************
+//******************************************************************************************
+
+
+
+
+
 $resultado[0]['vigencia'] = $resultadoContrato[0]['vigencia'];
 $resultado[0]['objetocontratar'] = $resultadoContrato[0]['objeto_contrato'];
 
