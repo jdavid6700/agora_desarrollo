@@ -113,7 +113,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	
         $tipo = 'success';
-        $mensaje = "Se registro la PERSONA, continuar para ingresar Actividades Económicas (IMPORTANTE)<br >";
+        $mensaje = "Se registro la PERSONA, puede OPRIMIR CONTINUAR e ingresar más Actividades Económicas, si lo requiere.<br >";
 		$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
 		$mensaje .= "<strong><br >";
 		$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";

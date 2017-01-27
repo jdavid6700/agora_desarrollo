@@ -601,17 +601,29 @@ class Formulario {
 				array_push($SQLs, $cadenaSqlPerNatural);
 				
 				
+				
+				
+				
+				// REGISTRO LA ACTIVIDAD
+				$arregloCIIU = array (
+						'nit' => $_REQUEST['documentoNat'],
+						'actividad' => $_REQUEST ['claseCIIUNat']
+				);
+				// Guardar ACTIVIDAD
+				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
+				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+				array_push($SQLs, $cadenaSqlActividad);
+				
+				
+				
+				
+				
+				
+				
+				
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 				
 				
-				/*
-				$id_proveedor = true;
-					$id_TelefonoFijo = true;
-					$id_TelefonoMovil = true; 
-				$resultadoTelefonoFijo = true; 
-				$resultadoTelefonoMovil = true; 
-				$resultadoPersonaNatural = true;
-				*/
 				
 				if ($registroPersona != false) {
 						

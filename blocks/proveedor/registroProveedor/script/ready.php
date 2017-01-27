@@ -206,6 +206,10 @@ $('#<?php echo $this->campoSeguro('grupoCIIU')?>').width(750);
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').width(750);
 
 
+$('#<?php echo $this->campoSeguro('claseCIIUNat')?>').width(750);
+$('#<?php echo $this->campoSeguro('claseCIIUJur')?>').width(750);
+
+
 $('#<?php echo $this->campoSeguro('tipoPersona')?>').width(150);
 $('#<?php echo $this->campoSeguro('paisEmpresa')?>').width(150);
 $('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').width(250);
@@ -296,6 +300,9 @@ $("#<?php echo $this->campoSeguro('responsableIVA')?>").select2();
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('grupoCIIU')?>').select2();
 $('#<?php echo $this->campoSeguro('claseCIIU')?>').select2();
+
+$('#<?php echo $this->campoSeguro('claseCIIUNat')?>').select2();
+$('#<?php echo $this->campoSeguro('claseCIIUJur')?>').select2();
 
 $('#<?php echo $this->campoSeguro('tipoPersona')?>').select2();
 $('#<?php echo $this->campoSeguro('paisEmpresa')?>').select2();

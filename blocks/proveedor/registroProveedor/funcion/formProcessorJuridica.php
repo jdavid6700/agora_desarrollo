@@ -591,44 +591,28 @@ class Formulario {
 				//$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
 				//****************************************************************************************************************************
 				array_push($SQLs, $cadenaSqlProveedorNatural);
+				
+				
+				
+				
+				// REGISTRO LA ACTIVIDAD
+				$arregloCIIU = array (
+						'nit' => $_REQUEST['nit'],
+						'actividad' => $_REQUEST ['claseCIIUJur']
+				);
+				// Guardar ACTIVIDAD
+				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
+				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+				array_push($SQLs, $cadenaSqlActividad);
+				
+				
+				
 					
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 					
 					
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlInfoProveedor;
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlResTelFijo;
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlPersonaNatural;
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlProveedorXRepresentante;
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlPersonaJuridica;
-// 				echo "<br>";
-// 				echo "<br>";
-// 				echo $cadenaSqlProveedorNatural;
-// 				echo "<br>";
-// 				echo "<br>";
-					
-// 				var_dump($registroPersona);
-// 				var_dump($SQLs);
-// 				exit();
-					
-				/*
-				 $id_proveedor = true; curval
-				 $id_representante = true;
-				 $id_TelefonoFijo = true;
-				 $resultadoTelefonoFijo = true;
-				 $resultadoPersonaNatural = true;
-				 $resultadoProveedorxRepresentante = true;
-				 $resultadoPersonaJuridica = true;
-				 */
+				
+				
 				
 				if ($registroPersona != false) {
 				

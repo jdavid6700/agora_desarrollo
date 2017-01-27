@@ -150,6 +150,13 @@ $this->idioma["claseCIIU"] = "Código CIIU :";
 $this->idioma["claseCIIUTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
 
 
+$this->idioma["claseCIIUNat"] = "Código CIIU :";
+$this->idioma["claseCIIUNatTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
+
+$this->idioma["claseCIIUJur"] = "Código CIIU :";
+$this->idioma["claseCIIUJurTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
+
+
 $this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
 $this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
 $this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
@@ -378,6 +385,7 @@ $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
+$this->idioma["marcoCIIUReg"] = "Actividad Económica Obligatoria";
 $this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
 $this->idioma["marcoContratos"] = "Información de Contratos";
 $this->idioma["marcoContratosTabla"] = "Contratos";
