@@ -270,7 +270,7 @@ class Formulario {
 						'descripcion_proveedor' => $_REQUEST['descripcion'],
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,
-						'id_estado' => '2' //Estado Inactivo
+						'id_estado' => '1' //Estado Inactivo
 				);
 					
 				//Guardar datos PROVEEDOR
