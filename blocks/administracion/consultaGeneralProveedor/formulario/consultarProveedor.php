@@ -22,6 +22,9 @@ $nombreFormulario = $esteBloque ["nombre"];
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+$conexion = 'framework';
+$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
 
 {
 	$tab = 1;
@@ -106,8 +109,13 @@ else{
 }
 
 
+$cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuario", $_REQUEST );
+$resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+//ECHO $cadena_sql;
+//var_dump($_REQUEST);
+//var_dump($resultadoPerfil);
 
-if ($resultado) {
+if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";
 		$atributos ["estilo"] = "jqueryui";
@@ -206,6 +214,105 @@ if ($resultado) {
 	
 	echo $this->miFormulario->agrupacion ( 'fin' );
 	unset ( $atributos );
+	
+} else if($resultado && $resultadoPerfil[0]['rol_id'] == 12){	
+	
+	
+	
+	
+		// -----------------Inicio de Conjunto de Controles----------------------------------------
+		$esteCampo = "marcoDatosResultadoParametrizar";
+		$atributos ["estilo"] = "jqueryui";
+		echo $this->miFormulario->marcoAgrupacion("inicio", $atributos);
+		unset ( $atributos );
+		
+		echo '<table id="tablaContratos" class="display" cellspacing="0" width="100%"> ';
+		
+		echo "<thead>
+					<tr>
+						<th><center>Documento</center></th>
+						<th><center>Nombre Proveedor</center></th>
+						<th><center>Tipo Persona</center></th>
+						<th><center>Correo</center></th>
+	                    <th><center>Teléfono</center></th>
+						<th><center>Movil</center></th>
+						<th><center>Estado</center></th>
+						<th><center>Detalle</center></th>
+					</tr>
+					</thead>
+					<tbody>";
+		
+		foreach ($resultado as $dato):
+		$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+		$variableView .= "&opcion=verPro";
+		$variableView .= "&idProveedor=" . $dato['id_proveedor'];
+		$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
+		$imagenView = 'verPro.png';
+			
+			
+			
+		$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+		$variableEdit .= "&opcion=modificarPro";
+		$variableEdit .= "&idProveedor=" . $dato['id_proveedor'];
+		$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
+		$imagenEdit = 'editPro.png';
+			
+			
+		switch ($dato['estado']) {
+			case 1:
+				$estado = 'Activo';
+				$imagen = 'edit.png';
+				break;
+			case 2:
+				$estado = 'Inactivo';
+				$imagen = 'cancel.png';
+				break;
+			case 3:
+				$estado = 'Inhabilitado';
+				$imagen = 'cancel.png';
+				break;
+		}
+		
+			
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $dato['num_documento'] );
+		$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $dato['num_documento'] );
+		$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+			
+		//var_dump($resultadoTel);
+		//var_dump($resultadoMovil);
+			
+		$mostrarHtml = "<tr>
+							<td><center>" . $dato['num_documento'] . "</center></td>
+							<td><center>" . $dato['nom_proveedor'] . "</center></td>
+							<td><center>" . $dato['tipopersona'] . "</center></td>
+							<td><center>" . $dato['correo'] . "</center></td>
+							<td><center>" . $resultadoTel[0]['numero_tel'] . "</center></td>
+							<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>
+							<td><center>" . $estado . "</center></td>
+							<td><center>
+								<a href='" . $variableView . "'>
+									<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
+								</a>
+							</center></td>
+						</tr>";
+		echo $mostrarHtml;
+		unset ( $mostrarHtml );
+		unset ( $variableView );
+		unset ( $variableEdit );
+		endforeach;
+		
+		echo "</tbody>";
+		echo "</table>";
+		
+		echo $this->miFormulario->agrupacion ( 'fin' );
+		unset ( $atributos );
+	
+	
+	
+	
+	
 	
 } else {
 		$nombreFormulario = $esteBloque ["nombre"];

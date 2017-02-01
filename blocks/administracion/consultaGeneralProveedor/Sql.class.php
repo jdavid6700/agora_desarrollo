@@ -1263,6 +1263,44 @@ class Sql extends \Sql {
 					$cadenaSql .= 'WHERE ';
 					$cadenaSql .= 'clase_parametro = \'Tipo Discapacidad\';';
 					break;
+					
+					
+				case "consultarPerfilUsuario" :
+					
+					$cadenaSql = "SELECT DISTINCT ";
+					$cadenaSql .= " sist.id_usuario,  ";
+					if (! isset ( $variable ['tipo'] )) {
+						$cadenaSql .= "sist.id_subsistema, ";
+						$cadenaSql .= "mod.etiketa subsistema, ";
+						$cadenaSql .= "sist.fecha_registro,  ";
+						$cadenaSql .= "sist.fecha_caduca,  ";
+					}
+					// $cadenaSql .= "sist.id_subsistema, ";
+					// $cadenaSql .= "mod.etiketa subsistema, ";
+					$cadenaSql .= "sist.rol_id, ";
+					$cadenaSql .= "rol.rol_alias , ";
+					// $cadenaSql .= "sist.fecha_registro, ";
+					// $cadenaSql .= "sist.fecha_caduca, ";
+					$cadenaSql .= "est.estado_registro_alias estado  ";
+					$cadenaSql .= "FROM " . $prefijo . "usuario_subsistema sist ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "subsistema mod ON mod.id_subsistema=sist.id_subsistema ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "rol rol ON rol.rol_id=sist.rol_id ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "estado_registro est ";
+					$cadenaSql .= "ON est.estado_registro_id=sist.estado ";
+					$cadenaSql .= "WHERE sist.id_usuario='" . $variable ['usuario'] . "'";
+					if (isset ( $variable ['subsistema'] ) && $variable ['subsistema'] > 0) {
+						$cadenaSql .= " AND ";
+						$cadenaSql .= " sist.id_subsistema='" . $variable ['subsistema'] . "' ";
+					}
+					if (isset ( $variable ['rol_id'] )) {
+						$cadenaSql .= " AND rol.rol_id ='" . $variable ['rol_id'] . "'";
+					}
+					if (isset ( $variable ['tipo'] ) && $variable ['tipo'] == 'unico') {
+						$cadenaSql .= " AND sist.estado=1 ";
+					}
+					$cadenaSql .= " ORDER BY rol.rol_alias";
+					break;
+					
 		}
 		
 		return $cadenaSql;
