@@ -318,7 +318,7 @@ mso-bidi-font-size:11.0pt;line-height:107%'>Que la persona <b>".$resultado[0]['n
 		</p>
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
-mso-bidi-font-size:11.0pt;line-height:107%'><b>CONTRATO No. " . $resultado[0]['numero_contrato'] . " DE " . $resultado[0]['vigencia'] . "</b>  </span></p>
+mso-bidi-font-size:11.0pt;line-height:107%'><b>CONTRATO No. " . $resultado[0]['numero_contrato_suscrito'] . " DE " . $resultado[0]['vigencia'] . "</b>  </span></p>
 
 <p class=MsoNormal style='text-align:justify'><span style='font-size:12.0pt;
 mso-bidi-font-size:11.0pt;line-height:107%'><b>OBJETO : </b><br> <br>

@@ -87,6 +87,9 @@ class Sql extends \Sql {
 			
 			case "consultarContratosARGO" :
 				$cadenaSql = " SELECT ";
+				
+				$cadenaSql.=" CS.numero_contrato_suscrito as numero_contrato_suscrito,";
+				
 				$cadenaSql.=" CG.numero_contrato as numero_contrato,";
 				$cadenaSql.=" CG.vigencia as vigencia, ";
 				$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
@@ -112,6 +115,9 @@ class Sql extends \Sql {
 				$cadenaSql.=" upper(TC.descripcion) as tipo_control,";
 				$cadenaSql.=" EC.nombre_estado as estado";
 				$cadenaSql.=" FROM argo.contrato_general CG";
+				
+				$cadenaSql.=" JOIN argo.contrato_suscrito CS ON CS.numero_contrato = CG.numero_contrato ";
+				
 				$cadenaSql.=" JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
 				$cadenaSql.=" JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
 				//$cadenaSql.=" JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
@@ -121,12 +127,17 @@ class Sql extends \Sql {
 				$cadenaSql.=" JOIN argo.estado_contrato EC ON EC.id = CE.estado";
 				$cadenaSql .= " WHERE CG.contratista IN (" . $variable . ")";
 				$cadenaSql .= " AND CE.fecha_registro IN (SELECT fecha_registro FROM argo.contrato_estado WHERE numero_contrato = CG.numero_contrato ORDER BY fecha_registro DESC LIMIT 1)";
-				$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, "./*OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\",*/" CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro";
+				
+				$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, "./*OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\",*/" CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro, CS.numero_contrato_suscrito";
+				
 				$cadenaSql .= " ORDER BY CG.numero_contrato ASC";
 				break;
 				
 				case "consultarContratosARGOByNum" :
 					$cadenaSql = " SELECT ";
+					
+					$cadenaSql.=" CS.numero_contrato_suscrito as numero_contrato_suscrito,";
+					
 					$cadenaSql.=" CG.numero_contrato as numero_contrato,";
 					$cadenaSql.=" CG.vigencia as vigencia, ";
 					$cadenaSql.=" CG.unidad_ejecutora as unidad_ejecutora, ";
@@ -152,6 +163,9 @@ class Sql extends \Sql {
 					$cadenaSql.=" upper(TC.descripcion) as tipo_control,";
 					$cadenaSql.=" EC.nombre_estado as estado";
 					$cadenaSql.=" FROM argo.contrato_general CG";
+					
+					$cadenaSql.=" JOIN argo.contrato_suscrito CS ON CS.numero_contrato = CG.numero_contrato ";
+					
 					$cadenaSql.=" JOIN argo.parametros UE ON UE.id_parametro = CG.unidad_ejecucion";
 					$cadenaSql.=" JOIN argo.parametros FP ON FP.id_parametro = CG.forma_pago";
 					//$cadenaSql.=" JOIN argo.argo_ordenadores OG ON OG.\"ORG_IDENTIFICADOR_UNICO\" = CG.ordenador_gasto";
@@ -161,7 +175,8 @@ class Sql extends \Sql {
 					$cadenaSql.=" JOIN argo.estado_contrato EC ON EC.id = CE.estado";
 					$cadenaSql .= " WHERE CG.numero_contrato = '" . $variable['numeroContrato'] . "' AND CG.vigencia = " . $variable['vigenciaContrato'];
 					$cadenaSql .= " AND CE.fecha_registro IN (SELECT fecha_registro FROM argo.contrato_estado WHERE numero_contrato = CG.numero_contrato ORDER BY fecha_registro DESC LIMIT 1)";
-					$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, "./*OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\",*/" CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro";
+					
+					$cadenaSql .= " GROUP BY CG.numero_contrato, CG.vigencia, UE.descripcion, FP.descripcion, "./*OG.\"ORG_NOMBRE\", OG.\"ORG_IDENTIFICACION\", OG.\"ORG_ORDENADOR_GASTO\", OG.\"ORG_ESTADO\",*/" CC.descripcion, TC.descripcion, EC.nombre_estado, CE.fecha_registro, CS.numero_contrato_suscrito";
 					break;
 			
 			case "consultarEPS" :

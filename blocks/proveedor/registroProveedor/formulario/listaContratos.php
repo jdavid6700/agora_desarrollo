@@ -355,7 +355,7 @@ if ($resultadoCont) {
 		
 		
 		echo "<tr>";
-		echo "<td align='center' width='5%'>" . $dato ['numero_contrato'] . "</td>";
+		echo "<td align='center' width='5%'>" . $dato ['numero_contrato_suscrito'] . "</td>";
 		echo "<td align='center'>" . $dato ['vigencia'] . "</td>";
 		echo "<td align='center'>" . $cdp[$j] . "</td>";
 		echo "<td align='center'>" . $rp[$j] . "</td>";
