@@ -41,7 +41,7 @@ class RadioButtonHtml extends HtmlBase{
         } else {
     
             $this->miOpcion .= "<input type='radio' ";
-            $this->miOpcion .= self::HTMLNAME . "'" . $id . "' ";
+            //$this->miOpcion .= self::HTMLNAME . "'" . $id . "' ";
             $this->miOpcion .= "id='" . $id . "' ";
             $this->miOpcion .= self::HTMLNAME . "'" . $nombre . "' ";
     
@@ -54,11 +54,15 @@ class RadioButtonHtml extends HtmlBase{
             if (isset ( $this->atributos [self::SELECCIONADO] ) && $this->atributos [self::SELECCIONADO]) {
                 $this->miOpcion .= "checked='true' ";
             }
+            
+            if (isset ( $this->atributos ['validar'] ) && $this->atributos ['validar']) {
+            	$this->miOpcion .= "required='required' ";
+            }
     
             $this->miOpcion .= "/> ";
-            $this->miOpcion .= self::HTMLLABEL . "'" . $id . "'>";
-            $this->miOpcion .= $this->atributos [self::ETIQUETA];
-            $this->miOpcion .= self::HTMLENDLABEL;
+            //$this->miOpcion .= self::HTMLLABEL . "'" . $id . "'>";
+            //$this->miOpcion .= $this->atributos [self::ETIQUETA];
+           //$this->miOpcion .= self::HTMLENDLABEL;
         }
         return $this->miOpcion;
     
@@ -73,14 +77,14 @@ class RadioButtonHtml extends HtmlBase{
                 if ($opcion [0] != $this->atributos ["seleccion"]) {
                     $cadena .= "<div>";
                     $cadena .= "<input type='radio' id='" . $id . "' " . self::HTMLNAME . "'" . $nombre . "' value='" . $opcion [0] . "' />";
-                    $cadena .= self::HTMLLABEL . "'" . $id . "'>";
+                    $cadena .= self::HTMLLABEL . "'" . $id . "' align=\"center\">";
                     $cadena .= $opcion [1] . "";
                     $cadena .= "</label>";
                     $cadena .= "</div>";
                 } else {
                     $cadena .= "<div>";
                     $cadena .= "<input type='radio' id='" . $id . "' " . self::HTMLNAME . "'" . $nombre . "' value='" . $opcion [0] . "' checked /> ";
-                    $cadena .= self::HTMLLABEL . "'" . $id . "'>";
+                    $cadena .= self::HTMLLABEL . "'" . $id . "' align=\"center\">";
                     $cadena .= $opcion [1] . "";
                     $cadena .= "</label>";
                     $cadena .= "</div>";
