@@ -418,14 +418,15 @@ class registrarForm {
             				$atributos ['id'] = $nombre.$i;
             				$atributos ['nombre'] = $nombre.$i;
             				$atributos ['marco'] = true;
+            				$atributos ['estilo'] = 'jquery';
             				$atributos ['estiloMarco'] = true;
             				$atributos ["etiquetaObligatorio"] = false;
             				$atributos ['columnas'] = 1;
             				$atributos ['dobleLinea'] = 1;
             				$atributos ['tabIndex'] = $tab;
             				$atributos ['etiqueta'] = $respuestas;
-            				$atributos ['validar'] = 'true';
-            				$atributos ['seleccionado'] = 'true';
+            				$atributos ['validar'] = 'required';
+            				//$atributos ['seleccionado'] = 'true';
             				$atributos ['valor'] = $respuestas;
             				$atributos ['deshabilitado'] = false;
             				$tab ++;

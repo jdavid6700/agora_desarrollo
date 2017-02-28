@@ -55,8 +55,8 @@ class RadioButtonHtml extends HtmlBase{
                 $this->miOpcion .= "checked='true' ";
             }
             
-            if (isset ( $this->atributos ['validar'] ) && $this->atributos ['validar']) {
-            	$this->miOpcion .= "required='required' ";
+            if (isset ( $this->atributos ['validar'] ) && $this->atributos ['validar'] != "") {
+            	$this->miOpcion .= "class='validate[" . $this->atributos ['validar'] . "]'";
             }
     
             $this->miOpcion .= "/> ";
