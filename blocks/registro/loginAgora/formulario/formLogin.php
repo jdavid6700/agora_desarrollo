@@ -37,7 +37,12 @@ class Formulario {
         $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
         $enlace = 'pagina=registroProveedor&id_usuario=REG777&usuario=REG777&clave=agora2016';
-        $urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );     
+        $urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );    
+        
+        
+        $enlaceReset = 'pagina=recuperarCredenciales';
+        $urlCodificadaReset = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlaceReset, $directorio );
+        
         ?>
 
         <!--        <div id="slider1_container" style="position: absolute; top: -500px; left: 0px; width: 100%; height: 50px; overflow: hidden;">
@@ -193,6 +198,14 @@ class Formulario {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoBoton($atributos);
                 unset($atributos);
+                
+                ?>
+                            <div id="texto">
+                                <p>
+                           			 <a class="btn btn-danger" href="<?php echo $urlCodificadaReset; ?>" role="button">¿Olvidó su Contraseña?</a>
+                       			 </p>
+                            </div>
+                <?php
 
                 // ------------------Fin Division para los botones-------------------------
                 echo $this->miFormulario->division("fin");
@@ -254,7 +267,7 @@ class Formulario {
                     Caldas</p>
                 <p>
                     Todos los derechos reservados. Carrera 8 N. 40-78 Piso 1 / PBX
-                    3238400 - 3239300 <a href="">computo@udistrital.edu.co</a>
+                    3239300 <a href="">computo@udistrital.edu.co</a>
                 </p>
             </div>
             <div id="footerRight">
