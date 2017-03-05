@@ -1,5 +1,8 @@
 <?php
 $indice=0;
+
+$estilo[$indice++]="miestilo.css";
+
 $estilo[$indice++]="ui.jqgrid.css";
 $estilo[$indice++]="ui.multiselect.css";
 $estilo[$indice++]="timepicker.css";
@@ -11,7 +14,7 @@ $estilo[$indice++]="select2.css";
 $estilo[$indice++]="jquery_switch.css";
 $estilo[$indice++]="jquery-ui_smoot.css";
 $estilo[$indice++]="jquery-ui.css";
-$estilo[$indice++]="miestilo.css";
+
 
 // Tablas
 $estilo[$indice++]="demo_page.css";

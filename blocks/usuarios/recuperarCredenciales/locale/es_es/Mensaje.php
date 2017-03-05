@@ -28,6 +28,8 @@ $this->idioma["contrasenaConfirmTitulo"] = "Confirme la Nueva contraseña";
 
 $this->idioma["mensajeCambiarClave"] = "Recuperación de Credenciales";
 
+$this->idioma["mensajeCambiarClavePass"] = "Contraseña";
+
 $this->idioma["mensajeCambiarClavePreguntas"] = "Validación de Información";
 
 $this->idioma["mensajeNoInformacion"] = "No existe Registro";

@@ -14,11 +14,31 @@ class RadioButtonHtml extends HtmlBase{
             $this->cadenaHTML = "<div class='campoBotonRadial'>\n";
         }
     
+        
+        //Se requiere agregar estilos en el bloque que se utilice el RadioInput (Completely CSS: Custom checkboxes, radio buttons and select boxes KENAN YUSUF)
+        //****************************************************************************
+        //****************************************************************************
+        
+        
         if (isset ( $this->atributos [self::ETIQUETA] ) && $this->atributos [self::ETIQUETA] != "") {
-            $this->cadenaHTML .= $this->etiqueta ( $this->atributos );
+            
+        	$this->cadenaHTML .= '<label class="control control--radio">'.$this->atributos [self::ETIQUETA];
+            $this->cadenaHTML .= $this->radioButton ();
+            $this->cadenaHTML .= '<div class="control__indicator"></div>';
+            $this->cadenaHTML .= '</label>';
+            
+        }else{
+        	
+        	$this->cadenaHTML .= '<label class="control control--radio">';
+        	$this->cadenaHTML .= $this->radioButton ();
+        	$this->cadenaHTML .= '<div class="control__indicator"></div>';
+        	$this->cadenaHTML .= '</label>';
+        	
         }
+        
+       //**************************************************************************** 
+       //****************************************************************************
     
-        $this->cadenaHTML .= $this->radioButton ();
         $this->cadenaHTML .= "\n</div>\n";
         return $this->cadenaHTML;
     
