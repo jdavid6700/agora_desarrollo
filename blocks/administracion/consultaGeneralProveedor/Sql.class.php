@@ -129,6 +129,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_entidad_bancaria,";
 				$cadenaSql .= " puntaje_evaluacion, ";
 				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " fecha_registro, ";
 				$cadenaSql .= " estado  ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor";
@@ -159,12 +160,112 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_entidad_bancaria,";
 				$cadenaSql .= " puntaje_evaluacion, ";
 				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " fecha_registro, ";
 				$cadenaSql .= " estado  ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor";
 				$cadenaSql .= " WHERE 1=1 ";
 				$cadenaSql .= " AND tipopersona != 'UNION TEMPORAL' AND tipopersona != 'CONSORCIO'";
 				break;
+				
+				
+				
+				
+			case "infoCIIU" :
+				$cadenaSql = "SELECT * FROM core.ciiu_subclase";
+				$cadenaSql.= " WHERE id_subclase = '".$variable."'";
+				break;
+				
+			case "infoSNIES" :
+				$cadenaSql = "SELECT * FROM core.snies_nucleo_basico";
+				$cadenaSql.= " WHERE id_nucleo = '".$variable."'";
+				break;
+				
+			case "consultarProveedores2Filtro" :
+				$cadenaSql=" SELECT DISTINCT";
+				$cadenaSql.=" id_proveedor, ";
+				$cadenaSql.=" p.num_documento, ";
+				$cadenaSql.=" nom_proveedor, ";
+				$cadenaSql.=" correo, ";
+				$cadenaSql.=" web, ";
+				$cadenaSql.=" tipopersona, ";
+				$cadenaSql.=" id_ciudad_contacto, ";
+				$cadenaSql.=" direccion, ";
+				$cadenaSql.=" nom_asesor, ";
+				$cadenaSql.=" tel_asesor, ";
+				$cadenaSql.=" tipo_cuenta_bancaria,";
+				$cadenaSql.=" num_cuenta_bancaria, ";
+				$cadenaSql.=" id_entidad_bancaria, ";
+				$cadenaSql.=" puntaje_evaluacion, ";
+				$cadenaSql.=" clasificacion_evaluacion, ";
+				$cadenaSql.=" fecha_registro,";
+				$cadenaSql.=" estado";
+				$cadenaSql.=" FROM agora.informacion_proveedor p";
+				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.num_documento = ac.num_documento";
+				$cadenaSql.=" JOIN agora.informacion_persona_natural pn ON p.num_documento = pn.num_documento_persona";
+				$cadenaSql.=" WHERE 1=1 ";
+				$cadenaSql.=" AND (ac.id_subclase = '".$variable [0]."' OR pn.id_nucleo_basico = ".$variable [1].") ";
+				$cadenaSql.=" AND tipopersona != 'UNION TEMPORAL' ";
+				$cadenaSql.=" AND tipopersona != 'CONSORCIO'";
+				break;
+				
+				
+			case "consultarProveedoresFiltroCIIU" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" id_proveedor, ";
+				$cadenaSql.=" p.num_documento, ";
+				$cadenaSql.=" nom_proveedor, ";
+				$cadenaSql.=" correo, ";
+				$cadenaSql.=" web, ";
+				$cadenaSql.=" tipopersona, ";
+				$cadenaSql.=" id_ciudad_contacto, ";
+				$cadenaSql.=" direccion, ";
+				$cadenaSql.=" nom_asesor, ";
+				$cadenaSql.=" tel_asesor, ";
+				$cadenaSql.=" tipo_cuenta_bancaria,";
+				$cadenaSql.=" num_cuenta_bancaria, ";
+				$cadenaSql.=" id_entidad_bancaria, ";
+				$cadenaSql.=" puntaje_evaluacion, ";
+				$cadenaSql.=" clasificacion_evaluacion, ";
+				$cadenaSql.=" fecha_registro,";
+				$cadenaSql.=" ac.id_subclase, ";
+				$cadenaSql.=" estado";
+				$cadenaSql.=" FROM agora.informacion_proveedor p";
+				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.num_documento = ac.num_documento";
+				$cadenaSql.=" WHERE 1=1 ";
+				$cadenaSql.=" AND ac.id_subclase = '".$variable."'";
+				$cadenaSql.=" AND tipopersona != 'UNION TEMPORAL' ";
+				$cadenaSql.=" AND tipopersona != 'CONSORCIO';";
+				break;
+				
+			case "consultarProveedoresFiltroSNIES" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" id_proveedor, ";
+				$cadenaSql.=" num_documento, ";
+				$cadenaSql.=" nom_proveedor, ";
+				$cadenaSql.=" correo, ";
+				$cadenaSql.=" web, ";
+				$cadenaSql.=" tipopersona, ";
+				$cadenaSql.=" id_ciudad_contacto, ";
+				$cadenaSql.=" direccion, ";
+				$cadenaSql.=" nom_asesor, ";
+				$cadenaSql.=" tel_asesor, ";
+				$cadenaSql.=" tipo_cuenta_bancaria,";
+				$cadenaSql.=" num_cuenta_bancaria, ";
+				$cadenaSql.=" id_entidad_bancaria, ";
+				$cadenaSql.=" puntaje_evaluacion, ";
+				$cadenaSql.=" clasificacion_evaluacion, ";
+				$cadenaSql.=" fecha_registro, ";
+				$cadenaSql.=" estado,";
+				$cadenaSql.=" pn.id_nucleo_basico ";
+				$cadenaSql.=" FROM agora.informacion_proveedor p";
+				$cadenaSql.=" JOIN agora.informacion_persona_natural pn ON p.num_documento = pn.num_documento_persona";
+				$cadenaSql.=" WHERE 1=1 ";
+				$cadenaSql.=" AND pn.id_nucleo_basico = ".$variable;
+				$cadenaSql.=" AND tipopersona != 'UNION TEMPORAL' ";
+				$cadenaSql.=" AND tipopersona != 'CONSORCIO';";
+				break;
+				
 					
 					
 			case "consultarContactoTelProveedor" :
@@ -1126,6 +1227,16 @@ class Sql extends \Sql {
 					$cadenaSql .= " WHERE (clase)::int ='" . $variable . "'";
 					$cadenaSql .= " ORDER BY id_subclase";
 					break;
+					
+					
+					case "ciiuClaseAll" :
+						$cadenaSql = "SELECT";
+						$cadenaSql .= " id_subclase AS id_subclase,";
+						$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
+						$cadenaSql .= " FROM ";
+						$cadenaSql .= " core.ciiu_subclase";
+						$cadenaSql .= " ORDER BY id_subclase";
+						break;
 						
 				case 'buscarPais' :
 				

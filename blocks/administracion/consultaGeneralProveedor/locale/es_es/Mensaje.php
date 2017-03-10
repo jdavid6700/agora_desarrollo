@@ -7,6 +7,11 @@ $this->idioma["marcoSearchByName"]="Ingresar nombre empresa del proveedor";
 $this->idioma["marcoDatos"]="Datos del Proveedor";
 $this->idioma["marcoInhabilidad"]="Datos Inhabilidad";
 
+$this->idioma["marcoSearchByFiltCIIU"]="Filtro Búsqueda por Actividad Económica (OPCIONAL)";
+$this->idioma["marcoSearchByFiltSNIES"]="Filtro Búsqueda por Profesión SNIES (OPCIONAL)";
+
+
+
 $this->idioma["nit_proveedor"] =  "NIT/Cédula o Nombre : ";
 $this->idioma["nit_proveedorTitulo"] = "Indicar NIT o Cédula del proveedor";
 
@@ -32,7 +37,7 @@ $this->idioma["fechaTitulo"]="Seleccione Fecha de inicio de la Inhabilidad";
 $this->idioma["descripcion"] = "Descripci&oacuten";
 $this->idioma["descripcionTitulo"]="Digite la descripción";
 
-$this->idioma["parametrosInvalidos"] = "Párametros de Consulta Invalidos por favor Revise los Datos Ingresados";
+$this->idioma["parametrosInvalidos"] = "No existen personas registradas que cumplan los criterios de búsqueda.";
 
 $this->idioma["noDefinido"] = "No definido";
 

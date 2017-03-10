@@ -19,11 +19,26 @@ $miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( "pagina" );
 
 $nombreFormulario = $esteBloque ["nombre"];
 
-$conexion = "estructura";
-$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
-
-$conexion = 'framework';
-$frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
+        
+        $conexion = 'estructura';
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'centralUD';
+        $centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'argo_contratos';
+        $argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'core_central';
+        $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        //*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
 
 
 {
@@ -61,8 +76,6 @@ $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($co
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );	
 		unset ( $atributos );		
 }
-
-
 
 if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
 	//-------------------------------------------------
@@ -103,6 +116,167 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 		$resultado = false;
 	}
 }
+else if(isset ( $_REQUEST ['claseCIIU'] ) && $_REQUEST ['claseCIIU'] != '' && isset ( $_REQUEST ['personaNBC'] ) && $_REQUEST ['personaNBC'] != ''){
+	
+	//-------------------------------------------------
+	//-------------------------------------------------
+	//Validación Petición POST Parametro SQL Injection
+	if(isset($_REQUEST ['claseCIIU']) && is_numeric($_REQUEST ['claseCIIU']) && isset($_REQUEST ['personaNBC']) && is_numeric($_REQUEST ['personaNBC'])){
+		settype($_REQUEST ['personaNBC'], 'integer');
+		$secure = true;
+	}else{
+		$secure = false;
+	}
+	//-------------------------------------------------
+	//-------------------------------------------------
+
+	if($secure){
+		
+		$ciiu = $_REQUEST['claseCIIU'];
+		$snies = $_REQUEST['personaNBC'];
+		$arreglo = array (
+				$ciiu,
+				$snies
+		);
+		
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "infoCIIU", $ciiu );
+		$resultadoCIIU = $coreRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "infoSNIES", $snies );
+		$resultadoSNIES = $coreRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		$resultadoCIIU[0]['nombre']=mb_strtoupper($resultadoCIIU[0]['nombre'],'utf-8');
+		$resultadoSNIES[0]['nombre']=mb_strtoupper($resultadoSNIES[0]['nombre'],'utf-8');
+		
+		// -------------Control Boton-----------------------
+		$esteCampo = "parametros";
+		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+		$atributos ["etiqueta"] = "";
+		$atributos ["estilo"] = "centrar";
+		$atributos ["tipo"] = 'information';
+		$atributos ["mensaje"] = "Filtros (Personas) con las siguientes características: <br>
+				<br>
+				* (Codígo CIIU) <b>".$ciiu." - ".$resultadoCIIU[0]['nombre']."</b> <br>
+				* (Núcleo Básico de Conocimiento SNIES) <b>".$snies." - ".$resultadoSNIES[0]['nombre']."</b> <br>
+				<br>
+						
+						Las personas que cumplen al menos un (1) criterio, se presentan a continuación.";
+		
+		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		unset ( $atributos );
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedores2Filtro", $arreglo );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	}else{
+		$resultado = false;
+	}
+
+	
+}
+else if(isset ( $_REQUEST ['claseCIIU'] ) && $_REQUEST ['claseCIIU'] != ''){
+	
+	//-------------------------------------------------
+	//-------------------------------------------------
+	//Validación Petición POST Parametro SQL Injection
+	if(isset($_REQUEST ['claseCIIU']) && is_numeric($_REQUEST ['claseCIIU'])){
+		$secure = true;
+	}else{
+		$secure = false;
+	}
+	//-------------------------------------------------
+	//-------------------------------------------------
+	
+	if($secure){
+		
+		$ciiu = $_REQUEST['claseCIIU'];
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "infoCIIU", $ciiu );
+		$resultadoCIIU = $coreRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		$resultadoCIIU[0]['nombre']=mb_strtoupper($resultadoCIIU[0]['nombre'],'utf-8');
+		
+		// -------------Control Boton-----------------------
+		$esteCampo = "parametros";
+		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+		$atributos ["etiqueta"] = "";
+		$atributos ["estilo"] = "centrar";
+		$atributos ["tipo"] = 'information';
+		$atributos ["mensaje"] = "Filtro (Personas) con la siguiente característica: <br>
+				<br>
+				* (Codígo CIIU) <b>".$ciiu." - ".$resultadoCIIU[0]['nombre']."</b> <br>
+				<br>
+		
+						Las personas que cumplen con el criterio, se presentan a continuación.";
+		
+		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		unset ( $atributos );
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedoresFiltroCIIU", $ciiu );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	}else{
+		$resultado = false;
+	}
+	
+
+}
+else if(isset ( $_REQUEST ['personaNBC'] ) && $_REQUEST ['personaNBC'] != ''){
+
+	
+	//-------------------------------------------------
+	//-------------------------------------------------
+	//Validación Petición POST Parametro SQL Injection
+	if(isset($_REQUEST ['personaNBC']) && is_numeric($_REQUEST ['personaNBC'])){
+		settype($_REQUEST ['personaNBC'], 'integer');
+		$secure = true;
+	}else{
+		$secure = false;
+	}
+	//-------------------------------------------------
+	//-------------------------------------------------
+	
+	if($secure){
+		
+		$snies = $_REQUEST['personaNBC'];
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "infoSNIES", $snies );
+		$resultadoSNIES = $coreRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+		
+		$resultadoSNIES[0]['nombre']=mb_strtoupper($resultadoSNIES[0]['nombre'],'utf-8');
+		
+		// -------------Control Boton-----------------------
+		$esteCampo = "parametros";
+		$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+		$atributos ["etiqueta"] = "";
+		$atributos ["estilo"] = "centrar";
+		$atributos ["tipo"] = 'information';
+		$atributos ["mensaje"] = "Filtro (Personas) con la siguiente característica: <br>
+				<br>
+				* (Núcleo Básico de Conocimiento SNIES) <b>".$snies." - ".$resultadoSNIES[0]['nombre']."</b> <br>
+				<br>
+		
+						Las personas que cumplen con el criterio, se presentan a continuación.";
+		
+		echo $this->miFormulario->cuadroMensaje ( $atributos );
+		unset ( $atributos );
+		
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedoresFiltroSNIES", $snies );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+	
+	}else{
+		$resultado = false;
+	}
+	
+
+}
 else{
 	$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedores" );
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
@@ -134,6 +308,7 @@ if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 					<th><center>Movil</center></th>
 					<th><center>Puntaje Total</center></th>
 					<th><center>Clasificaciòn</center></th>
+					<th><center>Fecha Registro</center></th>
 					<th><center>Estado</center></th>
 					<th><center>Detalle</center></th>
 					<th><center>Modificar</center></th>
@@ -191,6 +366,7 @@ if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 						<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>
 						<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
 						<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
+						<td><center>" . $dato['fecha_registro'] . "</center></td>
 						<td><center>" . $estado . "</center></td>
 						<td><center>
 							<a href='" . $variableView . "'>                        
@@ -236,6 +412,7 @@ if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 						<th><center>Correo</center></th>
 	                    <th><center>Teléfono</center></th>
 						<th><center>Movil</center></th>
+						<th><center>Fecha Registro</center></th>
 						<th><center>Estado</center></th>
 						<th><center>Detalle</center></th>
 					</tr>
@@ -290,6 +467,7 @@ if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 							<td><center>" . $dato['correo'] . "</center></td>
 							<td><center>" . $resultadoTel[0]['numero_tel'] . "</center></td>
 							<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>
+							<td><center>" . $dato['fecha_registro'] . "</center></td>
 							<td><center>" . $estado . "</center></td>
 							<td><center>
 								<a href='" . $variableView . "'>

@@ -37,7 +37,7 @@ class RegistradorUsuarios {
         
         $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; 
         $num = '1234567890';
-        $caracter = '=_#$-';
+        $caracter = '=$';
         $numerodeletras=5; 
         $pass = "";
         $keycar=$keyNum= "";
