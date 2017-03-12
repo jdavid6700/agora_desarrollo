@@ -3707,10 +3707,22 @@ class Formulario {
 			$atributos["estilo"]="marcoBotones widget";
 			echo $this->miFormulario->division("inicio",$atributos);
 			
-			$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
-			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
-			$enlace.="</a>";
-			echo $enlace;
+			
+			
+			
+			if($_REQUEST['DocumentoRUT'] != null){
+				$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+				$enlace.="</a>";
+				echo $enlace;
+			}else{
+				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+				$enlace.="</a>";
+				echo $enlace;
+			}
+			
+			
 			//------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division("fin");
 			//FIN enlace boton descargar RUT
@@ -6454,10 +6466,20 @@ class Formulario {
 					$atributos["estilo"]="marcoBotones widget";
 					echo $this->miFormulario->division("inicio",$atributos);
 					
+					
+					if($_REQUEST['DocumentoRUTNat'] != null){
 						$enlace = "<br><a href='".$_REQUEST['DocumentoRUTNat']."' target='_blank'>";
 						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
 						$enlace.="</a>";
 						echo $enlace;
+					}else{
+						$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
+						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+						$enlace.="</a>";
+						echo $enlace;
+					}
+					
+					
 						//------------------Fin Division para los botones-------------------------
 					echo $this->miFormulario->division("fin");
 				//FIN enlace boton descargar RUT
