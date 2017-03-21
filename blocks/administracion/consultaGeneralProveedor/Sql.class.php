@@ -1177,6 +1177,16 @@ class Sql extends \Sql {
 					$cadenaSql .= 'core.pais ';
 					$cadenaSql .= 'ORDER BY NOMBRE';
 					break;
+					
+					case 'consultarPaisesExt' :
+						$cadenaSql = 'SELECT ';
+						$cadenaSql .= 'id_pais as ID_PAIS, ';
+						$cadenaSql .= 'nombre_pais as NOMBRE, ';
+						$cadenaSql .= 'codigo_pais as COD_PAIS ';
+						$cadenaSql .= 'FROM ';
+						$cadenaSql .= 'core.pais ';
+						$cadenaSql .= 'WHERE id_pais = '.$variable;
+						break;
 						
 				case "consultarBanco" :
 					$cadenaSql = "SELECT";
