@@ -4,6 +4,8 @@
 $this->idioma["tipoPersona"] = "Tipo de Persona : ";
 $this->idioma["tipoPersonaTitulo"]="Seleccione Tipo de Persona";
 
+$this->idioma["marcoDatos"]="Datos del Proveedor";
+
 $this->idioma["nit"] = "NIT: ";
 $this->idioma["nitTitulo"]="Digite NIT de la empresa";
 
@@ -18,6 +20,9 @@ $this->idioma["digitoNatTitulo"]="Digito de Verificación";
 $this->idioma["digitoRepre"] = "Digito de Verificación : ";
 $this->idioma["digitoRepreTitulo"]="Digito de Verificación";
 
+
+$this->idioma ["botonRegresar"] ="Regresar";
+$this->idioma ["botonRegresarNat"] ="Regresar";
 
 
 $this->idioma["marcoInfoReg"] = "Certificación";

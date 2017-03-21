@@ -28,6 +28,84 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "consultarProveedores" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id_proveedor, ";
+				$cadenaSql .= " num_documento, ";
+				$cadenaSql .= " nom_proveedor, ";
+				$cadenaSql .= " correo, ";
+				$cadenaSql .= " web, ";
+				$cadenaSql .= " tipopersona,";
+				$cadenaSql .= " id_ciudad_contacto,";
+				$cadenaSql .= " direccion,";
+				$cadenaSql .= " nom_asesor,";
+				$cadenaSql .= " tel_asesor,";
+				$cadenaSql .= " tipo_cuenta_bancaria,";
+				$cadenaSql .= " num_cuenta_bancaria,";
+				$cadenaSql .= " id_entidad_bancaria,";
+				$cadenaSql .= " puntaje_evaluacion, ";
+				$cadenaSql .= " clasificacion_evaluacion, ";
+				$cadenaSql .= " fecha_registro, ";
+				$cadenaSql .= " estado  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor";
+				$cadenaSql .= " WHERE 1=1 ";
+				$cadenaSql .= " AND tipopersona = 'EXTRANJERA'";
+				break;
+				
+				case "consultarContactoTelProveedor" :
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " P.id_proveedor, ";
+					$cadenaSql .= " P.num_documento, ";
+					$cadenaSql .= " P.nom_proveedor, ";
+					$cadenaSql .= " C.id_telefono,  ";
+					$cadenaSql .= " T.numero_tel,  ";
+					$cadenaSql .= " T.tipo,  ";
+					$cadenaSql .= " T.extension,  ";
+					$cadenaSql .= " P.estado  ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.informacion_proveedor P ";
+					$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+					$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
+					$cadenaSql .= " WHERE 1=1 ";
+					$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
+					$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
+					break;
+				
+				case "consultarContactoMovilProveedor" :
+					$cadenaSql = "SELECT  ";
+					$cadenaSql .= " P.id_proveedor, ";
+					$cadenaSql .= " P.num_documento, ";
+					$cadenaSql .= " P.nom_proveedor, ";
+					$cadenaSql .= " C.id_telefono,  ";
+					$cadenaSql .= " T.numero_tel,  ";
+					$cadenaSql .= " T.tipo,  ";
+					$cadenaSql .= " T.extension,  ";
+					$cadenaSql .= " P.estado  ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.informacion_proveedor P ";
+					$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+					$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
+					$cadenaSql .= " WHERE 1=1 ";
+					$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
+					$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
+					break;
+					
+					case "consultar_tipo_proveedor" :
+						$cadenaSql = " SELECT P.tipoPersona, P.num_documento FROM agora.informacion_proveedor P";
+						$cadenaSql.= " WHERE P.id_proveedor = $variable ";
+						break;
+						
+						case 'consultarPaisesExt' :
+							$cadenaSql = 'SELECT ';
+							$cadenaSql .= 'id_pais as ID_PAIS, ';
+							$cadenaSql .= 'nombre_pais as NOMBRE, ';
+							$cadenaSql .= 'codigo_pais as COD_PAIS ';
+							$cadenaSql .= 'FROM ';
+							$cadenaSql .= 'core.pais ';
+							$cadenaSql .= 'WHERE id_pais = '.$variable;
+							break;
+			
 			case "verificarEnvio" :
 				$cadenaSql = " SELECT identificacion, tipo_identificacion, informado, correo, fecha_registro, estado FROM prov_usuario ";
 				$cadenaSql .= " WHERE id_usuario = '" . $variable . "'";

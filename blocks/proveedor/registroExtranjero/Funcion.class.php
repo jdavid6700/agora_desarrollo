@@ -61,7 +61,10 @@ class Funcion {
 	function certCumplimiento()
 	{
 		include_once($this->ruta."/funcion/certCumplimientoPDF.php");
-	}		
+	}
+	function actualizarExtranjera() {
+		include_once ($this->ruta . "/funcion/actualizarExtranjera.php");
+	}
 	function actualizarJuridica() {
 		include_once ($this->ruta . "/funcion/actualizarJuridica.php");
 	}
@@ -155,13 +158,11 @@ class Funcion {
 					case 'actualizar':
 					if (isset ( $_REQUEST ["botonRegresar"] ) && $_REQUEST ["botonRegresar"] == 'true') {
 						$arreglo = unserialize ( $_REQUEST ['arreglo'] );	
-						redireccion::redireccionar ( "paginaConsulta", $arreglo );
+						redireccion::redireccionar ( "paginaPrincipalMod", $arreglo );
 						exit();
-					} else if (isset ( $_REQUEST ["botonGuardar"] ) && $_REQUEST ["botonGuardar"] == 'true') {
-						$this->actualizarJuridica();
-					} else if (isset ( $_REQUEST ["botonGuardarNat"] ) &&  $_REQUEST['botonGuardarNat'] == 'true'){
-					    $this->actualizarNatural();
-					}
+					} else {
+						$this->actualizarExtranjera();
+					} 
 					break;
 			}
 		} else {

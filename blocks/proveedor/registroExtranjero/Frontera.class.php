@@ -82,6 +82,14 @@ class Frontera {
                  case "modificar":
                      include_once($this->ruta . "/formulario/modificar.php");
                     break;
+                    
+                    case "verPro" :
+                    	include_once ($this->ruta . "/formulario/verExt.php");
+                    	break;
+                    
+                    case "modificarPro" :
+                    	include_once ($this->ruta . "/formulario/modificarExt.php");
+                    	break;
             }
         } else {
         	

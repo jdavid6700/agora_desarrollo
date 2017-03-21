@@ -21,8 +21,8 @@ $this->idioma["nombreEmpresaTitulo"] = "Indicar nombre de la empresa";
 $this->idioma["botonAceptar"] = "Aceptar";
 $this->idioma["botonCancelar"] = "Cancelar";
 $this->idioma["botonContinuar"] = "Continuar";
-$this->idioma ["botonRegresar"] ="< < Regresar";
-$this->idioma ["botonRegresarNat"] ="< < Regresar";
+$this->idioma ["botonRegresar"] ="Regresar";
+$this->idioma ["botonRegresarNat"] ="Regresar";
 
 $this->idioma["tipo"] = "Tipo de Inhabilidad :";
 $this->idioma["tipoTitulo"]="Digite Tipo Inhabilidad ";

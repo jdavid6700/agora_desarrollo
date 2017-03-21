@@ -30,8 +30,8 @@ class Formulario {
 		$conexion = 'estructura';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'sicapital';
-		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'sicapital';
+		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		$conexion = 'centralUD';
 		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -98,7 +98,7 @@ class Formulario {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
-			$variable = "pagina=" . $miPaginaActual;
+			$variable = "pagina=" . $miPaginaActual."&opcion=modificar";
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -1100,8 +1100,6 @@ class Formulario {
 			
 			
 		}
-		
-		
 		
 		
 		$atributos["id"]="botones";
@@ -6016,7 +6014,7 @@ class Formulario {
 				$atributos ['valor'] = '';
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 50;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 200;
@@ -6050,7 +6048,7 @@ class Formulario {
 						$atributos['tab'] = $tab;
 				
 						$atributos['evento'] = ' ';
-						$atributos['deshabilitado'] = true;
+						$atributos['deshabilitado'] = false;
 						$atributos['limitar']= 50;
 						$atributos['tamanno']= 1;
 						$atributos['columnas']= 1;
@@ -6093,7 +6091,7 @@ class Formulario {
 						$atributos['tab'] = $tab;
 				
 						$atributos['evento'] = ' ';
-						$atributos['deshabilitado'] = true;
+						$atributos['deshabilitado'] = false;
 						$atributos['limitar']= 50;
 						$atributos['tamanno']= 1;
 						$atributos['columnas']= 1;
@@ -6130,7 +6128,7 @@ class Formulario {
 						$atributos['tab'] = $tab;
 						$atributos['seleccion'] = $_REQUEST['personaJuridicaCiudad'];
 						$atributos['evento'] = ' ';
-						$atributos['deshabilitado'] = true;
+						$atributos['deshabilitado'] = false;
 						$atributos['limitar']= 50;
 						$atributos['tamanno']= 1;
 						$atributos['columnas']= 1;
@@ -6218,7 +6216,7 @@ class Formulario {
 					$atributos ['valor'] = '';
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = true;
+				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 30;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 160;
@@ -6313,7 +6311,7 @@ class Formulario {
 				$atributos ['valor'] = '';
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 30;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 160;
@@ -6350,7 +6348,7 @@ class Formulario {
 				$atributos ['valor'] = '';
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 30;
 			$atributos ['maximoTamanno'] = '320';
 			$atributos ['anchoEtiqueta'] = 160;
@@ -6386,7 +6384,7 @@ class Formulario {
 				$atributos ['valor'] = '';
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 30;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 160;
@@ -7249,7 +7247,7 @@ class Formulario {
 			} else {
 				$atributos ['seleccion'] = -1;
 			}
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['columnas'] = 2;
 			$atributos ['tamanno'] = 1;
 			$atributos ['estilo'] = "jqueryui";
@@ -7288,11 +7286,13 @@ class Formulario {
 			
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
+				$atributos ['deshabilitado'] = false;
 			} else {
 				$atributos ['valor'] = '';
+				$atributos ['deshabilitado'] = true;
 			}
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			
 			$atributos ['tamanno'] = 15;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 200;
@@ -7319,7 +7319,7 @@ class Formulario {
 			} else {
 				$atributos ['seleccion'] = -1;
 			}
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['columnas'] = 1;
 			$atributos ['tamanno'] = 1;
 			$atributos ['estilo'] = "jqueryui";
@@ -7364,7 +7364,7 @@ class Formulario {
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			$atributos ['validar'] = 'required,maxSize[250]';
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			$atributos ['deshabilitado'] = true;
+			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 20;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 220;

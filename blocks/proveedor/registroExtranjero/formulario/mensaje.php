@@ -247,7 +247,7 @@ if (!isset($GLOBALS["autorizado"])) {
        
     }else if($_REQUEST['mensaje'] == 'actualizo') {
         $tipo = 'success';
-        $mensaje = "Se guardaron los datos de la Persona.<br >";
+        $mensaje = "Se guardaron los datos de la PERSONA EXTRANJERA.<br >";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;

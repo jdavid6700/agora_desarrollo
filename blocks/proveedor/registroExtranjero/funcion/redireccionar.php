@@ -100,8 +100,9 @@ class redireccion {
 				$variable .= "&opcion=asociarActa";
 				break;
 			
-			case "paginaPrincipal" :
+			case "paginaPrincipalMod" :
 				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=modificar";
 				break;
 			
 			case "paginaConsulta" :

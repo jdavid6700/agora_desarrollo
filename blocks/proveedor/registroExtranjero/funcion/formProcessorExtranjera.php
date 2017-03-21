@@ -125,7 +125,7 @@ class Formulario {
 				$status = "<br>Error al subir archivo2";
 			}
 		} else {
-			echo "<br>NO existe el archivo D:!!!";
+			//echo "<br>NO existe el archivo D:!!!";
 		}
 		//************************************************************************************************************
 		
@@ -161,7 +161,7 @@ class Formulario {
 				$status = "<br>Error al subir archivo2";
 			}
 		} else {
-			echo "<br>NO existe el archivo D:!!!";
+			//echo "<br>NO existe el archivo D:!!!";
 		}
 		//************************************************************************************************************
 		
@@ -211,6 +211,8 @@ class Formulario {
 							break;
 						case 4 :
 							$_REQUEST ['tipoCuenta'] = 'NO APLICA';
+							$_REQUEST['entidadBancaria'] = 68;
+							$_REQUEST['numeroCuenta'] = ' ';
 							break;
 					}
 				}
