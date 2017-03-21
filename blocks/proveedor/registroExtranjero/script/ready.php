@@ -5,10 +5,6 @@ function detectarCarga(){
 	$('#marcoGeneral').show('slow');
 }
 
-$('*').bind("cut copy paste",function(e) {
-	      e.preventDefault();
-});
-
 
 $('#<?php echo $this->campoSeguro('direccionNat')?>').bind("cut copy paste",function(e) {
 	      e.preventDefault();
@@ -80,7 +76,7 @@ $("#dialogo").dialog({
    });
 
 
-$("#registroProveedor").validationEngine({
+$("#registroExtranjero").validationEngine({
     validateNonVisibleFields: false,
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
@@ -452,7 +448,7 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 
 
 
-$('#tablaReporteCont').DataTable({
+$('#tablaExtranjeros').DataTable({
         
     "language": {
         "sProcessing":     "Procesando...",

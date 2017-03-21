@@ -1235,6 +1235,31 @@ function consultarDepartamentoLug(elem, request, response){
 		
       $(function () {
       
+      
+      			$("#<?php echo $this->campoSeguro('tipoCuenta')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('tipoCuenta')?>").val() == 4){
+						
+						$("#<?php echo $this->campoSeguro('entidadBancaria')?>").attr('disabled','');
+						
+						$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
+						
+						
+						$("#<?php echo $this->campoSeguro('numeroCuenta')?>").attr('disabled','');
+						
+						
+		    		}else{
+		    		
+		    			$("#<?php echo $this->campoSeguro('entidadBancaria')?>").removeAttr('disabled');
+						
+						$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
+						
+						
+						$("#<?php echo $this->campoSeguro('numeroCuenta')?>").removeAttr('disabled');
+		    			
+		    			}
+		    	      });	
+      
+      
       			 $("#<?php echo $this->campoSeguro('paisExpeNat')?>").change(function(){
 		        	if($("#<?php echo $this->campoSeguro('paisExpeNat')?>").val()!=''){
 						consultarDepartamentoExp();
