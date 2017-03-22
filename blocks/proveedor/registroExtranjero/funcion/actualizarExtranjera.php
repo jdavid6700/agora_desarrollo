@@ -508,9 +508,33 @@ class Formulario {
 // 		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorJuridica", $datosInformacionPersonaJuridica );
 // 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
+		
+		// CAMBIAR LA ACTIVIDAD
+		
+		
+		$cadenaCiiu = $this->miSql->getCadenaSql ( "buscarCiiuPersona", $_REQUEST['nit']);
+		$resultadoCiiuPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaCiiu, "busqueda" );
+			
+		$oldCIIU = array (
+				'nit' => $resultadoCiiuPersona[0]['num_documento'],
+				'actividad' => $resultadoCiiuPersona[0]['id_subclase']
+		);
+		
+		// Eliminar ACTIVIDAD
+		$cadenaSqlActividad = $this->miSql->getCadenaSql ( "eliminarActividad", $oldCIIU );
+		$resultadoOldCiiu = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlActividad, 'acceso' );
+		
+		$arregloCIIU = array (
+				'nit' => $_REQUEST['nit'],
+				'actividad' => $_REQUEST ['claseCIIUJur']
+		);
+		
+		// Registrar ACTIVIDAD
+		$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
+		$resultadoNewCiiu = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlActividad, 'acceso' );
 				
 
-				if ($resultado) {
+				if ($resultado && $resultadoOldCiiu && $resultadoNewCiiu) {
 					redireccion::redireccionar ( 'actualizo',  $_REQUEST['nit']);
 					exit();
 				} else {

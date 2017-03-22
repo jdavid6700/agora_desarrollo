@@ -105,6 +105,17 @@ class Sql extends \Sql {
 							$cadenaSql .= 'core.pais ';
 							$cadenaSql .= 'WHERE id_pais = '.$variable;
 							break;
+							
+							case "buscarCiiuPersona" :
+								$cadenaSql = " SELECT P.num_documento, P.id_subclase FROM agora.proveedor_actividad_ciiu P";
+								$cadenaSql.= " WHERE P.num_documento = $variable ";
+								break;
+								
+								case "eliminarActividad" :
+									$cadenaSql = " DELETE FROM agora.proveedor_actividad_ciiu";
+									$cadenaSql.= " WHERE num_documento = " . $variable['nit'];
+									$cadenaSql.= " AND id_subclase = '" . $variable['actividad']."'";
+									break;
 			
 			case "verificarEnvio" :
 				$cadenaSql = " SELECT identificacion, tipo_identificacion, informado, correo, fecha_registro, estado FROM prov_usuario ";

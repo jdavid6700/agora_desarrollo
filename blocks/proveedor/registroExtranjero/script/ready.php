@@ -444,6 +444,20 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 }
 
 
+if($("#<?php echo $this->campoSeguro('tipoCuenta')?>").val() == 4){
+		$("#infoBancos").hide("fast");
+		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").attr('disabled','');
+		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
+		$("#<?php echo $this->campoSeguro('numeroCuenta')?>").attr('disabled','');
+}else{
+		$("#infoBancos").show("fast");
+		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").removeAttr('disabled');
+		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
+		$("#<?php echo $this->campoSeguro('numeroCuenta')?>").removeAttr('disabled');
+		    			
+}
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

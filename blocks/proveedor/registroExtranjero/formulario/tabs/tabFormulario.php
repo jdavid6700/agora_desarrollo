@@ -1467,7 +1467,7 @@ class registrarForm {
 							$atributos ['seleccion'] = -1;
 						}
 						$atributos ['deshabilitado'] = false;
-						$atributos ['columnas'] = 2;
+						$atributos ['columnas'] = 1;
 						$atributos ['tamanno'] = 1;
 						$atributos ['estilo'] = "jqueryui";
 						$atributos ['validar'] = "required";
@@ -1488,76 +1488,91 @@ class registrarForm {
 						unset ( $atributos );
 						// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 				
-						// ---------------- CONTROL: Cuadro de Texto NIT--------------------------------------------------------
-						$esteCampo = 'numeroCuenta';
-						$atributos ['id'] = $esteCampo;
-						$atributos ['nombre'] = $esteCampo;
-						$atributos ['tipo'] = 'text';
-						$atributos ['estilo'] = 'jqueryui';
-						$atributos ['marco'] = true;
-						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = false;
-						$atributos ['columnas'] = 2;
-						$atributos ['dobleLinea'] = 0;
-						$atributos ['tabIndex'] = $tab;
-						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'required,minSize[1],maxSize[15],custom[onlyNumberSp]';
+						echo "<br>";
+						echo "<br>";
+						echo "<br>";
 						
-						if (isset ( $_REQUEST [$esteCampo] )) {
-							$atributos ['valor'] = $_REQUEST [$esteCampo];
-						} else {
-							$atributos ['valor'] = '';
-						}
-						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-						$atributos ['deshabilitado'] = false;
-						$atributos ['tamanno'] = 15;
-						$atributos ['maximoTamanno'] = '';
-						$atributos ['anchoEtiqueta'] = 200;
-						$tab ++;
-						
-						// Aplica atributos globales al control
-						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+						$atributos ["id"] = "infoBancos";
+						$atributos ["estilo"] = "";
+						echo $this->miFormulario->division ( "inicio", $atributos );
 						unset ( $atributos );
-						// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
-						
-						
-						// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
-						$esteCampo = "entidadBancaria";
-						$atributos ['nombre'] = $esteCampo;
-						$atributos ['id'] = $esteCampo;
-						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ["etiquetaObligatorio"] = true;
-						$atributos ['tab'] = $tab ++;
-						$atributos ['anchoEtiqueta'] = 200;
-						$atributos ['evento'] = '';
-						if (isset ( $_REQUEST [$esteCampo] )) {
-							$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-						} else {
-							$atributos ['seleccion'] = -1;
-						}
-						$atributos ['deshabilitado'] = false;
-						$atributos ['columnas'] = 1;
-						$atributos ['tamanno'] = 1;
-						$atributos ['estilo'] = "jqueryui";
-						$atributos ['validar'] = "required";
-						$atributos ['limitar'] = false;
-						$atributos ['anchoCaja'] = 60;
-						$atributos ['miEvento'] = '';
-						
-						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
-						$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-						/* Valores a mostrar en el control
-						$matrizItems = array (
-								array ( 1, 'Ahorros' ),
-								array ( 2, 'Corriente' )
-						);*/
-						$atributos ['matrizItems'] = $matrizItems;
-						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
-						unset ( $atributos );
-						// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
+						{
+
+							// ---------------- CONTROL: Cuadro de Texto NIT--------------------------------------------------------
+							$esteCampo = 'numeroCuenta';
+							$atributos ['id'] = $esteCampo;
+							$atributos ['nombre'] = $esteCampo;
+							$atributos ['tipo'] = 'text';
+							$atributos ['estilo'] = 'jqueryui';
+							$atributos ['marco'] = true;
+							$atributos ['estiloMarco'] = '';
+							$atributos ["etiquetaObligatorio"] = false;
+							$atributos ['columnas'] = 1;
+							$atributos ['dobleLinea'] = 0;
+							$atributos ['tabIndex'] = $tab;
+							$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+							$atributos ['validar'] = 'required,minSize[1],maxSize[15],custom[onlyNumberSp]';
+							
+							if (isset ( $_REQUEST [$esteCampo] )) {
+								$atributos ['valor'] = $_REQUEST [$esteCampo];
+							} else {
+								$atributos ['valor'] = '';
+							}
+							$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+							$atributos ['deshabilitado'] = false;
+							$atributos ['tamanno'] = 15;
+							$atributos ['maximoTamanno'] = '';
+							$atributos ['anchoEtiqueta'] = 200;
+							$tab ++;
+							
+							// Aplica atributos globales al control
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+							echo $this->miFormulario->campoCuadroTexto ( $atributos );
+							unset ( $atributos );
+							// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+							
+							
+							// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+							$esteCampo = "entidadBancaria";
+							$atributos ['nombre'] = $esteCampo;
+							$atributos ['id'] = $esteCampo;
+							$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+							$atributos ["etiquetaObligatorio"] = true;
+							$atributos ['tab'] = $tab ++;
+							$atributos ['anchoEtiqueta'] = 200;
+							$atributos ['evento'] = '';
+							if (isset ( $_REQUEST [$esteCampo] )) {
+								$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+							} else {
+								$atributos ['seleccion'] = -1;
+							}
+							$atributos ['deshabilitado'] = false;
+							$atributos ['columnas'] = 2;
+							$atributos ['tamanno'] = 1;
+							$atributos ['estilo'] = "jqueryui";
+							$atributos ['validar'] = "required";
+							$atributos ['limitar'] = false;
+							$atributos ['anchoCaja'] = 60;
+							$atributos ['miEvento'] = '';
+							
+							$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
+							$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+							/* Valores a mostrar en el control
+							$matrizItems = array (
+									array ( 1, 'Ahorros' ),
+									array ( 2, 'Corriente' )
+							);*/
+							$atributos ['matrizItems'] = $matrizItems;
+							$atributos = array_merge ( $atributos, $atributosGlobales );
+							echo $this->miFormulario->campoCuadroLista ( $atributos );
+							unset ( $atributos );
+							// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 				
+						}
+						echo $this->miFormulario->division ( 'fin' );
+						
+						
+						
 				
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				

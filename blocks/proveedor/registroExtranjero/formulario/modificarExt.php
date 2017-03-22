@@ -7269,44 +7269,139 @@ class Formulario {
 			unset ( $atributos );
 			// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 			
-			// ---------------- CONTROL: Cuadro de Texto NIT--------------------------------------------------------
-			$esteCampo = 'numeroCuenta';
-			$atributos ['id'] = $esteCampo;
-			$atributos ['nombre'] = $esteCampo;
-			$atributos ['tipo'] = 'text';
-			$atributos ['estilo'] = 'jqueryui';
-			$atributos ['marco'] = true;
-			$atributos ['estiloMarco'] = '';
-			$atributos ["etiquetaObligatorio"] = false;
-			$atributos ['columnas'] = 2;
-			$atributos ['dobleLinea'] = 0;
-			$atributos ['tabIndex'] = $tab;
-			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'minSize[1],maxSize[15],custom[onlyNumberSp]';
 			
-			if (isset ( $_REQUEST [$esteCampo] )) {
-				$atributos ['valor'] = $_REQUEST [$esteCampo];
-				$atributos ['deshabilitado'] = false;
-			} else {
-				$atributos ['valor'] = '';
-				$atributos ['deshabilitado'] = true;
-			}
-			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+			echo "<br>";
+			echo "<br>";
+			echo "<br>";
 			
-			$atributos ['tamanno'] = 15;
-			$atributos ['maximoTamanno'] = '';
-			$atributos ['anchoEtiqueta'] = 200;
-			$tab ++;
-			
-			// Aplica atributos globales al control
-			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->campoCuadroTexto ( $atributos );
+			$atributos ["id"] = "infoBancos";
+			$atributos ["estilo"] = "";
+			echo $this->miFormulario->division ( "inicio", $atributos );
 			unset ( $atributos );
-			// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+			{
+			
+				// ---------------- CONTROL: Cuadro de Texto NIT--------------------------------------------------------
+				$esteCampo = 'numeroCuenta';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = 'required,minSize[1],maxSize[15],custom[onlyNumberSp]';
+				
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+					$atributos ['deshabilitado'] = false;
+				} else {
+					$atributos ['valor'] = '';
+					$atributos ['deshabilitado'] = true;
+				}
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				
+				$atributos ['tamanno'] = 15;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 200;
+				$tab ++;
+				
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
+				
+				
+				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
+				$esteCampo = "entidadBancaria";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					if($_REQUEST [$esteCampo] != 68){
+						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+					}else{
+						$atributos ['seleccion'] = -1;
+					}
+				} else {
+					$atributos ['seleccion'] = -1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				
+				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
+				$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				/* Valores a mostrar en el control
+				 $matrizItems = array (
+				 array ( 1, 'Ahorros' ),
+				 array ( 2, 'Corriente' )
+				 );*/
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 			
 			
-			// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
-			$esteCampo = "entidadBancaria";
+			}
+			echo $this->miFormulario->division ( 'fin' );
+			
+			
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
+			
+			
+			$esteCampo = "marcoCIIUReg";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+			$cadenaCiiu = $this->miSql->getCadenaSql ( "buscarCiiuPersona", $_REQUEST['nit']);
+			$resultadoCiiuPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaCiiu, "busqueda" );
+			
+			$_REQUEST ['claseCIIUJur'] = $resultadoCiiuPersona[0]['id_subclase'];
+			
+			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+			$esteCampo = 'mensaje';
+				
+			$tipo = 'warning';
+				
+			$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+			$atributos["etiqueta"] = "";
+			$atributos["estilo"] = "centrar";
+			$atributos["tipo"] = $tipo;
+				
+			$mensajeLey = "<b>Recuerde que se solicita relacionar Una (1) Actividad Económica como mínimo para tener un
+						registro exitoso e identificar los servicios que presta la empresa, relacione una actividad que represente
+						lo mejor posible los servicios que desarrolla la compañia extranjera según su criterio.</b>";
+				
+			$atributos["mensaje"] = $mensajeLey;
+			echo $this->miFormulario->cuadroMensaje($atributos);
+			unset($atributos);
+			
+			
+			
+			
+			// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+			$esteCampo = "claseCIIUJur";
 			$atributos ['nombre'] = $esteCampo;
 			$atributos ['id'] = $esteCampo;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -7317,32 +7412,31 @@ class Formulario {
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['seleccion'] = $_REQUEST [$esteCampo];
 			} else {
-				$atributos ['seleccion'] = -1;
+				$atributos ['seleccion'] = - 1;
 			}
 			$atributos ['deshabilitado'] = false;
 			$atributos ['columnas'] = 1;
 			$atributos ['tamanno'] = 1;
+			$atributos ['ajax_function'] = "";
+			$atributos ['ajax_control'] = $esteCampo;
 			$atributos ['estilo'] = "jqueryui";
 			$atributos ['validar'] = "required";
 			$atributos ['limitar'] = false;
 			$atributos ['anchoCaja'] = 60;
 			$atributos ['miEvento'] = '';
-			
-			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarBanco" );
-			$matrizItems = $coreRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-			/* Valores a mostrar en el control
-			 $matrizItems = array (
-			 array ( 1, 'Ahorros' ),
-			 array ( 2, 'Corriente' )
-			 );*/
+			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			$atributos ['matrizItems'] = $matrizItems;
 			$atributos = array_merge ( $atributos, $atributosGlobales );
 			echo $this->miFormulario->campoCuadroLista ( $atributos );
 			unset ( $atributos );
-			// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
-			
+			// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
 			
 			
 			
