@@ -1,5 +1,7 @@
 <?php
 
+$this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
+
 $this->idioma["tabConsultarProveedor"] = "Consultar Información del Proveedor";
 
 $this->idioma["marcoSearchByNIT"]="Ingresar NIT/Cédula o Nombre del proveedor";

@@ -3403,6 +3403,69 @@ class Formulario {
 			
 			
 			
+			// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
+			$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			if( $resultadoActividades ){
+					
+				$esteCampo = "marcoActividades";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( ".count($resultadoActividades)." Actividad(es) Relacionada(s) )</i>";
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+				foreach ($resultadoActividades as $dato):
+			
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeObjeto";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'information';
+				$atributos ["mensaje"] = ' (' . $dato['id_subclase'] . ') - <b>' . $dato['nombre'] . '</b>';
+					
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+				
+				endforeach;
+			
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			}else{
+				
+				
+				$esteCampo = "marcoActividades";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( 0 Actividad(es) Relacionada(s) )</i>";
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+					
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeObjeto";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = "La Persona no tiene <b>Actividades Económicas</b> Registradas.";
+					
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+					
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+			}
+			// ----------------FIN ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+			
+			
+			
+			
+			
+			
 				
 			$esteCampo = "marcoRUT";
 			$atributos ['id'] = $esteCampo;
@@ -5764,6 +5827,73 @@ class Formulario {
 				
 				
 				
+				
+				
+				// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['documentoNat']  );
+				$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+				if( $resultadoActividades ){
+						
+					$esteCampo = "marcoActividades";
+					$atributos ['id'] = $esteCampo;
+					$atributos ["estilo"] = "jqueryui";
+					$atributos ['tipoEtiqueta'] = 'inicio';
+					$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( ".count($resultadoActividades)." Actividad(es) Relacionada(s) )</i>";
+					echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+						
+					foreach ($resultadoActividades as $dato):
+						
+					// -------------SECCION: Controles del Formulario-----------------------
+					$esteCampo = "mensajeObjeto";
+					$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+					$atributos ["etiqueta"] = "";
+					$atributos ["estilo"] = "centrar";
+					$atributos ["tipo"] = 'information';
+					$atributos ["mensaje"] = ' (' . $dato['id_subclase'] . ') - <b>' . $dato['nombre'] . '</b>';
+						
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					unset ( $atributos );
+					// -------------FIN Control Formulario----------------------
+				
+					endforeach;
+						
+					echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				}else{
+				
+				
+					$esteCampo = "marcoActividades";
+					$atributos ['id'] = $esteCampo;
+					$atributos ["estilo"] = "jqueryui";
+					$atributos ['tipoEtiqueta'] = 'inicio';
+					$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( 0 Actividad(es) Relacionada(s) )</i>";
+					echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+						
+					// -------------SECCION: Controles del Formulario-----------------------
+					$esteCampo = "mensajeObjeto";
+					$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+					$atributos ["etiqueta"] = "";
+					$atributos ["estilo"] = "centrar";
+					$atributos ["tipo"] = 'error';
+					$atributos ["mensaje"] = "La Persona no tiene <b>Actividades Económicas</b> Registradas.";
+						
+					echo $this->miFormulario->cuadroMensaje ( $atributos );
+					unset ( $atributos );
+					// -------------FIN Control Formulario----------------------
+						
+					echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				}
+				// ----------------FIN ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+						
+				
+				
+				
+				
+				
+				
+				
 				$esteCampo = "marcoRUT";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
@@ -7343,6 +7473,70 @@ class Formulario {
 			
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
+			
+			
+			// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
+			$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+			if( $resultadoActividades ){
+			
+				$esteCampo = "marcoActividades";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( ".count($resultadoActividades)." Actividad(es) Relacionada(s) )</i>";
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+				foreach ($resultadoActividades as $dato):
+			
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeObjeto";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'information';
+				$atributos ["mensaje"] = ' (' . $dato['id_subclase'] . ') - <b>' . $dato['nombre'] . '</b>';
+			
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+			
+				endforeach;
+			
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			}else{
+			
+			
+				$esteCampo = "marcoActividades";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = "Actividades Económicas Registradas <i>( 0 Actividad(es) Relacionada(s) )</i>";
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeObjeto";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = "La Persona no tiene <b>Actividades Económicas</b> Registradas.";
+			
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+			
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			}
+			// ----------------FIN ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
+			
+			
 			
 			
 			
