@@ -100,19 +100,21 @@ class registrarForm {
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                        $esteCampo = 'botonRegresar';
-                        $atributos ['id'] = $esteCampo;
-                        $atributos ['enlace'] = $variable;
-                        $atributos ['tabIndex'] = 1;
-                        $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                        $atributos ['estilo'] = 'textoPequenno textoGris';
-                        $atributos ['enlaceImagen'] = $rutaBloque."/images/player_rew.png";
-                        $atributos ['posicionImagen'] = "atras";//"adelante";
-                        $atributos ['ancho'] = '30px';
-                        $atributos ['alto'] = '30px';
-                        $atributos ['redirLugar'] = true;
-                        echo $this->miFormulario->enlace ( $atributos );
-                        unset ( $atributos );
+			
+			
+			$atributos["id"]="botonReg";
+			$atributos["estilo"]=" marcoBotones widget";
+			echo $this->miFormulario->division("inicio",$atributos);
+			{
+				$enlace = "<a href='".$variable."'>";
+				$enlace.="<img src='".$rutaBloque."/images/player_rew.png' width='35px'><br>Regresar";
+				$enlace.="</a><br><br>";
+				echo $enlace;
+			}
+			//------------------Fin Division para los botones-------------------------
+			echo $this->miFormulario->division("fin");
+			unset ( $atributos );
+			
                         
 			$esteCampo = "marcoUsuario";
 			$atributos ['id'] = $esteCampo;
@@ -188,7 +190,7 @@ class registrarForm {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;
@@ -214,7 +216,7 @@ class registrarForm {
 				$atributos ['id'] = $esteCampo;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'text';
-				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['estilo'] = 'jqueryui mayuscula';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
 				$atributos ["etiquetaObligatorio"] = true;

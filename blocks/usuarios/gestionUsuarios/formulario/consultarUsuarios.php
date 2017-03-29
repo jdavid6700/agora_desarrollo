@@ -101,23 +101,27 @@ class consultarForm {
             echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
             unset ( $atributos );
                 {
+                	
+                	$atributos["id"]="botonReg";
+                	$atributos["estilo"]=" marcoBotones widget";
+                	echo $this->miFormulario->division("inicio",$atributos);
+                	{
+	                	$enlace = "<a href='".$variableNuevo."'>";
+	                	$enlace.="<img src='".$rutaBloque."/images/asociar.png' width='35px'><br>Registrar Usuario ";
+	                	$enlace.="</a><br><br>";
+	                	echo $enlace;
+                	}
+                	//------------------Fin Division para los botones-------------------------
+                	echo $this->miFormulario->division("fin");
+                	unset ( $atributos );
+                	
 
                 echo "<div ><table width='100%' align='center'>
                         <tr align='center'>
                             <td align='center'>";
-                                $esteCampo = 'nuevoUsuario';
-                                $atributos ['id'] = $esteCampo;
-                                $atributos ['enlace'] = $variableNuevo;
-                                $atributos ['tabIndex'] = 1;
-                                $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                                $atributos ['estilo'] = 'textoPequenno textoGris';
-                                $atributos ['enlaceImagen'] = $rutaBloque."/images/asociar.png";
-                                $atributos ['posicionImagen'] = "atras";//"adelante";
-                                $atributos ['ancho'] = '45px';
-                                $atributos ['alto'] = '45px';
-                                $atributos ['redirLugar'] = true;
-                                echo $this->miFormulario->enlace ( $atributos );
-                                unset ( $atributos );
+                
+				                
+                                
                 echo "            </td>
                         </tr>
                       </table></div> ";
@@ -154,7 +158,15 @@ class consultarForm {
                             <tbody>";
 
                         foreach($resultadoUsuarios as $key=>$value )
-                            { 
+                        { 
+                            	
+                            	if($resultadoUsuarios[$key]['identificacion'] == '6666' ||
+                            	   $resultadoUsuarios[$key]['identificacion'] == '777'  ||
+                            	   $resultadoUsuarios[$key]['identificacion'] == '123456'
+                            	  ){
+                            		continue;
+                            	}
+                            	
                                 $parametro['id_usuario']=$resultadoUsuarios[$key]['id_usuario'];
                                 $parametro['tipo']='unico';
                                 $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);

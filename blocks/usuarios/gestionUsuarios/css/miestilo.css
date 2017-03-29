@@ -40,6 +40,10 @@ display: table-cell;
 .fila-base{ display: none; } /* fila base oculta */
 .eliminar{ cursor: pointer; color: #000; }
 
+.mayuscula {
+	text-transform: uppercase; 
+}
+
 
 
 
