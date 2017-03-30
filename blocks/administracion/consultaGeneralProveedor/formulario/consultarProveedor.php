@@ -287,9 +287,19 @@ $cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuario", $_REQUEST );
 $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 //ECHO $cadena_sql;
 //var_dump($_REQUEST);
-//var_dump($resultadoPerfil);
+//var_dump(count($resultadoPerfil));
 
-if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
+$i = 0;
+$consultor = false;
+while($i < count($resultadoPerfil)){
+	
+	if($resultadoPerfil[$i]['rol_id'] != 12){
+		$consultor = true;
+	}
+	$i++;
+}
+
+if ($resultado && !$consultor) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";
 		$atributos ["estilo"] = "jqueryui";
@@ -391,7 +401,7 @@ if ($resultado && $resultadoPerfil[0]['rol_id'] != 12) {
 	echo $this->miFormulario->agrupacion ( 'fin' );
 	unset ( $atributos );
 	
-} else if($resultado && $resultadoPerfil[0]['rol_id'] == 12){	
+} else if($resultado && $consultor){	
 	
 	
 	
