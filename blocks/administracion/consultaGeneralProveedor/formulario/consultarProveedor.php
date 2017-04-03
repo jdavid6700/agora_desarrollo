@@ -287,14 +287,17 @@ $cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuario", $_REQUEST );
 $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 //ECHO $cadena_sql;
 //var_dump($_REQUEST);
-//var_dump(count($resultadoPerfil));
+//var_dump($resultadoPerfil);
 
 $i = 0;
 $consultor = false;
 while($i < count($resultadoPerfil)){
 	
-	if($resultadoPerfil[$i]['rol_id'] != 12 && $_REQUEST['usuario'] != 'CC123456'){
+	if($resultadoPerfil[$i]['rol_id'] != 8 && $resultadoPerfil[$i]['rol_id'] == 12){
 		$consultor = true;
+	}else if($resultadoPerfil[$i]['rol_id'] == 8){
+		$consultor = false;
+		break;
 	}
 	$i++;
 }
@@ -366,6 +369,11 @@ if ($resultado && !$consultor) {
 			
 			//var_dump($resultadoTel);
 			//var_dump($resultadoMovil);
+			
+			if($dato['tipopersona'] == 'EXTRANJERA'){
+				$variableEdit = "#";
+				$imagenEdit = "cancel.png";
+			}
 			
 			$mostrarHtml = "<tr>
 						<td><center>" . $dato['num_documento'] . "</center></td>
