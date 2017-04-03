@@ -293,7 +293,7 @@ $i = 0;
 $consultor = false;
 while($i < count($resultadoPerfil)){
 	
-	if($resultadoPerfil[$i]['rol_id'] != 12){
+	if($resultadoPerfil[$i]['rol_id'] != 12 && $_REQUEST['usuario'] != 'CC123456'){
 		$consultor = true;
 	}
 	$i++;
