@@ -22,11 +22,11 @@ $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 		$conexion = 'estructura';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'sicapital';
-		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'sicapital';
+		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'centralUD';
-		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'centralUD';
+		//$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		$conexion = 'argo_contratos';
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -50,16 +50,23 @@ $resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 $cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
 $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $resultadoObjeto[0]['responsable'] );
+$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+ereg("([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $resultadoObjeto[0]['fecha_solicitud_cotizacion'], $mifecha);
+$fechana1 = $mifecha[3] . "/" . $mifecha[2] . "/" . $mifecha[1];
+
+ereg("([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $resultadoObjeto[0]['fecha_apertura'], $mifecha);
+$fechana2 = $mifecha[3] . "/" . $mifecha[2] . "/" . $mifecha[1];
+
+ereg("([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $resultadoObjeto[0]['fecha_cierre'], $mifecha);
+$fechana3 = $mifecha[3] . "/" . $mifecha[2] . "/" . $mifecha[1];
 
 $datos = array (
 		'idSolicitud' => $resultadoObjeto[0]['numero_solicitud'],
 		'vigencia' => $resultadoObjeto[0]['vigencia'],
 		'unidadEjecutora' => $resultadoObjeto[0]['unidad_ejecutora']
 );
-
-
-$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
-$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
 $certUniversidadImagen = 'sabio_caldas.png';
@@ -88,12 +95,12 @@ if($resultadoObjeto[0]['tipo_necesidad'] == 'SERVICIO'){
 			                </td>
 			            </tr>	
 				    ";
-	$titulo = "OBJETO SOLICITUD DE NECESIDAD PARA CONVOCATORIA";
+	$titulo = "INFORMACIÓN DE LA SOLICITUD DE COTIZACIÓN";
 		
 }else{
 	$convocatoria = false;
 	$contentConv = "";
-	$titulo = "OBJETO SOLICITUD DE NECESIDAD A COTIZAR";
+	$titulo = "INFORMACIÓN DE LA SOLICITUD DE COTIZACIÓN";
 }
 
 
@@ -103,12 +110,6 @@ foreach ($resultadoActividades as $dato):
 	$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
 	$contenidoAct .= "<br>";
 endforeach;
-
-if(!isset($solicitudNecesidad [0]['OBJETO'])) $solicitudNecesidad [0]['OBJETO'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['JUSTIFICACION'])) $solicitudNecesidad [0]['JUSTIFICACION'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
-if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
 
 $listProv = "";
 
@@ -128,10 +129,7 @@ if($resultadoProveedor){
                     <b>Proveedor</b>
                 </td>
                 <td align='center' style='background:#BDD6EE'>
-                    <b>Puntaje Evaluación</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Clasificación</b>
+                    <b>Correo</b>
                 </td>
             </tr>";
 
@@ -148,10 +146,7 @@ if($resultadoProveedor){
                     " . $dato['nom_proveedor'] . "
                 </td>
                 <td align='center' >
-                    " . $dato['puntaje_evaluacion'] . "
-                </td>
-                <td align='center' >
-                    " . $dato['clasificacion_evaluacion'] . "
+                    " . $dato['correo'] . "
                 </td>
 
 
@@ -204,21 +199,29 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
  style='width:100%;border-collapse:collapse;border:none;'> 
  
 
-            <tr>
+			<tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Fecha</b>
+                    <b>Número de Solicitud de Cotización - Vigencia</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $resultadoObjeto[0]['fechasolicitudcotizacion'] . "
+                    " . $resultadoObjeto[0]['numero_solicitud'] . " - " .$resultadoObjeto[0]['vigencia'] ."
+                </td>
+            </tr>
+            <tr>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Fecha Solicitud</b>
+                </td>
+                <td align='left' style='width:80%;'>
+                    " . $fechana1 . "
                 </td>
             </tr>
                     	
             <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Objeto Solicitud de Necesidad</b>
+                    <b>Título Cotización</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $solicitudNecesidad [0]['OBJETO'] . "
+                    " . $resultadoObjeto[0]['titulo_cotizacion']. "
                 </td>
             </tr>
             <tr>
@@ -229,29 +232,47 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     " . $contenidoAct . "
                 </td>
             </tr>
-            . $contentConv .        		
-            <tr>
+            . $contentConv . 
+
+ <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Justificación</b>
+                    <b>Fecha Apertura</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $solicitudNecesidad [0]['JUSTIFICACION'] . "
+                    " . $fechana2 . "
                 </td>
             </tr>
-            <tr>
+
+ <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Número de Solicitud de Necesidad - Vigencia</b>
+                    <b>Fecha Cierre</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $solicitudNecesidad [0]['NUM_SOL_ADQ'] . " - " . $solicitudNecesidad [0]['VIGENCIA'] . "
+                    " . $fechana3 . "
+                </td>
+            </tr>       		
+            <tr>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Objetivos/Temas</b>
+                </td>
+                <td align='left' style='width:80%;'>
+                " . $resultadoObjeto[0]['objetivo']. "
                 </td>
             </tr>  
             <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Cantidad</b>
+                    <b>Requisitos</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $resultadoObjeto[0]['cantidad'] . "
+                    " . $resultadoObjeto[0]['requisitos']. "
+                </td>
+            </tr>
+			<tr>
+                <td align='center' style='width:20%;background:#BDD6EE'>
+                    <b>Observaciones Adicionales</b>
+                </td>
+                <td align='left' style='width:80%;'>
+                    " . $resultadoObjeto[0]['observaciones']. "
                 </td>
             </tr>
             <tr>
@@ -259,15 +280,15 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     <b>Dependencia</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $solicitudNecesidad [0]['DEPENDENCIA'] . "
+                    " . $resultadoObjeto[0]['dependencia']. "
                 </td>
             </tr>
             <tr>
                 <td align='center' style='width:20%;background:#BDD6EE'>
-                    <b>Ordenador del Gasto</b>
+                    <b>Responsable de la Cotización</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "
+                    " . $resultadoUsuario[0]['identificacion']. " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']. "
                 </td>
             </tr>
                     		
@@ -282,7 +303,7 @@ style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'> &nbsp; </sp
 
 <p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>PROVEEDORES SELECCIONADOS</span></b></p>
+107%'>PROVEEDORES RELACIONADOS</span></b></p>
 
 <div align=center>"
                     . $listProv .		
@@ -308,7 +329,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 
 
 
-$nombreDocumento = 'objetoContratar_' . $_REQUEST['idObjeto'] . '.pdf';
+$nombreDocumento = 'objetoCotizacion_' . $_REQUEST['idObjeto'] . '.pdf';
 
     $html2pdf = new HTML2PDF('P','LETTER','es');
     $res = $html2pdf->WriteHTML($contenidoPagina);

@@ -128,8 +128,7 @@ class Funcion {
 					
 					if (isset ( $_REQUEST ["botonTerminar"] ) && $_REQUEST ["botonTerminar"] == 'true' && isset ( $_REQUEST ["tipoNecesidad"] ) && $_REQUEST ["tipoNecesidad"] == 'BIEN') {
 						$arreglo = array (
-								'idObjeto' => $_REQUEST['idObjeto'],
-								'numCotizaciones' => $_REQUEST['numCotizaciones']
+								'idObjeto' => $_REQUEST['idObjeto']
 						);
 						redireccion::redireccionar ( "cotizacion", $arreglo );
 						exit();

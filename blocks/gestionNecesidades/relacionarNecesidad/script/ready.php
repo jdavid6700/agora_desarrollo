@@ -1,4 +1,22 @@
-$("#gestionObjetoRegistrar").validationEngine({
+
+$('#<?php echo $this->campoSeguro('fechaCierre')?>').datepicker({
+		<?php /*?>timeFormat: 'HH:mm:ss',<?php */?>
+                dateFormat: 'dd/mm/yy',
+		minDate: 0,
+        yearRange: '0:+50',
+		changeYear: true,
+		changeMonth: true,
+		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+		    'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+		    
+			
+	   });
+
+$("#relacionarNecesidadRegistrar").validationEngine({
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,
@@ -18,6 +36,8 @@ $("#gestionObjetoConsultarCot").validationEngine({
 	autoHidePrompt: true,
 	autoHideDelay: 2000
 });
+
+$( ".widget input[type=submit], .widget a, .widget button" ).button();
         
 /*
  * Función que organiza los tabs en la interfaz gráfica
@@ -55,8 +75,8 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').width(250)
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
 
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').width(250);
-
-
+$('#<?php echo $this->campoSeguro('unidadEjecutora')?>').width(250);
+$('#<?php echo $this->campoSeguro('dependencia')?>').width(750);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
@@ -77,10 +97,56 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadRelacionada')?>').select2();
 $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').select2();
 
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').select2();
-
+$('#<?php echo $this->campoSeguro('unidadEjecutora')?>').select2();
+$('#<?php echo $this->campoSeguro('dependencia')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$('#tablaObjetos').dataTable({
+        
+    "language": {
+        "sProcessing":     "Procesando...",
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+        "sSearch":         "Buscar:",
+        "sLoadingRecords": "Cargando...",
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Ãšltimo",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+		}
+    }
+});
+
+
+$('#tablaPersonas').dataTable({
+        
+    "language": {
+        "sProcessing":     "Procesando...",
+        "sLengthMenu":     "Mostrar _MENU_ registros",
+	"sZeroRecords":    "No se encontraron resultados",
+        "sSearch":         "Buscar:",
+        "sLoadingRecords": "Cargando...",
+        "sEmptyTable":     "Ningún dato disponible en esta tabla",
+	"sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+	"sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+	"oPaginate": {
+		"sFirst":    "Primero",
+		"sLast":     "Ãšltimo",
+		"sNext":     "Siguiente",
+		"sPrevious": "Anterior"
+		}
+    }
+});
+
+
 
 $('#tablaObjetos').dataTable({
         

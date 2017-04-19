@@ -40,30 +40,19 @@ class Registrar {
 		$arreglo = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
 				'objetoNBC' => $_REQUEST ['objetoNBC'],
-				'idSolicitud' => $_REQUEST['numSolicitud'],
-				'vigencia' => $_REQUEST['vigencia'],
-				'unidadEjecutora' => $_REQUEST['unidadEjecutora'],
 				'tipoNecesidad' => $_REQUEST['tipoNecesidad'],
-				'modificarNBC' => $_REQUEST ['modificarNBC'],
-				'numCotizaciones' => $_REQUEST['numCotizaciones'],
+				//'modificarNBC' => $_REQUEST ['modificarNBC'],
 				'usuario' => $_REQUEST ['usuario']
 		);
 		
-		if($_REQUEST ['modificarNBC']){
-			
-			// Modificar NUCLEO BASICO
-			$cadenaSql = $this->miSql->getCadenaSql ( "actualizarNucleoBasico", $arreglo );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-			
-			
-		}else{
+
 				
 			// Guardar NUCLEO BASICO
 			$cadenaSql = $this->miSql->getCadenaSql ( "registrarNucleoBasico", $arreglo );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
 			
-		}
+
 		
 			
 			if ($resultado) {

@@ -10,7 +10,6 @@ class redireccion {
 	public static function redireccionar($opcion, $valor = "") {
 		$miConfigurador = \Configurador::singleton ();
 		$miPaginaActual = $miConfigurador->getVariableConfiguracion ( "pagina" );
-		//var_dump($_REQUEST);exit();
 		switch ($opcion) {
 
 			case "inserto" :
@@ -18,12 +17,10 @@ class redireccion {
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=confirma";
 				$variable .= "&idObjeto=".$valor['idObjeto'];
-				$variable .= "&numSolicitud=".$valor['numero_solicitud'];
 				$variable .= "&vigencia=".$valor['vigencia'];
 				$variable .= "&unidadEjecutora=".$valor['unidad_ejecutora'];
-				$variable .= "&numCotizaciones=".$valor['cotizaciones'];
 				$variable .= "&tipoNecesidad=".$valor['tipo_necesidad'];
-				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
+				$variable .= "&dependencia=".$valor['dependencia'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;
 				
@@ -33,7 +30,6 @@ class redireccion {
 				$variable .= "&mensaje=confirmaCotizacion";
                 $variable .= "&idObjeto=".$valor['idObjeto'];
                 $variable .= "&idCodigo=".$valor['idCodigo'];
-                $variable .= "&usuario=".$valor['usuario'];
 				break;				
 			
 			case "noInserto" :
@@ -97,11 +93,7 @@ class redireccion {
 				$variable .= "&mensaje=registroActividad";
 				$variable .= "&idObjeto=" . $valor ['idObjeto'];
 				$variable .= "&actividad=" . $valor ['actividad'];
-				$variable .= "&numSolicitud=".$valor['idSolicitud'];
-				$variable .= "&vigencia=".$valor['vigencia'];
-				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
 				$variable .= "&tipoNecesidad=".$valor['tipoNecesidad'];
-				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;
 				
@@ -111,12 +103,8 @@ class redireccion {
 				$variable .= "&mensaje=registroNucleo";
 				$variable .= "&idObjeto=" . $valor ['idObjeto'];
 				$variable .= "&nucleo=" . $valor ['objetoNBC'];
-				$variable .= "&numSolicitud=" . $valor ['idSolicitud'];
-				$variable .= "&vigencia=" . $valor ['vigencia'];
-				$variable .= "&unidadEjecutora=" . $valor ['unidadEjecutora'];
 				$variable .= "&tipoNecesidad=" . $valor ['tipoNecesidad'];
-				$variable .= "&numCotizaciones=" . $valor ['numCotizaciones'];
-				$variable .= "&modificarNBC=" . $valor ['modificarNBC'];
+				//$variable .= "&modificarNBC=" . $valor ['modificarNBC'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;
 			
@@ -126,11 +114,7 @@ class redireccion {
 				$variable .= "&mensaje=mensajeExisteActividad";
 				$variable .= "&idObjeto=" . $valor ['idObjeto'];
 				$variable .= "&actividad=" . $valor ['actividad'];
-				$variable .= "&numSolicitud=".$valor['idSolicitud'];
-				$variable .= "&vigencia=".$valor['vigencia'];
-				$variable .= "&unidadEjecutora=".$valor['unidadEjecutora'];
 				$variable .= "&tipoNecesidad=".$valor['tipoNecesidad'];
-				$variable .= "&numCotizaciones=".$valor['numCotizaciones'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;
 				

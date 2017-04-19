@@ -41,11 +41,7 @@ class Registrar {
 		$arreglo = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
 				'actividad' => $_REQUEST ['claseCIIU'],
-				'idSolicitud' => $_REQUEST['numSolicitud'],
-				'vigencia' => $_REQUEST['vigencia'],
-				'unidadEjecutora' => $_REQUEST['unidadEjecutora'],
 				'tipoNecesidad' => $_REQUEST['tipoNecesidad'],
-				'numCotizaciones' => $_REQUEST['numCotizaciones'],
 				'usuario' => $_REQUEST ['usuario']
 		);
 		

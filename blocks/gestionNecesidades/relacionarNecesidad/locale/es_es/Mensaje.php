@@ -7,21 +7,32 @@ $this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 $this->idioma["marcoDatos"]="Solicitudes de Necesidad";
 $this->idioma["marcoRelacionCIIU"]="Relacionar Actividad Económica y Cotizaciones";
 $this->idioma["marcoDatosSolicitud"]="Información Solicitud de Necesidad";
-$this->idioma["marcoObjeto"]="Solicitud de Necesidad a Cotizar - Información General";
+$this->idioma["marcoObjeto"]="Solicitud de Cotización - Información General";
 
-$this->idioma["marcoObjetoConv"]="Solicitud de Necesidad para Convocatoria - Información General";
+$this->idioma["marcoObjetoConv"]="Solicitud de Cotización - Información General";
 
-$this->idioma["marcoProveedores"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU Registrados";
+$this->idioma["marcoActividadesCot"]="Gestión de Actividades Económicas - (Cotización)";
 
-$this->idioma["marcoProveedoresConv"]="Proveedores que Pueden Responder a la Necesidad según sus CIIU y NBC (Snies) Registrados";
+$this->idioma["marcoNBCCot"]="Gestión de Profesión SNIES - (Cotización)";
 
-$this->idioma["marcoObjetoAct"]="Solicitud de Necesidad - Información General";
+
+$this->idioma["marcoProveedores"]="Proveedores que Pueden Responder a la Cotización según sus CIIU Registrados";
+
+$this->idioma["marcoProveedoresConv"]="Proveedores que Pueden Responder a la Cotización según sus CIIU y NBC (Snies) Registrados";
+
+$this->idioma["marcoObjetoAct"]="Solicitud de Cotización - Información General";
 $this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
-$this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
-$this->idioma["marcoActividadesRel"] = "Actividades Ecónomicas Relacionadas con la Necesidad";
 
-$this->idioma["marcoNBCRel"] = "Núcleo Básico de Conocimiento (Profesión) SNIES Relacionado con la Necesidad";
+$this->idioma["marcoTipoNecesidadCot"]="Tipología de la Cotización";
+$this->idioma["marcoDatosSolicitudCot"]="Información Solicitud de Cotización";
+
+$this->idioma["marcoDatosSolicitudCotReg"]="Registro Solicitud de Cotización";
+
+$this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
+$this->idioma["marcoActividadesRel"] = "Actividades Ecónomicas Relacionadas con la Cotización";
+
+$this->idioma["marcoNBCRel"] = "Núcleo Básico de Conocimiento (Profesión) SNIES Relacionado con la Cotización";
 
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Ecónomica";
 
@@ -53,8 +64,8 @@ $this->idioma["divisionCIIUTitulo"]="Seleccionar división CIIU";
 $this->idioma["grupoCIIU"] = "Grupo :";
 $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 
-$this->idioma["claseCIIU"] = "Clase :";
-$this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
+$this->idioma["claseCIIU"] = "Código CIIU :";
+$this->idioma["claseCIIUTitulo"]="Seleccionar Código CIIU";
 
 $this->idioma["ordenador"] = "Ordenador del Gasto :";
 $this->idioma["ordenadorTitulo"]="Ordenador del Gasto";
@@ -127,7 +138,7 @@ $this->idioma["tabIngresar"] = "Objeto a Contratar";
 
 $this->idioma["tabConsultar"] = "Solicitar Cotización";
 $this->idioma["tabConsultarMen"] = "Solicitar (Cotización / Convocatoria)";
-$this->idioma["tabConsultarConv"] = "Solicitar Convocatoria";
+$this->idioma["tabConsultarConv"] = "Solicitar Cotización";
 
 $this->idioma["tabCotizacion"] = "Estado (Cotización / Convocatoria)";
 $this->idioma["tabActividad"] = "Actividades Económicas";
@@ -141,6 +152,7 @@ $this->idioma["botonModificar"] = "Modificar";
 $this->idioma["botonContinuar"] = "Continuar";
 $this->idioma["botonAgregar"] = "Agregar";
 $this->idioma["botonTerminar"] = "Continuar";
+$this->idioma["botonProcesar"] = "Procesar";
 
 $this->idioma["paso1"] = "Consultar Funcionario";
 $this->idioma["paso2"] = "Información del Docente";
@@ -165,18 +177,18 @@ $this->idioma["mensajeActividad"] =  "Actualmente no hay proveedores con esta Ac
 
 
 $this->idioma["mensajeCotizacion"] =  "Registro Exitoso.<br> Se envío la solicitud de Cotización a los Proveedores. <br>" ;
-$this->idioma["mensajeConvocatoria"] =  "Registro Exitoso.<br> Se envío la información de Convocatoria a los Proveedores. <br>" ;
+$this->idioma["mensajeConvocatoria"] =  "Registro Exitoso.<br> Se envío la información de Cotización a los Proveedores. <br>" ;
 
 $this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
-$this->idioma["mensajeEnConvocatoria"] =  "Estado del Objeto a Contratar: CONVOCATORIA.<br> Los Proveedores Interesados han sido informados. <br>" ;
+$this->idioma["mensajeEnConvocatoria"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
-$this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con la Actividad Económica </br> ";
+$this->idioma["mensajeNoHayProveedores"] =  "Actualmente no hay Proveedores que cumplan con las caracteristicas de búsqueda. </br> ";
 //$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con el Puntaje Evaluación mayor a 45 </br> y que se encuentren Activos";
 
-$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con las condiciones </br> y que se encuentren Activos";
+$this->idioma["mensajeNoHayProveedoresPuntaje"] =  "Actualmente no hay Proveedores que cumplan con las caracteristicas de búsqueda. </br> ";
 /////////////////////////////////
 
 $this->idioma["marcoConsultaGeneral"] = "Consulta Títulos Académicos Registradas";
@@ -196,6 +208,7 @@ $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";
 $this->idioma["botonAceptar"] = "Aceptar";
 $this->idioma["botonRegistrar"] = "Registrar";
+$this->idioma["botonRegistrarSol"] = "Solicitar";
 $this->idioma["botonCancelar"] = "Cancelar";
 $this->idioma["noDefinido"] = "No definido";
 ///////////////////////////////////////////////////////
@@ -263,5 +276,35 @@ $this->idioma["identificacionDocenteTitulo"] = "Ingrese el Número de Identifica
 $this->idioma['crearDocente'] = '';
 $this->idioma['crearDocenteRegistrar'] = '';
 $this->idioma['crearDocenteModificar'] = '';
+
+
+
+
+
+
+$this->idioma["tituloCotizacion"] = "Título de la Cotización:";
+$this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotización";
+
+$this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
+
+$this->idioma["nombresResponsable"] = "Nombres: ";
+$this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";
+$this->idioma["apellidosResponsable"] = "Apellidos: ";
+$this->idioma["apeliidosResponsableTitulo"] = "Apellidos persona responsable para la cotización";
+$this->idioma["identificacionResponsable"] = "Identificación: ";
+$this->idioma["identificacionResponsableTitulo"] = "Identificación persona responsable para la cotización";
+
+$this->idioma["fechaApertura"] = "Fecha de Apertura :";
+$this->idioma["fechaAperturaTitulo"]="Fecha de Apertura";
+$this->idioma["fechaCierre"] = "Fecha de Cierre :";
+$this->idioma["fechaCierreTitulo"]="Fecha de Cierre";
+
+$this->idioma["objetivo"] = "Objetivo / Tema :";
+$this->idioma["objetivoTitulo"]="Objetivo / Tema";
+$this->idioma["requisitos"] = "Requisitos :";
+$this->idioma["requisitosTitulo"]="Requisitos";
+$this->idioma["observaciones"] = "Observaciones Adicionales :";
+$this->idioma["observacionesTitulo"]="Observaciones Adicionales";
 
 ?>
