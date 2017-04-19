@@ -56,10 +56,19 @@ class TextArea  extends HtmlBase{
         $this->mi_cuadro .= "id='" . $this->atributos [self::ID] . "' ";
         $this->mi_cuadro .= $this->atributosGeneralesAreaTexto ();
     
-        if (isset ( $this->atributos [self::ESTILOAREA] ) && $this->atributos [self::ESTILOAREA] != "") {
-            $this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] . "' ";
-        } else {
-            $this->mi_cuadro .= "class='areaTexto' ";
+        
+        if(isset ( $this->atributos ["validar"] ) && $this->atributos ["validar"] != ""){
+        	if (isset ( $this->atributos [self::ESTILOAREA] ) && $this->atributos [self::ESTILOAREA] != "") {
+        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ."  validate[" . $this->atributos ["validar"]."]' ";
+        	} else {
+        		$this->mi_cuadro .= "class='areaTexto validate[" . $this->atributos ["validar"]."]' ";
+        	}
+        }else{
+        	if (isset ( $this->atributos [self::ESTILOAREA] ) && $this->atributos [self::ESTILOAREA] != "") {
+        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ."' ";
+        	} else {
+        		$this->mi_cuadro .= "class='areaTexto' ";
+        	}
         }
     
         $this->mi_cuadro .= self::HTMLTABINDEX . "'" . $this->atributos [self::TABINDEX] . "' ";
@@ -70,13 +79,21 @@ class TextArea  extends HtmlBase{
             $this->mi_cuadro .= "";
         }
         $this->mi_cuadro .= "</textarea>\n";
+        
+        
     
         if (isset ( $this->atributos [self::TEXTOENRIQUECIDO] ) && $this->atributos [self::TEXTOENRIQUECIDO]) {
-            $this->mi_cuadro .= "<script type=\"text/javascript\">\n";
-            $this->mi_cuadro .= "mis_botones='" . $datosConfiguracion ["host"] . $datosConfiguracion ["site"] . $datosConfiguracion ["grafico"] . "/textarea/';\n";
-            $this->mi_cuadro .= "archivo_css='" . $datosConfiguracion ["host"] . $datosConfiguracion ["site"] . $datosConfiguracion ["estilo"] . "/basico/estilo.php';\n";
-            $this->mi_cuadro .= "editor_html('" . $this->atributos [self::ID] . "', 'bold italic underline | left center right | number bullet | wikilink');";
-            $this->mi_cuadro .= "\n</script>";
+        	
+        	
+        	if (isset ( $this->atributos [self::DESHABILITADO] ) && $this->atributos [self::DESHABILITADO]) {
+        		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
+  										<script>tinymce.init({ selector:\'textarea\', readonly : 1 });</script>';
+        	}else{
+        		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
+  										<script>tinymce.init({ selector:\'textarea\' });</script>';
+        	}
+        	
+           
         }
     
         return $this->mi_cuadro;
