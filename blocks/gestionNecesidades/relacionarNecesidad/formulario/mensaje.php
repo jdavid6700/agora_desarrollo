@@ -31,8 +31,8 @@ if (!isset($GLOBALS["autorizado"])) {
     $conexion = "estructura";
     $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
     
-    $conexion = "sicapital";
-    $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+    //$conexion = "sicapital";
+    //$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
 
     $tab = 1;
@@ -74,8 +74,11 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
     	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarDependencia', $_REQUEST['dependencia'] );
+    	$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         
-        if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "CREADO"){
+        if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "RELACIONADO"){
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
         	$valorCodificado.="&opcion=actividad";
@@ -105,6 +108,18 @@ if (!isset($GLOBALS["autorizado"])) {
         
         }else{	
         	
+        	//***************************************************************************
+        	$numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+        	
+        	$parametros = array (
+        			'idObjeto' => $_REQUEST ['idObjeto'],
+        			'numero_solicitud' => $numberSolicitud,
+        	);
+        	
+        	$cadenaSql = $this->sql->getCadenaSql ( 'actualizarObjetoNum', $parametros );
+        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+        	//***************************************************************************
+        	
         	$Proceso = "el <b>Registro</b>";
         	
         	$valorCodificado = "pagina=".$miPaginaActual;
@@ -112,19 +127,18 @@ if (!isset($GLOBALS["autorizado"])) {
         	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        	$valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
         	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
         	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
-        	$valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         	
         }
         
         $tipo = 'success';
-        $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Necesidad <b>N° ".$_REQUEST['numSolicitud']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
+        $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Cotización <b>N° ".$_REQUEST['idObjeto']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
 					Unidad Ejecutora <b>". $valorUnidadEjecutoraText . "</b>
 				</br>
+				</br><b>Dependencia:</b> ".$resultadoDependencia[0][0]."
 				</br><b>Fecha del Proceso:</b> ".$hoy."
 				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
         $boton = "continuar";
@@ -134,7 +148,10 @@ if (!isset($GLOBALS["autorizado"])) {
  
     } else if($_REQUEST['mensaje'] == 'confirmaCotizacion') {
             
-        
+    	$hoy = date ( "d/m/Y" );
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
+    	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		//Buscar usuario para enviar correo
 		$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
@@ -150,8 +167,8 @@ if (!isset($GLOBALS["autorizado"])) {
 				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
 		);
 		
-		$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
-		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		//$cadenaSql = $this->sql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
+		//$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		 
 		 
 		$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
@@ -173,6 +190,8 @@ if (!isset($GLOBALS["autorizado"])) {
 		}
 		$boton = "regresar";
 		
+		
+		
 		//INICIO enlace boton descargar resumen
 		$variableResumen = "pagina=" . $miPaginaActual;
 		$variableResumen.= "&action=".$esteBloque["nombre"];
@@ -185,12 +204,12 @@ if (!isset($GLOBALS["autorizado"])) {
 		
 		//------------------Division para los botones-------------------------
 		$atributos["id"]="botones";
-		$atributos["estilo"]="marcoBotones";
+		$atributos["estilo"]="marcoBotones widget";
 		echo $this->miFormulario->division("inicio",$atributos);
 		
 		$enlace = "<a href='".$variableResumen."'>";
 		if($convocatoria){
-			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Información Convocatoria ";
+			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
 		}else{
 			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
 		}
@@ -199,8 +218,6 @@ if (!isset($GLOBALS["autorizado"])) {
 		//------------------Fin Division para los botones-------------------------
 		echo $this->miFormulario->division("fin");
 		//FIN enlace boton descargar resumen
-		
-		
 		
 		
 		$contenidoAct = '<br>';
@@ -215,7 +232,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		if(!isset($solicitudNecesidad [0]['DEPENDENCIA'])) $solicitudNecesidad [0]['DEPENDENCIA'] = "SIN INFORMACIÓN ";
 		if(!isset($solicitudNecesidad [0]['ORDENADOR_GASTO'])) $solicitudNecesidad [0]['ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
 		if(!isset($solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'])) $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] = "SIN INFORMACIÓN ";
-		
+
 		//INICIO ENVIO DE CORREO AL USUARIO
 		    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
 		
@@ -273,13 +290,16 @@ if (!isset($GLOBALS["autorizado"])) {
 		        $mail->Body=$contenido;
 
 				foreach ($resultadoProveedor as $dato):
-					$to_mail=$dato ['correo'];
-				    //$to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
+					//$to_mail=$dato ['correo'];
+				    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
 					$mail->AddAddress($to_mail);
 					//$mail->Send();
-					
-					if(!$mail->Send()) {
+					if(!true){
+					//if(!$mail->Send()) {
 		    			echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
+		    			$mensajeEnvio = "no han sido informados mediante correo, ocurrio un problema comuniquese con el Administrador del Sistema.";
+				    }else{
+				    	$mensajeEnvio = "ya han sido informados mediante correo.";
 				    }
 					
 				endforeach;
@@ -303,7 +323,16 @@ if (!isset($GLOBALS["autorizado"])) {
 		        */
 		        
 		        
-		//FIN ENVIO DE CORREO AL USUARIO                
+		//FIN ENVIO DE CORREO AL USUARIO    
+		
+		        $mensaje =  "Se Realizo Registro de la Relación Solicitud de Cotización <b>N° ".$_REQUEST['idObjeto']."</b> con los Proveedores Encontrados que pueden responder a la misma.
+				</br>
+							</br>
+							Los Proveedores que cumplen las caracteristicas ". $mensajeEnvio ."
+							</br>
+				</br><b>Fecha del Proceso:</b> ".$hoy."
+				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
+		        $boton = "continuar";
 		
 		        $valorCodificado = "pagina=".$miPaginaActual;
 		        $valorCodificado.="&opcion=nuevo";
@@ -341,28 +370,35 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
        
     }else if($_REQUEST['mensaje'] == 'mensajeExisteActividad') {
-        $tipo = 'error';
-        $mensaje = "Error en el cargue. <br>La Actividad ya se encuentra registrada.";
-        $boton = "regresar";
-        
-        $actividades = true;
-
-        $valorCodificado = "pagina=". $miPaginaActual;
-        $valorCodificado.="&opcion=actividad";
-        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
-        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
-        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
-        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
-        $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
-        $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+    	$tipo = 'error';
+    	$mensaje = "Error en el cargue. <br>La Actividad ya se encuentra registrada.";
+    	$boton = "regresar";
+    	
+    	$actividades = true;
+    	
+    	if($_REQUEST['tipoNecesidad'] == 'SERVICIO'){
+    		$faltaNBC = true;
+    	}else{
+    		$faltaNBC = false;
+    	}
+    	
+    	$valorCodificado = "pagina=". $miPaginaActual;
+    	$valorCodificado.="&opcion=actividad";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+    	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
+    	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+    	$valorCodificado.="&sigueNBC=".$faltaNBC;
         
     }else if($_REQUEST['mensaje'] == 'registroActividad') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'ciiuSubClaseByNum', $_REQUEST['actividad']  );
+    	$resultadoCIIU = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
         $tipo = 'success';
         $mensaje = "Se registro la Actividad Económica<br >";
-		$mensaje .= "<strong>" . $_REQUEST['actividad'] . "</strong><br >";
+		$mensaje .= "<strong>" . $resultadoCIIU[0]['nombre'] . "</strong><br >";
         $boton = "regresar";
 
         $actividades = true;
@@ -378,10 +414,6 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
-        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
-        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
-        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         $valorCodificado.="&sigueNBC=".$faltaNBC;
@@ -391,11 +423,8 @@ if (!isset($GLOBALS["autorizado"])) {
     	$cadenaSql = $this->sql->getCadenaSql ( 'buscarNBC', $_REQUEST['nucleo']  );
     	$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
     	
-    	if($_REQUEST['modificarNBC']){
-    		$mensaje = "Se <b>Modificó</b> el Núcleo Básico de Conocimiento Relacionado<br >";
-    	}else{
-    		$mensaje = "Se <b>Registró</b> el Núcleo Básico de Conocimiento Relacionado<br >";
-    	}
+    	$mensaje = "Se <b>Registró</b> el Núcleo Básico de Conocimiento Relacionado<br >";
+    	
     	
         $tipo = 'success';
 		$mensaje .= "<strong>" . $_REQUEST['nucleo'] ." - ". $resultadoNBC[0]['nombre'] . "</strong><br >";
@@ -408,10 +437,6 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
         $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        $valorCodificado.="&numSolicitud=".$_REQUEST['numSolicitud'];
-        $valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
-        $valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
-        $valorCodificado.="&numCotizaciones=" . $_REQUEST["numCotizaciones"];
         $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
         $valorCodificado.="&objetoNBC=".$_REQUEST['nucleo'];
         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES Y NBC";

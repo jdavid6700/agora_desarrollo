@@ -19,6 +19,13 @@ class registrarForm {
 		
 		$this->miSql = $sql;
 	}
+	
+	function cambiafecha_format($fecha) {
+		ereg("([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $fecha, $mifecha);
+		$fechana = $mifecha[3] . "/" . $mifecha[2] . "/" . $mifecha[1];
+		return $fechana;
+	}
+	
 	function miForm() {
 
 		/**
@@ -33,11 +40,11 @@ class registrarForm {
 		$conexion = 'estructura';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'sicapital';
-		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'sicapital';
+		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'centralUD';
-		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'centralUD';
+		//$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		$conexion = 'argo_contratos';
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -84,18 +91,13 @@ class registrarForm {
 		
 		// Si no se coloca, entonces toma el valor predeterminado.
 		$atributos ['estilo'] = '';
-		$atributos ['marco'] = true;
+		$atributos ['marco'] = false;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
 		// ----------------INICIAR EL FORMULARIO ------------------------------------------------------------
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		echo $this->miFormulario->formulario ( $atributos );
 		
-		
-		
-		
-		
-		if(isset($_REQUEST['tipoNecesidad'])){
 		
 			if($_REQUEST['tipoNecesidad'] == "SERVICIO"){
 				$marcoTipo = "marcoProveedoresConv";
@@ -108,69 +110,21 @@ class registrarForm {
 				$tipoSolicitud = $_REQUEST['tipoNecesidad'];
 				$service = false;
 			}
-		
-		}else{
-		
-			$datosSolicitudNecesidad = array (
-					'idSolicitud' => $_REQUEST['idSolicitud'],
-					'vigencia' => $_REQUEST['vigencia'],
-					'unidadEjecutora' => $_REQUEST['unidadEjecutora']
-			);
-		
-			$cadena_sql = $this->miSql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
-			$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-			
-			if($resultadoNecesidadRelacionada[0]['tipo_necesidad'] == "SERVICIO"){
-				$marcoTipo = "marcoProveedoresConv";
-				$tipoMarco = "marcoObjetoConv";
-				$tipoSolicitud = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
-				$service = true;
-			}else{
-				$marcoTipo = "marcoProveedores";
-				$tipoMarco = "marcoObjeto";
-				$tipoSolicitud = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
-				$service = false;
-			}
-			
-			
-			$cadena_sql = $this->miSql->getCadenaSql ( "consultarNucleoBasico", $resultadoNecesidadRelacionada[0]['id_objeto']);
-			$resultadoNBCRel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 
-			$_REQUEST ['objetoNBC'] = $resultadoNBCRel[0]['id_nucleo'];
-		
-		}
-		
-
-		if(isset($_REQUEST['idSolicitud']) && isset($_REQUEST['vigencia']) && isset($_REQUEST['unidadEjecutora'])){
-			
-			
-			$datos = array (
-					'idSolicitud' => $_REQUEST['idSolicitud'],
-					'vigencia' => $_REQUEST['vigencia'],
-					'unidadEjecutora' => $_REQUEST['unidadEjecutora']
-			);
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'informacionSolicitudAgora', $datos );
-			$objeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-			
-			$_REQUEST["idObjeto"] = $objeto[0]['id_objeto'];
-			$_REQUEST['numCotizaciones'] = $objeto[0]['numero_cotizaciones'];
-				
-		}
-		
-		//DATOS DEL OBJETO A CONTRATAR SELECCIONADO
-		$cadenaSql = $this->miSql->getCadenaSql ( 'objetoContratar', $_REQUEST["idObjeto"] );
-		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$datos = array (
-				'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
-				'vigencia' => $objetoEspecifico[0]['vigencia'],
-				'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+				'idObjeto' => $_REQUEST['idObjeto']
 		);
 		
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'listaSolicitudNecesidadXNumSolicitud', $datos );
-		$solicitudNecesidad = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacionCast', $datos['idObjeto'] );
+		$solicitudCotizacionCast = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
+		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
+		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 
 		$esteCampo = $tipoMarco;
 		$atributos ['id'] = $esteCampo;
@@ -179,17 +133,24 @@ class registrarForm {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
                 
-		echo "<span class='textoElegante textoEnorme textoAzul'>Objeto Solicitud de Necesidad : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['OBJETO'] . "</span></br>"; 
-                echo "<br>";
-        echo "<span class='textoElegante textoEnorme textoAzul'>Justificación Solicitud de Necesidad : </span>";
-                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['JUSTIFICACION'] . "</span></br>";
-                echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>"; 
-                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['DEPENDENCIA'] . "</span></br>"; 
-                echo "<br>";
-        echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto : </span>";
-                echo "<span class='textoElegante textoMediano textoGris'>". $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] ."</span></br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Título Cotización : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['titulo_cotizacion'] . "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>N° Cotización - Vigencia - Unidad Ejecutora : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - " . $solicitudCotizacion[0]['unidad_ejecutora']. "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Apertura : </span>";
+		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_apertura']) . "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
+		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']."</b></span></br>";
+		
 
 		//FIN OBJETO A CONTRATAR
         echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -238,13 +199,15 @@ class registrarForm {
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'actividadesXNecesidad', $_REQUEST["idObjeto"] );
         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        
+
         $actividades = $resultado[0][0];
         
 		$cadenaSql = $this->miSql->getCadenaSql ( 'verificarActividadProveedor', $actividades );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
 		if (! $resultado) {
+			
+			
 			// ------------------INICIO Division para los botones-------------------------
 			$atributos ["id"] = "divNoEncontroEgresado";
 			$atributos ["estilo"] = "marcoBotones";
@@ -255,24 +218,25 @@ class registrarForm {
 			$atributos ["etiqueta"] = "";
 			$atributos ["estilo"] = "centrar";
 			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo ) . $idActividad . ' - ' . $objetoEspecifico[0]['actividad'];
+			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
 			
 			echo $this->miFormulario->cuadroMensaje ( $atributos );
 			unset ( $atributos );
 			// -------------FIN Control Formulario----------------------
 			// ------------------FIN Division para los botones-------------------------
 			echo $this->miFormulario->division ( "fin" );
-			unset ( $atributos );
+
+			
+			
 		} else {
 
-			// LISTA DE PROVEEDORES CON MEJOR CLASIFICACION
+
 			// ------- FILTRAR POR ACTIVIDAD ECONOMICA
 			
 			if($service){
 				$datos = array (
 						'actividadEconomica' => $actividades,
-						'objetoNBC' => $_REQUEST ['objetoNBC'],
-						'numCotizaciones' => $_REQUEST ['numCotizaciones']
+						'objetoNBC' => $_REQUEST ['objetoNBC']
 				);
 				
 				
@@ -281,13 +245,10 @@ class registrarForm {
 				
 			}else{
 				$datos = array (
-						'actividadEconomica' => $actividades,
-						'numCotizaciones' => $_REQUEST ['numCotizaciones']
+						'actividadEconomica' => $actividades
 				);
 				
-				
-				// -------- Limite de registros
-				// --------- evaluacion mayor a 45
+
 				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
 				$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
@@ -315,6 +276,8 @@ class registrarForm {
 				// ------------------FIN Division para los botones-------------------------
 				echo $this->miFormulario->division ( "fin" );
 				unset ( $atributos );
+				
+				
 			} else {
 				// ---------------INICIO TABLA CON LISTA DE PROVEEDORES---------------------
 				$esteCampo = $marcoTipo;
@@ -323,16 +286,20 @@ class registrarForm {
 				$atributos ['tipoEtiqueta'] = 'inicio';
 				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-				
+				//var_dump($resultadoProveedor);
 				?>
-<table
-	class="table table-bordered table-striped table-hover table-condensed">
-	<tr class="info">
-		<td align="center"><strong>Documento</strong></td>
-		<td align="center"><strong>Proveedor</strong></td>
-		<td align="center"><strong>Puntaje Evaluaciòn</strong></td>
-		<td align="center"><strong>Clasificaciòn</strong></td>
-	</tr>	
+<table id="tablaPersonas"
+	class="display" cellspacing="0" width="100%">
+	<thead >
+		<tr>
+			<th align="center"><strong>Documento</strong></th>
+			<th align="center"><strong>Tipo Persona</strong></th>
+			<th align="center"><strong>Nombre</strong></th>
+			<th align="center"><strong>Correo</strong></th>
+		</tr>
+	</thead>	
+	
+	<tbody>
 			<?php
 				
 				$proveedores = array ();
@@ -346,15 +313,16 @@ class registrarForm {
 				
 					echo "<tr>";
 					echo "<td align='center'>" . $dato ['num_documento'] . "</td>";
+					echo "<td align='center'>" . $dato ['tipopersona'] . "</td>";
 					echo "<td align='center'>" . $dato ['nom_proveedor'] . "</td>";
-					echo "<td align='right'>" . $dato ['puntaje_evaluacion'] . "</td>";
-					echo "<td align='right'>" . $clasificacion . "</td>";
+					echo "<td align='left'>" . $dato ['correo'] . "</td>";
 					echo "</tr>";
 					
 					array_push ( $proveedores, $dato ['id_proveedor'] );
 				endforeach
 				;
 				?>
+				</tbody>
 			</table>
 <?php
 				
@@ -397,7 +365,7 @@ class registrarForm {
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				
 				// -----------------CONTROL: Botón ----------------------------------------------------------------
-				$esteCampo = 'botonAceptar';
+				$esteCampo = 'botonProcesar';
 				$atributos ["id"] = $esteCampo;
 				$atributos ["tabIndex"] = $tab;
 				$atributos ["tipo"] = 'boton';
@@ -418,6 +386,9 @@ class registrarForm {
 				unset ( $atributos );
 				// ------------------Fin Division para los botones-------------------------
 				echo $this->miFormulario->division ( "fin" );
+				
+			}
+		}
 		
 		// ------------------- SECCION: Paso de variables ------------------------------------------------
 		
@@ -465,14 +436,13 @@ class registrarForm {
 		// ---------------- FIN SECCION: Controles del Formulario -------------------------------------------
 		// ----------------FINALIZAR EL FORMULARIO ----------------------------------------------------------
 		// Se debe declarar el mismo atributo de marco con que se inició el formulario.
-		$atributos ['marco'] = true;
+		$atributos ['marco'] = false;
 		$atributos ['tipoEtiqueta'] = 'fin';
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		return true;
                 
-                }
-            }
+       
 	}
 }
 

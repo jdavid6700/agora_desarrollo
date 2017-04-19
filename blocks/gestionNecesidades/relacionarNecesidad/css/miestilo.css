@@ -47,3 +47,6 @@ textarea{
 font-weight: bold;
 }
 
+.mayuscula {
+	text-transform: uppercase; 
+}

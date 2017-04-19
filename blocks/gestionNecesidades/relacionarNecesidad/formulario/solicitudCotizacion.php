@@ -28,11 +28,11 @@ $directorio = $this->miConfigurador->getVariableConfiguracion ( "rutaUrlBloque" 
 		$conexion = 'estructura';
 		$esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'sicapital';
-		$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'sicapital';
+		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		$conexion = 'centralUD';
-		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		//$conexion = 'centralUD';
+		//$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		$conexion = 'argo_contratos';
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
