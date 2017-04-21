@@ -197,7 +197,7 @@ $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
-$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro (RUP) o (ESAL) :";
 $this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
 $this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
 $this->idioma["DocumentoRUPNatTitulo"]="Seleccionar documento";
@@ -371,7 +371,7 @@ $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
 $this->idioma["marcoContratos"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario (RUT) ";
 
-$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) ";
+$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) o Registro de Entidades Sin Ánimo de Lucro (ESAL)";
 
 
 //*******************************************

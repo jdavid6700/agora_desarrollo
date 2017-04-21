@@ -3765,12 +3765,12 @@ class Formulario {
 				
 			if($_REQUEST['DocumentoRUP'] != null){
 				$enlace = "<br><a href='".$_REQUEST['DocumentoRUP']."' target='_blank'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}else{
-				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUP')\">";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado Registro (RUP) o (ESAL)')\">";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}

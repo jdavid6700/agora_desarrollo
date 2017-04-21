@@ -157,7 +157,7 @@ $this->idioma["claseCIIUJur"] = "Código CIIU :";
 $this->idioma["claseCIIUJurTitulo"]="Seleccione el Código CIIU de la Actividad Económica";
 
 
-$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro (RUP) o (ESAL)  :";
 $this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
 $this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
 $this->idioma["DocumentoRUPNatTitulo"]="Seleccionar documento";
@@ -391,7 +391,7 @@ $this->idioma["marcoContratos"] = "Información de Contratos";
 $this->idioma["marcoContratosTabla"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario (RUT) ";
 
-$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) ";
+$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) o Registro de Entidades Sin Ánimo de Lucro (ESAL)";
 
 
 $this->idioma["tabProveedor"] = "Registro Proveedor";

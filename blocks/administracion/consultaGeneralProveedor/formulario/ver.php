@@ -98,8 +98,7 @@ class Formulario {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
-			$variable = "pagina=" . $miPaginaActual;
-			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
@@ -1099,6 +1098,20 @@ class Formulario {
 			
 			
 			
+		}
+		
+		
+		if(isset($_REQUEST['paginaOrigen'])){
+			$variable = "pagina=" . $_REQUEST['paginaOrigen'];
+			$variable .= "&opcion=" . $_REQUEST['opcionOrigen'];
+			$variable .= "&idSolicitud=" . $_REQUEST['idSolicitudOrigen'];
+			$variable .= "&vigencia=" . $_REQUEST['vigenciaOrigen'];
+			$variable .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutoraOrigen'];
+			$variable .= "&usuario=" . $_REQUEST['usuarioOrigen'];
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		}else{
+			$variable = "pagina=" . $miPaginaActual;
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		}
 		
 		
@@ -3521,12 +3534,12 @@ class Formulario {
 			
 			if($_REQUEST['DocumentoRUP'] != null){
 				$enlace = "<br><a href='".$_REQUEST['DocumentoRUP']."' target='_blank'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL)";
 				$enlace.="</a>";
 				echo $enlace;
 			}else{
-				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUP')\">";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado Registro (RUP) o (ESAL)')\">";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}
