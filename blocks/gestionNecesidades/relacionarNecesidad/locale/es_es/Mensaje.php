@@ -70,8 +70,18 @@ $this->idioma["claseCIIUTitulo"]="Seleccionar Código CIIU";
 $this->idioma["ordenador"] = "Ordenador del Gasto :";
 $this->idioma["ordenadorTitulo"]="Ordenador del Gasto";
 
-$this->idioma["dependencia"] = "Dependencia :";
-$this->idioma["dependenciaTitulo"]="Seleccionar dependencia";
+$this->idioma["dependencia"] = "Dependencia Solicitante :";
+$this->idioma["dependenciaTitulo"]="Seleccionar Dependencia solicitante";
+
+$this->idioma["solicitante"] = "Solicitante :";
+$this->idioma["solicitanteTitulo"]="Seleccionar Solicitante";
+
+
+$this->idioma["marcoAnexo"] = "Detalle Cotización";
+$this->idioma["cotizacionSoporte"] = "Adjuntar (PDF) : ";
+$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (PDF)";
+
+
 
 $this->idioma["numCDP"] = "No. CDP :";
 $this->idioma["numCDPTitulo"] = "Indicar número de CDP";

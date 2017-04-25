@@ -29,6 +29,25 @@ class Sql extends \Sql {
 		switch ($tipo) {
 			
 			
+			case "buscarSolicitante" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= "	cargo";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " argo.cargo_supervisor_temporal";
+				$cadenaSql .= " WHERE id = ".$variable;
+				break;
+			
+			
+			case "solicitante" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id,";
+				$cadenaSql .= "	cargo";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " argo.cargo_supervisor_temporal";
+				$cadenaSql .= " ORDER BY cargo";
+				break;
+			
+			
 			case "buscarAreaConocimiento" :
 				$cadenaSql = "SELECT ";
 				$cadenaSql .= " id_area,";
@@ -574,6 +593,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " titulo_cotizacion,";
 				$cadenaSql .= " numero_solicitud,";
 				$cadenaSql .= " vigencia,";
+				$cadenaSql .= " id_solicitante,";
 				$cadenaSql .= " unidad_ejecutora,";
 				$cadenaSql .= "	fecha_registro,";
 				$cadenaSql .= "	fecha_solicitud_cotizacion,";
@@ -730,11 +750,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " requisitos,";
 				$cadenaSql .= " observaciones,";
 				$cadenaSql .= " vigencia,";
+				$cadenaSql .= " id_solicitante,";
 				$cadenaSql .= " unidad_ejecutora,";
 				$cadenaSql .= " estado,";
 				$cadenaSql .= " tipo_necesidad,";
 				$cadenaSql .= " fecha_registro,";
-				$cadenaSql .= " responsable";
+				$cadenaSql .= " responsable,";
+				$cadenaSql .= " anexo_cotizacion";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
@@ -746,11 +768,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['requisitos'] . "',";
 				$cadenaSql .= " '" . $variable ['observaciones'] . "',";
 				$cadenaSql .= " " . $variable ['vigencia'] . ",";
+				$cadenaSql .= " " . $variable ['solicitante'] . ",";
 				$cadenaSql .= " " . $variable ['unidad_ejecutora'] . ",";
 				$cadenaSql .= " 'RELACIONADO',";
 				$cadenaSql .= " '" . $variable ['tipo_necesidad'] . "',";
 				$cadenaSql .= " '" . $hoy . "',";
-				$cadenaSql .= " '" . $variable ['usuario'] . "'";
+				$cadenaSql .= " '" . $variable ['usuario'] . "',";
+				$cadenaSql .= " '" . $variable ['anexo'] . "' ";
 				$cadenaSql .= " )";
 				$cadenaSql .= " RETURNING  id_objeto; ";
 				break;

@@ -72,9 +72,46 @@ class Registrar {
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
-		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/asignacionPuntajes/salariales/";
+		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/gestionNecesidades/";
 		$rutaBloque .= $esteBloque ['nombre'];
-		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
+		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/gestionNecesidades/" . $esteBloque ['nombre'];
+
+		
+		//Guardar RUT adjuntado Persona Natural*********************************************************************
+		$_REQUEST ['destino'] = '';
+		// Guardar el archivo
+		if ($_FILES) {
+			$i = 0;
+			foreach ( $_FILES as $key => $values ) {
+				$archivoCarga[$i] = $_FILES [$key];
+				$i++;
+			}
+			$archivo = $archivoCarga[0];
+			// obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivo1 = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivo1;
+		
+			if ($archivo1 != "") {
+				// guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/soportes/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
+					$_REQUEST ['destino'] = $host . "/soportes/" . $prefijo . "-" . $archivo1;
+				} else {
+					$status = "<br>Error al subir el archivo1";
+				}
+			} else {
+				$status = "<br>Error al subir archivo2";
+			}
+		} else {
+			echo "<br>NO existe el archivo D:!!!";
+		}
+		//************************************************************************************************************
+		
 		
 		
 		if(isset($_REQUEST['tituloCotizacion'])){$_REQUEST['tituloCotizacion']=mb_strtoupper($_REQUEST['tituloCotizacion'],'utf-8');}
@@ -102,6 +139,9 @@ class Registrar {
 				case 2 :
 					$_REQUEST['tipoNecesidad']='SERVICIO';
 					break;
+				case 3 :
+					$_REQUEST ['tipoNecesidad'] = 'BIEN Y SERVICIO';
+					break;
 			}
 		}
         
@@ -112,6 +152,7 @@ class Registrar {
         		'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
         		'vigencia' => $_REQUEST ['vigencia'],
         		'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
+        		'solicitante' => $_REQUEST ['solicitante'],
         		'dependencia' => $_REQUEST ['dependencia'],
         		'fecha_apertura' => $fechaApertura,
         		'fecha_cierre' => $fechaCierre,
@@ -119,13 +160,15 @@ class Registrar {
         		'requisitos' => $datosTextoEnriquecido['requisitos'],
         		'observaciones' => $datosTextoEnriquecido['observaciones'],
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
-        		'usuario' => $_REQUEST ['usuario']
+        		'usuario' => $_REQUEST ['usuario'],
+        		'anexo' => $_REQUEST ['destino']
         );
 
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
         $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSolicitud, 'registrar' );
 		
+
 		if ($resultado) {
 			
 			
@@ -137,6 +180,7 @@ class Registrar {
 						'idObjeto' => $resultado[0][0],
 						'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
 						'vigencia' => $_REQUEST ['vigencia'],
+						'solicitante' => $_REQUEST ['solicitante'],
 						'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
 						'dependencia' => $_REQUEST ['dependencia'],
 						'fecha_apertura' => $fechaApertura,

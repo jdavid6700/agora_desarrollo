@@ -77,6 +77,7 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('unidadEjecutora')?>').width(250);
 $('#<?php echo $this->campoSeguro('dependencia')?>').width(750);
+$('#<?php echo $this->campoSeguro('solicitante')?>').width(750);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
@@ -99,6 +100,7 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').select2();
 $('#<?php echo $this->campoSeguro('unidadEjecutora')?>').select2();
 $('#<?php echo $this->campoSeguro('dependencia')?>').select2();
+$('#<?php echo $this->campoSeguro('solicitante')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

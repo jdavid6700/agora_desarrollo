@@ -132,8 +132,8 @@ class Funcion {
 						);
 						redireccion::redireccionar ( "cotizacion", $arreglo );
 						exit();
-					}else if(!isset ( $_REQUEST ["botonTerminar"] ) && isset ( $_REQUEST ["tipoNecesidad"] ) && $_REQUEST ["tipoNecesidad"] == 'SERVICIO'
-							&& (!isset($_REQUEST ["divisionCIIU"]) && !isset($_REQUEST ["grupoCIIU"]) && !isset($_REQUEST ["claseCIIU"]))){			
+					}else if(!isset ( $_REQUEST ["botonTerminar"] ) && isset ( $_REQUEST ["tipoNecesidad"] ) && ($_REQUEST ["tipoNecesidad"] == 'SERVICIO' || $_REQUEST ["tipoNecesidad"] == 'BIEN Y SERVICIO')
+							&& (!isset($_REQUEST ["divisionCIIU"]) && !isset($_REQUEST ["grupoCIIU"]) && !isset($_REQUEST ["claseCIIU"]))){	
 						$this->registrarNucleoBasico ();
 					}else{						
 						$this->registrarActividad ();

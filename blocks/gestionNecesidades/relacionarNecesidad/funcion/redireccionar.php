@@ -18,6 +18,7 @@ class redireccion {
 				$variable .= "&mensaje=confirma";
 				$variable .= "&idObjeto=".$valor['idObjeto'];
 				$variable .= "&vigencia=".$valor['vigencia'];
+				$variable .= "&solicitante=".$valor['solicitante'];
 				$variable .= "&unidadEjecutora=".$valor['unidad_ejecutora'];
 				$variable .= "&tipoNecesidad=".$valor['tipo_necesidad'];
 				$variable .= "&dependencia=".$valor['dependencia'];

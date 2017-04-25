@@ -301,3 +301,17 @@ if($("#<?php echo $this->campoSeguro('pais')?>").val() != '' ){
 	$('#<?php echo $this->campoSeguro('ciudad')?>').width(470);
 	$("#<?php echo $this->campoSeguro('ciudad')?>").select2();
 }
+
+
+$( '#<?php echo $this->campoSeguro('cotizacionSoporte')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('cotizacionSoporte')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('cotizacionSoporte')?>');
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+
+
