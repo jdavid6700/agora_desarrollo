@@ -99,7 +99,7 @@ class registrarForm {
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		
-			if($_REQUEST['tipoNecesidad'] == "SERVICIO"){
+			if($_REQUEST['tipoNecesidad'] == "SERVICIO" || $_REQUEST['tipoNecesidad'] == "BIEN Y SERVICIO"){
 				$marcoTipo = "marcoProveedoresConv";
 				$tipoMarco = "marcoObjetoConv";
 				$tipoSolicitud = $_REQUEST['tipoNecesidad'];
@@ -123,8 +123,17 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
 		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitante', $solicitudCotizacion[0]['id_solicitante'] );
+		$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		if($solicitudCotizacion[0]['unidad_ejecutora'] == 1){
+			$valorUnidadEjecutoraText = "1 - Rectoría";
+		}else{
+			$valorUnidadEjecutoraText = "2 - IDEXUD";
+		}
                 
 		$esteCampo = $tipoMarco;
 		$atributos ['id'] = $esteCampo;
@@ -137,7 +146,7 @@ class registrarForm {
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['titulo_cotizacion'] . "</b></span></br>";
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>N° Cotización - Vigencia - Unidad Ejecutora : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - " . $solicitudCotizacion[0]['unidad_ejecutora']. "</b></span></br>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - (" .$valorUnidadEjecutoraText. ")</b></span></br>";
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Apertura : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_apertura']) . "</b></span></br>";
@@ -145,7 +154,10 @@ class registrarForm {
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
 		echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Solicitante : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoSolicitante[0][0]. "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>";
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";
@@ -209,22 +221,33 @@ class registrarForm {
 			
 			
 			// ------------------INICIO Division para los botones-------------------------
-			$atributos ["id"] = "divNoEncontroEgresado";
-			$atributos ["estilo"] = "marcoBotones";
-			echo $this->miFormulario->division ( "inicio", $atributos );
-			// -------------SECCION: Controles del Formulario-----------------------
-			$esteCampo = "mensajeNoHayProveedores";
-			$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
-			$atributos ["etiqueta"] = "";
-			$atributos ["estilo"] = "centrar";
-			$atributos ["tipo"] = 'error';
-			$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
-			
-			echo $this->miFormulario->cuadroMensaje ( $atributos );
-			unset ( $atributos );
-			// -------------FIN Control Formulario----------------------
-			// ------------------FIN Division para los botones-------------------------
-			echo $this->miFormulario->division ( "fin" );
+				$atributos ["id"] = "divNoEncontroEgresado";
+				$atributos ["estilo"] = "marcoBotones";
+				echo $this->miFormulario->division ( "inicio", $atributos );
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeNoHayProveedoresPuntaje";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'error';
+				$atributos ["mensaje"] = "No se encontraron proveedores, actualmente <h2><b>(" ."0" . ")</b></h2> proveedores cumplen con las características de la solicitud de cotización.
+						<br>
+						<br>
+						Por favor modifique la solicitud, diríjase al <b>Módulo de Gestión de Solicitudes de Cotización</b> y realice los cambios correspondientes.
+						<br>
+						<br>
+						<br>
+						Solicitud de Cotización : <b>". $solicitudCotizacion[0]['numero_solicitud'] ."</b>
+						
+						
+						";
+				
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
+				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
 
 			
 			
@@ -268,7 +291,17 @@ class registrarForm {
 				$atributos ["etiqueta"] = "";
 				$atributos ["estilo"] = "centrar";
 				$atributos ["tipo"] = 'error';
-				$atributos ["mensaje"] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["mensaje"] = "No se encontraron proveedores, actualmente <h2><b>(" ."0" . ")</b></h2> proveedores cumplen con las características de la solicitud de cotización.
+						<br>
+						<br>
+						Por favor modifique la solicitud, diríjase al <b>Módulo de Gestión de Solicitudes de Cotización</b> y realice los cambios correspondientes.
+						<br>
+						<br>
+						<br>
+						Solicitud de Cotización : <b>". $solicitudCotizacion[0]['numero_solicitud'] ."</b>
+						
+						
+						";
 				
 				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
@@ -279,113 +312,40 @@ class registrarForm {
 				
 				
 			} else {
-				// ---------------INICIO TABLA CON LISTA DE PROVEEDORES---------------------
-				$esteCampo = $marcoTipo;
-				$atributos ['id'] = $esteCampo;
-				$atributos ["estilo"] = "jqueryui";
-				$atributos ['tipoEtiqueta'] = 'inicio';
-				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-				//var_dump($resultadoProveedor);
-				?>
-<table id="tablaPersonas"
-	class="display" cellspacing="0" width="100%">
-	<thead >
-		<tr>
-			<th align="center"><strong>Documento</strong></th>
-			<th align="center"><strong>Tipo Persona</strong></th>
-			<th align="center"><strong>Nombre</strong></th>
-			<th align="center"><strong>Correo</strong></th>
-		</tr>
-	</thead>	
-	
-	<tbody>
-			<?php
 				
-				$proveedores = array ();
-				foreach ( $resultadoProveedor as $dato ) :
-					
-					if($dato ['clasificacion_evaluacion'] == null){
-						$clasificacion = 'SIN CLASIFICACIÓN';
-					}else{
-						$clasificacion = $dato ['clasificacion_evaluacion'];
-					}
 				
-					echo "<tr>";
-					echo "<td align='center'>" . $dato ['num_documento'] . "</td>";
-					echo "<td align='center'>" . $dato ['tipopersona'] . "</td>";
-					echo "<td align='center'>" . $dato ['nom_proveedor'] . "</td>";
-					echo "<td align='left'>" . $dato ['correo'] . "</td>";
-					echo "</tr>";
-					
-					array_push ( $proveedores, $dato ['id_proveedor'] );
-				endforeach
-				;
-				?>
-				</tbody>
-			</table>
-<?php
 				
-				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-				
-				$esteCampo = 'idProveedor';
-				$atributos ["id"] = $esteCampo; // No cambiar este nombre
-				$atributos ["tipo"] = "hidden";
-				$atributos ['estilo'] = '';
-				$atributos ["obligatorio"] = false;
-				$atributos ['marco'] = true;
-				$atributos ["etiqueta"] = "";
-				$atributos ['valor'] = serialize ( $proveedores );
-				
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				unset ( $atributos );
-				
-				// ---------------FIN TABLA CON LISTA DE PROVEEDORES---------------------
-				
-				$esteCampo = 'idObjeto';
-				$atributos ["id"] = $esteCampo; // No cambiar este nombre
-				$atributos ["tipo"] = "hidden";
-				$atributos ['estilo'] = '';
-				$atributos ["obligatorio"] = false;
-				$atributos ['marco'] = true;
-				$atributos ["etiqueta"] = "";
-				if (isset ( $_REQUEST [$esteCampo] )) {
-					$atributos ['valor'] = $_REQUEST [$esteCampo];
-				} else {
-					$atributos ['valor'] = '';
-				}
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroTexto ( $atributos );
-				unset ( $atributos );
-				
-				// ------------------Division para los botones-------------------------
-				$atributos ["id"] = "botones";
+				// ------------------INICIO Division para los botones-------------------------
+				$atributos ["id"] = "divEncontro";
 				$atributos ["estilo"] = "marcoBotones";
 				echo $this->miFormulario->division ( "inicio", $atributos );
+				// -------------SECCION: Controles del Formulario-----------------------
+				$esteCampo = "mensajeHayProveedores";
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = 'success';
+				$atributos ["mensaje"] = "Se encontraron <h2><b>(" .count($resultadoProveedor) . ")</b></h2> personas que cumplen con las características de la solicitud de cotización.
+						<br>
+						<br>
+						Si desea procesar la solicitud, diríjase al <b>Módulo de Gestión de Solicitudes de Cotización</b> y realice el procesamiento correspondiente.
+						<br>
+						<br>
+						<br>
+						Solicitud de Cotización : <b>". $solicitudCotizacion[0]['numero_solicitud'] ."</b>
+						
+						
+						";
 				
-				// -----------------CONTROL: Botón ----------------------------------------------------------------
-				$esteCampo = 'botonProcesar';
-				$atributos ["id"] = $esteCampo;
-				$atributos ["tabIndex"] = $tab;
-				$atributos ["tipo"] = 'boton';
-				// submit: no se coloca si se desea un tipo button genérico
-				$atributos ['submit'] = 'true';
-				$atributos ["estiloMarco"] = '';
-				$atributos ["estiloBoton"] = 'jqueryui';
-				// verificar: true para verificar el formulario antes de pasarlo al servidor.
-				$atributos ["verificar"] = '';
-				$atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-				$atributos ["valor"] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['nombreFormulario'] = $esteBloque ['nombre'];
-				$tab ++;
-				
-				// Aplica atributos globales al control
-				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoBoton ( $atributos );
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
-				// ------------------Fin Division para los botones-------------------------
+				// -------------FIN Control Formulario----------------------
+				// ------------------FIN Division para los botones-------------------------
 				echo $this->miFormulario->division ( "fin" );
+				unset ( $atributos );
+				
+				
+				
 				
 			}
 		}

@@ -27,6 +27,9 @@ if (!isset($GLOBALS["autorizado"])) {
 
     $conexion = "framework";
     $esteRecursoDBE = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
+    
+    $conexion = 'argo_contratos';
+    $argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
     $conexion = "estructura";
     $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
@@ -77,6 +80,9 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	$cadenaSql = $this->sql->getCadenaSql ( 'buscarDependencia', $_REQUEST['dependencia'] );
     	$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarSolicitante', $_REQUEST['solicitante'] );
+    	$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         
         if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "RELACIONADO"){
         	
@@ -138,9 +144,10 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Cotización <b>N° ".$_REQUEST['idObjeto']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
 					Unidad Ejecutora <b>". $valorUnidadEjecutoraText . "</b>
 				</br>
-				</br><b>Dependencia:</b> ".$resultadoDependencia[0][0]."
-				</br><b>Fecha del Proceso:</b> ".$hoy."
-				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
+				</br><b>Solicitante: </b> ".$resultadoSolicitante[0][0]."
+				</br><b>Dependencia: </b> ".$resultadoDependencia[0][0]."
+				</br><b>Fecha del Proceso: </b> ".$hoy."
+				</br><b>Responsable: </b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
         $boton = "continuar";
 		
         
@@ -177,7 +184,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		
 		
 		$tipo = 'success';
-		if($objetoEspecifico[0]['tipo_necesidad'] == 'SERVICIO'){
+		if($objetoEspecifico[0]['tipo_necesidad'] == 'SERVICIO' || $objetoEspecifico[0]['tipo_necesidad'] == 'BIEN Y SERVICIO'){
 			$convocatoria = true;
 			$mensaje =  $this->lenguaje->getCadena('mensajeConvocatoria');
 			
@@ -331,7 +338,7 @@ if (!isset($GLOBALS["autorizado"])) {
 							Los Proveedores que cumplen las caracteristicas ". $mensajeEnvio ."
 							</br>
 				</br><b>Fecha del Proceso:</b> ".$hoy."
-				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
+				</br><b>Responsable:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
 		        $boton = "continuar";
 		
 		        $valorCodificado = "pagina=".$miPaginaActual;
@@ -376,7 +383,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	$actividades = true;
     	
-    	if($_REQUEST['tipoNecesidad'] == 'SERVICIO'){
+    	if($_REQUEST['tipoNecesidad'] == 'SERVICIO' || $_REQUEST['tipoNecesidad'] == 'BIEN Y SERVICIO'){
     		$faltaNBC = true;
     	}else{
     		$faltaNBC = false;
@@ -403,7 +410,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
         $actividades = true;
         
-        if($_REQUEST['tipoNecesidad'] == 'SERVICIO'){
+        if($_REQUEST['tipoNecesidad'] == 'SERVICIO' || $_REQUEST['tipoNecesidad'] == 'BIEN Y SERVICIO'){
         	$faltaNBC = true;
         }else{
         	$faltaNBC = false;

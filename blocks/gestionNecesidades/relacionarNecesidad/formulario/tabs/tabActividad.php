@@ -46,8 +46,8 @@ class FormularioRegistro {
 		//$conexion = 'sicapital';
 		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
-		//$conexion = 'centralUD';
-		//$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+		$conexion = 'centralUD';
+		$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 		
 		$conexion = 'argo_contratos';
 		$argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
@@ -129,12 +129,21 @@ class FormularioRegistro {
 				
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacionCast', $datos['idObjeto'] );
 		$solicitudCotizacionCast = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
 		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitante', $solicitudCotizacion[0]['id_solicitante'] );
+		$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		if($solicitudCotizacion[0]['unidad_ejecutora'] == 1){
+			$valorUnidadEjecutoraText = "1 - Rectoría";
+		}else{
+			$valorUnidadEjecutoraText = "2 - IDEXUD";
+		}
 			
 		$esteCampo = "marcoObjetoAct";
 		$atributos ['id'] = $esteCampo;
@@ -147,7 +156,7 @@ class FormularioRegistro {
 				echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['titulo_cotizacion'] . "</b></span></br>";
 				echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>N° Cotización - Vigencia - Unidad Ejecutora : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - " . $solicitudCotizacion[0]['unidad_ejecutora']. "</b></span></br>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - (" .$valorUnidadEjecutoraText. ")</b></span></br>";
 				echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Apertura : </span>"; 
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_apertura']) . "</b></span></br>"; 
@@ -155,7 +164,10 @@ class FormularioRegistro {
         echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
         echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
                 echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia : </span>"; 
+        echo "<span class='textoElegante textoEnorme textoAzul'>Solicitante : </span>";
+        echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoSolicitante[0][0]. "</b></span></br>";
+                echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>"; 
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>"; 
                 echo "<br>";
         echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";

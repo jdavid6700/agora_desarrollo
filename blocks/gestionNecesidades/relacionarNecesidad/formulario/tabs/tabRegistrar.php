@@ -234,7 +234,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -264,7 +264,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -294,7 +294,7 @@ class FormularioRegistro {
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -331,7 +331,7 @@ class FormularioRegistro {
 			$atributos ['seleccion'] = - 1;
 		}
 		$atributos ['deshabilitado'] = false;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 2;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
 		$atributos ['ajax_control'] = $esteCampo;
@@ -352,6 +352,7 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
+		
 		
 		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
 		$esteCampo = "dependencia";
@@ -384,6 +385,41 @@ class FormularioRegistro {
 		echo $this->miFormulario->campoCuadroLista ( $atributos );
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+		
+		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+		$esteCampo = "solicitante";
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['tab'] = $tab ++;
+		$atributos ['anchoEtiqueta'] = 200;
+		$atributos ['evento'] = '';
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['seleccion'] = - 1;
+		}
+		$atributos ['deshabilitado'] = false;
+		$atributos ['columnas'] = 1;
+		$atributos ['tamanno'] = 1;
+		$atributos ['ajax_function'] = "";
+		$atributos ['ajax_control'] = $esteCampo;
+		$atributos ['estilo'] = "jqueryui";
+		$atributos ['validar'] = "required";
+		$atributos ['limitar'] = false;
+		$atributos ['anchoCaja'] = 60;
+		$atributos ['miEvento'] = '';
+		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'solicitante' );
+		$matrizItems = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$atributos ['matrizItems'] = $matrizItems;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+		
+		
+
 		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -566,24 +602,14 @@ class FormularioRegistro {
 		$esteCampo = 'estado';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
-		$atributos ['tipo'] = 'text';
+		$atributos ['tipo'] = 'hidden';
 		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['marco'] = true;
-		$atributos ['estiloMarco'] = '';
-		$atributos ["etiquetaObligatorio"] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['validar'] = '';
 		
 		$atributos ['valor'] = 'RELACIONADO';
-		
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 20;
-		$atributos ['maximoTamanno'] = '30';
-		$atributos ['anchoEtiqueta'] = 200;
 		$tab ++;
 		
 		// Aplica atributos globales al control
@@ -595,6 +621,37 @@ class FormularioRegistro {
 		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		
+		
+		$esteCampo = "marcoAnexo";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+		// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+		$esteCampo = "cotizacionSoporte";
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["nombre"] = $esteCampo;
+		$atributos ["tipo"] = "file";
+		// $atributos ["obligatorio"] = true;
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ["tabIndex"] = $tab ++;
+		$atributos ["columnas"] = 1;
+		$atributos ["estilo"] = "textoIzquierda";
+		$atributos ["anchoEtiqueta"] = 400;
+		$atributos ["tamanno"] = 500000;
+		$atributos ["validar"] = "required";
+		
+		$atributos ["etiqueta"] = $this->lenguaje->getCadena($esteCampo);
+		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+		// $atributos ["valor"] = $valorCodificado;
+		$atributos = array_merge($atributos, $atributosGlobales);
+		echo $this->miFormulario->campoCuadroTexto($atributos);
+		unset($atributos);
+		// ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------
+		
+		echo $this->miFormulario->marcoAgrupacion('fin');
 		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -654,7 +711,8 @@ class FormularioRegistro {
 		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'unidad' );
 		$matrizItems = array (
 				array ( 1, 'Bien' ),
-				array ( 2, 'Servicio' )
+				array ( 2, 'Servicio' ),
+				array ( 3, 'Bien y Servicio' )
 		);
 		
 		$atributos ['matrizItems'] = $matrizItems;
