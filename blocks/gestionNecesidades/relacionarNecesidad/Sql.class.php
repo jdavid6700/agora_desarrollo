@@ -715,6 +715,19 @@ class Sql extends \Sql {
 					$cadenaSql .= " core.ciiu_subclase";
 					$cadenaSql .= " WHERE id_subclase = '".$variable."'";
 					break;
+					
+					
+					case "ciiuSubClaseByNumPush" :
+						$cadenaSql = "SELECT";
+						$cadenaSql .= " clase AS clase,";
+						$cadenaSql .= " nombre AS descripcion,";
+						$cadenaSql .= " id_subclase AS id_subclase,";
+						$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
+						$cadenaSql .= " FROM ";
+						$cadenaSql .= " core.ciiu_subclase";
+						$cadenaSql .= " WHERE id_subclase = '".$variable."'";
+						break;
+					
 				
 				
 			case "infoCotizacion" :	

@@ -4,6 +4,8 @@ use asignacionPuntajes\salariales\premiosDocente\Sql;
 $conexion = "estructura";
 $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+$conexion = 'core_central';
+$coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
 //Estas funciones se llaman desde ajax.php y estas a la vez realizan las consultas de Sql.class.php 
 
@@ -12,6 +14,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 //-------------------------------------------------
 //Validación Petición AJAX Parametro SQL Injection
 if(is_numeric($_REQUEST['valor'])){
+	$subclase = $_REQUEST['valor'];
 	settype($_REQUEST['valor'], 'integer');
 	$secure = true;
 }else{
@@ -40,7 +43,12 @@ if($secure){
 		$resultado = json_encode ( $resultado);
 		echo $resultado;
 	}
-
+	
+	if ($_REQUEST ['funcion'] == 'consultarCIIUPush') {
+		$cadenaSql = $this->sql->getCadenaSql ( 'ciiuSubClaseByNumPush', $subclase);
+		$datos = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
+	}
 }
 
 ?>

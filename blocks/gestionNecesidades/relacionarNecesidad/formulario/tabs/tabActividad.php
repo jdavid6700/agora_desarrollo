@@ -242,6 +242,72 @@ class FormularioRegistro {
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
 		
+			
+			$esteCampo = "marcoCIIU";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+			?>
+			
+			
+			
+			
+			<table id="tabla" class="table1" width="100%" >
+				<!-- Cabecera de la tabla -->
+				<thead>
+					<tr>
+						<th width="10%" >Codigo</th>
+						<th width="50%" >Descripción</th>
+						<th width="25%" >Clase</th>
+						<th width="15%" >&nbsp;</th>
+					</tr>
+				</thead>
+			 
+				<!-- Cuerpo de la tabla con los campos -->
+				<tbody>
+			 
+					<!-- fila base para clonar y agregar al final -->
+					<tr class="fila-base">
+						<td><input type="text" class="nombre" size="40" /></td>
+						<td><input type="text" class="apellidos" size="125" /></td>
+						<td><input type="text" class="apellidos" size="65" /></td>
+						<th class="eliminar" scope="row">Eliminar</th>
+					</tr>
+					<!-- fin de código: fila base -->
+			 
+<!--					 Fila de ejemplo 
+					<tr>
+						<td><input type="text" class="nombre" size="40" /></td>
+						<td><input type="text" class="apellidos" size="125" /></td>
+						<td><input type="text" class="apellidos" size="65" /></td>
+						<th class="eliminar" scope="row">Eliminar</th>
+					</tr>-->
+					<!-- fin de código: fila de ejemplo -->
+			 
+				</tbody>
+			</table>
+			<!-- Botón para agregar filas -->
+			<!-- 
+			<input type="button" id="agregar" value="Agregar fila" /> -->
+			
+
+
+			
+			
+			<?php
+			
+			
+			
+			
+			
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
+			
 		
 		// ------------------Division para los botones-------------------------
 		$atributos ["id"] = "botonesReg";

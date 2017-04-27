@@ -48,6 +48,50 @@ $cadena23 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal23 = $url . $cadena23;
 //echo $urlFinal16; exit;
 
+
+
+
+// URL base
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+//Variables
+$cadenaACodificar24 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar24 .= "&procesarAjax=true";
+$cadenaACodificar24 .= "&action=index.php";
+$cadenaACodificar24 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar24 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar24 .= $cadenaACodificar24 . "&funcion=consultarCIIUPush";
+$cadenaACodificar24 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena24 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar24, $enlace );
+
+// URL definitiva
+$urlFinal24 = $url . $cadena24;
+
+//Variables
+$cadenaACodificarCIUU = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificarCIUU .= "&procesarAjax=true";
+$cadenaACodificarCIUU .= "&action=index.php";
+$cadenaACodificarCIUU .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarCIUU .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarCIUU .= $cadenaACodificarCIUU . "&funcion=consultarCIIUPush";
+$cadenaACodificarCIUU .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadenaCIUU = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarCIUU, $enlace );
+
+// URL definitiva
+$urlInfoClaseCIUU = $url . $cadenaCIUU;
+
+
+
 ?>
 
 
@@ -145,6 +189,21 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		   });
 		};
 		
+		
+		function consultarCIIUPush(elem, request, response){
+		  $.ajax({
+		    url: "<?php echo $urlFinal24?>",
+		    dataType: "json",
+		    data: { valor:$("#<?php echo $this->campoSeguro('claseCIIU')?>").val()},
+		    success: function(data){ 
+					
+					console(data);
+		    			
+		    }
+			                    
+		   });
+		};
+		
 	
 	
 				$("#<?php echo $this->campoSeguro('objetoArea')?>").change(function(){
@@ -163,6 +222,128 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		    			$("#<?php echo $this->campoSeguro('objetoNBC')?>").addClass("validate[required]");
 		    			}
 		    	}); 		
+		    	
+		    	
+		        var iCnt = 0;   	
+		    	
+		    	
+		    	$(function(){
+		    	
+		    	
+		    	$("#<?php echo $this->campoSeguro('claseCIIU')?>").change(function(){
+		        	
+                        
+                          
+                          if ($("#<?php echo $this->campoSeguro('claseCIIU') ?>").val() != '') {
+                        
+                                
+                                consultarCIIUPush();
+		        	
+		        	
+                                <!--            InfoTabla();-->
+                          } else {
+
+                            }
+		        	
+		        	
+		        	
+		    	}); 
+                        
+                         function consultarCIIUPush(elem, request, response) {
+        $.ajax({
+            url: "<?php echo $urlInfoClaseCIUU ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('claseCIIU') ?>").val()},
+            success: function (data) {
+                if (data[0] != "") {
+                
+                              var validacion=0;
+                             
+                             $('#tabla tr').each(function(){
+                                        var celdas = $(this).find('td');
+                                                                              
+                                        if(data[0][2]===$(celdas[0]).html()){
+                                            validacion=1;
+                                         }
+                             });
+                             
+                             if(validacion===0){
+                                var tds=4;
+		        	var trs=4;
+		        	
+		        	var nuevaFila="<tr>";
+					
+                                nuevaFila+="<td>"+(data[0][2])+"</td>";
+								nuevaFila+="<td>"+(data[0][1])+"</td>";
+								nuevaFila+="<td>"+(data[0][0])+"</td>";
+								nuevaFila+="<th class=\"eliminar\" scope=\"row\">columna "+(iCnt++)+" Eliminar</th>";	
+					            nuevaFila+="</tr>";
+					
+                                 $("#tabla").append(nuevaFila);
+                             }
+                              else{                                   
+                                 alert('Ya se encuentra registrado!'); 
+                              
+                              }
+                                
+                             
+                
+                            
+                
+<!--                         if(data[0][2])-->
+                
+
+                }
+
+
+            }
+
+        });
+    }
+    ;
+
+					
+					 
+					
+					        /**
+					
+					         * Funcion para eliminar la ultima columna de la tabla.
+					
+					         * Si unicamente queda una columna, esta no sera eliminada
+					
+					         */
+					         
+					         
+					         // Evento que selecciona la fila y la elimina 
+								$(document).on("click",".eliminar",function(){
+									var parent = $(this).parents().get(0);
+									$(parent).remove();
+								});
+					
+					        $("#del").click(function(){
+					
+					            // Obtenemos el total de columnas (tr) del id "tabla"
+					
+					            var trs=$("#tabla tr").length;
+					
+					            if(trs>1)
+					
+					            {
+					
+					                // Eliminamos la ultima columna
+					
+					                $("#tabla tr:last").remove();
+					
+					            }
+					
+					        });
+					
+
+				});
+
+
+
+
 
 <?php
 
@@ -303,15 +484,15 @@ if($("#<?php echo $this->campoSeguro('pais')?>").val() != '' ){
 }
 
 
-$( '#<?php echo $this->campoSeguro('cotizacionSoporte')?>' ).change(function() {
-			var ext = $('#<?php echo $this->campoSeguro('cotizacionSoporte')?>').val().split('.').pop().toLowerCase();
-			$fileupload = $('#<?php echo $this->campoSeguro('cotizacionSoporte')?>');
-			if($.inArray(ext, ['pdf']) == -1) {
-			    alert('Extension de Archivo No Permitida!');
-			    
-				clearFileInput($fileupload);
-				$fileupload.replaceWith($fileupload.clone(true));
-			}
-		});
-
+$("#<?php echo $this->campoSeguro('cotizacionSoporte')?>").change(function (){
+         var file = $("#<?php echo $this->campoSeguro('cotizacionSoporte')?>").val();
+        var ext = file.substring(file.lastIndexOf("."));
+       if(ext != ".pdf" && ext != ".xls" && ext != ".xlsx" && ext != ".doc" &&  ext != ".docx")
+         {
+             alert('Por favor cambie el archivo por otro en alguno de los formatos (pdf, xls, xlsx, doc, docx)');
+             $("#<?php echo $this->campoSeguro('cotizacionSoporte')?>").val(null);
+         }
+     });
+     
+     
 
