@@ -96,6 +96,7 @@ class redireccion {
 				$variable .= "&actividad=" . $valor ['actividad'];
 				$variable .= "&tipoNecesidad=".$valor['tipoNecesidad'];
 				$variable .= "&usuario=".$valor['usuario'];
+				$variable .= "&actividadesArray=".$valor['actividades'];
 				break;
 				
 			case "registroNucleo" :

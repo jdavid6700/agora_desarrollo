@@ -400,12 +400,25 @@ if (!isset($GLOBALS["autorizado"])) {
         
     }else if($_REQUEST['mensaje'] == 'registroActividad') {
     	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'ciiuSubClaseByNum', $_REQUEST['actividad']  );
-    	$resultadoCIIU = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
+    	$actividadesArray = explode(",", $_REQUEST['actividadesArray']);
+    	$listAc = "";
+    	
+    	
+    	foreach ($actividadesArray as $dato):
+    		$cadenaSql = $this->sql->getCadenaSql ( 'ciiuSubClaseByNum', $dato  );
+    		$resultadoCIIU = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
+    		$listAc .= "<strong>" . $resultadoCIIU[0]['nombre'] . "</strong><br >";;
+    	endforeach;
+    	
+    	
+    	
+    	
 
         $tipo = 'success';
-        $mensaje = "Se registro la Actividad Económica<br >";
-		$mensaje .= "<strong>" . $resultadoCIIU[0]['nombre'] . "</strong><br >";
+        $mensaje = "Se registro la(s) Actividad(es) Económica(s)<br ><br>";
+		$mensaje .= $listAc;
         $boton = "regresar";
 
         $actividades = true;
@@ -533,7 +546,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	// Aplica atributos globales al control
     	$atributos = array_merge($atributos, $atributosGlobales);
-    	echo $this->miFormulario->campoBoton($atributos);
+    	//echo $this->miFormulario->campoBoton($atributos);
     	// -----------------FIN CONTROL: Botón -----------------------------------------------------------
     	
     	// -----------------CONTROL: Botón ----------------------------------------------------------------

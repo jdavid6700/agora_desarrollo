@@ -224,88 +224,97 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		    	}); 		
 		    	
 		    	
-		        var iCnt = 0;   	
 		    	
 		    	
-		    	$(function(){
+		    	
+		    	
+		    	
+		    	
+		    	
+		     var iCnt = 0;   
+		     var actividades = new Array(); 	
+		    	
+		    	
+		     $(function(){
+                        function eliminarFila(index) {
+                          $("#" + index).remove();
+                            }
 		    	
 		    	
 		    	$("#<?php echo $this->campoSeguro('claseCIIU')?>").change(function(){
 		        	
                         
                           
-                          if ($("#<?php echo $this->campoSeguro('claseCIIU') ?>").val() != '') {
-                        
-                                
-                                consultarCIIUPush();
-		        	
-		        	
-                                <!--            InfoTabla();-->
-                          } else {
+                     if ($("#<?php echo $this->campoSeguro('claseCIIU') ?>").val() != '') {
+								consultarCIIUPush();
+                                      <!--            InfoTabla();-->
+                   	 }
 
-                            }
-		        	
 		        	
 		        	
 		    	}); 
                         
-                         function consultarCIIUPush(elem, request, response) {
-        $.ajax({
-            url: "<?php echo $urlInfoClaseCIUU ?>",
-            dataType: "json",
-            data: {valor: $("#<?php echo $this->campoSeguro('claseCIIU') ?>").val()},
-            success: function (data) {
-                if (data[0] != "") {
-                
-                              var validacion=0;
-                             
-                             $('#tabla tr').each(function(){
-                                        var celdas = $(this).find('td');
-                                                                              
-                                        if(data[0][2]===$(celdas[0]).html()){
-                                            validacion=1;
-                                         }
-                             });
-                             
-                             if(validacion===0){
-                                var tds=4;
-		        	var trs=4;
-		        	
-		        	var nuevaFila="<tr>";
-					
-                                nuevaFila+="<td>"+(data[0][2])+"</td>";
-								nuevaFila+="<td>"+(data[0][1])+"</td>";
-								nuevaFila+="<td>"+(data[0][0])+"</td>";
-								nuevaFila+="<th class=\"eliminar\" scope=\"row\">columna "+(iCnt++)+" Eliminar</th>";	
-					            nuevaFila+="</tr>";
-					
-                                 $("#tabla").append(nuevaFila);
-                             }
-                              else{                                   
-                                 alert('Ya se encuentra registrado!'); 
-                              
-                              }
+                         
+               function consultarCIIUPush(elem, request, response) {
+                                        $.ajax({
+                                            url: "<?php echo $urlInfoClaseCIUU ?>",
+                                            dataType: "json",
+                                            data: {valor: $("#<?php echo $this->campoSeguro('claseCIIU') ?>").val()},
+                                            success: function (data) {                       
+
+
+
+
+                                                 if (data[0] != "") {
+                                                              var nFilas = $("#tabla tr").length;
+
+                                                              var validacion=0;
+
+                                                             $('#tabla tr').each(function(){
+                                                                        var celdas = $(this).find('td');
+
+                                                                        if(data[0][2]===$(celdas[0]).html()){
+                                                                            validacion=1;
+                                                                         }
+                                                             });
+
+                                                             if(validacion===0){
+                                                               							var tds=4;
+                                                                						var trs=4;
+		        																		actividades.push(data[0][2]);
+		        																	
+                                                        								var nuevaFila="<tr id=\"nFilas\">";
+
+                                                                                        nuevaFila+="<td>"+(data[0][2])+"</td>";
+                                                                                        nuevaFila+="<td><strong>"+(data[0][1])+"</strong></td>";
+                                                                                        nuevaFila+="<td>"+(data[0][0])+"</td>";
+                                                                                        nuevaFila+="<th class=\"eliminar\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
+                                                                                        nuevaFila+="</tr>";
+                                                                                        
+                                                                                        $("#<?php echo $this->campoSeguro('idsActividades') ?>").val(actividades);
+
+                                                        								$("#tabla").append(nuevaFila);
+                                                    		}
+                                                     		else{                                   
+                                                        								alert('Ya se encuentra registrado!'); 
+
+                                                     		}
                                 
-                             
-                
-                            
-                
-<!--                         if(data[0][2])-->
                 
 
-                }
+                                 				}
 
 
-            }
+                     				 }
 
-        });
-    }
-    ;
-
+                         });
+             };
+					
+                                                                
+	
 					
 					 
-					
-					        /**
+		 					/**
 					
 					         * Funcion para eliminar la ultima columna de la tabla.
 					
@@ -316,30 +325,28 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 					         
 					         // Evento que selecciona la fila y la elimina 
 								$(document).on("click",".eliminar",function(){
+								
+								
 									var parent = $(this).parents().get(0);
+									var element = $(parent).text();
+									var codigoCIIU = element.substring(0, 4);
+									
+									
+									var index = actividades.indexOf(codigoCIIU);
+									
+									if (index > -1) {
+									    actividades.splice(index, 1);
+									}
+									
+									$("#<?php echo $this->campoSeguro('idsActividades') ?>").val(actividades);
+									
 									$(parent).remove();
 								});
 					
-					        $("#del").click(function(){
-					
-					            // Obtenemos el total de columnas (tr) del id "tabla"
-					
-					            var trs=$("#tabla tr").length;
-					
-					            if(trs>1)
-					
-					            {
-					
-					                // Eliminamos la ultima columna
-					
-					                $("#tabla tr:last").remove();
-					
-					            }
-					
-					        });
-					
+
 
 				});
+
 
 
 

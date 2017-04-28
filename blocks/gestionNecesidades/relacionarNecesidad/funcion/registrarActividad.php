@@ -37,12 +37,21 @@ class Registrar {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+		
+		
+		$actividadesArray = explode(",", $_REQUEST['idsActividades']);
+
+		
+		
+		foreach ($actividadesArray as $dato):
+		
 		// VERIFICAR SI YA REGISTRO LA ACTIVIDAD
 		$arreglo = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
-				'actividad' => $_REQUEST ['claseCIIU'],
+				'actividad' => $dato,
 				'tipoNecesidad' => $_REQUEST['tipoNecesidad'],
-				'usuario' => $_REQUEST ['usuario']
+				'usuario' => $_REQUEST ['usuario'],
+				'actividades' => $_REQUEST['idsActividades']
 		);
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( "verificarActividad", $arreglo );
@@ -53,10 +62,18 @@ class Registrar {
 			redireccion::redireccionar ( 'mensajeExisteActividad', $arreglo );
 			exit ();
 		} else {
-			
+				
 			// Guardar ACTIVIDAD
 			$cadenaSql = $this->miSql->getCadenaSql ( "registrarActividad", $arreglo );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+			
+		}
+		
+		endforeach;
+		
+		
+		
+
 			
 			if ($resultado) {
 				redireccion::redireccionar ( 'registroActividad', $arreglo );
@@ -65,7 +82,7 @@ class Registrar {
 				redireccion::redireccionar ( 'noregistro', $arreglo );
 				exit ();
 			}
-		}
+		
 	}
 	function resetForm() {
 		foreach ( $_REQUEST as $clave => $valor ) {
