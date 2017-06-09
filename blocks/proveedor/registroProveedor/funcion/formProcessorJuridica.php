@@ -66,7 +66,7 @@ class Formulario {
 		
 		
 		$SQLs = [];
-		
+		$representanteExiste = false;
 		
 		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
 		if(isset($_REQUEST['correoPer'])){$_REQUEST['correoPer'] = str_replace('\\', "", $_REQUEST['correoPer']);}
@@ -181,10 +181,21 @@ class Formulario {
 			$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST['numeroDocumento']);
 			$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 			if ($resultadoVerificar) {
+				
+				/*
+				 * 
+				 * Caso especial donde el representante legal ya esta registrado en el Sistema
+				 * se crea llave de relación entre la Persona Juridica y la Persona Natural
+				 * 
+				 * */
+				
+				$representanteExiste = true;
+				
+				
 				//El proveedor ya existe
-				redireccion::redireccionar ( 'existeProveedorLegal',  $_REQUEST['numeroDocumento']);
-				exit();
-			}else{
+				//redireccion::redireccionar ( 'existeProveedorLegal',  $_REQUEST['numeroDocumento']);
+				//exit();
+			}
 				
 				
 				
@@ -323,275 +334,489 @@ class Formulario {
 				 */
 				
 				
-				$datosInformacionPersonaNaturalRepresentante = array (
-						'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
-						'fki_numero_documento' => $_REQUEST['numeroDocumento'],
-						'digito_verificacion' => $_REQUEST['digitoRepre'],
-						'primer_apellido' => $_REQUEST['primerApellido'],
-						'segundo_apellido' => $_REQUEST['segundoApellido'],
-						'primer_nombre' => $_REQUEST['primerNombre'],
-						'segundo_nombre' => $_REQUEST['segundoNombre'],
-						'genero' => $_REQUEST['genero'],
-						'cargo' => $_REQUEST['cargo'],
-						'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
-						'id_perfil' => $_REQUEST['perfil'],
-						'id_nucleo_basico' => $_REQUEST['personaNBC'],
-						'profesion' => $_REQUEST['profesion'],
-						'especialidad' => $_REQUEST['especialidad'],
-						'monto_capital_autorizado' => null,
-						'grupoEtnico' => null,
-						'comunidadLGBT' => 'FALSE',
-						'cabezaFamilia' => 'FALSE',
-						'personasCargo' => 'FALSE',
-						'numeroPersonasCargo' => null,
-						'estadoCivil' => 'SOLTERO',
-						'discapacidad' => 'FALSE',
-						'tipoDiscapacidad' => null,
-						'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
-						'medicina_prepagada' => 'FALSE',
-						'valor_uvt_prepagada' => null,
-						'cuenta_ahorro_afc' => 'FALSE',
-						'num_cuenta_bancaria_afc' => null,
-						'id_entidad_bancaria_afc' => null,
-						'interes_vivienda_afc' => null,
-						'dependiente_hijo_menor_edad' => 'FALSE',
-						'dependiente_hijo_menos23_estudiando' => 'FALSE',
-						'dependiente_hijo_mas23_discapacitado' => 'FALSE',
-						'dependiente_conyuge' => 'FALSE',
-						'dependiente_padre_o_hermano' => 'FALSE',
-						'id_eps' => null,
-						'id_fondo_pension' => null,
-						'id_caja_compensacion' => null,
-						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
-						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
-				);
-				
-				
-				//Guardar datos PROVEEDOR NATURAL
-				$cadenaSqlPersonaNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
-				//$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-				array_push($SQLs, $cadenaSqlPersonaNatural);
-				
-				
-				
-				$datosProveedorXRepre = array (
-						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')",
-						'fki_id_Representante' => $_REQUEST['numeroDocumento'],
-						'correo_Repre' => $_REQUEST['correoPer'],
-						'tel_Repre' => $_REQUEST['numeroContacto'],
-				);
-				
-				$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-				//$resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
-				array_push($SQLs, $cadenaSqlProveedorXRepresentante);
-				
+				//Caso representante legal registrado de manera inicial
+				if($representanteExiste){
 					
-				if(isset($_REQUEST['paisEmpresa'])){//CAST
-					switch($_REQUEST['paisEmpresa']){
-						case 1 :
-							$_REQUEST['paisEmpresa']='NACIONAL';
-							$_REQUEST['personaJuridicaCiudad'] = null;
-							break;
-						case 2 :
-							$_REQUEST['paisEmpresa']='EXTRANJERO';
-							break;
+					//RELACIONAR REPRESENTANTE LEGAL (Registrado anteriormente como Persona Natural)
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					
+					$datosProveedorXRepre = array (
+							'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')",
+							'fki_id_Representante' => $_REQUEST['numeroDocumento'],
+							'correo_Repre' => $_REQUEST['correoPer'],
+							'tel_Repre' => $_REQUEST['numeroContacto'],
+					);
+						
+					$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
+					//$resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+					array_push($SQLs, $cadenaSqlProveedorXRepresentante);
+						
+					
+					
+
+					if(isset($_REQUEST['paisEmpresa'])){//CAST
+						switch($_REQUEST['paisEmpresa']){
+							case 1 :
+								$_REQUEST['paisEmpresa']='NACIONAL';
+								$_REQUEST['personaJuridicaCiudad'] = null;
+								break;
+							case 2 :
+								$_REQUEST['paisEmpresa']='EXTRANJERO';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['tipoIdentifiExtranjera'])){//CAST
-					switch($_REQUEST['tipoIdentifiExtranjera']){
-						case 1 :
-							$_REQUEST['tipoIdentifiExtranjera']='CEDULA DE EXTRANJERIA';
-							break;
-						case 2 :
-							$_REQUEST['tipoIdentifiExtranjera']='PASAPORTE';
-							break;
+						
+					if(isset($_REQUEST['tipoIdentifiExtranjera'])){//CAST
+						switch($_REQUEST['tipoIdentifiExtranjera']){
+							case 1 :
+								$_REQUEST['tipoIdentifiExtranjera']='CEDULA DE EXTRANJERIA';
+								break;
+							case 2 :
+								$_REQUEST['tipoIdentifiExtranjera']='PASAPORTE';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['regimenContributivo'])){//CAST
-					switch($_REQUEST['regimenContributivo']){
-						case 1 :
-							$_REQUEST['regimenContributivo']='COMUN';
-							break;
-						case 2 :
-							$_REQUEST['regimenContributivo']='SIMPLIFICADO';
-							break;
+						
+					if(isset($_REQUEST['regimenContributivo'])){//CAST
+						switch($_REQUEST['regimenContributivo']){
+							case 1 :
+								$_REQUEST['regimenContributivo']='COMUN';
+								break;
+							case 2 :
+								$_REQUEST['regimenContributivo']='SIMPLIFICADO';
+								break;
+						}
 					}
-				}
-					
-					
-					
-				// 7 campos TRUE FALSE
-					
-				if(isset($_REQUEST['productoImportacion'])){
-					switch($_REQUEST ['productoImportacion']){
-						case 1 :
-							$_REQUEST ['productoImportacion']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['productoImportacion']='FALSE';
-							break;
-						default:
-							$_REQUEST ['productoImportacion']='NULL';
-							break;
+						
+						
+						
+					// 7 campos TRUE FALSE
+						
+					if(isset($_REQUEST['productoImportacion'])){
+						switch($_REQUEST ['productoImportacion']){
+							case 1 :
+								$_REQUEST ['productoImportacion']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['productoImportacion']='FALSE';
+								break;
+							default:
+								$_REQUEST ['productoImportacion']='NULL';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['pyme'])){
-					switch($_REQUEST ['pyme']){
-						case 1 :
-							$_REQUEST ['pyme']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['pyme']='FALSE';
-							break;
-						default:
-							$_REQUEST ['pyme']='NULL';
-							break;
+						
+					if(isset($_REQUEST['pyme'])){
+						switch($_REQUEST ['pyme']){
+							case 1 :
+								$_REQUEST ['pyme']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['pyme']='FALSE';
+								break;
+							default:
+								$_REQUEST ['pyme']='NULL';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['registroMercantil'])){
-					switch($_REQUEST ['registroMercantil']){
-						case 1 :
-							$_REQUEST ['registroMercantil']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['registroMercantil']='FALSE';
-							break;
-						default:
-							$_REQUEST ['registroMercantil']='NULL';
-							break;
+						
+					if(isset($_REQUEST['registroMercantil'])){
+						switch($_REQUEST ['registroMercantil']){
+							case 1 :
+								$_REQUEST ['registroMercantil']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['registroMercantil']='FALSE';
+								break;
+							default:
+								$_REQUEST ['registroMercantil']='NULL';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['sujetoDeRetencion'])){
-					switch($_REQUEST ['sujetoDeRetencion']){
-						case 1 :
-							$_REQUEST ['sujetoDeRetencion']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['sujetoDeRetencion']='FALSE';
-							break;
-						default:
-							$_REQUEST ['sujetoDeRetencion']='NULL';
-							break;
+						
+					if(isset($_REQUEST['sujetoDeRetencion'])){
+						switch($_REQUEST ['sujetoDeRetencion']){
+							case 1 :
+								$_REQUEST ['sujetoDeRetencion']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['sujetoDeRetencion']='FALSE';
+								break;
+							default:
+								$_REQUEST ['sujetoDeRetencion']='NULL';
+								break;
+						}
 					}
-				}
-					
-					
-				if(isset($_REQUEST['agenteRetenedor'])){
-					switch($_REQUEST ['agenteRetenedor']){
-						case 1 :
-							$_REQUEST ['agenteRetenedor']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['agenteRetenedor']='FALSE';
-							break;
-						default:
-							$_REQUEST ['agenteRetenedor']='NULL';
-							break;
+						
+						
+					if(isset($_REQUEST['agenteRetenedor'])){
+						switch($_REQUEST ['agenteRetenedor']){
+							case 1 :
+								$_REQUEST ['agenteRetenedor']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['agenteRetenedor']='FALSE';
+								break;
+							default:
+								$_REQUEST ['agenteRetenedor']='NULL';
+								break;
+						}
 					}
-				}
-					
-				if(isset($_REQUEST['responsableICA'])){
-					switch($_REQUEST ['responsableICA']){
-						case 1 :
-							$_REQUEST ['responsableICA']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['responsableICA']='FALSE';
-							break;
-						default:
-							$_REQUEST ['responsableICA']='NULL';
-							break;
+						
+					if(isset($_REQUEST['responsableICA'])){
+						switch($_REQUEST ['responsableICA']){
+							case 1 :
+								$_REQUEST ['responsableICA']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['responsableICA']='FALSE';
+								break;
+							default:
+								$_REQUEST ['responsableICA']='NULL';
+								break;
+						}
 					}
-				}
-					
-					
-				if(isset($_REQUEST['responsableIVA'])){
-					switch($_REQUEST ['responsableIVA']){
-						case 1 :
-							$_REQUEST ['responsableIVA']='TRUE';
-							break;
-						case 2 :
-							$_REQUEST ['responsableIVA']='FALSE';
-							break;
-						default:
-							$_REQUEST ['responsableIVA']='NULL';
-							break;
+						
+						
+					if(isset($_REQUEST['responsableIVA'])){
+						switch($_REQUEST ['responsableIVA']){
+							case 1 :
+								$_REQUEST ['responsableIVA']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['responsableIVA']='FALSE';
+								break;
+							default:
+								$_REQUEST ['responsableIVA']='NULL';
+								break;
+						}
 					}
+						
+					
+					$datosInformacionPersonaJuridica = array (
+							'fki_numero_documento' => $_REQUEST['nit'],
+							'digito_verificacion' => $_REQUEST['digito'],
+							'procedencia_empresa' => $_REQUEST['paisEmpresa'],
+							'id_ciudad_origen' => $_REQUEST['personaJuridicaCiudad'],
+							'codigo_pais_dian' => $_REQUEST['codigoPais'],
+							'codigo_postal' => $_REQUEST['codigoPostal'],
+							'tipo_identificacion_extranjera' => $_REQUEST['tipoIdentifiExtranjera'],
+							'num_cedula_extranjeria' => $_REQUEST['cedulaExtranjeria'],
+							'num_pasaporte' => $_REQUEST['pasaporte'],
+							'id_tipo_conformacion' => $_REQUEST['tipoConformacion'],
+							'monto_capital_autorizado' => $_REQUEST['monto'],
+							'genero' => 'NO APLICA',
+							'nom_proveedor' => $_REQUEST['nombreEmpresa'],
+							'regimen_contributivo' => $_REQUEST['regimenContributivo'],
+							'exclusividad_producto' => $_REQUEST ['productoImportacion'],
+							'pyme' => $_REQUEST ['pyme'],
+							'registro_mercantil' => $_REQUEST ['registroMercantil'],
+							'sujeto_retencion' => $_REQUEST ['sujetoDeRetencion'],
+							'agente_retenedor' => $_REQUEST ['agenteRetenedor'],
+							'responsable_ICA' => $_REQUEST ['responsableICA'],
+							'responsable_IVA' => $_REQUEST ['responsableIVA']
+					);
+						
+					//Guardar datos PROVEEDOR JURIDICA
+					$cadenaSqlPersonaJuridica = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
+					//$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+					array_push($SQLs, $cadenaSqlPersonaJuridica);
+					
+					
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					
+					
+					
+				}else{
+					
+					
+					//REGISTRO REPRESENTANTE LEGAL (No Registrado anteriormente como Persona Natural)
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					
+					
+					//CAST****************************************************************
+					$dateExp = explode("/", $_REQUEST ['fechaExpeRep']);
+					$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
+					$_REQUEST ['fechaExpeRep'] = $cadena_fecha;
+					//********************************************************************
+					
+					
+					$datosInformacionPersonaNaturalRepresentante = array (
+							'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
+							'fki_numero_documento' => $_REQUEST['numeroDocumento'],
+							'digito_verificacion' => $_REQUEST['digitoRepre'],
+							'primer_apellido' => $_REQUEST['primerApellido'],
+							'segundo_apellido' => $_REQUEST['segundoApellido'],
+							'primer_nombre' => $_REQUEST['primerNombre'],
+							'segundo_nombre' => $_REQUEST['segundoNombre'],
+							'genero' => $_REQUEST['genero'],
+							'cargo' => $_REQUEST['cargo'],
+							'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
+							'id_perfil' => $_REQUEST['perfil'],
+							'id_nucleo_basico' => $_REQUEST['personaNBC'],
+							'profesion' => $_REQUEST['profesion'],
+							'especialidad' => $_REQUEST['especialidad'],
+							'monto_capital_autorizado' => null,
+							'grupoEtnico' => null,
+							'comunidadLGBT' => 'FALSE',
+							'cabezaFamilia' => 'FALSE',
+							'personasCargo' => 'FALSE',
+							'numeroPersonasCargo' => null,
+							'estadoCivil' => 'SOLTERO',
+							'discapacidad' => 'FALSE',
+							'tipoDiscapacidad' => null,
+							'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
+							'medicina_prepagada' => 'FALSE',
+							'valor_uvt_prepagada' => null,
+							'cuenta_ahorro_afc' => 'FALSE',
+							'num_cuenta_bancaria_afc' => null,
+							'id_entidad_bancaria_afc' => null,
+							'interes_vivienda_afc' => null,
+							'dependiente_hijo_menor_edad' => 'FALSE',
+							'dependiente_hijo_menos23_estudiando' => 'FALSE',
+							'dependiente_hijo_mas23_discapacitado' => 'FALSE',
+							'dependiente_conyuge' => 'FALSE',
+							'dependiente_padre_o_hermano' => 'FALSE',
+							'id_eps' => null,
+							'id_fondo_pension' => null,
+							'id_caja_compensacion' => null,
+							'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
+							'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
+					);
+					
+					
+					//Guardar datos PROVEEDOR NATURAL
+					$cadenaSqlPersonaNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
+					//$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+					array_push($SQLs, $cadenaSqlPersonaNatural);
+					
+					
+					
+					$datosProveedorXRepre = array (
+							'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')",
+							'fki_id_Representante' => $_REQUEST['numeroDocumento'],
+							'correo_Repre' => $_REQUEST['correoPer'],
+							'tel_Repre' => $_REQUEST['numeroContacto'],
+					);
+					
+					$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
+					//$resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
+					array_push($SQLs, $cadenaSqlProveedorXRepresentante);
+					
+					
+					
+					
+
+					if(isset($_REQUEST['paisEmpresa'])){//CAST
+						switch($_REQUEST['paisEmpresa']){
+							case 1 :
+								$_REQUEST['paisEmpresa']='NACIONAL';
+								$_REQUEST['personaJuridicaCiudad'] = null;
+								break;
+							case 2 :
+								$_REQUEST['paisEmpresa']='EXTRANJERO';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['tipoIdentifiExtranjera'])){//CAST
+						switch($_REQUEST['tipoIdentifiExtranjera']){
+							case 1 :
+								$_REQUEST['tipoIdentifiExtranjera']='CEDULA DE EXTRANJERIA';
+								break;
+							case 2 :
+								$_REQUEST['tipoIdentifiExtranjera']='PASAPORTE';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['regimenContributivo'])){//CAST
+						switch($_REQUEST['regimenContributivo']){
+							case 1 :
+								$_REQUEST['regimenContributivo']='COMUN';
+								break;
+							case 2 :
+								$_REQUEST['regimenContributivo']='SIMPLIFICADO';
+								break;
+						}
+					}
+						
+						
+						
+					// 7 campos TRUE FALSE
+						
+					if(isset($_REQUEST['productoImportacion'])){
+						switch($_REQUEST ['productoImportacion']){
+							case 1 :
+								$_REQUEST ['productoImportacion']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['productoImportacion']='FALSE';
+								break;
+							default:
+								$_REQUEST ['productoImportacion']='NULL';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['pyme'])){
+						switch($_REQUEST ['pyme']){
+							case 1 :
+								$_REQUEST ['pyme']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['pyme']='FALSE';
+								break;
+							default:
+								$_REQUEST ['pyme']='NULL';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['registroMercantil'])){
+						switch($_REQUEST ['registroMercantil']){
+							case 1 :
+								$_REQUEST ['registroMercantil']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['registroMercantil']='FALSE';
+								break;
+							default:
+								$_REQUEST ['registroMercantil']='NULL';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['sujetoDeRetencion'])){
+						switch($_REQUEST ['sujetoDeRetencion']){
+							case 1 :
+								$_REQUEST ['sujetoDeRetencion']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['sujetoDeRetencion']='FALSE';
+								break;
+							default:
+								$_REQUEST ['sujetoDeRetencion']='NULL';
+								break;
+						}
+					}
+						
+						
+					if(isset($_REQUEST['agenteRetenedor'])){
+						switch($_REQUEST ['agenteRetenedor']){
+							case 1 :
+								$_REQUEST ['agenteRetenedor']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['agenteRetenedor']='FALSE';
+								break;
+							default:
+								$_REQUEST ['agenteRetenedor']='NULL';
+								break;
+						}
+					}
+						
+					if(isset($_REQUEST['responsableICA'])){
+						switch($_REQUEST ['responsableICA']){
+							case 1 :
+								$_REQUEST ['responsableICA']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['responsableICA']='FALSE';
+								break;
+							default:
+								$_REQUEST ['responsableICA']='NULL';
+								break;
+						}
+					}
+						
+						
+					if(isset($_REQUEST['responsableIVA'])){
+						switch($_REQUEST ['responsableIVA']){
+							case 1 :
+								$_REQUEST ['responsableIVA']='TRUE';
+								break;
+							case 2 :
+								$_REQUEST ['responsableIVA']='FALSE';
+								break;
+							default:
+								$_REQUEST ['responsableIVA']='NULL';
+								break;
+						}
+					}
+						
+					
+					$datosInformacionPersonaJuridica = array (
+							'fki_numero_documento' => $_REQUEST['nit'],
+							'digito_verificacion' => $_REQUEST['digito'],
+							'procedencia_empresa' => $_REQUEST['paisEmpresa'],
+							'id_ciudad_origen' => $_REQUEST['personaJuridicaCiudad'],
+							'codigo_pais_dian' => $_REQUEST['codigoPais'],
+							'codigo_postal' => $_REQUEST['codigoPostal'],
+							'tipo_identificacion_extranjera' => $_REQUEST['tipoIdentifiExtranjera'],
+							'num_cedula_extranjeria' => $_REQUEST['cedulaExtranjeria'],
+							'num_pasaporte' => $_REQUEST['pasaporte'],
+							'id_tipo_conformacion' => $_REQUEST['tipoConformacion'],
+							'monto_capital_autorizado' => $_REQUEST['monto'],
+							'genero' => 'NO APLICA',
+							'nom_proveedor' => $_REQUEST['nombreEmpresa'],
+							'regimen_contributivo' => $_REQUEST['regimenContributivo'],
+							'exclusividad_producto' => $_REQUEST ['productoImportacion'],
+							'pyme' => $_REQUEST ['pyme'],
+							'registro_mercantil' => $_REQUEST ['registroMercantil'],
+							'sujeto_retencion' => $_REQUEST ['sujetoDeRetencion'],
+							'agente_retenedor' => $_REQUEST ['agenteRetenedor'],
+							'responsable_ICA' => $_REQUEST ['responsableICA'],
+							'responsable_IVA' => $_REQUEST ['responsableIVA']
+					);
+						
+					//Guardar datos PROVEEDOR JURIDICA
+					$cadenaSqlPersonaJuridica = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
+					//$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+					array_push($SQLs, $cadenaSqlPersonaJuridica);
+						
+						
+					//****************************************************************************************************************************
+					$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
+						
+					$datosInformacionProveedorPersonaNaturalRepresentante = array (
+							'tipoPersona' => 'NATURAL',
+							'numero_documento' => $_REQUEST['numeroDocumento'],
+							'nombre_proveedor' => $nombrePersonaRepre,
+							'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
+							'direccion_contacto' => $_REQUEST['direccion'],
+							'correo_contacto' => $_REQUEST['correoPer'],
+							'web_contacto' => '',
+							'nom_asesor_comercial_contacto' => '',
+							'tel_asesor_comercial_contacto' => '',
+							'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],//**** INICIAL = al de la EMPRESA ****
+							'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
+							'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
+							'anexo_rut' => null,
+							'anexo_rup' => null,
+							'descripcion_proveedor' => '',
+							'fecha_registro' => $fechaActual,
+							'fecha_modificación' => $fechaActual,
+							'id_estado' => '2' //Estado Inactivo
+					);
+					//Guardar datos PROVEEDOR Representante
+					$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
+					//$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
+					//****************************************************************************************************************************
+					array_push($SQLs, $cadenaSqlProveedorNatural);
+					
+					
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+					
+					
+					
+					
+					
 				}
-					
-				
-				$datosInformacionPersonaJuridica = array (
-						'fki_numero_documento' => $_REQUEST['nit'],
-						'digito_verificacion' => $_REQUEST['digito'],
-						'procedencia_empresa' => $_REQUEST['paisEmpresa'],
-						'id_ciudad_origen' => $_REQUEST['personaJuridicaCiudad'],
-						'codigo_pais_dian' => $_REQUEST['codigoPais'],
-						'codigo_postal' => $_REQUEST['codigoPostal'],
-						'tipo_identificacion_extranjera' => $_REQUEST['tipoIdentifiExtranjera'],
-						'num_cedula_extranjeria' => $_REQUEST['cedulaExtranjeria'],
-						'num_pasaporte' => $_REQUEST['pasaporte'],
-						'id_tipo_conformacion' => $_REQUEST['tipoConformacion'],
-						'monto_capital_autorizado' => $_REQUEST['monto'],
-						'genero' => 'NO APLICA',
-						'nom_proveedor' => $_REQUEST['nombreEmpresa'],
-						'regimen_contributivo' => $_REQUEST['regimenContributivo'],
-						'exclusividad_producto' => $_REQUEST ['productoImportacion'],
-						'pyme' => $_REQUEST ['pyme'],
-						'registro_mercantil' => $_REQUEST ['registroMercantil'],
-						'sujeto_retencion' => $_REQUEST ['sujetoDeRetencion'],
-						'agente_retenedor' => $_REQUEST ['agenteRetenedor'],
-						'responsable_ICA' => $_REQUEST ['responsableICA'],
-						'responsable_IVA' => $_REQUEST ['responsableIVA']
-				);
-					
-				//Guardar datos PROVEEDOR JURIDICA
-				$cadenaSqlPersonaJuridica = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
-				//$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-				array_push($SQLs, $cadenaSqlPersonaJuridica);
-					
-					
-					
-				//CAST****************************************************************
-				$dateExp = explode("/", $_REQUEST ['fechaExpeRep']);
-				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
-				$_REQUEST ['fechaExpeRep'] = $cadena_fecha;
-				//********************************************************************
-					
-					
-				//****************************************************************************************************************************
-				$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
-					
-				$datosInformacionProveedorPersonaNaturalRepresentante = array (
-						'tipoPersona' => 'NATURAL',
-						'numero_documento' => $_REQUEST['numeroDocumento'],
-						'nombre_proveedor' => $nombrePersonaRepre,
-						'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
-						'direccion_contacto' => $_REQUEST['direccion'],
-						'correo_contacto' => $_REQUEST['correoPer'],
-						'web_contacto' => '',
-						'nom_asesor_comercial_contacto' => '',
-						'tel_asesor_comercial_contacto' => '',
-						'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],//**** INICIAL = al de la EMPRESA ****
-						'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
-						'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
-						'anexo_rut' => null,
-						'anexo_rup' => null,
-						'descripcion_proveedor' => '',
-						'fecha_registro' => $fechaActual,
-						'fecha_modificación' => $fechaActual,
-						'id_estado' => '2' //Estado Inactivo
-				);
-				//Guardar datos PROVEEDOR Representante
-				$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
-				//$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
-				//****************************************************************************************************************************
-				array_push($SQLs, $cadenaSqlProveedorNatural);
-				
 				
 				
 				
@@ -609,9 +834,6 @@ class Formulario {
 				
 					
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
-					
-					
-				
 				
 				
 				if ($registroPersona != false) {
@@ -725,7 +947,8 @@ class Formulario {
 							'telefono' => $_REQUEST['telefono'],
 							'id_usuario' => $arregloDatos['id_usuario']
 					);
-				
+					
+					
 				
 				
 					if($resultadoEstado && $resultadoPerfil){
@@ -744,9 +967,6 @@ class Formulario {
 					redireccion::redireccionar ( 'noregistro',  $_REQUEST['usuario']);
 					exit();
 				}
-                    
-			
-			}
 		
 		}		
 		

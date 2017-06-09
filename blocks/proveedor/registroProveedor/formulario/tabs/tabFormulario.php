@@ -831,7 +831,7 @@ class registrarForm {
 										
 									$atributos ['obligatorio'] = true;
 									$atributos ['etiquetaObligatorio'] = true;
-									$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+									$atributos ['validar'] = 'required, minSize[8]';
 										
 									if (isset ( $_REQUEST [$esteCampo] )) {
 										$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -4694,7 +4694,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 							
 						$atributos ['obligatorio'] = true;
 						$atributos ['etiquetaObligatorio'] = true;
-						$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+						$atributos ['validar'] = 'required, minSize[8]';
 							
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
