@@ -67,6 +67,18 @@ $nombreFormulario = $esteBloque ["nombre"];
 	//$variable .= "&usuario=".$_REQUEST['usuario'];
 	$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 		
+	
+
+	echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading3.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+
+	
+	
+	
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
@@ -313,8 +325,8 @@ if ($resultado && !$consultor) {
 		
 		echo "<thead>
 				<tr>
-					<th><center>Documento</center></th>
-					<th><center>Nombre Proveedor</center></th>
+					<th width='10%'><center>Documento</center></th>
+					<th width='40%'><center>Nombre Proveedor</center></th>
 					<th><center>Tipo Persona</center></th>
 					<th><center>Correo</center></th>
                     <th><center>Teléfono</center></th>

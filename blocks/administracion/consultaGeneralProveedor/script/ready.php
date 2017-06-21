@@ -1,3 +1,12 @@
+window.onload = detectarCarga;
+function detectarCarga(){
+
+	$('#marcoDatosLoad').fadeOut(1000, function (){
+		$('#marcoDatos').fadeIn(500);
+	});
+	
+}
+
 $("#consultaGeneralProveedor").validationEngine({
     validateNonVisibleFields: false,
 	promptPosition : "bottomRight:-150", 
