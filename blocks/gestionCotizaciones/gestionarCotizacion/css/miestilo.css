@@ -1,0 +1,197 @@
+
+
+
+#botonValidar {    font-family: verdana, arial, sans-serif;
+                   font-size: 12pt;
+                   padding: 5px;
+                   background-color: #eeeeee;
+                   color: #000000;
+                   border-radius: 8px;
+                   margin: 0 auto;
+                   text-align: center;
+                   text-decoration: none;
+}
+#botonValidar:link,
+#botonValidar:visited {
+    border-top: 1px solid #cccccc;
+    border-bottom: 2px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 2px solid #cccccc;
+}
+#botonValidar:hover {
+    border-bottom: 1px solid #cccccc;
+    border-top: 2px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-left: 2px solid #cccccc;
+}
+body {font-family:arial;font-size:15}
+td {font-family:arial;font-size:15} 
+
+.padre-enlace{
+    display:block;
+    position:relative;
+}
+
+
+#botonValidar {
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 125px;
+}
+
+
+textarea{
+    font-weight: bold;
+}
+
+.mayusculas {
+    text-transform: uppercase; 
+}
+
+
+input {font-weight:bold;}
+
+
+
+/* Table 1 Style */
+table.table1 {
+     border-collapse: separate;
+     font-family: "Trebuchet MS",sans-serif;
+     font-size: 16px;
+     font-style: normal;
+     font-weight: bold;
+     line-height: 1.4em;
+}
+
+.table1 thead th {
+     -moz-border-bottom-colors: none;
+     -moz-border-left-colors: none;
+     -moz-border-right-colors: none;
+     -moz-border-top-colors: none;
+     background: rgba(0, 0, 0, 0) linear-gradient(to right, #b1d3e3 0%, #89b9cf 100%) repeat scroll 0% 0%;
+     border-color: #e5edf6 #e5edf6 #e5edf6;
+     border-image: none;
+     border-style: solid;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+     border-width: 1px 1px 3px;
+     color: #ffffff;
+     padding: 15px;
+     text-shadow: 1px 1px 1px #666666;
+}
+
+.table1 thead th:empty {
+     background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+     border: medium none;
+}
+
+.table1 tbody th {
+     -moz-border-bottom-colors: none;
+     -moz-border-left-colors: none;
+     -moz-border-right-colors: none;
+     -moz-border-top-colors: none;
+     background-color: #C6D3EF;
+     border-bottom-left-radius: 5px;
+     border-color: #C6D3EF       ;
+     border-image: none;
+     border-style: solid;
+     border-top-left-radius: 5px;
+     border-width: 1px 3px 1px 1px;
+     color: #666666;
+     padding: 0px 10px;
+     text-shadow: 1px 1px 1px #ffffff
+       ;
+}
+
+.table1 tfoot td {
+     color: #000000;
+     font-size: 32px;
+     padding: 10px 0px;
+     text-align: center;
+     text-shadow: 1px 1px 1px #e5edf6
+       ;
+}
+
+.table1 tfoot th {
+     color: #666666;
+}
+
+.table1 tbody td {
+     background-color: #e5edf6;
+     border-radius: 2px;
+     border: 2px solid #e7efe0;
+     color: #666666;
+     padding: 10px;
+     text-align: center;
+     text-shadow: 1px 1px 1px #ffffff;
+}
+
+.table1 tbody span.check::before {
+     content: url("../images/check0.png");
+}
+
+.fila-base {
+     display: none;
+}
+
+.eliminar {
+     color: #666666;
+     cursor: pointer;
+}
+
+
+
+#botonValidar {    font-family: verdana, arial, sans-serif;
+                   font-size: 12pt;
+                   padding: 5px;
+                   background-color: #eeeeee;
+                   color: #000000;
+                   border-radius: 8px;
+                   margin: 0 auto;
+                   text-align: center;
+                   text-decoration: none;
+}
+#botonValidar:link,
+#botonValidar:visited {
+    border-top: 1px solid #cccccc;
+    border-bottom: 2px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 2px solid #cccccc;
+}
+#botonValidar:hover {
+    border-bottom: 1px solid #cccccc;
+    border-top: 2px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-left: 2px solid #cccccc;
+}
+body {font-family:arial;font-size:15}
+td {font-family:arial;font-size:15} 
+
+.padre-enlace{
+    display:block;
+    position:relative;
+}
+
+
+#botonValidar {
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 125px;
+}
+
+
+input {font-weight:bold;}
+
+
+textarea{
+    font-weight: bold;
+}
+
+.mayuscula {
+    text-transform: uppercase; 
+}
+
