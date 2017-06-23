@@ -614,10 +614,6 @@ class Formulario {
 				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				array_push($SQLs, $cadenaSqlActividad);
 				
-				echo $SQLs[0];
-				
-				var_dump($SQLs);
-				exit();
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 					
 				
