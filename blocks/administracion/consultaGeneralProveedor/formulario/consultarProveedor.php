@@ -72,7 +72,7 @@ $nombreFormulario = $esteBloque ["nombre"];
 	echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
 			<div style='width: 100%;height: 100px'>
 			</div>
-			<center><img src='" . $rutaBloque . "/images/loading3.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
 			</center>
 		  </div>';
 
@@ -80,7 +80,7 @@ $nombreFormulario = $esteBloque ["nombre"];
 	
 	
 	// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = "marcoDatos";
+		$esteCampo = "marcoDatosTable";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';

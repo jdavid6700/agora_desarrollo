@@ -2,6 +2,7 @@ window.onload = detectarCarga;
 function detectarCarga(){
 
 	$('#marcoDatosLoad').fadeOut(1000, function (){
+		$('#marcoDatosTable').fadeIn(500);
 		$('#marcoDatos').fadeIn(500);
 	});
 	

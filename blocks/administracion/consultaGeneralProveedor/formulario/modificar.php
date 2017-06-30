@@ -108,6 +108,15 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $_REQUEST["idProveedor"] );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
+		echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+		
+		
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -878,17 +887,24 @@ class Formulario {
 		}
 		
 		
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones widget";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['enlace'] = $variable;
 		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
+		$atributos ['estilo'] = '';
 		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['ancho'] = '10%';
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
+		
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin");
 		
 		unset ( $atributos );
 		
