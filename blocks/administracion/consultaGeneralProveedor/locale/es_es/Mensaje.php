@@ -7,6 +7,7 @@ $this->idioma["tabConsultarProveedor"] = "Consultar Información del Proveedor";
 $this->idioma["marcoSearchByNIT"]="Ingresar NIT/Cédula o Nombre del proveedor";
 $this->idioma["marcoSearchByName"]="Ingresar nombre empresa del proveedor";
 $this->idioma["marcoDatos"]="Datos del Proveedor";
+$this->idioma["marcoDatosTable"]="Datos del Proveedor";
 $this->idioma["marcoInhabilidad"]="Datos Inhabilidad";
 
 $this->idioma["marcoSearchByFiltCIIU"]="Filtro Búsqueda por Actividad Económica (OPCIONAL)";
@@ -248,6 +249,9 @@ $this->idioma["personaNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
 $this->idioma["direccionNat"] = "Dirección : ";
 $this->idioma["direccionNatTitulo"]="Digite Dirección";
 
+$this->idioma["direccionExt"] = "Dirección : ";
+$this->idioma["direccionExtTitulo"]="Digite Dirección";
+
 $this->idioma["correoNat"] = "Correo : ";
 $this->idioma["correoNatTitulo"]="Digite el correo";
 
@@ -364,6 +368,7 @@ $this->idioma["marcoEmpresa"] = "Información de la Empresa";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
 
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
+$this->idioma["marcoProcedenciaExtranjero"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
