@@ -76,10 +76,21 @@ $this->idioma["dependenciaTitulo"]="Seleccionar Dependencia solicitante";
 $this->idioma["solicitante"] = "Solicitante :";
 $this->idioma["solicitanteTitulo"]="Seleccionar Solicitante";
 
+$this->idioma["medioPago"] = "Medio de Pago :";
+$this->idioma["medioPagoTitulo"]="Seleccionar Medio de Pago";
 
 $this->idioma["marcoAnexo"] = "Detalle Cotización";
 $this->idioma["cotizacionSoporte"] = "Adjuntar (PDF) : ";
 $this->idioma["cotizacionSoporteTitulo"]="Adjuntar (PDF)";
+
+$this->idioma["marcoPlan"] = "Detalle Plan de Acción Relacionado";
+
+$this->idioma["marcoPago"] = "Detalle Información de Pago";
+
+
+$this->idioma["marcoParametrosFormaPago"] = "Seleccionar Parametros Forma de Pago";
+$this->idioma["marcoFormaPago"] = "Detalle Formas de Pago Agregadas";
+
 
 
 
@@ -101,6 +112,9 @@ $this->idioma["descripcionTitulo"]="Digite la descripción";
 
 $this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
+
+$this->idioma["planAccion"] = "Plan de Acción";
+$this->idioma["planAccionTitulo"]="Plan de Acción";
 
 
 $this->idioma["estado"] = "Estado Solicitud :";
@@ -212,7 +226,7 @@ $this->idioma["ciudad"] = "Ciudad";
 
 
 //***************** SECCIÓN BOTONES ******************//
-$this->idioma["botonRegresar"] = "< < Regresar";
+$this->idioma["botonRegresar"] = "Regresar";
 $this->idioma["botonConsultar"] = "Consultar";
 $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";

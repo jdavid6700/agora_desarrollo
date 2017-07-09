@@ -29,6 +29,38 @@ class Sql extends \Sql {
 		switch ($tipo) {
 			
 			
+			case "tipoFormaPagoUdistrital" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM agora.tipo_condicion WHERE estado = TRUE;";
+				break;
+			
+			case "medioPagoUdistrital" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM core.medio_pago WHERE estado = TRUE;";
+				break;
+			
+			case "tipoNecesidadAdministrativa" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM administrativa.tipo_necesidad WHERE estado = TRUE;";
+				break;
+			
+			case "ordenadorUdistrital" :
+				$cadenaSql=" SELECT DISTINCT ON (CR.id) CR.id , ('(' ||JD.tercero_id || ') - ' || UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" FROM core.ordenador_gasto CR";
+				$cadenaSql.=" JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+				$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+				$cadenaSql.=" GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+				break;
+				
+			case "dependenciaUdistrital" :
+				$cadenaSql=" SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre) || ' - (' || JD.tercero_id || ')') as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" FROM oikos.dependencia D";
+				$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = D.id";
+				$cadenaSql.=" GROUP BY D.id, JD.tercero_id, D.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" ORDER BY D.id, D.nombre, JD.fecha_fin DESC";
+				break;
+				
 			case "buscarDependenciaOikosById" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= "	*";

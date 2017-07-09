@@ -1,4 +1,8 @@
 
+#marcoDatosSolicitudCot {
+	display: none;
+}
+
 /* Table 1 Style */
 table.table1{
     font-family: "Trebuchet MS", sans-serif;
