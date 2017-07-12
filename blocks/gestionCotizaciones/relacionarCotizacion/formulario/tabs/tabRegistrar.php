@@ -449,40 +449,6 @@ class FormularioRegistro {
 		
 		
 		// ----------------INICIO CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
-		$esteCampo = 'fechaSolicitud';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['tipo'] = 'text';
-		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['marco'] = true;
-		$atributos ['estiloMarco'] = '';
-		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
-		$atributos ['dobleLinea'] = 0;
-		$atributos ['tabIndex'] = $tab;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = '';
-		
-		$dia=date("d/m/Y");
-		//$newDate = date("d/m/Y", strtotime($resultado[0]['FECHA_SOLICITUD']));
-		
-		$atributos ['valor'] = $dia;
-		
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 15;
-		$atributos ['maximoTamanno'] = '30';
-		$atributos ['anchoEtiqueta'] = 200;
-		$tab ++;
-		
-		// Aplica atributos globales al control
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
-		
-		
-		// ----------------INICIO CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
 		$esteCampo = 'fechaApertura';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
@@ -811,12 +777,12 @@ class FormularioRegistro {
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = '';
+		$atributos ['validar'] = 'custom[number]';
 		
 		$atributos ['valor'] = '';
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
+		$atributos ['deshabilitado'] = false;
 		$atributos ['tamanno'] = 20;
 		$atributos ['maximoTamanno'] = '20';
 		$atributos ['anchoEtiqueta'] = 200;
@@ -842,12 +808,12 @@ class FormularioRegistro {
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
 		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = '';
+		$atributos ['validar'] = 'custom[number]';
 
 		$atributos ['valor'] = '';
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
+		$atributos ['deshabilitado'] = false;
 		$atributos ['tamanno'] = 20;
 		$atributos ['maximoTamanno'] = '20';
 		$atributos ['anchoEtiqueta'] = 200;
@@ -874,7 +840,7 @@ class FormularioRegistro {
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonAgregar';
 		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = '#';
+		$atributos ['enlace'] = '';
 		$atributos ['tabIndex'] = 1;
 		$atributos ['estilo'] = 'textoSubtitulo';
 		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -897,18 +863,49 @@ class FormularioRegistro {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
+		
+		unset ( $atributos );
+		$esteCampo = 'countParam';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "text";
+		$atributos ['estilo'] = 'jquery';
+		$atributos ['columnas'] = 2;
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = false;
+		$atributos ["etiqueta"] = "";
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['valor'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['valor'] = '';
+		}
+		$atributos ['validar'] = 'required';
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = '70%';
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
 		?>
+		<p>Configurado el 100% de la Forma Pago</p>
+			<!-- Slide THREE -->
+			  <div class="slideThree">  
+			      <input type="checkbox" value="None" id="slideThree" name="check" class="validate[required]" readonly="readonly" />
+			      <label for="slideThree"></label>
+			  </div>
+		
+		<?php
+		
+		
+		?>
+		
 					
-					
-					
-					
-					<table id="tabla" class="table1" width="100%" >
+					<table id="tablaFP" class="table1" width="100%" >
 						<!-- Cabecera de la tabla -->
 						<thead>
 							<tr>
-								<th width="10%" >Tipo</th>
-								<th width="50%" >Valor</th>
-								<th width="25%" >Porcentaje (%) de Pago</th>
+								<th width="20%" >Tipo</th>
+								<th width="30%" >Condición de Avance</th>
+								<th width="35%" >Porcentaje (%) de Pago</th>
 								<th width="15%" >&nbsp;</th>
 							</tr>
 						</thead>
@@ -917,12 +914,6 @@ class FormularioRegistro {
 						<tbody>
 					 
 							<!-- fila base para clonar y agregar al final -->
-							<tr class="fila-base">
-								<td><input type="text" class="nombre" size="40" /></td>
-								<td><input type="text" class="apellidos" size="125" /></td>
-								<td><input type="text" class="apellidos" size="65" /></td>
-								<th class="eliminar" scope="row">Eliminar</th>
-							</tr>
 							<!-- fin de código: fila base -->
 					 
 		<!--					 Fila de ejemplo 
@@ -948,13 +939,13 @@ class FormularioRegistro {
 					
 					
 					
-					
+
 					
 					echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
 					
 					unset ( $atributos );
-					$esteCampo = 'idsActividades';
+					$esteCampo = 'idsFormaPago';
 					$atributos ["id"] = $esteCampo; // No cambiar este nombre
 					$atributos ["tipo"] = "hidden";
 					$atributos ['estilo'] = '';
