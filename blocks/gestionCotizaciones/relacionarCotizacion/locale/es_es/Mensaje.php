@@ -93,6 +93,13 @@ $this->idioma["marcoFormaPago"] = "Detalle Formas de Pago Agregadas";
 
 
 
+$this->idioma["tipoFormaPago"] = "Tipo Forma de Pago :";
+$this->idioma["porcentajePagoForma"] = "Porcentaje de Pago :";
+$this->idioma["porcentajePagoFormaTitulo"]="Ingresar Porcentaje Parte del 100% de la Forma de Pago";
+$this->idioma["valorFormaPago"] = "Valor del Parámetro :";
+$this->idioma["valorFormaPagoTitulo"]="Ingresar valor de Parámetro (En Días -> Tiempo) o (Decimal -> Porcentaje)";
+
+
 
 $this->idioma["numCDP"] = "No. CDP :";
 $this->idioma["numCDPTitulo"] = "Indicar número de CDP";

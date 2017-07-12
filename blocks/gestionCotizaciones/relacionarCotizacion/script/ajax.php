@@ -92,6 +92,26 @@ $urlInfoClaseCIUU = $url . $cadenaCIUU;
 
 
 
+//Variables
+$cadenaACodificar25 = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+$cadenaACodificar25 .= "&procesarAjax=true";
+$cadenaACodificar25 .= "&action=index.php";
+$cadenaACodificar25 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar25 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar25 .= $cadenaACodificar25 . "&funcion=consultarTipoFormaPago";
+$cadenaACodificar25 .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+
+$cadena25 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificar25, $enlace );
+
+// URL definitiva
+$urlFinal25 = $url . $cadena25;
+
+
+
+
 ?>
 
 
@@ -190,19 +210,6 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		};
 		
 		
-		function consultarCIIUPush(elem, request, response){
-		  $.ajax({
-		    url: "<?php echo $urlFinal24?>",
-		    dataType: "json",
-		    data: { valor:$("#<?php echo $this->campoSeguro('claseCIIU')?>").val()},
-		    success: function(data){ 
-					
-					console(data);
-		    			
-		    }
-			                    
-		   });
-		};
 		
 	
 	
@@ -226,8 +233,285 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		    	
 		    	
 		    	
-		    	
-		    	
+		    $("#botonAgregar").click(function(){
+		    		
+		    	if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '' &&
+		    		$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() != '' &&
+		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '') {
+		    		
+		    		
+		    		if( $.isNumeric($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val()) ){
+		    			
+		    			if(($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 2 && 	
+		    				$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() <= 100) ||
+		    				$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 1){
+		    			
+		    				$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#DDDDDD');
+		    		
+		    			if( $.isNumeric($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val()) && 
+		    			    $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() < 100){
+		    			
+		    				$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").css('border-color','#DDDDDD');
+
+		   
+							
+							swal({
+							  title: 'Parámetro Forma de Pago',
+							  type: 'success',
+							  html:
+							    'El Parámetro fue agregado correctamente.</br> '+
+							    'Porcentaje Agregado: ' + $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() + '%' ,
+							  confirmButtonText:
+							    'Ok'
+							})
+							
+							
+							//-----------------------------------------------------------------------------
+							
+							
+							if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
+								consultarTipoFormaPagoPush();
+
+                   	 		}
+							
+							
+							//-----------------------------------------------------------------------------
+							
+		    			
+		    			}else{
+		    				$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").css('border-color','#FF0000');
+							
+							swal({
+							  title: 'Ocurrio un problema...',
+							  type: 'error',
+							  html:
+							    'El Valor de <big>Porcentaje Forma de Pago</big>, no es Númerico. (ERROR) ',
+							  confirmButtonText:
+							    'Ok'
+							})
+            				
+		    			}
+		    		
+		    		}else{
+		    		
+		    			$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#FF0000');
+						
+						swal({
+						  title: 'Ocurrio un problema...',
+						  type: 'error',
+						  html:
+						    'El Valor de <big>Forma de Pago</big>, es un valor Porcentual Incorrecto. (ERROR) ',
+						  confirmButtonText:
+						    'Ok'
+						})
+		    			
+		    		}
+		    		
+		    	}else{
+		    			$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#FF0000');
+						
+						swal({
+						  title: 'Ocurrio un problema...',
+						  type: 'error',
+						  html:
+						    'El Valor de <big>Forma de Pago</big>, no es Númerico. (ERROR) ',
+						  confirmButtonText:
+						    'Ok'
+						})
+						
+            			
+		    	}
+		    		
+
+              }else{	
+					
+					swal({
+					  title: 'Ocurrio un problema...',
+					  type: 'error',
+					  html:
+					    'Los Parámetros de <big>Forma de Pago</big>, ' +
+					    'están mal diligenciados, No se pudieron agregar.',
+					  confirmButtonText:
+					    'Ok'
+					})
+            		
+			  }
+			});	
+			
+			var iCntFP = 0;   
+		    var paramFP = new Array();
+		    var totalPago = 0;
+		    var fullParam;  
+			
+			function consultarTipoFormaPagoPush(elem, request, response) {
+                                        $.ajax({
+                                            url: "<?php echo $urlFinal25 ?>",
+                                            dataType: "json",
+                                            data: {valor: $("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val()},
+                                            success: function (data) {                       
+
+
+
+
+                                                 if (data[0] != "") {
+                                                             
+                                                       var nFilas = $("#tablaFP tr").length;
+                                                       var tds = 4;
+                                                       var trs = 4;
+		        									   var tipoValor;	
+		        									   
+		        									   var preCarga = totalPago + parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+		        									   
+		        									   if(preCarga == 100){
+		        									   		$('#slideThree').prop("checked", true);
+		        									   }else{
+		        									   		$('#slideThree').prop("checked", false);
+		        									   }
+		        									   
+		        									   if(preCarga > 100){
+		        									   		
+		        									   		swal({
+															  title: 'Se excedio el 100%...',
+															  type: 'warning',
+															  html:
+															    'El Valor de Porcentaje de Pago, Ingresado no es Valido, ' +
+															    'Por favor, Validar.',
+															  confirmButtonText:
+															    'Ok'
+															})
+															
+															$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
+                                                       		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+															
+		        									   
+		        									   }else{	
+		        									   		
+                                                             
+                                                            paramFP.push(data[0][0]); 
+                                                             
+                                                           	totalPago += parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+                                                           	
+                                                           	var count = nFilas;
+		        									   		$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
+		        									   		+' - ( Configurado el '+ totalPago +'% )')					
+		        																	
+		        										if(data[0][0] == 1){
+		        											tipoValor = " días Transcurridos del Inicio"
+		        										}else{
+		        											tipoValor = " % Completado del Total";
+		        										}
+		        										
+		        																	
+                                                       var nuevaFila="<tr id=\"nFilas\">";
+                                                              nuevaFila+="<td>"+(data[0][0])+" - "+(data[0][1])+"</td>";
+                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val())+tipoValor+"</td>";
+                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val())+" %</td>";
+                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
+                                                              nuevaFila+="</tr>";
+                                                                                        
+                                                       
+
+                                                       $("#tablaFP").append(nuevaFila);
+                                                       
+                                                       
+                                                       $("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
+                                                       $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+                                                       
+                                                       fullParam = "";
+                                                       $('#tablaFP tr').each(function(){
+ 
+														        /* Obtener todas las celdas */
+														        var celdas = $(this).find('td');
+														 		
+														        /* Mostrar el valor de cada celda */
+														        celdas.each(function(){
+														        	fullParam += String($(this).html())+"&"; 
+														        });
+														 
+														 
+													   });
+													   
+													   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
+													   
+                                
+                									}
+
+                                 				}
+
+
+                     				 }
+
+                         });
+			
+			};
+			
+			
+			/**
+					
+					         * Funcion para eliminar la ultima columna de la tabla.
+					
+					         * Si unicamente queda una columna, esta no sera eliminada
+					
+					         */
+					         
+					         
+					         // Evento que selecciona la fila y la elimina 
+								$(document).on("click",".eliminarFP",function(){
+								
+								
+									var parent = $(this).parents().get(0);
+									var element = $(parent).text();
+									
+									var celdas = $(parent).find('td');
+														 		
+								
+									
+									
+									var cadena = String($(celdas[2]).html()),
+    									separador = " ", // un espacio en blanco
+    									limite    = 2,
+    								quickPago = cadena.split(separador, limite);
+									
+									
+									totalPago = totalPago - parseFloat(quickPago[0]);
+									
+									
+									var nFilas = $("#tablaFP tr").length;
+									
+									var count = nFilas - 2;
+									
+									if(totalPago < 0){
+										totalPago = 0;
+									}
+									
+		        					$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
+		        					+' - ( Configurado el '+ totalPago +'% )');
+									
+									if(totalPago == 100){
+		        						$('#slideThree').prop("checked", true);
+		        					}else{
+		        						$('#slideThree').prop("checked", false);
+		        					}
+									
+									$(parent).remove();
+
+								});
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		    	
 		    	
 		    	

@@ -49,6 +49,13 @@ if($secure){
 		$datos = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		echo json_encode( $datos );
 	}
+	
+	if ($_REQUEST ['funcion'] == 'consultarTipoFormaPago') {
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarTipoFormaPagoByNumPush', $subclase);
+		$datos = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
+	}
+	
 }
 
 ?>

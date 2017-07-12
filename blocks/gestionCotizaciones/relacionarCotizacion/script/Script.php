@@ -8,11 +8,14 @@ $funcion [$indice ++] = "jquery.autocomplete.min.js";
 
 $funcion [$indice++]  = "jquery.dataTables.min.js";
 
+$funcion [$indice++]  = "bootstrap-checkbox.js";
+
 $funcion [$indice++]  = "dataTables.bootstrap.min.js";
 $funcion [$indice++]  = "dataTables.bootstrap.js";
 $funcion [$indice++]  = "dataTables.jqueryui.js";
 $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
+$funcion [$indice++]  = "sweetalert2.min.js";
 
 
 $embebido [$indice] = true;

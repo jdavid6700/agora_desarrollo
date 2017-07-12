@@ -29,6 +29,11 @@ class Sql extends \Sql {
 		switch ($tipo) {
 			
 			
+			case "consultarTipoFormaPagoByNumPush" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM agora.tipo_condicion WHERE estado = TRUE AND id = ".$variable." ;";
+				break;
+			
 			case "tipoFormaPagoUdistrital" :
 				$cadenaSql=" SELECT id, nombre";
 				$cadenaSql.=" FROM agora.tipo_condicion WHERE estado = TRUE;";

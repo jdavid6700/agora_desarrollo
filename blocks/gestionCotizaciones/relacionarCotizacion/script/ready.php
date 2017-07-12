@@ -8,6 +8,12 @@ function detectarCarga(){
 	
 }
 
+	$(':checkbox[readonly=readonly]').click(function(){
+	
+		return false;        
+
+	}); 
+
 $('#<?php echo $this->campoSeguro('fechaCierre')?>').datepicker({
 		<?php /*?>timeFormat: 'HH:mm:ss',<?php */?>
                 dateFormat: 'dd/mm/yy',
@@ -92,7 +98,6 @@ $("#relacionarCotizacionRegistrar").validationEngine({
 	scroll: false,
 	autoHidePrompt: true,
 	autoHideDelay: 2000,
-	validateNonVisibleFields: true,
     updatePromptsPosition:true
 });
 
