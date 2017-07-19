@@ -1900,7 +1900,7 @@ class Formulario {
 								
 							$atributos ['obligatorio'] = true;
 							$atributos ['etiquetaObligatorio'] = true;
-							$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+							$atributos ['validar'] = 'required, minSize[1]';
 								
 							if (isset ( $_REQUEST [$esteCampo] )) {
 								$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5662,7 +5662,7 @@ class Formulario {
 			
 							$atributos ['obligatorio'] = true;
 							$atributos ['etiquetaObligatorio'] = true;
-							$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+							$atributos ['validar'] = 'required, minSize[1]';
 			
 							if (isset ( $_REQUEST [$esteCampo] )) {
 								$atributos ['valor'] = $_REQUEST [$esteCampo];
