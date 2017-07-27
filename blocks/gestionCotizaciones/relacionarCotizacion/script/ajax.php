@@ -433,7 +433,7 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 													   
 													   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
 													   
-                                
+                                						
                 									}
 
                                  				}
@@ -580,9 +580,22 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
                                                         								$("#tabla").append(nuevaFila);
                                                     		}
                                                      		else{                                   
-                                                        								alert('Ya se encuentra registrado!'); 
+                                                        								
+                                                        								swal({
+																						  title: 'Problema con Código Actividad Económica CIIU ('+(data[0][2])+')',
+																						  type: 'warning',
+																						  html:
+																						    'La actividad ya se encuentra registrada</br> '+ '</br>' + 
+																						    'Actividad Económica: (' + (data[0][2])+') ' + (data[0][1]) ,
+																						  confirmButtonText:
+																						    'Ok'
+																						})
 
                                                      		}
+                                                     		
+                                                     		
+															$("#<?php echo $this->campoSeguro('claseCIIU')?>").select2("val", "");
+															$("#<?php echo $this->campoSeguro('claseCIIU')?>").removeClass("validate[required]");
                                 
                 
 
@@ -780,7 +793,14 @@ $("#<?php echo $this->campoSeguro('cotizacionSoporte')?>").change(function (){
         var ext = file.substring(file.lastIndexOf("."));
        if(ext != ".pdf" && ext != ".xls" && ext != ".xlsx" && ext != ".doc" &&  ext != ".docx")
          {
-             alert('Por favor cambie el archivo por otro en alguno de los formatos (pdf, xls, xlsx, doc, docx)');
+         	 swal({
+			  title: 'Problema con el Archivo de Soporte',
+			  type: 'warning',
+			  html:
+			    'Por favor cambie el archivo por otro en alguno de los formatos <i>(pdf, xls, xlsx, doc, docx)</i>' ,
+			  confirmButtonText:
+			    'Ok'
+			 })
              $("#<?php echo $this->campoSeguro('cotizacionSoporte')?>").val(null);
          }
      });

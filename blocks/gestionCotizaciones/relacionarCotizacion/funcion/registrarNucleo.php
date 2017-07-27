@@ -51,8 +51,6 @@ class Registrar {
 			$cadenaSql = $this->miSql->getCadenaSql ( "registrarNucleoBasico", $arreglo );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
-			
-
 		
 			
 			if ($resultado) {

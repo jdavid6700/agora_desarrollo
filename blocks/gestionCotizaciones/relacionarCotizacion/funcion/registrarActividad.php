@@ -40,8 +40,6 @@ class Registrar {
 		
 		
 		$actividadesArray = explode(",", $_REQUEST['idsActividades']);
-
-		
 		
 		foreach ($actividadesArray as $dato):
 		
@@ -71,9 +69,6 @@ class Registrar {
 		
 		endforeach;
 		
-		
-		
-
 			
 			if ($resultado) {
 				redireccion::redireccionar ( 'registroActividad', $arreglo );

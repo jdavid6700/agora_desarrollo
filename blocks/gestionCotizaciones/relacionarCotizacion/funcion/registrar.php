@@ -72,9 +72,9 @@ class Registrar {
 		
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		
-		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/gestionNecesidades/";
+		$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/gestionCotizaciones/";
 		$rutaBloque .= $esteBloque ['nombre'];
-		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/gestionNecesidades/" . $esteBloque ['nombre'];
+		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/gestionCotizaciones/" . $esteBloque ['nombre'];
 
 		
 		//Guardar RUT adjuntado Persona Natural*********************************************************************
@@ -122,54 +122,121 @@ class Registrar {
 		$objetivos = $_POST[$this->campoSeguroCodificar('objetivo', $_REQUEST['tiempo'])];
 		$requisitos = $_POST[$this->campoSeguroCodificar('requisitos', $_REQUEST['tiempo'])];
 		$observaciones = $_POST[$this->campoSeguroCodificar('observaciones', $_REQUEST['tiempo'])];
+		$plan = $_POST[$this->campoSeguroCodificar('planAccion', $_REQUEST['tiempo'])];
 		
 		$datosTextoEnriquecido = array (
 				'objetivos' => $objetivos,
 				'requisitos' => $requisitos,
-				'observaciones' => $observaciones
+				'observaciones' => $observaciones,
+				'plan' => $plan
 		);
 		/*--------------------------------------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
-		
-		if(isset($_REQUEST['tipoNecesidad'])){//CAST tipo de NECESIDAD
-			switch($_REQUEST['tipoNecesidad']){
-				case 1 :
-					$_REQUEST['tipoNecesidad']='BIEN';
-					break;
-				case 2 :
-					$_REQUEST['tipoNecesidad']='SERVICIO';
-					break;
-				case 3 :
-					$_REQUEST ['tipoNecesidad'] = 'BIEN Y SERVICIO';
-					break;
-			}
-		}
         
 		$fechaApertura = $this->cambiafecha_format($_REQUEST['fechaApertura']);
 		$fechaCierre = $this->cambiafecha_format($_REQUEST['fechaCierre']);
+		
+		
+		$SQLs = [];
+		
+		
+		
+		
+		$planAccion = $this->miSql->getCadenaSql ( 'registrarPlanAccion', $datosTextoEnriquecido['plan'] );
+		array_push($SQLs, $planAccion);
+		
+		
+		
 		
         $datosSolicitud = array (
         		'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
         		'vigencia' => $_REQUEST ['vigencia'],
         		'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
-        		'solicitante' => $_REQUEST ['solicitante'],
         		'dependencia' => $_REQUEST ['dependencia'],
+        		'ordenador' => $_REQUEST ['ordenador'],
         		'fecha_apertura' => $fechaApertura,
         		'fecha_cierre' => $fechaCierre,
         		'objetivo' => $datosTextoEnriquecido['objetivos'],
         		'requisitos' => $datosTextoEnriquecido['requisitos'],
         		'observaciones' => $datosTextoEnriquecido['observaciones'],
+        		'plan' => "currval('administrativa.plan_accion_id_seq')",
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
+        		'medio_pago' => $_REQUEST ['medioPago'],
         		'usuario' => $_REQUEST ['usuario'],
         		'anexo' => $_REQUEST ['destino']
         );
 
         
-        $cadenaSql = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
-        $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda", $datosSolicitud, 'registrar' );
-		
+        $datosSolicitudCotizacion = $this->miSql->getCadenaSql ( 'registrar', $datosSolicitud );
+        array_push($SQLs, $datosSolicitudCotizacion);
+        
+        
+        
+        //******************************** FORMA PAGO ****************************************************************
+        
+        $subCount = explode(" ", $_REQUEST ['countParam']);
+        $countFPParam = $subCount[1];
+        
+        $subFP = explode("&", $_REQUEST ['idsFormaPago']);
+        $cantidadParametros = ($countFPParam) * 3;
+        
+        $limitP = 0;
+        while($limitP < $cantidadParametros){
+        	
+        	$subCount[$limitP] = explode(" ", $subFP[$limitP]);
+        	
+        	$limitP++;
+        	
+        }
 
-		if ($resultado) {
+        $limit = 0;
+        while($limit < $cantidadParametros){
+        	
+        	
+        	$datoFP = array (
+        			'tipo_condicion' => $subCount[$limit][0],
+        			'valor_condicion' => $subCount[$limit+1][0],
+        			'porcentaje_pago' => $subCount[$limit+2][0]
+        	);
+        	
+        	$datoRegFP = $this->miSql->getCadenaSql ( 'registrarFormaPago', $datoFP );
+        	array_push($SQLs, $datoRegFP);
+        	
+        	$datoFPxCot = array (
+        			'objeto_cotizacion_id' => "currval('agora.prov_objeto_contratar_id_objeto_seq')",
+        			'forma_pago_id' => "currval('agora.forma_pago_id_seq')"
+        	);
+        	
+        	$datoRegFPxCot = $this->miSql->getCadenaSql ( 'registrarFormaPagoXCotizacion', $datoFPxCot );
+        	array_push($SQLs, $datoRegFPxCot);
+        	
+        	
+        	$limit = $limit + 3;
+        }
+        
+        
+        //*************************************************************************************************************
+        
+        
+        $registroCotizacion = $esteRecursoDB->transaccion($SQLs);
+        
+
+		if ($registroCotizacion) {
+			
+			
+					if(isset($_REQUEST['tipoNecesidad'])){//CAST tipo de NECESIDAD
+						switch($_REQUEST['tipoNecesidad']){
+							case 1 :
+								$_REQUEST['tipoNecesidad']='BIEN';
+								break;
+							case 2 :
+								$_REQUEST['tipoNecesidad']='SERVICIO';
+								break;
+							case 3 :
+								$_REQUEST ['tipoNecesidad'] = 'BIEN Y SERVICIO';
+								break;
+						}
+					}
 			
 			
 				//Conusltar el ultimo ID del objeto
@@ -177,18 +244,20 @@ class Registrar {
 				$lastId = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$datos = array (
-						'idObjeto' => $resultado[0][0],
+						'idObjeto' => $lastId[0][0],
 						'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
 						'vigencia' => $_REQUEST ['vigencia'],
-						'solicitante' => $_REQUEST ['solicitante'],
 						'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
 						'dependencia' => $_REQUEST ['dependencia'],
+						'ordenador' => $_REQUEST ['ordenador'],
 						'fecha_apertura' => $fechaApertura,
 						'fecha_cierre' => $fechaCierre,
 						'objetivo' => $datosTextoEnriquecido['objetivos'],
 						'requisitos' => $datosTextoEnriquecido['requisitos'],
 						'observaciones' => $datosTextoEnriquecido['observaciones'],
+						'plan' => $datosTextoEnriquecido['plan'],
 						'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
+						'medio_pago' => $_REQUEST ['medioPago'],
 						'usuario' => $_REQUEST ['usuario']
 				);
 			
