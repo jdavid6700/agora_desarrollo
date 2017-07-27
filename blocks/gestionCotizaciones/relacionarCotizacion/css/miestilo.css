@@ -97,8 +97,7 @@ table.table1{
 
 
 .fila-base{ display: none; } /* fila base oculta */
-.eliminar{ cursor: pointer; color: #000; }
-.modificar{ cursor: pointer; color: #000; }
+.eliminarFP{ cursor: pointer; color: #000; }
 
 
 

@@ -469,7 +469,7 @@ class FormularioRegistro {
 		$atributos ['valor'] = '';
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['tamanno'] = 15;
 		$atributos ['maximoTamanno'] = '30';
 		$atributos ['anchoEtiqueta'] = 200;
@@ -499,7 +499,7 @@ class FormularioRegistro {
 		$atributos ['valor'] = '';
 		
 		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['tamanno'] = 15;
 		$atributos ['maximoTamanno'] = '30';
 		$atributos ['anchoEtiqueta'] = 200;

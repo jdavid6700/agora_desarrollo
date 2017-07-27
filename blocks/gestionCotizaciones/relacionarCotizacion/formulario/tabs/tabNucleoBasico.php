@@ -142,14 +142,17 @@ class FormularioRegistro {
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacionCast', $datos['idObjeto'] );
 		$solicitudCotizacionCast = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
 		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+		$cadenaSql = $this->miSql->getCadenaSql ( 'dependenciaUdistritalById', $solicitudCotizacion[0]['jefe_dependencia'] );
+		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		 
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
+		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitante', $solicitudCotizacion[0]['id_solicitante'] );
-		$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		if($solicitudCotizacion[0]['unidad_ejecutora'] == 1){
@@ -167,22 +170,22 @@ class FormularioRegistro {
 		
 		echo "<span class='textoElegante textoEnorme textoAzul'>Título Cotización : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['titulo_cotizacion'] . "</b></span></br>";
-			 echo "<br>";
+		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>N° Cotización - Vigencia - Unidad Ejecutora : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $_REQUEST['idObjeto']. " - ". $solicitudCotizacion[0]['vigencia'] . " - (" .$valorUnidadEjecutoraText. ")</b></span></br>";
-			 echo "<br>";
+		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Apertura : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_apertura']) . "</b></span></br>";
-			 echo "<br>";
+		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
-		     echo "<br>";
-        echo "<span class='textoElegante textoEnorme textoAzul'>Solicitante : </span>";
-        echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoSolicitante[0][0]. "</b></span></br>";
-             echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>"; 
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>"; 
-             echo "<br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto Relacionado : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoOrdenador[0][1]. "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoDependencia[0][1]. "</b></span></br>";
+		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']."</b></span></br>";
 		

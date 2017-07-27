@@ -123,10 +123,13 @@ class registrarForm {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
 		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitante', $solicitudCotizacion[0]['id_solicitante'] );
-		$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'dependenciaUdistritalById', $solicitudCotizacion[0]['jefe_dependencia'] );
+		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
+		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		if($solicitudCotizacion[0]['unidad_ejecutora'] == 1){
@@ -140,8 +143,8 @@ class registrarForm {
 		$atributos ["estilo"] = "jqueryui";
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );                
-                
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+		
 		echo "<span class='textoElegante textoEnorme textoAzul'>Título Cotización : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['titulo_cotizacion'] . "</b></span></br>";
 		echo "<br>";
@@ -154,11 +157,11 @@ class registrarForm {
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
 		echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Solicitante : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoSolicitante[0][0]. "</b></span></br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto Relacionado : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoOrdenador[0][1]. "</b></span></br>";
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoDependencia[0][1]. "</b></span></br>";
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']."</b></span></br>";
@@ -169,7 +172,7 @@ class registrarForm {
         
         $cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['idObjeto']  );
         $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        
+
         if( $resultadoActividades ){
         		
         	$esteCampo = "marcoActividadesRel";
@@ -181,7 +184,7 @@ class registrarForm {
         
         	foreach ($resultadoActividades as $dato):
         	echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
-        		echo $dato['id_subclase'] . ' - ' . $dato['nombre'] . "</b><br>";
+        		echo $dato['subclase'] . ' - ' . $dato['nombre'] . "</b><br>";
         	endforeach;
         
         	echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -201,7 +204,7 @@ class registrarForm {
         	
         	
         	echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
-        	echo $resultadoNBC[0]['id_nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "</b><br>";
+        	echo $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "</b><br>";
         	
         	
         	echo $this->miFormulario->marcoAgrupacion ( 'fin' );

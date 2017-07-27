@@ -80,8 +80,8 @@ $this->idioma["medioPago"] = "Medio de Pago :";
 $this->idioma["medioPagoTitulo"]="Seleccionar Medio de Pago";
 
 $this->idioma["marcoAnexo"] = "Detalle Cotización";
-$this->idioma["cotizacionSoporte"] = "Adjuntar (PDF) : ";
-$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (PDF)";
+$this->idioma["cotizacionSoporte"] = "Adjuntar (Archivo) : ";
+$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (Archivo)";
 
 $this->idioma["marcoPlan"] = "Detalle Plan de Acción Relacionado";
 

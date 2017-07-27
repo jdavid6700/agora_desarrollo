@@ -78,11 +78,12 @@ if (!isset($GLOBALS["autorizado"])) {
     	$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
     	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso ( $cadenaSql, "busqueda" );
     	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarDependencia', $_REQUEST['dependencia'] );
+    	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $_REQUEST['dependencia'] );
     	$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
     	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'buscarSolicitante', $_REQUEST['solicitante'] );
-    	$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	$cadenaSql = $this->sql->getCadenaSql ( 'ordenadorUdistritalById', $_REQUEST['ordenador'] );
+    	$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
         
         if(isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "RELACIONADO"){
         	
@@ -115,7 +116,7 @@ if (!isset($GLOBALS["autorizado"])) {
         }else{	
         	
         	//***************************************************************************
-        	$numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+        	$numberSolicitud = "SC-" . sprintf("%06d", $_REQUEST['idObjeto']);
         	
         	$parametros = array (
         			'idObjeto' => $_REQUEST ['idObjeto'],
@@ -144,8 +145,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Cotización <b>N° ".$_REQUEST['idObjeto']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
 					Unidad Ejecutora <b>". $valorUnidadEjecutoraText . "</b>
 				</br>
-				</br><b>Solicitante: </b> ".$resultadoSolicitante[0][0]."
-				</br><b>Dependencia: </b> ".$resultadoDependencia[0][0]."
+				</br><b>Ordenador del Gasto Relacionado: </b> ".$resultadoOrdenador[0][1]."
+				</br><b>Dependencia Solicitante: </b> ".$resultadoDependencia[0][1]."
 				</br><b>Fecha del Proceso: </b> ".$hoy."
 				</br><b>Responsable: </b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
         $boton = "continuar";
@@ -400,7 +401,7 @@ if (!isset($GLOBALS["autorizado"])) {
         
     }else if($_REQUEST['mensaje'] == 'registroActividad') {
     	
-    	
+
     	$actividadesArray = explode(",", $_REQUEST['actividadesArray']);
     	$listAc = "";
     	
@@ -417,7 +418,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
 
         $tipo = 'success';
-        $mensaje = "Se registro la(s) Actividad(es) Económica(s)<br ><br>";
+        $mensaje = "Se <b>Registró</b> la(s) Actividad(es) Económica(s)<br ><br>";
 		$mensaje .= $listAc;
         $boton = "regresar";
 
