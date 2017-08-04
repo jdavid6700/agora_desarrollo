@@ -90,7 +90,18 @@ class TextArea  extends HtmlBase{
   										<script>tinymce.init({ selector:\'textarea\', readonly : 1 });</script>';
         	}else{
         		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
-  										<script>tinymce.init({ selector:\'textarea\' });</script>';
+  										<script>tinymce.init({ selector:\'textarea\',
+        															
+        															setup : function(ed) {
+																        ed.on("change", function(e){
+        																	$(\'#\'+ed.id).html(tinymce.activeEditor.getContent());
+																        });
+																        ed.on("keyup", function(){
+        																	$(\'#\'+ed.id).html(tinymce.activeEditor.getContent());
+																        });
+																   }
+        				
+        													});</script>';
         	}
         	
            
