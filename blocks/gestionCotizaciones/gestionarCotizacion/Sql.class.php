@@ -28,6 +28,209 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "buscarUnidadItem" :
+				$cadenaSql = " SELECT *";
+				$cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id = ".$variable.";";
+				break;
+					
+			case "buscarDetalleItemsProducto" :
+				$cadenaSql=" SELECT ";
+				$cadenaSql.=" id, ";
+				$cadenaSql.=" nombre, ";
+				$cadenaSql.=" descripcion, ";
+				$cadenaSql.=" tipo_necesidad, ";
+				$cadenaSql.=" unidad, ";
+				$cadenaSql.=" tiempo_ejecucion, ";
+				$cadenaSql.=" cantidad, ";
+				$cadenaSql.=" valor_unitario";
+				$cadenaSql.=" FROM agora.item_cotizacion";
+				$cadenaSql.=" WHERE respuesta_cotizacion_proveedor = ".$variable.";";
+				break;
+			
+			case "consultar_respuesta" :
+				$cadenaSql = "SELECT  ";
+				$cadenaSql .= " id, ";
+				$cadenaSql .= " descripcion,  ";
+				$cadenaSql .= " informacion_entrega, ";
+				$cadenaSql .= " descuentos, ";
+				$cadenaSql .= " observaciones, ";
+				$cadenaSql .= " fecha_vencimiento, ";
+				$cadenaSql .= " soporte_cotizacion, ";
+				$cadenaSql .= " fecha_registro";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.respuesta_cotizacion_proveedor";
+				$cadenaSql .= " WHERE  ";
+				$cadenaSql .= " solicitud_cotizacion = " . $variable;
+				break;
+			
+			case "consultarIdsolicitud" : // ********************************************************************
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " id ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.solicitud_cotizacion";
+				$cadenaSql .= " WHERE objeto_cotizacion = " . $variable ['solicitud'];
+				$cadenaSql .= " AND proveedor= " . $variable ['proveedor'];
+				break;
+			
+			case "registrarFormaPagoXCotizacion" :
+				$hoy = date ( "Y-m-d" );
+				$cadenaSql = " INSERT INTO agora.objeto_cotizacion_forma_pago";
+				$cadenaSql .= " (";
+				$cadenaSql .= " objeto_cotizacion_id,";
+				$cadenaSql .= " forma_pago_id";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " " . $variable ['objeto_cotizacion_id'] . ",";
+				$cadenaSql .= " " . $variable ['forma_pago_id'] . "";
+				$cadenaSql .= " );";
+				break;
+			
+			
+			case "registrarFormaPago" :
+				$hoy = date ( "Y-m-d" );
+				$cadenaSql = " INSERT INTO agora.forma_pago";
+				$cadenaSql .= " (";
+				$cadenaSql .= " tipo_condicion,";
+				$cadenaSql .= " valor_condicion,";
+				$cadenaSql .= " porcentaje_pago";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " " . $variable ['tipo_condicion'] . ",";
+				$cadenaSql .= " " . $variable ['valor_condicion'] . ",";
+				$cadenaSql .= " " . $variable ['porcentaje_pago'] . "";
+				$cadenaSql .= " )";
+				$cadenaSql .= " RETURNING  id; ";
+				break;
+			
+			case "configuracionRelaciones" :
+				$cadenaSql=" DELETE ";
+				$cadenaSql.=" FROM agora.objeto_cotizacion_forma_pago WHERE objeto_cotizacion_id = ".$variable." ;";
+				break;
+			
+			case 'actualizarPlanAccion' :
+				$cadenaSql = "UPDATE administrativa.plan_accion SET ";
+				$cadenaSql .= "descripcion = '" . $variable ['plan'] . "'";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['fk_id_plan'] . "';";
+				break;
+			
+			case 'actualizarSoporte' :
+				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
+				$cadenaSql .= "anexo_cotizacion = '" . $variable ['destino'] . "'";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
+				break;
+			
+			case "buscarDetalleFormaPago" :
+				$cadenaSql=" SELECT";
+				$cadenaSql.=" FP.tipo_condicion as id_tipo_condicion, ";
+				$cadenaSql.=" TC.nombre as tipo_condicion, ";
+				$cadenaSql.=" FP.valor_condicion as valor_condicion, ";
+				$cadenaSql.=" FP.porcentaje_pago as porcentaje_pago ";
+				$cadenaSql.=" FROM agora.forma_pago FP ";
+				$cadenaSql.=" JOIN agora.tipo_condicion TC ON TC.id = FP.tipo_condicion ";
+				$cadenaSql.=" JOIN agora.objeto_cotizacion_forma_pago OCFP ON OCFP.forma_pago_id = FP.id ";
+				$cadenaSql.=" WHERE OCFP.objeto_cotizacion_id = " . $variable['idObjeto'];
+				break;
+			
+			case "buscarPlanAccionId" :
+				$cadenaSql=" SELECT *";
+				$cadenaSql.=" FROM administrativa.plan_accion WHERE id = ".$variable." ;";
+				break;
+			
+			case "consultarTipoFormaPagoByNumPush" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM agora.tipo_condicion WHERE estado = TRUE AND id = ".$variable." ;";
+				break;
+			
+			case "tipoFormaPagoUdistrital" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM agora.tipo_condicion WHERE estado = TRUE;";
+				break;
+			
+			case "medioPagoUdistrital" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM core.medio_pago WHERE estado = TRUE;";
+				break;
+			
+			case "tipoNecesidadAdministrativa" :
+				$cadenaSql=" SELECT id, nombre";
+				$cadenaSql.=" FROM administrativa.tipo_necesidad WHERE estado = TRUE;";
+				break;
+			
+			case "ordenadorUdistrital" :
+				$cadenaSql=" SELECT DISTINCT ON (CR.id) CR.id , ('(' ||JD.tercero_id || ') - ' || UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" FROM core.ordenador_gasto CR";
+				$cadenaSql.=" JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+				$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+				$cadenaSql.=" GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+				break;
+				
+			case "dependenciaUdistrital" :
+				$cadenaSql=" SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre) || ' - (' || JD.tercero_id || ')') as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" FROM oikos.dependencia D";
+				$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = D.id";
+				$cadenaSql.=" GROUP BY D.id, JD.tercero_id, D.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+				$cadenaSql.=" ORDER BY D.id, D.nombre, JD.fecha_fin DESC";
+				break;
+				
+				case "ordenadorUdistritalById" :
+					$cadenaSql=" SELECT DISTINCT ON (CR.id) CR.id , ('(' ||JD.tercero_id || ') - ' || UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin";
+					$cadenaSql.=" FROM core.ordenador_gasto CR";
+					$cadenaSql.=" JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+					$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+					$cadenaSql.=" WHERE CR.id = ".$variable;
+					$cadenaSql.=" GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+					$cadenaSql.=" ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+					break;
+					
+					case "ordenadorUdistritalByIdCast" :
+						$cadenaSql=" SELECT DISTINCT ON (CR.id) CR.id , ( UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin";
+						$cadenaSql.=" FROM core.ordenador_gasto CR";
+						$cadenaSql.=" JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+						$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+						$cadenaSql.=" WHERE CR.id = ".$variable;
+						$cadenaSql.=" GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+						$cadenaSql.=" ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+						break;
+				
+				case "dependenciaUdistritalById" :
+					$cadenaSql=" SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre)) as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+					$cadenaSql.=" FROM oikos.dependencia D";
+					$cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = D.id";
+					$cadenaSql.=" WHERE D.id = ".$variable;
+					$cadenaSql.=" GROUP BY D.id, JD.tercero_id, D.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+					$cadenaSql.=" ORDER BY D.id, D.nombre, JD.fecha_fin DESC";
+					break;
+				
+			case "buscarDependenciaOikosById" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= "	*";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " oikos.dependencia";
+				$cadenaSql .= " WHERE id = ".$variable;
+				break;
+				
+			
+			case "buscarEstadoJefeDependencia" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= "	*";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.jefe_dependencia";
+				$cadenaSql .= " WHERE tercero_id = ".$variable ." ORDER BY fecha_fin DESC LIMIT 1; ";
+				break;
+				
+				
+				
+				
+				
+				
+				
+			
+			
 			/* REGISTRAR COTIZACION */
 			case "actualizarRespuestaCotizacionDec" :
 				$cadenaSql = " UPDATE agora.respuesta_cotizacion_ordenador SET ";
@@ -106,10 +309,8 @@ class Sql extends \Sql {
 				$cadenaSql.=" ('(' ||P.num_documento || ', ' || P.tipopersona || ') - ' || P.nom_proveedor) as name ";
 				$cadenaSql.=" FROM";
 				$cadenaSql.=" agora.solicitud_cotizacion S";
-				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
-				$cadenaSql.=" JOIN core.ciudad U ON P.id_ciudad_contacto = U.id_ciudad";
-				$cadenaSql.=" JOIN core.departamento D ON U.id_departamento = D.id_departamento";
-				$cadenaSql.=" WHERE  id_objeto = " . $variable;
+				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.proveedor";
+				$cadenaSql.=" WHERE  S.objeto_cotizacion = " . $variable;
 				break;
 			
 			case "consultarSolicitudxProveedorRes" :
@@ -145,9 +346,17 @@ class Sql extends \Sql {
 				$cadenaSql .= "	*";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.solicitud_cotizacion";
-				$cadenaSql .= " WHERE id_objeto = ".$variable['objeto'] . " AND id_proveedor = ".$variable['proveedor'];
+				$cadenaSql .= " WHERE objeto_cotizacion = ".$variable['objeto'] . " AND proveedor = ".$variable['proveedor'];
 				break;
-			
+				
+			case "consultarRespuestaxProveedor" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= "	*";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.respuesta_cotizacion_proveedor";
+				$cadenaSql .= " WHERE solicitud_cotizacion = " . $variable . ";";
+				break;
+				
 			case "buscarSolicitante" :
 				$cadenaSql = "SELECT";
 				$cadenaSql .= "	cargo";
@@ -191,7 +400,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" * ";
 				$cadenaSql.=" FROM ";
 				$cadenaSql.=" agora.objeto_cotizacion";
-				$cadenaSql.=" WHERE responsable = '" . $variable . "';";
+				$cadenaSql.=" WHERE usuario_creo = '" . $variable . "';";
 				break;
 			
 			
@@ -427,10 +636,10 @@ class Sql extends \Sql {
 				
 			case "estadoSolicitudAgora" :
 				$cadenaSql = " SELECT ";
-				$cadenaSql .= " estado ";
+				$cadenaSql .= " estado_cotizacion ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion ";
-				$cadenaSql .= " WHERE id_objeto = " . $variable['idObjeto'];
+				$cadenaSql .= " WHERE id = " . $variable['idObjeto'];
 				break;
 				
 			case "informacionSolicitudAgoraNoCast" :
@@ -438,32 +647,35 @@ class Sql extends \Sql {
 				$cadenaSql .= " * ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable['idObjeto']; // Activo
+				$cadenaSql .= " WHERE  id =" . $variable['idObjeto']; // Activo
 				break;
 				
 			case "informacionSolicitudAgora" :
 				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_objeto,";
-				$cadenaSql .= " titulo_cotizacion,";
+				$cadenaSql .= " O.id,";
 				$cadenaSql .= " numero_solicitud,";
-				$cadenaSql .= " id_solicitante,";
 				$cadenaSql .= " vigencia,";
-				$cadenaSql .= " unidad_ejecutora,";
-				$cadenaSql .= "	fecha_registro,";
-				$cadenaSql .= "	fecha_solicitud_cotizacion,";
+				$cadenaSql .= " fecha_registro,";
+				$cadenaSql .= " fecha_solicitud_cotizacion,";
+				$cadenaSql .= " estado_cotizacion,";
+				$cadenaSql .= "	unidad_ejecutora,";
 				$cadenaSql .= "	tipo_necesidad,";
-				$cadenaSql .= "	esp.dependencia,";
+				$cadenaSql .= "	titulo_cotizacion,";
+				$cadenaSql .= "	jesp.dependencia_id,";
 				$cadenaSql .= " objetivo,";
 				$cadenaSql .= " requisitos,";
 				$cadenaSql .= " observaciones,";
-				$cadenaSql .= " responsable,";
 				$cadenaSql .= " fecha_apertura,";
 				$cadenaSql .= " fecha_cierre,";
-				$cadenaSql .= "	estado";
+				$cadenaSql .= " ordenador_gasto,";
+				$cadenaSql .= " justificacion_seleccion,";
+				$cadenaSql .= " anexo_cotizacion,";
+				$cadenaSql .= " medio_pago,";
+				$cadenaSql .= "	plan_accion";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion O";
-				$cadenaSql .= " JOIN agora.parametro_dependencia esp ON esp.id_dependencia = O.dependencia";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable['idObjeto']; // Activo
+				$cadenaSql .= " JOIN core.jefe_dependencia jesp ON jesp.id = O.jefe_dependencia";
+				$cadenaSql .= " WHERE  O.id =" . $variable['idObjeto']; // Activo
 				break;
 				
 				
@@ -473,7 +685,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" JOIN core.ciiu_subclase C ON C.id_subclase = T.codigociiu";
 				$cadenaSql.=" JOIN core.ciiu_clase P ON P.id_clase = C.clase";
 				$cadenaSql.=" JOIN core.ciiu_division D ON D.id_division = P.division";
-				$cadenaSql .= " WHERE T.id_objeto = " . $variable ['idObjeto'];
+				$cadenaSql .= " WHERE T.id = " . $variable ['idObjeto'];
 				break;
 				
 				
@@ -488,40 +700,40 @@ class Sql extends \Sql {
 				break;
 				
 				/* CONSULTAR ACTIVIDADES DE LA NECESIDAD */
-                            case "eliminarActividadActual" : // ********************************************************************
+            case "eliminarActividadActual" : // ********************************************************************
 				$cadenaSql = " DELETE FROM";
 				$cadenaSql .= " agora.objeto_cotizacion_actividad_ciiu ";
-				$cadenaSql .= " WHERE id_objeto = " . $variable;
+				$cadenaSql .= " WHERE objeto = " . $variable;
 				break;
 			case "consultarActividades" : // ********************************************************************
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " A.id_subclase,";
-				$cadenaSql .= " nombre,";
-                                $cadenaSql .= " clase";
+				$cadenaSql .= " A.subclase,";
+				$cadenaSql .= " S.nombre,";
+                $cadenaSql .= " S.clase";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion_actividad_ciiu A";
-				$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
-				$cadenaSql .= " WHERE id_objeto = " . $variable;
+				$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.subclase ";
+				$cadenaSql .= " WHERE A.objeto = " . $variable;
 				break;
 				
 			case "consultarActividadesImp" : // ********************************************************************
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " A.id_subclase,";
+				$cadenaSql .= " A.subclase,";
 				$cadenaSql .= " UPPER(S.nombre) as nombre";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion_actividad_ciiu A";
-				$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
-				$cadenaSql .= " WHERE id_objeto = " . $variable;
+				$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.subclase ";
+				$cadenaSql .= " WHERE A.objeto = " . $variable;
 				break;
 				
 			case "consultarNBCImp" : // ********************************************************************
 				$cadenaSql = " SELECT";
-				$cadenaSql .= " A.id_nucleo,";
+				$cadenaSql .= " A.nucleo,";
 				$cadenaSql .= " UPPER(S.nombre) as nombre";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion_nucleo_basico A";
-				$cadenaSql .= " JOIN core.snies_nucleo_basico S ON S.id_nucleo = A.id_nucleo ";
-				$cadenaSql .= " WHERE A.id_objeto = " . $variable;
+				$cadenaSql .= " JOIN core.snies_nucleo_basico S ON S.id_nucleo = A.nucleo ";
+				$cadenaSql .= " WHERE A.objeto = " . $variable;
 				break;
 				
 				
@@ -530,8 +742,8 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " agora.objeto_cotizacion_actividad_ciiu ";
 				$cadenaSql .= " (";
-				$cadenaSql .= " id_objeto,";
-				$cadenaSql .= " id_subclase";
+				$cadenaSql .= " objeto,";
+				$cadenaSql .= " subclase";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
@@ -556,9 +768,9 @@ class Sql extends \Sql {
 				
 			case "actualizarNucleoBasico" : // **********************************************************
 				$cadenaSql = " UPDATE agora.objeto_cotizacion_nucleo_basico SET ";
-				$cadenaSql .= " id_nucleo = " . $variable ['objetoNBC'];
+				$cadenaSql .= " nucleo = " . $variable ['objetoNBC'];
 				$cadenaSql .= " WHERE";
-				$cadenaSql .= " id_objeto = '" . $variable ['idObjeto'] . "';";
+				$cadenaSql .= " objeto = '" . $variable ['idObjeto'] . "';";
 				break;
 				
 			case "consultarNucleoBasico" : // **********************************************************
@@ -586,13 +798,13 @@ class Sql extends \Sql {
 				
 			case "actividadesXNecesidad" :
 				$cadenaSql = " SELECT ";
-				$cadenaSql .= " string_agg('''' || cast(id_subclase as text) || '''',',' ";
+				$cadenaSql .= " string_agg('''' || cast(subclase as text) || '''',',' ";
 				$cadenaSql .= " ORDER BY ";
-				$cadenaSql .= " id_subclase) ";
+				$cadenaSql .= " subclase) ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion_actividad_ciiu ";
 				$cadenaSql .= " WHERE ";
-				$cadenaSql .= " id_objeto = " . $variable . ";";
+				$cadenaSql .= " objeto = " . $variable . ";";
 				break;
 				
 				
@@ -632,8 +844,8 @@ class Sql extends \Sql {
 				$cadenaSql .= "	P.clasificacion_evaluacion";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.solicitud_cotizacion S";
-				$cadenaSql .= " JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable;
+				$cadenaSql .= " JOIN agora.informacion_proveedor P ON P.id_proveedor = S.proveedor";
+				$cadenaSql .= " WHERE  objeto_cotizacion =" . $variable;
 				$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
 				break;
 				
@@ -651,10 +863,10 @@ class Sql extends \Sql {
 				$cadenaSql.=" P.clasificacion_evaluacion";
 				$cadenaSql.=" FROM";
 				$cadenaSql.=" agora.solicitud_cotizacion S";
-				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
+				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.proveedor";
 				$cadenaSql.=" JOIN core.ciudad U ON P.id_ciudad_contacto = U.id_ciudad";
 				$cadenaSql.=" JOIN core.departamento D ON U.id_departamento = D.id_departamento";
-				$cadenaSql.=" WHERE  id_objeto = " . $variable;
+				$cadenaSql.=" WHERE objeto_cotizacion = " . $variable;
 				break;
 			
 			/* REGISTRAR COTIZACION */
@@ -663,15 +875,14 @@ class Sql extends \Sql {
 				
 				$cadenaSql = " INSERT INTO agora.solicitud_cotizacion";
 				$cadenaSql .= " (";
-				$cadenaSql .= " id_objeto,";
-				$cadenaSql .= " id_proveedor,";
-				$cadenaSql .= " estado";
+				$cadenaSql .= " objeto_cotizacion,";
+				$cadenaSql .= " proveedor";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= " '" . $variable [0] . "',";
-				$cadenaSql .= " '" . $variable [1] . "',";
-				$cadenaSql .= " 'ABIERTO'";
+				$cadenaSql .= " '" . $variable [1] . "'";
+				//$cadenaSql .= " 'ABIERTO'";
 				$cadenaSql .= " );";
 				break;
 			
@@ -679,9 +890,9 @@ class Sql extends \Sql {
 			case 'actualizarObjeto' :
 				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
 				$cadenaSql .= "numero_solicitud = '" . $variable ['numero_solicitud'] . "',";
-				$cadenaSql .= "estado = '" . $variable ['estado'] . "',";
+				$cadenaSql .= "estado_cotizacion = '" . $variable ['estado'] . "',";
 				$cadenaSql .= "fecha_solicitud_cotizacion = '" . $variable ['fecha'] . "'";
-				$cadenaSql .= " WHERE id_objeto=";
+				$cadenaSql .= " WHERE id = ";
 				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
 				break;
 			
@@ -759,7 +970,6 @@ class Sql extends \Sql {
 				$cadenaSql .= "	fecha_registro,";
 				$cadenaSql .= "	fecha_solicitud_cotizacion,";
 				$cadenaSql .= "	tipo_necesidad,";
-				$cadenaSql .= "	esp.dependencia,";
 				$cadenaSql .= " objetivo,";
 				$cadenaSql .= " requisitos,";
 				$cadenaSql .= " observaciones,";
@@ -768,26 +978,23 @@ class Sql extends \Sql {
 				$cadenaSql .= " fecha_cierre,";
 				$cadenaSql .= "	estado";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.objeto_cotizacion O";
-				$cadenaSql .= " JOIN agora.parametro_dependencia esp ON esp.id_dependencia = O.dependencia";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable; // Activo
+				$cadenaSql .= " agora.objeto_cotizacion ";
+				$cadenaSql .= " WHERE  id =" . $variable; // Activo
 				break;
 			
 			/* LISTA - OBJETO A CONTRATAR */
 			case "listaObjetoContratar" :
 				$cadenaSql = "SELECT";
-				$cadenaSql .= " id_objeto,";
+				$cadenaSql .= " id,";
 				$cadenaSql .= " numero_solicitud,";
 				$cadenaSql .= " vigencia,";
 				$cadenaSql .= " unidad_ejecutora,";
-				$cadenaSql .= "	cantidad,";
-				$cadenaSql .= "	fechasolicitudcotizacion,";
-				$cadenaSql .= "	fecharegistro,";
-				$cadenaSql .= "	numero_cotizaciones,";
+				$cadenaSql .= "	fecha_solicitud_cotizacion,";
+				$cadenaSql .= "	fecha_registro,";
 				$cadenaSql .= "	estado";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion O";
-				$cadenaSql .= " WHERE  estado= '" . $variable ."'"; // Activo
+				//$cadenaSql .= " WHERE  estado= '" . $variable ."'"; // Activo
 				$cadenaSql .= " ORDER BY fechaRegistro";
 				break;
 			
@@ -879,26 +1086,23 @@ class Sql extends \Sql {
 				break;
 				
 				
-			case "infoCotizacion" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " * ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.objeto_cotizacion";
-				$cadenaSql .= " WHERE id_objeto = " . $variable;
-				break;
+				case "infoCotizacion" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " * ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.objeto_cotizacion";
+					$cadenaSql .= " WHERE id = " . $variable;
+					break;
 				
-			case "infoCotizacionCast" :
-				$cadenaSql = "SELECT";
-				$cadenaSql .= " oc.titulo_cotizacion, ";
-				$cadenaSql .= " oc.id_solicitante, ";
-				$cadenaSql .= " oc.fecha_apertura, ";
-				$cadenaSql .= " oc.fecha_cierre, ";
-				$cadenaSql .= " esp.dependencia ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.objeto_cotizacion oc";
-				$cadenaSql .= " JOIN agora.parametro_dependencia esp ON esp.id_dependencia = oc.dependencia";
-				$cadenaSql .= " WHERE id_objeto = " . $variable;
-				break;
+				case "infoCotizacionCast" :
+					$cadenaSql = "SELECT";
+					$cadenaSql .= " oc.titulo_cotizacion, ";
+					$cadenaSql .= " oc.fecha_apertura, ";
+					$cadenaSql .= " oc.fecha_cierre ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.objeto_cotizacion oc";
+					$cadenaSql .= " WHERE oc.id = " . $variable;
+					break;
 				
 				/* REGISTRAR DATOS DEL OBJETO A CONTRATAR */
 			case "registrar" :
@@ -943,19 +1147,21 @@ class Sql extends \Sql {
 			case "actualizar" :
 				$cadenaSql = " UPDATE agora.objeto_cotizacion SET";
 				$cadenaSql .= " titulo_cotizacion = "." '" . $variable ['titulo_cotizacion'] . "',";
-				$cadenaSql .= " dependencia = "." " . $variable ['dependencia'] . ",";;
+				$cadenaSql .= " jefe_dependencia = "." " . $variable ['dependencia'] . ",";;
+				$cadenaSql .= " ordenador_gasto = "." " . $variable ['ordenador'] . ",";;
 				$cadenaSql .= " fecha_apertura = "." '" . $variable ['fecha_apertura'] . "',";
 				$cadenaSql .= " fecha_cierre = "." '" . $variable ['fecha_cierre'] . "',";
 				$cadenaSql .= " objetivo = "." '" . $variable ['objetivo'] . "',";
 				$cadenaSql .= " requisitos = "." '" . $variable ['requisitos'] . "',";
 				$cadenaSql .= " observaciones = "." '" . $variable ['observaciones'] . "',";
+				$cadenaSql .= " plan_accion = "." '" . $variable ['plan'] . "',";
 				$cadenaSql .= " vigencia = "." " . $variable ['vigencia'] . ",";
 				$cadenaSql .= " unidad_ejecutora = "." " . $variable ['unidad_ejecutora'] . ",";
-				$cadenaSql .= " id_solicitante = "." " . $variable ['solicitante'] . ",";
-				$cadenaSql .= " estado = 'RELACIONADO',";
+				$cadenaSql .= " estado_cotizacion = '1',";
 				$cadenaSql .= " tipo_necesidad = '" . $variable ['tipo_necesidad'] . "',";
-				$cadenaSql .= " responsable = "." '" . $variable ['usuario'] . "'";
-				$cadenaSql .= " WHERE id_objeto = " . $variable ['idObjeto'];
+				$cadenaSql .= " medio_pago = '" . $variable ['medio_pago'] . "',";
+				$cadenaSql .= " usuario_creo = "." '" . $variable ['usuario'] . "'";
+				$cadenaSql .= " WHERE id = " . $variable ['idObjeto'] .";";
 				break;
 				
 				

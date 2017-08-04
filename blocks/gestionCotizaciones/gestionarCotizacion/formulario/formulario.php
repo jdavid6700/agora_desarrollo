@@ -63,8 +63,8 @@ class Formulario {
 		//$conexion = "sicapital";
 		//$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 		
-		$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCOTIZACION );
-		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
+		//$this->cadena_sql = $this->miSql->getCadenaSql ( "listaObjetoContratar", self::OBJETOCOTIZACION );
+		//$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
 		
 		
 		// ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
@@ -101,7 +101,7 @@ class Formulario {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
-			
+
 		
 		$this->cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosParaCotizacion", $_REQUEST['usuario'] );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $this->cadena_sql, "busqueda" );
@@ -125,6 +125,15 @@ class Formulario {
 			$atributos["mensaje"] = $mensaje;
 			echo $this->miFormulario->cuadroMensaje($atributos);
 			unset($atributos);
+			
+		
+			echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+			
 
 		$esteCampo = "marcoDatosCotizacionList";
 		$atributos ['id'] = $esteCampo;
@@ -151,6 +160,7 @@ class Formulario {
 								<th><center>Modificar</center></th>
 								<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>
+								<th><center>Borrar</center></th>
 							</tr>
 							</thead>
 							<tbody>";
@@ -158,16 +168,16 @@ class Formulario {
 			foreach ($resultado as $dato):
 			$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableView .= "&opcion=verSolicitudRelacionada";
-			$variableView .= "&idSolicitud=" . $dato['id_objeto'];
+			$variableView .= "&idSolicitud=" . $dato['id'];
 			$variableView .= "&vigencia=" . $dato['vigencia'];
 			$variableView .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 			$variableView .= "&usuario=" . $_REQUEST['usuario'];
 			$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 			$imagenView = 'verPro.png';
 
-			$cadena_sql = $this->miSql->getCadenaSql ( "buscarDependencia", $dato['dependencia']);
+			$cadena_sql = $this->miSql->getCadenaSql ( "dependenciaUdistritalById", $dato['jefe_dependencia']);
 			$resultadoDep = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-			
+
 			if(isset($dato['unidad_ejecutora'])){//CAST
 				switch($dato['unidad_ejecutora']){
 					case 1 :
@@ -179,11 +189,48 @@ class Formulario {
 				}
 			}
 			
-			if($dato['estado'] == "COTIZACION"){
+			if(isset($dato['tipo_necesidad'])){//CAST
+				switch($dato['tipo_necesidad']){
+						case 1 :
+							$dato ['tipo_necesidad'] = 'BIEN';
+							break;
+						case 2 :
+							$dato ['tipo_necesidad'] = 'SERVICIO';
+							break;
+						case 3 :
+							$dato ['tipo_necesidad'] = 'BIEN Y SERVICIO';
+							break;
+				}
+			}
+			
+			if(isset($dato['estado_cotizacion'])){//CAST
+				switch($dato['estado_cotizacion']){
+						case 1 :
+							$estadoCotizacionArq = 'RELACIONADO';
+							break;
+						case 2 :
+							$estadoCotizacionArq = 'COTIZACION';
+							break;
+						case 3 :
+							$estadoCotizacionArq = 'ASIGNADO';
+							break;
+						case 4 :
+							$estadoCotizacionArq = 'CANCELADO';
+							break;
+						case 5 :
+							$estadoCotizacionArq = 'PROCESADO';
+							break;
+						case 6 :
+							$estadoCotizacionArq = 'RECOTIZACION';
+							break;
+				}
+			}
+			
+			if($estadoCotizacionArq == "COTIZACION"){
 				
 				
 				/* VALIDAR FECHA DE CIERRE ++++++++++++++++++++++++++++++++++++*/
-				$fecha = date('Y-m-d');
+				$fecha = date('Y-m-d h:i:s A');
 					
 				$datetime1 = date_create($dato['fecha_cierre']);
 				$datetime2 = date_create($fecha);
@@ -193,13 +240,11 @@ class Formulario {
 				$intervalo = (int)$interval->format('%R%a');
 				/*+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 				
-				
-				
-				if($intervalo > 0){
+				if($intervalo > 0){ // Mayor a Cero Dia No lo Incluye If 19/07/2017 - 19/07/2017 No esta Habilitado Aún
 					
 					$variableAdd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 					$variableAdd .= "&opcion=verCotizacionSolicitud";
-					$variableAdd .= "&idSolicitud=" . $dato['id_objeto'];
+					$variableAdd .= "&idSolicitud=" . $dato['id'];
 					$variableAdd .= "&vigencia=" . $dato['vigencia'];
 					$variableAdd .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 					$variableAdd .= "&usuario=" . $_REQUEST['usuario'];
@@ -213,7 +258,8 @@ class Formulario {
 					
 				}
 				
-				
+				$variableCan = "#";
+				$imagenCan = 'cancel.png';
 				
 				$variableMod = "#";
 				$imagenMod = 'cancel.png';
@@ -221,7 +267,7 @@ class Formulario {
 				$variableCal = "#";
 				$imagenCal = 'cancel.png';
 				
-			}else if($dato['estado'] == "ASIGNADO"){
+			}else if($estadoCotizacionArq == "ASIGNADO"){
 				
 				$variableAdd = "#";
 				$imagenAdd = 'cancel.png';
@@ -231,6 +277,9 @@ class Formulario {
 				
 				$variableCal = "#";
 				$imagenCal = 'cancel.png';
+				
+				$variableCan = "#";
+				$imagenCan = 'cancel.png';
 				
 			}else{
 				
@@ -239,7 +288,7 @@ class Formulario {
 				
 				$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variableMod .= "&opcion=modificarSolicitudRelacionada";
-				$variableMod .= "&idSolicitud=" . $dato['id_objeto'];
+				$variableMod .= "&idSolicitud=" . $dato['id'];
 				$variableMod .= "&vigencia=" . $dato['vigencia'];
 				$variableMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 				$variableMod .= "&usuario=" . $_REQUEST['usuario'];
@@ -248,8 +297,8 @@ class Formulario {
 				
 				$variableCal = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variableCal .= "&opcion=cotizarSolicitud";
-				$variableCal .= "&idSolicitud=" . $dato['id_objeto'];
-				$variableCal .= "&idObjeto=" . $dato['id_objeto'];
+				$variableCal .= "&idSolicitud=" . $dato['id'];
+				$variableCal .= "&idObjeto=" . $dato['id'];
 				$variableCal .= "&vigencia=" . $dato['vigencia'];
 				$variableCal .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 				$variableCal .= "&tipoNecesidad=" . $dato['tipo_necesidad'];
@@ -258,11 +307,16 @@ class Formulario {
 				$variableCal = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableCal, $directorio );
 				$imagenCal = 'calPro.png';
 				
+				
+				$variableCan = "#";
+				$imagenCan = 'canPro.png';
+				
+				
 			}
 			if($dato['fecha_solicitud_cotizacion'] != null){
 				$dateSolicitud = $this->cambiafecha_format($dato['fecha_solicitud_cotizacion']);
 			}else{
-				$dateSolicitud = $dato['fecha_solicitud_cotizacion'];
+				$dateSolicitud = 'SIN PROCESAR';
 			}
 			
 			
@@ -274,14 +328,14 @@ class Formulario {
 									<td><center>" . $dato['titulo_cotizacion'] . "</center></td>
 									<td><center>" . $this->cambiafecha_format($dato['fecha_apertura']) . "</center></td>
 									<td><center>" . $this->cambiafecha_format($dato['fecha_cierre']) . "</center></td>
-									<td><center>" . $resultadoDep[0][0]. "</center></td>".									
+									<td><center>" . $resultadoDep[0][1]. "</center></td>".									
 
 									/*<td><center>" . substr($dato['JUSTIFICACION'], 0, 400) . "</center></td>
 									<td><center>" . substr($dato['OBJETO'], 0, 400) . "</center></td>*/
 
 									
 								   "<td><center>" . $dato['tipo_necesidad'] . "</center></td>
-									<td><center>" . $dato['estado'] . "</center></td>
+									<td><center>" . $estadoCotizacionArq . "</center></td>
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>
@@ -297,13 +351,19 @@ class Formulario {
 										<a href='" . $variableCal . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenCal . "' width='15px'>
 										</a>
-									</center></td>	
+									</center></td>
 		
 									<td><center>
 										<a href='" . $variableAdd . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenAdd . "' width='15px'>
 										</a>
-									</center></td>	
+									</center></td>
+													
+									<td><center>
+										<a href='" . $variableCan . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenCan . "' width='15px'>
+										</a>
+									</center></td>					
 								</tr>";
 			echo $mostrarHtml;
 			unset ( $mostrarHtml );

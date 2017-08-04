@@ -43,17 +43,22 @@ if($secure){
 		$resultado = json_encode ( $resultado);
 		echo $resultado;
 	}
-        if ($_REQUEST ['funcion'] == 'consultarCIIUPush') {
+    if ($_REQUEST ['funcion'] == 'consultarCIIUPush') {
 		$cadenaSql = $this->sql->getCadenaSql ( 'ciiuSubClaseByNumPush', $subclase);
 		$datos = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		echo json_encode( $datos );
 	}
-         if ($_REQUEST ['funcion'] == 'consultarActividad') {
+    if ($_REQUEST ['funcion'] == 'consultarActividad') {
 		$cadenaSql = $this->sql->getCadenaSql ( 'consultarActividades', $subclase);
 		$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		echo json_encode( $datos );
 	}
-        
+       
+	if ($_REQUEST ['funcion'] == 'consultarTipoFormaPago') {
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarTipoFormaPagoByNumPush', $subclase);
+		$datos = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
+	}
 
 }
 

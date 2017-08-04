@@ -1,7 +1,17 @@
 <?php
 $indice=0;
+
+
+	if(!isset($_REQUEST['opcion']) || $_REQUEST['opcion'] == 'nuevo' || $_REQUEST['opcion'] == 'verCotizacionSolicitud'){
+		$estilo[$indice++]="jquery.dataTables.css";
+		$estilo[$indice++]="jquery.dataTables.min.css";
+		$estilo[$indice++]="jquery.dataTables_themeroller.css";
+	}
+
+
+
 $estilo[$indice++]="timepicker.css";
-$estilo[$indice++]="validationEngine.jquery.css";
+//$estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="miestilo.css";
@@ -10,9 +20,8 @@ $estilo[$indice++]="miestilo.css";
 // Tablas
 $estilo[$indice++]="demo_page.css";
 // $estilo[$indice++]="demo_table.css";
-$estilo[$indice++]="jquery.dataTables.css";
-//$estilo[$indice++]="jquery.dataTables.min.css";
-$estilo[$indice++]="jquery.dataTables_themeroller.css";
+
+$estilo[$indice++]="sweetalert2.min.css";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

@@ -146,11 +146,14 @@ class FormularioRegistro {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'infoCotizacion', $datos['idObjeto'] );
 		$solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['responsable'] );
-		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'dependenciaUdistritalById', $solicitudCotizacion[0]['jefe_dependencia'] );
+		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
+		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitante', $solicitudCotizacion[0]['id_solicitante'] );
-		$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
+		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		if($solicitudCotizacion[0]['unidad_ejecutora'] == 1){
 			$valorUnidadEjecutoraText = "1 - Rectoría";
@@ -176,13 +179,13 @@ class FormularioRegistro {
 		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Fecha de Cierre : </span>";
 		echo "<span class='textoElegante textoEnorme textoGris'><b>". $this->cambiafecha_format($solicitudCotizacionCast[0]['fecha_cierre']). "</b></span></br>";
-                echo "<br>";
-        echo "<span class='textoElegante textoEnorme textoAzul'>Solicitante : </span>";
-        echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoSolicitante[0][0]. "</b></span></br>";
-                echo "<br>";
-		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>"; 
-		echo "<span class='textoElegante textoGrande textoGris'><b>". $solicitudCotizacionCast[0]['dependencia']. "</b></span></br>"; 
-                echo "<br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Ordenador del Gasto Relacionado : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoOrdenador[0][1]. "</b></span></br>";
+		echo "<br>";
+		echo "<span class='textoElegante textoEnorme textoAzul'>Dependencia Solicitante : </span>";
+		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoDependencia[0][1]. "</b></span></br>";
+		echo "<br>";
 		echo "<span class='textoElegante textoEnorme textoAzul'>Responsable : </span>";
 		echo "<span class='textoElegante textoGrande textoGris'><b>". $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']."</b></span></br>";
 		
@@ -206,7 +209,8 @@ class FormularioRegistro {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 
 				foreach ($resultadoActividades as $dato):
-					echo $dato['id_subclase'] . '-' . $dato['nombre'] . "<br>";
+					echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
+					echo $dato['subclase'] . ' - ' . $dato['nombre'] . "</b><br>";
 				endforeach;
 				
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
@@ -239,7 +243,7 @@ class FormularioRegistro {
 					$atributos ['validar'] = 'required';
 					
 					if($modificar){
-						$cadenaTest = $this->miSql->getCadenaSql ( "buscarAreaConocimientoXNBC", $resultadoNBC[0]['id_nucleo']);
+						$cadenaTest = $this->miSql->getCadenaSql ( "buscarAreaConocimientoXNBC", $resultadoNBC[0]['nucleo']);
 						$matrizPrev = $esteRecursoDB->ejecutarAcceso ( $cadenaTest, "busqueda" );
 							
 						$cadenaTestP = $this->miSql->getCadenaSql ( "buscarNBCAjax", $matrizPrev[0]['id_area']);
@@ -277,7 +281,7 @@ class FormularioRegistro {
 					$atributos['tab'] = $tab;
 					
 					if ($modificar) {
-						$atributos['seleccion'] = $resultadoNBC[0]['id_nucleo'];
+						$atributos['seleccion'] = $resultadoNBC[0]['nucleo'];
 					} else {
 						$atributos['seleccion'] = -1;
 							

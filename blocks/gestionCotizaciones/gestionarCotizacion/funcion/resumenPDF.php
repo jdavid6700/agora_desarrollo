@@ -40,21 +40,35 @@ $correo=$this->miConfigurador->getVariableConfiguracion("correoAdministrador");
 		//*************************************************************************** DBMS *******************************
 		//****************************************************************************************************************
 
-//CONSULTAR USUARIO
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedores', $_REQUEST['idObjeto'] );
-$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql('buscarProveedores', $_REQUEST['idObjeto']);
+		$resultadoProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
+		$resultadoObjeto = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+		
+		$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $resultadoObjeto[0]['jefe_dependencia'] );
+		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		 
+		$cadenaSql = $this->sql->getCadenaSql ( 'ordenadorUdistritalByIdCast', $resultadoObjeto[0]['ordenador_gasto'] );
+		$resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );	
+		
+		$cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $resultadoObjeto[0]['usuario_creo']);
+		$resultadoUsuarioCot = $frameworkRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+		$resultadoOrdenador = $resultadoUsuarioCot[0]['nombre'] . " " . $resultadoUsuarioCot[0]['apellido'];
 
 
 
 //CONSULTAR OBJETO A CONTRATAR
-$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
-$resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// $cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $_REQUEST['idObjeto'] );
+// $resultadoObjeto = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $resultadoObjeto[0]['responsable'] );
-$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+// $cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $resultadoObjeto [0] ['responsable'] );
+// $resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$cadenaSql = $this->sql->getCadenaSql ( 'buscarSolicitante', $resultadoObjeto[0]['id_solicitante'] );
-$resultadoSolicitante = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 ereg("([0-9]{2,4})-([0-9]{1,2})-([0-9]{1,2})", $resultadoObjeto[0]['fecha_solicitud_cotizacion'], $mifecha);
 $fechana1 = $mifecha[3] . "/" . $mifecha[2] . "/" . $mifecha[1];
@@ -80,7 +94,7 @@ $cadenaSql = $this->sql->getCadenaSql ( 'consultarActividadesImp', $_REQUEST['id
 $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 
-if($resultadoObjeto[0]['tipo_necesidad'] == 'SERVICIO' || $resultadoObjeto[0]['tipo_necesidad'] == 'BIEN Y SERVICIO'){
+if($resultadoObjeto[0]['tipo_necesidad'] == 2 || $resultadoObjeto[0]['tipo_necesidad'] == 3){
 	$convocatoria = true;
 	
 		
@@ -94,7 +108,7 @@ if($resultadoObjeto[0]['tipo_necesidad'] == 'SERVICIO' || $resultadoObjeto[0]['t
 			                    <b>Profesión Relacionada (Núcleo Básico de Conocimiento SNIES)</b>
 			                </td>
 			                <td align='left' style='width:80%;'>		
-			                    " . $resultadoNBC[0]['id_nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "
+			                    " . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "
 			                </td>
 			            </tr>	
 				    ";
@@ -110,7 +124,7 @@ if($resultadoObjeto[0]['tipo_necesidad'] == 'SERVICIO' || $resultadoObjeto[0]['t
 $contenidoAct = '';
 
 foreach ($resultadoActividades as $dato):
-	$contenidoAct .= $dato['id_subclase'] . ' - ' . $dato['nombre'] . "<br>";
+	$contenidoAct .= $dato['subclase'] . ' - ' . $dato['nombre'] . "<br>";
 	$contenidoAct .= "<br>";
 endforeach;
 
@@ -284,7 +298,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     <b>Solicitante</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $resultadoSolicitante[0][0]. "
+                    " . $resultadoOrdenador. "
                 </td>
             </tr>        		
             <tr>
@@ -292,7 +306,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     <b>Dependencia Solicitante</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $resultadoObjeto[0]['dependencia']. "
+                    " . $resultadoDependencia[0][1]. "
                 </td>
             </tr>
             <tr>
@@ -300,7 +314,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                     <b>Responsable de la Cotización</b>
                 </td>
                 <td align='left' style='width:80%;'>
-                    " . $resultadoUsuario[0]['identificacion']. " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']. "
+                    " . $resultadoOrdenadorDef[0][1]. "
                 </td>
             </tr>
                     		

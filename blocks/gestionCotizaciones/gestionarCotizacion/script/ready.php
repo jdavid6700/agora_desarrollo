@@ -1,22 +1,136 @@
-$("#gestionObjetoRegistrar").validationEngine({
-	promptPosition : "bottomRight:-150", 
-	scroll: false,
+
+window.onload = detectarCarga;
+function detectarCarga(){
+
+	$('#marcoDatosLoad').fadeOut(1000, function (){
+		$('#marcoDatosSolicitudCot').fadeIn(500);
+		$('#marcoDatosCotizacionList').fadeIn(500);
+		$('#marcoDatosCotizacionListPer').fadeIn(500);
+		$('#marcoContratos').fadeIn(500);
+		
+	});
+	
+}
+
+
+	$(':checkbox[readonly=readonly]').click(function(){
+	
+		return false;        
+
+	}); 
+
+$('#<?php echo $this->campoSeguro('fechaCierre')?>').datepicker({
+		<?php /*?>timeFormat: 'HH:mm:ss',<?php */?>
+                dateFormat: 'dd/mm/yy',
+		minDate: 0,
+        yearRange: '0:+50',
+		changeYear: true,
+		changeMonth: true,
+		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+		    'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+		    
+			
+	   });
+	   
+$('#<?php echo $this->campoSeguro('fechaApertura')?>').datepicker({
+		<?php /*?>timeFormat: 'HH:mm:ss',<?php */?>
+                dateFormat: 'dd/mm/yy',
+		minDate: 0,
+        yearRange: '0:+50',
+		changeYear: true,
+		changeMonth: true,
+		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+		    'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
+		    
+			
+	   });
+	   
+	   
+$( function() {
+		var dateFormat = "dd/mm/yy",
+			from = $( '#<?php echo $this->campoSeguro('fechaApertura')?>' )
+				.datepicker({
+				defaultDate: "+1w",
+			        yearRange: '0:+50',
+					changeYear: true,
+					changeMonth: true,
+					monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+				    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+				    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+				    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+				    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+				})
+				.on( "change", function() {
+					to.datepicker( "option", "minDate", getDate( this ) );
+				}),
+			to = $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).datepicker({
+				defaultDate: "+1w",
+			        yearRange: '0:+50',
+					changeYear: true,
+					changeMonth: true,
+					monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+				    monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+				    dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+				    dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+				    dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+			})
+			.on( "change", function() {
+				from.datepicker( "option", "maxDate", getDate( this ) );
+			});
+
+		function getDate( element ) {
+			var date;
+			try {
+				date = $.datepicker.parseDate( dateFormat, element.value );
+			} catch( error ) {
+				date = null;
+			}
+
+			return date;
+		}
+	} );	
+
+
+$("#gestionarCotizacionRegistrar").validationEngine({
+	validateNonVisibleFields: true,
+	promptPosition : "inline", 
+	scroll: true,
 	autoHidePrompt: true,
-	autoHideDelay: 2000
+	autoHideDelay: 9000,
+    updatePromptsPosition:false
+});
+
+$("#gestionarCotizacion").validationEngine({
+	validateNonVisibleFields: true,
+	promptPosition : "inline", 
+	scroll: true,
+	autoHidePrompt: true,
+	autoHideDelay: 9000,
+    updatePromptsPosition:false
 });
 
 $("#gestionObjetoConsultarRel").validationEngine({
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,
-	autoHideDelay: 2000
+	autoHideDelay: 2000,
+	updatePromptsPosition:true
 });
 
 $("#gestionObjetoConsultarCot").validationEngine({
 	promptPosition : "bottomRight:-150", 
 	scroll: false,
 	autoHidePrompt: true,
-	autoHideDelay: 2000
+	autoHideDelay: 2000,
+	updatePromptsPosition:true
 });
 
 $( ".widget input[type=submit], .widget a, .widget button" ).button();
@@ -59,9 +173,12 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').width(250);
 $('#<?php echo $this->campoSeguro('unidadEjecutora')?>').width(250);
 $('#<?php echo $this->campoSeguro('dependencia')?>').width(750);
+$('#<?php echo $this->campoSeguro('ordenador')?>').width(750);
 $('#<?php echo $this->campoSeguro('solicitante')?>').width(750);
 $('#<?php echo $this->campoSeguro('decision')?>').width(750);
-
+$('#<?php echo $this->campoSeguro('medioPago')?>').width(250);
+$('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
+$('#<?php echo $this->campoSeguro('decisionPro')?>').width(750);
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
@@ -83,8 +200,12 @@ $('#<?php echo $this->campoSeguro('vigenciaNecesidadCotizacion')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoNecesidad')?>').select2();
 $('#<?php echo $this->campoSeguro('unidadEjecutora')?>').select2();
 $('#<?php echo $this->campoSeguro('dependencia')?>').select2();
+$('#<?php echo $this->campoSeguro('ordenador')?>').select2();
 $('#<?php echo $this->campoSeguro('solicitante')?>').select2();
 $('#<?php echo $this->campoSeguro('decision')?>').select2();
+$('#<?php echo $this->campoSeguro('medioPago')?>').select2();
+$('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
+$('#<?php echo $this->campoSeguro('decisionPro')?>').select2();
 
 
 

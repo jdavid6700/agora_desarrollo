@@ -1,6 +1,34 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
+
+$this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
+
+$this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
+
+$this->idioma["observaciones"] = "Observaciones Adicionales : ";
+$this->idioma["observacionesTitulo"]="Observaciones Adicionales";
+
+
+$this->idioma["entregables"] = "Entregables : *";
+$this->idioma["entregablesTitulo"]="Entregables";
+$this->idioma["plazoEntrega"] = "Información de Plazos de Entrega : *";
+$this->idioma["plazoEntregaTitulo"]="Información de Plazos de Entrega";
+
+$this->idioma["desServicio"] = "Descripción del Servicio : *";
+$this->idioma["desServicioTitulo"]="Descripción del Servicio";
+$this->idioma["detalleEjecucion"] = "Información de Ejecución del Servicio : *";
+$this->idioma["detalleEjecucionTitulo"]="Información de Ejecución del Servicio";
+
+$this->idioma["entregablesdesServicio"] = "Descripción del Servicio y Entregables : *";
+$this->idioma["entregablesdesServicioTitulo"]="Descripción del Servicio y Entregables";
+$this->idioma["entregaEjecucion"] = "Información de Ejecución del Servicio y Plazos de Entrega : *";
+$this->idioma["entregaEjecucionTitulo"]="Información de Ejecución del Servicio y Plazos de Entrega ";
+
+$this->idioma["fechaVencimientoCotRead"] = "Fecha de Vencimiento Cotización : ";
+$this->idioma["fechaVencimientoCotReadTitulo"]="Fecha de Vencimiento Cotización";
+
 $this->idioma["objetoContrato"] = "Objeto a Contratar : ";
 $this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 
@@ -80,14 +108,43 @@ $this->idioma["dependenciaTitulo"]="Seleccionar dependencia solicitante";
 
 $this->idioma["decision"] = "Decisión sobre la Cotización :";
 $this->idioma["decisionTitulo"]="Seleccionar decisión cotización";
-$this->idioma["respuesta"] = "Respuesta/Recomendaciones/Sugerencias al Proveedor :";
+$this->idioma["decisionPro"] = "Proveedor Seleccionado :";
+$this->idioma["decisionProTitulo"]="Seleccionar decisión cotización";
+$this->idioma["respuesta"] = "Respuesta/Recomendaciones/Sugerencias al Proveedor : *";
 $this->idioma["respuestaTitulo"]="Digite la respuesta al proveedor";
+$this->idioma["respuestaDet"] = "Respuesta/Recomendaciones/Sugerencias al Proveedor Seleccionado : *";
+$this->idioma["respuestaDetTitulo"]="Digite la respuesta al proveedor";
 
-
+$this->idioma["respuestaGen"] = "Respuesta General a todos los Proveedores : *";
+$this->idioma["respuestaGenTitulo"]="Digite la respuesta a los proveedores";
 
 
 $this->idioma["solicitante"] = "Solicitante :";
 $this->idioma["solicitanteTitulo"]="Seleccionar Solicitante";
+
+$this->idioma["medioPago"] = "Medio de Pago :";
+$this->idioma["medioPagoTitulo"]="Seleccionar Medio de Pago";
+
+$this->idioma["marcoAnexo"] = "Detalle Cotización";
+$this->idioma["cotizacionSoporte"] = "Adjuntar (Archivo) : ";
+$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (Archivo)";
+
+$this->idioma["marcoPlan"] = "Detalle Plan de Acción Relacionado";
+
+$this->idioma["marcoPago"] = "Detalle Información de Pago";
+
+$this->idioma["marcoRespuestaEspecificaPro"] = "Detalle Proveedor Seleccionado";
+
+$this->idioma["marcoParametrosFormaPago"] = "Seleccionar Parametros Forma de Pago";
+$this->idioma["marcoFormaPago"] = "Detalle Formas de Pago Agregadas";
+
+
+
+$this->idioma["tipoFormaPago"] = "Tipo Forma de Pago :";
+$this->idioma["porcentajePagoForma"] = "Porcentaje de Pago :";
+$this->idioma["porcentajePagoFormaTitulo"]="Ingresar Porcentaje Parte del 100% de la Forma de Pago";
+$this->idioma["valorFormaPago"] = "Valor del Parámetro :";
+$this->idioma["valorFormaPagoTitulo"]="Ingresar valor de Parámetro (En Días -> Tiempo) o (Decimal -> Porcentaje)";
 
 $this->idioma["numCDP"] = "No. CDP :";
 $this->idioma["numCDPTitulo"] = "Indicar número de CDP";
@@ -109,11 +166,15 @@ $this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
 
 
+$this->idioma["planAccion"] = "Plan de Acción";
+$this->idioma["planAccionTitulo"]="Plan de Acción";
+
+
 $this->idioma["estado"] = "Estado Solicitud :";
 $this->idioma["estadoTitulo"]="Estado Solicitud de Necesidad";
 $this->idioma["ordenadorCargo"] = "Cargo Ordenador Gasto :";
 $this->idioma["ordenadorCargoTitulo"]="Cargo Ordenador Gasto";
-$this->idioma["justificacion"] = "Justificación :";
+$this->idioma["justificacion"] = "Justificación : *";
 $this->idioma["justificacionTitulo"]="Justificación";
 $this->idioma["plazo"] = "Plazo de Ejecución :";
 $this->idioma["plazoTitulo"]="Plazo de Ejecución";
@@ -163,6 +224,8 @@ $this->idioma["tipoDocumento"] = "Tipo de Documento";
 $this->idioma["identificacionDocente"] = "Número de Identificación del Docente:";
 $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primero debe realizar la validación del funcionario.<br> Por favor seleccione el tipo documento y digite el número de documento y <br> de click en 'Validar'.</center>"; 
 
+
+$this->idioma["botonActualizar"] = "Actualizar";
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
 $this->idioma["botonContinuar"] = "Continuar";
@@ -213,12 +276,15 @@ $this->idioma["marcoModificarRegistro"] = "Modificar Información de Títulos Ac
 $this->idioma["marcoNombre"] = "Nombres y Apellidos";
 $this->idioma["marcoLugarExpedicion"] = "Lugar de Expedición";
 
+$this->idioma["marcoDescripcionJusti"] = "Detalle Justificación Decisión";
+$this->idioma["marcoParametrosJuti"] = "Determinación sobre Cotización";
+
 $this->idioma["pais"] = "País";
 $this->idioma["ciudad"] = "Ciudad";
 
 
 //***************** SECCIÓN BOTONES ******************//
-$this->idioma["botonRegresar"] = "< < Regresar";
+$this->idioma["botonRegresar"] = "Regresar";
 $this->idioma["botonConsultar"] = "Consultar";
 $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";
@@ -351,8 +417,8 @@ $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
 
 $this->idioma["marcoAnexo"] = "Soporte Detalle Cotización";
-$this->idioma["cotizacionSoporte"] = "Adjuntar (PDF) : ";
-$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (PDF)";
+$this->idioma["cotizacionSoporte"] = "Adjuntar (Archivo) : ";
+$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (Archivo)";
 
 $this->idioma["marcoContratos"] = "Información de Cotizaciones";
 $this->idioma["marcoInfoCont"] = "Información de la Persona";

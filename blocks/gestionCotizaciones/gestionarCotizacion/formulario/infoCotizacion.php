@@ -69,44 +69,46 @@ if (!isset($GLOBALS["autorizado"])) {
     //$atributos["estiloEnLinea"]="display:none"; 
     echo $this->miFormulario->division("inicio", $atributos);
     
-    
+
     //********************************************************************************************************************************
     
-    //var_dump($_REQUEST);
     $datosSolicitudNecesidad = array (
     		'idObjeto' => $_REQUEST['idSolicitud']
     );
     
-    
     //*********************************************************************************************************************************
+    
     $cadena_sql = $this->sql->getCadenaSql ( "estadoSolicitudAgora", $datosSolicitudNecesidad);
     $resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
     
     if(isset($resultado)) {
-    	$estadoSolicitud = $resultado[0]['estado'];
+    	$estadoSolicitud = $resultado[0]['estado_cotizacion'];
     
     
     	$cadena_sql = $this->sql->getCadenaSql ( "informacionSolicitudAgora", $datosSolicitudNecesidad);
     	$resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
     
-    
-    	$cadena_sql = $this->sql->getCadenaSql ( "informacionCIIURelacionada", $datosSolicitudNecesidad);
-    	$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    	//$cadena_sql = $this->sql->getCadenaSql ( "informacionCIIURelacionada", $datosSolicitudNecesidad);
+    	//$resultadoNecesidadRelacionadaCIIU = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
     }
 		
 		//Buscar usuario para enviar correo
-		$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $resultadoNecesidadRelacionada[0]['id_objeto'] );
+		$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $resultadoNecesidadRelacionada[0]['id'] );
 		$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
+
 		//Buscar usuario para enviar correo
-		$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $resultadoNecesidadRelacionada[0]['id_objeto'] );
-		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		//$cadenaSql = $this->sql->getCadenaSql ( 'objetoContratar', $resultadoNecesidadRelacionada[0]['id'] );
+		//$objetoEspecifico = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $resultadoNecesidadRelacionada[0]['id']);
+		$objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
 		
-		if($objetoEspecifico[0]['tipo_necesidad'] == 'SERVICIO' || $objetoEspecifico[0]['tipo_necesidad'] == 'BIEN Y SERVICIO'){
+		if($objetoEspecifico[0]['tipo_necesidad'] == 2 || $objetoEspecifico[0]['tipo_necesidad'] == 3){
 			$convocatoria = true;
 				
-			$cadenaSql = $this->sql->getCadenaSql ( 'consultarNBCImp', $resultadoNecesidadRelacionada[0]['id_objeto']  );
+			$cadenaSql = $this->sql->getCadenaSql ( 'consultarNBCImp', $resultadoNecesidadRelacionada[0]['id']  );
 			$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$tipoMN = "Cotización";
@@ -132,7 +134,7 @@ if (!isset($GLOBALS["autorizado"])) {
 		$variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
 		$variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 		$variableResumen.= "&opcion=resumen";
-		$variableResumen.= "&idObjeto=" . $resultadoNecesidadRelacionada[0]['id_objeto'];
+		$variableResumen.= "&idObjeto=" . $resultadoNecesidadRelacionada[0]['id'];
 		$variableResumen.= "&idCodigo=" . "1112";
 		$variableResumen.= "&proveedoresView=true";
 		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
@@ -170,6 +172,16 @@ if (!isset($GLOBALS["autorizado"])) {
 		$atributos ["estilo"] = "marcoBotones";
 		echo $this->miFormulario->division("inicio", $atributos);
 		
+		
+		
+		echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+		
+		
 
 		$esteCampo = "marcoDatosCotizacionListPer";
 		$atributos ['id'] = $esteCampo;
@@ -205,15 +217,18 @@ if (!isset($GLOBALS["autorizado"])) {
 			foreach ($resultadoProveedor as $dato):
 			
 				$datosSolicitud = array (
-						'objeto' => $resultadoNecesidadRelacionada[0]['id_objeto'],
+						'objeto' => $resultadoNecesidadRelacionada[0]['id'],
 						'proveedor' => $dato['id_proveedor']
 				);
 					
 				$cadenaSql = $this->sql->getCadenaSql ( 'consultarSolicitudxProveedor', $datosSolicitud );
 				$resultadoSolicitudxPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
+				$cadenaSql = $this->sql->getCadenaSql ( 'consultarRespuestaxProveedor', $resultadoSolicitudxPersona[0]['id'] );
+				$respuestaCotizacionProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
-				if($resultadoSolicitudxPersona[0]['estado'] == 'CERRADO'){
+				
+				if($respuestaCotizacionProveedor){ //Se manejaba ESTADO Cerrado ---- $resultadoSolicitudxPersona[0]['estado'] == 'CERRADO'
 					
 					$variableView = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 					$variableView .= "&opcion=resultadoCotizacion";
@@ -224,7 +239,7 @@ if (!isset($GLOBALS["autorizado"])) {
 					$variableView .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
 					$variableView .= "&tipoCotizacion=" . $objetoEspecifico[0]['tipo_necesidad'];
 					$variableView .= "&idObjeto=" . $datosSolicitudNecesidad['idObjeto'];
-					$variableView .= "&idSolicitudIndividual=" . $resultadoSolicitudxPersona[0]['id_solicitud'];
+					$variableView .= "&idSolicitudIndividual=" . $resultadoSolicitudxPersona[0]['id'];
 					$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 					$imagenView = 'resPro.png';
 					
@@ -237,7 +252,7 @@ if (!isset($GLOBALS["autorizado"])) {
 					$variableAdd .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
 					$variableAdd .= "&tipoCotizacion=" . $objetoEspecifico[0]['tipo_necesidad'];
 					$variableAdd .= "&idObjeto=". $datosSolicitudNecesidad['idObjeto'];
-					$variableAdd .= "&idSolicitudIndividual=" . $resultadoSolicitudxPersona[0]['id_solicitud'];
+					$variableAdd .= "&idSolicitudIndividual=" . $resultadoSolicitudxPersona[0]['id'];
 					$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
 					$imagenAdd = 'addPro.png';
 					
@@ -256,7 +271,7 @@ if (!isset($GLOBALS["autorizado"])) {
 					
 				}
 				
-				//var_dump($resultadoSolicitudxPersona);
+
 			
 			$variableViewPro = "pagina="."consultaGeneralProveedor";//$miPaginaActual; // pendiente la pagina para modificar parametro
 			$variableViewPro .= "&opcion=verPro";
@@ -314,6 +329,35 @@ if (!isset($GLOBALS["autorizado"])) {
 			echo "</table>";
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin');
+			
+
+			$paraIdSolicitud = $_REQUEST['idSolicitud'];
+			$paraVigencia = $_REQUEST['vigencia'];
+			$paraUnidad = $_REQUEST['unidadEjecutora'];
+			$paraUsuario = $_REQUEST['usuario'];
+			
+			
+			$variableRet = "pagina=" . $miPaginaActual . "&opcion=terminarCotizacion&idSolicitud=".$paraIdSolicitud
+			."&vigencia=".$paraVigencia."&unidadEjecutora=".$paraUnidad."&usuario=".$paraUsuario;
+			$variableRet = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableRet, $directorio );
+			
+			
+			$atributos["id"]="botonReg";
+			$atributos["estilo"]=" marcoBotones widget";
+			echo $this->miFormulario->division("inicio",$atributos);
+			{
+				$enlace = "<a href='".$variableRet."'>";
+				$enlace.="<img src='".$rutaBloque."/images/asiPro.png' width='35px'><br>Decisión Cotización ";
+				$enlace.="</a><br><br>";
+				echo $enlace;
+			}
+			//------------------Fin Division para los botones-------------------------
+			echo $this->miFormulario->division("fin");
+			unset ( $atributos );
+			
+			
+			
+			
 
 
 			echo $this->miFormulario->marcoAgrupacion ( 'fin');
@@ -348,79 +392,6 @@ if (!isset($GLOBALS["autorizado"])) {
 			echo $this->miFormulario->division("fin");
 			
 
-//EVALUAR Opcion de Gestionar NUEVO Envio
-
-/*			
-//ERROR Correo se ENVIA a SPAM*******-----------------------------------------------------------------------------------------------------
-//INICIO ENVIO DE CORREO AL USUARIO
-    $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
-
-    include_once($rutaClases."/mail/class.phpmailer.php");
-    include_once($rutaClases."/mail/class.smtp.php");
-	
-	$mail = new PHPMailer(); 
-
-
-	//configuracion de cuenta de envio
-	$mail->Host     = "200.69.103.49";
-	$mail->Mailer   = "smtp";
-	$mail->SMTPAuth = true;
-	$mail->Username = "condor@udistrital.edu.co";
-	$mail->Password = "CondorOAS2012";
-	$mail->Timeout  = 1200;
-	$mail->Charset  = "utf-8";
-	$mail->IsHTML(true);
-
-        $mail->From='agora@udistrital.edu.co';
-        $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
-        $mail->Subject="Solicitud de Cotización";
-        $contenido= "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
-        $contenido.= "<b>Objeto Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['OBJETO'] . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Justificación Solicitud de Necesidad : </b>" . $solicitudNecesidad [0]['JUSTIFICACION'] . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Actividad econ&oacute;mica : </b>" . $objetoEspecifico[0]['codigociiu'] . ' - ' . $objetoEspecifico[0]['actividad'] . "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Dependencia Solicitante : </b>" . $solicitudNecesidad [0]['DEPENDENCIA']. "<br>";
-        $contenido.= "<br>";
-        $contenido.= "<b>Responsable : </b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'];
-        $contenido.= "<br>";
-        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización con una fecha máxima no superior a tres (3) días hábiles a partir del recibo del presente comunicado, para lo cual 
-        		         puede ingresar al Banco de Proveedores.</p>";
-        $contenido.= "<br>";
-        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
-        $contenido.= "<br>";
-        $contenido.= "<br>";
-        $contenido.= "Cordialmente :<br>";
-		$contenido.= "<b>" . $solicitudNecesidad [0]['ORDENADOR_GASTO'] . " - " . $solicitudNecesidad [0]['CARGO_ORDENADOR_GASTO'] . "</b>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<br>";
-		$contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
-		
-        $mail->Body=$contenido;
-
-		//foreach ($resultadoProveedor as $dato):
-			//$to_mail=$dato ['correo'];
-		    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
-			$mail->AddAddress($to_mail);
-			//$mail->Send();
-			
-			if(!$mail->Send()) {
-				echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
-			}else{
-				echo "Enviado!!! ". $to_mail .": " . $mail->ErrorInfo;
-			}
-			
-		//endforeach; 
-		
-			var_dump($mail);
-			
-        $mail->ClearAllRecipients();
-        $mail->ClearAttachments();
-//FIN ENVIO DE CORREO AL USUARIO     
-*/
 
         $valorCodificado = "pagina=".$miPaginaActual;
         $valorCodificado.="&opcion=nuevo";

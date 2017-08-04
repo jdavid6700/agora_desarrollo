@@ -19,11 +19,11 @@ class redireccion {
 				$variable .= "&mensaje=confirma";
 				$variable .= "&idObjeto=".$valor['idObjeto'];
 				$variable .= "&vigencia=".$valor['vigencia'];
-				$variable .= "&solicitante=".$valor['solicitante'];
 				$variable .= "&unidadEjecutora=".$valor['unidad_ejecutora'];
 				$variable .= "&tipoNecesidad=".$valor['tipo_necesidad'];
 				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
 				$variable .= "&dependencia=".$valor['dependencia'];
+				$variable .= "&ordenador=".$valor['ordenador'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;
 				

@@ -55,18 +55,20 @@ class SolicitudCotizacion {
 			$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarCotizacion', $datos );
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
 		}
+		
+		//Aqui se tenia ESTADO ABIERTO *************** OBJETO x PROVEEDOR Verificar
 
 		
 		// actualizo estado del objeto a contratar a 2(cotizacion)
 		// actualizo fecha de solicitud
 		// Actualizar estado del OBJETO CONTRATO A ASIGNADA
 		
-		$numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+		$numberSolicitud = "SC-" . sprintf("%06d", $_REQUEST['idObjeto']);
 		
 		$parametros = array (
 				'idObjeto' => $_REQUEST ['idObjeto'],
 				'numero_solicitud' => $numberSolicitud,
-				'estado' => 'COTIZACION', // solicitud de cotizacion
+				'estado' => '2', // solicitud de cotizacion
 				'fecha' => date ( "Y-m-d" ),
 				'usuario' => $_REQUEST ['usuario']
 		);

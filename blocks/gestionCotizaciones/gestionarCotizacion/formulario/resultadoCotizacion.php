@@ -113,8 +113,47 @@ class FormularioRegistro {
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
-
 			
+			
+			
+			$variable = "pagina=" . $miPaginaActual;
+			$variable .= "&opcion=" . "verCotizacionSolicitud";
+			$variable .= "&idSolicitud=" . $_REQUEST['idObjeto'];
+			$variable .= "&vigencia=" . $_REQUEST['vigencia'];
+			$variable .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
+			$variable .= "&usuario=" . $_REQUEST['usuario'];
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+			
+			$atributos["id"]="botones";
+			$atributos["estilo"]="marcoBotones widget";
+			echo $this->miFormulario->division("inicio",$atributos);
+			
+			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['estilo'] = '';
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['ancho'] = '10%';
+			$atributos ['alto'] = '10%';
+			$atributos ['redirLugar'] = true;
+			echo $this->miFormulario->enlace ( $atributos );
+			
+			//------------------Fin Division para los botones-------------------------
+			echo $this->miFormulario->division("fin");
+			
+			unset ( $atributos );
+			
+			
+			
+
+			echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
 			
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -147,38 +186,6 @@ class FormularioRegistro {
 		$direccion = $resultadoDats[0]['direccion'];
 		
 		$numeroDocumento = $resultadoDats[0]['num_documento'];
-		
-		
-		
-		
-		$variable = "pagina=" . $miPaginaActual;
-		$variable .= "&opcion=" . "verCotizacionSolicitud";
-		$variable .= "&idSolicitud=" . $_REQUEST['idObjeto'];
-		$variable .= "&vigencia=" . $_REQUEST['vigencia'];
-		$variable .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
-		$variable .= "&usuario=" . $_REQUEST['usuario'];
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		
-		$atributos["id"]="botones";
-		$atributos["estilo"]="marcoBotones widget";
-		echo $this->miFormulario->division("inicio",$atributos);
-		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = '';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
-		
-		//------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division("fin");
-		
-		unset ( $atributos );
 		
 		
 		$datosRespuesta = array (
@@ -292,7 +299,7 @@ class FormularioRegistro {
                 $atributos ['dobleLinea'] = 0;
                 $atributos ['tabIndex'] = $tab;
                 $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                $atributos ['validar'] = 'required,minSize[4]';
+                $atributos ['validar'] = 'required,minSize[20]';
                 $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                 $atributos ['deshabilitado'] = false;
                 $atributos ['tamanno'] = 20;
