@@ -120,7 +120,7 @@ $this->idioma["descripcionTitulo"]="Digite la descripción";
 $this->idioma["caracteristicas"] = "Caracterìsticas Adicionales";
 $this->idioma["caracteristicasTitulo"]="Digite las caracteristicas";
 
-$this->idioma["planAccion"] = "Plan de Acción";
+$this->idioma["planAccion"] = "Plan de Acción : *";
 $this->idioma["planAccionTitulo"]="Plan de Acción";
 
 
@@ -331,9 +331,9 @@ $this->idioma["fechaAperturaTitulo"]="Fecha de Apertura";
 $this->idioma["fechaCierre"] = "Fecha de Cierre :";
 $this->idioma["fechaCierreTitulo"]="Fecha de Cierre";
 
-$this->idioma["objetivo"] = "Objetivo / Tema :";
+$this->idioma["objetivo"] = "Objetivo / Tema : *";
 $this->idioma["objetivoTitulo"]="Objetivo / Tema";
-$this->idioma["requisitos"] = "Requisitos :";
+$this->idioma["requisitos"] = "Requisitos : *";
 $this->idioma["requisitosTitulo"]="Requisitos";
 $this->idioma["observaciones"] = "Observaciones Adicionales :";
 $this->idioma["observacionesTitulo"]="Observaciones Adicionales";

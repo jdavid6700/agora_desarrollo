@@ -94,11 +94,12 @@ $( function() {
 	} );	   	   
 
 $("#relacionarCotizacionRegistrar").validationEngine({
-	promptPosition : "bottomRight:-150", 
-	scroll: false,
+	validateNonVisibleFields: true,
+	promptPosition : "inline", 
+	scroll: true,
 	autoHidePrompt: true,
-	autoHideDelay: 2000,
-    updatePromptsPosition:true
+	autoHideDelay: 9000,
+    updatePromptsPosition:false
 });
 
 $("#gestionObjetoConsultarRel").validationEngine({
