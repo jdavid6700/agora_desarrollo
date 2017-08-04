@@ -6117,7 +6117,7 @@ class Formulario {
 							
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						//echo $this->miFormulario->campoCuadroLista ( $atributos );
 						// --------------- FIN CONTROL : Select --------------------------------------------------
 							
 						// ---------------- CONTROL: Select --------------------------------------------------------
@@ -6151,7 +6151,7 @@ class Formulario {
 							
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						//echo $this->miFormulario->campoCuadroLista ( $atributos );
 				
 				
 					// ---------------- FIN CONTROL: Cuadro de Texto  PAIS--------------------------------------------------------
@@ -7456,7 +7456,7 @@ class Formulario {
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['validar'] = 'required,maxSize[250]';
+			$atributos ['validar'] = '';
 			$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 			$atributos ['deshabilitado'] = false;
 			$atributos ['tamanno'] = 20;

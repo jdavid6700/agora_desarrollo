@@ -13,7 +13,7 @@ if(isset($_REQUEST['pagina'])){
 }
 
 $estilo[$indice++]="timepicker.css";
-$estilo[$indice++]="validationEngine.jquery.css";
+//$estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
 

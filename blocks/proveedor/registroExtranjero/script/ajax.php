@@ -1382,7 +1382,7 @@ function consultarDepartamentoLug(elem, request, response){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
         				var value = $(this).val().length;
-        				if(value == 9){//Ejecutar solo Cuando se Completa el NIT
+        				if(value > 3){//Ejecutar solo Cuando se Completa el NIT
         					var cadenaNit = $(this).val();
         					calcularDigito(cadenaNit);//LLamar la Función para Ejecutar Calculo Digito Verificación
         				}else{

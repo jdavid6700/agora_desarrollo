@@ -238,11 +238,21 @@ class Formulario {
 		$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
 		
 		
+		
+		$pais =	$_REQUEST['personaJuridicaPais'];
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarDepartamentoAjax', $pais );
+		$resultadoDepa = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarCiudadAjax', $resultadoDepa[0][0] );
+		$resultadoCiuda = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		
+		
 		$datosInformacionProveedorPersonaNatural = array (
 				'id_Proveedor' => $_REQUEST['id_Proveedor'],
 				'numero_documento' => $_REQUEST['nit'],
 				'nombre_proveedor' => $_REQUEST ['nombreEmpresa'],
-				'id_ciudad_contacto' => $_REQUEST ['personaJuridicaCiudad'],
+				'id_ciudad_contacto' => $resultadoCiuda[0][0],
 				'direccion_contacto' => $_REQUEST ['direccionExt'],
 				'correo_contacto' => $_REQUEST ['correo'],
 				'web_contacto' => $_REQUEST ['sitioWeb'],

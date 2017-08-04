@@ -6,8 +6,8 @@ $this->idioma["tipoPersonaTitulo"]="Seleccione Tipo de Persona";
 
 $this->idioma["marcoDatos"]="Datos del Proveedor";
 
-$this->idioma["nit"] = "NIT: ";
-$this->idioma["nitTitulo"]="Digite NIT de la empresa";
+$this->idioma["nit"] = "Documento: ";
+$this->idioma["nitTitulo"]="Digite Documento del proveedor";
 
 $this->idioma["cedula"] = "Cédula: ";
 $this->idioma["cedulaTitulo"]="Digite cédula de la persona";
@@ -62,8 +62,8 @@ $this->idioma["paisExpeNatTitulo"]="Digite Pais Expedición";
 
 
 
-$this->idioma["nombreEmpresa"]="Nombre de la Empresa";
-$this->idioma["nombreTitulo"]="Digite Nombre de la Empresa";
+$this->idioma["nombreEmpresa"]="Nombre del Proveedor";
+$this->idioma["nombreTitulo"]="Digite Nombre del Proveedor";
 
 $this->idioma["paisEmpresa"] = "Procedencia Empresa : ";
 $this->idioma["paisEmpresaTitulo"]="Seleccione Procedencia de la Empresa";

@@ -142,7 +142,7 @@ class registrarForm {
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
-						$atributos ['maximoTamanno'] = 9;
+						$atributos ['maximoTamanno'] = 15;
 						$atributos ['anchoEtiqueta'] = 200;
 						$tab ++;
 						
@@ -279,8 +279,8 @@ class registrarForm {
 							$atributos['tamanno']= 1;
 							$atributos['columnas']= 1;
 							
-							$atributos ['obligatorio'] = true;
-							$atributos ['etiquetaObligatorio'] = true;
+							$atributos ['obligatorio'] = false;
+							$atributos ['etiquetaObligatorio'] = false;
 							$atributos ['validar'] = 'required';
 							
 							$matrizItems=array(
@@ -303,7 +303,7 @@ class registrarForm {
 							
 							// Aplica atributos globales al control
 							$atributos = array_merge ( $atributos, $atributosGlobales );
-							echo $this->miFormulario->campoCuadroLista ( $atributos );
+							//echo $this->miFormulario->campoCuadroLista ( $atributos );
 							// --------------- FIN CONTROL : Select --------------------------------------------------
 							
 							// ---------------- CONTROL: Select --------------------------------------------------------
@@ -319,8 +319,8 @@ class registrarForm {
 							$atributos['tamanno']= 1;
 							$atributos['columnas']= 1;
 							
-							$atributos ['obligatorio'] = true;
-							$atributos ['etiquetaObligatorio'] = true;
+							$atributos ['obligatorio'] = false;
+							$atributos ['etiquetaObligatorio'] = false;
 							$atributos ['validar'] = 'required';
 							
 							$matrizItems=array(
@@ -343,7 +343,7 @@ class registrarForm {
 							
 							// Aplica atributos globales al control
 							$atributos = array_merge ( $atributos, $atributosGlobales );
-							echo $this->miFormulario->campoCuadroLista ( $atributos );
+							//echo $this->miFormulario->campoCuadroLista ( $atributos );
 							 
 							
 							
@@ -1656,13 +1656,13 @@ class registrarForm {
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['columnas'] = 90;
 				$atributos ['filas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required,maxSize[250]';
+				$atributos ['validar'] = '';
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 20;
