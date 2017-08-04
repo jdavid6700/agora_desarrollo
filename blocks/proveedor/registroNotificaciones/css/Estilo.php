@@ -1,28 +1,20 @@
 <?php
 $indice=0;
 
-$estilo[$indice++]="ui.jqgrid.css";
-$estilo[$indice++]="ui.multiselect.css";
 $estilo[$indice++]="timepicker.css";
-$estilo[$indice++]="jquery-te.css";
-$estilo[$indice++]="validationEngine.jquery.css";
-$estilo[$indice++]="autocomplete.css";
-$estilo[$indice++]="chosen.css";
+//$estilo[$indice++]="validationEngine.jquery.css";
+$estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
-$estilo[$indice++]="jquery_switch.css";
+$estilo[$indice++]="miestilo.css";
+// $estilo[$indice++]="formToWizard.css";
 
 // Tablas
 $estilo[$indice++]="demo_page.css";
-$estilo[$indice++]="demo_table.css";
-$estilo[$indice++]="jquery.dataTables.css";
+// $estilo[$indice++]="demo_table.css";
+//$estilo[$indice++]="jquery.dataTables.css";
+//$estilo[$indice++]="jquery.dataTables.min.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
-$estilo[$indice++]="jquery.auto-complete.css";
-$estilo[$indice++]="bootstrap-theme.css";
-$estilo[$indice++]="bootstrap-theme.min.css";
-$estilo[$indice++]="jquery.dataTables.css";
-$estilo[$indice++]="dataTables.tableTools.css";
-$estilo[$indice++]="bootstrap.css";
-$estilo[$indice++]="bootstrap.min.css";
+$estilo[$indice++]="sweetalert2.min.css";
 
 //if(isset($_REQUEST['pagina'])){
 //	if($_REQUEST['pagina'] == "modificaProveedor" || $_REQUEST['pagina'] == "registroProveedor"){

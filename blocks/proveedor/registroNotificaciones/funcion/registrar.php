@@ -92,7 +92,8 @@ class Registrar {
 
             $archivo = $_FILES [$key];
         }
-
+		
+        $SQLs = [];
 
 
         $cotizacion_soporte = $this->campoSeguroCodificar('cotizacionSoporte', $_REQUEST['tiempo']);
@@ -151,15 +152,15 @@ class Registrar {
 
         $entregables = $_POST[$this->campoSeguroCodificar($entregaServicio, $_REQUEST['tiempo'])];
         $plazoEntrega = $_POST[$this->campoSeguroCodificar($plazoEjecucion, $_REQUEST['tiempo'])];
-        $formaPagoCot = $_POST[$this->campoSeguroCodificar('formaPagoCot', $_REQUEST['tiempo'])];
         $descuentos = $_POST[$this->campoSeguroCodificar('descuentos', $_REQUEST['tiempo'])];
+        $observaciones = $_POST[$this->campoSeguroCodificar('observaciones', $_REQUEST['tiempo'])];
 
 
         $datosTextoEnriquecido = array(
             'entregables' => $entregables,
             'plazoEntrega' => $plazoEntrega,
-            'formaPagoCot' => $formaPagoCot,
-            'descuentos' => $descuentos
+            'descuentos' => $descuentos,
+        	'observaciones' => $observaciones
         );
         
         
@@ -179,8 +180,8 @@ class Registrar {
             'entregables' => $datosTextoEnriquecido['entregables'],
             'plazoEntrega' => $datosTextoEnriquecido['plazoEntrega'],
             'precio' => $_REQUEST['precioCot'],
-            'formapago' => $datosTextoEnriquecido['formaPagoCot'],
             'descuentos' => $datosTextoEnriquecido['descuentos'],
+        	'observaciones' => $datosTextoEnriquecido['observaciones'],
             'fechaVencimiento' => $fechaVencimiento,
             'soporte' => $destino1,
             'fechaRegistro' => date('Y-m-d'),
@@ -188,40 +189,99 @@ class Registrar {
         );
 
         
-           
-
-        $cadenaSql = $this->miSql->getCadenaSql('registrarRespuesta', $datosSolicitud);
-        $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosSolicitud, 'registrarRespuesta');
+        $datosRespuestaSolicitudCotizacion = $this->miSql->getCadenaSql ( 'registrarRespuesta', $datosSolicitud );
+        array_push($SQLs, $datosRespuestaSolicitudCotizacion);
         
         
-        $cadenaSql = $this->miSql->getCadenaSql('actualizarEstado', $id_solicitud[0][0]);
-        $resultadoActualizacion = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosSolicitud, 'registrarRespuesta');
+        
+        //******************************** ITEMS ****************************************************************
+        
+        $countFPParam = $_REQUEST ['countItems'];
+        
+        $subFP = explode("&", $_REQUEST ['idsItems']);
+        $cantidadParametros = ($countFPParam) * 7;
+        
+        $limitP = 0;
+        while($limitP < $cantidadParametros){
+        	 
+        	$subCount[$limitP] = explode(" ", $subFP[$limitP]);
+        	 
+        	$limitP++;
+        	 
+        }
+        
+        $limit = 0;
+        while($limit < $cantidadParametros){
+        	 
+        	
+        	if($subCount[$limit+2][0] == 1){
+        		
+        		$datoFP = array (
+        				'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
+        				'nombre' => $subFP[$limit],
+        				'descripcion' => $subFP[$limit+1],
+        				'tipo' => $subCount[$limit+2][0],
+        				'unidad' => $subCount[$limit+3][0],
+        				'tiempo' => $subCount[$limit+4][0],
+        				'cantidad' => $subCount[$limit+5][0],
+        				'valor' => $subCount[$limit+6][1]
+        		);
+        		
+        	}
+        	
+        	
+        	if($subCount[$limit+2][0] == 2){
+        		
+        		$subTime = explode(" ", $subFP[$limit+4]);
+        		$totalDays = (intval($subTime[0]) * 360) + (intval($subTime[3]) * 30) + intval($subTime[6]);
+        		
+        		$datoFP = array (
+        				'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
+        				'nombre' => $subFP[$limit],
+        				'descripcion' => $subFP[$limit+1],
+        				'tipo' => $subCount[$limit+2][0],
+        				'unidad' => $subCount[$limit+3][0],
+        				'tiempo' => $totalDays,
+        				'cantidad' => $subCount[$limit+5][0],
+        				'valor' => $subCount[$limit+6][1]
+        		);
+
+        	}
+        	
+        	$datoRegFP = $this->miSql->getCadenaSql ( 'registrarItemProducto', $datoFP );
+        	array_push($SQLs, $datoRegFP);
+        	 
+        	 
+        	$limit = $limit + 7;
+        }
+        
+        
+        //*************************************************************************************************************
+
+        $registroRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
 
 
-
-        if ($resultado[0][0]) {
-
-
-             $datos = array(
-                'resultado' =>  $resultado[0][0],
-                'solicitud' => $id_solicitud[0][0],
-                'entregables' => $datosTextoEnriquecido['entregables'],
-                'plazoEntrega' => $datosTextoEnriquecido['plazoEntrega'],
-                'precio' => $_REQUEST['precioCot'],
-                'formapago' => $datosTextoEnriquecido['formaPagoCot'],
-                'descuentos' => $datosTextoEnriquecido['descuentos'],
-                'fechaVencimiento' => $fechaVencimiento,
-                'soporte' => $destino1,
-                'fechaRegistro' => date('Y-m-d'),
-                'usuario' => $_REQUEST ['usuario'],
-                 'proveedor' =>$_REQUEST['id_proveedor'],
-                 'objeto' => $_REQUEST['solicitud'],
-                 'numero_solicitud' => $_REQUEST['numero_solicitud'],
-                 'vigencia' => $_REQUEST['vigencia'],
-                 'titulo_cotizacion' => $_REQUEST['titulo_cotizacion'],
-                  'fecha_cierre' => $_REQUEST['fecha_cierre']
-                 
-            );
+        if ($registroRespuestaProveedorCotizacion) {
+        	
+        	
+			$datos = array (
+					'solicitud' => $id_solicitud [0] [0],
+					'entregables' => $datosTextoEnriquecido ['entregables'],
+					'plazoEntrega' => $datosTextoEnriquecido ['plazoEntrega'],
+					'precio' => $_REQUEST ['precioCot'],
+					'observaciones' => $datosTextoEnriquecido ['observaciones'],
+					'descuentos' => $datosTextoEnriquecido ['descuentos'],
+					'fechaVencimiento' => $fechaVencimiento,
+					'soporte' => $destino1,
+					'fechaRegistro' => date ( 'Y-m-d' ),
+					'usuario' => $_REQUEST ['usuario'],
+					'proveedor' => $_REQUEST ['id_proveedor'],
+					'objeto' => $_REQUEST ['solicitud'],
+					'numero_solicitud' => $_REQUEST ['numero_solicitud'],
+					'vigencia' => $_REQUEST ['vigencia'],
+					'titulo_cotizacion' => $_REQUEST ['titulo_cotizacion'],
+					'fecha_cierre' => $_REQUEST ['fecha_cierre'] 
+			);
 
             
             redireccion::redireccionar('inserto', $datos);

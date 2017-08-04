@@ -90,7 +90,7 @@ class registrarForm {
 		$atributos ['action'] = 'index.php';
 		// $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo );
 		// Si no se coloca, entonces toma el valor predeterminado.
-		$atributos ['estilo'] = '';
+		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['marco'] = true;
 		$tab = 1;
 		// ---------------- FIN SECCION: de Parámetros Generales del Formulario ----------------------------
@@ -195,7 +195,7 @@ class registrarForm {
 			$cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosParaCotizacionJoin", $numeroDocumento);
 			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
                         
-                       
+         
                       
                         
                  
@@ -223,12 +223,13 @@ class registrarForm {
 								<th><center>Fecha Apertura</center></th>
 			                    <th><center>Fecha Cierre</center></th>
 								<th><center>Dependencia</center></th>
+		 						<th><center>Ordenador</center></th>
 								<th><center>Tipo Cotización</center></th>
 								<th><center>Estado</center></th>
-								<th><center>Detalle</center></th>
+								<th><center>Solicitud</center></th>
 								<th><center>Responder</center></th>
-                                                                <th><center>Detalle Respuesta</center></th>
-                                                                <th><center>Respuesta Ordenador</center></th>".
+                                <th><center>Cotización</center></th>
+                                <th><center>Respuesta Ordenador</center></th>".
 								/*<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>*/
 						   "</tr>
@@ -236,9 +237,9 @@ class registrarForm {
 							<tbody>";
 				
 				foreach ($resultado as $dato):
-				$variableView = "pagina=" . "gestionarNecesidadConTercero"; // pendiente la pagina para modificar parametro
+				$variableView = "pagina=" . "gestionarCotizacion"; // pendiente la pagina para modificar parametro
 				$variableView .= "&opcion=verSolicitudRelacionada";
-				$variableView .= "&idSolicitud=" . $dato['id_objeto'];
+				$variableView .= "&idSolicitud=" . $dato['id'];
 				$variableView .= "&vigencia=" . $dato['vigencia'];
 				$variableView .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 				$variableView .= "&usuario=" . $_REQUEST['usuario'];
@@ -246,8 +247,12 @@ class registrarForm {
 				$variableView = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableView, $directorio );
 				$imagenView = 'verPro.png';
 				
-				$cadena_sql = $this->miSql->getCadenaSql ( "buscarDependencia", $dato['dependencia']);
-				$resultadoDep = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'dependenciaUdistritalById', $dato['jefe_dependencia'] );
+				$resultadoDep = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+					
+				$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalByIdCast', $dato['ordenador_gasto'] );
+				$resultadoOrd = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
 				
 				if(isset($dato['unidad_ejecutora'])){//CAST
 					switch($dato['unidad_ejecutora']){
@@ -259,180 +264,169 @@ class registrarForm {
 							break;
 					}
 				}
+				
+				
+				if(isset($dato['tipo_necesidad'])){//CAST
+					switch($dato['tipo_necesidad']){
+						case 1 :
+							$dato['tipo_necesidad'] = 'BIEN';
+							break;
+						case 2 :
+							$dato['tipo_necesidad'] = 'SERVICIO';
+							break;
+						case 3 :
+							$dato['tipo_necesidad'] = 'BIENES Y SERVICIOS';
+							break;
+					}
+				}
+				
                                 
-                                if($dato['estado_solicitud'] == "ABIERTO"){
-//					
-					$variableAdd = "pagina=" . "gestionarNecesidadConTercero"; // pendiente la pagina para modificar parametro
-					$variableAdd .= "&opcion=verCotizacionSolicitud";
-					$variableAdd .= "&idSolicitud=" . $dato['id_objeto'];
-					$variableAdd .= "&vigencia=" . $dato['vigencia'];
-					$variableAdd .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
-					$variableAdd .= "&usuario=" . $_REQUEST['usuario'];
-					$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
-					$imagenAdd = 'cotPro.png';
+                if($dato['estado_cotizacion'] == 2 && $dato ['fecha_cierre'] > date ( 'Y-m-d' ) && $dato ['fecha_apertura'] < date ( 'Y-m-d' )){ //Antes estaba ABIERTO revisar......
+
 					
-					$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-					$variableMod .= "&opcion=modificarSolicitudRelacionada";
-					$variableMod .= "&idSolicitud=" . $dato['id_objeto'];
-					$variableMod .= "&vigencia=" . $dato['vigencia'];
-					$variableMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
-                                        $variableMod .= "&numero_solicitud=" . $dato['numero_solicitud'];
-                                        $variableMod .= "&vigencia=" . $dato['vigencia'];
-                                        $variableMod .= "&titulo_cotizacion=" . $dato['titulo_cotizacion'];
-                                        $variableMod .= "&fecha_cierre=" . $this->cambiafecha_format($dato['fecha_cierre']);
-					$variableMod .= "&usuario=" . $_REQUEST['usuario'];
-					$variableMod .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
-					$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
-					$imagenMod = 'resPro.png';
-					
-					$variableCal = "#";
-					$imagenCal = 'cancel.png';
-                                        
-                                        $variableDetalle = "#";
-					$imagenDetalle = 'cancel.png';
-                                        
-                                        
+                	$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                	$variableMod .= "&opcion=modificarSolicitudRelacionada";
+                	$variableMod .= "&idSolicitud=" . $dato['id'];
+                	$variableMod .= "&vigencia=" . $dato['vigencia'];
+                	$variableMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+                	$variableMod .= "&numero_solicitud=" . $dato['numero_solicitud'];
+                	$variableMod .= "&vigencia=" . $dato['vigencia'];
+                	$variableMod .= "&titulo_cotizacion=" . $dato['titulo_cotizacion'];
+                	$variableMod .= "&fecha_cierre=" . $this->cambiafecha_format($dato['fecha_cierre']);
+                	$variableMod .= "&usuario=" . $_REQUEST['usuario'];
+                	$variableMod .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
+                	$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
+                	$imagenMod = 'resPro.png';
+                	
+                	$variableDetalle = "#";
+                	$imagenDetalle = 'cancel.png';
+                                                
 									
 		
 				}else{
-                                    
-                                    if($dato['estado_solicitud'] == "CERRADO"){
-//					
-								
+                             
+						
+					$variableMod = "#";
+					$imagenMod = 'cancel.png';
+		
+						
+					$variableDetalle = "#";
+					$imagenDetalle = 'cancel.png';
+					
+					
+				}
+					
+				
+				
+				
+				$datosConsultaResPro = array (
+						'objeto' => $dato ['id'],
+						'solicitud' => $dato ['id_solicitud']
+				);
+				$cadena_sql = $this->miSql->getCadenaSql ( "consultarRespuestaProveedor", $datosConsultaResPro );
+				$validacionResPro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				
+				if($validacionResPro [0] [0] != null){
+						
+				
+					$variableMod = "#";
+					$imagenMod = 'cancel.png';
+				
 					$variableDetalle = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 					$variableDetalle .= "&opcion=verDetalleRespuesta";
-					$variableDetalle .= "&idSolicitud=" . $dato['id_objeto'];
+					$variableDetalle .= "&idSolicitud=" . $dato['id'];
 					$variableDetalle .= "&vigencia=" . $dato['vigencia'];
 					$variableDetalle .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
 					$variableDetalle .= "&usuario=" . $_REQUEST['usuario'];
 					$variableDetalle .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
-                                        $variableDetalle .= "&id_proveedor=" . $idProveedor;
-                                        
-                                        
+					$variableDetalle .= "&id_proveedor=" . $idProveedor;
 					$variableDetalle = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableDetalle, $directorio );
 					$imagenDetalle = 'verPro.png';
+						
+				
+						
+						
+				}else{
+				
+					$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+					$variableMod .= "&opcion=modificarSolicitudRelacionada";
+					$variableMod .= "&idSolicitud=" . $dato['id'];
+					$variableMod .= "&vigencia=" . $dato['vigencia'];
+					$variableMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+					$variableMod .= "&numero_solicitud=" . $dato['numero_solicitud'];
+					$variableMod .= "&vigencia=" . $dato['vigencia'];
+					$variableMod .= "&titulo_cotizacion=" . $dato['titulo_cotizacion'];
+					$variableMod .= "&fecha_cierre=" . $this->cambiafecha_format($dato['fecha_cierre']);
+					$variableMod .= "&usuario=" . $_REQUEST['usuario'];
+					$variableMod .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
+					$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
+					$imagenMod = 'resPro.png';
+						
+					$variableDetalle = "#";
+					$imagenDetalle = 'cancel.png';
+				
+						
+				}
+				
+				
+				
+				$datosConsultaResJef = array (
+						'objeto' => $dato ['id'],
+						'solicitud' => $dato ['id_solicitud'] 
+				);
+				$cadena_sql = $this->miSql->getCadenaSql ( "consultarRespuestaOrdenador", $datosConsultaResJef );
+				$validacionResOrd = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+						
+				if ($validacionResOrd [0] [0] != null) {
+					$variableRespuestaOrd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+					$variableRespuestaOrd .= "&opcion=verRespuestaOrdenador";
+					$variableRespuestaOrd .= "&idSolicitud=" . $dato ['id_objeto'];
+					$variableRespuestaOrd .= "&vigencia=" . $dato ['vigencia'];
+					$variableRespuestaOrd .= "&unidadEjecutora=" . $dato ['unidad_ejecutora'];
+					$variableRespuestaOrd .= "&usuario=" . $_REQUEST ['usuario'];
+					$variableRespuestaOrd .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
+					$variableRespuestaOrd .= "&id_proveedor=" . $idProveedor;
 					
-                                        $variableMod = "#";
-					$imagenMod = 'cancel.png';
-					
-					
-                                       }
-                                       else{
-                                           
-                                          $variableAdd = "#";
-					$imagenAdd = 'cancel.png';
-					
+					$variableRespuestaOrd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableRespuestaOrd, $directorio );
+					$imagenRespuestaOrd = 'verPro.png';
 					$variableMod = "#";
 					$imagenMod = 'cancel.png';
-					
-					$variableCal = "#";
-					$imagenCal = 'cancel.png'; 
-                                        
-                                        $variableDetalle = "#";
-					$imagenDetalle = 'cancel.png';
-                                       }
-					
-					
-					
+				} else {
+					$variableRespuestaOrd = "#";
+					$imagenRespuestaOrd = 'cancel.png';
 				}
-                                
-                                  $datosConsultaResOrd = array(
-                                        'objeto' =>$dato['id_objeto'],
-                                        'solicitud' => $dato['id_solicitud']
-                                    );
-                                $cadena_sql = $this->miSql->getCadenaSql ( "consultarRespuestaOrdenador", $datosConsultaResOrd);
-                                $validacionResOrd = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-                                
-                                
-                                if($validacionResOrd[0][0] != null){
-                                    $variableRespuestaOrd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-					$variableRespuestaOrd .= "&opcion=verRespuestaOrdenador";
-					$variableRespuestaOrd .= "&idSolicitud=" . $dato['id_objeto'];
-					$variableRespuestaOrd .= "&vigencia=" . $dato['vigencia'];
-					$variableRespuestaOrd .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
-					$variableRespuestaOrd .= "&usuario=" . $_REQUEST['usuario'];
-					$variableRespuestaOrd .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
-                                        $variableRespuestaOrd .= "&id_proveedor=" . $idProveedor;
-                                        
-                                        $variableRespuestaOrd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableRespuestaOrd, $directorio );
-					$imagenRespuestaOrd = 'verPro.png';
-                                        $variableMod = "#";
-					$imagenMod = 'cancel.png';
-                                }
-                                else{
-                                    $variableRespuestaOrd = "#";
-			            $imagenRespuestaOrd = 'cancel.png';
-                                }
-                        
-//                                
-//                                SELECT id_respuesta_ordenador, id_respuesta_directa, id_solicitud, id_objeto, 
-//       respuesta, decision
-//  FROM agora.respuesta_cotizacion_ordenador;
+							
+						
 
-                                
-                                if($dato['fecha_cierre'] < date('Y-m-d')){
-                                    
-                                    if($dato['estado'] == 'ASIGNADO'){
-                                               $dato['estado']='FINALIZADA';
-                                               
-                                       }
-                                       else{
-                                           $dato['estado']='EN ESTUDIO';
-                                       }
-//					
-                                        
-                                                                              
-                                        $variableMod = "#";
-					$imagenMod = 'cancel.png';
-                                        
-                                 
-					
-					
-				}
-                                
-                                 if($dato['estado'] == 'ASIGNADO'){
-                                               $dato['estado']='FINALIZADA';
-                                               
-                                       }            
-                            
-                                
-//				if($dato['estado'] == "COTIZACION"){
-//					
-//					$variableAdd = "pagina=" . "gestionarNecesidadConTercero"; // pendiente la pagina para modificar parametro
-//					$variableAdd .= "&opcion=verCotizacionSolicitud";
-//					$variableAdd .= "&idSolicitud=" . $dato['id_objeto'];
-//					$variableAdd .= "&vigencia=" . $dato['vigencia'];
-//					$variableAdd .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
-//					$variableAdd .= "&usuario=" . $_REQUEST['usuario'];
-//					$variableAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableAdd, $directorio );
-//					$imagenAdd = 'cotPro.png';
-//					
-//					$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-//					$variableMod .= "&opcion=modificarSolicitudRelacionada";
-//					$variableMod .= "&idSolicitud=" . $dato['id_objeto'];
-//					$variableMod .= "&vigencia=" . $dato['vigencia'];
-//					$variableMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
-//					$variableMod .= "&usuario=" . $_REQUEST['usuario'];
-//					$variableMod .= "&tipoCotizacion=" . $dato['tipo_necesidad'];
-//					$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
-//					$imagenMod = 'resPro.png';
-//					
-//					$variableCal = "#";
-//					$imagenCal = 'cancel.png';
-//					
-//				}else if($dato['estado'] == "ASIGNADO"){
-//					
-//					$variableAdd = "#";
-//					$imagenAdd = 'cancel.png';
-//					
-//					$variableMod = "#";
-//					$imagenMod = 'cancel.png';
-//					
-//					$variableCal = "#";
-//					$imagenCal = 'cancel.png';
-//					
-//				}
+						
+						
+				if ($dato ['fecha_cierre'] <= date ( 'Y-m-d' )) {
 				
+					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 7 || $dato ['estado_cotizacion'] == 8) {
+						$dato ['estado'] = 'FINALIZADA';
+					} else {
+						$dato ['estado'] = 'EN ESTUDIO';
+					}
+				
+					$variableMod = "#";
+					$imagenMod = 'cancel.png';
+				} else if($dato ['fecha_apertura'] < date ( 'Y-m-d' )) {
+				
+					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 7 || $dato ['estado_cotizacion'] == 8) {
+						$dato ['estado'] = 'FINALIZADA';
+					} else {
+						$dato ['estado'] = 'ABIERTA';
+					}
+				} else{
+						
+					$dato ['estado'] = 'SOLICITUD';
+						
+					$variableMod = "#";
+					$imagenMod = 'cancel.png';
+				}
+						
+						
+						
 				
 				if($dato['fecha_solicitud_cotizacion'] != null){
 					$dateSolicitud = $this->cambiafecha_format($dato['fecha_solicitud_cotizacion']);
@@ -441,22 +435,26 @@ class registrarForm {
 				}
 				
 				
-				$mostrarHtml = "<tr>
-									<td><center>" . $dato['numero_solicitud'] . "</center></td>
-									<td><center>" . $dato['vigencia'] . "</center></td>".
+				
+				
+				
+						$mostrarHtml = "<tr>
+									<td><center>" . $dato ['numero_solicitud'] . "</center></td>
+									<td><center>" . $dato ['vigencia'] . "</center></td>".
 									/*<td><center>" . $unidadEjecutora. "</center></td>
 									<td><center>" . $dateSolicitud . "</center></td>*/
-									"<td><center>" . $dato['titulo_cotizacion'] . "</center></td>
-									<td><center>" . $this->cambiafecha_format($dato['fecha_apertura']) . "</center></td>
-									<td><center>" . $this->cambiafecha_format($dato['fecha_cierre']) . "</center></td>
-									<td><center>" . $resultadoDep[0][0]. "</center></td>".
+									"<td><center>" . $dato ['titulo_cotizacion'] . "</center></td>
+									<td><center>" . $this->cambiafecha_format ( $dato ['fecha_apertura'] ) . "</center></td>
+									<td><center>" . $this->cambiafecha_format ( $dato ['fecha_cierre'] ) . "</center></td>
+									<td><center>" . $resultadoDep [0] [1] . "</center></td>".
+								   "<td><center>" . $resultadoOrd [0] [1] . "</center></td>".
 									
 									/*<td><center>" . substr($dato['JUSTIFICACION'], 0, 400) . "</center></td>
 									 <td><center>" . substr($dato['OBJETO'], 0, 400) . "</center></td>*/
 				
 				
-				"<td><center>" . $dato['tipo_necesidad'] . "</center></td>
-									<td><center>" . $dato['estado'] . "</center></td>
+				"<td><center>" . $dato ['tipo_necesidad'] . "</center></td>
+									<td><center>" . $dato ['estado'] . "</center></td>
 									<td><center>
 										<a href='" . $variableView . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>

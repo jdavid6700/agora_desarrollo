@@ -67,6 +67,12 @@ if($secure){
 		$resultado = json_encode ( $resultado);
 		echo $resultado;
 	}	
+	
+	if ($_REQUEST ['funcion'] == 'consultarUnidad') {
+		$cadenaSql = $this->sql->getCadenaSql ( 'consultarUnidadByNumPush', $_REQUEST['valor']);
+		$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
+	}
 }
 
 

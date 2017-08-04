@@ -18,6 +18,7 @@ $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
 
 //$funcion [$indice ++] = "miScript.js";
+$funcion [$indice++]  = "sweetalert2.min.js";
 
 
 $embebido [$indice] = true;

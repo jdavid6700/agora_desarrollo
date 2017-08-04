@@ -1,10 +1,48 @@
 <?php
 
 //Formulario 
+
+$this->idioma ["botonAgregar"] ="Agregar";
+
+$this->idioma["nombreItem"] = "Nombre: ";
+$this->idioma["nombreItemTitulo"]="Nombre Item";
+$this->idioma["descripcionItem"] = "Descripción: ";
+$this->idioma["descripcionItemTitulo"]="Descripción Item";
+$this->idioma["tipoItem"] = "Tipo: ";
+$this->idioma["tipoItemTitulo"]="Tipo Item";
+$this->idioma["unidadItem"] = "Unidad de Medida: ";
+$this->idioma["unidadItemTitulo"]="Unidad de Medida Item";
+$this->idioma["tiempoItem"] = "Tiempo de Ejecución: ";
+$this->idioma["tiempoItemTitulo"]="Tiempo de Ejecución Item";
+$this->idioma["cantidadItem"] = "Cantidad: ";
+$this->idioma["cantidadItemTitulo"]="Cantidad Item";
+$this->idioma["valorItem"] = "Valor Unitario: ";
+$this->idioma["valorItemTitulo"]="Valor Unitario Item";
+
+
+$this->idioma["tiempoItem1"] = "Años: ";
+$this->idioma["tiempoItem1Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem2"] = "Meses: ";
+$this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem3"] = "Días: ";
+$this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
+
+$this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
+
+
+
 $this->idioma["tipoPersona"] = "Tipo de Persona : ";
 $this->idioma["tipoPersonaTitulo"]="Seleccione Tipo de Persona";
 
 $this->idioma["marcoDatos"]="Datos del Proveedor";
+
+
+$this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
+
+$this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
+
+$this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
+
 
 $this->idioma["nit"] = "NIT: ";
 $this->idioma["nitTitulo"]="Digite NIT de la empresa";
@@ -447,20 +485,24 @@ $this->idioma["tipoDiscapacidadTitulo"]="Tipo de Discapacidad";
 
 
 
-$this->idioma["entregables"] = "Entregables : ";
+$this->idioma["observaciones"] = "Observaciones Adicionales : ";
+$this->idioma["observacionesTitulo"]="Observaciones Adicionales";
+
+
+$this->idioma["entregables"] = "Entregables : *";
 $this->idioma["entregablesTitulo"]="Entregables";
-$this->idioma["plazoEntrega"] = "Información de Plazos de Entrega : ";
+$this->idioma["plazoEntrega"] = "Información de Plazos de Entrega : *";
 $this->idioma["plazoEntregaTitulo"]="Información de Plazos de Entrega";
 
-$this->idioma["desServicio"] = "Descripción del Servicio : ";
+$this->idioma["desServicio"] = "Descripción del Servicio : *";
 $this->idioma["desServicioTitulo"]="Descripción del Servicio";
-$this->idioma["detalleEjecucion"] = "Información de Ejecución del Servicio : ";
+$this->idioma["detalleEjecucion"] = "Información de Ejecución del Servicio : *";
 $this->idioma["detalleEjecucionTitulo"]="Información de Ejecución del Servicio";
 
-$this->idioma["entregablesdesServicio"] = "Descripción del Servicio y Entregables : ";
+$this->idioma["entregablesdesServicio"] = "Descripción del Servicio y Entregables : *";
 $this->idioma["entregablesdesServicioTitulo"]="Descripción del Servicio y Entregables";
-$this->idioma["entregaEjecucion"] = "Información de Ejecución del Servicio y plazos de entrega : ";
-$this->idioma["entregaEjecucionTitulo"]="Información de Ejecución del Servicio y plazos de entrega ";
+$this->idioma["entregaEjecucion"] = "Información de Ejecución del Servicio y Plazos de Entrega : *";
+$this->idioma["entregaEjecucionTitulo"]="Información de Ejecución del Servicio y Plazos de Entrega ";
 
 
 
@@ -474,12 +516,14 @@ $this->idioma["descuentos"] = "Descuentos Aplicables : ";
 $this->idioma["descuentosTitulo"]="Descuentos Aplicables";
 $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
+$this->idioma["fechaVencimientoCotRead"] = "Fecha de Vencimiento Cotización : ";
+$this->idioma["fechaVencimientoCotReadTitulo"]="Fecha de Vencimiento Cotización";
 
 $this->idioma["fechaVencimientoCotDetalle"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCoDetalleTitulo"]="Fecha de Vencimiento Cotización";
 
 $this->idioma["marcoAnexo"] = "Soporte Detalle Cotización";
-$this->idioma["cotizacionSoporte"] = "Adjuntar (PDF) : ";
-$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (PDF)";
+$this->idioma["cotizacionSoporte"] = "Adjuntar (Archivo) : ";
+$this->idioma["cotizacionSoporteTitulo"]="Adjuntar (Archivo)";
 
 ?>
