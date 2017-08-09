@@ -145,6 +145,14 @@ class redireccion {
 				$variable .= "&usuario=" . $valor ['usuario'];
 				break;
 				
+			case "respondioCotizacionGen" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=respondioCotizacion";
+				$variable .= "&idObjeto=" . $valor ["id_objeto"];
+				$variable .= "&usuario=" . $valor ['usuario'];
+				break;
+				
 		}
 		
 		foreach ( $_REQUEST as $clave => $valor ) {

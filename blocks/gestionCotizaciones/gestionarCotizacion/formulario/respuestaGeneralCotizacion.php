@@ -244,7 +244,68 @@ class FormularioRegistro {
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
 		
+		
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'solicitudesXCotizacion', $solicitudCotizacion[0]['id'] );
+		$solicitudIndividualesCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitudesXCotizacionSolicitante', $solicitudIndividualesCotizacion[0][0] );
+		$solicitudIndividualesCotizacionSolicitante = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		if($solicitudIndividualesCotizacionSolicitante){
+			$existeSeleccionado = true;
+			
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorSeleccionado', $solicitudIndividualesCotizacionSolicitante [0] ['solicitud_cotizacion'] );
+				$solicitudIndividualInfoPro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$tipo = 'success';
+				$mensaje = "<b>ESTADO SOLICITUD:</b> Con Proveedor Seleccionado<br>
+							<br>
+							Ya se ha seleccionado a un <b>Proveedor</b> para la presente <b>Solicitud de Cotización (" . $_REQUEST ['idSolicitud'] . " - " . $solicitudCotizacion [0] ['vigencia'] . ") </b>:<br>" . 
+
+				"<br><b>Nombre:</b> " . $solicitudIndividualInfoPro [0] ['nom_proveedor'] . " ( PERSONA " . $solicitudIndividualInfoPro [0] ['tipopersona'] . ")" . "<br> 
+						   	 <b>Documento:</b> " . $solicitudIndividualInfoPro [0] ['num_documento'] . "<br>" . 
+
+				"<br>Ahora, por favor registre un mensaje
+							general para todos los proveedores que fueron relacionados en la solicitud. Todos veran el mismo mensaje, a continuación
+							indique la justificación de su decisión, la cual podrá ser observada por el Ordenador del Gasto responsable. Gracias
+							";
+				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				$esteCampo = 'mensaje';
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = $tipo;
+				$atributos ["mensaje"] = $mensaje;
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+			
+		}else{
+			$existeSeleccionado = false;
+			
+				$tipo = 'information';
+				$mensaje = "<b>ESTADO SOLICITUD:</b> Sin Proveedor Seleccionado<br>
+							<br>
+							No se ha seleccionado a un <b>Proveedor</b> para la presente <b>Solicitud de Cotización (" . $_REQUEST ['idSolicitud'] . " - " . $solicitudCotizacion [0] ['vigencia'] . ") </b>:<br>" . 
+
+				"<br>Puede seleccionar un proveedor y registrar un mensaje que solo vera dicho proveedor, luego por favor registre un mensaje
+							general para todos los proveedores que fueron relacionados en la solicitud. Todos veran el mismo mensaje, a continuación
+							indique la justificación de su decisión, la cual podrá ser observada por el Ordenador del Gasto responsable. Gracias
+							";
+				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				$esteCampo = 'mensaje';
+				$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos ["etiqueta"] = "";
+				$atributos ["estilo"] = "centrar";
+				$atributos ["tipo"] = $tipo;
+				$atributos ["mensaje"] = $mensaje;
+				echo $this->miFormulario->cuadroMensaje ( $atributos );
+				unset ( $atributos );
+			
+		}
+		
+		
 		
 			
 			$esteCampo = "marcoContratosTablaRes";
@@ -265,12 +326,17 @@ class FormularioRegistro {
 				$atributos ['tab'] = $tab ++;
 				$atributos ['anchoEtiqueta'] = 250;
 				$atributos ['evento'] = '';
-				if (isset ( $estadoSolicitud )) {
-					$atributos ['seleccion'] = -1;
+				
+				
+				if (isset ( $existeSeleccionado ) && $existeSeleccionado) {
+					$atributos ['seleccion'] = 2;
+					$atributos ['deshabilitado'] = true;
 				} else {
 					$atributos ['seleccion'] = -1;
+					$atributos ['deshabilitado'] = false;
 				}
-				$atributos ['deshabilitado'] = false;
+				
+				
 				$atributos ['columnas'] = 1;
 				$atributos ['tamanno'] = 1;
 				$atributos ['ajax_function'] = "";
@@ -289,7 +355,10 @@ class FormularioRegistro {
 				$atributos ['matrizItems'] = $matrizItems;
 				
 				$atributos = array_merge ( $atributos, $atributosGlobales );
-				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				
+				if (isset ( $existeSeleccionado ) && !$existeSeleccionado) {
+					echo $this->miFormulario->campoCuadroLista ( $atributos );
+				}
 				unset ( $atributos );
 				// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
 				
@@ -333,7 +402,10 @@ class FormularioRegistro {
 					$atributos ['matrizItems'] = $matrizItems;
 					 
 					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
+					
+					if (isset ( $existeSeleccionado ) && !$existeSeleccionado) {
+						echo $this->miFormulario->campoCuadroLista ( $atributos );
+					}
 					unset ( $atributos );
 					// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
 				
@@ -352,13 +424,13 @@ class FormularioRegistro {
 	                $atributos ['dobleLinea'] = 0;
 	                $atributos ['tabIndex'] = $tab;
 	                $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-	                $atributos ['validar'] = 'required,minSize[4]';
+	                $atributos ['validar'] = 'required,minSize[20]';
 	                $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
 	                $atributos ['deshabilitado'] = false;
 	                $atributos ['tamanno'] = 20;
 	                $atributos ['maximoTamanno'] = '';
 	                $atributos ['anchoEtiqueta'] = 220;
-	                $atributos ['textoEnriquecido'] = true; //Este atributo se coloca una sola vez en todo el formulario (ERROR paso de datos)
+	                
 	
 					if (isset ( $_REQUEST [$esteCampo] )) {
 						$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -366,11 +438,20 @@ class FormularioRegistro {
 						$atributos ['valor'] = '';
 					}
 	
-	                $tab ++;
-	
-	                // Aplica atributos globales al control
-	                $atributos = array_merge($atributos, $atributosGlobales);
-	                echo $this->miFormulario->campoTextArea($atributos);
+	                
+	                
+	                if (isset ( $existeSeleccionado ) && !$existeSeleccionado) {
+	                	$atributos ['textoEnriquecido'] = true; //Este atributo se coloca una sola vez en todo el formulario (ERROR paso de datos)
+	                	
+	                	$tab ++;
+	                	
+	                	// Aplica atributos globales al control
+	                	$atributos = array_merge($atributos, $atributosGlobales);
+	                	
+	                	echo $this->miFormulario->campoTextArea($atributos);
+	                	
+	                }
+	                
 	                unset($atributos);
 	               
                 
@@ -392,12 +473,16 @@ class FormularioRegistro {
                 $atributos ['dobleLinea'] = 0;
                 $atributos ['tabIndex'] = $tab;
                 $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                $atributos ['validar'] = 'required,minSize[4]';
+                $atributos ['validar'] = 'required,minSize[20]';
                 $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                 $atributos ['deshabilitado'] = false;
                 $atributos ['tamanno'] = 20;
                 $atributos ['maximoTamanno'] = '';
                 $atributos ['anchoEtiqueta'] = 220;
+                
+                if (isset ( $existeSeleccionado ) && $existeSeleccionado) {
+                	$atributos ['textoEnriquecido'] = true; //Este atributo se coloca una sola vez en todo el formulario (ERROR paso de datos)
+                }
                 
                 if (isset ( $_REQUEST [$esteCampo] )) {
                 	$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -421,16 +506,25 @@ class FormularioRegistro {
                 $atributos ["obligatorio"] = false;
                 $atributos ['marco'] = true;
                 $atributos ["etiqueta"] = "";
-                if (isset ( $_REQUEST [$esteCampo] )) {
-                	$atributos ['valor'] = $_REQUEST [$esteCampo];
-                } else {
-                	$atributos ['valor'] = '';
-                }
+                
+                $atributos ['valor'] = $_REQUEST['idSolicitud'];
+                
                 $atributos = array_merge ( $atributos, $atributosGlobales );
                 echo $this->miFormulario->campoCuadroTexto ( $atributos );
                 unset ( $atributos );
                 
 
+                $esteCampo = 'estadoSolicitudSel';
+                $atributos ["id"] = $esteCampo; // No cambiar este nombre
+                $atributos ["tipo"] = "hidden";
+                $atributos ['estilo'] = '';
+                $atributos ["obligatorio"] = false;
+                $atributos ['marco'] = true;
+                $atributos ["etiqueta"] = "";
+                $atributos ['valor'] = $existeSeleccionado;
+                $atributos = array_merge ( $atributos, $atributosGlobales );
+                echo $this->miFormulario->campoCuadroTexto ( $atributos );
+                unset ( $atributos );
        
 				
 				
@@ -479,7 +573,7 @@ class FormularioRegistro {
 					$atributos ['dobleLinea'] = 0;
 					$atributos ['tabIndex'] = $tab;
 					$atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-					$atributos ['validar'] = 'required,minSize[4]';
+					$atributos ['validar'] = 'required,minSize[20]';
 					$atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 20;

@@ -77,96 +77,129 @@ class SolicitudCotizacion {
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
 		
-		$respuesta = $_POST[$this->campoSeguroCodificar('respuesta', $_REQUEST['tiempo'])];
+		$respuestaGen = $_POST[$this->campoSeguroCodificar('respuestaGen', $_REQUEST['tiempo'])];
+		$justificacion = $_POST[$this->campoSeguroCodificar('justificacion', $_REQUEST['tiempo'])];
+		$rechazado = false;
 		
-		
-		$_REQUEST['decision']='EN ESTUDIO';
-
-		
-		//Buscar usuario para enviar correo
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedoresInfoCotizacion', $_REQUEST ['idObjeto'] );
-		$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
-		
-		foreach ($resultadoProveedor as $dato):
+		if(isset($_REQUEST['estadoSolicitudSel']) && $_REQUEST['estadoSolicitudSel']){// TRUE Proveedor Previamente SELECCIONADO
 			
-				$datosSolicitud = array (
-						'objeto' => $_REQUEST ['idObjeto'],
-						'proveedor' => $dato['id_proveedor']
-				);
-					
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSolicitudxProveedor', $datosSolicitud );
-				$resultadoSolicitudxPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-				$datosSolicitudRes = array (
-						'objeto' => $_REQUEST ['idObjeto'],
-						'proveedor' => $dato['id_proveedor'],
-						'solicitud' => $resultadoSolicitudxPersona[0]['id_solicitud']
-				);
-					
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarSolicitudxProveedorRes', $datosSolicitudRes );
-				$resultadoSolicitudxPersonaRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-				
-				
-				if(!$resultadoSolicitudxPersonaRes){
-					
-					$datosRes = array (
-							'id_objeto' => $_REQUEST ['idObjeto'],
-							'id_proveedor' => $dato['id_proveedor'],
-							'id_respuesta_directa' => null,
-							'id_solicitud' => $resultadoSolicitudxPersona[0]['id_solicitud'],
-							'respuesta' => $respuesta,
-							'decision' => $_REQUEST['decision'],
-							'usuario' => $_REQUEST ['usuario']
-					);
-					
-					// Inserto las solicitudes de cotizacion para cada proveedor
-					$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datosRes );
-					$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
-					
-				}
-				
-		
-		endforeach;
-		
-		
-		$datos = array (
-				'id_objeto' => $_REQUEST ['idObjeto'],
-				'id_respuesta_directa' => null,
-				'respuesta' => $respuesta,
-				'decision' => $_REQUEST['decision'],
-				'usuario' => $_REQUEST ['usuario']
-		);
-		
-		// actualizo estado del objeto a contratar a 2(cotizacion)
-		// actualizo fecha de solicitud
-		// Actualizar estado del OBJETO CONTRATO A ASIGNADA
-		
-		if($_REQUEST['decision'] == "APROBADO - SELECCIONADO"){
-			
-			$numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
-			
-			$parametros = array (
-					'idObjeto' => $_REQUEST ['idObjeto'],
-					'numero_solicitud' => $numberSolicitud,
-					'estado' => 'ASIGNADO', // solicitud de cotizacion
-					'fecha' => date ( "Y-m-d" ),
-					'usuario' => $_REQUEST ['usuario']
-			);
-			// Actualizo estado del objeto a contratar
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjeto', $parametros );
-			//$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
-			$resultadoAct = true;
+			$estadoPro = 2;
 			
 		}else{
-			$resultadoAct = true;
+		
+			$estadoPro = 1;
+			
+			if(isset($_REQUEST['decisionPro']) && $_REQUEST['decisionPro'] != null){
+				
+				$datos = array (
+						'objeto' => $_REQUEST ['idObjeto'],
+						'proveedor' => $_REQUEST ['decisionPro']
+				);
+				
+				$cadenaSql = $this->miSql->getCadenaSql ( 'solicitudXProveedorSel', $datos);
+				$solicitudXProveedorSel = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$respuestaDet = $_POST[$this->campoSeguroCodificar('respuestaDet', $_REQUEST['tiempo'])];
+
+				$datos = array (
+						'id_objeto' => $_REQUEST ['idObjeto'],
+						'id_solicitud' => $solicitudXProveedorSel[0]['id'],
+						'respuesta' => $respuestaDet,
+						'decision' => $estadoPro,
+						'usuario' => $_REQUEST ['usuario']
+				);
+
+				// Inserto las solicitudes de cotizacion para cada proveedor
+				$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
+				$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+				
+				$estadoPro = 2;
+				
+			}else{
+				
+				$rechazado = true;
+				
+				$estadoPro = 2;
+				
+			}
+			
+			
 		}
 		
+		
+		//Buscar usuario para enviar correo
+		$cadenaSql = $this->miSql->getCadenaSql ( 'solicitudesXCotizacionSinMensaje', $_REQUEST ['idObjeto'] );
+		$resultadoMensajesGenerales = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 		
+		$limit = $resultadoMensajesGenerales[0]['contador'];
+		$i = 0;
+		
+		$resultadoMensajesGenerales[0]['string_agg'] = str_replace ( "'" , "", $resultadoMensajesGenerales[0]['string_agg']);
+		$idSplit = explode( ',', $resultadoMensajesGenerales[0]['string_agg'] )  ;
+		
+		
+		//Registro de Respuestas GENERALES Proveedores NO Seleccionados
+		while($i < $limit){
+			
+			
+			$datos = array (
+					'id_respuesta_directa' => null,
+					'id_solicitud' => $idSplit[$i],
+					'respuesta' => $respuestaGen,
+					'decision' => $estadoPro,
+					'usuario' => $_REQUEST ['usuario']
+			);
 
+			// Inserto las solicitudes de cotizacion para cada proveedor
+			$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
+			$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			
+			$i++;
+			
+		}
+		
+		
+		if($rechazado){
+			
+			$datos = array (
+					'id_objeto' => $_REQUEST ['idObjeto'],
+					'proveedor' => null,
+					'justificacion' => $justificacion,
+					'estado' => '8',
+					'usuario' => $_REQUEST ['usuario']
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjetoDecNo', $datos );
+			$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			
+		}else{
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'solicitudesXCotizacion', $_REQUEST ['idObjeto'] );
+			$solicitudIndividualesCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitudesXCotizacionSolicitante', $solicitudIndividualesCotizacion[0][0] );
+			$solicitudIndividualesCotizacionSolicitante = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorSeleccionado', $solicitudIndividualesCotizacionSolicitante [0] ['solicitud_cotizacion'] );
+			$solicitudIndividualInfoPro = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			
+			$datos = array (
+					'id_objeto' => $_REQUEST ['idObjeto'],
+					'proveedor' => $solicitudIndividualInfoPro[0]['id_proveedor'],
+					'justificacion' => $justificacion,
+					'estado' => '7',
+					'usuario' => $_REQUEST ['usuario']
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjetoDec', $datos );
+			$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			
+		}
+		
+	
+		
 		
 		
 		if ($resultadoAct) {

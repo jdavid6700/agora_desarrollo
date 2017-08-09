@@ -353,9 +353,17 @@ $("#<?php echo $this->campoSeguro('decision')?>").change(function(){
 		            	
 		            	$('#marcoRespuestaEspecificaPro').fadeIn(500);
 		            	
+		            	$("#<?php echo $this->campoSeguro('respuestaDet') ?>").val();
+		            	$("#<?php echo $this->campoSeguro('respuestaDet')?>").addClass("validate[required]");
+		            	$("#<?php echo $this->campoSeguro('decisionPro')?>").addClass("validate[required]");
+		            	
 		    		}else{
 		    			
 		    			$('#marcoRespuestaEspecificaPro').fadeOut(500);
+		    			
+		    			$("#<?php echo $this->campoSeguro('respuestaDet') ?>").val("No seleccionado Proveedor Para Cotización");
+		    			$("#<?php echo $this->campoSeguro('respuestaDet')?>").removeClass("validate[required]");
+		    			$("#<?php echo $this->campoSeguro('decisionPro')?>").removeClass("validate[required]");
 		    			
 		    		}
 });

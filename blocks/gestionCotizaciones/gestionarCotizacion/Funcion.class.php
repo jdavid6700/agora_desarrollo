@@ -49,6 +49,9 @@ class Funcion {
 	function responderCotizacion() {
 		include_once ($this->ruta . "/funcion/responderCotizacion.php");
 	}
+	function responderCotizacionGen() {
+		include_once ($this->ruta . "/funcion/responderCotizacionGen.php");
+	}
 	function registrarActividad() {
 		include_once ($this->ruta . "/funcion/registrarActividad.php");
 	}
@@ -144,18 +147,21 @@ class Funcion {
 					}
 					
 					break;
-					
 				case 'cotizacion' :
 					$this->solicitudCotizacion ();
 					break;
-					
-					case 'registrarRespuestaCot' :
-						$this->responderCotizacion ();
-						break;
-
-				case "resumen":
-                                        $this->resumen();
-                                        break;	
+				
+				case 'registrarRespuestaCot' :
+					$this->responderCotizacion ();
+					break;
+				
+				case 'registrarRespuestaCotGen' :
+					$this->responderCotizacionGen ();
+					break;
+				
+				case "resumen" :
+					$this->resumen ();
+					break;	
 				
 				case 'actualizar' :
 				

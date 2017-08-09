@@ -28,6 +28,71 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case 'solicitudXProveedorSel' :
+				$cadenaSql = "SELECT id ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.solicitud_cotizacion ";
+				$cadenaSql .= " WHERE proveedor = ";
+				$cadenaSql .= "'" . $variable ['proveedor'] . "' AND objeto_cotizacion = ". $variable ['objeto'] . ";";
+				break;
+				
+			case 'actualizarObjetoDecNo' :
+				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
+				$cadenaSql .= " justificacion_seleccion = '" . $variable ['justificacion'] . "',";
+				$cadenaSql .= " estado_cotizacion = '" . $variable ['estado'] . "'";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['id_objeto'] . "' ";
+				break;
+			
+			case 'actualizarObjetoDec' :
+				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
+				$cadenaSql .= " justificacion_seleccion = '" . $variable ['justificacion'] . "',";
+				$cadenaSql .= " informacion_proveedor = '" . $variable ['proveedor'] . "',";
+				$cadenaSql .= " estado_cotizacion = '" . $variable ['estado'] . "'";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['id_objeto'] . "' ";
+				break;
+			
+			case "solicitudesXCotizacionSinMensaje" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " string_agg('''' || cast(OC.id as text) || '''',',' ";
+				$cadenaSql .= " ORDER BY ";
+				$cadenaSql .= " OC.id), ";
+				$cadenaSql .= " count(*) as contador";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.solicitud_cotizacion OC ";
+				$cadenaSql .= " LEFT JOIN agora.respuesta_cotizacion_solicitante RCS ON RCS.solicitud_cotizacion = OC.id ";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " objeto_cotizacion = " . $variable . " AND RCS.solicitud_cotizacion IS NULL;";
+				break;
+			
+			case "buscarProveedorSeleccionado" :
+				$cadenaSql = " SELECT * ";
+				$cadenaSql .= " FROM agora.informacion_proveedor IP ";
+				$cadenaSql .= " JOIN agora.solicitud_cotizacion SC ON SC.proveedor = IP.id_proveedor ";
+				$cadenaSql .= " WHERE SC.id = " . $variable . ";";
+				break;
+			
+			case "solicitudesXCotizacion" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " string_agg('''' || cast(id as text) || '''',',' ";
+				$cadenaSql .= " ORDER BY ";
+				$cadenaSql .= " id) ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.solicitud_cotizacion ";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " objeto_cotizacion = " . $variable . ";";
+				break;
+				
+			case "buscarSolicitudesXCotizacionSolicitante" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.respuesta_cotizacion_solicitante ";
+				$cadenaSql .= " WHERE ";
+				$cadenaSql .= " solicitud_cotizacion IN ( " . $variable . ") AND resultado = 1;";
+				break;
+				
 			case "buscarUnidadItem" :
 				$cadenaSql = " SELECT *";
 				$cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id = ".$variable.";";
@@ -325,17 +390,15 @@ class Sql extends \Sql {
 			case "ingresarRespuestaCotizacion" :
 				$hoy = date ( "Y-m-d" );
 			
-				$cadenaSql = " INSERT INTO agora.respuesta_cotizacion_ordenador";
+				$cadenaSql = " INSERT INTO agora.respuesta_cotizacion_solicitante";
 				$cadenaSql .= " (";
-				$cadenaSql .= " id_solicitud,";
-				$cadenaSql .= " id_objeto,";
+				$cadenaSql .= " solicitud_cotizacion,";
 				$cadenaSql .= " respuesta,";
-				$cadenaSql .= " decision";
+				$cadenaSql .= " resultado";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= " " . $variable ['id_solicitud'] . ",";
-				$cadenaSql .= " " . $variable ['id_objeto'] . ",";
 				$cadenaSql .= " '" . $variable ['respuesta'] . "',";
 				$cadenaSql .= " '" . $variable ['decision'] . "'";
 				$cadenaSql .= " );";
@@ -354,6 +417,14 @@ class Sql extends \Sql {
 				$cadenaSql .= "	*";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.respuesta_cotizacion_proveedor";
+				$cadenaSql .= " WHERE solicitud_cotizacion = " . $variable . ";";
+				break;
+				
+			case "consultarRespuestaxSolicitante" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= "	*";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.respuesta_cotizacion_solicitante";
 				$cadenaSql .= " WHERE solicitud_cotizacion = " . $variable . ";";
 				break;
 				

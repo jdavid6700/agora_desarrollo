@@ -223,10 +223,16 @@ class Formulario {
 						case 6 :
 							$estadoCotizacionArq = 'RECOTIZACION';
 							break;
+						case 7 :
+							$estadoCotizacionArq = 'SELECCIONADO';
+							break;
+						case 8 :
+							$estadoCotizacionArq = 'RECHAZADO';
+							break;
 				}
 			}
 			
-			if($estadoCotizacionArq == "COTIZACION"){
+			if($estadoCotizacionArq == "COTIZACION" || $estadoCotizacionArq == "SELECCIONADO" || $estadoCotizacionArq == "RECHAZADO"){
 				
 				
 				/* VALIDAR FECHA DE CIERRE ++++++++++++++++++++++++++++++++++++*/

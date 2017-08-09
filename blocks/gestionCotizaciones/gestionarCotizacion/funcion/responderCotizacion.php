@@ -80,6 +80,23 @@ class SolicitudCotizacion {
 		$respuesta = $_POST[$this->campoSeguroCodificar('respuesta', $_REQUEST['tiempo'])];
 		
 		
+		$datos = array (
+				'id_objeto' => $_REQUEST ['idObjeto'],
+				'id_proveedor' => $_REQUEST['idProveedor'],
+				'id_respuesta_directa' => null,
+				'id_solicitud' => $_REQUEST['idSolicitudIndividual'],
+				'respuesta' => $respuesta,
+				'decision' => $_REQUEST['decision'],
+				'usuario' => $_REQUEST ['usuario']
+		);
+
+		
+		
+		// Inserto las solicitudes de cotizacion para cada proveedor
+		$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
+		$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+
+
 		if(isset($_REQUEST['decision'])){//CAST tipo de NECESIDAD
 			switch($_REQUEST['decision']){
 				case 1 :
@@ -90,30 +107,13 @@ class SolicitudCotizacion {
 					break;
 			}
 		}
-
 		
-		
-		$datos = array (
-				'id_objeto' => $_REQUEST ['idObjeto'],
-				'id_proveedor' => $_REQUEST['idProveedor'],
-				'id_respuesta_directa' => null,
-				'id_solicitud' => $_REQUEST['idSolicitudIndividual'],
-				'respuesta' => $respuesta,
-				'decision' => $_REQUEST['decision'],
-				'usuario' => $_REQUEST ['usuario']
-		);
-		
-
-		
-			// Inserto las solicitudes de cotizacion para cada proveedor
-		$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
-		$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
-
 		
 		// actualizo estado del objeto a contratar a 2(cotizacion)
 		// actualizo fecha de solicitud
 		// Actualizar estado del OBJETO CONTRATO A ASIGNADA
 		
+		/*
 		if($_REQUEST['decision'] == "APROBADO - SELECCIONADO"){
 			
 			$numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
@@ -133,13 +133,10 @@ class SolicitudCotizacion {
 		}else{
 			$resultadoAct = true;
 		}
-		
-
-		
-
+		*/
 		
 		
-		if ($resultadoRegRes && $resultadoAct) {
+		if ($resultadoRegRes) {
 			redireccion::redireccionar ( 'respondioCotizacion', $datos );
 			exit ();
 		} else {
