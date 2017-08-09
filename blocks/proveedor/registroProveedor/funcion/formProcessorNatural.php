@@ -509,27 +509,15 @@ class Formulario {
 				);
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
-				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
-				//array_push($SQLs, $cadenaSqlTelFijo);
-				
-				
-				
-				$datosTelefonoMovilPersonaProveedor = array (
-						'num_telefono' => $_REQUEST['movilNat'],
-						'extension_telefono' => null,
-						'tipo' => '2'
-				);
-				
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
-				$id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoMovilPersonaProveedor, "insertarInformacionProveedorTelefono");
-				//array_push($SQLs, $cadenaSqlTelMovil);
+				$cadenaSqlTelFijo = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
+				//$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
+				array_push($SQLs, $cadenaSqlTelFijo);
 				
 				
 				
 				
 				$datosTelefonoProveedorTipoA = array (
-						'fki_id_tel' => $id_TelefonoFijo[0][0],
+						'fki_id_tel' => "currval('agora.prov_proveedor_telefono')",
 						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
@@ -539,8 +527,27 @@ class Formulario {
 				
 				
 				
+				
+				
+				$datosTelefonoMovilPersonaProveedor = array (
+						'num_telefono' => $_REQUEST['movilNat'],
+						'extension_telefono' => null,
+						'tipo' => '2'
+				);
+				
+				$cadenaSqlTelMovil = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
+				//$id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoMovilPersonaProveedor, "insertarInformacionProveedorTelefono");
+				array_push($SQLs, $cadenaSqlTelMovil);
+				
+				
+				
+				
+				
+				
+				
+				
 				$datosTelefonoProveedorTipoB = array (
-						'fki_id_tel' => $id_TelefonoMovil[0][0],
+						'fki_id_tel' => "currval('agora.prov_proveedor_telefono')",
 						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
@@ -613,13 +620,7 @@ class Formulario {
 				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
 				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				array_push($SQLs, $cadenaSqlActividad);
-				
-				
-				
-				
-				
-				
-				
+								
 				
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 				
