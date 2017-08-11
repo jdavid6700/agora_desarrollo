@@ -28,6 +28,14 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */
+			case 'eliminarSolicitudCotizacion' :
+				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
+				$cadenaSql .= "estado_cotizacion = '4' ";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['idObjeto'] . "' ";
+				break;
+			
 			case 'solicitudXProveedorSel' :
 				$cadenaSql = "SELECT id ";
 				$cadenaSql .= " FROM ";
@@ -471,7 +479,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" * ";
 				$cadenaSql.=" FROM ";
 				$cadenaSql.=" agora.objeto_cotizacion";
-				$cadenaSql.=" WHERE usuario_creo = '" . $variable . "';";
+				$cadenaSql.=" WHERE usuario_creo = '" . $variable . "' AND estado_cotizacion != 4;";
 				break;
 			
 			

@@ -61,7 +61,10 @@ class Funcion {
 	function resumen()
 	{
 		include_once($this->ruta."/funcion/resumenPDF.php");
-	}        
+	}
+	function eliminarSolicitud() {
+		include_once ($this->ruta . "/funcion/eliminarSolicitud.php");
+	}
 	function actualizar() {
 		include_once ($this->ruta . "/funcion/actualizar.php");
 	}
@@ -149,6 +152,10 @@ class Funcion {
 					break;
 				case 'cotizacion' :
 					$this->solicitudCotizacion ();
+					break;
+					
+				case 'eliminarSolicitud' :
+					$this->eliminarSolicitud ();
 					break;
 				
 				case 'registrarRespuestaCot' :

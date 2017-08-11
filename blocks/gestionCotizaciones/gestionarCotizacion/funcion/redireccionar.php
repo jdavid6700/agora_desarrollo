@@ -33,7 +33,14 @@ class redireccion {
 				$variable .= "&mensaje=confirmaCotizacion";
                 $variable .= "&idObjeto=".$valor['idObjeto'];
                 $variable .= "&idCodigo=".$valor['idCodigo'];
-				break;				
+				break;
+				
+			case "eliminoSolicitud" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=eliminoCotizacion";
+				$variable .= "&idObjeto=" . $valor ['idObjeto'];
+				break;
 			
 			case "noInserto" :
 				$variable = "pagina=" . $miPaginaActual;

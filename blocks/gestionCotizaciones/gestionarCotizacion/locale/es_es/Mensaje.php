@@ -70,6 +70,8 @@ $this->idioma["objetoNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
 
 $this->idioma["marcoDatosRelacionada"]="Solicitudes de Cotización Generadas Relacionadas";
 $this->idioma["marcoDatosCotizacion"]="Gestión de Solicitudes de Cotización Generadas";
+$this->idioma["marcoDatosCotizacionEliminar"]="Borrar Solicitud de Cotización";
+$this->idioma["marcoDatosCotizacionEliminarTex"]="Solicitud de Cotización";
 
 $this->idioma["marcoDatosCotizacionList"]="Solicitudes de Cotización Generadas";
 $this->idioma["marcoDatosCotizacionListPer"]="Personas Relacionadas en Cotización";
@@ -232,6 +234,7 @@ $this->idioma["botonContinuar"] = "Continuar";
 $this->idioma["botonAgregar"] = "Agregar";
 $this->idioma["botonTerminar"] = "Continuar";
 $this->idioma["botonProcesar"] = "Procesar";
+$this->idioma["botonEliminar"] = "Eliminar";
 
 $this->idioma["paso1"] = "Consultar Funcionario";
 $this->idioma["paso2"] = "Información del Docente";

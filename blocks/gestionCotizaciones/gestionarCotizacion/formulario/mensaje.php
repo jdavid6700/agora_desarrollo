@@ -499,6 +499,32 @@ if (!isset($GLOBALS["autorizado"])) {
 //         $valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
 //         $valorCodificado.="&objetoNBC=".$_REQUEST['nucleo'];
 //         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES Y NBC";
+    } else if ($_REQUEST['mensaje'] == 'eliminoCotizacion') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+    	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	//Buscar usuario para enviar correo
+    	$cadenaSql = $this->sql->getCadenaSql('buscarProveedores', $_REQUEST['idObjeto']);
+    	$resultadoProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	//Buscar usuario para enviar correo
+    	$cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
+    	$objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	$hoy = date("d/m/Y");
+    	
+        $tipo = 'success';
+        $mensaje = "Se eliminó satisfactoriamente la Solicitud de Cotización <b>(".$objetoEspecifico[0]['numero_solicitud'].")</b>.<br>
+        		<br>
+        		<b>Fecha de Eliminación:</b> ".$hoy."
+        		";
+        $boton = "continuar";
+
+        $valorCodificado = "pagina=" . $esteBloque['nombre'];
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     }
 
 

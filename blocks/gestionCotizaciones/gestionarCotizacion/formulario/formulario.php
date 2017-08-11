@@ -313,8 +313,16 @@ class Formulario {
 				$variableCal = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableCal, $directorio );
 				$imagenCal = 'calPro.png';
 				
-				
-				$variableCan = "#";
+				$variableCan = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				$variableCan .= "&opcion=eliminarSolicitud";
+				$variableCan .= "&idSolicitud=" . $dato['id'];
+				$variableCan .= "&idObjeto=" . $dato['id'];
+				$variableCan .= "&vigencia=" . $dato['vigencia'];
+				$variableCan .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+				$variableCan .= "&tipoNecesidad=" . $dato['tipo_necesidad'];
+				$variableCan .= "&botonTrue=true";
+				$variableCan .= "&usuario=" . $_REQUEST['usuario'];
+				$variableCan = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableCan, $directorio );
 				$imagenCan = 'canPro.png';
 				
 				
