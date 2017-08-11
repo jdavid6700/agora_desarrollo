@@ -114,40 +114,7 @@ class FormularioRegistro {
 		echo $this->miFormulario->formulario ( $atributos );
 		
 		
-		//------------------Division para los botones-------------------------
-		$atributos["id"]="botones";
-		$atributos["estilo"]="marcoBotones widget";
-		echo $this->miFormulario->division("inicio",$atributos);
 		
-		//******************************************************************************************************************************
-		$variable = "pagina=" . $miPaginaActual;
-		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		
-		if(isset($_REQUEST['paginaOrigen'])){
-			$variable = "pagina=" . $_REQUEST['paginaOrigen'];
-			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		}else{
-			$variable = "pagina=" . $miPaginaActual;
-			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-		}
-		
-		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-		$esteCampo = 'botonRegresar';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['enlace'] = $variable;
-		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
-		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['ancho'] = '10%';
-		$atributos ['alto'] = '10%';
-		$atributos ['redirLugar'] = true;
-		echo $this->miFormulario->enlace ( $atributos );
-		
-		unset ( $atributos );
-		//********************************************************************************************************************************
-		
-		//------------------Fin Division para los botones-------------------------
-		echo $this->miFormulario->division("fin");
 		
 		
 		$datosSolicitudNecesidad = array (
@@ -261,6 +228,44 @@ class FormularioRegistro {
 		$atributos ['tipoEtiqueta'] = 'inicio';
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo ) . " - Solicitud Número # (".$resultadoNecesidadRelacionada[0]['numero_solicitud'].")";
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+		
+		
+		
+		//------------------Division para los botones-------------------------
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones widget";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
+		//******************************************************************************************************************************
+		$variable = "pagina=" . $miPaginaActual;
+		$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		
+		if(isset($_REQUEST['paginaOrigen'])){
+			$variable = "pagina=" . $_REQUEST['paginaOrigen'];
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		}else{
+			$variable = "pagina=" . $miPaginaActual;
+			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
+		}
+		
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+		$esteCampo = 'botonRegresar';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['enlace'] = $variable;
+		$atributos ['tabIndex'] = 1;
+		$atributos ['estilo'] = 'textoSubtitulo';
+		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ['ancho'] = '10%';
+		$atributos ['alto'] = '10%';
+		$atributos ['redirLugar'] = true;
+		echo $this->miFormulario->enlace ( $atributos );
+		
+		unset ( $atributos );
+		//********************************************************************************************************************************
+		
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin");
+		
 		
 
 		// ----------------INICIO CONTROL: Campo de Texto NUM SOLICITUD--------------------------------------------------------

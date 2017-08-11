@@ -124,26 +124,7 @@ class FormularioRegistro {
 			$variable .= "&usuario=" . $_REQUEST['usuario'];
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 			
-			$atributos["id"]="botones";
-			$atributos["estilo"]="marcoBotones widget";
-			echo $this->miFormulario->division("inicio",$atributos);
 			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-			$esteCampo = 'botonRegresar';
-			$atributos ['id'] = $esteCampo;
-			$atributos ['enlace'] = $variable;
-			$atributos ['tabIndex'] = 1;
-			$atributos ['estilo'] = '';
-			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-			$atributos ['ancho'] = '10%';
-			$atributos ['alto'] = '10%';
-			$atributos ['redirLugar'] = true;
-			echo $this->miFormulario->enlace ( $atributos );
-			
-			//------------------Fin Division para los botones-------------------------
-			echo $this->miFormulario->division("fin");
-			
-			unset ( $atributos );
 			
 			
 			
@@ -163,6 +144,28 @@ class FormularioRegistro {
 			$atributos ['tipoEtiqueta'] = 'inicio';
 			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			unset ( $atributos );
+			
+			
+			$atributos["id"]="botones";
+			$atributos["estilo"]="marcoBotones widget";
+			echo $this->miFormulario->division("inicio",$atributos);
+				
+			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['estilo'] = '';
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['ancho'] = '10%';
+			$atributos ['alto'] = '10%';
+			$atributos ['redirLugar'] = true;
+			echo $this->miFormulario->enlace ( $atributos );
+				
+			//------------------Fin Division para los botones-------------------------
+			echo $this->miFormulario->division("fin");
+				
 			unset ( $atributos );
 		
 		
