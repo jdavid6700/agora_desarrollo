@@ -229,7 +229,7 @@ class registrarForm {
 								<th><center>Solicitud</center></th>
 								<th><center>Responder</center></th>
                                 <th><center>Cotización</center></th>
-                                <th><center>Respuesta Ordenador</center></th>".
+                                <th><center>Respuesta Solicitante</center></th>".
 								/*<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>*/
 						   "</tr>
@@ -368,7 +368,7 @@ class registrarForm {
 						
 				}
 				
-				
+
 				
 				$datosConsultaResJef = array (
 						'objeto' => $dato ['id'],
@@ -377,10 +377,10 @@ class registrarForm {
 				$cadena_sql = $this->miSql->getCadenaSql ( "consultarRespuestaOrdenador", $datosConsultaResJef );
 				$validacionResOrd = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 						
-				if ($validacionResOrd [0] [0] != null) {
+				if ($validacionResOrd [0] [0] != null && ($dato ['estado_cotizacion'] == '3' || $dato ['estado_cotizacion'] == '8' )) {
 					$variableRespuestaOrd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 					$variableRespuestaOrd .= "&opcion=verRespuestaOrdenador";
-					$variableRespuestaOrd .= "&idSolicitud=" . $dato ['id_objeto'];
+					$variableRespuestaOrd .= "&idSolicitud=" . $dato ['id'];
 					$variableRespuestaOrd .= "&vigencia=" . $dato ['vigencia'];
 					$variableRespuestaOrd .= "&unidadEjecutora=" . $dato ['unidad_ejecutora'];
 					$variableRespuestaOrd .= "&usuario=" . $_REQUEST ['usuario'];
@@ -402,7 +402,7 @@ class registrarForm {
 						
 				if ($dato ['fecha_cierre'] <= date ( 'Y-m-d' )) {
 				
-					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 7 || $dato ['estado_cotizacion'] == 8) {
+					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 8) {
 						$dato ['estado'] = 'FINALIZADA';
 					} else {
 						$dato ['estado'] = 'EN ESTUDIO';
@@ -412,7 +412,7 @@ class registrarForm {
 					$imagenMod = 'cancel.png';
 				} else if($dato ['fecha_apertura'] < date ( 'Y-m-d' )) {
 				
-					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 7 || $dato ['estado_cotizacion'] == 8) {
+					if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 8) {
 						$dato ['estado'] = 'FINALIZADA';
 					} else {
 						$dato ['estado'] = 'ABIERTA';

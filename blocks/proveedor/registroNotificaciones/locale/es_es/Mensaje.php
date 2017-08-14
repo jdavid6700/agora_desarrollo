@@ -85,8 +85,8 @@ $this->idioma["departamentoExpeRepTitulo"]="Digite Departamento Expedición";
 $this->idioma["paisExpeRep"]="Pais Expedición :";
 $this->idioma["paisExpeRepTitulo"]="Digite Pais Expedición";
 
-$this->idioma["respuesta"] = "Respuesta del Ordenador :";
-$this->idioma["respuestaTitulo"]="Respuesta del Ordenador";
+$this->idioma["respuesta"] = "Respuesta del Solicitante :";
+$this->idioma["respuestaTitulo"]="Respuesta del Solicitante";
 
 
 $this->idioma["marcoExp"] = "Documento de Identificación";
@@ -376,6 +376,7 @@ $this->idioma["marcoPersona"] = "Información de la Persona";
 $this->idioma["marcoEmpresa"] = "Información de la Persona";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
 $this->idioma["marcoInfoCont"] = "Información de la Persona";
+$this->idioma["marcoInfoContPer"] = "Información de los Responsables";
 
 
 

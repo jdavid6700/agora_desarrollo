@@ -28,6 +28,19 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "buscarUsuarioDoc" : // ****************************************************************************
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " *";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " prov_usuario";
+				$cadenaSql .= " WHERE identificacion = '" . $variable . "'";
+				break;
+			
+			case "informacionPersonaOrdenador" :
+				$cadenaSql = " SELECT *";
+				$cadenaSql .= " FROM agora.informacion_proveedor WHERE estado = 1 AND num_documento = ".$variable.";";
+				break;
+			
 			case "buscarUnidadItem" :
 				$cadenaSql = " SELECT *";
 				$cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id = ".$variable.";";
@@ -112,6 +125,16 @@ class Sql extends \Sql {
 				$cadenaSql .= " GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
 				$cadenaSql .= " ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
 				break;
+				
+				case "ordenadorUdistritalByIdCastDoc" :
+					$cadenaSql = " SELECT DISTINCT ON (CR.id) CR.id , ( UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin, JD.tercero_id";
+					$cadenaSql .= " FROM core.ordenador_gasto CR";
+					$cadenaSql .= " JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+					$cadenaSql .= " JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+					$cadenaSql .= " WHERE CR.id = " . $variable;
+					$cadenaSql .= " GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+					$cadenaSql .= " ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+					break;
 			
 			case "dependenciaUdistritalById" :
 				$cadenaSql = " SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre)) as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
@@ -125,10 +148,10 @@ class Sql extends \Sql {
 			/* LISTA - DEPENDENCIA */
 			case "buscarDependencia" :
 				$cadenaSql = "SELECT";
-				$cadenaSql .= "	dependencia";
+				$cadenaSql .= "	*";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.parametro_dependencia";
-				$cadenaSql .= " WHERE id_dependencia = " . $variable;
+				$cadenaSql .= " core.jefe_dependencia";
+				$cadenaSql .= " WHERE id = " . $variable;
 				break;
 			
 			case "listarObjetosParaCotizacion" :
@@ -140,10 +163,18 @@ class Sql extends \Sql {
 				break;
 			
 			case "consultar_DatosRespuestaOrdenador" :
-				$cadenaSql = " SELECT respuesta, decision  ";
+				$cadenaSql = " SELECT *  ";
 				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.respuesta_cotizacion_ordenador";
-				$cadenaSql .= " WHERE id_objeto=" . $variable ['objeto'] . " AND id_solicitud=" . $variable ['solicitud'];
+				$cadenaSql .= " agora.respuesta_cotizacion_solicitante";
+				$cadenaSql .= " WHERE solicitud_cotizacion = " . $variable ['solicitud'];
+				
+				break;
+				
+			case "consultar_DatosRespuestaOrdenadorResultado" :
+				$cadenaSql = " SELECT *  ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.resultado_cotizacion";
+				$cadenaSql .= " WHERE id = " . $variable;
 				
 				break;
 			
@@ -668,7 +699,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " * ";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.objeto_cotizacion";
-				$cadenaSql .= " WHERE  id_objeto=" . $variable;
+				$cadenaSql .= " WHERE  id = " . $variable;
 				// Activo
 				break;
 			case "consultarIdsolicitud" : // ********************************************************************

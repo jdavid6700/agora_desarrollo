@@ -109,8 +109,6 @@ class FormularioRegistro {
 
 
 
-
-
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
             $esteCampo = "marcoContratos";
             $atributos ['id'] = $esteCampo;
@@ -150,25 +148,30 @@ class FormularioRegistro {
            
             
 
+            $cadenaSql = $this->miSql->getCadenaSql ( 'informacionSolicitudAgoraNoCast', $_REQUEST['idSolicitud'] );
+            $solicitudCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+            
+            $cadenaSql = $this->miSql->getCadenaSql ( 'dependenciaUdistritalById', $solicitudCotizacion[0]['jefe_dependencia'] );
+            $resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+            	
+            $cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalByIdCastDoc', $solicitudCotizacion[0]['ordenador_gasto'] );
+            $resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-            $cadenaSql = $this->miSql->getCadenaSql('buscarUsuario', $resultadoOrdenadorInfo[0]['responsable']);
+
+            
+            $cadenaSql = $this->miSql->getCadenaSql('buscarUsuario', $resultadoOrdenadorInfo[0]['usuario_creo']);
             $resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
-            $cadenaSql = $this->miSql->getCadenaSql('buscarDependencia', $resultadoOrdenadorInfo[0]['dependencia']);
-            $resultadoOrdenadoDep = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
-            $cadenaSql = $this->miSql->getCadenaSql('buscarsolicitante', $resultadoOrdenadorInfo[0]['id_solicitante']);
-            $resultadoOrdenadoSol = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-            
-            
-            
-            
+           
 
-            $nombreOrdenador = $resultadoUsuario[0]['nombre'];
-            $apellidoOrdenador = $resultadoUsuario[0]['apellido'];
-            $identificacionOrdenador = $resultadoUsuario[0]['identificacion'];
-            $dependenciaOrdenador = $resultadoOrdenadoDep[0][0];
-            $solicitanteOrdenador = $resultadoOrdenadoSol[0][1];
+            $cadenaSql = $this->miSql->getCadenaSql ( 'informacionPersonaOrdenador', $resultadoOrdenador[0]['tercero_id'] );
+            $datoAgoraOrdenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+            $cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuarioDoc', $resultadoOrdenador[0]['tercero_id'] );
+            $datoAgoraOrdenadorFrame = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+            
+            $nombreOrdenador = $datoAgoraOrdenadorFrame[0]['nombre'];
+            $apellidoOrdenador = $datoAgoraOrdenadorFrame[0]['apellido'];
+            $identificacionOrdenador = $resultadoOrdenador[0]['tercero_id'];
             
             
             $numeroDocumento = $resultadoDoc[0]['identificacion'];
@@ -189,7 +192,7 @@ class FormularioRegistro {
             $direccion = $resultadoDats[0]['direccion'];
 
 
-            $esteCampo = "marcoInfoCont";
+            $esteCampo = "marcoInfoContPer";
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";
             $atributos ['tipoEtiqueta'] = 'inicio';
@@ -204,10 +207,12 @@ class FormularioRegistro {
                 echo "<span class='textoElegante textoGrande textoGris'>" . $apellidoOrdenador . "</span></br>";
                 echo "<span class='textoElegante textoGrande textoAzul'>Identificacion : </span>";
                 echo "<span class='textoElegante textoGrande textoGris'>" . $identificacionOrdenador . "</span></br>";
+                echo "<span class='textoElegante textoGrande textoAzul'>Cargo : </span>";
+                echo "<span class='textoElegante textoGrande textoGris'>" . $resultadoOrdenador[0]['ordenador'] . "</span></br>";
                 echo "<span class='textoElegante textoGrande textoAzul'>Dependencia Solicitante : </span>";
-                echo "<span class='textoElegante textoGrande textoGris'>" . $dependenciaOrdenador . "</span></br>";
+                echo "<span class='textoElegante textoGrande textoGris'>" . $resultadoDependencia[0]['jefe'] . "</span></br>";
                 echo "<span class='textoElegante textoGrande textoAzul'>Solicitante : </span>";
-                echo "<span class='textoElegante textoGrande textoGris'>" . $solicitanteOrdenador . "</span></br>";
+                echo "<span class='textoElegante textoGrande textoGris'>" . $resultadoUsuario[0]['nombre']." ". $resultadoUsuario[0]['apellido'] . "</span></br>";
                 //FIN INFORMACION
             }
             echo $this->miFormulario->marcoAgrupacion('fin', $atributos);
@@ -233,15 +238,18 @@ class FormularioRegistro {
 //        
         $cadenaSql = $this->miSql->getCadenaSql('consultarIdsolicitud', $datosConsultaSol);
         $id_solicitud= $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosConsultaSol, 'consultarIdsolicitud');
-        
+ 
             $datosConsultaRes = array(
-            'solicitud' =>$id_solicitud[0][0],
-            'objeto' => $_REQUEST['idSolicitud']
+            	'solicitud' =>$id_solicitud[0][0],
+            	'objeto' => $_REQUEST['idSolicitud']
             );
 
             $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosRespuestaOrdenador', $datosConsultaRes);
             $resultadoDatosRes = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
             
+            
+            $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosRespuestaOrdenadorResultado', $resultadoDatosRes[0]['resultado']);
+            $resultadoDatosResCas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
           
 
             $esteCampo = "marcoDatosSolicitudCot";
@@ -264,7 +272,7 @@ class FormularioRegistro {
             $atributos ['tabIndex'] = $tab;
             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
 
-            $atributos ['valor'] = $resultadoDatosRes[0][1];
+            $atributos ['valor'] = $resultadoDatosResCas[0]['nombre'];
 
             $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
             $atributos ['deshabilitado'] = true;
@@ -328,7 +336,7 @@ class FormularioRegistro {
                 $atributos ['anchoEtiqueta'] = 220;
                 $atributos ['textoEnriquecido'] = true; //Este atributo se coloca una sola vez en todo el formulario (ERROR paso de datos)
 
-                    $atributos ['valor'] = $resultadoDatosRes[0][0];
+                    $atributos ['valor'] = $resultadoDatosRes[0]['respuesta'];
             
                 $tab ++;
 
