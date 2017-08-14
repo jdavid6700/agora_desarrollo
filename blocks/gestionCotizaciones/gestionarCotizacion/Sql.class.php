@@ -101,6 +101,16 @@ class Sql extends \Sql {
 				$cadenaSql .= " solicitud_cotizacion IN ( " . $variable . ") AND resultado = 1;";
 				break;
 				
+				case "buscarSolicitudesXCotizacionSolicitanteSinResponder" :
+					$cadenaSql = " SELECT ";
+					$cadenaSql .= " * ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.solicitud_cotizacion SC ";
+					$cadenaSql .= " LEFT JOIN agora.respuesta_cotizacion_solicitante RCS ON RCS.solicitud_cotizacion = SC.id";
+					$cadenaSql .= " WHERE ";
+					$cadenaSql .= " SC.objeto_cotizacion = " . $variable . " AND RCS.id IS NULL;";
+					break;
+				
 			case "buscarUnidadItem" :
 				$cadenaSql = " SELECT *";
 				$cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id = ".$variable.";";
@@ -383,7 +393,8 @@ class Sql extends \Sql {
 				$cadenaSql.=" FROM";
 				$cadenaSql.=" agora.solicitud_cotizacion S";
 				$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.proveedor";
-				$cadenaSql.=" WHERE  S.objeto_cotizacion = " . $variable;
+				$cadenaSql.=" LEFT JOIN agora.respuesta_cotizacion_solicitante RCS ON RCS.solicitud_cotizacion = S.id";
+				$cadenaSql.=" WHERE  S.objeto_cotizacion = " . $variable . "AND RCS.id IS NULL";
 				break;
 			
 			case "consultarSolicitudxProveedorRes" :

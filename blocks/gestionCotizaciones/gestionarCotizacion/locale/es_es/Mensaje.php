@@ -70,7 +70,7 @@ $this->idioma["objetoNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
 
 $this->idioma["marcoDatosRelacionada"]="Solicitudes de Cotización Generadas Relacionadas";
 $this->idioma["marcoDatosCotizacion"]="Gestión de Solicitudes de Cotización Generadas";
-$this->idioma["marcoDatosCotizacionEliminar"]="Borrar Solicitud de Cotización";
+$this->idioma["marcoDatosCotizacionEliminar"]="Cancelar Solicitud de Cotización";
 $this->idioma["marcoDatosCotizacionEliminarTex"]="Solicitud de Cotización";
 
 $this->idioma["marcoDatosCotizacionList"]="Solicitudes de Cotización Generadas";
@@ -215,9 +215,9 @@ $this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vige
 
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 
-$this->idioma["tabConsultar"] = "Solicitar Cotización";
-$this->idioma["tabConsultarMen"] = "Solicitar (Cotización / Convocatoria)";
-$this->idioma["tabConsultarConv"] = "Solicitar Cotización";
+$this->idioma["tabConsultar"] = "Generar Cotización";
+$this->idioma["tabConsultarMen"] = "Generar (Cotización / Convocatoria)";
+$this->idioma["tabConsultarConv"] = "Generar Cotización";
 
 $this->idioma["tabCotizacion"] = "Estado (Cotización / Convocatoria)";
 $this->idioma["tabActividad"] = "Actividades Económicas";

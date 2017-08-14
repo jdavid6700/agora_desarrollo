@@ -160,7 +160,7 @@ class Formulario {
 								<th><center>Modificar</center></th>
 								<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>
-								<th><center>Borrar</center></th>
+								<th><center>Cancelar</center></th>
 							</tr>
 							</thead>
 							<tbody>";

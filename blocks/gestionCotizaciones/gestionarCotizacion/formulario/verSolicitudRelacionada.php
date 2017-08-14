@@ -347,7 +347,7 @@ class FormularioRegistro {
 		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 		
-		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $resultadoNecesidadRelacionada[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		

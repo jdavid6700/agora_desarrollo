@@ -259,7 +259,7 @@ class FormularioRegistro {
 		$tipo = 'warning';
 		$mensaje =  "<b>IMPORTANTE</b><br>
 							<br>
-							Esta seguro que desea eliminar la Solicitud de Cotización <b>(".$solicitudCotizacion[0]['numero_solicitud'].")</b> registrada en la fecha <b>(".$this->cambiafecha_format($solicitudCotizacion[0]['fecha_registro']).")</b>.<br>
+							Esta seguro que desea cancelar la Solicitud de Cotización <b>(".$solicitudCotizacion[0]['numero_solicitud'].")</b> registrada en la fecha <b>(".$this->cambiafecha_format($solicitudCotizacion[0]['fecha_registro']).")</b>.<br>
 							Recuerde que no se puede recuperar la información.
 							";
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------

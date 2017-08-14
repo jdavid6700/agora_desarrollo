@@ -244,14 +244,16 @@ class FormularioRegistro {
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 		
 		
-		
-		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'solicitudesXCotizacion', $solicitudCotizacion[0]['id'] );
 		$solicitudIndividualesCotizacion = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 	
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitudesXCotizacionSolicitante', $solicitudIndividualesCotizacion[0][0] );
 		$solicitudIndividualesCotizacionSolicitante = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarSolicitudesXCotizacionSolicitanteSinResponder', $solicitudCotizacion[0]['id'] );
+		$solicitudIndividualesCotizacionExiste = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
 		
 		if($solicitudIndividualesCotizacionSolicitante){
 			$existeSeleccionado = true;
@@ -281,7 +283,7 @@ class FormularioRegistro {
 				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
 			
-		}else{
+		}else if ($solicitudIndividualesCotizacionExiste){
 			$existeSeleccionado = false;
 			
 				$tipo = 'information';
@@ -302,6 +304,28 @@ class FormularioRegistro {
 				$atributos ["mensaje"] = $mensaje;
 				echo $this->miFormulario->cuadroMensaje ( $atributos );
 				unset ( $atributos );
+			
+		}else{
+			$existeSeleccionado = true;
+			
+			$tipo = 'warning';
+			$mensaje = "<b>ESTADO SOLICITUD:</b> Ningún Proveedor fue Seleccionado<br>
+							<br>
+							No se ha seleccionado a un <b>Proveedor</b> para la presente <b>Solicitud de Cotización (" . $_REQUEST ['idSolicitud'] . " - " . $solicitudCotizacion [0] ['vigencia'] . ") </b>:<br>" .
+			
+										"<br>A continuación
+							indique la justificación de su decisión, la cual podrá ser observada por el Ordenador del Gasto responsable. Gracias
+							";
+			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+			$esteCampo = 'mensaje';
+			$atributos ["id"] = $esteCampo; // Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+			$atributos ["etiqueta"] = "";
+			$atributos ["estilo"] = "centrar";
+			$atributos ["tipo"] = $tipo;
+			$atributos ["mensaje"] = $mensaje;
+			echo $this->miFormulario->cuadroMensaje ( $atributos );
+			unset ( $atributos );
+			
 			
 		}
 		
