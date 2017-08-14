@@ -167,9 +167,9 @@ $this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vige
 
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 
-$this->idioma["tabConsultar"] = "Solicitar Cotización";
-$this->idioma["tabConsultarMen"] = "Solicitar (Cotización / Convocatoria)";
-$this->idioma["tabConsultarConv"] = "Solicitar Cotización";
+$this->idioma["tabConsultar"] = "Generar Cotización";
+$this->idioma["tabConsultarMen"] = "Generar (Cotización / Convocatoria)";
+$this->idioma["tabConsultarConv"] = "Generar Cotización";
 
 $this->idioma["tabCotizacion"] = "Estado (Cotización / Convocatoria)";
 $this->idioma["tabActividad"] = "Actividades Económicas";
@@ -239,7 +239,7 @@ $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["continuar"] = "Continuar";
 $this->idioma["botonAceptar"] = "Aceptar";
 $this->idioma["botonRegistrar"] = "Registrar";
-$this->idioma["botonRegistrarSol"] = "Solicitar";
+$this->idioma["botonRegistrarSol"] = "Generar";
 $this->idioma["botonCancelar"] = "Cancelar";
 $this->idioma["noDefinido"] = "No definido";
 ///////////////////////////////////////////////////////
