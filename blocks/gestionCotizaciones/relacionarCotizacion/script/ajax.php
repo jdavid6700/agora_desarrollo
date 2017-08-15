@@ -249,7 +249,7 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		    				$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#DDDDDD');
 		    		
 		    			if( $.isNumeric($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val()) && 
-		    			    $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() < 100){
+		    			    $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() <= 100){
 		    			
 		    				$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").css('border-color','#DDDDDD');
 
