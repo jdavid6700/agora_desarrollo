@@ -162,10 +162,10 @@ class Registrar {
 		
 		
 		$datosTextoEnriquecido = array (
-				'objetivos' => $objetivos,
-				'requisitos' => $requisitos,
-				'observaciones' => $observaciones,
-				'plan' => $plan
+				'objetivos' => str_replace("'", "\"", $objetivos), //Limpieza Comilla Simple para evitar Errores En Ejecución Base de Datos
+				'requisitos' => str_replace("'", "\"", $requisitos),
+				'observaciones' => str_replace("'", "\"", $observaciones),
+				'plan' => str_replace("'", "\"", $plan)
 		);
 		/*--------------------------------------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
