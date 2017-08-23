@@ -200,9 +200,13 @@ class Formulario {
 		
 		$tipo = 'success';
 		if($convocatoria){
-			$mensaje =  "Estado del Objeto a Contratar: ".$estadoCotizacionArq.".<br> Los Proveedores Interesados han sido informados. <br>";
+			$mensaje =  "Estado del Objeto a Contratar: ".$estadoCotizacionArq.".<br> La Solicitud de Cotización ya ha sido Cerrada. <br>
+						<br>
+						El Proveedor que fue <b>Seleccionado</b> aparece resaltado en color amarillo en la siguiente Lista.";
 		}else{
-			$mensaje =  "Estado del Objeto a Contratar: ".$estadoCotizacionArq.".<br> Los Proveedores Interesados han sido informados. <br>";
+			$mensaje =  "Estado del Objeto a Contratar: ".$estadoCotizacionArq.".<br> La Solicitud de Cotización ya ha sido Cerrada. <br>
+						<br>
+						El Proveedor que fue <b>Seleccionado</b> aparece resaltado en color amarillo en la siguiente Lista.";
 		}
 		$boton = "regresar";
 		
@@ -424,6 +428,7 @@ class Formulario {
 			
 			echo "</tbody>";
 			echo "</table>";
+			
 				
 			echo $this->miFormulario->marcoAgrupacion ( 'fin');
 				
@@ -578,20 +583,21 @@ class Formulario {
 				$variableViewPro = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewPro, $directorio );
 				$imagenViewPro = 'verPro.png';
 					
+				
+				if($dato['id_proveedor'] == $objetoEspecifico[0]['informacion_proveedor']){
+					echo '<tr style="background-color:#D7DF01;">';
+				}else{
+					echo '<tr>';
+				}
 					
-					
-			
-					
-				$mostrarHtml = "<tr>
+				$mostrarHtml = "
 									<td><center>" . $dato['num_documento'] . "</center></td>
 									<td><center>" . $dato['nom_proveedor'] . "</center></td>
 									<td><center>" . $dato['tipopersona'] . "</center></td>
 									<td><center>" . $dato['direccion'] . "</center></td>
 									<td><center>" . $dato['web'] . "</center></td>
 								    <td><center>" . $dato['correo'] . "</center></td>
-									<td><center>" . $dato['ubicacion'] . "</center></td>"
-														/*<td><center>" . $dato['puntaje_evaluacion'] . "</center></td>
-														 <td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>*/."
+									<td><center>" . $dato['ubicacion'] . "</center></td>
 									<td><center>" . $estadoRes . "</center></td>
 									<td><center>
 										<a href='" . $variableViewPro . "'>
@@ -615,6 +621,39 @@ class Formulario {
 			
 			echo "</tbody>";
 			echo "</table>";
+			
+			$esteCampo = "justificacion";
+			$atributos ['id'] = $esteCampo;
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['tipo'] = 'text';
+			$atributos ['estilo'] = 'jqueryui';
+			$atributos ['marco'] = true;
+			$atributos ['estiloMarco'] = '';
+			$atributos ["etiquetaObligatorio"] = true;
+			$atributos ['columnas'] = 120;
+			$atributos ['filas'] = 8;
+			$atributos ['dobleLinea'] = 0;
+			$atributos ['tabIndex'] = $tab;
+			$atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+			$atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+			$atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+			$atributos ['deshabilitado'] = true;
+			$atributos ['tamanno'] = 20;
+			$atributos ['maximoTamanno'] = '';
+			$atributos ['anchoEtiqueta'] = 220;
+			$atributos ['textoEnriquecido'] = true;
+			
+			$atributos ['valor'] = $objetoEspecifico[0]['justificacion_seleccion'];
+			
+			
+			$tab ++;
+			
+			// Aplica atributos globales al control
+			$atributos = array_merge($atributos, $atributosGlobales);
+			echo $this->miFormulario->campoTextArea($atributos);
+			unset($atributos);
+			
+			
 				
 			echo $this->miFormulario->marcoAgrupacion ( 'fin');
 				

@@ -525,6 +525,40 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    } else if ($_REQUEST['mensaje'] == 'respondioCotizacionOrdenador') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+    	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	//Buscar usuario para enviar correo
+    	$cadenaSql = $this->sql->getCadenaSql('buscarProveedores', $_REQUEST['idObjeto']);
+    	$resultadoProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	//Buscar usuario para enviar correo
+    	$cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
+    	$objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+    	
+    	$hoy = date("d/m/Y");
+    	
+    	if($_REQUEST['estado'] == '3'){
+    		$dec = "COTIZACIÓN APROBADA";
+    	}else{
+    		$dec = "COTIZACIÓN RECHAZADA";
+    	}
+    	
+        $tipo = 'success';
+        $mensaje = "Se proceso satisfactoriamente la Cotización <b>(".$objetoEspecifico[0]['numero_solicitud'].")</b>.<br>
+        		<br>
+        		<b>Fecha de Procesamiento Ordenador:</b> ".$hoy."
+        		<br>
+        		<b>Decisión:</b> ".$dec."
+        		";
+        $boton = "continuar";
+
+        $valorCodificado = "pagina=" . $esteBloque['nombre'];
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     }
 
 

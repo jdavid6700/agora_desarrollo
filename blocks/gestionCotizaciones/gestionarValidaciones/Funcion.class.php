@@ -52,6 +52,9 @@ class Funcion {
 	function responderCotizacionGen() {
 		include_once ($this->ruta . "/funcion/responderCotizacionGen.php");
 	}
+	function responderCotizacionOrdenador() {
+		include_once ($this->ruta . "/funcion/responderCotizacionOrdenador.php");
+	}
 	function registrarActividad() {
 		include_once ($this->ruta . "/funcion/registrarActividad.php");
 	}
@@ -164,6 +167,10 @@ class Funcion {
 				
 				case 'registrarRespuestaCotGen' :
 					$this->responderCotizacionGen ();
+					break;
+					
+				case 'registrarRespuestaOrdenador' :
+					$this->responderCotizacionOrdenador ();
 					break;
 				
 				case "resumen" :

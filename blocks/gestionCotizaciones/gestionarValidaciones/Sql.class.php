@@ -28,6 +28,27 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case 'validacionObjetoCotizacion' :
+				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
+				$cadenaSql .= "estado_cotizacion = '". $variable ['estado']."' ";
+				$cadenaSql .= " WHERE id = ";
+				$cadenaSql .= "'" . $variable ['objeto'] . "' ";
+				break;
+			
+			case "validacionOrdenador" :
+				$cadenaSql = " INSERT INTO agora.validacion_ordenador";
+				$cadenaSql .= " (";
+				$cadenaSql .= " objeto_cotizacion,";
+				$cadenaSql .= " observaciones";
+				$cadenaSql .= " )";
+				$cadenaSql .= " VALUES";
+				$cadenaSql .= " (";
+				$cadenaSql .= " " . $variable ['objeto'] . ",";
+				$cadenaSql .= " '" . $variable ['observaciones'] . "'";
+				$cadenaSql .= " )";
+				$cadenaSql .= " ;";
+				break;
+			
 			case "listarObjetosParaCotizacionByOrdenador" :
 				$cadenaSql=" SELECT ";
 				$cadenaSql.=" * ";

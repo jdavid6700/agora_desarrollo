@@ -108,7 +108,7 @@ $("#gestionarCotizacionRegistrar").validationEngine({
     updatePromptsPosition:false
 });
 
-$("#gestionarCotizacion").validationEngine({
+$("#gestionarValidaciones").validationEngine({
 	validateNonVisibleFields: true,
 	promptPosition : "inline", 
 	scroll: true,

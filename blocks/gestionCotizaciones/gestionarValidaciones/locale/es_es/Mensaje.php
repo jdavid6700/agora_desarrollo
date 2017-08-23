@@ -7,8 +7,8 @@ $this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
 
 $this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
 
-$this->idioma["observaciones"] = "Observaciones Adicionales : ";
-$this->idioma["observacionesTitulo"]="Observaciones Adicionales";
+$this->idioma["observaciones"] = "Observaciones Ordenador : ";
+$this->idioma["observacionesTitulo"]="Observaciones Ordenador";
 
 
 $this->idioma["entregables"] = "Entregables : *";
