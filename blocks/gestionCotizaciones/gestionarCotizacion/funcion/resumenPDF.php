@@ -9,6 +9,11 @@ $ruta=$this->miConfigurador->getVariableConfiguracion('raizDocumento');
 //include($ruta.'/core/classes/html2pdf/html2pdf.class.php');
 include($ruta.'/plugin/html2pdf/html2pdf.class.php');
 
+include($ruta.'/plugin/NumberToLetterConverter.class.php');
+
+$converterNumber = new NumberToLetterConverter();
+
+
 //$directorio=$this->miConfigurador->getVariableConfiguracion("rutaUrlBloque");
 $directorio=$this->miConfigurador->getVariableConfiguracion("rutaBloque");
 $aplicativo=$this->miConfigurador->getVariableConfiguracion("nombreAplicativo");
@@ -104,7 +109,7 @@ if($resultadoObjeto[0]['tipo_necesidad'] == 2 || $resultadoObjeto[0]['tipo_neces
 	
 	$contentConv = "
 						<tr>
-			                <td align='center' style='width:20%;background:#BDD6EE'>
+			                <td align='center' style='width:20%;background:#BDD6EE;'>
 			                    <b>Profesión Relacionada (Núcleo Básico de Conocimiento SNIES)</b>
 			                </td>
 			                <td align='left' style='width:80%;'>		
@@ -120,6 +125,7 @@ if($resultadoObjeto[0]['tipo_necesidad'] == 2 || $resultadoObjeto[0]['tipo_neces
 	$titulo = "INFORMACIÓN DE LA SOLICITUD DE COTIZACIÓN";
 }
 
+setlocale(LC_MONETARY,"es_CO");
 
 $contenidoAct = '';
 
@@ -128,51 +134,155 @@ foreach ($resultadoActividades as $dato):
 	$contenidoAct .= "<br>";
 endforeach;
 
-$listProv = "";
+$totalCotizacion = 0;
+$countTotal = 0;
 
+$listProv = "";
 
 if($resultadoProveedor && isset($_REQUEST['proveedoresView']) && $_REQUEST['proveedoresView'] == 'true'){
 
-	$listProv .= "<table align='center' class=MsoTableGrid border=1 cellspacing=5 cellpadding=5
-    style='width:100%;border-collapse:collapse;border:none;'>
+	$listProv .= "<table align='center' style='width:100%;' border=0.2 cellspacing=0 >
 
-            <tr>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Documento</b>
-                </td>
-				<td align='center' style='background:#BDD6EE'>
-                    <b>Tipo</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Proveedor</b>
-                </td>
-                <td align='center' style='background:#BDD6EE'>
-                    <b>Correo</b>
-                </td>
-            </tr>";
+            <thead>
+			  <tr>
+				<th align='center' style='width:20%;'>
+                    <b>Nombre</b>
+                </th>
+                <th align='center' style='width:30%;'>
+                    <b>Condiciones Ofrecidas</b>
+                </th>
+                <th align='center' style='width:30%;'>
+                    <b>Objeto</b>
+                </th>
+				<th align='center' style='width:20%;'>
+                    <b>Valor Ofrecido</b>
+                </th>
+			  </tr>
+            </thead>
+			<tbody>";
 
 	foreach ($resultadoProveedor as $dato):
+	
+	$datosSC = array (
+			'id' => $resultadoObjeto[0]['id'],
+			'proveedor' => $dato['id_proveedor']
+	);
+	$cadenaSql = $this->sql->getCadenaSql ( 'informacionRespuestaPDFCotizacion', $datosSC  );
+	$resultadoRespuestaCot = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	
+	if($resultadoRespuestaCot){
+		
+		$count = count($resultadoRespuestaCot);
+		$totalItem = 0;
+		$i = 0;
+		
+		while ($i < $count){
+			
+			$totalItem += ((float)$resultadoRespuestaCot[$i]['cantidad'] * (float)$resultadoRespuestaCot[$i]['valor_unitario']);
+			$i++;
+		}
+		
+		$totalCotizacion += $totalItem;
+		$totalItem = money_format('%#15.0n', $totalItem);
+		$countTotal++;
+		
+		if($resultadoRespuestaCot[0]['descuentos'] == null){
+			$resultadoRespuestaCot[0]['descuentos'] = "NO APLICA";
+		}
+		
+		if($resultadoRespuestaCot[0]['observaciones'] == null){
+			$resultadoRespuestaCot[0]['observaciones'] = "SIN OBSERVACIONES";
+		}
+		
+		$listProv .= "
+            <tr>
+                <td rowspan='3' align='center' style='width:20%;' >
+                    <b>" . $dato['nom_proveedor'] . "</b>
+                </td>
+                <td align='center' style='width:30%;' >
+                    " . $resultadoRespuestaCot[0]['informacion_entrega'] . "
+                </td>
+                <td rowspan='3' align='center' style='width:30%;' >
+                    " . $resultadoRespuestaCot[0]['des_sc'] . " 		
+                </td>                    		
+				<td rowspan='3' align='center' style='width:20%;' >
+                    " . $totalItem . "
+                </td>
+            </tr>
+                    		
+            <tr>
+    			<td align='center' style='width:30%;'>
+                    <b>(Descuentos)</b><br> " . $resultadoRespuestaCot[0]['descuentos'] . " 		
+                </td> 
+  			</tr>
+  			<tr>
+    			<td align='center' style='width:30%;'>
+                    <b>(Observaciones)</b><br> " . $resultadoRespuestaCot[0]['observaciones'] . " 		
+                </td> 
+  			</tr>";
+		
+	}else{
+		
+		$listProv .= "
+            <tr>
+                 <td align='center' style='width:20%;' >
+                    <b>" . $dato['nom_proveedor'] . "</b>
+                </td>
+                <td align='center' style='width:30%;' >
+                    " . "SIN RESPUESTA" . "
+                </td>
+                <td align='center' style='width:30%;' >
+                    " . "SIN RESPUESTA" . "
+                </td>
+				<td align='center' style='width:20%;' >
+                    " . "NO APLICÓ" . "
+                </td>
+            </tr>";
+		
+	}
+	
+	
+	endforeach;
+	
 	$listProv .= "
             <tr>
-                <td align='center' >
-                    " . $dato['num_documento'] . "
+                <td align='right' colspan='3' style='background:#B4B4B4;' >
+                    " . "VALOR PROMEDIO" . "
                 </td>
-                 <td align='center' >
-                    " . " ". $dato['tipopersona'] . " " . "
+				<td align='center' >
+                    " . money_format('%#15.0n', (int)($totalCotizacion/$countTotal)) . "
                 </td>
-                <td align='center' >
-                    " . $dato['nom_proveedor'] . "
-                </td>
-                <td align='center' >
-                    " . $dato['correo'] . "
-                </td>
-
-
-
-            </tr>";
-	endforeach;
-
-	$listProv .= "</table></div>";
+            </tr>
+            </tbody>";
+	
+	
+	$promedio = ($totalCotizacion/$countTotal);
+	if($promedio > 999999999 && $promedio <= 999999999999){
+		
+		$restCast = substr((int)$promedio, -9);
+		$rest = str_replace ( $restCast , "" , (int)$promedio );
+		$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+		
+		if ($rest == '001') {
+			$converted = 'MIL ';
+		} else if (intval($rest) > 0) {
+			$converted = sprintf('%sMIL ', $converterNumber->convertGroup($rest));
+		}
+		
+		$converted .= $converterNumber->to_word($restCast, 'COP');
+	}else{
+		$converted = $converterNumber->to_word($promedio, 'COP');
+	}
+	
+	$dineroCast = $converted;
+	
+	$listProv .= "</table>
+			
+			<p>
+			<b>VALOR PROMEDIO EN LETRAS:</b> ".$dineroCast."
+			</p>
+			
+			</div>";
 
 }else{
 
@@ -184,7 +294,57 @@ if($resultadoProveedor && isset($_REQUEST['proveedoresView']) && $_REQUEST['prov
 }
 
 
-$contenidoPagina = "<page backtop='10mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
+$contenidoPagina = "
+		
+		
+		
+		<style>
+			
+
+table {
+  background-color: white;
+  padding: 1em;
+  &, * {
+    border-color: #27ae60;
+    }
+  th {
+    text-transform: uppercase;
+    font-weight: 300;
+    text-align: center;
+    color: white;
+    background-color: #27ae60;
+    position: relative;
+    &:after {
+      content: '';
+      display: block;
+      height: 5px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background-color: #16a085;
+      position: absolute;
+      }
+    }
+  }
+
+#credits {
+  text-align: right;
+  color: white;
+  a {
+    color: #16a085;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+      }
+    }
+  }
+		
+		</style>
+		
+		
+		
+		
+		<page backtop='10mm' backbottom='10mm' backleft='20mm' backright='20mm'>";
     
     $contenidoPagina .= "
 
@@ -218,7 +378,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
  
 
 			<tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Número de Solicitud de Cotización - Vigencia</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -226,7 +386,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Fecha Solicitud</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -235,7 +395,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
             </tr>
                     	
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Título Cotización</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -243,7 +403,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Actividad Económica</b>
                 </td>
                 <td align='left' style='width:80%;'>		
@@ -253,7 +413,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
             . $contentConv . 
 
  <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Fecha Apertura</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -262,7 +422,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
             </tr>
 
  <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Fecha Cierre</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -270,7 +430,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>       		
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Objetivos/Temas</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -278,7 +438,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>  
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Requisitos</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -286,7 +446,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>
 			<tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Observaciones Adicionales</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -294,7 +454,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Solicitante</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -302,7 +462,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>        		
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Dependencia Solicitante</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -310,7 +470,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 </td>
             </tr>
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;'>
                     <b>Responsable de la Cotización</b>
                 </td>
                 <td align='left' style='width:80%;'>
@@ -327,13 +487,14 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
 <p class=MsoNormal align=center style='text-align:center'><span
 style='font-size:12.0pt;mso-bidi-font-size:11.0pt;line-height:107%'> &nbsp; </span></p>
 
-<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
+<div>"
+    ."<p class=MsoNormal align=center style='text-align:center'><b style='mso-bidi-font-weight:
 normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
-107%'>PROVEEDORES RELACIONADOS</span></b></p>
-
-<div align=center>"
-                    . $listProv .		
-   "<page_footer>
+107%'>PROVEEDORES RELACIONADOS</span></b></p>"                		
+                    		
+                    . $listProv . 		
+   "          		
+  	<page_footer>
         <table align='center' width = '100%'>
 
             <tr>
