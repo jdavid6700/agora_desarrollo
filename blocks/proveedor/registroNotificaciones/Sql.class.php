@@ -64,6 +64,16 @@ class Sql extends \Sql {
 				$cadenaSql = " SELECT id, nombre";
 				$cadenaSql .= " FROM administrativa.tipo_necesidad WHERE estado = TRUE AND id != 3;";
 				break;
+				
+			case "tipoNecesidadAdministrativaOnlyBien" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM administrativa.tipo_necesidad WHERE id = 1;";
+				break;
+				
+			case "tipoNecesidadAdministrativaOnlyServicio" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM administrativa.tipo_necesidad WHERE id = 2;";
+				break;
 			
 			case "unidadUdistrital" :
 				$cadenaSql = " SELECT id, unidad";

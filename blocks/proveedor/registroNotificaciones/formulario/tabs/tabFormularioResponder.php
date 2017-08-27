@@ -164,23 +164,25 @@ class FormularioRegistro {
                 echo "<span class='textoElegante textoGrande textoAzul'>Correo : </span>";
                 echo "<span class='textoElegante textoGrande textoGris'>" . $correo . "</span></br>";
                 //FIN INFORMACION
+                
+                
             }
             echo $this->miFormulario->marcoAgrupacion('fin', $atributos);
-			
-            
-            $_REQUEST['tipoCotizacion'] = "BIENES Y SERVICIOS";
-            
             
             if (isset($_REQUEST['tipoCotizacion']) && $_REQUEST['tipoCotizacion'] == 'BIEN') {
                 $campo1 = "entregables";
                 $campo2 = "plazoEntrega";
+                $bien = true;
             } else {
+            	$bien = false;
                 if (isset($_REQUEST['tipoCotizacion']) && ($_REQUEST['tipoCotizacion'] == 'SERVICIO')) {
                     $campo1 = "desServicio";
                     $campo2 = "detalleEjecucion";
+                    $servicio = true;
                 } else {
                     $campo1 = "entregablesdesServicio";
                     $campo2 = "entregaEjecucion";
+                    $servicio = false;
                 }
             }
 
@@ -314,7 +316,15 @@ class FormularioRegistro {
                 	$atributos ['limitar'] = false;
                 	$atributos ['anchoCaja'] = 60;
                 	$atributos ['miEvento'] = '';
-                	$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'tipoNecesidadAdministrativa' );
+                	
+                	if($bien){
+                		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'tipoNecesidadAdministrativaOnlyBien' );
+                	}else if($servicio){
+                		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'tipoNecesidadAdministrativaOnlyServicio' );
+                	}else{
+                		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'tipoNecesidadAdministrativa' );
+                	}
+                	
                 	$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
                 	$atributos ['matrizItems'] = $matrizItems;
                 	$atributos = array_merge ( $atributos, $atributosGlobales );

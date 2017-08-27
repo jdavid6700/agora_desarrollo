@@ -28,6 +28,14 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case 'informacionRespuestaPDFCotizacion' :
+				$cadenaSql=" SELECT RCP.informacion_entrega, RCP.descripcion as des_sc, RCP.descuentos, RCP.observaciones, IC.cantidad, IC.valor_unitario, IC.nombre, IC.descripcion as des_ic  FROM";
+				$cadenaSql.=" agora.solicitud_cotizacion SC";
+				$cadenaSql.=" JOIN agora.respuesta_cotizacion_proveedor RCP ON RCP.solicitud_cotizacion = SC.id";
+				$cadenaSql.=" JOIN agora.item_cotizacion IC ON IC.respuesta_cotizacion_proveedor = RCP.id";
+				$cadenaSql.=" WHERE objeto_cotizacion = ".$variable ['id']." AND proveedor = ".$variable ['proveedor'].";";
+				break;
+			
 			/* ACTUALIZAR - OBJETO CONTRATO - ESTADO */
 			case 'eliminarSolicitudCotizacion' :
 				$cadenaSql = "UPDATE agora.objeto_cotizacion SET ";
@@ -241,6 +249,16 @@ class Sql extends \Sql {
 			case "tipoNecesidadAdministrativa" :
 				$cadenaSql=" SELECT id, nombre";
 				$cadenaSql.=" FROM administrativa.tipo_necesidad WHERE estado = TRUE;";
+				break;
+				
+			case "tipoNecesidadAdministrativaOnlyBien" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM administrativa.tipo_necesidad WHERE id = 1;";
+				break;
+				
+			case "tipoNecesidadAdministrativaOnlyServicio" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM administrativa.tipo_necesidad WHERE id = 2;";
 				break;
 			
 			case "ordenadorUdistrital" :

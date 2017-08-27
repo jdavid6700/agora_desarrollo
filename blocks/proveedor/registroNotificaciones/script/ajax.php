@@ -2545,7 +2545,7 @@ function consultarDepartamentoLug(elem, request, response){
      
      
     	 
-    if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null){
+    if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCot') ?>").val() > 0){
     	$("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCarga')?>").val(), 0) + " pesos (COP)");
     }
     	 

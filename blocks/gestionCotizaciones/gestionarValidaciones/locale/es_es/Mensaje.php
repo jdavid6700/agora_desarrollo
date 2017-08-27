@@ -69,7 +69,7 @@ $this->idioma["objetoArea"]="Area de Conocimiento (SNIES) :";
 $this->idioma["objetoNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
 
 $this->idioma["marcoDatosRelacionada"]="Solicitudes de Cotización Generadas Relacionadas";
-$this->idioma["marcoDatosCotizacion"]="Gestión de Solicitudes de Cotización Generadas";
+$this->idioma["marcoDatosCotizacion"]="Validación Solicitudes de Cotización Vinculadas";
 $this->idioma["marcoDatosCotizacionEliminar"]="Cancelar Solicitud de Cotización";
 $this->idioma["marcoDatosCotizacionEliminarTex"]="Solicitud de Cotización";
 
