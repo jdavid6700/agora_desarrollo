@@ -403,8 +403,8 @@ class FormularioRegistro {
 																 				<td><?php echo $tipo  ?></td>
 																 				<td><?php echo $unidad  ?></td>
 																 				<td><?php echo $tiempo  ?></td>
-																 				<td><?php echo round($resultadoItems[$i]['cantidad'],0)  ?></td>
-																 				<td><?php echo "$ " . round($resultadoItems[$i]['valor_unitario'],0)  ?></td>
+																 				<td><?php echo number_format(round($resultadoItems[$i]['cantidad'],0), 0, '', '.')  ?></td>
+																 				<td><?php echo "$ " . number_format(round($resultadoItems[$i]['valor_unitario'],0), 0, '', '.')  ?></td>
 																 				<th scope="row"><div class = "widget"><?php echo $i+1  ?></div></th>
 																 			</tr>
 																			<?php

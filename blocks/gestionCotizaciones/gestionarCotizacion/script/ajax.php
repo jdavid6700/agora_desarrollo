@@ -802,7 +802,9 @@ function consultarActividadExistente(elem, request, response){
 		    return (parts.length == 3 ? '-' : '') + result;
 		}						
 	
-	$("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCarga')?>").val(), 0) + " pesos (COP)");	
+	if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCarga') ?>").val() > 0){
+    	$("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCarga')?>").val(), 0) + " pesos (COP)");
+    }	
 	
 	
 			

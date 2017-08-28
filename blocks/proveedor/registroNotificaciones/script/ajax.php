@@ -2038,6 +2038,19 @@ function consultarDepartamentoLug(elem, request, response){
 		    }
 		    return (parts.length == 3 ? '-' : '') + result;
 		}
+		
+		
+		function formatearNumero(nStr) {
+		    nStr += '';
+		    x = nStr.split('.');
+		    x1 = x[0];
+		    x2 = x.length > 1 ? ',' + x[1] : '';
+		    var rgx = /(\d+)(\d{3})/;
+		    while (rgx.test(x1)) {
+		            x1 = x1.replace(rgx, '$1' + '.' + '$2');
+		    }
+		    return x1 + x2;
+		}
     	 
     	 
     	$("#botonAgregar").click(function(){
@@ -2333,8 +2346,8 @@ function consultarDepartamentoLug(elem, request, response){
 		                                                       		  nuevaFila+="<td>1 - BIEN</td>";
 		                                                              nuevaFila+="<td>"+(data[0][0])+" - "+(data[0][1])+"</td>";
 		                                                              nuevaFila+="<td>0 - NO APLICA</td>";
-		                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())+"</td>";
-		                                                              nuevaFila+="<td>$ "+($("#<?php echo $this->campoSeguro('valorItem') ?>").val())+"</td>";
+		                                                              nuevaFila+="<td>"+formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val()))+"</td>";
+		                                                              nuevaFila+="<td>$ "+formatearNumero(($("#<?php echo $this->campoSeguro('valorItem') ?>").val()))+"</td>";
 		                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
 		                                                              nuevaFila+="</tr>";
 		                                                                                        
@@ -2411,8 +2424,8 @@ function consultarDepartamentoLug(elem, request, response){
 		                                                       		  nuevaFila+="<td>2 - SERVICIO</td>";
 		                                                       		  nuevaFila+="<td>0 - NO APLICA</td>";
 		                                                              nuevaFila+="<td>"+(inverseTotalDias(countDays))+"</td>";
-		                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())+"</td>";
-		                                                              nuevaFila+="<td>$ "+($("#<?php echo $this->campoSeguro('valorItem') ?>").val())+"</td>";
+		                                                              nuevaFila+="<td>"+formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val()))+"</td>";
+		                                                              nuevaFila+="<td>$ "+formatearNumero(($("#<?php echo $this->campoSeguro('valorItem') ?>").val()))+"</td>";
 		                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
 		                                                              nuevaFila+="</tr>";
 		                                                                                        
@@ -2545,7 +2558,7 @@ function consultarDepartamentoLug(elem, request, response){
      
      
     	 
-    if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCot') ?>").val() > 0){
+    if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCarga') ?>").val() > 0){
     	$("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCarga')?>").val(), 0) + " pesos (COP)");
     }
     	 
