@@ -1,4 +1,23 @@
 
+
+.lefht{
+	text-align:left;
+	margin-left:10px;
+}
+
+div.clean-gray{
+	border:2px solid #ffffff;
+	border-radius: 10px;
+    background: #e5edf6;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: static;
+    top: 30px;
+    width: 70%;
+}
+
+
 #marcoDatosSolicitudCot {
 	display: none;
 }

@@ -409,7 +409,7 @@ $this->idioma["desServicioTitulo"]="Descripción del Servicio";
 $this->idioma["detalleEjecucion"] = "Información de Ejecución del Servicio : ";
 $this->idioma["detalleEjecucionTitulo"]="Información de Ejecución del Servicio";
 
-$this->idioma["precioCot"] = "Precio Cotización : ";
+$this->idioma["precioCot"] = "PRECIO COTIZACIÓN : ";
 $this->idioma["precioCotTitulo"]="Precio Cotización";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
