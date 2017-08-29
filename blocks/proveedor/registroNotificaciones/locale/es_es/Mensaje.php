@@ -508,7 +508,7 @@ $this->idioma["entregaEjecucionTitulo"]="Información de Ejecución del Servicio
 
 
 
-$this->idioma["precioCot"] = "Precio Cotización : ";
+$this->idioma["precioCot"] = "PRECIO COTIZACIÓN : ";
 $this->idioma["precioCotTitulo"]="Precio Cotización";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
