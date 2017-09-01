@@ -230,6 +230,23 @@ class FormularioRegistro {
                 }
             }
             
+            $tipo = 'information';
+            $mensaje = "<b>IMPORTANTE</b><br>
+							<br>
+							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
+				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i> y la
+				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b>    <i>'Por medio de la cual se adopta el Manual De.Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>.
+							";
+            // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+            $esteCampo = 'mensaje';
+            $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+            $atributos["etiqueta"] = "";
+            $atributos["estilo"] = "centrar";
+            $atributos["tipo"] = $tipo;
+            $atributos["mensaje"] = $mensaje;
+            echo $this->miFormulario->cuadroMensaje($atributos);
+            unset($atributos);
+            
             
 //            $datosConsultaSol = array(
 //            'proveedor' =>$_REQUEST['id_proveedor'],
