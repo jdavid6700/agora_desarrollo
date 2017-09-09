@@ -88,6 +88,11 @@ class Sql extends \Sql {
 				$cadenaSql .= " JOIN agora.solicitud_cotizacion SC ON SC.proveedor = IP.id_proveedor ";
 				$cadenaSql .= " WHERE SC.id = " . $variable . ";";
 				break;
+				
+			case "formaSeleccionUdistrital" :
+				$cadenaSql = "SELECT id, nombre";
+				$cadenaSql .= " FROM agora.forma_seleccion WHERE estado = TRUE";
+				break;
 			
 			case "solicitudesXCotizacion" :
 				$cadenaSql = " SELECT ";
@@ -1267,6 +1272,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " unidad_ejecutora = "." " . $variable ['unidad_ejecutora'] . ",";
 				$cadenaSql .= " estado_cotizacion = '1',";
 				$cadenaSql .= " tipo_necesidad = '" . $variable ['tipo_necesidad'] . "',";
+				$cadenaSql .= " forma_seleccion_id = '" . $variable ['forma_seleccion'] . "',";
 				$cadenaSql .= " medio_pago = '" . $variable ['medio_pago'] . "',";
 				$cadenaSql .= " usuario_creo = "." '" . $variable ['usuario'] . "'";
 				$cadenaSql .= " WHERE id = " . $variable ['idObjeto'] .";";

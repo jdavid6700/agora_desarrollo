@@ -163,6 +163,7 @@ class Registrar {
         		'observaciones' => $datosTextoEnriquecido['observaciones'],
         		'plan' => "currval('administrativa.plan_accion_id_seq')",
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
+        		'forma_seleccion' => $_REQUEST ['formaSeleccion'],
         		'medio_pago' => $_REQUEST ['medioPago'],
         		'usuario' => $_REQUEST ['usuario'],
         		'anexo' => $_REQUEST ['destino']

@@ -677,6 +677,58 @@ class FormularioRegistro {
 		
 		
 		
+		$esteCampo = "marcoSeleccion";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+		// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+		
+		
+		
+		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+		$esteCampo = "formaSeleccion";
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['tab'] = $tab ++;
+		$atributos ['anchoEtiqueta'] = 200;
+		$atributos ['evento'] = '';
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['seleccion'] = - 1;
+		}
+		$atributos ['deshabilitado'] = false;
+		$atributos ['columnas'] = 1;
+		$atributos ['tamanno'] = 1;
+		$atributos ['ajax_function'] = "";
+		$atributos ['ajax_control'] = $esteCampo;
+		$atributos ['estilo'] = "jqueryui";
+		$atributos ['validar'] = "required";
+		$atributos ['limitar'] = false;
+		$atributos ['anchoCaja'] = 60;
+		$atributos ['miEvento'] = '';
+		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'formaSeleccionUdistrital' );
+		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$atributos ['matrizItems'] = $matrizItems;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+		
+		
+		
+		
+		echo $this->miFormulario->marcoAgrupacion('fin');
+		
+		
+		
+		
+		
+		
 		$esteCampo = "marcoPago";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -764,6 +816,11 @@ class FormularioRegistro {
 		// ----------------FIN CONTROL: Tipo Forma Pago--------------------------------------------------------
 		
 		
+		$atributos ["id"] = "valoresForma";
+		$atributos ["estilo"] = "";
+		echo $this->miFormulario->division ( "inicio", $atributos );
+		
+		
 		// ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
 		$esteCampo = 'valorFormaPago';
 		$atributos ['id'] = $esteCampo;
@@ -825,6 +882,7 @@ class FormularioRegistro {
 		unset ( $atributos );
 		// ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
 		
+		echo $this->miFormulario->division ( "fin" );
 		
 		
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );

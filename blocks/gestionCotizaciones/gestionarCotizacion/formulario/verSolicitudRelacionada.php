@@ -179,6 +179,8 @@ class FormularioRegistro {
 		if(isset($resultadoNecesidadRelacionada[0]['observaciones'])) $_REQUEST['observaciones'] = $resultadoNecesidadRelacionada[0]['observaciones'];
 		if(isset($resultadoNecesidadRelacionada[0]['estado_cotizacion'])) $_REQUEST['estado'] = $resultadoNecesidadRelacionada[0]['estado_cotizacion'];
 		
+		if(isset($resultadoNecesidadRelacionada[0]['forma_seleccion_id'])) $_REQUEST['formaSeleccion'] = $resultadoNecesidadRelacionada[0]['forma_seleccion_id'];
+		
 		if(isset($resultadoNecesidadRelacionada[0]['anexo_cotizacion'])) $_REQUEST['cotizacionSoporte'] = $resultadoNecesidadRelacionada[0]['anexo_cotizacion'];
 		
 		if(isset($resultadoNecesidadRelacionada[0]['plan_accion'])){
@@ -813,6 +815,54 @@ class FormularioRegistro {
 		
 		
 		
+		$esteCampo = "marcoSeleccion";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+		// ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+		
+		
+		
+		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+		$esteCampo = "formaSeleccion";
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['tab'] = $tab ++;
+		$atributos ['anchoEtiqueta'] = 200;
+		$atributos ['evento'] = '';
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['seleccion'] = - 1;
+		}
+		$atributos ['deshabilitado'] = true;
+		$atributos ['columnas'] = 1;
+		$atributos ['tamanno'] = 1;
+		$atributos ['ajax_function'] = "";
+		$atributos ['ajax_control'] = $esteCampo;
+		$atributos ['estilo'] = "jqueryui";
+		$atributos ['validar'] = "required";
+		$atributos ['limitar'] = false;
+		$atributos ['anchoCaja'] = 60;
+		$atributos ['miEvento'] = '';
+		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'formaSeleccionUdistrital' );
+		$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$atributos ['matrizItems'] = $matrizItems;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+		
+		
+		
+		
+		echo $this->miFormulario->marcoAgrupacion('fin');
+		
+		
 		
 		$esteCampo = "marcoPago";
 		$atributos ['id'] = $esteCampo;
@@ -919,7 +969,7 @@ class FormularioRegistro {
 								 		while ($i < $count){
 								 			
 								 			if($resultadoFP[$i][0] == 1){
-								 				$tipoValor = " días Transcurridos del Inicio";
+								 				$tipoValor = " % Completado";
 								 			}else{
 								 				$tipoValor = " % Completado del Total";
 								 			}

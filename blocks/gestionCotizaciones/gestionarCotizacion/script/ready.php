@@ -179,6 +179,7 @@ $('#<?php echo $this->campoSeguro('decision')?>').width(750);
 $('#<?php echo $this->campoSeguro('medioPago')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
 $('#<?php echo $this->campoSeguro('decisionPro')?>').width(750);
+$('#<?php echo $this->campoSeguro('formaSeleccion')?>').width(350);
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
@@ -206,6 +207,7 @@ $('#<?php echo $this->campoSeguro('decision')?>').select2();
 $('#<?php echo $this->campoSeguro('medioPago')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
 $('#<?php echo $this->campoSeguro('decisionPro')?>').select2();
+$('#<?php echo $this->campoSeguro('formaSeleccion')?>').select2();
 
 
 

@@ -678,7 +678,7 @@ function consultarActividadExistente(elem, request, response){
 		        									   		+' - ( Configurado el '+ totalPago +'% )')					
 		        																	
 		        										if(data[0][0] == 1){
-		        											tipoValor = " días Transcurridos del Inicio"
+		        											tipoValor = " % Completado"
 		        										}else{
 		        											tipoValor = " % Completado del Total";
 		        										}

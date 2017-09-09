@@ -24,6 +24,11 @@ $this->idioma["marcoObjetoAct"]="Solicitud de Cotización - Información General
 $this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
 
+$this->idioma["marcoSeleccion"]="Forma de Selección Cotización";
+$this->idioma["formaSeleccion"] = "Forma de Selección : ";
+$this->idioma["formaSeleccionTitulo"]="Forma de Selección";
+
+
 $this->idioma["marcoTipoNecesidadCot"]="Tipología de la Cotización";
 $this->idioma["marcoDatosSolicitudCot"]="Información Solicitud de Cotización";
 

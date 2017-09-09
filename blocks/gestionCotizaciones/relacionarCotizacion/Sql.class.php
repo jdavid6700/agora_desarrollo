@@ -44,6 +44,12 @@ class Sql extends \Sql {
 				$cadenaSql.=" FROM core.medio_pago WHERE estado = TRUE;";
 				break;
 			
+				
+			case "formaSeleccionUdistrital"	:
+				$cadenaSql="SELECT id, nombre";
+				$cadenaSql.=" FROM agora.forma_seleccion WHERE estado = TRUE";
+				break;
+				
 			case "tipoNecesidadAdministrativa" :
 				$cadenaSql=" SELECT id, nombre";
 				$cadenaSql.=" FROM administrativa.tipo_necesidad WHERE estado = TRUE;";
@@ -885,6 +891,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " unidad_ejecutora,";
 				$cadenaSql .= " estado_cotizacion,";
 				$cadenaSql .= " tipo_necesidad,";
+				$cadenaSql .= " forma_seleccion_id,";
 				$cadenaSql .= " fecha_registro,";
 				$cadenaSql .= " medio_pago,";
 				$cadenaSql .= " usuario_creo,";
@@ -905,6 +912,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " " . $variable ['unidad_ejecutora'] . ",";
 				$cadenaSql .= " '1',";
 				$cadenaSql .= " '" . $variable ['tipo_necesidad'] . "',";
+				$cadenaSql .= " '" . $variable ['forma_seleccion'] . "',";
 				$cadenaSql .= " '" . $hoy . "',";
 				$cadenaSql .= " " . $variable ['medio_pago'] . ",";
 				$cadenaSql .= " '" . $variable ['usuario'] . "',";

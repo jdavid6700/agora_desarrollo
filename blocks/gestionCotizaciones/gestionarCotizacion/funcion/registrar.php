@@ -203,6 +203,7 @@ class Registrar {
 				'observaciones' => $datosTextoEnriquecido['observaciones'],
 				'plan' => $datosFkCotizacion['plan_accion'],
 				'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
+				'forma_seleccion' => $_REQUEST ['formaSeleccion'],
 				'medio_pago' => $_REQUEST ['medioPago'],
 				'usuario' => $_REQUEST ['usuario']
 		);

@@ -160,6 +160,7 @@ $('#<?php echo $this->campoSeguro('ordenador')?>').width(750);
 $('#<?php echo $this->campoSeguro('solicitante')?>').width(750);
 $('#<?php echo $this->campoSeguro('medioPago')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
+$('#<?php echo $this->campoSeguro('formaSeleccion')?>').width(350);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
@@ -186,6 +187,7 @@ $('#<?php echo $this->campoSeguro('ordenador')?>').select2();
 $('#<?php echo $this->campoSeguro('solicitante')?>').select2();
 $('#<?php echo $this->campoSeguro('medioPago')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
+$('#<?php echo $this->campoSeguro('formaSeleccion')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

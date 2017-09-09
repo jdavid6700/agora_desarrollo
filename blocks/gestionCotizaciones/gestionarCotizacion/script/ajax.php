@@ -506,7 +506,20 @@ function consultarActividadExistente(elem, request, response){
             
             
                                                                 
-                                    
+		   
+		   $("#<?php echo $this->campoSeguro('tipoFormaPago')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('tipoFormaPago')?>").val() == 1){
+		            	$('#valoresForma').fadeOut(300 , function (){
+							$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('100');
+                        	$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('100');
+						});
+		            	
+		    		}else{
+		    			$('#valoresForma').fadeIn(300);
+		    			$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
+                        $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+		    		}
+		    });                                    
 
 
 
@@ -678,7 +691,7 @@ function consultarActividadExistente(elem, request, response){
 		        									   		+' - ( Configurado el '+ totalPago +'% )')					
 		        																	
 		        										if(data[0][0] == 1){
-		        											tipoValor = " días Transcurridos del Inicio"
+		        											tipoValor = " % Completado"
 		        										}else{
 		        											tipoValor = " % Completado del Total";
 		        										}
