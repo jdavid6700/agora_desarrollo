@@ -179,8 +179,6 @@ class FormularioRegistro {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'hidden';
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = false;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['valor'] = 0;
@@ -199,8 +197,6 @@ class FormularioRegistro {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'hidden';
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = false;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['valor'] = "";
@@ -217,8 +213,6 @@ class FormularioRegistro {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'hidden';
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = false;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['valor'] = "";
@@ -235,8 +229,6 @@ class FormularioRegistro {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'hidden';
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = false;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['valor'] = 0;
@@ -254,8 +246,6 @@ class FormularioRegistro {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['tipo'] = 'hidden';
 				$atributos ['estilo'] = 'jqueryui';
-				$atributos ['marco'] = true;
-				$atributos ['columnas'] = 1;
 				$atributos ['dobleLinea'] = false;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['valor'] = "";
@@ -314,7 +304,7 @@ class FormularioRegistro {
 				// ----------------FIN CONTROL: Lista Vigencia--------------------------------------------------------
 				
 				$esteCampo = 'vigencia_solicitud_consulta';
-				$atributos ['columnas'] = 3;
+				$atributos ['columnas'] = 2;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['evento'] = '';
@@ -352,7 +342,7 @@ class FormularioRegistro {
 				unset($atributos);
 		
 				$esteCampo = 'numero_disponibilidad';
-				$atributos ['columnas'] = 3;
+				$atributos ['columnas'] = 2;
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['seleccion'] = - 1;

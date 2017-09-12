@@ -977,13 +977,11 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
                 numero_disponibilidad: $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").val()},
             success: function (data) {
-           		console.log(data[0].NOMBRE_DEPENDENCIA);
-            	console.log(data[0].DEP_DESTINO);
                 if (data[0] != "") {
                     $('#' + $("#<?php echo $this->campoSeguro('indice_tabla') ?>").val()).html("<td><center>" + data[0].VIGENCIA + "</center></td>\n\\n\
                                    <td><center>" + data[0].NUM_SOL_ADQ + "</center></td>\n\
                                    <td><center>" + data[0].NUMERO_DISPONIBILIDAD + "</center></td>\n\
-                                   <td><center>" + formatearNumero(data[0].VALOR_CONTRATACION) + "</center></td>\n\
+                                   <td><center>" + data[0].VALOR_CONTRATACION + "</center></td>\n\
                                    <td><center>" + data[0].NOMBRE_DEPENDENCIA + "</center></td>\n\
                                    <td><center>" + data[0].DESCRIPCION + "</center></td>\n\
                                    <td><center>" + data[0].ESTADO + "</center></td>");
@@ -998,8 +996,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     var indice = parseFloat($("#<?php echo $this->campoSeguro('indice_tabla') ?>").val()) + 1;
                     $("#<?php echo $this->campoSeguro('indice_tabla') ?>").val(indice);
                     $('#tablacdpasociados').append('<tr id="' + $("#<?php echo $this->campoSeguro('indice_tabla') ?>").val() + '"></tr>');
-                    $("#<?php echo $this->campoSeguro('indices_cdps') ?>").val($("#<?php echo $this->campoSeguro('indices_cdps') ?>").val() + "," + data[0].NUMERO_DISPONIBILIDAD);
-                    $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val($("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val() + "," + data[0].NUMERO_DISPONIBILIDAD + "-" + data[0].VIGENCIA);
+                    $("#<?php echo $this->campoSeguro('indices_cdps') ?>").val($("#<?php echo $this->campoSeguro('indices_cdps') ?>").val() + "," + data[0].NUM_SOL_ADQ);
+                    $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val($("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val() + "," + data[0].NUM_SOL_ADQ + "-" + data[0].VIGENCIA);
                     var acumulado = parseFloat($("#<?php echo $this->campoSeguro('valor_real_acumulado') ?>").val()) + parseFloat(data[0].VALOR_CONTRATACION);
                     $("#<?php echo $this->campoSeguro('valor_real_acumulado') ?>").val(acumulado);
                     acumulado = new Intl.NumberFormat(["ban", "id"]).format(acumulado);
@@ -1033,7 +1031,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").val($("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").val());
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").select2();
-                    $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " CDP("+data[0].VIGENCIA+"-"+data[0].NUMERO_DISPONIBILIDAD+")");
+                    $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " CDP("+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")");
 					$('#marcoDatosSolicitudCot').fadeIn(500);
 
                 }
