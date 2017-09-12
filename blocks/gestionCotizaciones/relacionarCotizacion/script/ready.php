@@ -3,7 +3,7 @@ window.onload = detectarCarga;
 function detectarCarga(){
 
 	$('#marcoDatosLoad').fadeOut(1000, function (){
-		$('#marcoDatosSolicitudCot').fadeIn(500);
+		$('#AgrupacionDisponibilidadNec').fadeIn(500);
 	});
 	
 }
@@ -319,3 +319,12 @@ $(function(){
                 alert('aaaaaaaaaaaaaaaa');
         });
 });
+
+$('#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>').width(300);
+$("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").select2();
+$('#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>').width(200);
+$("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").select2();
+$('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
+$("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
+$('#<?php echo $this->campoSeguro('dependenciaDestino')?>').width(750);
+$('#<?php echo $this->campoSeguro('dependenciaDestino')?>').select2();

@@ -147,14 +147,15 @@ class Registrar {
 		$planAccion = $this->miSql->getCadenaSql ( 'registrarPlanAccion', $datosTextoEnriquecido['plan'] );
 		array_push($SQLs, $planAccion);
 		
-		
+		$valorCDP = str_replace(",", "", $_REQUEST['indices_cdps']);
 		
 		
         $datosSolicitud = array (
         		'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
         		'vigencia' => $_REQUEST ['vigencia'],
-        		'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
+        		'unidad_ejecutora' => (int)$_REQUEST ['unidad_ejecutora_hidden'],
         		'dependencia' => $_REQUEST ['dependencia'],
+        		'dependencia_destino' => $_REQUEST ['dependenciaDestino'],
         		'ordenador' => $_REQUEST ['ordenador'],
         		'fecha_apertura' => $fechaApertura,
         		'fecha_cierre' => $fechaCierre,
@@ -165,6 +166,7 @@ class Registrar {
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
         		'forma_seleccion' => $_REQUEST ['formaSeleccion'],
         		'medio_pago' => $_REQUEST ['medioPago'],
+        		'numero_disponibilidad' => $valorCDP,
         		'usuario' => $_REQUEST ['usuario'],
         		'anexo' => $_REQUEST ['destino']
         );
@@ -249,8 +251,9 @@ class Registrar {
 						'idObjeto' => $lastId[0][0],
 						'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
 						'vigencia' => $_REQUEST ['vigencia'],
-						'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
+						'unidad_ejecutora' => (int)$_REQUEST ['unidad_ejecutora_hidden'],
 						'dependencia' => $_REQUEST ['dependencia'],
+						'dependencia_destino' => $_REQUEST ['dependenciaDestino'],
 						'ordenador' => $_REQUEST ['ordenador'],
 						'fecha_apertura' => $fechaApertura,
 						'fecha_cierre' => $fechaCierre,

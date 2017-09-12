@@ -28,6 +28,67 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			case "requisitosNecesidad" :
+				$cadenaSql = "SELECT * FROM CO.CO_SOL_REQUISITO WHERE VIGENCIA=" . $variable ['vigencia'] . " and ";
+				$cadenaSql.= "NUM_SOL_ADQ=" . $variable ['numero_disponibilidad'] . " ORDER BY ITEM";
+				break;
+			
+			case "obtenerInfoNec" :
+				$cadenaSql = " SELECT SN.NUM_SOL_ADQ, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
+				$cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION, ";
+				$cadenaSql .= " DP2.NOMBRE_DEPENDENCIA as DEP_DESTINO";
+				$cadenaSql .= " FROM CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP , CO.CO_DEPENDENCIAS DP, CO.CO_DEPENDENCIAS DP2, PR.PR_RUBRO RB, CO.CO_SOLICITUD_ADQ SN   ";
+				$cadenaSql .= " LEFT JOIN CO.CO_DTLLE_SOL_ADQ_S DE ON  DE.VIGENCIA = SN.VIGENCIA and DE.NUM_SOL_ADQ = SN.NUM_SOL_ADQ   ";
+				$cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.DEPENDENCIA_DESTINO = DP2.COD_DEPENDENCIA";
+				$cadenaSql .= " and SN.VIGENCIA = RB.VIGENCIA and SN.RUBRO_INTERNO = RB.INTERNO  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and SN.VIGENCIA=" . $variable ['vigencia'] . " and ";
+				$cadenaSql .= "  SN.CODIGO_UNIDAD_EJECUTORA='0" . $variable ['unidad_ejecutora'] . "' and SN.NUM_SOL_ADQ=" . $variable ['numero_disponibilidad'] . " ";
+				$cadenaSql .= "  ORDER BY SN.NUM_SOL_ADQ ";
+				break;
+			
+			case "obtenerInfoCdp" :
+				$cadenaSql = " SELECT SN.NUM_SOL_ADQ, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
+				$cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION ";
+				$cadenaSql .= " FROM CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP , CO.CO_DEPENDENCIAS DP, PR.PR_RUBRO RB, CO.CO_SOLICITUD_ADQ SN   ";
+				$cadenaSql .= " LEFT JOIN CO.CO_DTLLE_SOL_ADQ_S DE ON  DE.VIGENCIA = SN.VIGENCIA and DE.NUM_SOL_ADQ = SN.NUM_SOL_ADQ   ";
+				$cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA and SN.DEPENDENCIA = DP.COD_DEPENDENCIA ";
+				$cadenaSql .= " and SN.VIGENCIA = RB.VIGENCIA and SN.RUBRO_INTERNO = RB.INTERNO  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and SN.VIGENCIA=" . $variable ['vigencia'] . " and ";
+				$cadenaSql .= "  SN.CODIGO_UNIDAD_EJECUTORA='0" . $variable ['unidad_ejecutora'] . "' and CDP.NUMERO_DISPONIBILIDAD=" . $variable ['numero_disponibilidad'] . " ";
+				$cadenaSql .= "  ORDER BY SN.NUM_SOL_ADQ ";
+				break;
+			
+			case "obtener_necesidades_vigencia" :
+				$cadenaSql = " SELECT SN.NUM_SOL_ADQ as valor, SN.NUM_SOL_ADQ as informacion ";
+				$cadenaSql .= " FROM CO.CO_SOLICITUD_ADQ SN, CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP  ";
+				$cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and SN.VIGENCIA=" . $variable ['vigencia'] . " and SN.NUM_SOL_ADQ NOT IN (" . $variable ['cdps_seleccion'] . ") and ";
+				$cadenaSql .= "  SN.CODIGO_UNIDAD_EJECUTORA='0" . $variable ['unidad_ejecutora'] . "' ";
+				$cadenaSql .= "  ORDER BY SN.NUM_SOL_ADQ ";
+				break;
+			
+			case "obtener_cdps_vigencia" :
+				$cadenaSql = " SELECT CDP.NUMERO_DISPONIBILIDAD as valor, CDP.NUMERO_DISPONIBILIDAD as informacion ";
+				$cadenaSql .= " FROM CO.CO_SOLICITUD_ADQ SN, CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP  ";
+				$cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
+				$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and SN.VIGENCIA=" . $variable ['vigencia'] . " and CDP.NUMERO_DISPONIBILIDAD NOT IN (" . $variable ['cdps_seleccion'] . ") and ";
+				$cadenaSql .= "  SN.CODIGO_UNIDAD_EJECUTORA='0" . $variable ['unidad_ejecutora'] . "' ";
+				$cadenaSql .= "  ORDER BY CDP.NUMERO_DISPONIBILIDAD ";
+				
+				break;
+			
+			
+			case "vigencias_sica_disponibilidades" :
+				$year = date('Y');
+				$cadenaSql = " SELECT DISTINCT SN.VIGENCIA AS valor, SN.VIGENCIA AS informacion  FROM CO.CO_SOLICITUD_ADQ SN WHERE SN.VIGENCIA = ".$year;
+				$cadenaSql .= " ORDER BY SN.VIGENCIA DESC ";
+			
+				break;
+			
 			
 			case "consultarTipoFormaPagoByNumPush" :
 				$cadenaSql=" SELECT id, nombre";
@@ -880,6 +941,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " titulo_cotizacion,";
 				$cadenaSql .= " jefe_dependencia,";
+				$cadenaSql .= " jefe_dependencia_destino,";
 				$cadenaSql .= " ordenador_gasto,";
 				$cadenaSql .= " fecha_apertura,";
 				$cadenaSql .= " fecha_cierre,";
@@ -894,6 +956,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " forma_seleccion_id,";
 				$cadenaSql .= " fecha_registro,";
 				$cadenaSql .= " medio_pago,";
+				$cadenaSql .= " numero_necesidad,";
 				$cadenaSql .= " usuario_creo,";
 				$cadenaSql .= " anexo_cotizacion";
 				$cadenaSql .= " )";
@@ -901,6 +964,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " '" . $variable ['titulo_cotizacion'] . "',";
 				$cadenaSql .= " " . $variable ['dependencia'] . ",";
+				$cadenaSql .= " " . $variable ['dependencia_destino'] . ",";
 				$cadenaSql .= " " . $variable ['ordenador'] . ",";
 				$cadenaSql .= " '" . $variable ['fecha_apertura'] . "',";
 				$cadenaSql .= " '" . $variable ['fecha_cierre'] . "',";
@@ -915,6 +979,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " '" . $variable ['forma_seleccion'] . "',";
 				$cadenaSql .= " '" . $hoy . "',";
 				$cadenaSql .= " " . $variable ['medio_pago'] . ",";
+				$cadenaSql .= " '" . $variable ['numero_disponibilidad'] . "',";
 				$cadenaSql .= " '" . $variable ['usuario'] . "',";
 				$cadenaSql .= " '" . $variable ['anexo'] . "' ";
 				$cadenaSql .= " )";

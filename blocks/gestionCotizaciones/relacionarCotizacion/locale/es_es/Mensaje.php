@@ -1,6 +1,17 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
+$this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
+$this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
+$this->idioma["numero_disponibilidadTitulo"]="Número de la Necesidad";
+$this->idioma["valor_acumulado"] = "($)Valor (CDP) : ";
+$this->idioma["valor_acumuladoTitulo"]="($)Valor (CDP)";
+$this->idioma["dependenciaDestino"] = "Dependencia Destino :";
+$this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
+
+
+
 $this->idioma["objetoContrato"] = "Objeto a Contratar : ";
 $this->idioma["objetoContratoTitulo"]="Objeto a Contratar";
 
@@ -24,8 +35,8 @@ $this->idioma["marcoObjetoAct"]="Solicitud de Cotización - Información General
 $this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
 
-$this->idioma["marcoSeleccion"]="Forma de Selección Cotización";
-$this->idioma["formaSeleccion"] = "Forma de Selección : ";
+$this->idioma["marcoSeleccion"]="Criterio de Selección Cotización";
+$this->idioma["formaSeleccion"] = "Criterio de Selección : ";
 $this->idioma["formaSeleccionTitulo"]="Forma de Selección";
 
 

@@ -81,6 +81,9 @@ if (!isset($GLOBALS["autorizado"])) {
     	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $_REQUEST['dependencia'] );
     	$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
     	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $_REQUEST['dependencia_destino'] );
+    	$resultadoDependenciaDes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
     	$cadenaSql = $this->sql->getCadenaSql ( 'ordenadorUdistritalById', $_REQUEST['ordenador'] );
     	$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
@@ -147,6 +150,7 @@ if (!isset($GLOBALS["autorizado"])) {
 				</br>
 				</br><b>Ordenador del Gasto Relacionado: </b> ".$resultadoOrdenador[0][1]."
 				</br><b>Dependencia Solicitante: </b> ".$resultadoDependencia[0][1]."
+				</br><b>Dependencia Destino: </b> ".$resultadoDependenciaDes[0][1]."
 				</br><b>Fecha del Proceso: </b> ".$hoy."
 				</br><b>Responsable: </b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
         $boton = "continuar";
