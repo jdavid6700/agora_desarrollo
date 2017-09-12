@@ -189,12 +189,16 @@ class Registrar {
 		array_push($SQLs, $planAccion);
 		
 		
+		$valorCDP = str_replace(",", "", $_REQUEST['indices_cdps']);
+		
+		
 		$datosSolicitud = array (
 				'idObjeto' => $_REQUEST['idObjeto'],
 				'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
 				'vigencia' => $_REQUEST ['vigencia'],
 				'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
 				'dependencia' => $_REQUEST ['dependencia'],
+				'dependencia_destino' => $_REQUEST ['dependenciaDestino'],
 				'ordenador' => $_REQUEST ['ordenador'],
 				'fecha_apertura' => $fechaApertura,
 				'fecha_cierre' => $fechaCierre,
@@ -205,6 +209,7 @@ class Registrar {
 				'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
 				'forma_seleccion' => $_REQUEST ['formaSeleccion'],
 				'medio_pago' => $_REQUEST ['medioPago'],
+				'numero_disponibilidad' => $valorCDP,
 				'usuario' => $_REQUEST ['usuario']
 		);
 		
@@ -295,6 +300,7 @@ class Registrar {
 						'vigencia' => $_REQUEST ['vigencia'],
 						'unidad_ejecutora' => (int)$_REQUEST ['unidadEjecutora'],
 						'dependencia' => $_REQUEST ['dependencia'],
+						'dependencia_destino' => $_REQUEST ['dependenciaDestino'],
 						'ordenador' => $_REQUEST ['ordenador'],
 						'fecha_apertura' => $fechaApertura,
 						'fecha_cierre' => $fechaCierre,

@@ -23,6 +23,7 @@ class redireccion {
 				$variable .= "&tipoNecesidad=".$valor['tipo_necesidad'];
 				$variable .= "&estadoSolicitud=".$valor['estadoSolicitud'];
 				$variable .= "&dependencia=".$valor['dependencia'];
+				$variable .= "&dependencia_destino=".$valor['dependencia_destino'];
 				$variable .= "&ordenador=".$valor['ordenador'];
 				$variable .= "&usuario=".$valor['usuario'];
 				break;

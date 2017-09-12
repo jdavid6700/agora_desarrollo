@@ -88,6 +88,7 @@ class TextArea  extends HtmlBase{
         	if (isset ( $this->atributos [self::DESHABILITADO] ) && $this->atributos [self::DESHABILITADO]) {
         		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
   										<script>tinymce.init({ selector:\'textarea\', 
+        															height : "280",
         															
         															setup: function(ed) {
 																        if ($(\'#\'+ed.id).prop(\'readonly\')) {
@@ -105,6 +106,7 @@ class TextArea  extends HtmlBase{
         	}else{
         		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
   										<script>tinymce.init({ selector:\'textarea\',
+        															height : "280",
         															
         															setup : function(ed) {
 																        ed.on("change", function(e){
