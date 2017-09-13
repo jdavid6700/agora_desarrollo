@@ -258,6 +258,23 @@ class FormularioRegistro {
 				echo $this->miFormulario->campoCuadroTexto($atributos);
 				unset($atributos);
 				
+				$esteCampo = 'ordenador_hidden';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'hidden';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['dobleLinea'] = false;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['valor'] = "";
+				$atributos ['deshabilitado'] = false;
+				$atributos ['tamanno'] = 30;
+				$atributos ['maximoTamanno'] = '';
+				$tab ++;
+				// Aplica atributos globales al control
+				$atributos = array_merge($atributos, $atributosGlobales);
+				echo $this->miFormulario->campoCuadroTexto($atributos);
+				unset($atributos);
+				
 				
 				
 				/*
@@ -710,7 +727,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";

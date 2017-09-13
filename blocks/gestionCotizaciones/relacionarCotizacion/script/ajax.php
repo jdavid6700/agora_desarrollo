@@ -977,6 +977,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
                 numero_disponibilidad: $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").val()},
             success: function (data) {
+ 
                 if (data[0] != "") {
                     $('#' + $("#<?php echo $this->campoSeguro('indice_tabla') ?>").val()).html("<td><center>" + data[0].VIGENCIA + "</center></td>\n\\n\
                                    <td><center>" + data[0].NUM_SOL_ADQ + "</center></td>\n\
@@ -1031,7 +1032,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").val($("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").val());
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").select2();
-                    $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " CDP("+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")");
+                    $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " NECESIDAD("+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")");
 					$('#marcoDatosSolicitudCot').fadeIn(500);
 
                 }
@@ -1050,6 +1051,21 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 }else{
                 	$(tinymce.get('<?php echo $this->campoSeguro('requisitos') ?>').getBody()).html('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
                 	$("#<?php echo $this->campoSeguro('requisitos') ?>").val('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
+                }
+                console.log(data);
+                if(data[2] != "" && data[3] != ""){
+                	
+                	var i = 0;
+                	while(i < data[3].length){
+                		if(data[3][i].tercero_id == data[2].NUMERO_DOCUMENTO){
+                			console.log(data[3][i].tercero_id + " => " + data[3][i].id);
+                			$("#<?php echo $this->campoSeguro('ordenador') ?>").val(data[3][i].id);
+                    		$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+                    		$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(data[3][i].id);
+                		}
+                		i++;
+                	}
+                	
                 }
 
 

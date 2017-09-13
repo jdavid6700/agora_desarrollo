@@ -109,6 +109,12 @@ if($secure){
 		$cadenaSql2 = $this->sql->getCadenaSql('requisitosNecesidad', $datos);
 		$resultadoItems2 = $DBSICA->ejecutarAcceso($cadenaSql2, "busqueda");
 		$resultadoArray[1] = $resultadoItems2;
+		$cadenaSql3 = $this->sql->getCadenaSql('obtenerInfoNecOrdenador', $datos);
+		$resultadoItems3 = $DBSICA->ejecutarAcceso($cadenaSql3, "busqueda");
+		$resultadoArray[2] = $resultadoItems3[0];
+		$cadenaSql4 = $this->sql->getCadenaSql('ordenadorUdistritalListAjax');
+		$resultadoItems4 = $coreRecursoDB->ejecutarAcceso($cadenaSql4, "busqueda");
+		$resultadoArray[3] = $resultadoItems4;
 		$resultado = json_encode($resultadoArray);
 		echo $resultado;
 	}

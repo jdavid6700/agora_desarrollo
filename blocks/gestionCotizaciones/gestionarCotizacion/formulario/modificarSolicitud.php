@@ -258,6 +258,8 @@ class FormularioRegistro {
 		if(isset($resultadoNecesidadRelacionada[0]['vigencia'])) $_REQUEST['vigencia_solicitud_consultaMod'] = $resultadoNecesidadRelacionada[0]['vigencia'];
 		if(isset($resultadoNecesidadRelacionada[0]['numero_necesidad'])) $_REQUEST['numero_disponibilidadMod'] = $resultadoNecesidadRelacionada[0]['numero_necesidad'];
 		
+		if(isset($resultadoNecesidadRelacionada[0]['unidad_ejecutora'])) $_REQUEST['unidad_ejecutora_hidden'] = $resultadoNecesidadRelacionada[0]['unidad_ejecutora'];
+		if(isset($resultadoNecesidadRelacionada[0]['ordenador_gasto'])) $_REQUEST['ordenador_hidden'] = $resultadoNecesidadRelacionada[0]['ordenador_gasto'];
 		
 		echo "<section>";
 		{
@@ -434,7 +436,32 @@ class FormularioRegistro {
 					$atributos ['estilo'] = 'jqueryui';
 					$atributos ['dobleLinea'] = false;
 					$atributos ['tabIndex'] = $tab;
-					$atributos ['valor'] = "";
+					if (isset($_REQUEST [$esteCampo])) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
+					$atributos ['deshabilitado'] = false;
+					$atributos ['tamanno'] = 30;
+					$atributos ['maximoTamanno'] = '';
+					$tab ++;
+					// Aplica atributos globales al control
+					$atributos = array_merge($atributos, $atributosGlobales);
+					echo $this->miFormulario->campoCuadroTexto($atributos);
+					unset($atributos);
+					
+					$esteCampo = 'ordenador_hidden';
+					$atributos ['id'] = $esteCampo;
+					$atributos ['nombre'] = $esteCampo;
+					$atributos ['tipo'] = 'hidden';
+					$atributos ['estilo'] = 'jqueryui';
+					$atributos ['dobleLinea'] = false;
+					$atributos ['tabIndex'] = $tab;
+					if (isset($_REQUEST [$esteCampo])) {
+						$atributos ['valor'] = $_REQUEST [$esteCampo];
+					} else {
+						$atributos ['valor'] = '';
+					}
 					$atributos ['deshabilitado'] = false;
 					$atributos ['tamanno'] = 30;
 					$atributos ['maximoTamanno'] = '';
@@ -871,7 +898,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 2;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
@@ -909,7 +936,7 @@ class FormularioRegistro {
 		} else {
 			$atributos ['seleccion'] = - 1;
 		}
-		$atributos ['deshabilitado'] = false;
+		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;
 		$atributos ['ajax_function'] = "";
