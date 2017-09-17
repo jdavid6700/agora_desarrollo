@@ -84,16 +84,6 @@ class Formulario {
 		if(isset($_REQUEST['descripcion'])){$_REQUEST['descripcion']=mb_strtoupper($_REQUEST['descripcion'],'utf-8');}
 		
 
-		/*
-		$id_proveedor = true; 
-				 $id_representante = true; 
-				 $id_TelefonoFijo = true; 
-				 $resultadoTelefonoFijo = true; 
-				 $resultadoPersonaNatural = true; 
-				 $resultadoProveedorxRepresentante = true; 
-		$resultadoPersonaJuridica = true; 
-		*/
-
 		//Guardar RUT adjuntado Persona Juridica*********************************************************************
 		$_REQUEST ['destino'] = '';
 		// Guardar el archivo
@@ -166,9 +156,25 @@ class Formulario {
 		//************************************************************************************************************
 		
 
+		if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
+			switch($_REQUEST['tipoPersona']){
+				case 1 :
+					$_REQUEST['tipoPersona']='NATURAL';
+					break;
+				case 2 :
+					$_REQUEST['tipoPersona']='JURIDICA';
+					break;
+			}
+		}
+		
+		$arregloUnique = array (
+				'num_documento' => $_REQUEST['nit'],
+				'tipo_persona' => $_REQUEST ['tipoPersona']
+		);
+		
 		unset($resultado);
-		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['nit']);
+		//VERIFICAR SI EL PROVEEDOR YA SE ENCUENTRA REGISTRADO
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $arregloUnique);
 		$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 
 		if ($resultadoVerificar) {
@@ -177,8 +183,13 @@ class Formulario {
 			exit();    
 		}else{
 			
+			$arregloUnique = array (
+					'num_documento' => $_REQUEST['numeroDocumento'],
+					'tipo_persona' => 'NATURAL'
+			);
+			
 			//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-			$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST['numeroDocumento']);
+			$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $arregloUnique);
 			$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 			if ($resultadoVerificar) {
 				
@@ -190,25 +201,8 @@ class Formulario {
 				 * */
 				
 				$representanteExiste = true;
-				
-				
-				//El proveedor ya existe
-				//redireccion::redireccionar ( 'existeProveedorLegal',  $_REQUEST['numeroDocumento']);
-				//exit();
 			}
 				
-				
-				
-				if(isset($_REQUEST['tipoPersona'])){//CAST genero tipoCuenta
-					switch($_REQUEST['tipoPersona']){
-						case 1 :
-							$_REQUEST['tipoPersona']='NATURAL';
-							break;
-						case 2 :
-							$_REQUEST['tipoPersona']='JURIDICA';
-							break;
-					}
-				}
 				
 				if(isset($_REQUEST['tipoCuenta'])){//CAST
 					switch($_REQUEST['tipoCuenta']){
@@ -286,9 +280,7 @@ class Formulario {
 					
 				//Guardar datos PROVEEDOR
 				$cadenaSqlInfoProveedor = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaJuridica);
-				//$id_proveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaJuridica, "insertarInformacionProveedor");
 				array_push($SQLs, $cadenaSqlInfoProveedor);
-				//Curval*********************************************
 				
 				
 				$datosTelefonoFijoPersonaProveedor = array (
@@ -301,37 +293,29 @@ class Formulario {
 				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
 				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
 				
-				/*
-				 $datosTelefonoMovilPersonaProveedor = array (
-				 'num_telefono' => $_REQUEST['movil'],
-				 'extension_telefono' => null,
-				 'tipo' => '2'
-				 );
 				
-				 $cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
-				 $id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoMovilPersonaProveedor, "insertarInformacionProveedorTelefono");
-				 */
+				
 				$datosTelefonoProveedorTipoA = array (
 						'fki_id_tel' => $id_TelefonoFijo[0][0],
 						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
 				$cadenaSqlResTelFijo = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoA);
-				//$resultadoTelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 				array_push($SQLs, $cadenaSqlResTelFijo);
 				
 				
 				
+				// REGISTRO LA ACTIVIDAD
+				$arregloCIIU = array (
+						'fk_id_proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')",
+						'num_documento' => $_REQUEST['nit'],
+						'actividad' => $_REQUEST ['claseCIIUJur']
+				);
+				// Guardar ACTIVIDAD
+				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
+				array_push($SQLs, $cadenaSqlActividad);
 				
-				/*
-				 $datosTelefonoProveedorTipoB = array (
-				 'fki_id_tel' => $id_TelefonoMovil[0][0],
-				 'fki_id_Proveedor' => $id_proveedor[0][0]
-				 );
 				
-				 $cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorXTelefono",$datosTelefonoProveedorTipoB);
-				 $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
-				 */
 				
 				
 				//Caso representante legal registrado de manera inicial
@@ -349,7 +333,6 @@ class Formulario {
 					);
 						
 					$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-					//$resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 					array_push($SQLs, $cadenaSqlProveedorXRepresentante);
 						
 					
@@ -388,10 +371,6 @@ class Formulario {
 								break;
 						}
 					}
-						
-						
-						
-					// 7 campos TRUE FALSE
 						
 					if(isset($_REQUEST['productoImportacion'])){
 						switch($_REQUEST ['productoImportacion']){
@@ -520,7 +499,6 @@ class Formulario {
 						
 					//Guardar datos PROVEEDOR JURIDICA
 					$cadenaSqlPersonaJuridica = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
-					//$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 					array_push($SQLs, $cadenaSqlPersonaJuridica);
 					
 					
@@ -568,7 +546,7 @@ class Formulario {
 							'estadoCivil' => 'SOLTERO',
 							'discapacidad' => 'FALSE',
 							'tipoDiscapacidad' => null,
-							'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
+							'declarante_renta' => 'FALSE',
 							'medicina_prepagada' => 'FALSE',
 							'valor_uvt_prepagada' => null,
 							'cuenta_ahorro_afc' => 'FALSE',
@@ -588,9 +566,8 @@ class Formulario {
 					);
 					
 					
-					//Guardar datos PROVEEDOR NATURAL
+					//Guardar datos PROVEEDOR NATURAL REPRESENTANTE
 					$cadenaSqlPersonaNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
-					//$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 					array_push($SQLs, $cadenaSqlPersonaNatural);
 					
 					
@@ -603,7 +580,6 @@ class Formulario {
 					);
 					
 					$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-					//$resultadoProveedorxRepresentante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 					array_push($SQLs, $cadenaSqlProveedorXRepresentante);
 					
 					
@@ -643,10 +619,6 @@ class Formulario {
 								break;
 						}
 					}
-						
-						
-						
-					// 7 campos TRUE FALSE
 						
 					if(isset($_REQUEST['productoImportacion'])){
 						switch($_REQUEST ['productoImportacion']){
@@ -775,7 +747,6 @@ class Formulario {
 						
 					//Guardar datos PROVEEDOR JURIDICA
 					$cadenaSqlPersonaJuridica = $this->miSql->getCadenaSql ( "registrarProveedorJuridica", $datosInformacionPersonaJuridica );
-					//$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 					array_push($SQLs, $cadenaSqlPersonaJuridica);
 						
 						
@@ -792,7 +763,7 @@ class Formulario {
 							'web_contacto' => '',
 							'nom_asesor_comercial_contacto' => '',
 							'tel_asesor_comercial_contacto' => '',
-							'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],//**** INICIAL = al de la EMPRESA ****
+							'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],
 							'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
 							'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
 							'anexo_rut' => null,
@@ -804,38 +775,17 @@ class Formulario {
 					);
 					//Guardar datos PROVEEDOR Representante
 					$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
-					//$id_representante = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosInformacionProveedorPersonaNaturalRepresentante, "insertarInformacionProveedor");
+					array_push($SQLs, $cadenaSqlProveedorNatural);	
 					//****************************************************************************************************************************
-					array_push($SQLs, $cadenaSqlProveedorNatural);
-					
 					
 					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 					//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-					
-					
-					
-					
 					
 				}
+
 				
-				
-				
-				// REGISTRO LA ACTIVIDAD
-				$arregloCIIU = array (
-						'nit' => $_REQUEST['nit'],
-						'actividad' => $_REQUEST ['claseCIIUJur']
-				);
-				// Guardar ACTIVIDAD
-				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
-				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-				array_push($SQLs, $cadenaSqlActividad);
-				
-				
-				
-					
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
-				
-				
+
 				if ($registroPersona != false) {
 				
 				
@@ -845,8 +795,6 @@ class Formulario {
 					$_REQUEST['tipo_identificacion'] = "NIT";
 					$_REQUEST['nombres'] = "EMPRESA";
 					$_REQUEST['apellidos'] = $_REQUEST['nombreEmpresa'];
-					//$_REQUEST['correo'] = $_REQUEST['correo'];
-					//$_REQUEST['telefono'] = $_REQUEST['telefono'];
 					$_REQUEST['subsistema'] = 2;
 					$_REQUEST['perfil'] = 7;
 					
@@ -936,6 +884,7 @@ class Formulario {
 					$datosRegistroUsuario = array (
 							'tipo_identificacion'=>$_REQUEST['tipo_identificacion'],
 							'num_documento' => $_REQUEST ['nit'],
+							'tipo_persona' => $_REQUEST ['tipoPersona'],
 							'contrasena' => $password,
 							'generadaPass' => $pass,
 							'tipo' => "Tercero",

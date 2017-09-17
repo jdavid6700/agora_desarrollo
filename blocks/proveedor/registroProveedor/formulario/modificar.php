@@ -108,17 +108,17 @@ class Formulario {
 			
 			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
 			$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-
-			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $resultadoDoc[0][0] );
-			$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-		
 			
 			
+			if ($resultadoDoc [0] ['tipo_identificacion'] != 'NIT') {
+				$_REQUEST ['tipo_persona'] = "NATURAL";
+			} else {
+				$_REQUEST ['tipo_persona'] = "JURIDICA";
+			}
 			
 			
-		if(isset($resultado[0][0])){//CAST genero tipoCuenta
-			switch($resultado[0][0]){
+		if(isset($resultadoDoc)){//CAST genero tipoCuenta
+			switch($_REQUEST['tipo_persona']){
 				case 'NATURAL' :
 					$_REQUEST['tipoPersona'] = 1;
 					$_TIPO = 1;
@@ -131,6 +131,11 @@ class Formulario {
 					break;
 			}
 		}
+		
+		$datosControl = array (
+				'tipo_persona' => $_REQUEST['tipo_persona'],
+				'num_documento' => $resultadoDoc[0]['identificacion']
+		);
 		
 		$esteCampo = 'tipoPersona_Update';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
@@ -151,7 +156,7 @@ class Formulario {
 				
 				//******************************************************************************************************NATURAL****************************************
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumentoUnique', $datosControl );
 				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
@@ -571,7 +576,7 @@ class Formulario {
 				//*******************************************************************************************************************JURIDICA******************
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumentoUnique', $datosControl );
 				$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];

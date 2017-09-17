@@ -24,6 +24,7 @@ class redireccion {
 				$variable .= "&generada=" . $valor ['generadaPass'];
 				$variable .= "&id_usuario=" . $valor ['id_usuario'];
 				$variable .= "&tipo_identificacion=" . $valor ['tipo_identificacion'];
+				$variable .= "&tipo_persona=" . $valor ['tipo_persona'];
 				$variable .= "&tipo=" . $valor ['tipo'];
 				$variable .= "&rol_menu=" . $valor ['rolMenu'];
 				$variable .= "&telefono=" . $valor ['telefono'];
@@ -35,8 +36,10 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable.= "&opcion=mensaje";
 				$variable.= "&mensaje=registroActividad";
-				$variable.="&nit=" . $valor['nit'];
-				$variable.="&actividad=" . $valor['actividad'];
+				$variable.="&num_documento=" . $valor['num_documento'];
+				$variable.="&actividades=" . $valor['actividades'];
+				$variable.="&idProveedor=" . $valor['fk_id_proveedor'];
+				$variable.="&tipo_persona=" . $valor['tipo_persona'];
 				break;	
                             
  			case "existeProveedor" :

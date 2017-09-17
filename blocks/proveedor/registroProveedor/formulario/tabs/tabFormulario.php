@@ -196,7 +196,7 @@ class registrarForm {
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
-						$atributos ['maximoTamanno'] = 9;
+						$atributos ['maximoTamanno'] = 14;
 						$atributos ['anchoEtiqueta'] = 200;
 						$tab ++;
 						
