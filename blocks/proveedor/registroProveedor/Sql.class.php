@@ -28,6 +28,65 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			/* DATOS DEL PROVEEDOR */
+			case "buscarProveedorByDocumentoUnique" : // ****************************************************************************
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " P.id_proveedor,";
+				$cadenaSql .= " P.num_documento,";
+				$cadenaSql .= " P.tipopersona,";
+				$cadenaSql .= " P.nom_proveedor,";
+				$cadenaSql .= " P.id_ciudad_contacto,";
+				$cadenaSql .= " P.direccion,";
+				$cadenaSql .= " P.correo,";
+				$cadenaSql .= " P.web,";
+				$cadenaSql .= " P.nom_asesor,";
+				$cadenaSql .= " P.tel_asesor,";
+				$cadenaSql .= " P.tipo_cuenta_bancaria,";
+				$cadenaSql .= " P.num_cuenta_bancaria,";
+				$cadenaSql .= " P.id_entidad_bancaria,";
+				$cadenaSql .= " P.descripcion,";
+				$cadenaSql .= " P.anexorut,";
+				$cadenaSql .= " P.anexorup,";
+				$cadenaSql .= " P.fecha_registro,";
+				$cadenaSql .= " P.fecha_ultima_modificacion,";
+				$cadenaSql .= " P.estado";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor P";
+				$cadenaSql .= " WHERE num_documento = '" . $variable['num_documento'] . "' AND tipopersona='" . $variable['tipo_persona']."';";
+				break;
+			
+			case "buscarProveedorByUnique" :
+				$cadenaSql = "SELECT * ";
+				$cadenaSql.= "FROM agora.informacion_proveedor ";
+				$cadenaSql.= "WHERE tipopersona='". $variable['tipo_persona'] ."' AND num_documento=". $variable['num_documento'] .";";
+				break;
+			
+			case "ciiuSubClaseByNum" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " id_subclase AS id_subclase,";
+				$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.ciiu_subclase";
+				$cadenaSql .= " WHERE id_subclase = '" . $variable . "'";
+				break;
+			
+			case "eliminarActividadesActuales" : // ********************************************************************
+				$cadenaSql = " DELETE FROM";
+				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
+				$cadenaSql .= " WHERE informacion_proveedor_id = " . $variable;
+				break;
+			
+			case "ciiuSubClaseByNumPush" :
+				$cadenaSql = "SELECT";
+				$cadenaSql .= " clase AS clase,";
+				$cadenaSql .= " nombre AS descripcion,";
+				$cadenaSql .= " id_subclase AS id_subclase,";
+				$cadenaSql .= "	id_subclase||' - ('||nombre||')' AS  nombre";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " core.ciiu_subclase";
+				$cadenaSql .= " WHERE id_subclase = '" . $variable . "'";
+				break;
+			
 			case "verificarEnvio" :
 				$cadenaSql = " SELECT identificacion, tipo_identificacion, informado, correo, fecha_registro, estado FROM prov_usuario ";
 				$cadenaSql .= " WHERE id_usuario = '" . $variable . "'";
@@ -287,12 +346,14 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
+				$cadenaSql .= " informacion_proveedor_id,";
 				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= " '" . $variable ['nit'] . "',";
+				$cadenaSql .= " " . $variable ['fk_id_proveedor'] . ",";
+				$cadenaSql .= " '" . $variable ['num_documento'] . "',";
 				$cadenaSql .= " '" . $variable ['actividad'] . "'";
 				$cadenaSql .= " );";
 				break;
@@ -311,11 +372,12 @@ class Sql extends \Sql {
 			case "consultarActividades" : // ********************************************************************
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " A.id_subclase,";
-				$cadenaSql .= " nombre";
+				$cadenaSql .= " S.nombre,";
+				$cadenaSql .= " S.clase";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.proveedor_actividad_ciiu A";
 				$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
-				$cadenaSql .= " WHERE num_documento= " . $variable;
+				$cadenaSql .= " WHERE informacion_proveedor_id = " . $variable;
 				break;
 			
 			// **************************************************************************
@@ -1127,14 +1189,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " AND CG.numero_contrato = '" . $variable ['num_contrato'] . "';";
 				break;
 			
-			/* VERIFICAR NUMERO DE NIT */
+			/* VERIFICAR NUMERO DE DOCUMENTO Y TIPO PERSONA */
 			case "verificarProveedor" :
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " tipopersona,";
 				$cadenaSql .= " nom_proveedor";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor ";
-				$cadenaSql .= " WHERE num_documento = '" . $variable . "'";
+				$cadenaSql .= " WHERE num_documento = '" . $variable ['num_documento'] . "' AND tipopersona = '".$variable ['tipo_persona']."';";
 				break;
 			
 			// ********************************************************************************

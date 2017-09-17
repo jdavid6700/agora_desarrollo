@@ -113,21 +113,36 @@ class FormularioRegistro {
 				// Aplica atributos globales al control
 		echo $this->miFormulario->formulario ( $atributos );
 
-			//var_dump($_REQUEST);
-
-                //DATOS DEL PROVEEDOR 
-                if(isset($_REQUEST['usuario']) && $_REQUEST['usuario'] != 'REG777'){
-                	
-                	$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
-                	$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-                	
-                    $cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento', $resultadoDoc[0][0] );
+		
+		if(isset($_REQUEST['tipo_persona'])){
 				
-                }else{
-                    $cadenaSql = $this->miSql->getCadenaSql ( 'verificarNIT', $_REQUEST['nit']  );
-                }
-                
-                $datosProvedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			$datosControl = array (
+					'tipo_persona'=>$_REQUEST['tipo_persona'],
+					'num_documento'=>$_REQUEST['num_documento']
+			);
+				
+		}else{
+				
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+			$resultadoUser = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			if($resultadoUser[0]['tipo_identificacion'] != 'NIT'){
+				$_REQUEST['tipo_persona'] = "NATURAL";
+			}else{
+				$_REQUEST['tipo_persona'] = "JURIDICA";
+			}
+			
+			$datosControl = array (
+					'tipo_persona'=>$_REQUEST['tipo_persona'],
+					'num_documento'=>$resultadoUser[0]['identificacion']
+			);
+				
+				
+		}
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByUnique', $datosControl );
+		$datosProvedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
         
 		$_REQUEST['idProveedor'] = $datosProvedor[0]['id_proveedor'];
         $_REQUEST['nit']  = $datosProvedor[0]['num_documento'];
@@ -155,133 +170,72 @@ class FormularioRegistro {
 		echo $this->miFormulario->marcoAgrupacion ( 'fin' );		
 
 		// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
-		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
-        $resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        
-		if( $resultadoActividades ){
-			
-			$esteCampo = "marcoActividades";
-			$atributos ['id'] = $esteCampo;
-			$atributos ["estilo"] = "jqueryui";
-			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-
-				foreach ($resultadoActividades as $dato):
-					echo $dato['id_subclase'] . '-' . $dato['nombre'] . "<br>";
-				endforeach;
-				
-			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		}				
-		// ----------------FIN ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------		
-				
-			$esteCampo = "marcoCIIU";
-			$atributos ['id'] = $esteCampo;
-			$atributos ["estilo"] = "jqueryui";
-			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
-			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
-			
-				// ---------------- CONTROL: Lista division CIIU--------------------------------------------------------
-					$esteCampo = "divisionCIIU";
-					$atributos ['nombre'] = $esteCampo;
-					$atributos ['id'] = $esteCampo;
-					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['tab'] = $tab ++;
-					$atributos ['anchoEtiqueta'] = 200;
-					$atributos ['evento'] = '';
-					if (isset ( $_REQUEST [$esteCampo] )) {
-						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-					} else {
-						$atributos ['seleccion'] = -1;
-					}
-					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 1;
-					$atributos ['tamanno'] = 1;
-					$atributos ['ajax_function'] = "";
-					$atributos ['ajax_control'] = $esteCampo;
-					$atributos ['estilo'] = "jqueryui";
-					$atributos ['validar'] = "required";
-					$atributos ['limitar'] = false;
-					$atributos ['anchoCaja'] = 60;
-					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuDivision' );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					$atributos ['matrizItems'] = $matrizItems;
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					//echo $this->miFormulario->campoCuadroLista ( $atributos );
-					unset ( $atributos );
-				// ----------------FIN CONTROL: Lista division CIIU--------------------------------------------------------
-					
-				// ---------------- CONTROL: Lista grupo CIIU--------------------------------------------------------
-					$esteCampo = "grupoCIIU";
-					$atributos ['nombre'] = $esteCampo;
-					$atributos ['id'] = $esteCampo;
-					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['tab'] = $tab ++;
-					$atributos ['anchoEtiqueta'] = 200;
-					$atributos ['evento'] = '';
-					if (isset ( $_REQUEST [$esteCampo] )) {
-						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-					} else {
-						$atributos ['seleccion'] = - 1;
-					}
-					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 1;
-					$atributos ['tamanno'] = 1;
-					$atributos ['ajax_function'] = "";
-					$atributos ['ajax_control'] = $esteCampo;
-					$atributos ['estilo'] = "jqueryui";
-					$atributos ['validar'] = "required";
-					$atributos ['limitar'] = false;
-					$atributos ['anchoCaja'] = 60;
-					$atributos ['miEvento'] = '';
-					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuGrupo', '01' );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					$atributos ['matrizItems'] = $matrizItems;
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					//echo $this->miFormulario->campoCuadroLista ( $atributos );
-					unset ( $atributos );
-				// ----------------FIN CONTROL: Lista grupo CIIU--------------------------------------------------------
-
-				// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
-					$esteCampo = "claseCIIU";
-					$atributos ['nombre'] = $esteCampo;
-					$atributos ['id'] = $esteCampo;
-					$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-					$atributos ["etiquetaObligatorio"] = true;
-					$atributos ['tab'] = $tab ++;
-					$atributos ['anchoEtiqueta'] = 200;
-					$atributos ['evento'] = '';
-					if (isset ( $_REQUEST [$esteCampo] )) {
-						$atributos ['seleccion'] = $_REQUEST [$esteCampo];
-					} else {
-						$atributos ['seleccion'] = - 1;
-					}
-					$atributos ['deshabilitado'] = false;
-					$atributos ['columnas'] = 1;
-					$atributos ['tamanno'] = 1;
-					$atributos ['ajax_function'] = "";
-					$atributos ['ajax_control'] = $esteCampo;
-					$atributos ['estilo'] = "jqueryui";
-					$atributos ['validar'] = "required";
-					$atributos ['limitar'] = false;
-					$atributos ['anchoCaja'] = 60;
-					$atributos ['miEvento'] = '';
-					$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
-					$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-					$atributos ['matrizItems'] = $matrizItems;
-					$atributos = array_merge ( $atributos, $atributosGlobales );
-					echo $this->miFormulario->campoCuadroLista ( $atributos );
-					unset ( $atributos );
-				// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
-				
-			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['idProveedor']  );
+		$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
-		$esteCampo = 'nit';
+		if ($resultadoActividades) {
+
+            $esteCampo = "marcoActividades";
+            $atributos ['id'] = $esteCampo;
+            $atributos ["estilo"] = "jqueryui";
+            $atributos ['tipoEtiqueta'] = 'inicio';
+            $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+            echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+
+            foreach ($resultadoActividades as $dato):
+				echo "<span class='textoElegante textoEnorme textoAzul'>+ </span><b>";
+				echo $dato['id_subclase'] . ' - ' . $dato['nombre'] . "</b><br>";
+			endforeach;
+
+            echo $this->miFormulario->marcoAgrupacion('fin');
+        }				
+		// ----------------FIN ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------		
+			
+		
+		
+		$esteCampo = "marcoCIIU";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+		
+		// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+		$esteCampo = "claseCIIU";
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['id'] = $esteCampo;
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+		$atributos ["etiquetaObligatorio"] = true;
+		$atributos ['tab'] = $tab ++;
+		$atributos ['anchoEtiqueta'] = 200;
+		$atributos ['evento'] = '';
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['seleccion'] = - 1;
+		}
+		$atributos ['deshabilitado'] = false;
+		$atributos ['columnas'] = 1;
+		$atributos ['tamanno'] = 1;
+		$atributos ['ajax_function'] = "";
+		$atributos ['ajax_control'] = $esteCampo;
+		$atributos ['estilo'] = "jqueryui";
+		$atributos ['validar'] = "required";
+		$atributos ['limitar'] = false;
+		$atributos ['anchoCaja'] = 60;
+		$atributos ['miEvento'] = '';
+		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
+		$matrizItems = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$atributos ['matrizItems'] = $matrizItems;
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroLista ( $atributos );
+		unset ( $atributos );
+		// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+		
+		echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+		
+		$esteCampo = 'idsActividades';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";
 		$atributos ['estilo'] = '';
@@ -293,6 +247,115 @@ class FormularioRegistro {
 		} else {
 			$atributos ['valor'] = '';
 		}
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+			
+			
+		$esteCampo = "marcoCIIU";
+		$atributos ['id'] = $esteCampo;
+		$atributos ["estilo"] = "jqueryui";
+		$atributos ['tipoEtiqueta'] = 'inicio';
+		$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+		echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+		?>
+					
+					
+					<table id="tabla" class="table1" width="100%" >
+						<!-- Cabecera de la tabla -->
+						<thead>
+							<tr>
+								<th width="10%" >Codigo</th>
+								<th width="50%" >Descripción</th>
+								<th width="25%" >Clase</th>
+								<th width="15%" >&nbsp;</th>
+							</tr>
+						</thead>
+					 
+						<!-- Cuerpo de la tabla con los campos -->
+						<tbody>
+					 
+							<!-- fila base para clonar y agregar al final -->
+							<tr class="fila-base">
+								<td><input type="text" class="nombre" size="40" /></td>
+								<td><input type="text" class="apellidos" size="125" /></td>
+								<td><input type="text" class="apellidos" size="65" /></td>
+								<th class="eliminar" scope="row">Eliminar</th>
+							</tr>
+							<!-- fin de código: fila base -->
+					 
+		<!--					 Fila de ejemplo 
+							<tr>
+								<td><input type="text" class="nombre" size="40" /></td>
+								<td><input type="text" class="apellidos" size="125" /></td>
+								<td><input type="text" class="apellidos" size="65" /></td>
+								<th class="eliminar" scope="row">Eliminar</th>
+							</tr>-->
+							<!-- fin de código: fila de ejemplo -->
+					 
+						</tbody>
+					</table>
+					<!-- Botón para agregar filas -->
+					<!-- 
+					<input type="button" id="agregar" value="Agregar fila" /> -->
+
+		
+		
+					
+					
+		<?php
+					
+		echo $this->miFormulario->marcoAgrupacion ( 'fin' );		
+
+		$esteCampo = 'idProveedor';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		if (isset ( $_REQUEST [$esteCampo] )) {
+			$atributos ['valor'] = $_REQUEST [$esteCampo];
+		} else {
+			$atributos ['valor'] = '';
+		}
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
+		$esteCampo = 'numDocumento';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ['valor'] = $datosProvedor[0]['num_documento'];
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
+		$esteCampo = 'tipo_persona';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ['valor'] = $datosProvedor[0]['tipopersona'];
+		$atributos = array_merge ( $atributos, $atributosGlobales );
+		echo $this->miFormulario->campoCuadroTexto ( $atributos );
+		unset ( $atributos );
+		
+		$esteCampo = 'idActividades';
+		$atributos ["id"] = $esteCampo; // No cambiar este nombre
+		$atributos ["tipo"] = "hidden";
+		$atributos ['estilo'] = '';
+		$atributos ["obligatorio"] = false;
+		$atributos ['marco'] = true;
+		$atributos ["etiqueta"] = "";
+		$atributos ['valor'] = '';
 		$atributos = array_merge ( $atributos, $atributosGlobales );
 		echo $this->miFormulario->campoCuadroTexto ( $atributos );
 		unset ( $atributos );
@@ -325,7 +388,7 @@ class FormularioRegistro {
 			// -----------------FIN CONTROL: Botón -----------------------------------------------------------
 		}
 	// 			------------------Fin Division para los botones-------------------------
-				echo $this->miFormulario->division( "fin" );
+		echo $this->miFormulario->division( "fin" );
 				
 				
 				// ------------------- SECCION: Paso de variables ------------------------------------------------
