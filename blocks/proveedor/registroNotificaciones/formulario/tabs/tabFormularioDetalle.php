@@ -230,6 +230,9 @@ class FormularioRegistro {
 
         $conexion = 'framework';
         $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = "argo_contratos";
+        $esteRecursoDBArka = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
         //*************************************************************************** DBMS *******************************
         //****************************************************************************************************************
@@ -374,8 +377,10 @@ class FormularioRegistro {
         $mensaje = "<b>IMPORTANTE</b><br>
 							<br>
 							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
-				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i> y la
-				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b>    <i>'Por medio de la cual se adopta el Manual De.Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>.
+				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i>, la
+				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b> <i>'Por medio de la cual se adopta el Manual de Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>,
+        		la <b>RESOLUCIÓN  No. 262 (2 de Junio de 2015)</b> <i>'Por medio de la cual se reglamenta el Acuerdo 03 de 2015, Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas y se dictan otras disposiciones'</i> y
+        		la <b>RESOLUCIÓN  No. 683 (9 de Diciembre de 2016)</b> <i>'Por la cual se crea y se reglamenta el banco de proveedores en la Universidad Distrital Francisco José de Caldas'</i>.
 							";
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
         $esteCampo = 'mensaje';
@@ -465,6 +470,9 @@ class FormularioRegistro {
             $resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
             
             
+
+            
+            
             $esteCampo = "marcoDescripcionProducto";
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";
@@ -495,9 +503,10 @@ class FormularioRegistro {
                             									<th width="25%" >Descripción</th>
                             									<th width="10%" >Tipo</th>
                             									<th width="10%" >Unidad</th>
-                            									<th width="20%" >Tiempo de Ejecución</th>
-                            									<th width="10%" >Cantidad</th>
+                            									<th width="10%" >Tiempo de Ejecución</th>
+                            									<th width="5%" >Cantidad</th>
                             									<th width="10%" >Valor Unitario</th>
+                                                                                                <th width="15%" >Iva</th>
                             									<th width="5%" >&nbsp;</th>
                             								</tr>
                             							</thead>
@@ -513,12 +522,20 @@ class FormularioRegistro {
 													 		<?php 
 													 		
 													 		$valorPrecioTotal = 0;
+                                                                                                                        $valorPrecioTotalIva=0;
 													 		
 													 		if (isset ( $resultadoItems ) && $resultadoItems) {
 													 		$count = count($resultadoItems);
 													 		$i = 0;
 													 		
 														 		while ($i < $count){
+                                                                                                                                    
+                                                                                                                                    $sumaIva=0;
+                                                                                                                                    
+                                                                                                                                    $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consultar_tipo_iva_Item", $resultadoItems[$i]['iva']);
+                                                                                                                                    $IvaItem = $esteRecursoDBArka->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
+                                                                                                                                    
+                                                                                                                                    
 														 			
 														 			if($resultadoItems[$i]['tipo_necesidad'] == 1){
 														 				$tipo = "1 - BIEN";
@@ -543,8 +560,17 @@ class FormularioRegistro {
 														 			}
 														 			
 														 			$valorPrecioTotal += ($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario']);
+                                                                                                                                        if($IvaItem[0]['descripcion']=='Tarifa de Cero' || $IvaItem[0]['descripcion']=='Exento'){
+                                                                                                                                            $valorPrecioTotalIva +=($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario']);
+                                                                                                                                        }
+                                                                                                                                        else{
+                                                                                                                                             $valorPrecioTotalIva += (($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario'])) * (1+($IvaItem[0]['iva']));
+                                                                                                                                        }
+                                                                                                                                        
+                                                                                                                                       
 														 			
 														 		?>
+                                                                                                                        
 																<tr id="nFilas" >
 																	<td><?php echo $resultadoItems[$i]['nombre']  ?></td>
 													 				<td><?php echo $resultadoItems[$i]['descripcion']  ?></td>
@@ -553,6 +579,7 @@ class FormularioRegistro {
 													 				<td><?php echo $tiempo  ?></td>
 													 				<td><?php echo number_format(round($resultadoItems[$i]['cantidad'],0), 0, '', '.')  ?></td>
 													 				<td><?php echo "$ " . number_format(round($resultadoItems[$i]['valor_unitario'],0), 0, '', '.')  ?></td>
+                                                                                                                                        <td><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
 													 				<th scope="row"><div class = "widget"><?php echo $i+1  ?></div></th>
 													 			</tr>
 																<?php
@@ -591,6 +618,36 @@ class FormularioRegistro {
                             						$atributos ["etiqueta"] = "";
                             						
                             						$atributos ['valor'] = $valorPrecioTotal;
+                            						
+                            						$atributos ['validar'] = '';
+                            						$atributos = array_merge ( $atributos, $atributosGlobales );
+                            						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+                            						unset ( $atributos );
+                                                                        
+                                                                          $esteCampo = 'precioTotaldeIva';
+                            						$atributos ["id"] = $esteCampo; // No cambiar este nombre
+                            						$atributos ["tipo"] = "hidden";
+                            						$atributos ['estilo'] = '';
+                            						$atributos ["obligatorio"] = false;
+                            						$atributos ['marco'] = false;
+                            						$atributos ["etiqueta"] = "";
+                            						
+                            						$atributos ['valor'] = $valorPrecioTotalIva-$valorPrecioTotal;
+                            						
+                            						$atributos ['validar'] = '';
+                            						$atributos = array_merge ( $atributos, $atributosGlobales );
+                            						echo $this->miFormulario->campoCuadroTexto ( $atributos );
+                            						unset ( $atributos );
+                                                                        
+                                                                        $esteCampo = 'precioCargaIva';
+                            						$atributos ["id"] = $esteCampo; // No cambiar este nombre
+                            						$atributos ["tipo"] = "hidden";
+                            						$atributos ['estilo'] = '';
+                            						$atributos ["obligatorio"] = false;
+                            						$atributos ['marco'] = false;
+                            						$atributos ["etiqueta"] = "";
+                            						
+                            						$atributos ['valor'] = $valorPrecioTotalIva;
                             						
                             						$atributos ['validar'] = '';
                             						$atributos = array_merge ( $atributos, $atributosGlobales );
@@ -660,6 +717,49 @@ class FormularioRegistro {
                             
                             $dineroCast = $converted;
                             
+                            $promedioIva = $valorPrecioTotalIva;
+                            if($promedioIva > 999999999 && $promedioIva <= 999999999999){
+                            
+                            	$restCast = substr((int)$promedioIva, -9);
+                            	$rest = str_replace ( $restCast , "" , (int)$promedioIva );
+                            	$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+                            
+                            	if ($rest == '001') {
+                            		$convertedIva = 'MIL ';
+                            	} else if (intval($rest) > 0) {
+                            		$convertedIva = sprintf('%sMIL ', $this->convertGroup($rest));
+                            	}
+                            
+                            	$convertedIva .= $this->to_word($restCast, 'COP');
+                            }else{
+                            	$convertedIva = $this->to_word($promedioIva, 'COP');
+                            }
+                            
+                            $dineroCastIva = $convertedIva;
+                            
+                            
+                            $promedioSoloIva = $valorPrecioTotalIva-$valorPrecioTotal;
+                            if($promedioSoloIva > 999999999 && $promedioSoloIva <= 999999999999){
+                            
+                            	$restCast = substr((int)$promedioSoloIva, -9);
+                            	$rest = str_replace ( $restCast , "" , (int)$promedioSoloIva );
+                            	$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+                            
+                            	if ($rest == '001') {
+                            		$convertedSoloIva = 'MIL ';
+                            	} else if (intval($rest) > 0) {
+                            		$convertedSoloIva = sprintf('%sMIL ', $this->convertGroup($rest));
+                            	}
+                            
+                            	$convertedSoloIva .= $this->to_word($restCast, 'COP');
+                            }else{
+                            	$convertedSoloIva = $this->to_word($promedioSoloIva, 'COP');
+                            }
+                            
+                            $dineroCastSoloIva = $convertedSoloIva;
+                            
+                            
+                            
                             echo "<center>";
                             // ------------------Division para los botones-------------------------
                             $atributos ["id"] = "botones";
@@ -700,6 +800,75 @@ class FormularioRegistro {
                             	
                             	echo "<div class='lefht' >";
                             		echo "<b>VALOR DE LA COTIZACIÓN EN LETRAS:</b>  ". $dineroCast;
+                            	echo "</div>";
+                                
+                                 echo "<br><br>";
+                                // ----------------INICIO CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
+                            	$esteCampo = 'precioTotalIva';
+                            	$atributos ['id'] = $esteCampo;
+                            	$atributos ['nombre'] = $esteCampo;
+                            	$atributos ['tipo'] = 'text';
+                            	$atributos ['estilo'] = 'jqueryui';
+                            	$atributos ['marco'] = true;
+                            	$atributos ['estiloMarco'] = '';
+                            	$atributos ["etiquetaObligatorio"] = false;
+                            	$atributos ['columnas'] = 1;
+                            	$atributos ['dobleLinea'] = 0;
+                            	$atributos ['tabIndex'] = $tab;
+                            	$atributos ['etiqueta'] = "<b>".$this->lenguaje->getCadena($esteCampo)."</b>";
+                            	$atributos ['validar'] = 'required, minSize[1], maxSize[40]';
+                            	
+                            	$atributos ['valor'] = '';
+                            	
+                            	$atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                            	$atributos ['deshabilitado'] = true;
+                            	$atributos ['tamanno'] = 55;
+                            	$atributos ['maximoTamanno'] = '75';
+                            	$atributos ['anchoEtiqueta'] = 400;
+                            	$tab ++;
+                            	
+                            	// Aplica atributos globales al control
+                            	$atributos = array_merge($atributos, $atributosGlobales);
+                            	echo $this->miFormulario->campoCuadroTexto($atributos);
+                            	unset($atributos);
+                                
+                                echo "<div class='lefht' >";
+                            	echo "<b>VALOR DE IVA EN LETRAS:</b>  ". $dineroCastSoloIva;
+                            	echo "</div>";
+                                
+                                echo "<br><br>";
+                                // ----------------INICIO CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
+                            	$esteCampo = 'precioCotIva';
+                            	$atributos ['id'] = $esteCampo;
+                            	$atributos ['nombre'] = $esteCampo;
+                            	$atributos ['tipo'] = 'text';
+                            	$atributos ['estilo'] = 'jqueryui';
+                            	$atributos ['marco'] = true;
+                            	$atributos ['estiloMarco'] = '';
+                            	$atributos ["etiquetaObligatorio"] = false;
+                            	$atributos ['columnas'] = 1;
+                            	$atributos ['dobleLinea'] = 0;
+                            	$atributos ['tabIndex'] = $tab;
+                            	$atributos ['etiqueta'] = "<b>".$this->lenguaje->getCadena($esteCampo)."</b>";
+                            	$atributos ['validar'] = 'required, minSize[1], maxSize[40]';
+                            	
+                            	$atributos ['valor'] = '';
+                            	
+                            	$atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+                            	$atributos ['deshabilitado'] = true;
+                            	$atributos ['tamanno'] = 55;
+                            	$atributos ['maximoTamanno'] = '75';
+                            	$atributos ['anchoEtiqueta'] = 400;
+                            	$tab ++;
+                            	
+                            	// Aplica atributos globales al control
+                            	$atributos = array_merge($atributos, $atributosGlobales);
+                            	echo $this->miFormulario->campoCuadroTexto($atributos);
+                            	unset($atributos);
+                            	// ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
+                            	
+                            	echo "<div class='lefht' >";
+                            		echo "<b>VALOR DE LA COTIZACIÓN CON IVA EN LETRAS:</b>  ". $dineroCastIva;
                             	echo "</div>";
                             }
                             echo $this->miFormulario->division("fin");

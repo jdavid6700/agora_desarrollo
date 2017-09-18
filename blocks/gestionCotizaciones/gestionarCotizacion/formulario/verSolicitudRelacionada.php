@@ -712,8 +712,10 @@ class FormularioRegistro {
 		$mensaje = "<b>IMPORTANTE</b><br>
 							<br>
 							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
-				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i> y la                                                                                                                                                                                                                                                                                                                                                 
-				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b>    <i>'Por medio de la cual se adopta el Manual De.Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>.
+				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i>, la
+				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b> <i>'Por medio de la cual se adopta el Manual de Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>,
+        		la <b>RESOLUCIÓN  No. 262 (2 de Junio de 2015)</b> <i>'Por medio de la cual se reglamenta el Acuerdo 03 de 2015, Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas y se dictan otras disposiciones'</i> y
+        		la <b>RESOLUCIÓN  No. 683 (9 de Diciembre de 2016)</b> <i>'Por la cual se crea y se reglamenta el banco de proveedores en la Universidad Distrital Francisco José de Caldas'</i>.
 							";
 		// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 		$esteCampo = 'mensaje';
