@@ -113,16 +113,13 @@ class Registrar {
 		//************************************************************************************************************
 		
 		
-		
-		if(isset($_REQUEST['tituloCotizacion'])){$_REQUEST['tituloCotizacion']=mb_strtoupper($_REQUEST['tituloCotizacion'],'utf-8');}
-		
-		
 		/*Variables Texto Enriquecido ----------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
 		$objetivos = $_POST[$this->campoSeguroCodificar('objetivo', $_REQUEST['tiempo'])];
 		$requisitos = $_POST[$this->campoSeguroCodificar('requisitos', $_REQUEST['tiempo'])];
 		$observaciones = $_POST[$this->campoSeguroCodificar('observaciones', $_REQUEST['tiempo'])];
 		$plan = $_POST[$this->campoSeguroCodificar('planAccion', $_REQUEST['tiempo'])];
+		$titulo = $_POST[$this->campoSeguroCodificar('tituloCotizacion', $_REQUEST['tiempo'])];
 		
 		
 		
@@ -130,7 +127,8 @@ class Registrar {
 				'objetivos' => str_replace("'", "\"", $objetivos), //Limpieza Comilla Simple para evitar Errores En Ejecución Base de Datos
 				'requisitos' => str_replace("'", "\"", $requisitos),
 				'observaciones' => str_replace("'", "\"", $observaciones),
-				'plan' => str_replace("'", "\"", $plan)
+				'plan' => str_replace("'", "\"", $plan),
+				'titulo' => str_replace("'", "\"", $titulo)
 		);
 		/*--------------------------------------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
@@ -151,7 +149,7 @@ class Registrar {
 		
 		
         $datosSolicitud = array (
-        		'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
+        		'titulo_cotizacion' => $datosTextoEnriquecido['titulo'],
         		'vigencia' => $_REQUEST ['vigencia'],
         		'unidad_ejecutora' => (int)$_REQUEST ['unidad_ejecutora_hidden'],
         		'dependencia' => $_REQUEST ['dependencia'],
@@ -220,9 +218,82 @@ class Registrar {
         }
         
         
+        //******************************** ITEMS ****************************************************************
+        
+        $countFPParam = $_REQUEST ['countItems'];
+        
+     
+        $subFP = explode("&", $_REQUEST ['idsItems']);
+        
+     
+       
+        $cantidadParametros = ($countFPParam) * 7;
+        
+        $limitP = 0;
+        while($limitP < $cantidadParametros){
+        	 
+        	$subCount[$limitP] = explode(" ", $subFP[$limitP]);
+        	 
+        	$limitP++;
+        	 
+        }
+       
+     
+        $limit = 0;
+        while($limit < $cantidadParametros){
+            
+                $registroCant =str_replace(".", "", $subCount[$limit + 6][0]);
+                $registroCant =str_replace(",", ".", $registroCant);
+        	 
+        
+        	if($subCount[$limit+3][0] == 1){
+        		
+        		$datoFP = array (
+        				'objeto_cotizacion' => "currval('agora.prov_objeto_contratar_id_objeto_seq')",
+        				'nombre' => $subFP[$limit+1],
+        				'descripcion' => $subFP[$limit+2],
+        				'tipo' => $subCount[$limit+3][0],
+        				'unidad' => $subCount[$limit+4][0],
+        				'tiempo' => $subCount[$limit+5][0],
+        				'cantidad' => $registroCant
+        		);
+        		
+        	}
+        	
+        	
+        	if($subCount[$limit+3][0] == 2){
+        		
+        		$subTime = explode(" ", $subFP[$limit+5]);
+        		$totalDays = (intval($subTime[0]) * 360) + (intval($subTime[3]) * 30) + intval($subTime[6]);
+        		
+        		$datoFP = array (
+        				'objeto_cotizacion' => "currval('agora.prov_objeto_contratar_id_objeto_seq')",
+        				'nombre' => $subFP[$limit+1],
+        				'descripcion' => $subFP[$limit+2],
+        				'tipo' => $subCount[$limit+3][0],
+        				'unidad' => $subCount[$limit+4][0],
+        				'tiempo' => $totalDays,
+        				'cantidad' => $registroCant
+        		);
+
+        	}
+        	
+        	$datoRegFP = $this->miSql->getCadenaSql ( 'registrarItemProducto', $datoFP );
+             
+            
+        	array_push($SQLs, $datoRegFP);
+        	 
+        	 
+        	$limit = $limit + 7;
+        }
+       
+      
+        
         //*************************************************************************************************************
         
         $registroCotizacion = $esteRecursoDB->transaccion($SQLs);
+        
+          
         
 
 		if ($registroCotizacion) {
@@ -249,7 +320,7 @@ class Registrar {
 				
 				$datos = array (
 						'idObjeto' => $lastId[0][0],
-						'titulo_cotizacion' => $_REQUEST ['tituloCotizacion'],
+						'titulo_cotizacion' => $datosTextoEnriquecido['titulo'],
 						'vigencia' => $_REQUEST ['vigencia'],
 						'unidad_ejecutora' => (int)$_REQUEST ['unidad_ejecutora_hidden'],
 						'dependencia' => $_REQUEST ['dependencia'],
@@ -270,6 +341,7 @@ class Registrar {
 			redireccion::redireccionar ( 'inserto',  $datos);
 			exit ();
 		} else {
+                      
 			redireccion::redireccionar ( 'noInserto' );
 			exit ();
 		}

@@ -1146,8 +1146,11 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").val($("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").val());
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").select2();
-                    $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " NECESIDAD("+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")");
+                    
+                    $(tinymce.get('<?php echo $this->campoSeguro('tituloCotizacion') ?>').getBody()).html('<p><i>'+data[0].OBJETO + ' - <b>NECESIDAD ('+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")"+'</b></i></p>');
+					$("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val('<p><i>'+data[0].OBJETO + ' - <b>NECESIDAD ('+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")"+'</b></i></p>');
 					
+                    
 					
 					
 					// Validación CDP Normativa Tipo de Caracteristicas -----------------------------------------------------------------------------------
@@ -1294,14 +1297,33 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 if(data[2] != "" && data[3] != ""){
                 	
                 	var i = 0;
+                	var control = false;
                 	while(i < data[3].length){
                 		if(data[3][i].tercero_id == data[2].NUMERO_DOCUMENTO){
-                			console.log(data[3][i].tercero_id + " => " + data[3][i].id);
                 			$("#<?php echo $this->campoSeguro('ordenador') ?>").val(data[3][i].id);
                     		$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
                     		$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(data[3][i].id);
+                    		control = true;
                 		}
                 		i++;
+                	}
+                	
+                	if(!control){
+                	
+                		swal({
+			                title: 'Inconsistencia datos SICAPITAL y ÁGORA',
+			                type: 'error',
+			                html:
+			                        'Atención, la información del ordenador del gasto no esta actualizada,'
+			                        +' existen inconsistencias con el Sistema ÁGORA, la necesidad N°'+data[0].NUM_SOL_ADQ+' de SICAPITAL presenta'
+			                        +' como ordenador de gasto al Señor(a):<br><br> <b>('+data[2].NUMERO_DOCUMENTO+') - '+data[2].NOMBRES+' '+data[2].PRIMER_APELLIDO
+			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+			            
+			            eliminarCDP();
+                	
                 	}
                 	
                 }
@@ -1936,7 +1958,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
             /* Obtener todas las celdas */
             var celdas = $(this).find('td');
             
-             $(celdas[0]).innerText=contNumeral+1;
+            
+             $(celdas[0]).text(contNumeral);
             
             /* Mostrar el valor de cada celda */
             celdas.each(function () {

@@ -731,39 +731,41 @@ class FormularioRegistro {
 		
 		
 
-		// ----------------INICIO CONTROL: Campo de Texto NUM SOLICITUD--------------------------------------------------------
+		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'tituloCotizacion';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['nombre'] = $esteCampo;
 		$atributos ['tipo'] = 'text';
-		$atributos ['estilo'] = 'jqueryui mayuscula';
+		$atributos ['estilo'] = 'jqueryui';
 		$atributos ['marco'] = true;
 		$atributos ['estiloMarco'] = '';
 		$atributos ["etiquetaObligatorio"] = true;
-		$atributos ['columnas'] = 1;
+		$atributos ['columnas'] = 120;
+		$atributos ['filas'] = 8;
 		$atributos ['dobleLinea'] = 0;
 		$atributos ['tabIndex'] = $tab;
-		$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-		$atributos ['validar'] = 'required';
+		$atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+		$atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+		$atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+		$atributos ['deshabilitado'] = true;
+		$atributos ['tamanno'] = 20;
+		$atributos ['maximoTamanno'] = '';
+		$atributos ['anchoEtiqueta'] = 220;
+		$atributos ['textoEnriquecido'] = true;
 		
-		if (isset ( $_REQUEST [$esteCampo] )) {
+		if (isset($_REQUEST [$esteCampo])) {
 			$atributos ['valor'] = $_REQUEST [$esteCampo];
 		} else {
 			$atributos ['valor'] = '';
 		}
 		
-		$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-		$atributos ['deshabilitado'] = true;
-		$atributos ['tamanno'] = 80;
-		$atributos ['maximoTamanno'] = '80';
-		$atributos ['anchoEtiqueta'] = 200;
 		$tab ++;
 		
 		// Aplica atributos globales al control
-		$atributos = array_merge ( $atributos, $atributosGlobales );
-		echo $this->miFormulario->campoCuadroTexto ( $atributos );
-		unset ( $atributos );
-		// ----------------FIN CONTROL: Campo de Texto NUM SOLICITUD--------------------------------------------------------
+		$atributos = array_merge($atributos, $atributosGlobales);
+		echo $this->miFormulario->campoTextArea($atributos);
+		unset($atributos);
+		
 		
 		// ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
 		$esteCampo = 'vigencia';
