@@ -1658,13 +1658,8 @@ class FormularioRegistro {
 		$atributos ['anchoEtiqueta'] = 200;
 		$atributos ['evento'] = '';
 		
+		$atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
 		
-		
-		if (isset ( $estadoSolicitud )) {
-			$atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
-		} else {
-			$atributos ['seleccion'] = - 1;
-		}
 		$atributos ['deshabilitado'] = true;
 		$atributos ['columnas'] = 1;
 		$atributos ['tamanno'] = 1;

@@ -1,6 +1,15 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
+$this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
+$this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
+$this->idioma["numero_disponibilidadTitulo"]="Número de la Necesidad";
+$this->idioma["valor_acumulado"] = "($)Valor (CDP) : ";
+$this->idioma["valor_acumuladoTitulo"]="($)Valor (CDP)";
+$this->idioma["dependenciaDestino"] = "Dependencia Destino :";
+$this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
+
 $this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
 
 $this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
@@ -10,6 +19,11 @@ $this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
 $this->idioma["observaciones"] = "Observaciones Ordenador : ";
 $this->idioma["observacionesTitulo"]="Observaciones Ordenador";
 
+$this->idioma["precioTotalIva"] = "PRECIO IVA : ";
+$this->idioma["precioTotalIvaTitulo"]="Precio Iva";
+
+$this->idioma["precioCotIva"] = "PRECIO COTIZACIÓN CON IVA: ";
+$this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
 
 $this->idioma["entregables"] = "Entregables : *";
 $this->idioma["entregablesTitulo"]="Entregables";
