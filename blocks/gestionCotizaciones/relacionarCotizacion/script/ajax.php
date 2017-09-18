@@ -48,7 +48,22 @@ $cadena23 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $c
 $urlFinal23 = $url . $cadena23;
 //echo $urlFinal16; exit;
 
+//Variables
+$cadenaACodificar29 = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificar29 .= "&procesarAjax=true";
+$cadenaACodificar29 .= "&action=index.php";
+$cadenaACodificar29 .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificar29 .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificar29 .= $cadenaACodificar29 . "&funcion=consultarUnidad";
+$cadenaACodificar29 .= "&tiempo=" . $_REQUEST ['tiempo'];
 
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+
+$cadena29 = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificar29, $enlace);
+
+// URL definitiva
+$urlFinal29 = $url . $cadena29;
 
 
 // URL base
@@ -112,8 +127,28 @@ $urlFinal25 = $url . $cadena25;
 
 
 
+
+//Variables
+$cadenaACodificarArchivo = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarArchivo .= "&procesarAjax=true";
+$cadenaACodificarArchivo .= "&action=index.php";
+$cadenaACodificarArchivo .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarArchivo .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarArchivo .= $cadenaACodificarArchivo . "&funcion=verificarArchivo";
+$cadenaACodificarArchivo .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+
+$cadenaArchivo = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarArchivo, $enlace);
+
+// URL definitiva
+$urlFinalArchivo = $url . $cadenaArchivo;
+
 ?>
 
+$('#<?php echo $this->campoSeguro('IvaItem') ?>').width(150);
+    $("#<?php echo $this->campoSeguro('IvaItem') ?>").select2();
 
 //////////////////Función que se ejecuta al seleccionar alguna opción del contexto de la Entidad////////////////////
 
@@ -257,11 +292,13 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 		   
 		    	
 		    	
-		    $("#botonAgregar").click(function(){
+			 $("#botonAgregar").click(function(){
+			 
 		    		
 		    	if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '' &&
 		    		$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() != '' &&
-		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '') {
+		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '' &&
+		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() > 0) {
 		    		
 		    		
 		    		if( $.isNumeric($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val()) ){
@@ -294,11 +331,31 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 							//-----------------------------------------------------------------------------
 							
 							
-							if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
-								consultarTipoFormaPagoPush();
-
-                   	 		}
+							if(($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3 &&
+							$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() > 0) ||
+							$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 3){
 							
+								$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#DDDDDD');
+							
+								if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
+									consultarTipoFormaPagoPush();
+	
+	                   	 		}
+							
+							}else{
+							
+								$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#FF0000');
+						
+								swal({
+								  title: 'Ocurrio un problema...',
+								  type: 'error',
+								  html:
+								    'El Valor de <big>Forma de Pago</big>, es un valor Porcentual Incorrecto. (ERROR) ',
+								  confirmButtonText:
+								    'Ok'
+								})
+								
+							}
 							
 							//-----------------------------------------------------------------------------
 							
@@ -361,7 +418,10 @@ $("#<?php echo $this->campoSeguro('grupoCIIU')?>").change(function() {
 					})
             		
 			  }
-			});	
+			});	   
+				
+			
+			
 			
 			var iCntFP = 0;   
 		    var paramFP = new Array();
@@ -1133,7 +1193,842 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         });
 
     });
+    
 //---------------------Fin Ajax Numero de Solicitud de Necesidad------------------  
 
 
+    $('#<?php echo $this->campoSeguro('tipoItem') ?>').change(function () {
+
+        $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
+
+        if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() != '') {
+            $('#parametros1').fadeIn(500);
+            $('#parametros4').fadeIn(500);
+
+            if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() == 1) {
+                $('#parametros2').fadeIn(500);
+                $('#parametros3').fadeOut(100);
+            }
+
+            if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() == 2) {
+                $('#parametros2').fadeOut(100);
+                $('#parametros3').fadeIn(500);
+            }
+
+
+        } else {
+            $('#parametros1').fadeOut(600);
+            $('#parametros2').fadeOut(600);
+            $('#parametros3').fadeOut(600);
+            $('#parametros4').fadeOut(600);
+        }
+
+
+
+
+    });
+    
+    
+      $("#<?php echo $this->campoSeguro('documentos_elementos') ?>").change(function () {
+        var file = $("#<?php echo $this->campoSeguro('documentos_elementos') ?>").val();
+        var ext = file.substring(file.lastIndexOf("."));
+        if (ext != ".xlsx")
+        {
+            swal({
+                title: 'Problema con el Archivo de Elementos',
+                type: 'warning',
+                html:
+                        'Por favor cambie el archivo por otro en formato.  <i>(xlsx)</i> recuerde que puede descargar el Archivo Plantilla adjunto y cargarlo en este campo con los elementos registrados',
+                confirmButtonText:
+                        'Ok'
+            })
+            $("#<?php echo $this->campoSeguro('documentos_elementos') ?>").val(null);
+        }
+    });
+    
+    
+     function isNormalInteger(str) {
+        var n = Math.floor(Number(str));
+        return String(n) === str && n >= 0;
+    }
+
+    function totalDias(years, months, days) {
+
+        var totalDays = (years * 360) + (months * 30) + days;
+
+        return totalDays;
+
+    }
+
+    function inverseTotalDias(days) {
+
+        var nyears = parseInt(days / 360);
+        var nmonths = parseInt((days - parseInt(days / 360) * 360) / 30);
+        var ndays = parseInt(days - (parseInt(days / 360) * 360 + parseInt((days - parseInt(days / 360) * 360) / 30) * 30));
+
+        return nyears + " AÑO(S) - " + nmonths + " MES(ES) - " + ndays + " DÍA(S)";
+
+    }
+
+
+    function currency(value, decimals, separators) {
+        decimals = decimals >= 0 ? parseInt(decimals, 0) : 2;
+        separators = separators || ['.', "'", ','];
+        var number = (parseFloat(value) || 0).toFixed(decimals);
+        if (number.length <= (4 + decimals))
+            return number.replace('.', separators[separators.length - 1]);
+        var parts = number.split(/[-.]/);
+        value = parts[parts.length > 1 ? parts.length - 2 : 0];
+        var result = value.substr(value.length - 3, 3) + (parts.length > 1 ?
+                separators[separators.length - 1] + parts[parts.length - 1] : '');
+        var start = value.length - 6;
+        var idx = 0;
+        while (start > -3) {
+            result = (start > 0 ? value.substr(start, 3) : value.substr(0, 3 + start))
+                    + separators[idx] + result;
+            idx = (++idx) % 2;
+            start -= 3;
+        }
+        return (parts.length == 3 ? '-' : '') + result;
+    }
+
+
+    function formatearNumero(nStr) {
+        nStr += '';
+        x = nStr.split('.');
+        x1 = x[0];
+        x2 = x.length > 1 ? ',' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + '.' + '$2');
+        }
+        return x1 + x2;
+    }
+
+    
+    
+    $("#botonAgregarItem").click(function () {
+    
+        if ($("#<?php echo $this->campoSeguro('tipoItem') ?>").val() == 1) {//BIEN
+            
+            if ($("#<?php echo $this->campoSeguro('nombreItem') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('unidadItem') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val() != '') {
+
+
+                if ($.isNumeric($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val()) && $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val() > 0) {
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").css('border-color', '#DDDDDD');
+
+                        //-----------------------------------------------------------------------------
+
+                        consultarItemPushBien();
+
+                        //-----------------------------------------------------------------------------
+
+                }
+            
+            }
+            
+            else {
+
+                swal({
+                    title: 'Ocurrio un problema...',
+                    type: 'error',
+                    html:
+                            'Los Parámetros de <big>Items de Producto o Servicio</big>, ' +
+                            'están mal diligenciados, No se pudieron agregar.',
+                    confirmButtonText:
+                            'Ok'
+                })
+
+            }
+        }
+        
+        if ($("#<?php echo $this->campoSeguro('tipoItem') ?>").val() == 2) {//SERVICIO
+
+            if ($("#<?php echo $this->campoSeguro('nombreItem') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val() != '' &&
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val() != '' ) {
+
+
+                if ($.isNumeric($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val()) && $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val() > 0) {
+
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").css('border-color', '#DDDDDD');
+
+                    
+
+                 
+
+                        if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val())) {
+
+                            $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").css('border-color', '#DDDDDD');
+
+
+                            if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val())) {
+
+                                $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").css('border-color', '#DDDDDD');
+
+
+                                if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val())) {
+
+                                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").css('border-color', '#DDDDDD');
+
+
+
+                                    var tiempo = parseInt($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val()) +
+                                            parseInt($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val()) +
+                                            parseInt($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val());
+
+                                    if (tiempo > 0) {
+
+                                        //-----------------------------------------------------------------------------
+
+                                        consultarItemPushServicio();
+
+                                        //-----------------------------------------------------------------------------
+
+
+                                    } else {
+
+                                        swal({
+                                            title: 'Ocurrio un problema...',
+                                            type: 'error',
+                                            html:
+                                                    'El Contenido de <big>Tiempo de Ejecución</big>, es Cero. (ERROR) ',
+                                            confirmButtonText:
+                                                    'Ok'
+                                        })
+
+                                    }
+
+
+                                } else {
+
+                                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").css('border-color', '#FF0000');
+
+                                    swal({
+                                        title: 'Ocurrio un problema...',
+                                        type: 'error',
+                                        html:
+                                                'El Contenido de <big>Días</big>, no es Númerico Entero. (ERROR) ',
+                                        confirmButtonText:
+                                                'Ok'
+                                    })
+
+                                }
+
+
+                            } else {
+
+                                $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").css('border-color', '#FF0000');
+
+                                swal({
+                                    title: 'Ocurrio un problema...',
+                                    type: 'error',
+                                    html:
+                                            'El Contenido de <big>Meses</big>, no es Númerico Entero. (ERROR) ',
+                                    confirmButtonText:
+                                            'Ok'
+                                })
+
+                            }
+
+
+
+                        } else {
+
+                            $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").css('border-color', '#FF0000');
+
+                            swal({
+                                title: 'Ocurrio un problema...',
+                                type: 'error',
+                                html:
+                                        'El Contenido de <big>Año</big>, no es Númerico Entero. (ERROR) ',
+                                confirmButtonText:
+                                        'Ok'
+                            })
+
+                        }
+
+
+
+
+
+
+                    
+
+
+                } else {
+
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").css('border-color', '#FF0000');
+
+                    swal({
+                        title: 'Ocurrio un problema...',
+                        type: 'error',
+                        html:
+                                'El Contenido de <big>Cantidad</big>, no es Númerico. (ERROR) ',
+                        confirmButtonText:
+                                'Ok'
+                    })
+
+                }
+
+
+
+
+            } else {
+
+                swal({
+                    title: 'Ocurrio un problema...',
+                    type: 'error',
+                    html:
+                            'Los Parámetros de <big>Items de Producto o Servicio</big>, ' +
+                            'están mal diligenciados, No se pudieron agregar.',
+                    confirmButtonText:
+                            'Ok'
+                })
+
+            }
+
+
+        }
+        
+        
+    });
+    
+    
+     var iCntIt = 0;
+    var paramIt = new Array();
+    var totalPrecio = 0;
+     var totalPrecioIva = 0;
+     var sumadorBienes = 0;
+     var sumadorServicios = 0;
+     var totalIva = 0;
+    var fullParamIt;
+    var ContadorNumItem = 0;
+    
+    function consultarItemPushBien(elem, request, response) {
+      
+        $.ajax({
+            url: "<?php echo $urlFinal29 ?>",
+            dataType: "json",
+            data: {valor: $("#<?php echo $this->campoSeguro('unidadItem') ?>").val()},
+            success: function (data) {
+
+
+
+
+                if (data[0] != "") {
+
+                    var nFilas = $("#tablaFP2 tr").length;
+                    var tds = 8;
+                    var trs = 8;
+
+                    paramIt.push(data[0][0]);
+                    
+                    var totalItem=0;
+                    var totalItemiva=0;
+                         
+               
+                    var count = nFilas;
+
+
+                    ContadorNumItem =ContadorNumItem+1;
+                    
+
+
+                    var nuevaFila = "<tr id=\"nFilas\">";
+                    nuevaFila += "<td>" + (nFilas)+"</td>";
+                    nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('nombreItem') ?>").val().toUpperCase()) + "</td>";
+                    nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('descripcionItem') ?>").val().toUpperCase()) + "</td>";
+                    nuevaFila += "<td>1 - BIEN</td>";
+                    nuevaFila += "<td>" + (data[0][0]) + " - " + (data[0][1]) + "</td>";
+                    nuevaFila += "<td>0 - NO APLICA</td>";
+                    nuevaFila += "<td>" + formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())) + "</td>";
+                    nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
+                    nuevaFila += "</tr>";
+
+
+
+                    $("#tablaFP2").append(nuevaFila);
+
+
+                    $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
+                    $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
+                    $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
+                    $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
+                    $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
+                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
+                    $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
+                    $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2("val", -1);
+                    $('#parametros1').fadeOut(600);
+                    $('#parametros2').fadeOut(600);
+                    $('#parametros3').fadeOut(600);
+                    $('#parametros4').fadeOut(600);
+
+
+
+                    fullParamIt = "";
+                    $('#tablaFP2 tr').each(function () {
+
+                        /* Obtener todas las celdas */
+                        var celdas = $(this).find('td');
+
+                        /* Mostrar el valor de cada celda */
+                        celdas.each(function () {
+                            fullParamIt += String($(this).html()) + "&";
+                        });
+
+
+                    });
+
+                    $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
+                    
+                    
+
+                    $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
+                    
+                    sumadorBienes = sumadorBienes + 1;
+                    
+                    if(sumadorBienes>0 && sumadorServicios>0){
+                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                         
+                    }
+                    else{
+                      if(sumadorBienes>0){
+                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                      }
+                      else{
+                        if(sumadorServicios>0){
+                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                        }
+                        else{
+                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                        }
+                      }
+                    }
+                    
+           
+                          
+                }
+
+
+            }
+
+        });
+
+    }
+    ;
+    
+    
+    function consultarItemPushServicio() {
+
+        var countDays = totalDias(parseInt($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val()),
+                parseInt($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val()),
+                parseInt($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val()));
+
+        var nFilas = $("#tablaFP2 tr").length;
+        var tds = 8;
+        var trs = 8;
+
+
+
+        var totalItem=0;
+        
+
+    
+
+        var count = nFilas;
+
+
+
+
+
+        var nuevaFila = "<tr id=\"nFilas\">";
+        nuevaFila += "<td>" + (nFilas)+"</td>";
+        nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('nombreItem') ?>").val().toUpperCase()) + "</td>";
+        nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('descripcionItem') ?>").val().toUpperCase()) + "</td>";
+        nuevaFila += "<td>2 - SERVICIO</td>";
+        nuevaFila += "<td>0 - NO APLICA</td>";
+        nuevaFila += "<td>" + (inverseTotalDias(countDays)) + "</td>";
+        nuevaFila += "<td>" + formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())) + "</td>";
+        nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
+        nuevaFila += "</tr>";
+
+
+
+        $("#tablaFP2").append(nuevaFila);
+
+
+        $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
+        $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2("val", -1);
+        $('#parametros1').fadeOut(600);
+        $('#parametros2').fadeOut(600);
+        $('#parametros3').fadeOut(600);
+ 
+        $('#parametros4').fadeOut(600);
+
+
+
+        fullParamIt = "";
+        $('#tablaFP2 tr').each(function () {
+
+            /* Obtener todas las celdas */
+            var celdas = $(this).find('td');
+
+            /* Mostrar el valor de cada celda */
+            celdas.each(function () {
+                fullParamIt += String($(this).html()) + "&";
+            });
+
+
+        });
+
+        $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
+        $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
+
+        sumadorServicios = sumadorServicios + 1;
+                    
+                                    if(sumadorBienes>0 && sumadorServicios>0){
+                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                                    }
+                                    else{
+                                      if(sumadorBienes>0){
+                                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                                      }
+                                      else{
+                                        if(sumadorServicios>0){
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                                        }
+                                        else{
+                                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                                        }
+                                      }
+                                    }
+
+    }
+    ;
+    
+    
+     // Evento que selecciona la fila y la elimina 
+    $(document).on("click", ".eliminarItem", function () {
+
+        var parent = $(this).parents().get(0);
+        var element = $(parent).text();
+        var restaItemiva;
+        var restaValor;
+
+        var celdas = $(parent).find('td');
+
+        var tipo_item = String($(celdas[3]).html());
+        
+        $(parent).remove();
+
+        fullParamIt = "";
+        $('#tablaFP2 tr').each(function () {
+
+            /* Obtener todas las celdas */
+            var celdas = $(this).find('td');
+
+            /* Mostrar el valor de cada celda */
+            celdas.each(function () {
+                fullParamIt += String($(this).html()) + "&";
+            });
+
+
+        });
+
+        $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
+      
+
+        var countF = $("#tablaFP2 tr").length - 1;
+
+        $("#<?php echo $this->campoSeguro('countItems') ?>").val(countF);
+
+
+        if(tipo_item === '1 - BIEN'){
+            sumadorBienes = sumadorBienes -1;
+        }
+        if(tipo_item === '2 - SERVICIO')
+            {
+                sumadorServicios = sumadorServicios - 1; 
+            }
+            if(sumadorBienes>0 && sumadorServicios>0){
+                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                                    }
+                                    else{
+                                      if(sumadorBienes>0){
+                                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                                      }
+                                      else{
+                                        if(sumadorServicios>0){
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                                        }
+                                        else{
+                                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                                        }
+                                      }
+                                    }
+
+        
+    });
+
+
+    var fileArchivo;
+    var dataArchivo;
+    $("#botonCargarArchivo").click(function () {
+    
+
+        var inputFileImage = document.getElementById("<?php echo $this->campoSeguro('documentos_elementos') ?>");
+       
+        fileArchivo = inputFileImage.files[0];
+        
+        if(fileArchivo !== undefined){
+            dataArchivo = new FormData();
+            dataArchivo.append('file', fileArchivo);
+            analizarArchivo();
+        }
+        else{
+             swal({
+                title: 'No se ha cargado ningún archivo',
+                type: 'warning',
+                html:
+                        'Recuerde que puede descargar el Archivo Plantilla adjunto y cargarlo en este campo con los elementos registrados',
+                confirmButtonText:
+                        'Ok'
+            }) 
+        }
+      
+        
+    });
+    
+    
+    function analizarArchivo(elem, request, response) {
+
+        $.ajax({
+            url: "<?php echo $urlFinalArchivo ?>",
+            type: "post",
+            dataType: "json",
+            data: dataArchivo,
+            processData: false,
+            contentType: false,
+            success: function (data) {
+            
+                if (data[0] != " ") {
+
+
+
+                    $.each(data, function (indice, valor) {
+                        
+                      
+                        
+                        if (($("#<?php echo $this->campoSeguro('permisoItem') ?>").val() == 'ambos' && data[indice].tipo.toUpperCase() == '1 - BIEN')) {
+                            var nFilas = $("#tablaFP2 tr").length;
+
+                            var count = nFilas;
+                     
+
+                            var nuevaFila = "<tr id=\"nFilas\">";
+                            nuevaFila += "<td>" + (nFilas)+"</td>";
+                            nuevaFila += "<td>" + (data[indice].nombre.toUpperCase()) + "</td>";
+                            nuevaFila += "<td>" + (data[indice].descripcion.toUpperCase()) + "</td>";
+                            nuevaFila += "<td>1 - BIEN</td>";
+                            nuevaFila += "<td>" + (data[indice].unidad) + "</td>";
+                            nuevaFila += "<td>" + "0 - NO APLICA" + "</td>";
+                            nuevaFila += "<td>" + formatearNumero(data[indice].cantidad) + "</td>";
+                            nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
+                            nuevaFila += "</tr>";
+
+                            $("#tablaFP2").append(nuevaFila);
+                            
+                            fullParamIt = "";
+                            $('#tablaFP2 tr').each(function () {
+
+                                /* Obtener todas las celdas */
+                                var celdas = $(this).find('td');
+
+                                /* Mostrar el valor de cada celda */
+                                celdas.each(function () {
+                                    fullParamIt += String($(this).html()) + "&";
+                                });
+
+
+                            });
+                            
+                            
+
+                            
+                           
+                          
+
+                            $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
+
+                            $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
+                            
+                            sumadorBienes = sumadorBienes + 1;
+                    
+                                    if(sumadorBienes>0 && sumadorServicios>0){
+                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                                    }
+                                    else{
+                                      if(sumadorBienes>0){
+                                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                                      }
+                                      else{
+                                        if(sumadorServicios>0){
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                                        }
+                                        else{
+                                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                                        }
+                                      }
+                                    }
+
+                        }
+                        
+                            if (($("#<?php echo $this->campoSeguro('permisoItem') ?>").val() == 'ambos' && data[indice].tipo.toUpperCase() == '2 - SERVICIO')) {
+                            var nFilas = $("#tablaFP2 tr").length;
+                            
+                             var countDays = totalDias(parseInt(data[indice].tiempo_ejecucion_ano),
+                                    parseInt(data[indice].tiempo_ejecucion_mes),
+                                    parseInt(data[indice].tiempo_ejecucion_dia));
+
+                            var count = nFilas;
+                
+
+
+                            var nuevaFila = "<tr id=\"nFilas\">";
+                            nuevaFila += "<td>" + (nFilas)+"</td>";
+                            nuevaFila += "<td>" + (data[indice].nombre.toUpperCase()) + "</td>";
+                            nuevaFila += "<td>" + (data[indice].descripcion.toUpperCase()) + "</td>";
+                            nuevaFila += "<td>2 - SERVICIO</td>";
+                            nuevaFila += "<td>" + (data[indice].unidad) + "</td>";
+                            nuevaFila += "<td>" + (inverseTotalDias(countDays)) + "</td>";
+                            nuevaFila += "<td>" + formatearNumero(data[indice].cantidad) + "</td>";
+                            nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
+                            nuevaFila += "</tr>";
+
+                            $("#tablaFP2").append(nuevaFila);
+                            
+                            fullParamIt = "";
+                            $('#tablaFP2 tr').each(function () {
+
+                                /* Obtener todas las celdas */
+                                var celdas = $(this).find('td');
+
+                                /* Mostrar el valor de cada celda */
+                                celdas.each(function () {
+                                    fullParamIt += String($(this).html()) + "&";
+                                });
+
+
+                            });
+                            
+                            
+
+                            
+                           
+                          
+
+                            $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
+
+                            $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
+                                sumadorServicios = sumadorServicios + 1;
+                    
+                                    if(sumadorBienes>0 && sumadorServicios>0){
+                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                                    }
+                                    else{
+                                      if(sumadorBienes>0){
+                                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                                      }
+                                      else{
+                                        if(sumadorServicios>0){
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                                        }
+                                        else{
+                                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                                        }
+                                      }
+                                    }
+                        }
+                    });
+
+
+
+
+                } else {
+
+                    if (data != '') {
+                        swal({
+                            title: 'Ocurrio un problema...',
+                            type: 'error',
+                            html:
+                                    'Los Datos Registrados en el Archivo de Carga se Encuentran Erroneos. Revisar la celda correspondiente : <big> ' + data + ' . </big>, ' +
+                                    'Puede Verificar la Plantilla en la Pestaña GUIA para el correcto formato de los datos.',
+                            confirmButtonText:
+                                    'Ok'
+
+                        })
+                    } else {
+                        swal({
+                            title: 'Ocurrio un problema...',
+                            type: 'error',
+                            html:
+                                    'Se ha Presentado un Error en la Carga del Archivo,  ' +
+                                    'Puede Verificar la Plantilla en la Pestaña GUIA para el correcto formato de los datos.',
+                            confirmButtonText:
+                                    'Ok'
+
+                        })
+
+
+                    }
+
+
+                }
+
+            }
+        });
+    }
+    ;
+
+    $("#<?php echo $this->campoSeguro('tipoNecesidad')?>").change(function() {
+    
+       
+         if(sumadorBienes>0 && sumadorServicios>0){
+                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                         
+                    }
+                    else{
+                      if(sumadorBienes>0){
+                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                      }
+                      else{
+                        if(sumadorServicios>0){
+                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                        }
+                        else{
+                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                        }
+                      }
+                    }
+    });
+   
     

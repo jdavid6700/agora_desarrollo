@@ -535,7 +535,8 @@ function consultarActividadExistente(elem, request, response){
 		    		
 		    	if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '' &&
 		    		$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() != '' &&
-		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '') {
+		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '' &&
+		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() > 0) {
 		    		
 		    		
 		    		if( $.isNumeric($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val()) ){
@@ -568,11 +569,31 @@ function consultarActividadExistente(elem, request, response){
 							//-----------------------------------------------------------------------------
 							
 							
-							if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
-								consultarTipoFormaPagoPush();
-
-                   	 		}
+							if(($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3 &&
+							$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() > 0) ||
+							$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 3){
 							
+								$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#DDDDDD');
+							
+								if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
+									consultarTipoFormaPagoPush();
+	
+	                   	 		}
+							
+							}else{
+							
+								$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#FF0000');
+						
+								swal({
+								  title: 'Ocurrio un problema...',
+								  type: 'error',
+								  html:
+								    'El Valor de <big>Forma de Pago</big>, es un valor Porcentual Incorrecto. (ERROR) ',
+								  confirmButtonText:
+								    'Ok'
+								})
+								
+							}
 							
 							//-----------------------------------------------------------------------------
 							
@@ -827,7 +848,13 @@ function consultarActividadExistente(elem, request, response){
 	
 	if($("#<?php echo $this->campoSeguro('precioCot') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCarga') ?>").val() > 0){
     	$("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCarga')?>").val(), 0) + " pesos (COP)");
-    }	
+    }
+     if ($("#<?php echo $this->campoSeguro('precioCotIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioCargaIva') ?>").val() > 0) {
+        $("#<?php echo $this->campoSeguro('precioCotIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioCargaIva') ?>").val(), 0) + " pesos (COP)");
+    }
+    if ($("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val() > 0) {
+        $("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val(), 0) + " pesos (COP)");
+    }
 	
 	
 
@@ -1191,4 +1218,39 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 //---------------------Fin Ajax Numero de Solicitud de Necesidad------------------  
 
 	
-			                                              
+			                                               $('#<?php echo $this->campoSeguro('tipoItem') ?>').change(function () {
+
+        $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
+        $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
+        $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
+
+        if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() != '') {
+            $('#parametros1').fadeIn(500);
+            $('#parametros4').fadeIn(500);
+
+            if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() == 1) {
+                $('#parametros2').fadeIn(500);
+                $('#parametros3').fadeOut(100);
+            }
+
+            if ($('#<?php echo $this->campoSeguro('tipoItem') ?>').val() == 2) {
+                $('#parametros2').fadeOut(100);
+                $('#parametros3').fadeIn(500);
+            }
+
+
+        } else {
+            $('#parametros1').fadeOut(600);
+            $('#parametros2').fadeOut(600);
+            $('#parametros3').fadeOut(600);
+            $('#parametros4').fadeOut(600);
+        }
+
+
+
+
+    });

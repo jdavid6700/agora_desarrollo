@@ -45,7 +45,7 @@ $('#<?php echo $this->campoSeguro('fechaApertura')?>').datepicker({
 		<?php /*?>timeFormat: 'HH:mm:ss',<?php */?>
                 dateFormat: 'dd/mm/yy',
 		minDate: 0,
-        yearRange: '0:+50',
+        yearRange: '0:+0',
 		changeYear: true,
 		changeMonth: true,
 		monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
@@ -103,6 +103,71 @@ $( function() {
 		}
 	} );	
 
+
+$( '#<?php echo $this->campoSeguro('fechaApertura')?>' ).datepicker()
+    .on("input change", function (e) {
+    
+	    var start = $( '#<?php echo $this->campoSeguro('fechaApertura')?>' ).datepicker('getDate');
+	    var end   = $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).datepicker('getDate');
+	    if(!start || !end){
+	        return;
+	    }
+	    var days = 0;
+	    if (start && end) {
+	        days = Math.floor((end.getTime() - start.getTime()) / 86400000); // ms per day
+	    }
+	    
+	    if(days <= 3){
+	    
+	    	swal({
+                            title: 'Ocurrio un problema...',
+                            type: 'error',
+                            html:
+                                    'La Fecha de Cierre debe ser mayor a (3) días en relación a la fecha de Apertura.',
+                            confirmButtonText:
+                                    'Ok'
+
+            })
+            
+            $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).val("");
+                                 
+	    	
+	    }
+	    
+	});
+
+
+$( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).datepicker()
+    .on("input change", function (e) {
+    
+	    var start = $( '#<?php echo $this->campoSeguro('fechaApertura')?>' ).datepicker('getDate');
+	    var end   = $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).datepicker('getDate');
+	    if(!start || !end){
+	        return;
+	    }
+	    var days = 0;
+	    if (start && end) {
+	        days = Math.floor((end.getTime() - start.getTime()) / 86400000); // ms per day
+	    }
+	    
+	    if(days <= 3){
+	    
+	    	swal({
+                            title: 'Ocurrio un problema...',
+                            type: 'error',
+                            html:
+                                    'La Fecha de Cierre debe ser mayor a (3) días en relación a la fecha de Apertura.',
+                            confirmButtonText:
+                                    'Ok'
+
+            })
+            
+            $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).val("");
+                                 
+	    	
+	    }
+	    
+	});
 
 $("#gestionarCotizacionRegistrar").validationEngine({
 	validateNonVisibleFields: true,
@@ -310,4 +375,46 @@ $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
 $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
 $('#<?php echo $this->campoSeguro('dependenciaDestino')?>').width(750);
 $('#<?php echo $this->campoSeguro('dependenciaDestino')?>').select2();
+
+
+$("#<?php echo $this->campoSeguro('tipo_registro') ?>").width(220);
+$("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
+ $('#<?php echo $this->campoSeguro('tipoItem')?>').width(240);
+ $("#<?php echo $this->campoSeguro('tipoItem')?>").select2();
+  $('#<?php echo $this->campoSeguro('unidadItem')?>').width(240);
+ $("#<?php echo $this->campoSeguro('unidadItem')?>").select2();
+$( "#<?php echo $this->campoSeguro('tipo_registro')?>" ).change(function() {
+        
+            switch($("#<?php echo $this->campoSeguro('tipo_registro')?>").val())
+            {
+                           
+                case '1':
+                    
+                   
+                    $("#<?php echo $this->campoSeguro('cargar_elemento')?>").css('display','block');
+                    $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','none');
+
+                   
+
+                break;
+                
+                
+                       case '2':
+                    
+                    $("#<?php echo $this->campoSeguro('cargar_elemento')?>").css('display','none');
+                    $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','block');
+       
+                break;
+                
+
+                default:
+                
+                    $("#<?php echo $this->campoSeguro('cargar_elemento')?>").css('display','block');
+                    $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','none');
+                   
+                   break;
+                
+                
+             }
+          }); 
 	   
