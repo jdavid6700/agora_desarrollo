@@ -1093,7 +1093,135 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").val($("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").val());
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").select2();
                     $("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val(data[0].DESCRIPCION + " NECESIDAD("+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")");
-					$('#marcoDatosSolicitudCot').fadeIn(500);
+                    
+                    
+                    
+                    
+                    
+                    // Validación CDP Normativa Tipo de Caracteristicas -----------------------------------------------------------------------------------
+                    
+                    var valorCDP = data[0].VALOR_CONTRATACION;
+                    
+                    var salario = data[4].valor;
+                    
+                    var limiteASalario = 100 * salario;
+                    var limiteBSalario = 200 * salario;
+                    
+                    if(valorCDP > limiteBSalario){
+                    	
+                    	swal({
+			                title: 'Información <br>ACUERDO No. 03 de 2015',
+			                type: 'error',
+			                html:
+			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
+			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>200 SMLMV</b> '
+			                        + 'por tanto, no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
+			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+			            eliminarCDP();
+                    	
+                    }else if(valorCDP > limiteASalario){
+						
+						swal.setDefaults({
+						  confirmButtonText: 'Siguiente &rarr;',
+						  showCancelButton: false,
+						  animation: true,
+						  progressSteps: ['1', '2']
+						})
+						
+						var steps = [
+						  {
+						    title: 'Información <br>ACUERDO No. 03 de 2015',
+						  	html:
+			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
+			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>100 SMLMV</b> '
+			                        + 'por tanto, se debe validar lo estipulado en el Artículo 16°.<br><br>'
+			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                type: 'warning',
+						  },
+						  {
+						    title: 'Información <br>ACUERDO No. 03 de 2015',
+						    type: 'question',
+						  	html:
+			                        'Por favor, responda lo siguiente:<br><br>'
+			                        + 'La Cotización se requiere para Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización',
+			                input: 'select',
+							inputOptions: {
+							    '1': 'Si',
+							    '2': 'No'
+							}
+						  }
+						]
+						
+						swal.queue(steps).then(function (result) {
+						  swal.resetDefaults()
+						
+						  if(result[1] == 1){
+						  
+						  	swal({
+						  	
+						  		title: 'Información <br>ACUERDO No. 03 de 2015',
+				                type: 'error',
+				                html:
+				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
+				                        + 'dado que se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
+				                        + 'no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>Debe ser realizado mediante (Acuerdo Marco de Precios, Bolsa de Productos o Subasta Inversa).<br><br>'
+				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                confirmButtonText:
+				                        'Aceptar'
+							        //JSON.stringify(result) +
+							  })
+						  	
+						  	eliminarCDP();
+						  }else{
+						  
+						  	  swal({
+						  	
+						  		title: 'Información <br>ACUERDO No. 03 de 2015',
+				                type: 'info',
+				                html:
+				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
+				                        + 'dado que se no se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
+				                        + 'se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
+				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                confirmButtonText:
+				                        'Aceptar'
+							        //JSON.stringify(result) +
+							  })
+						  
+						  	$('#marcoDatosSolicitudCot').fadeIn(500);
+						  }
+						  
+						}, function () {
+						  	swal.resetDefaults()
+						})
+                    
+                    }else{
+                    	
+                    	swal({
+			                title: 'Información <br>ACUERDO No. 03 de 2015',
+			                type: 'info',
+			                html:
+			                        'De acuerdo con lo estipulado en el Articulo 16°, se valida que el valor del presente CDP es:<br><br><b>'
+			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por debajo del Limite de los <b>100 SMLMV</b> '
+			                        + 'por tanto, se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
+			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+			            
+			            $('#marcoDatosSolicitudCot').fadeIn(500);
+                    
+                    }
+                    
+                    // Fin Validación CDP Normativa Tipo de Caracteristicas -------------------------------------------------------------------------------
+                    
+                    
+                    
+                    
+					
 
                 }
                 
@@ -1112,13 +1240,11 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	$(tinymce.get('<?php echo $this->campoSeguro('requisitos') ?>').getBody()).html('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
                 	$("#<?php echo $this->campoSeguro('requisitos') ?>").val('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
                 }
-                console.log(data);
                 if(data[2] != "" && data[3] != ""){
                 	
                 	var i = 0;
                 	while(i < data[3].length){
                 		if(data[3][i].tercero_id == data[2].NUMERO_DOCUMENTO){
-                			console.log(data[3][i].tercero_id + " => " + data[3][i].id);
                 			$("#<?php echo $this->campoSeguro('ordenador') ?>").val(data[3][i].id);
                     		$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
                     		$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(data[3][i].id);
@@ -1137,7 +1263,14 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
     $(document).ready(function () {
 
         $("#eliminarCDP").click(function () {
-            var indice = parseFloat($("#<?php echo $this->campoSeguro('indice_tabla') ?>").val());
+			eliminarCDP();
+        });
+
+    });
+    
+    function eliminarCDP (){
+    
+    	    var indice = parseFloat($("#<?php echo $this->campoSeguro('indice_tabla') ?>").val());
             var table = document.getElementById('tablacdpasociados');
             for (var r = 0, n = table.rows.length; r < n; r++) {
                 for (var c = 0, m = table.rows[r].cells.length; c < m; c++) {
@@ -1190,9 +1323,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
             $("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").select2();
             $("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").removeAttr('disabled');
             $('#marcoDatosSolicitudCot').fadeOut(500);
-        });
-
-    });
+    
+    }
     
 //---------------------Fin Ajax Numero de Solicitud de Necesidad------------------  
 
