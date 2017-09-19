@@ -31,6 +31,12 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "argoTipoContratoUdistrital" :
+        		$year = date('Y');
+        		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";
+        		$cadenaSql.= "WHERE estado = 'TRUE' ";
+        		break;
+        	
         	case "salarioMinimoVigente" :
         		$year = date('Y');
         		$cadenaSql = "SELECT * FROM core.salario_minimo ";

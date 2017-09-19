@@ -31,6 +31,12 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "argoTipoContratoUdistrital" :
+        		$year = date('Y');
+        		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";
+        		$cadenaSql.= "WHERE estado = 'TRUE' ";
+        		break;
+        	
         	case "salarioMinimoVigente" :
         		$year = date('Y');
         		$cadenaSql = "SELECT * FROM core.salario_minimo ";
@@ -1393,6 +1399,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " tipo_necesidad = '" . $variable ['tipo_necesidad'] . "',";
                 $cadenaSql .= " forma_seleccion_id = '" . $variable ['forma_seleccion'] . "',";
                 $cadenaSql .= " medio_pago = '" . $variable ['medio_pago'] . "',";
+                $cadenaSql .= " tipo_contrato = '" . $variable ['tipo_contrato'] . "',";
                 $cadenaSql .= " numero_necesidad = '" . $variable ['numero_disponibilidad'] . "',";
                 $cadenaSql .= " usuario_creo = " . " '" . $variable ['usuario'] . "'";
                 $cadenaSql .= " WHERE id = " . $variable ['idObjeto'] . ";";
@@ -1506,6 +1513,35 @@ class Sql extends \Sql {
             case "consultarUnidadByNumPush" :
                 $cadenaSql = " SELECT *";
                 $cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id = " . $variable . ";";
+                break;
+             case "registrarItemProducto" :
+                $cadenaSql = " INSERT INTO ";
+                $cadenaSql .= "agora.item_cotizacion_padre";
+                $cadenaSql .= " (";
+                $cadenaSql .= " objeto_cotizacion_id,";
+                $cadenaSql .= " nombre,";
+                $cadenaSql .= " descripcion,";
+                $cadenaSql .= " tipo_necesidad,";
+                $cadenaSql .= " unidad, ";
+                $cadenaSql .= " tiempo_ejecucion, ";
+                $cadenaSql .= " cantidad ";
+                $cadenaSql .= " )";
+                $cadenaSql .= " VALUES";
+                $cadenaSql .= " (";
+                $cadenaSql .= $variable ['objeto_cotizacion'] . ",";
+                $cadenaSql .= " '" . $variable ['nombre'] . "',";
+                $cadenaSql .= " '" . $variable ['descripcion'] . "',";
+                $cadenaSql .= " '" . $variable ['tipo'] . "',";
+                $cadenaSql .= " '" . $variable ['unidad'] . "',";
+                $cadenaSql .= " '" . $variable ['tiempo'] . "',";
+                $cadenaSql .= " '" . $variable ['cantidad'] . "' ";
+                $cadenaSql .= " );";
+                break;
+            case "EliminarItemProducto" :
+                $cadenaSql = " DELETE FROM ";
+                $cadenaSql .= "agora.item_cotizacion_padre";
+                $cadenaSql .= " WHERE ";
+                $cadenaSql .= " objeto_cotizacion_id=".$variable .";";
                 break;
         }
 

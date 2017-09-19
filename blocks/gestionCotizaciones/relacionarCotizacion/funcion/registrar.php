@@ -164,6 +164,7 @@ class Registrar {
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
         		'forma_seleccion' => $_REQUEST ['formaSeleccion'],
         		'medio_pago' => $_REQUEST ['medioPago'],
+        		'tipo_contrato' => $_REQUEST ['tipoContrato'],
         		'numero_disponibilidad' => $valorCDP,
         		'usuario' => $_REQUEST ['usuario'],
         		'anexo' => $_REQUEST ['destino']
@@ -333,6 +334,7 @@ class Registrar {
 						'observaciones' => $datosTextoEnriquecido['observaciones'],
 						'plan' => $datosTextoEnriquecido['plan'],
 						'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
+						'tipo_contrato' => $_REQUEST ['tipoContrato'],
 						'medio_pago' => $_REQUEST ['medioPago'],
 						'usuario' => $_REQUEST ['usuario']
 				);

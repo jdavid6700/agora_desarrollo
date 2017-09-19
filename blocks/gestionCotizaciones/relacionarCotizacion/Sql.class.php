@@ -31,6 +31,12 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "argoTipoContratoUdistrital" :
+        		$year = date('Y');
+        		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";
+        		$cadenaSql.= "WHERE estado = 'TRUE' ";
+        		break;
+        	
         	case "salarioMinimoVigente" :
         		$year = date('Y');
         		$cadenaSql = "SELECT * FROM core.salario_minimo ";
@@ -989,6 +995,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " forma_seleccion_id,";
                 $cadenaSql .= " fecha_registro,";
                 $cadenaSql .= " medio_pago,";
+                $cadenaSql .= " tipo_contrato,";
                 $cadenaSql .= " numero_necesidad,";
                 $cadenaSql .= " usuario_creo,";
                 $cadenaSql .= " anexo_cotizacion";
@@ -1012,6 +1019,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " '" . $variable ['forma_seleccion'] . "',";
                 $cadenaSql .= " '" . $hoy . "',";
                 $cadenaSql .= " " . $variable ['medio_pago'] . ",";
+                $cadenaSql .= " " . $variable ['tipo_contrato'] . ",";
                 $cadenaSql .= " '" . $variable ['numero_disponibilidad'] . "',";
                 $cadenaSql .= " '" . $variable ['usuario'] . "',";
                 $cadenaSql .= " '" . $variable ['anexo'] . "' ";
