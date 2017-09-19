@@ -30,6 +30,16 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion("id_sesion");
 
         switch ($tipo) {
+
+        	case "consultarTipoFormaPagoFull" :
+        		$cadenaSql = " SELECT id, nombre";
+        		$cadenaSql .= " FROM agora.tipo_condicion WHERE estado = TRUE ;";
+        		break;
+        			
+        	case "consultarTipoFormaPagoExep" :
+        		$cadenaSql = " SELECT id, nombre";
+        		$cadenaSql .= " FROM agora.tipo_condicion WHERE estado = TRUE AND id != 3 ;";
+        		break;        	
         	
         	case "argoTipoContratoUdistrital" :
         		$year = date('Y');

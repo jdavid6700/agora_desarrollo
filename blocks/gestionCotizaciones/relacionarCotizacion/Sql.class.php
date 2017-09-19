@@ -31,6 +31,16 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+			case "consultarTipoFormaPagoFull" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM agora.tipo_condicion WHERE estado = TRUE ;";
+				break;
+			
+			case "consultarTipoFormaPagoExep" :
+				$cadenaSql = " SELECT id, nombre";
+				$cadenaSql .= " FROM agora.tipo_condicion WHERE estado = TRUE AND id != 3 ;";
+				break;
+        	
         	case "argoTipoContratoUdistrital" :
         		$year = date('Y');
         		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";

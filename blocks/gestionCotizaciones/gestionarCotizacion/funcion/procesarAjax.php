@@ -99,6 +99,17 @@ if($secure){
 		echo json_encode( $datos );
 	}
 	
+	if ($_REQUEST ['funcion'] == 'formaDePagoAjax') {
+	
+		if($_REQUEST ['valor'] != 13){//Contrato de Obra -> Se debe Permitir Anticipo, de lo Contrario NO
+			$cadenaSql = $this->sql->getCadenaSql ( 'consultarTipoFormaPagoExep');
+		}else{
+			$cadenaSql = $this->sql->getCadenaSql ( 'consultarTipoFormaPagoFull');
+		}
+		$datos = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		echo json_encode( $datos );
+	}
+	
 	if ($_REQUEST ['funcion'] == 'ObtenersCdps') {
 	
 		if ($_REQUEST['cdpseleccion'] != "") {

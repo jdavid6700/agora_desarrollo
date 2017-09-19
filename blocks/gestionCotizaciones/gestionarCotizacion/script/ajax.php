@@ -2248,4 +2248,60 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     }
     });
    
-    
+
+<?php 
+
+
+$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+$url .= "/index.php?";
+
+$cadenaACodificarInfoTipoCon = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarInfoTipoCon .= "&procesarAjax=true";
+$cadenaACodificarInfoTipoCon .= "&action=index.php";
+$cadenaACodificarInfoTipoCon .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarInfoTipoCon .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarInfoTipoCon .= $cadenaACodificarInfoTipoCon . "&funcion=formaDePagoAjax";
+$cadenaACodificarInfoTipoCon .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+$cadenaACodificarInfoTipoCon = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarInfoTipoCon, $enlace);
+
+// URL definitiva
+$urlInfoTipoCon = $url . $cadenaACodificarInfoTipoCon;
+
+?>
+
+
+
+$("#<?php echo $this->campoSeguro('tipoContrato')?>").change(function() {
+	if($("#<?php echo $this->campoSeguro('tipoContrato')?>").val() == ''){
+		$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").html("");
+		$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('tipoFormaPago')?>");
+		$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").addAttr('disabled');
+		$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").select2();
+	}else{
+		consultarPago();
+		$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").removeAttr('disabled');
+		$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").select2();
+	}
+});
+
+
+function consultarPago(elem, request, response){
+	$.ajax({
+		url: "<?php echo $urlInfoTipoCon?>",
+		dataType: "json",
+		data: { valor:$("#<?php echo $this->campoSeguro('tipoContrato')?>").val()},
+		success: function(data){
+			if(data[0]!=" "){
+				$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").html("");
+				$("<option value=''>Seleccione .....</option>").appendTo("#<?php echo $this->campoSeguro('tipoFormaPago')?>");
+				$.each(data , function(indice,valor){
+					$("<option value='"+data[ indice ].id+"'>"+data[ indice ].nombre+"</option>").appendTo("#<?php echo $this->campoSeguro('tipoFormaPago')?>");
+				});
+			}
+		}
+	});
+};    
