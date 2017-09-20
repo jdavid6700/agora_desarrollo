@@ -1089,13 +1089,17 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 					}
 					
 					
-                    
+
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").val($("#<?php echo $this->campoSeguro('unidadEjecutoraCheck') ?>").val());
                     $("#<?php echo $this->campoSeguro('unidadEjecutora') ?>").select2();
                     
                     $(tinymce.get('<?php echo $this->campoSeguro('tituloCotizacion') ?>').getBody()).html('<p><i>'+data[0].OBJETO + ' - <b>NECESIDAD ('+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")"+'</b></i></p>');
 					$("#<?php echo $this->campoSeguro('tituloCotizacion') ?>").val('<p><i>'+data[0].OBJETO + ' - <b>NECESIDAD ('+data[0].VIGENCIA+"-"+data[0].NUM_SOL_ADQ+")"+'</b></i></p>');
 					
+                    $(tinymce.get('<?php echo $this->campoSeguro('plazoEjecucion') ?>').getBody()).html('<p><i>'+data[0].PLAZO_EJECUCION + '</i></p>');
+					$("#<?php echo $this->campoSeguro('plazoEjecucion') ?>").val('<p><i>'+data[0].PLAZO_EJECUCION + '</i></p>');
+					
+                    
                     
                     
                     
@@ -1230,6 +1234,11 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	var i = 0;
                 	var listRequisitos = "";
                 	while(i < data[1].length){
+                		
+                		if(data[1][i].OBSERVACIONES == null){
+                			data[1][i].OBSERVACIONES = "Sin observaciones al requisito adicionales";
+                		}
+                		
                 		listRequisitos += "<h3>"+data[1][i].ITEM+"\. "+data[1][i].REQUISITO+"</h3><p style='padding-left: 30px;'>"+data[1][i].OBSERVACIONES+"</p><br>";
                 		i++;
                 	}
@@ -1241,6 +1250,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	$(tinymce.get('<?php echo $this->campoSeguro('requisitos') ?>').getBody()).html('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
                 	$("#<?php echo $this->campoSeguro('requisitos') ?>").val('<p>NO APLICA<br>LOS REQUISITOS NO FUERON ESTABLECIDOS</p>');
                 }
+                
                 if(data[2] != "" && data[3] != ""){
                 	
                 	var i = 0;
@@ -1273,6 +1283,25 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	
                 	}
                 	
+                }
+                
+
+                if(data[5] != ""){
+                	var i = 0;
+                	var listFactores = "";
+                	while(i < data[5].length){
+                		
+                		if(data[5][i].SUGERIR_CLASIFICACION == null){
+                			data[5][i].SUGERIR_CLASIFICACION = "Sin sugerencias adicionales";
+                		}
+                		var j = i + 1;
+                		listFactores += "<h3>"+j+"\. "+data[5][i].TIPO+"</h3><p style='padding-left: 30px;'>"+data[5][i].SUGERIR_CLASIFICACION+"</p><br>";
+                		i++;
+                	}
+                	
+                	$(tinymce.get('<?php echo $this->campoSeguro('criterioSeleccion') ?>').getBody()).html('<p>'+listFactores+'</p>');
+                	$("#<?php echo $this->campoSeguro('criterioSeleccion') ?>").val('<p>'+listFactores+'</p>');
+                
                 }
 
 
@@ -2245,3 +2274,18 @@ function consultarPago(elem, request, response){
 	});
 };
 
+
+$("#<?php echo $this->campoSeguro('medioPago')?>").change(function() {
+	if($("#<?php echo $this->campoSeguro('medioPago')?>").val() == 3){
+		
+		swal({
+                title: 'Importante<br>MEDIO DE PAGO',
+                type: 'info',
+                html:
+                        'Recuerde que el Pago mediante TARJETA DE CRÉDITO, esta regulado según lo dispuesto en la <i>RESOLUCIÓN 067 del 09 de Febrero de 2017</i>',
+                confirmButtonText:
+                        'Aceptar'
+            })
+     }
+
+});

@@ -1,6 +1,14 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
+
+
+$this->idioma["marcoTipoContrato"]="Tipo de Contratación Asociada";
+$this->idioma["tipoContrato"] = "Tipo Contrato : ";
+$this->idioma["tipoContratoTitulo"]="Tipo Contrato";
+
 $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
@@ -34,6 +42,46 @@ $this->idioma["marcoProveedoresConv"]="Proveedores que Pueden Responder a la Cot
 $this->idioma["marcoObjetoAct"]="Solicitud de Cotización - Información General";
 $this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
+$this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
+
+$this->idioma ["tipo_registro"] = "Tipo de Registro	";
+
+$this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
+$this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
+
+$this->idioma["tipoItem"] = "Tipo de Necesidad : * ";
+$this->idioma["tipoItemTitulo"]="Tipo de Necesidad Item";
+
+$this->idioma["nombreItem"] = "Nombre: ";
+$this->idioma["nombreItemTitulo"]="Nombre Item";
+$this->idioma["descripcionItem"] = "Descripción: ";
+$this->idioma["descripcionItemTitulo"]="Descripción Item";
+$this->idioma["unidadItem"] = "Unidad de Medida: ";
+$this->idioma["unidadItemTitulo"]="Unidad de Medida Item";
+$this->idioma["tiempoItem1"] = "Años: ";
+$this->idioma["tiempoItem1Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem2"] = "Meses: ";
+$this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem3"] = "Días: ";
+$this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["cantidadItem"] = "Cantidad: ";
+$this->idioma["cantidadItemTitulo"]="Cantidad Item";
+$this->idioma["valorItem"] = "Valor Unitario: ";
+$this->idioma["valorItemTitulo"]="Valor Unitario Item";
+$this->idioma ["IvaItem"] = "IVA : ";
+$this->idioma ["IvaItemTitulo"] = "Seleccione IVA";
+$this->idioma ["documentos_elementos"] = "Archivo de Items";
+
+$this->idioma["precioCot"] = "PRECIO COTIZACIÓN : ";
+$this->idioma["precioCotTitulo"]="Precio Cotización";
+$this->idioma["precioTotalIva"] = "PRECIO IVA : ";
+$this->idioma["precioTotalIvaTitulo"]="Precio Iva";
+$this->idioma["precioIva"] = "TOTAL IVA: ";
+$this->idioma["precioIvaTitulo"]="Total iva";
+$this->idioma["precioCotIva"] = "PRECIO COTIZACIÓN CON IVA: ";
+$this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
+
+$this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
 
 $this->idioma["marcoSeleccion"]="Criterio de Selección Cotización";
 $this->idioma["formaSeleccion"] = "Criterio de Selección : ";
@@ -176,11 +224,6 @@ $this->idioma["vigenciaNecesidadCotizacionTitulo"]="Por favor seleccione la Vige
 
 
 
-
-
-
-
-
 $this->idioma["tabIngresar"] = "Objeto a Contratar";
 
 $this->idioma["tabConsultar"] = "Generar Cotización";
@@ -198,6 +241,10 @@ $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
 $this->idioma["botonContinuar"] = "Continuar";
 $this->idioma["botonAgregar"] = "Agregar";
+$this->idioma["botonAgregarItem"] = "Agregar";
+
+
+$this->idioma["botonCargarArchivo"] ="Cargar Items";
 $this->idioma["botonTerminar"] = "Continuar";
 $this->idioma["botonProcesar"] = "Procesar";
 

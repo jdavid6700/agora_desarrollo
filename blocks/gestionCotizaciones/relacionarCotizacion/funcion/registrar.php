@@ -120,6 +120,8 @@ class Registrar {
 		$observaciones = $_POST[$this->campoSeguroCodificar('observaciones', $_REQUEST['tiempo'])];
 		$plan = $_POST[$this->campoSeguroCodificar('planAccion', $_REQUEST['tiempo'])];
 		$titulo = $_POST[$this->campoSeguroCodificar('tituloCotizacion', $_REQUEST['tiempo'])];
+		$criterio = $_POST[$this->campoSeguroCodificar('criterioSeleccion', $_REQUEST['tiempo'])];
+		$plazo = $_POST[$this->campoSeguroCodificar('plazoEjecucion', $_REQUEST['tiempo'])];
 		
 		
 		
@@ -128,7 +130,9 @@ class Registrar {
 				'requisitos' => str_replace("'", "\"", $requisitos),
 				'observaciones' => str_replace("'", "\"", $observaciones),
 				'plan' => str_replace("'", "\"", $plan),
-				'titulo' => str_replace("'", "\"", $titulo)
+				'titulo' => str_replace("'", "\"", $titulo),
+				'criterio' => str_replace("'", "\"", $criterio),
+				'plazo' => str_replace("'", "\"", $plazo)
 		);
 		/*--------------------------------------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
@@ -162,12 +166,14 @@ class Registrar {
         		'observaciones' => $datosTextoEnriquecido['observaciones'],
         		'plan' => "currval('administrativa.plan_accion_id_seq')",
         		'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
-        		'forma_seleccion' => $_REQUEST ['formaSeleccion'],
+        		//'forma_seleccion' => $_REQUEST ['formaSeleccion'],
         		'medio_pago' => $_REQUEST ['medioPago'],
         		'tipo_contrato' => $_REQUEST ['tipoContrato'],
         		'numero_disponibilidad' => $valorCDP,
         		'usuario' => $_REQUEST ['usuario'],
-        		'anexo' => $_REQUEST ['destino']
+        		'criterio' => $datosTextoEnriquecido['criterio'],
+        		'plazo' => $datosTextoEnriquecido['plazo'],
+        		'anexo' => ''//$_REQUEST ['destino']
         );
 
         

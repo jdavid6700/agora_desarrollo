@@ -31,6 +31,11 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "criteriosNecesidad" :
+        		$cadenaSql = "SELECT * FROM CO.CO_SOL_ADQ_FACTOR WHERE VIGENCIA=" . $variable ['vigencia'] . " and ";
+        		$cadenaSql.= "NUM_SOL_ADQ=" . $variable ['numero_disponibilidad'] . " ORDER BY TIPO";
+        		break;
+        	
 			case "consultarTipoFormaPagoFull" :
 				$cadenaSql = " SELECT id, nombre";
 				$cadenaSql .= " FROM agora.tipo_condicion WHERE estado = TRUE ;";
@@ -68,7 +73,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoNec" :
-                $cadenaSql = " SELECT SN.NUM_SOL_ADQ, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
+                $cadenaSql = " SELECT SN.NUM_SOL_ADQ, SN.PLAZO_EJECUCION, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
                 $cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION, ";
                 $cadenaSql .= " DP2.NOMBRE_DEPENDENCIA as DEP_DESTINO";
                 $cadenaSql .= " FROM CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP , CO.CO_DEPENDENCIAS DP, CO.CO_DEPENDENCIAS DP2, PR.PR_RUBRO RB, CO.CO_SOLICITUD_ADQ SN   ";
@@ -1002,7 +1007,9 @@ class Sql extends \Sql {
                 $cadenaSql .= " unidad_ejecutora,";
                 $cadenaSql .= " estado_cotizacion,";
                 $cadenaSql .= " tipo_necesidad,";
-                $cadenaSql .= " forma_seleccion_id,";
+                //$cadenaSql .= " forma_seleccion_id,";
+                $cadenaSql .= " criterio_seleccion,";
+                $cadenaSql .= " plazo_ejecucion,";
                 $cadenaSql .= " fecha_registro,";
                 $cadenaSql .= " medio_pago,";
                 $cadenaSql .= " tipo_contrato,";
@@ -1026,7 +1033,9 @@ class Sql extends \Sql {
                 $cadenaSql .= " " . $variable ['unidad_ejecutora'] . ",";
                 $cadenaSql .= " '1',";
                 $cadenaSql .= " '" . $variable ['tipo_necesidad'] . "',";
-                $cadenaSql .= " '" . $variable ['forma_seleccion'] . "',";
+                //$cadenaSql .= " '" . $variable ['forma_seleccion'] . "',";
+                $cadenaSql .= " '" . $variable ['criterio'] . "',";
+                $cadenaSql .= " '" . $variable ['plazo'] . "',";
                 $cadenaSql .= " '" . $hoy . "',";
                 $cadenaSql .= " " . $variable ['medio_pago'] . ",";
                 $cadenaSql .= " " . $variable ['tipo_contrato'] . ",";

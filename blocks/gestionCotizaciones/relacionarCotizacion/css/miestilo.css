@@ -1,9 +1,36 @@
 
 #marcoDatosSolicitudCot {
-	display: none;
+    display: none;
 }
 #AgrupacionDisponibilidadNec {
+    display: none;
+}
+
+#parametros1 {
 	display: none;
+}
+#parametros2 {
+	display: none;
+}
+#parametros3 {
+	display: none;
+}
+#parametros4 {
+	display: none;
+}
+
+#marcoParametrosItem {
+
+    border:2px solid orange;
+    border-radius: 10px;
+    background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+
+    width: 78%;
+
 }
 
 /* Table 1 Style */
@@ -109,43 +136,43 @@ table.table1{
 
 
 #botonValidar {    font-family: verdana, arial, sans-serif;
-   font-size: 12pt;
-   padding: 5px;
-   background-color: #eeeeee;
-   color: #000000;
-   border-radius: 8px;
-   margin: 0 auto;
-   text-align: center;
-   text-decoration: none;
+                   font-size: 12pt;
+                   padding: 5px;
+                   background-color: #eeeeee;
+                   color: #000000;
+                   border-radius: 8px;
+                   margin: 0 auto;
+                   text-align: center;
+                   text-decoration: none;
 }
 #botonValidar:link,
 #botonValidar:visited {
-   border-top: 1px solid #cccccc;
-   border-bottom: 2px solid #cccccc;
-   border-left: 1px solid #cccccc;
-   border-right: 2px solid #cccccc;
+    border-top: 1px solid #cccccc;
+    border-bottom: 2px solid #cccccc;
+    border-left: 1px solid #cccccc;
+    border-right: 2px solid #cccccc;
 }
 #botonValidar:hover {
     border-bottom: 1px solid #cccccc;
-   border-top: 2px solid #cccccc;
-   border-right: 1px solid #cccccc;
-   border-left: 2px solid #cccccc;
+    border-top: 2px solid #cccccc;
+    border-right: 1px solid #cccccc;
+    border-left: 2px solid #cccccc;
 }
 body {font-family:arial;font-size:20}
-    td {font-family:arial;font-size:20} 
+td {font-family:arial;font-size:20} 
 
 .padre-enlace{
-	display:block;
-	position:relative;
+    display:block;
+    position:relative;
 }
 
 
 #botonValidar {
-	display: block;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 125px;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 125px;
 }
 
 
@@ -153,37 +180,37 @@ input {font-weight:bold;}
 
 
 textarea{
-font-weight: bold;
+    font-weight: bold;
 }
 
 .mayuscula {
-	text-transform: uppercase; 
+    text-transform: uppercase; 
 }
 
 
 
 .ondisplay{
-  text-align:center;
-  padding:0;
+    text-align:center;
+    padding:0;
 }
 
 .ondisplay section{
-  width:100px;
-  height:100px;
-  background: #555;
-  display:inline-block;
-  border: 1px solid gray;
-  text-align: center;
-  margin-top:5px;
-  border-radius:5px;
-  box-shadow: 0 1px 4px
-     rgba(0, 0, 0, 0.3), 0 0 40px
-     rgba(0, 0, 0, 0.1) inset;
+    width:100px;
+    height:100px;
+    background: #555;
+    display:inline-block;
+    border: 1px solid gray;
+    text-align: center;
+    margin-top:5px;
+    border-radius:5px;
+    box-shadow: 0 1px 4px
+        rgba(0, 0, 0, 0.3), 0 0 40px
+        rgba(0, 0, 0, 0.1) inset;
 }
 
 .ondisplay section::before {
-  content:'click it'; 
-  color: #bbb;
+    content:'click it'; 
+    color: #bbb;
     font: 15px Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-shadow: 0px 1px black;
@@ -749,7 +776,7 @@ input[type=checkbox] {
     width: 20px;
     height: 20px;
     top: 0;
-  left: 0;
+    left: 0;
     border-radius: 4px;
 
     -webkit-box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,.4);
@@ -811,7 +838,7 @@ input[type=checkbox] {
     width: 20px;
     height: 20px;
     top: 0;
-  left: 0;
+    left: 0;
     border-radius: 4px;
 
     -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
@@ -861,11 +888,11 @@ input[type=checkbox] {
     opacity: 1;
 }
 p {
- color: #bbb;
+    color: #bbb;
     font: 15px Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-shadow: 0px 1px black;
- text-align: center;
- margin: 10px 0;
+    text-align: center;
+    margin: 10px 0;
 }
 p a {color: #00bf00;}
