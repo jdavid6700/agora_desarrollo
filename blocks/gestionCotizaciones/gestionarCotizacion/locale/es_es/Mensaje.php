@@ -1,6 +1,13 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
+
+$this->idioma["marcoTipoContrato"]="Tipo de Contratación Asociada";
+$this->idioma["tipoContrato"] = "Tipo Contrato : ";
+$this->idioma["tipoContratoTitulo"]="Tipo Contrato";
+
 $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
@@ -11,6 +18,11 @@ $this->idioma["dependenciaDestino"] = "Dependencia Destino :";
 $this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
 
 
+$this->idioma["precioCotIva"] = "PRECIO COTIZACIÓN CON IVA: ";
+$this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
+
+$this->idioma["precioTotalIva"] = "PRECIO IVA : ";
+$this->idioma["precioTotalIvaTitulo"]="Precio Iva";
 
 $this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
 
@@ -443,5 +455,32 @@ $this->idioma["marcoContratos"] = "Información de Cotizaciones";
 $this->idioma["marcoInfoCont"] = "Información de la Persona";
 $this->idioma["marcoContratosTablaRes"] = "Información de la Cotización => ";
 
+$this->idioma ["tipo_registro"] = "Tipo de Registro	";
+
+$this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
+$this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
+
+$this->idioma["tipoItem"] = "Tipo de Necesidad : * ";
+$this->idioma["tipoItemTitulo"]="Tipo de Necesidad Item";
+
+$this->idioma["nombreItem"] = "Nombre: ";
+$this->idioma["nombreItemTitulo"]="Nombre Item";
+$this->idioma["descripcionItem"] = "Descripción: ";
+$this->idioma["descripcionItemTitulo"]="Descripción Item";
+$this->idioma["unidadItem"] = "Unidad de Medida: ";
+$this->idioma["unidadItemTitulo"]="Unidad de Medida Item";
+$this->idioma["tiempoItem1"] = "Años: ";
+$this->idioma["tiempoItem1Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem2"] = "Meses: ";
+$this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["tiempoItem3"] = "Días: ";
+$this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
+$this->idioma["cantidadItem"] = "Cantidad: ";
+$this->idioma["cantidadItemTitulo"]="Cantidad Item";
+
+$this->idioma["botonAgregarItem"] = "Agregar";
+$this->idioma ["documentos_elementos"] = "Archivo de Items";
+
+$this->idioma["botonCargarArchivo"] ="Cargar Items";
 
 ?>

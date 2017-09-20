@@ -333,13 +333,12 @@ class Formulario {
 				$dateSolicitud = 'SIN PROCESAR';
 			}
 			
-			
 			$mostrarHtml = "<tr>
 									<td><center>" . $dato['numero_solicitud'] . "</center></td>
 									<td><center>" . $dato['vigencia'] . "</center></td>
 									<td><center>" . $unidadEjecutora. "</center></td>
 									<td><center>" . $dateSolicitud . "</center></td>
-									<td><center>" . $dato['titulo_cotizacion'] . "</center></td>
+									<td><center>" . substr(str_replace("<p>", "", $dato['titulo_cotizacion']), 0, 300)."..." . "</center></td>
 									<td><center>" . $this->cambiafecha_format($dato['fecha_apertura']) . "</center></td>
 									<td><center>" . $this->cambiafecha_format($dato['fecha_cierre']) . "</center></td>
 									<td><center>" . $resultadoDep[0][1]. "</center></td>".									

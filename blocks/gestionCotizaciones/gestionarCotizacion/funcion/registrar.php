@@ -155,6 +155,8 @@ class Registrar {
         $observaciones = $_POST[$this->campoSeguroCodificar('observaciones', $_REQUEST['tiempo'])];
         $plan = $_POST[$this->campoSeguroCodificar('planAccion', $_REQUEST['tiempo'])];
         $titulo = $_POST[$this->campoSeguroCodificar('tituloCotizacion', $_REQUEST['tiempo'])];
+        $criterio = $_POST[$this->campoSeguroCodificar('criterioSeleccion', $_REQUEST['tiempo'])];
+        $plazo = $_POST[$this->campoSeguroCodificar('plazoEjecucion', $_REQUEST['tiempo'])];
 
 
         $datosTextoEnriquecido = array(
@@ -162,7 +164,9 @@ class Registrar {
             'requisitos' => str_replace("'", "\"", $requisitos),
             'observaciones' => str_replace("'", "\"", $observaciones),
             'plan' => str_replace("'", "\"", $plan),
-        	'titulo' => str_replace("'", "\"", $titulo)
+        	'titulo' => str_replace("'", "\"", $titulo),
+        	'criterio' => str_replace("'", "\"", $criterio),
+        	'plazo' => str_replace("'", "\"", $plazo)
         );
         /* -------------------------------------------------------------------------------------- */
         /* -------------------------------------------------------------------------------------- */
@@ -204,7 +208,9 @@ class Registrar {
             'observaciones' => $datosTextoEnriquecido['observaciones'],
             'plan' => $datosFkCotizacion['plan_accion'],
             'tipo_necesidad' => $_REQUEST ['tipoNecesidad'],
-            'forma_seleccion' => $_REQUEST ['formaSeleccion'],
+            //'forma_seleccion' => $_REQUEST ['formaSeleccion'],
+			'criterio' => $datosTextoEnriquecido['criterio'],
+        	'plazo' => $datosTextoEnriquecido['plazo'],
             'medio_pago' => $_REQUEST ['medioPago'],
         	'tipo_contrato' => $_REQUEST ['tipoContrato'],
             'numero_disponibilidad' => $valorCDP,
@@ -345,7 +351,6 @@ class Registrar {
        
          
         $actualizoCotizacion = $esteRecursoDB->transaccion($SQLs);
-        
         
 
         if ($actualizoCotizacion) {

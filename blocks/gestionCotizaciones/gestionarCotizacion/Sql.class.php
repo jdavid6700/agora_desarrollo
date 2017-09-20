@@ -30,6 +30,11 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion("id_sesion");
 
         switch ($tipo) {
+        	
+        	case "criteriosNecesidad" :
+        		$cadenaSql = "SELECT * FROM CO.CO_SOL_ADQ_FACTOR WHERE VIGENCIA=" . $variable ['vigencia'] . " and ";
+        		$cadenaSql.= "NUM_SOL_ADQ=" . $variable ['numero_disponibilidad'] . " ORDER BY TIPO";
+        		break;        	
 
         	case "consultarTipoFormaPagoFull" :
         		$cadenaSql = " SELECT id, nombre";
@@ -75,7 +80,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtenerInfoNec" :
-                $cadenaSql = " SELECT SN.NUM_SOL_ADQ, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
+                $cadenaSql = " SELECT SN.NUM_SOL_ADQ, SN.PLAZO_EJECUCION, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
                 $cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION, ";
                 $cadenaSql .= " DP2.NOMBRE_DEPENDENCIA as DEP_DESTINO";
                 $cadenaSql .= " FROM CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP , CO.CO_DEPENDENCIAS DP, CO.CO_DEPENDENCIAS DP2, PR.PR_RUBRO RB, CO.CO_SOLICITUD_ADQ SN   ";
@@ -1407,7 +1412,9 @@ class Sql extends \Sql {
                 $cadenaSql .= " unidad_ejecutora = " . " " . $variable ['unidad_ejecutora'] . ",";
                 $cadenaSql .= " estado_cotizacion = '1',";
                 $cadenaSql .= " tipo_necesidad = '" . $variable ['tipo_necesidad'] . "',";
-                $cadenaSql .= " forma_seleccion_id = '" . $variable ['forma_seleccion'] . "',";
+                //$cadenaSql .= " forma_seleccion_id = '" . $variable ['forma_seleccion'] . "',";
+                $cadenaSql .= " criterio_seleccion = " . " '" . $variable ['criterio'] . "',";
+                $cadenaSql .= " plazo_ejecucion = " . " '" . $variable ['plazo'] . "',";
                 $cadenaSql .= " medio_pago = '" . $variable ['medio_pago'] . "',";
                 $cadenaSql .= " tipo_contrato = '" . $variable ['tipo_contrato'] . "',";
                 $cadenaSql .= " numero_necesidad = '" . $variable ['numero_disponibilidad'] . "',";

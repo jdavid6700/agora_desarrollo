@@ -1,6 +1,13 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
+
+$this->idioma["marcoTipoContrato"]="Tipo de Contratación Asociada";
+$this->idioma["tipoContrato"] = "Tipo Contrato : ";
+$this->idioma["tipoContratoTitulo"]="Tipo Contrato";
+
 $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";

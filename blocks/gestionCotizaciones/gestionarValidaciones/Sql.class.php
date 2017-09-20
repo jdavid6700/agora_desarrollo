@@ -313,6 +313,31 @@ class Sql extends \Sql {
                 $cadenaSql.=" FROM agora.item_cotizacion";
                 $cadenaSql.=" WHERE respuesta_cotizacion_proveedor = " . $variable . ";";
                 break;
+            
+             case "buscarDetalleItems" :
+                $cadenaSql = " SELECT ";
+                $cadenaSql.=" id, ";
+                $cadenaSql.=" nombre, ";
+                $cadenaSql.=" descripcion, ";
+                $cadenaSql.=" tipo_necesidad, ";
+                $cadenaSql.=" unidad, ";
+                $cadenaSql.=" tiempo_ejecucion, ";
+                $cadenaSql.=" cantidad ";
+                $cadenaSql.=" FROM agora.item_cotizacion_padre";
+                $cadenaSql.=" WHERE objeto_cotizacion_id = " . $variable['idObjeto'] . ";";
+                break;
+            case "unidadUdistrital" :
+                $cadenaSql = " SELECT id, unidad";
+                $cadenaSql .= " FROM agora.unidad WHERE estado = TRUE;";
+                break;
+             case "unidadUdistrital2" :
+                $cadenaSql = " SELECT id, unidad";
+                $cadenaSql .= " FROM agora.unidad WHERE estado = TRUE AND id=".$variable.";";
+                break;
+            case "tipoNecesidadAdministrativa3" :
+                $cadenaSql = " SELECT id, nombre";
+                $cadenaSql .= " FROM administrativa.tipo_necesidad WHERE estado = TRUE AND id = ".$variable.";";
+                break;
 
             case "consultar_respuesta" :
                 $cadenaSql = "SELECT  ";

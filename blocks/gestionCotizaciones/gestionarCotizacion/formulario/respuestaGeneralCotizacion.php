@@ -423,6 +423,15 @@ class FormularioRegistro {
 					 
 					$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('buscarProveedoresInfoCotizacionMat' , $datos['idObjeto']);
 					$matrizItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+					
+					if(!$matrizItems){
+						$matrizItems = array (
+								array ( 1, 'NO ES POSIBLE SELECCIONAR UN PROVEEDOR' )
+						);
+						$atributos ['deshabilitado'] = true;
+						echo "<script>alert('No es posible seleccionar ningun proveedor, pues no hay al menos una respuesta registrada por parte de los Proveedores. (IMPORTANTE) ');</script>";
+					}
+					
 					$atributos ['matrizItems'] = $matrizItems;
 					 
 					$atributos = array_merge ( $atributos, $atributosGlobales );

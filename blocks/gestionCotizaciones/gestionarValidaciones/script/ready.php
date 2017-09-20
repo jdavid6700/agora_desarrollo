@@ -15,6 +15,11 @@ function detectarCarga(){
         InfoCDPMod();
 	}
 	
+	tinyMCE.get('<?php echo $this->campoSeguro('criterioSeleccion')?>').theme.resizeTo("100%", 150);
+	tinyMCE.get('<?php echo $this->campoSeguro('plazoEjecucion')?>').theme.resizeTo("100%", 50);
+	
+	tinyMCE.get('<?php echo $this->campoSeguro('observaciones')?>').theme.resizeTo("100%", 60);
+	
 }
 
 
@@ -185,6 +190,7 @@ $('#<?php echo $this->campoSeguro('medioPago')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
 $('#<?php echo $this->campoSeguro('decisionPro')?>').width(750);
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').width(350);
+$('#<?php echo $this->campoSeguro('tipoContrato')?>').width(450);
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
@@ -213,6 +219,7 @@ $('#<?php echo $this->campoSeguro('medioPago')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
 $('#<?php echo $this->campoSeguro('decisionPro')?>').select2();
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').select2();
+$('#<?php echo $this->campoSeguro('tipoContrato')?>').select2();
 
 
 
