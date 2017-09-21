@@ -527,4 +527,46 @@ $('#tablaReporteCont').DataTable({
     }
 });
 
+$("#<?php echo $this->campoSeguro('tipo_registro') ?>").width(220);
+$("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
+
+$( "#<?php echo $this->campoSeguro('tipo_registro')?>" ).change(function() {
+        
+            switch($("#<?php echo $this->campoSeguro('tipo_registro')?>").val())
+            {
+                           
+                case '1':
+                    
+                   
+                  $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','none');
+                    
+            
+                   
+
+                break;
+                
+                case '2':
+                    
+                   
+                    $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','block');
+                    
+            
+                   
+
+                break;
+                            
+                
+
+                default:
+                
+                    $("#<?php echo $this->campoSeguro('cargue_elementos')?>").css('display','none');
+                   
+                   break;
+                
+                
+             }
+          }); 
+          
+        
+
 

@@ -1351,6 +1351,16 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	$(tinymce.get('<?php echo $this->campoSeguro('criterioSeleccion') ?>').getBody()).html('<p>'+listFactores+'</p>');
                 	$("#<?php echo $this->campoSeguro('criterioSeleccion') ?>").val('<p>'+listFactores+'</p>');
                 
+                }else{
+                
+                	$(tinymce.get('<?php echo $this->campoSeguro('criterioSeleccion') ?>').getBody()).html('');
+                	$("#<?php echo $this->campoSeguro('criterioSeleccion') ?>").val('');
+                
+                	$("#criteriosEva").hover(function() {
+					  alertCriterio();
+					  $(this).unbind('mouseenter mouseleave');
+					});
+                
                 }
 
 
@@ -1366,6 +1376,20 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         });
 
     });
+    
+    function alertCriterio() {
+    	
+    	swal({
+			                title: 'Importante <br>CRITERIOS DE SELECCIÓN - SICAPITAL',
+			                type: 'warning',
+			                html:
+			                        'Atención, la información de los criterios de selección, no aparece registrada en SICAPITAL,'
+			                        +' la información debe ser diligenciada en el campo correspondiente.',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+    	
+    }
     
     function eliminarCDP (){
     

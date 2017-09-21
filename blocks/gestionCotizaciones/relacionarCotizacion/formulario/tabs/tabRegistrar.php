@@ -1019,6 +1019,11 @@ class FormularioRegistro {
 
 
 
+        //------------------Division para los botones-------------------------
+        $atributos["id"] = "criteriosEva";
+        $atributos["estilo"] = "";
+        echo $this->miFormulario->division("inicio", $atributos);
+        
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
         $esteCampo = 'criterioSeleccion';
         $atributos ['id'] = $esteCampo;
@@ -1049,6 +1054,9 @@ class FormularioRegistro {
         $atributos = array_merge($atributos, $atributosGlobales);
         echo $this->miFormulario->campoTextArea($atributos);
         unset($atributos);
+        
+        echo $this->miFormulario->division("fin");
+        
         
         
         // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------

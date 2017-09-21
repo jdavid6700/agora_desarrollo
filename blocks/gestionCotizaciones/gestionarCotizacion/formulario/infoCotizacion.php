@@ -262,12 +262,12 @@ class Formulario {
 		
 		if($objetoEspecifico[0]['estado_cotizacion'] == 1 || $objetoEspecifico[0]['estado_cotizacion'] == 2){
 			
-			
+
 			$esteCampo = "marcoDatosCotizacionListPer";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo ) . " (Número Cotización: ". $resultadoNecesidadRelacionada[0]['numero_solicitud'] ." - Titulo: " . $resultadoNecesidadRelacionada[0]['titulo_cotizacion'] . ")";
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo ) . " (Número Cotización: ". $resultadoNecesidadRelacionada[0]['numero_solicitud'] ." - Titulo: " . substr(str_replace("<p>", "", $resultadoNecesidadRelacionada[0]['titulo_cotizacion']), 0, 100) . "...)";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			echo '<table id="tablaObjetosSinCotizacion" class="display" cellspacing="0" width="100%"> ';
@@ -464,7 +464,7 @@ class Formulario {
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
 			$atributos ['tipoEtiqueta'] = 'inicio';
-			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo ) . " (Número Cotización: ". $resultadoNecesidadRelacionada[0]['numero_solicitud'] ." - Titulo: " . $resultadoNecesidadRelacionada[0]['titulo_cotizacion'] . ")";
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo ) . " (Número Cotización: ". $resultadoNecesidadRelacionada[0]['numero_solicitud'] ." - Titulo: " . substr(str_replace("<p>", "", $resultadoNecesidadRelacionada[0]['titulo_cotizacion']), 0, 100) . "...)";
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 			echo '<table id="tablaObjetosSinCotizacion" class="display" cellspacing="0" width="100%"> ';

@@ -504,7 +504,6 @@ class FormularioRegistro {
 				$cadena_sql = $this->miSql->getCadenaSql ( "buscarDetalleItemsProducto", $resultadoRespuesta[0]['id']);
 				$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
-			
 				$esteCampo = "marcoDescripcionProducto";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
@@ -538,7 +537,8 @@ class FormularioRegistro {
 			                            									<th width="10%" >Tiempo de Ejecución</th>
 			                            									<th width="5%" >Cantidad</th>
 			                            									<th width="10%" >Valor Unitario</th>
-                                                                                                                        <th width="15%" >Iva</th>
+                                                                            <th width="15%" >Iva</th>
+                                                                            <th width="15%" >Ficha Técnica</th>
 			                            									<th width="5%" >&nbsp;</th>
 			                            								</tr>
 			                            							</thead>
@@ -606,7 +606,8 @@ class FormularioRegistro {
 																 				<td><?php echo $tiempo  ?></td>
 																 				<td><?php echo number_format(round($resultadoItems[$i]['cantidad'],0), 0, '', '.')  ?></td>
 																 				<td><?php echo "$ " . number_format(round($resultadoItems[$i]['valor_unitario'],0), 0, '', '.')  ?></td>
-                                                                                                                                                                 <td><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
+                                                                                <td><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
+                                                                                <td><?php echo $resultadoItems[$i]['ficha_tecnica']  ?></td>
 																 				<th scope="row"><div class = "widget"><?php echo $i+1  ?></div></th>
 																 			</tr>
 																			<?php

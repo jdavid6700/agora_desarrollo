@@ -3,6 +3,10 @@
 //Formulario 
 
 $this->idioma ["botonAgregar"] ="Agregar";
+$this->idioma ["botonCargarArchivo"] ="Cargar Items";
+
+$this->idioma ["IvaItem"] = "IVA : ";
+$this->idioma ["IvaItemTitulo"] = "Seleccione IVA";
 
 $this->idioma["nombreItem"] = "Nombre: ";
 $this->idioma["nombreItemTitulo"]="Nombre Item";
@@ -19,7 +23,8 @@ $this->idioma["cantidadItemTitulo"]="Cantidad Item";
 $this->idioma["valorItem"] = "Valor Unitario: ";
 $this->idioma["valorItemTitulo"]="Valor Unitario Item";
 
-
+$this->idioma ["tipo_registro"] = "Ver detalle Elementos :	";
+$this->idioma ["documentos_elementos"] = "Archivo de Items";
 $this->idioma["tiempoItem1"] = "Años: ";
 $this->idioma["tiempoItem1Titulo"]="Tiempo de Ejecución Item";
 $this->idioma["tiempoItem2"] = "Meses: ";
@@ -27,6 +32,7 @@ $this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
 $this->idioma["tiempoItem3"] = "Días: ";
 $this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
 
+$this->idioma["botonAgregarInfo"] = "Calcular ";
 $this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
 
 
@@ -510,6 +516,15 @@ $this->idioma["entregaEjecucionTitulo"]="Información de Ejecución del Servicio
 
 $this->idioma["precioCot"] = "PRECIO COTIZACIÓN : ";
 $this->idioma["precioCotTitulo"]="Precio Cotización";
+$this->idioma["precioTotalIva"] = "PRECIO IVA : ";
+$this->idioma["precioTotalIvaTitulo"]="Precio Iva";
+
+
+
+$this->idioma["precioIva"] = "TOTAL IVA: ";
+$this->idioma["precioIvaTitulo"]="Total iva";
+$this->idioma["precioCotIva"] = "PRECIO COTIZACIÓN CON IVA: ";
+$this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
 

@@ -181,7 +181,7 @@ class Registrar {
             'plazoEntrega' => $datosTextoEnriquecido['plazoEntrega'],
             'precio' => $_REQUEST['precioCot'],
             'descuentos' => $datosTextoEnriquecido['descuentos'],
-        	'observaciones' => $datosTextoEnriquecido['observaciones'],
+            'observaciones' => $datosTextoEnriquecido['observaciones'],
             'fechaVencimiento' => $fechaVencimiento,
             'soporte' => $destino1,
             'fechaRegistro' => date('Y-m-d'),
@@ -198,8 +198,26 @@ class Registrar {
         
         $countFPParam = $_REQUEST ['countItems'];
         
+     
         $subFP = explode("&", $_REQUEST ['idsItems']);
-        $cantidadParametros = ($countFPParam) * 7;
+        
+        $subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
+        
+   
+        
+     
+       
+        $cantidadParametrosValores = ($countFPParam-1) * 3;
+        $cantidadParametros = ($countFPParam-1);
+        
+        $limitP = 0;
+        while($limitP < $cantidadParametrosValores){
+        	 
+        	 $subCountValores[$limitP] = explode(" ", $subFPValores[$limitP]);
+        	 
+        	$limitP++;
+        	 
+        }
         
         $limitP = 0;
         while($limitP < $cantidadParametros){
@@ -209,58 +227,55 @@ class Registrar {
         	$limitP++;
         	 
         }
-        
+       
+     
         $limit = 0;
-        while($limit < $cantidadParametros){
+        $limitIds = 0;
+        while($limit < $cantidadParametrosValores){
         	 
+        
         	
-        	if($subCount[$limit+2][0] == 1){
-        		
-        		$datoFP = array (
-        				'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
-        				'nombre' => $subFP[$limit],
-        				'descripcion' => $subFP[$limit+1],
-        				'tipo' => $subCount[$limit+2][0],
-        				'unidad' => $subCount[$limit+3][0],
-        				'tiempo' => $subCount[$limit+4][0],
-        				'cantidad' => $subCount[$limit+5][0],
-        				'valor' => $subCount[$limit+6][1]
-        		);
-        		
-        	}
-        	
-        	
-        	if($subCount[$limit+2][0] == 2){
-        		
-        		$subTime = explode(" ", $subFP[$limit+4]);
-        		$totalDays = (intval($subTime[0]) * 360) + (intval($subTime[3]) * 30) + intval($subTime[6]);
-        		
-        		$datoFP = array (
-        				'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
-        				'nombre' => $subFP[$limit],
-        				'descripcion' => $subFP[$limit+1],
-        				'tipo' => $subCount[$limit+2][0],
-        				'unidad' => $subCount[$limit+3][0],
-        				'tiempo' => $totalDays,
-        				'cantidad' => $subCount[$limit+5][0],
-        				'valor' => $subCount[$limit+6][1]
-        		);
+                $valorMod = str_replace(".", "",$subFPValores[$limit]);
+                $valorMod = str_replace(",", ".",$valorMod);
+                
+                $valorIva = $subFPValores[$limit+1];
+                $valorIva=str_replace("\\", "", $valorIva);
+                $valorFicha =  $subFPValores[$limit+2];
+                
+                $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('consultar_id_iva_Item', $valorIva);
+                $matrizItemsIva = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-        	}
+                
+                $datoFP = array (       
+                                        'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
+        				'id_item' => $subFP[$limitIds+1],
+        				'iva' => $matrizItemsIva[0][0],
+        				'valor' => $valorMod,
+        				'ficha' => $valorFicha,
+        		);
+                
+                      
+                
         	
-        	$datoRegFP = $this->miSql->getCadenaSql ( 'registrarItemProducto', $datoFP );
+        	
+        	
+        	
+        	
+        	$datoRegFP = $this->miSql->getCadenaSql ( 'insertarRespuestaItemsProveedor', $datoFP );
+//            
         	array_push($SQLs, $datoRegFP);
         	 
         	 
-        	$limit = $limit + 7;
+        	$limit = $limit + 3;
+                $limitIds = $limitIds + 1;
         }
-        
-        
+      
+       
         //*************************************************************************************************************
 
         $registroRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
-
-
+      
+       
         if ($registroRespuestaProveedorCotizacion) {
         	
         	

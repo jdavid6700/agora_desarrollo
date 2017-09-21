@@ -155,8 +155,6 @@ if($secure){
 		$cadenaSql5 = $this->sql->getCadenaSql('salarioMinimoVigente');
 		$resultadoItems5 = $coreRecursoDB->ejecutarAcceso($cadenaSql5, "busqueda");
 		$resultadoArray[4] = $resultadoItems5[0];
-		$datos = array('numero_disponibilidad' => 2346,
-				'vigencia' => 2008, 'unidad_ejecutora' => $_REQUEST ['unidad']);
 		$cadenaSql6 = $this->sql->getCadenaSql('criteriosNecesidad', $datos);
 		$resultadoItems6 = $DBSICA->ejecutarAcceso($cadenaSql6, "busqueda");
 		$resultadoArray[5] = $resultadoItems6;

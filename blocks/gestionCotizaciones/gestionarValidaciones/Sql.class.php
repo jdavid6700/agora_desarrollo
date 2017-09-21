@@ -136,11 +136,12 @@ class Sql extends \Sql {
         		break;
 
             case 'informacionRespuestaPDFCotizacion' :
-                $cadenaSql = " SELECT RCP.informacion_entrega, RCP.descripcion as des_sc, RCP.descuentos, RCP.observaciones, IC.cantidad, IC.valor_unitario, IC.nombre, IC.descripcion as des_ic  FROM";
-                $cadenaSql.=" agora.solicitud_cotizacion SC";
-                $cadenaSql.=" JOIN agora.respuesta_cotizacion_proveedor RCP ON RCP.solicitud_cotizacion = SC.id";
-                $cadenaSql.=" JOIN agora.item_cotizacion IC ON IC.respuesta_cotizacion_proveedor = RCP.id";
-                $cadenaSql.=" WHERE objeto_cotizacion = " . $variable ['id'] . " AND proveedor = " . $variable ['proveedor'] . ";";
+            	$cadenaSql = " SELECT RCP.informacion_entrega, RCP.descripcion as des_sc, RCP.descuentos, RCP.observaciones, ICP.cantidad, IC.valor_unitario, ICP.nombre, ICP.descripcion as des_ic  FROM";
+            	$cadenaSql.=" agora.solicitud_cotizacion SC";
+            	$cadenaSql.=" JOIN agora.respuesta_cotizacion_proveedor RCP ON RCP.solicitud_cotizacion = SC.id";
+            	$cadenaSql.=" JOIN agora.item_cotizacion IC ON IC.respuesta_cotizacion_proveedor = RCP.id";
+            	$cadenaSql.=" JOIN agora.item_cotizacion_padre ICP ON IC.item_cotizacion_padre_id = ICP.id";
+            	$cadenaSql.=" WHERE objeto_cotizacion = " . $variable ['id'] . " AND proveedor = " . $variable ['proveedor'] . ";";
                 break;
 
             case 'validacionObjetoCotizacion' :
@@ -301,17 +302,20 @@ class Sql extends \Sql {
                 break;
 
             case "buscarDetalleItemsProducto" :
-                $cadenaSql = " SELECT ";
-                $cadenaSql.=" id, ";
-                $cadenaSql.=" nombre, ";
-                $cadenaSql.=" descripcion, ";
-                $cadenaSql.=" tipo_necesidad, ";
-                $cadenaSql.=" unidad, ";
-                $cadenaSql.=" tiempo_ejecucion, ";
-                $cadenaSql.=" cantidad, ";
-                $cadenaSql.=" valor_unitario, iva ";
-                $cadenaSql.=" FROM agora.item_cotizacion";
-                $cadenaSql.=" WHERE respuesta_cotizacion_proveedor = " . $variable . ";";
+            	$cadenaSql=" SELECT ";
+            	$cadenaSql.=" it.id, ";
+            	$cadenaSql.=" itp.nombre, ";
+            	$cadenaSql.=" itp.descripcion, ";
+            	$cadenaSql.=" itp.tipo_necesidad, ";
+            	$cadenaSql.=" itp.unidad, ";
+            	$cadenaSql.=" itp.tiempo_ejecucion, ";
+            	$cadenaSql.=" itp.cantidad, ";
+            	$cadenaSql.=" it.valor_unitario, ";
+            	$cadenaSql.=" it.iva, ";
+            	$cadenaSql.=" it.ficha_tecnica ";
+            	$cadenaSql.=" FROM agora.item_cotizacion it";
+            	$cadenaSql.=" JOIN agora.item_cotizacion_padre itp ON itp.id = it.item_cotizacion_padre_id";
+                $cadenaSql.=" WHERE it.respuesta_cotizacion_proveedor = " . $variable . ";";
                 break;
             
              case "buscarDetalleItems" :
