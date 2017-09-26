@@ -258,6 +258,9 @@ $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primer
 $this->idioma["botonActualizar"] = "Actualizar";
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
+$this->idioma["botonEnviarSolicitud"] = "Enviar Solicitud";
+
+
 $this->idioma["botonContinuar"] = "Continuar";
 $this->idioma["botonAgregar"] = "Agregar";
 $this->idioma["botonTerminar"] = "Continuar";
@@ -417,6 +420,8 @@ $this->idioma["fechaCierreReadTitulo"]="Fecha de Cierre";
 
 $this->idioma["objetivo"] = "Objetivo / Tema :";
 $this->idioma["objetivoTitulo"]="Objetivo / Tema";
+$this->idioma["solicitudModificacion"] = "Solicitud de Modificación :";
+$this->idioma["solicitudModificacionTitulo"]="Solicitud de Modificación : ";
 $this->idioma["requisitos"] = "Requisitos :";
 $this->idioma["requisitosTitulo"]="Requisitos";
 $this->idioma["observaciones"] = "Observaciones Adicionales :";

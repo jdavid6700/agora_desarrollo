@@ -62,6 +62,13 @@ class Funcion {
 	{
 		include_once($this->ruta."/funcion/resumenPDF.php");
 	}
+        
+        function solicitarModificacion()
+	{
+		include_once($this->ruta."/funcion/solicitudModificacion.php");
+	}
+        
+        
 	function eliminarSolicitud() {
 		include_once ($this->ruta . "/funcion/eliminarSolicitud.php");
 	}
@@ -165,6 +172,13 @@ class Funcion {
 				case 'registrarRespuestaCotGen' :
 					$this->responderCotizacionGen ();
 					break;
+                                    
+                                 case 'solicitarModificacion' :
+					$this->solicitarModificacion ();
+					break;   
+                                    
+                                    
+                                    
 				
 				case "resumen" :
 					$this->resumen ();

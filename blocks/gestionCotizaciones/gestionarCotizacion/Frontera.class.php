@@ -115,6 +115,10 @@ class Frontera {
 				case "modificarSolicitudRelacionada" :
 					include_once ($this->ruta . "/formulario/modificarSolicitud.php");
 					break;
+                                 case "solicitudModificacion" : 
+                                 
+					include_once ($this->ruta . "/formulario/solicitudModificacion.php");
+					break;    
 					
 				case "verSolicitudRelacionada" :
 					include_once ($this->ruta . "/formulario/verSolicitudRelacionada.php");

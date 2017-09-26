@@ -152,7 +152,7 @@ class Formulario {
 								<th><center>Fecha Procesamiento</center></th>
 								<th><center>Título</center></th>
 								<th><center>Fecha Apertura</center></th>
-			                    <th><center>Fecha Cierre</center></th>
+                                <th><center>Fecha Cierre</center></th>
 								<th><center>Dependencia</center></th>
 								<th><center>Tipo Cotización</center></th>
 								<th><center>Estado</center></th>
@@ -161,6 +161,8 @@ class Formulario {
 								<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>
 								<th><center>Cancelar</center></th>
+                                <th><center>Solicitar<br>Modificación</center></th>
+                                                                
 							</tr>
 							</thead>
 							<tbody>";
@@ -263,6 +265,26 @@ class Formulario {
 					$imagenAdd = 'cancel.png';
 					
 				}
+                                
+                                if($estadoCotizacionArq == "COTIZACION" ){
+                                    $variableSolMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+                                    $variableSolMod .= "&opcion=solicitudModificacion";
+                                    $variableSolMod .= "&idSolicitud=" . $dato['id'];
+                                    $variableSolMod .= "&idObjeto=" . $dato['id'];
+                                    $variableSolMod .= "&vigencia=" . $dato['vigencia'];
+                                    $variableSolMod .= "&unidadEjecutora=" . $dato['unidad_ejecutora'];
+                                    $variableSolMod .= "&tipoNecesidad=" . $dato['tipo_necesidad'];
+                                    $variableSolMod .= "&botonTrue=true";
+                                    $variableSolMod .= "&usuario=" . $_REQUEST['usuario'];
+                                    $variableSolMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableSolMod, $directorio );
+                                    $imagenSolMod = 'editPro.png';
+                                }
+                                else{
+                                    
+                                    $variableSolMod = "#";
+                                    $imagenSolMod = 'cancel.png';
+                                }
+                                
 				
 				$variableCan = "#";
 				$imagenCan = 'cancel.png';
@@ -272,6 +294,12 @@ class Formulario {
 				
 				$variableCal = "#";
 				$imagenCal = 'cancel.png';
+                                
+                                
+                                
+                                
+                                
+                               
 				
 			}else if($estadoCotizacionArq == "ASIGNADO"){
 				
@@ -280,6 +308,9 @@ class Formulario {
 				
 				$variableMod = "#";
 				$imagenMod = 'cancel.png';
+                                
+                                $variableSolMod = "#";
+				$imagenSolMod = 'cancel.png';
 				
 				$variableCal = "#";
 				$imagenCal = 'cancel.png';
@@ -324,6 +355,9 @@ class Formulario {
 				$variableCan .= "&usuario=" . $_REQUEST['usuario'];
 				$variableCan = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableCan, $directorio );
 				$imagenCan = 'canPro.png';
+                                
+                                $variableSolMod = "#";
+				$imagenSolMod = 'cancel.png';
 				
 				
 			}
@@ -377,6 +411,11 @@ class Formulario {
 											<img src='" . $rutaBloque . "/images/" . $imagenCan . "' width='15px'>
 										</a>
 									</center></td>					
+                                                                        <td><center>
+										<a href='" . $variableSolMod . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenSolMod . "' width='15px'>
+										</a>
+									</center></td>
 								</tr>";
 			echo $mostrarHtml;
 			unset ( $mostrarHtml );

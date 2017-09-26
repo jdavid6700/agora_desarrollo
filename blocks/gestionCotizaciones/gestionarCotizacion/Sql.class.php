@@ -1174,12 +1174,9 @@ class Sql extends \Sql {
                 $cadenaSql .= "	clasificacion_evaluacion";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " agora.informacion_proveedor P";
-                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.num_documento = P.num_documento";
+                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.informacion_proveedor_id = P.id_proveedor";
                 $cadenaSql .= " WHERE  A.id_subclase IN (" . $variable ['actividadEconomica'] . ")";
-                //$cadenaSql .= " AND P.puntaje_evaluacion > 45";
                 $cadenaSql .= " AND P.estado = '1'";
-                //$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
-                //$cadenaSql .= " LIMIT " . $variable ['numCotizaciones'];
                 break;
 
             case "proveedoresByClasificacionConv" :
@@ -1193,14 +1190,11 @@ class Sql extends \Sql {
                 $cadenaSql .= "	clasificacion_evaluacion";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " agora.informacion_proveedor P";
-                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.num_documento = P.num_documento";
+                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.informacion_proveedor_id = P.id_proveedor";
                 $cadenaSql .= " JOIN agora.informacion_persona_natural PN ON PN.num_documento_persona = P.num_documento";
                 $cadenaSql .= " WHERE  A.id_subclase IN (" . $variable ['actividadEconomica'] . ")";
                 $cadenaSql .= " AND PN.id_nucleo_basico = " . $variable ['objetoNBC'];
                 $cadenaSql .= " AND P.estado = '1'";
-                //$cadenaSql .= " AND P.tipopersona = 'NATURAL'";
-                //$cadenaSql .= " ORDER BY puntaje_evaluacion DESC";
-                //$cadenaSql .= " LIMIT " . $variable ['numCotizaciones'];
                 break;
 
 
