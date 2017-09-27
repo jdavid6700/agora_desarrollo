@@ -1,0 +1,316 @@
+/* 
+    Document   : miestilo
+    Created on : 29/08/2013, 12:11:16 PM
+    Author     : esanchez
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/***** ESTILOS REQUERIDOS PARA IMPLETAR RADIO INPUT (INSTANCIAS CREADAS EN CORE) ******/
+/**************************************************************************************/
+/**************************************************************************************/
+
+
+.control-group {
+	display: inline-block;
+	width: 200px;
+	height: 210px;
+	margin: 10px;
+	padding: 30px;
+	text-align: left;
+	vertical-align: top;
+	background: #fff;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+}
+
+.control {
+	font-size: 18px;
+	position: relative;
+	display: block;
+	margin-bottom: 15px;
+	padding-left: 30px;
+	cursor: pointer;
+}
+
+.control input {
+	position: absolute;
+	z-index: -1;
+	opacity: 0;
+}
+
+.control__indicator {
+	position: absolute;
+	top: 2px;
+	left: 0;
+	width: 20px;
+	height: 20px;
+	background: #e6e6e6;
+}
+
+.control--radio .control__indicator {
+	border-radius: 50%;
+}
+
+/* Hover and focus states */
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+	background: #ccc;
+}
+
+/* Checked state */
+.control input:checked ~ .control__indicator {
+	background: #2aa1c0;
+}
+
+/* Hover state whilst checked */
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+	background: #0e647d;
+}
+
+/* Disabled state */
+.control input:disabled ~ .control__indicator {
+	pointer-events: none;
+	opacity: .6;
+	background: #e6e6e6;
+}
+
+/* Check mark */
+.control__indicator:after {
+	position: absolute;
+	display: none;
+	content: '';
+}
+
+/* Show check mark */
+.control input:checked ~ .control__indicator:after {
+	display: block;
+}
+
+/* Checkbox tick */
+.control--checkbox .control__indicator:after {
+	top: 4px;
+	left: 8px;
+	width: 3px;
+	height: 8px;
+	transform: rotate(45deg);
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+}
+
+/* Disabled tick colour */
+.control--checkbox input:disabled ~ .control__indicator:after {
+	border-color: #7b7b7b;
+}
+
+/* Radio button inner circle */
+.control--radio .control__indicator:after {
+	top: 7px;
+	left: 7px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: #fff;
+}
+
+/* Disabled circle colour */
+.control--radio input:disabled ~ .control__indicator:after {
+	background: #7b7b7b;
+}
+
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+/**************************************************************************************/
+
+
+
+
+
+#pie {
+     width: 95%;
+}
+
+#scroll {
+     width:600px;
+     height:270px;
+     background-color:#F2F2F2;
+     overflow:auto;
+}
+
+.contenedor-tabla{
+
+display: table;
+
+}
+
+.contenedor-fila{
+
+display: table-row;
+
+}
+
+.contenedor-columna{
+
+display: table-cell;
+
+}
+
+/* General Demo Style */
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@font-face {
+    font-family: 'fontawesome';
+    src:url('../fonts/fontawesome.eot');
+    src:url('../fonts/fontawesome.eot?#iefix') format('embedded-opentype'),
+        url('../fonts/fontawesome.svg#fontawesome') format('svg'),
+        url('../fonts/fontawesome.woff') format('woff'),
+        url('../fonts/fontawesome.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body, html { font-size: 100%; 	padding: 0; margin: 0;}
+
+/* Reset */
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+body {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #000000;
+    background-image: url(../images/retro.jpg);
+    background-color: none;
+    min-height: 800px;
+    opacity: 0.95;
+}
+
+a {
+    color: #f0f0f0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
+}
+
+.container > header {
+    width: 90%;
+    max-width: 70em;
+    margin: 0 auto;
+    padding: 0 1.875em 3.125em 1.875em;
+}
+
+.container > header {
+    padding: 2.875em 1.875em 1.875em;
+}
+
+.container > header h1 {
+    font-size: 2.125em;
+    line-height: 1.3;
+    margin: 0;
+    float: left;
+    font-weight: 400;
+}
+
+.container > header span {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+    padding: 0 0 0.6em 0.1em;
+}
+
+.container > header nav {
+    float: right;
+}
+
+.container > header nav a {
+    display: block;
+    float: left;
+    position: relative;
+    width: 2.5em;
+    height: 2.5em;
+    background: #fff;
+    border-radius: 50%;
+    color: transparent;
+    margin: 0 0.1em;
+    border: 4px solid #47a3da;
+    text-indent: -8000px;
+}
+
+.container > header nav a:after {
+    content: attr(data-info);
+    color: #47a3da;
+    position: absolute;
+    width: 600%;
+    top: 120%;
+    text-align: right;
+    right: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.container > header nav a:hover:after {
+    opacity: 1;
+}
+
+.container > header nav a:hover {
+    background: #47a3da;
+}
+
+.icon-drop:before, 
+.icon-arrow-left:before {
+    font-family: 'fontawesome';
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 2;
+    text-align: center;
+    color: #47a3da;
+    -webkit-font-smoothing: antialiased;
+    text-indent: 8000px;
+    padding-left: 8px;
+}
+
+.container > header nav a:hover:before {
+    color: #fff;
+}
+
+.icon-drop:before {
+    content: "\e000";
+}
+
+.icon-arrow-left:before {
+    content: "\f060";
+}
+
+

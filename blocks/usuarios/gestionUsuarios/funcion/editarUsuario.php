@@ -31,6 +31,9 @@ class RegistradorUsuarios {
     }
 
     function procesarFormulario() {
+    	
+    	if(isset($_REQUEST['nombres'])){$_REQUEST['nombres']=mb_strtoupper($_REQUEST['nombres'],'utf-8');}
+    	if(isset($_REQUEST['apellidos'])){$_REQUEST['apellidos']=mb_strtoupper($_REQUEST['apellidos'],'utf-8');}
 
         $conexion="framework";
 	$frameworkRecursoDB=$this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);

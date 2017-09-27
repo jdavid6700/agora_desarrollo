@@ -16,7 +16,7 @@ class Encriptador {
 	private $llave;
 	private $iv;
 	//Se requiere una semilla de 16, 24 o 32 caracteres
-	const SEMILLA = '0xel0t1lwvXl1FO7';
+	const SEMILLA = '23fD27068bAF433b82eB8c7fXaw847di';
 	
 	// Constructor
 	function __construct($llave = '') {

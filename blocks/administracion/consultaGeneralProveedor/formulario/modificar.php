@@ -108,6 +108,15 @@ class Formulario {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_tipo_proveedor', $_REQUEST["idProveedor"] );
 		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		
+		echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+		
+		
 		$esteCampo = "marcoDatos";
 		$atributos ['id'] = $esteCampo;
 		$atributos ["estilo"] = "jqueryui";
@@ -878,17 +887,24 @@ class Formulario {
 		}
 		
 		
+		$atributos["id"]="botones";
+		$atributos["estilo"]="marcoBotones widget";
+		echo $this->miFormulario->division("inicio",$atributos);
+		
 		// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 		$esteCampo = 'botonRegresar';
 		$atributos ['id'] = $esteCampo;
 		$atributos ['enlace'] = $variable;
 		$atributos ['tabIndex'] = 1;
-		$atributos ['estilo'] = 'textoSubtitulo';
+		$atributos ['estilo'] = '';
 		$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
 		$atributos ['ancho'] = '10%';
 		$atributos ['alto'] = '10%';
 		$atributos ['redirLugar'] = true;
 		echo $this->miFormulario->enlace ( $atributos );
+		
+		//------------------Fin Division para los botones-------------------------
+		echo $this->miFormulario->division("fin");
 		
 		unset ( $atributos );
 		
@@ -3707,10 +3723,22 @@ class Formulario {
 			$atributos["estilo"]="marcoBotones widget";
 			echo $this->miFormulario->division("inicio",$atributos);
 			
-			$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
-			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
-			$enlace.="</a>";
-			echo $enlace;
+			
+			
+			
+			if($_REQUEST['DocumentoRUT'] != null){
+				$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+				$enlace.="</a>";
+				echo $enlace;
+			}else{
+				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+				$enlace.="</a>";
+				echo $enlace;
+			}
+			
+			
 			//------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division("fin");
 			//FIN enlace boton descargar RUT
@@ -3753,12 +3781,12 @@ class Formulario {
 				
 			if($_REQUEST['DocumentoRUP'] != null){
 				$enlace = "<br><a href='".$_REQUEST['DocumentoRUP']."' target='_blank'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}else{
-				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUP')\">";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado Registro (RUP) o (ESAL)')\">";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}
@@ -6454,10 +6482,20 @@ class Formulario {
 					$atributos["estilo"]="marcoBotones widget";
 					echo $this->miFormulario->division("inicio",$atributos);
 					
+					
+					if($_REQUEST['DocumentoRUTNat'] != null){
 						$enlace = "<br><a href='".$_REQUEST['DocumentoRUTNat']."' target='_blank'>";
 						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
 						$enlace.="</a>";
 						echo $enlace;
+					}else{
+						$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
+						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+						$enlace.="</a>";
+						echo $enlace;
+					}
+					
+					
 						//------------------Fin Division para los botones-------------------------
 					echo $this->miFormulario->division("fin");
 				//FIN enlace boton descargar RUT

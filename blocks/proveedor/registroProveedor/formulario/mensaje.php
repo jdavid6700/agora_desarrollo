@@ -95,6 +95,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	$variableResumen.= "&correo=" .$_REQUEST['correo'];
     	$variableResumen.= "&telefono=" .$_REQUEST['telefono'];
     	$variableResumen.= "&id_usuario=" .$_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'];
+    	$variableResumen.= "&tipo_persona=" . $_REQUEST ['tipo_persona'];
     	$variableResumen.= "&perfilUs=" .'Persona Natural o Jurídica';
     	$variableResumen.= "&password=" .$_REQUEST['generada'];
     	$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
@@ -113,7 +114,7 @@ if (!isset($GLOBALS["autorizado"])) {
     	
     	
         $tipo = 'success';
-        $mensaje = "Se registro la PERSONA, continuar para ingresar Actividades Económicas (IMPORTANTE)<br >";
+        $mensaje = "Se registro la PERSONA, puede OPRIMIR CONTINUAR e ingresar más Actividades Económicas, si lo requiere.<br >";
 		$mensaje .= "<strong>Usuario: </strong>" . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br >";
 		$mensaje .= "<strong><br >";
 		$mensaje .= "<strong>Clave Disponible en el Correo que registro, por favor revise su Bandeja de Entrada<br >";
@@ -211,8 +212,9 @@ if (!isset($GLOBALS["autorizado"])) {
 		$valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        $valorCodificado.="&nit=" . $_REQUEST['nit'];
+        $valorCodificado.="&num_documento=" . $_REQUEST['nit'];
         $valorCodificado.="&id_usuario=" . $_REQUEST['id_usuario'];
+        $valorCodificado.="&tipo_persona=" . $_REQUEST['tipo_persona'];
         
         
     } else if($_REQUEST['mensaje'] == 'mensajeExisteProveedor') {
@@ -267,16 +269,31 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];    
        
     } else if($_REQUEST['mensaje'] == 'registroActividad') {
+    
+    	$actividadesArray = explode(",", $_REQUEST['actividades']);
+        $listAc = "";
+
+        foreach ($actividadesArray as $dato):
+            $cadenaSql = $this->sql->getCadenaSql('ciiuSubClaseByNum', $dato);
+            $resultadoCIIU = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+            $listAc .= "<strong>" . $resultadoCIIU[0]['nombre'] . "</strong><br >";
+            ;
+        endforeach;
+
         $tipo = 'success';
-        $mensaje = "Se registro la Actividad Económica<br >";
-		$mensaje .= "<strong>" . $_REQUEST['actividad'] . "</strong><br >";
+        $mensaje = "</span>Se realizó la modificación a la(s) Actividad(es) Económica(s)<br><br>";
+        $mensaje .= $listAc;
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
         $valorCodificado.="&opcion=actividad";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-		$valorCodificado.="&nit=" . $_REQUEST['nit'];
+        $valorCodificado.="&num_documento=" . $_REQUEST['num_documento'];
+        $valorCodificado.="&tipo_persona=" . $_REQUEST['tipo_persona'];
+        $valorCodificado.="&idProveedor=" . $_REQUEST["idProveedor"];
+		
        
     }else if($_REQUEST['mensaje'] == 'actualizo') {
         $tipo = 'success';

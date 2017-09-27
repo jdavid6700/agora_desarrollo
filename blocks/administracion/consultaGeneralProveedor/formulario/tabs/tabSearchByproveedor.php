@@ -11,12 +11,14 @@ class Formulario {
     var $miConfigurador;
     var $lenguaje;
     var $miFormulario;
+    var $miSql;
 
-    function __construct($lenguaje, $formulario) {
+    function __construct($lenguaje, $formulario,  $sql) {
         $this->miConfigurador = \Configurador::singleton ();
         $this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
         $this->lenguaje = $lenguaje;
         $this->miFormulario = $formulario;
+        $this->miSql = $sql;
     }
 
     function formulario() {
@@ -45,6 +47,32 @@ class Formulario {
         // -------------------------------------------------------------------------------------------------
 
         // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------
+        
+        
+        
+        //*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
+        
+        $conexion = 'estructura';
+        $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'centralUD';
+        $centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'argo_contratos';
+        $argoRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'core_central';
+        $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
+        //*************************************************************************** DBMS *******************************
+        //****************************************************************************************************************
+        
+        
+        
         $esteCampo = $esteBloque ['nombre'];
         $atributos ['id'] = $esteCampo;
         $atributos ['nombre'] = $esteCampo;
@@ -120,6 +148,151 @@ class Formulario {
 					unset($atributos);
 
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
+			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+			$esteCampo = "marcoSearchByFiltCIIU";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+			
+			
+			// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+			$esteCampo = "claseCIIU";
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['id'] = $esteCampo;
+			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ["etiquetaObligatorio"] = false;
+			$atributos ['tab'] = $tab ++;
+			$atributos ['anchoEtiqueta'] = 200;
+			$atributos ['evento'] = '';
+			if (isset ( $_REQUEST [$esteCampo] )) {
+				$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+			} else {
+				$atributos ['seleccion'] = - 1;
+			}
+			$atributos ['deshabilitado'] = false;
+			$atributos ['columnas'] = 1;
+			$atributos ['tamanno'] = 1;
+			$atributos ['ajax_function'] = "";
+			$atributos ['ajax_control'] = $esteCampo;
+			$atributos ['estilo'] = "jqueryui";
+			$atributos ['validar'] = "";
+			$atributos ['limitar'] = false;
+			$atributos ['anchoCaja'] = 60;
+			$atributos ['miEvento'] = '';
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuClaseAll' );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			$atributos ['matrizItems'] = $matrizItems;
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			unset ( $atributos );
+			// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+			
+			
+			
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+			
+			
+			
+			
+			
+			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+			$esteCampo = "marcoSearchByFiltSNIES";
+			$atributos ['id'] = $esteCampo;
+			$atributos ["estilo"] = "jqueryui";
+			$atributos ['tipoEtiqueta'] = 'inicio';
+			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+			
+			
+			
+			// ---------------- CONTROL: Select --------------------------------------------------------
+			$esteCampo = 'personaArea';
+			$atributos['nombre'] = $esteCampo;
+			$atributos['id'] = $esteCampo;
+			$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos['tab'] = $tab;
+				
+			$atributos['evento'] = ' ';
+			$atributos['deshabilitado'] = false;
+			$atributos['limitar']= 50;
+			$atributos['tamanno']= 1;
+			$atributos['columnas']= 1;
+			$atributos ['anchoEtiqueta'] = 400;
+				
+			$atributos ['obligatorio'] = false;
+			$atributos ['etiquetaObligatorio'] = false;
+			$atributos ['validar'] = '';
+			
+			$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "buscarAreaConocimiento" );
+			$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+			$atributos['seleccion'] = -1;
+			
+			$atributos['matrizItems'] = $matrizItems;
+			$atributos ['valor'] = '';
+				
+			$tab ++;
+			
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			// --------------- FIN CONTROL : Select --------------------------------------------------
+			
+			
+			
+			// ---------------- CONTROL: Select --------------------------------------------------------
+			$esteCampo = 'personaNBC';
+			$atributos['nombre'] = $esteCampo;
+			$atributos['id'] = $esteCampo;
+			$atributos['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos['tab'] = $tab;
+			
+			$atributos['seleccion'] = -1;
+			
+			$atributos['evento'] = ' ';
+			
+			$atributos['deshabilitado'] = true;
+			
+			$atributos['limitar']= 50;
+			$atributos['tamanno']= 1;
+			$atributos['columnas']= 1;
+			$atributos ['anchoEtiqueta'] = 400;
+			
+			$atributos ['obligatorio'] = true;
+			$atributos ['etiquetaObligatorio'] = false;
+			$atributos ['validar'] = 'required';
+			
+			$matrizItems=array(
+					array(1,'Test A'),
+					array(2,'Test B'),
+			
+			);
+			
+			$atributos['matrizItems'] = $matrizItems;
+			$atributos ['valor'] = '';
+			
+			$tab ++;
+			
+			// Aplica atributos globales al control
+			$atributos = array_merge ( $atributos, $atributosGlobales );
+			echo $this->miFormulario->campoCuadroLista ( $atributos );
+			
+			
+			
+			
+			
+			
+			
+			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+			
+			
+			
 			
         // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 
@@ -243,7 +416,7 @@ class Formulario {
 
 }
 
-$miFormulario = new Formulario ( $this->lenguaje, $this->miFormulario );
+$miFormulario = new Formulario ( $this->lenguaje, $this->miFormulario, $this->sql  );
 
 
 $miFormulario->formulario ();

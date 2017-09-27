@@ -1,11 +1,19 @@
 <?php
 
+$this->idioma["marcoActividades"] = "Actividades Económicas Registradas";
+
 $this->idioma["tabConsultarProveedor"] = "Consultar Información del Proveedor";
 
 $this->idioma["marcoSearchByNIT"]="Ingresar NIT/Cédula o Nombre del proveedor";
 $this->idioma["marcoSearchByName"]="Ingresar nombre empresa del proveedor";
 $this->idioma["marcoDatos"]="Datos del Proveedor";
+$this->idioma["marcoDatosTable"]="Datos del Proveedor";
 $this->idioma["marcoInhabilidad"]="Datos Inhabilidad";
+
+$this->idioma["marcoSearchByFiltCIIU"]="Filtro Búsqueda por Actividad Económica (OPCIONAL)";
+$this->idioma["marcoSearchByFiltSNIES"]="Filtro Búsqueda por Profesión SNIES (OPCIONAL)";
+
+
 
 $this->idioma["nit_proveedor"] =  "NIT/Cédula o Nombre : ";
 $this->idioma["nit_proveedorTitulo"] = "Indicar NIT o Cédula del proveedor";
@@ -16,8 +24,8 @@ $this->idioma["nombreEmpresaTitulo"] = "Indicar nombre de la empresa";
 $this->idioma["botonAceptar"] = "Aceptar";
 $this->idioma["botonCancelar"] = "Cancelar";
 $this->idioma["botonContinuar"] = "Continuar";
-$this->idioma ["botonRegresar"] ="< < Regresar";
-$this->idioma ["botonRegresarNat"] ="< < Regresar";
+$this->idioma ["botonRegresar"] ="Regresar";
+$this->idioma ["botonRegresarNat"] ="Regresar";
 
 $this->idioma["tipo"] = "Tipo de Inhabilidad :";
 $this->idioma["tipoTitulo"]="Digite Tipo Inhabilidad ";
@@ -32,7 +40,7 @@ $this->idioma["fechaTitulo"]="Seleccione Fecha de inicio de la Inhabilidad";
 $this->idioma["descripcion"] = "Descripci&oacuten";
 $this->idioma["descripcionTitulo"]="Digite la descripción";
 
-$this->idioma["parametrosInvalidos"] = "Párametros de Consulta Invalidos por favor Revise los Datos Ingresados";
+$this->idioma["parametrosInvalidos"] = "No existen personas registradas que cumplan los criterios de búsqueda.";
 
 $this->idioma["noDefinido"] = "No definido";
 
@@ -190,7 +198,7 @@ $this->idioma["grupoCIIUTitulo"]="Seleccionar grupo CIIU";
 $this->idioma["claseCIIU"] = "Clase :";
 $this->idioma["claseCIIUTitulo"]="Seleccionar clase CIIU";
 
-$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro Único de Proponentes :";
+$this->idioma["DocumentoRUP"] = "Adjuntar PDF Registro (RUP) o (ESAL) :";
 $this->idioma["DocumentoRUPTitulo"]="Seleccionar documento";
 $this->idioma["DocumentoRUPNat"] = "Adjuntar PDF Registro Único de Proponentes :";
 $this->idioma["DocumentoRUPNatTitulo"]="Seleccionar documento";
@@ -240,6 +248,9 @@ $this->idioma["personaNBC"]="Nucleo Básico de Conocimiento NBC (SNIES) :";
 
 $this->idioma["direccionNat"] = "Dirección : ";
 $this->idioma["direccionNatTitulo"]="Digite Dirección";
+
+$this->idioma["direccionExt"] = "Dirección : ";
+$this->idioma["direccionExtTitulo"]="Digite Dirección";
 
 $this->idioma["correoNat"] = "Correo : ";
 $this->idioma["correoNatTitulo"]="Digite el correo";
@@ -357,6 +368,7 @@ $this->idioma["marcoEmpresa"] = "Información de la Empresa";
 $this->idioma["marcoFinanciero"] = "Información Financiera";
 
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
+$this->idioma["marcoProcedenciaExtranjero"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Enocómica";
@@ -364,7 +376,7 @@ $this->idioma["marcoActividades"] = "Actividades Enocómicas Registradas";
 $this->idioma["marcoContratos"] = "Contratos";
 $this->idioma["marcoRUT"] = "Registro Único Tributario (RUT) ";
 
-$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) ";
+$this->idioma["marcoRUP"] = "Registro Único de Proponentes (RUP) o Registro de Entidades Sin Ánimo de Lucro (ESAL)";
 
 
 //*******************************************

@@ -1349,7 +1349,7 @@ function consultarDepartamentoLug(elem, request, response){
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
         				var value = $(this).val().length;
-        				if(value == 9){//Ejecutar solo Cuando se Completa el NIT
+        				if(value > 3){//Ejecutar solo Cuando se Completa el NIT
         					var cadenaNit = $(this).val();
         					calcularDigito(cadenaNit);//LLamar la Función para Ejecutar Calculo Digito Verificación
         				}else{
@@ -1895,4 +1895,174 @@ function consultarDepartamentoLug(elem, request, response){
 				$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
 			}
 		});
+		
+		
+		<?php 
+		
+		
+		//Variables
+		$cadenaACodificarCIUU = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+		$cadenaACodificarCIUU .= "&procesarAjax=true";
+		$cadenaACodificarCIUU .= "&action=index.php";
+		$cadenaACodificarCIUU .= "&bloqueNombre=" . $esteBloque ["nombre"];
+		$cadenaACodificarCIUU .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+		$cadenaACodificarCIUU .= $cadenaACodificarCIUU . "&funcion=consultarCIIUPush";
+		$cadenaACodificarCIUU .= "&tiempo=" . $_REQUEST ['tiempo'];
+		
+		// Codificar las variables
+		$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		
+		$cadenaCIUU = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarCIUU, $enlace );
+		
+		// URL definitiva
+		$urlInfoClaseCIUU = $url . $cadenaCIUU;
+		
+		
+		$cadenaACodificarActividad= "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+		$cadenaACodificarActividad .= "&procesarAjax=true";
+		$cadenaACodificarActividad .= "&action=index.php";
+		$cadenaACodificarActividad .= "&bloqueNombre=" . $esteBloque ["nombre"];
+		$cadenaACodificarActividad .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+		$cadenaACodificarActividad .= $cadenaACodificarCIUU . "&funcion=consultarActividad";
+		$cadenaACodificarActividad .= "&tiempo=" . $_REQUEST ['tiempo'];
+		
+		// Codificar las variables
+		$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		
+		$cadenaActividad = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarActividad, $enlace );
+		
+		// URL definitiva
+		$urlFinalActividad = $url . $cadenaActividad;		
+		
+		
+		?>
+    	 
+
+if ($("#<?php echo $this->campoSeguro('idProveedor') ?>").val() != '') {
+  consultarActividadExistente();
+}
+ var iCnt = 0;  
+     var actividades = new Array();
+function consultarActividadExistente(elem, request, response){
+	$.ajax({
+		url: "<?php echo $urlFinalActividad?>",
+		dataType: "json",
+		data: { valor:$("#<?php echo $this->campoSeguro('idProveedor')?>").val()},
+		success: function(data){
+			if(data[0]!=" "){
+                                 var nFilas = $("#tabla tr").length;
+				$.each(data , function(indice,valor){
+					actividades.push(data[indice][0]);
+                                        var nuevaFila="<tr id=\"nFilas\">";
+
+                                                                                        nuevaFila+="<td>"+(data[indice][0])+"</td>";
+                                                                                        nuevaFila+="<td>"+(data[indice][1])+"</td>";
+                                                                                        nuevaFila+="<td>"+(data[indice][2])+"</td>";
+                                                                                        nuevaFila+="<th class=\"eliminar\" scope=\"row\">Eliminar</th>";		    
+                                                                                        <!--nuevaFila+="<td><input type='button' value='Eliminar' /></td>";-->	
+                                                                                        nuevaFila+="</tr>";
+                                         $("#tabla").append(nuevaFila);
+                                         $("#<?php echo $this->campoSeguro('idActividades') ?>").val(actividades);
+				});
+			}
+		}
+	});
+};
+
+    	
+  $(function(){
+                       
+		    	
+		    	$("#<?php echo $this->campoSeguro('claseCIIU')?>").change(function(){
+		        	
+                                 if ($("#<?php echo $this->campoSeguro('claseCIIU') ?>").val() != '') {
+                                          consultarCIIUPush();
+                                 } else {
+
+                                  }
+                        }); 
+                        
+                           function consultarCIIUPush(elem, request, response) {
+                                 $.ajax({
+                                            url: "<?php echo $urlInfoClaseCIUU ?>",
+                                            dataType: "json",
+                                            data: {valor: $("#<?php echo $this->campoSeguro('claseCIIU') ?>").val()},
+                                            success: function (data) {  
+                                             if (data[0] != "") {
+                                                              var nFilas = $("#tabla tr").length;
+                                                              var validacion=0;
+                                                              $('#tabla tr').each(function(){
+                                                                        var celdas = $(this).find('td');
+
+                                                                        if(data[0][2]===$(celdas[0]).html()){
+                                                                            validacion=1;
+                                                                         }
+                                                               });
+                                                                if(validacion===0){
+                                                                var tds=4;
+                                                                var trs=4;
+                                                                actividades.push(data[0][2]);
+		        	
+                                                        var nuevaFila="<tr id=\"nFilas\">";
+
+                                                                                        nuevaFila+="<td>"+(data[0][2])+"</td>";
+                                                                                        nuevaFila+="<td>"+(data[0][1])+"</td>";
+                                                                                        nuevaFila+="<td>"+(data[0][0])+"</td>";
+                                                                                        nuevaFila+="<th class=\"eliminar\" scope=\"row\">Eliminar</th>";		    
+                                                                                        <!--nuevaFila+="<td><input type='button' value='Eliminar' /></td>";-->	
+                                                                                        nuevaFila+="</tr>";
+                                                          $("#<?php echo $this->campoSeguro('idActividades') ?>").val(actividades);
+
+                                                        $("#tabla").append(nuevaFila);
+                                                    }
+                                                     else{                                   
+                                                        
+                                                        swal({
+																						  title: 'Problema con Código Actividad Económica CIIU ('+(data[0][2])+')',
+																						  type: 'warning',
+																						  html:
+																						    'La actividad ya se encuentra registrada</br> '+ '</br>' + 
+																						    'Actividad Económica: (' + (data[0][2])+') ' + (data[0][1]) ,
+																						  confirmButtonText:
+																						    'Ok'
+																						})
+
+                                                     }
+                                                     
+                                                     $("#<?php echo $this->campoSeguro('claseCIIU')?>").select2("val", "");
+													 $("#<?php echo $this->campoSeguro('claseCIIU')?>").removeClass("validate[required]");
+                                                              
+                                }
+                                            }
+                                 });
+                                 
+                                
+
+                           
+                           }
+                           
+                        
+
+               $(document).on("click",".eliminar",function(){
+									var parent = $(this).parents().get(0);
+									var element = $(parent).text();
+									var codigoCIIU = element.substring(0, 4);
+									
+									
+									var index = actividades.indexOf(codigoCIIU);
+									
+									if (index > -1) {
+									    actividades.splice(index, 1);
+									}
+									
+									$("#<?php echo $this->campoSeguro('idActividades') ?>").val(actividades);
+									
+									$("#<?php echo $this->campoSeguro('claseCIIU')?>").select2("val", "");
+									$("#<?php echo $this->campoSeguro('claseCIIU')?>").removeClass("validate[required]");
+									
+									$(parent).remove();
+								});
+                                                                
+            
+            });    	 
     	 

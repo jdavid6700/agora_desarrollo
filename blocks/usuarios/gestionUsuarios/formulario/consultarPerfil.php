@@ -81,19 +81,21 @@ class consultarForm {
 		$variable = "pagina=" . $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
                 $variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
 
-                $esteCampo = 'botonRegresar';
-                $atributos ['id'] = $esteCampo;
-                $atributos ['enlace'] = $variable;
-                $atributos ['tabIndex'] = 1;
-                $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                $atributos ['estilo'] = 'textoPequenno textoGris';
-                $atributos ['enlaceImagen'] = $rutaBloque."/images/player_rew.png";
-                $atributos ['posicionImagen'] = "atras";//"adelante";
-                $atributos ['ancho'] = '30px';
-                $atributos ['alto'] = '30px';
-                $atributos ['redirLugar'] = true;
-                echo $this->miFormulario->enlace ( $atributos );
+                
+                $atributos["id"]="botonReg";
+                $atributos["estilo"]="widget";
+                echo $this->miFormulario->division("inicio",$atributos);
+                {
+                	$enlace = "<a href='".$variable."'>";
+                	$enlace.="<img src='".$rutaBloque."/images/player_rew.png' width='35px'><br>Regresar";
+                	$enlace.="</a><br><br>";
+                	echo $enlace;
+                }
+                //------------------Fin Division para los botones-------------------------
+                echo $this->miFormulario->division("fin");
                 unset ( $atributos );
+                
+                
                 // ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
                 $esteCampo = "marcoDatosBasicos";
@@ -108,19 +110,22 @@ class consultarForm {
                     echo "<div class='datagrid'><table width='100%' align='center'>
                              <tr align='center'>
                                  <td align='center'>";
-                                         $esteCampo = 'nuevoPerfil';
-                                         $atributos ['id'] = $esteCampo;
-                                         $atributos ['enlace'] = $variableNuevo;
-                                         $atributos ['tabIndex'] = 1;
-                                         $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                                         $atributos ['estilo'] = 'textoPequenno textoGris';
-                                         $atributos ['enlaceImagen'] = $rutaBloque."/images/grupoNuevo.png";
-                                         $atributos ['posicionImagen'] = "atras";//"adelante";
-                                         $atributos ['ancho'] = '45px';
-                                         $atributos ['alto'] = '45px';
-                                         $atributos ['redirLugar'] = true;
-                                         echo $this->miFormulario->enlace ( $atributos );
-                                         unset ( $atributos );
+                    
+                    						
+				                    $atributos["id"]="botonReg";
+				                    $atributos["estilo"]="widget";
+				                    echo $this->miFormulario->division("inicio",$atributos);
+				                    {
+				                    	$enlace = "<a href='".$variableNuevo."'>";
+				                    	$enlace.="<img src='".$rutaBloque."/images/grupoNuevo.png' width='35px'><br>Registrar Nuevo<br>Rol";
+				                    	$enlace.="</a><br><br>";
+				                    	echo $enlace;
+				                    }
+				                    //------------------Fin Division para los botones-------------------------
+				                    echo $this->miFormulario->division("fin");
+				                    unset ( $atributos );
+                    					
+
                          echo "   </td>
                              </tr>
                            </table></div> ";

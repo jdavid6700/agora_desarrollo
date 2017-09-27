@@ -196,7 +196,7 @@ class registrarForm {
 						$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 						$atributos ['deshabilitado'] = false;
 						$atributos ['tamanno'] = 15;
-						$atributos ['maximoTamanno'] = 9;
+						$atributos ['maximoTamanno'] = 14;
 						$atributos ['anchoEtiqueta'] = 200;
 						$tab ++;
 						
@@ -831,7 +831,7 @@ class registrarForm {
 										
 									$atributos ['obligatorio'] = true;
 									$atributos ['etiquetaObligatorio'] = true;
-									$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+									$atributos ['validar'] = 'required, minSize[8]';
 										
 									if (isset ( $_REQUEST [$esteCampo] )) {
 										$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -2692,6 +2692,76 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				// ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------
 				
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
+				
+				
+				$esteCampo = "marcoCIIUReg";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+				
+				
+				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				$esteCampo = 'mensaje';
+					
+				$tipo = 'warning';
+					
+				$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos["etiqueta"] = "";
+				$atributos["estilo"] = "centrar";
+				$atributos["tipo"] = $tipo;
+					
+				$mensajeLey = "<b>Recuerde que se solicita relacionar Una (1) Actividad Económica como mínimo para tener un
+						registro exitoso, sin embargo, si desea relacionar más Actividades, puede ingresar al Sistema una
+						vez se registre y puede adicionar más Actividades Económicas, si así lo requiere.</b>";
+					
+				$atributos["mensaje"] = $mensajeLey;
+				echo $this->miFormulario->cuadroMensaje($atributos);
+				unset($atributos);
+				
+				
+				
+				
+				// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+				$esteCampo = "claseCIIUJur";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = - 1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['ajax_function'] = "";
+				$atributos ['ajax_control'] = $esteCampo;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+				
+				
 				
 				
 
@@ -4624,7 +4694,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 							
 						$atributos ['obligatorio'] = true;
 						$atributos ['etiquetaObligatorio'] = true;
-						$atributos ['validar'] = 'required, minSize[1], maxSize[5]';
+						$atributos ['validar'] = 'required, minSize[8]';
 							
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -5545,6 +5615,72 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
+				
+				
+				$esteCampo = "marcoCIIUReg";
+				$atributos ['id'] = $esteCampo;
+				$atributos ["estilo"] = "jqueryui";
+				$atributos ['tipoEtiqueta'] = 'inicio';
+				$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
+				echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
+				
+				
+				
+				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				$esteCampo = 'mensaje';
+					
+				$tipo = 'warning';
+					
+				$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				$atributos["etiqueta"] = "";
+				$atributos["estilo"] = "centrar";
+				$atributos["tipo"] = $tipo;
+					
+				$mensajeLey = "<b>Recuerde que se solicita relacionar Una (1) Actividad Económica como mínimo para tener un
+						registro exitoso, sin embargo, si desea relacionar más Actividades, puede ingresar al Sistema una
+						vez se registre y puede adicionar más Actividades Económicas, si así lo requiere.</b>";
+					
+				$atributos["mensaje"] = $mensajeLey;
+				echo $this->miFormulario->cuadroMensaje($atributos);
+				unset($atributos);
+				
+				
+				
+				
+				// ---------------- CONTROL: Lista clase CIIU--------------------------------------------------------
+				$esteCampo = "claseCIIUNat";
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['id'] = $esteCampo;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['tab'] = $tab ++;
+				$atributos ['anchoEtiqueta'] = 200;
+				$atributos ['evento'] = '';
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['seleccion'] = - 1;
+				}
+				$atributos ['deshabilitado'] = false;
+				$atributos ['columnas'] = 1;
+				$atributos ['tamanno'] = 1;
+				$atributos ['ajax_function'] = "";
+				$atributos ['ajax_control'] = $esteCampo;
+				$atributos ['estilo'] = "jqueryui";
+				$atributos ['validar'] = "required";
+				$atributos ['limitar'] = false;
+				$atributos ['anchoCaja'] = 60;
+				$atributos ['miEvento'] = '';
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'ciiuSubClase' );
+				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$atributos ['matrizItems'] = $matrizItems;
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroLista ( $atributos );
+				unset ( $atributos );
+				// ----------------FIN CONTROL: Lista clase CIIU--------------------------------------------------------
+				
+				echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				
 				

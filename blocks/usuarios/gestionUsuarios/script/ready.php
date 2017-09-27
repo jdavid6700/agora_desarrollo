@@ -25,6 +25,9 @@
                 return false;
             });
         });
+        
+        
+        $( ".widget input[type=submit], .widget a, .widget button" ).button();
  
 <?php /*?>
                $('#<?php echo $this->campoSeguro('fecha_final')?>').datepicker({

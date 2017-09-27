@@ -70,6 +70,11 @@ class Sql extends \Sql {
 				$cadenaSql .= "'" .date('Y-m-d  h:i:s A') . "') ";
 
 				break;
+			case 'guardar_password_hash':
+				$cadenaSql = "INSERT INTO password_hash(usuario, password_hash) ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "('".$variable['usuario']."','".$variable['password_hash']."');";
+				break;
 
         }
 

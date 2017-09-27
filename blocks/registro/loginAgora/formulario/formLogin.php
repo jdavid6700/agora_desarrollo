@@ -37,10 +37,33 @@ class Formulario {
         $directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 
         $enlace = 'pagina=registroProveedor&id_usuario=REG777&usuario=REG777&clave=agora2016';
-        $urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );     
+        $urlCodificada = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlace, $directorio );    
+        
+        
+        $enlaceReset = 'pagina=recuperarCredenciales';
+        $urlCodificadaReset = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $enlaceReset, $directorio );
+        
         ?>
 
-        <!--        <div id="slider1_container" style="position: absolute; top: -500px; left: 0px; width: 100%; height: 50px; overflow: hidden;">
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+			integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+			crossorigin="anonymous">
+		
+		<!-- Optional theme -->
+		<link rel="stylesheet"
+			href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+			integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+			crossorigin="anonymous">
+		
+		<!-- Latest compiled and minified JavaScript -->
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+			integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+			crossorigin="anonymous"></script>
+
+<!--        <div id="slider1_container" style="position: absolute; top: -500px; left: 0px; width: 100%; height: 50px; overflow: hidden;">
                      Slides Container 
                     <div u="slides" style="cursor: move; position: absolute; overflow: hidden; left: 0px; top: 0px; width: 100%; height: 100px; overflow: hidden;">-->
 
@@ -193,6 +216,14 @@ class Formulario {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoBoton($atributos);
                 unset($atributos);
+                
+                ?>
+                            <div id="texto">
+                                <p>
+                           			 <a class="btn btn-danger" href="<?php echo $urlCodificadaReset; ?>" role="button">¿Olvidó su Contraseña?</a>
+                       			 </p>
+                            </div>
+                <?php
 
                 // ------------------Fin Division para los botones-------------------------
                 echo $this->miFormulario->division("fin");
@@ -246,7 +277,28 @@ class Formulario {
                         </p>
 
                 </div>
-            </div>
+
+
+				<?php 
+    				
+				     $rutaAyuda = $this->miConfigurador->getVariableConfiguracion("ayuda");
+				
+				?>
+
+				<div id="texto2" align="center">
+					<p>
+						<a class="btn btn-lg btn-primary"
+							href="<?php echo $rutaAyuda ?>" target="_blank" role="button">Ayuda e
+							Información Importante<br> Guías <span class="glyphicon glyphicon-tags"></span> </a>
+					</p>
+				</div>
+
+	</div>
+            
+
+                            
+
+            
         </section>
         <footer>
             <div id="footerLeft">
@@ -254,7 +306,7 @@ class Formulario {
                     Caldas</p>
                 <p>
                     Todos los derechos reservados. Carrera 8 N. 40-78 Piso 1 / PBX
-                    3238400 - 3239300 <a href="">computo@udistrital.edu.co</a>
+                    3239300 <a href="">computo@udistrital.edu.co</a>
                 </p>
             </div>
             <div id="footerRight">

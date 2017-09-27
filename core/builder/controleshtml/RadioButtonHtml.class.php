@@ -14,11 +14,31 @@ class RadioButtonHtml extends HtmlBase{
             $this->cadenaHTML = "<div class='campoBotonRadial'>\n";
         }
     
+        
+        //Se requiere agregar estilos en el bloque que se utilice el RadioInput (Completely CSS: Custom checkboxes, radio buttons and select boxes KENAN YUSUF)
+        //****************************************************************************
+        //****************************************************************************
+        
+        
         if (isset ( $this->atributos [self::ETIQUETA] ) && $this->atributos [self::ETIQUETA] != "") {
-            $this->cadenaHTML .= $this->etiqueta ( $this->atributos );
+            
+        	$this->cadenaHTML .= '<label class="control control--radio">'.$this->atributos [self::ETIQUETA];
+            $this->cadenaHTML .= $this->radioButton ();
+            $this->cadenaHTML .= '<div class="control__indicator"></div>';
+            $this->cadenaHTML .= '</label>';
+            
+        }else{
+        	
+        	$this->cadenaHTML .= '<label class="control control--radio">';
+        	$this->cadenaHTML .= $this->radioButton ();
+        	$this->cadenaHTML .= '<div class="control__indicator"></div>';
+        	$this->cadenaHTML .= '</label>';
+        	
         }
+        
+       //**************************************************************************** 
+       //****************************************************************************
     
-        $this->cadenaHTML .= $this->radioButton ();
         $this->cadenaHTML .= "\n</div>\n";
         return $this->cadenaHTML;
     
@@ -41,7 +61,7 @@ class RadioButtonHtml extends HtmlBase{
         } else {
     
             $this->miOpcion .= "<input type='radio' ";
-            $this->miOpcion .= self::HTMLNAME . "'" . $id . "' ";
+            //$this->miOpcion .= self::HTMLNAME . "'" . $id . "' ";
             $this->miOpcion .= "id='" . $id . "' ";
             $this->miOpcion .= self::HTMLNAME . "'" . $nombre . "' ";
     
@@ -54,11 +74,15 @@ class RadioButtonHtml extends HtmlBase{
             if (isset ( $this->atributos [self::SELECCIONADO] ) && $this->atributos [self::SELECCIONADO]) {
                 $this->miOpcion .= "checked='true' ";
             }
+            
+            if (isset ( $this->atributos ['validar'] ) && $this->atributos ['validar'] != "") {
+            	$this->miOpcion .= "class='validate[" . $this->atributos ['validar'] . "]'";
+            }
     
             $this->miOpcion .= "/> ";
-            $this->miOpcion .= self::HTMLLABEL . "'" . $id . "'>";
-            $this->miOpcion .= $this->atributos [self::ETIQUETA];
-            $this->miOpcion .= self::HTMLENDLABEL;
+            //$this->miOpcion .= self::HTMLLABEL . "'" . $id . "'>";
+            //$this->miOpcion .= $this->atributos [self::ETIQUETA];
+           //$this->miOpcion .= self::HTMLENDLABEL;
         }
         return $this->miOpcion;
     
@@ -73,14 +97,14 @@ class RadioButtonHtml extends HtmlBase{
                 if ($opcion [0] != $this->atributos ["seleccion"]) {
                     $cadena .= "<div>";
                     $cadena .= "<input type='radio' id='" . $id . "' " . self::HTMLNAME . "'" . $nombre . "' value='" . $opcion [0] . "' />";
-                    $cadena .= self::HTMLLABEL . "'" . $id . "'>";
+                    $cadena .= self::HTMLLABEL . "'" . $id . "' align=\"center\">";
                     $cadena .= $opcion [1] . "";
                     $cadena .= "</label>";
                     $cadena .= "</div>";
                 } else {
                     $cadena .= "<div>";
                     $cadena .= "<input type='radio' id='" . $id . "' " . self::HTMLNAME . "'" . $nombre . "' value='" . $opcion [0] . "' checked /> ";
-                    $cadena .= self::HTMLLABEL . "'" . $id . "'>";
+                    $cadena .= self::HTMLLABEL . "'" . $id . "' align=\"center\">";
                     $cadena .= $opcion [1] . "";
                     $cadena .= "</label>";
                     $cadena .= "</div>";
