@@ -521,21 +521,13 @@ class Formulario {
 		
 		// CAMBIAR LA ACTIVIDAD
 		
-		
-		$cadenaCiiu = $this->miSql->getCadenaSql ( "buscarCiiuPersona", $_REQUEST['nit']);
-		$resultadoCiiuPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaCiiu, "busqueda" );
-			
-		$oldCIIU = array (
-				'nit' => $resultadoCiiuPersona[0]['num_documento'],
-				'actividad' => $resultadoCiiuPersona[0]['id_subclase']
-		);
-		
 		// Eliminar ACTIVIDAD
-		$cadenaSqlActividad = $this->miSql->getCadenaSql ( "eliminarActividad", $oldCIIU );
+		$cadenaSqlActividad = $this->miSql->getCadenaSql ( "eliminarActividad", $_REQUEST['id_Proveedor'] );
 		$resultadoOldCiiu = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlActividad, 'acceso' );
 		
 		$arregloCIIU = array (
-				'nit' => $_REQUEST['nit'],
+				'fk_id_proveedor' => $_REQUEST['id_Proveedor'],
+				'num_documento' => $_REQUEST['nit'],
 				'actividad' => $_REQUEST ['claseCIIUJur']
 		);
 		

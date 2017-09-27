@@ -113,8 +113,7 @@ class Sql extends \Sql {
 								
 								case "eliminarActividad" :
 									$cadenaSql = " DELETE FROM agora.proveedor_actividad_ciiu";
-									$cadenaSql.= " WHERE num_documento = " . $variable['nit'];
-									$cadenaSql.= " AND id_subclase = '" . $variable['actividad']."'";
+									$cadenaSql.= " WHERE informacion_proveedor_id = " . $variable;
 									break;
 			
 			case "verificarEnvio" :
@@ -376,12 +375,14 @@ class Sql extends \Sql {
 				$cadenaSql = " INSERT INTO ";
 				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
+				$cadenaSql .= " informacion_proveedor_id,";
 				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= " '" . $variable ['nit'] . "',";
+				$cadenaSql .= " " . $variable ['fk_id_proveedor'] . ",";
+				$cadenaSql .= " '" . $variable ['num_documento'] . "',";
 				$cadenaSql .= " '" . $variable ['actividad'] . "'";
 				$cadenaSql .= " );";
 				break;
@@ -1220,10 +1221,11 @@ class Sql extends \Sql {
 			case "verificarProveedor" :
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " num_documento,";
+				$cadenaSql .= " tipopersona,";
 				$cadenaSql .= " nom_proveedor";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor ";
-				$cadenaSql .= " WHERE num_documento = '" . $variable . "'";
+				$cadenaSql .= " WHERE num_documento = '" . $variable ['num_documento'] . "' AND tipopersona = '".$variable ['tipo_persona']."';";
 				break;
 			
 			// ********************************************************************************
