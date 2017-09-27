@@ -313,7 +313,7 @@ while($i < count($resultadoPerfil)){
 	}
 	$i++;
 }
-
+$consultor = true;
 if ($resultado && !$consultor) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";

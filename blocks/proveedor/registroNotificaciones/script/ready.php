@@ -527,7 +527,7 @@ $('#tablaReporteCont').DataTable({
     }
 });
 
-$("#<?php echo $this->campoSeguro('tipo_registro') ?>").width(220);
+$("#<?php echo $this->campoSeguro('tipo_registro') ?>").width(100);
 $("#<?php echo $this->campoSeguro('tipo_registro')?>").select2();
 
 $( "#<?php echo $this->campoSeguro('tipo_registro')?>" ).change(function() {

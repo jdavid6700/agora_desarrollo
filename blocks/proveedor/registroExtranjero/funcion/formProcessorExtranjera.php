@@ -166,9 +166,16 @@ class Formulario {
 		//************************************************************************************************************
 		
 
+		$_REQUEST['tipoPersona']='EXTRANJERA';
+		
+		$arregloUnique = array (
+				'num_documento' => $_REQUEST['nit'],
+				'tipo_persona' => $_REQUEST ['tipoPersona']
+		);
+		
 		unset($resultado);
-		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $_REQUEST ['nit']);
+		//VERIFICAR SI EL PROVEEDOR YA SE ENCUENTRA REGISTRADO
+		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $arregloUnique);
 		$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 
 		if ($resultadoVerificar) {
@@ -192,11 +199,6 @@ class Formulario {
 				redireccion::redireccionar ( 'existeProveedorLegal',  $_REQUEST['numeroDocumento']);
 				exit();
 			}else{
-				
-				
-				
-				$_REQUEST['tipoPersona']='EXTRANJERA';
-
 				
 				if(isset($_REQUEST['tipoCuenta'])){//CAST
 					switch($_REQUEST['tipoCuenta']){
@@ -616,13 +618,14 @@ class Formulario {
 				
 				// REGISTRO LA ACTIVIDAD
 				$arregloCIIU = array (
-						'nit' => $_REQUEST['nit'],
+						'fk_id_proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')",
+						'num_documento' => $_REQUEST['nit'],
 						'actividad' => $_REQUEST ['claseCIIUJur']
 				);
 				// Guardar ACTIVIDAD
 				$cadenaSqlActividad = $this->miSql->getCadenaSql ( "registrarActividad", $arregloCIIU );
-				//$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				array_push($SQLs, $cadenaSqlActividad);
+	
 				
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 					

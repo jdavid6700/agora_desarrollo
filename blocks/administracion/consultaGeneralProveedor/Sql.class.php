@@ -27,6 +27,39 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+			
+			/* DATOS DEL PROVEEDOR */
+			case "buscarProveedorByDocumentoUnique" : // ****************************************************************************
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " P.id_proveedor,";
+				$cadenaSql .= " P.num_documento,";
+				$cadenaSql .= " P.tipopersona,";
+				$cadenaSql .= " P.nom_proveedor,";
+				$cadenaSql .= " P.id_ciudad_contacto,";
+				$cadenaSql .= " P.direccion,";
+				$cadenaSql .= " P.correo,";
+				$cadenaSql .= " P.web,";
+				$cadenaSql .= " P.nom_asesor,";
+				$cadenaSql .= " P.tel_asesor,";
+				$cadenaSql .= " P.tipo_cuenta_bancaria,";
+				$cadenaSql .= " P.num_cuenta_bancaria,";
+				$cadenaSql .= " P.id_entidad_bancaria,";
+				$cadenaSql .= " P.descripcion,";
+				$cadenaSql .= " P.anexorut,";
+				$cadenaSql .= " P.anexorup,";
+				$cadenaSql .= " P.fecha_registro,";
+				$cadenaSql .= " P.fecha_ultima_modificacion,";
+				$cadenaSql .= " P.estado";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor P";
+				$cadenaSql .= " WHERE num_documento = '" . $variable['num_documento'] . "' AND tipopersona='" . $variable['tipo_persona']."';";
+				break;
+					
+			case "buscarProveedorByUnique" :
+				$cadenaSql = "SELECT * ";
+				$cadenaSql.= "FROM agora.informacion_proveedor ";
+				$cadenaSql.= "WHERE tipopersona='". $variable['tipo_persona'] ."' AND num_documento=". $variable['num_documento'] .";";
+				break;
 		
 				case "consultarEPS" :
 				$cadenaSql=" SELECT";
@@ -417,11 +450,12 @@ class Sql extends \Sql {
 				case "consultarActividades" ://********************************************************************
 					$cadenaSql = " SELECT";
 					$cadenaSql .= " A.id_subclase,";
-					$cadenaSql .= " nombre";
+					$cadenaSql .= " S.nombre,";
+					$cadenaSql .= " S.clase";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.proveedor_actividad_ciiu A";
 					$cadenaSql .= " JOIN core.ciiu_subclase S ON S.id_subclase = A.id_subclase ";
-					$cadenaSql .= " WHERE num_documento= " . $variable;
+					$cadenaSql .= " WHERE informacion_proveedor_id = " . $variable;
 					break;
 						
 						

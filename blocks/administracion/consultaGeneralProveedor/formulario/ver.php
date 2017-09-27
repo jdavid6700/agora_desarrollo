@@ -147,6 +147,11 @@ class Formulario {
 			}
 		}
 		
+		$datosControl = array (
+				'tipo_persona' => $resultado[0][0],
+				'num_documento' => $resultado[0]['num_documento']
+		);
+		
 		$esteCampo = 'tipoPersona_Update';
 		$atributos ["id"] = $esteCampo; // No cambiar este nombre
 		$atributos ["tipo"] = "hidden";
@@ -166,7 +171,7 @@ class Formulario {
 				
 				//******************************************************************************************************NATURAL****************************************
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento',  $resultado[0]['num_documento'] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumentoUnique',  $datosControl );
 				$resultadoPersonaNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedor'] =  $resultadoPersonaNatural[0]["id_proveedor"];
@@ -586,7 +591,7 @@ class Formulario {
 				//*******************************************************************************************************************JURIDICA******************
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento',  $resultado[0]['num_documento'] );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumentoUnique',  $datosControl );
 				$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 				$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];
@@ -909,7 +914,7 @@ class Formulario {
 			//*******************************************************************************************************************JURIDICA******************
 			
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumento',  $resultado[0]['num_documento'] );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'buscarProveedorByDocumentoUnique',  $datosControl );
 			$resultadoPersonaJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$_REQUEST['fki_idProveedorJur'] =  $resultadoPersonaJuridica[0]["id_proveedor"];
@@ -3421,12 +3426,10 @@ class Formulario {
 		
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
-			
-			
-			
+
 			
 			// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['idProveedor']  );
 			$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			if( $resultadoActividades ){
@@ -5852,7 +5855,7 @@ class Formulario {
 				
 				
 				// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
-				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['documentoNat']  );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades',  $_REQUEST['idProveedor']  );
 				$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 					
 				if( $resultadoActividades ){
@@ -7501,7 +7504,7 @@ class Formulario {
 			
 			
 			// ----------------INICIO ACTIVIDADES ECONOMICAS REGISTRADAS--------------------------------------------------------
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades', $_REQUEST['nit']  );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultarActividades',  $_REQUEST['idProveedor']  );
 			$resultadoActividades = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 				
 			if( $resultadoActividades ){

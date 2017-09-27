@@ -3081,8 +3081,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                                 title: 'Ocurrio un problema...',
                                                 type: 'error',
                                                 html:
-                                                        'Por favor diligencie Todos los campos,  ' +
-                                                        'Verifique el campo Ficha Técnica en el elemento : ' + (i+1) ,
+                                                        'Por favor diligencie Todos los campos, <br> ' +
+                                                        'Verifique el campo <b>Descripción Producto Ofrecido </b>en el elemento : <br><br> <b>' + (i+1) +'</b>',
                                                 confirmButtonText:
                                                         'Ok'
 
@@ -3095,8 +3095,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                                 title: 'Ocurrio un problema...',
                                                 type: 'error',
                                                 html:
-                                                        'Por favor diligencie Todos los campos,  ' +
-                                                        'Verifique el campo Iva en el elemento : ' + (i+1) ,
+                                                        'Por favor diligencie Todos los campos, <br> ' +
+                                                        'Verifique el campo <b>Iva</b> en el elemento : <br><br> <b>' + (i+1) + '</b>',
                                                 confirmButtonText:
                                                         'Ok'
 
@@ -3109,8 +3109,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                                 title: 'Ocurrio un problema...',
                                                 type: 'error',
                                                 html:
-                                                        'Por favor diligencie Todos los campos,  ' +
-                                                        'Verifique el campo Valor Unitario en el elemento : ' + (i+1) ,
+                                                        'Por favor diligencie Todos los campos, <br> ' +
+                                                        'Verifique el campo <b>Valor Unitario</b> en el elemento : <br><br> <b>' + (i+1) + '</b>',
                                                 confirmButtonText:
                                                         'Ok'
 
@@ -3135,7 +3135,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                                 type: 'error',
                                                 html:
                                                         'Por favor verifique el tipo de Dato,  ' +
-                                                        'Verifique el campo Valor Unitario en el elemento : ' + (i+1) ,
+                                                        'Verifique el campo <b>Valor Unitario</b> en el elemento : <br><br>  <b>' + (i+1) + '</b>',
                                                 confirmButtonText:
                                                         'Ok'
 

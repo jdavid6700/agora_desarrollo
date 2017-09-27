@@ -23,7 +23,7 @@ $this->idioma["cantidadItemTitulo"]="Cantidad Item";
 $this->idioma["valorItem"] = "Valor Unitario: ";
 $this->idioma["valorItemTitulo"]="Valor Unitario Item";
 
-$this->idioma ["tipo_registro"] = "Ver detalle Elementos :	";
+$this->idioma ["tipo_registro"] = "Ver detalle Elementos <br> y/o Servicios :	";
 $this->idioma ["documentos_elementos"] = "Archivo de Items";
 $this->idioma["tiempoItem1"] = "Años: ";
 $this->idioma["tiempoItem1Titulo"]="Tiempo de Ejecución Item";

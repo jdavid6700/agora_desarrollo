@@ -379,7 +379,7 @@ class FormularioRegistro {
                                 <th width="4%" >Cantidad</th>
                                 <th width="6%" >Valor Unitario</th>
                                 <th width="8%" >Iva</th>
-                                <th width="31%" >Ficha Técnica</th>
+                                <th width="31%" >Descripción Producto Ofrecido</th>
                             </tr>
                         </thead>
 
