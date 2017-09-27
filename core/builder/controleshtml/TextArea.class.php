@@ -81,13 +81,20 @@ class TextArea  extends HtmlBase{
         $this->mi_cuadro .= "</textarea>\n";
         
         
+        if(isset ( $this->atributos ["alto"] ) && $this->atributos ["alto"] != ""){
+        	$height = $this->atributos ["alto"];
+        }else{
+        	$height = 280;
+        }
+        
     
         if (isset ( $this->atributos [self::TEXTOENRIQUECIDO] ) && $this->atributos [self::TEXTOENRIQUECIDO]) {
         	
         	
         	if (isset ( $this->atributos [self::DESHABILITADO] ) && $this->atributos [self::DESHABILITADO]) {
         		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
-  										<script>tinymce.init({ selector:\'textarea\', 
+  										<script>tinymce.init({ 		mode : "textareas",
+    																editor_deselector : "NOTanEditor",
         															height : "280",
         															
         															setup: function(ed) {
@@ -105,7 +112,8 @@ class TextArea  extends HtmlBase{
         													});</script>';
         	}else{
         		$this->mi_cuadro .= '<script src="plugin/tinymce/tinymce.min.js"></script>
-  										<script>tinymce.init({ selector:\'textarea\',
+  										<script>tinymce.init({ 		mode : "textareas",
+    																editor_deselector : "NOTanEditor",
         															height : "280",
         															
         															setup : function(ed) {
