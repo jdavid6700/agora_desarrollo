@@ -215,21 +215,21 @@ class registrarForm {
 				
 				echo "<thead>
 							<tr>
-								<th><center>Número Solicitud</center></th>
-								<th><center>Vigencia</center></th>".
+								<th width='4%' ><center>Número Solicitud</center></th>
+								<th width='4%'><center>Vigencia</center></th>".
 								/*<th><center>Unidad Ejecutora</center></th>
 								<th><center>Fecha Solicitud</center></th>*/
-								"<th><center>Título</center></th>
-								<th><center>Fecha Apertura</center></th>
-			                    <th><center>Fecha Cierre</center></th>
-								<th><center>Dependencia</center></th>
-		 						<th><center>Ordenador</center></th>
-								<th><center>Tipo Cotización</center></th>
-								<th><center>Estado</center></th>
-								<th><center>Solicitud</center></th>
-								<th><center>Responder</center></th>
-                                <th><center>Cotización</center></th>
-                                <th><center>Respuesta Solicitante</center></th>".
+								"<th width='50%'><center>Título</center></th>
+								<th width='7%'><center>Fecha Apertura</center></th>
+                                                                <th width='7%'><center>Fecha Cierre</center></th>
+								<th width='8%'><center>Dependencia</center></th>
+		 						<th width='8%'><center>Ordenador</center></th>
+								<th width='2%'><center>Tipo Cotización</center></th>
+								<th width='2%'><center>Estado</center></th>
+								<th width='2%'><center>Solicitud</center></th>
+								<th width='2%'><center>Responder</center></th>
+                                                                <th width='2%'><center>Cotización</center></th>
+                                                                <th width='2%'><center>Respuesta Solicitante</center></th>".
 								/*<th><center>Procesar</center></th>
 								<th><center>Cotizaciones</center></th>*/
 						   "</tr>
@@ -443,7 +443,7 @@ class registrarForm {
 									<td><center>" . $dato ['vigencia'] . "</center></td>".
 									/*<td><center>" . $unidadEjecutora. "</center></td>
 									<td><center>" . $dateSolicitud . "</center></td>*/
-									"<td><center>" . $dato ['titulo_cotizacion'] . "</center></td>
+									"<td><center>" .substr(str_replace("<p>", "", $dato['titulo_cotizacion']), 0, 150)."..." . "</center></td>
 									<td><center>" . $this->cambiafecha_format ( $dato ['fecha_apertura'] ) . "</center></td>
 									<td><center>" . $this->cambiafecha_format ( $dato ['fecha_cierre'] ) . "</center></td>
 									<td><center>" . $resultadoDep [0] [1] . "</center></td>".
