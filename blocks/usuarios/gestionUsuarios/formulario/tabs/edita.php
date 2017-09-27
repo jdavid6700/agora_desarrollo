@@ -165,7 +165,7 @@ class registrarForm {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar']="required, minSize[5], custom[integer]";
+				$atributos ['validar']="required, minSize[5], custom[onlyLetterNumber]";
                                 $atributos ['valor'] = $resultadoUsuarios[0]['identificacion'];
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
 				$atributos ['deshabilitado'] = true;
