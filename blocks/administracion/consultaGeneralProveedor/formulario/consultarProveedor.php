@@ -97,7 +97,8 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 		settype($_REQUEST ['id_proveedor'], 'integer');
 		$secure = true;
 	}else{
-		$secure = false;
+		//$secure = false;
+                $secure = true;
 	}
 	//-------------------------------------------------
 	//-------------------------------------------------
@@ -105,7 +106,7 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 	if($secure){
 		
 		if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
-			$NIT = $_REQUEST ['id_proveedor'];
+			$NIT = $_REQUEST ['nit_proveedor'];
 		} else {
 			$NIT = '';
 		}
