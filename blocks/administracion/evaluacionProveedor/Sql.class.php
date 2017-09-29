@@ -440,7 +440,7 @@ class Sql extends \Sql {
 				$cadenaSql .= "	clasificacion_evaluacion";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor";
-				$cadenaSql .= " WHERE  num_documento = " . $variable;
+				$cadenaSql .= " WHERE  num_documento = '" . $variable."'";
 				break;
 			
 			/* CONSULTAR - PROVEEDOR POR ID */
