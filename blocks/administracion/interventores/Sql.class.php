@@ -50,7 +50,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " estado";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " prov_usuario ";
-				$cadenaSql .= " WHERE identificacion = " . $variable['cedula'] . ";";
+				$cadenaSql .= " WHERE identificacion = '" . $variable['cedula'] . "';";
 
             break; 
 			
@@ -62,7 +62,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " WHERE estado = 1";
-				$cadenaSql .= " AND num_documento = " . $variable . ";";
+				$cadenaSql .= " AND num_documento = '" . $variable . "';";
 				break;
 
 			case "consultarPersonaNaturalReg" :
