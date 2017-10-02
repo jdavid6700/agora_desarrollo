@@ -99,6 +99,25 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     }
     
+    if ($_REQUEST['mensaje'] == 'insertoObs') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql('listarObjetosParaMensajeJoin', $_REQUEST['objeto']);
+    	$datosSolicitud= $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $_REQUEST['objeto'], 'listarObjetosParaMensajeJoin');
+    	
+    	$timeStamp = date( "m/d/Y h:i A", strtotime($_REQUEST['fecha']));
+    	
+    	$tipo = 'success';
+    	$mensaje = "Se registro la <b>Observación</b> a la solicitud <b>".$datosSolicitud[0]['numero_solicitud']."</b> con vigencia <b>".$datosSolicitud[0]['vigencia']."</b><br >";
+    	$mensaje .= "La fecha de registro es (".$timeStamp.").<br><br> Podra ver en el anterior módulo cuando, su observación sea vista por el solicitante.<br >";
+    	$mensaje .= "<strong><br >";
+    	$boton = "continuar";
+    
+    	$valorCodificado = "pagina=" . $miPaginaActual;
+    	$valorCodificado.="&opcion=mostrar";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    }
+    
      if ($_REQUEST['mensaje'] == 'NoinsertoRespuesta') {
         $tipo = 'error';
         $mensaje = "No fue posible insertar respuesta. Inténte nuevamente por favor.<br >";

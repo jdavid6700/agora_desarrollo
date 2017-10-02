@@ -67,6 +67,10 @@ class Frontera {
                     include_once($this->ruta . "/formulario/formulario.php");
                     break;
                     
+				case "observaciones" :
+					include_once ($this->ruta . "/formulario/observaciones.php");
+					break;
+                    
                 case "cotizacion":
                 	include_once($this->ruta . "/formulario/formulario.php");
                 	break;
@@ -74,9 +78,11 @@ class Frontera {
                 case "modificarSolicitudRelacionada":
                 	include_once($this->ruta . "/formulario/responderCotizacion.php");
                 	break;
+                	
                 case "verDetalleRespuesta":
                 	include_once($this->ruta . "/formulario/detalleRespuesta.php");
-                break;    
+                break;  
+                
                 case "verRespuestaOrdenador":
                 	include_once($this->ruta . "/formulario/detalleRespuestaOrdenador.php");
                 break;    

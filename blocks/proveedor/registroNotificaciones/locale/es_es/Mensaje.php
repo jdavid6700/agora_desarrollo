@@ -2,6 +2,18 @@
 
 //Formulario 
 
+
+$this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
+$this->idioma["observacion"] = "Observación: ";
+$this->idioma["observacionTitulo"]="Observación";
+$this->idioma["tabProveedorObs"]="Gestión de Observaciones";
+$this->idioma["marcoObservacionView"]="Observaciones Registradas";
+
+
+
+
+
+
 $this->idioma ["botonAgregar"] ="Agregar";
 $this->idioma ["botonCargarArchivo"] ="Cargar Items";
 

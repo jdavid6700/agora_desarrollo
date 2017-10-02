@@ -3,6 +3,26 @@ window.onload = detectarCarga;
 function detectarCarga(){
 
 	$('#marcoGeneral').show('slow');
+	
+	$("#accordion" ).accordion();
+	
+	tinyMCE.get('<?php echo $this->campoSeguro('observacion')?>').theme.resizeTo("100%", 100);
+	
+	if($('#<?php echo $this->campoSeguro('countObservaciones') ?>').val() > 0){
+		
+		var temp = $('#<?php echo $this->campoSeguro('countObservaciones') ?>').val();
+		var cont = 0;
+		
+		while(cont < temp){
+		
+			tinyMCE.get('observacion'+cont).theme.resizeTo("80%", 100);
+			
+			tinyMCE.get('observacion'+cont).setMode('readonly');
+
+			cont++;
+		}		
+		
+	}
 }
 
 

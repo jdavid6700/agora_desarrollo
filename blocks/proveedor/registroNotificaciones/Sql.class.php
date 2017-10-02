@@ -30,6 +30,30 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion("id_sesion");
 
         switch ($tipo) {
+        	
+        	case "consultarObservacionesReg" :
+        		$cadenaSql = "SELECT * ";
+        		$cadenaSql .= "FROM agora.observacion_solicitud_cotizacion ";
+        		$cadenaSql .= "WHERE solicitud_cotizacion = ".$variable.";";
+        		break;
+        	
+        	case "registrarObservacion" :
+        		$cadenaSql = " INSERT INTO ";
+        		$cadenaSql .= "agora.observacion_solicitud_cotizacion";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " observacion,";
+        		$cadenaSql .= " fecha_observacion,";
+        		$cadenaSql .= " solicitud_cotizacion,";
+        		$cadenaSql .= " visto";
+        		$cadenaSql .= " )";
+        		$cadenaSql .= " VALUES";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " '" . $variable ['observacion'] . "',";
+        		$cadenaSql .= " '" . $variable ['fechaRegistro'] . "',";
+        		$cadenaSql .= " '" . $variable ['solicitud'] . "',";
+        		$cadenaSql .= " '" . $variable ['visto'] . "'";
+        		$cadenaSql .= " );";
+        		break;
 
             case "buscarUsuarioDoc" : // ****************************************************************************
                 $cadenaSql = " SELECT";
@@ -278,11 +302,11 @@ class Sql extends \Sql {
             
             case "listarObjetosParaMensajeJoin" :
                 $cadenaSql = " SELECT ";
-                $cadenaSql .= " OC.*, SC.estado estado_solicitud, SC.id_solicitud id_solicitud ";
+                $cadenaSql .= " OC.*, SC.id id_solicitud ";
                 $cadenaSql .= " FROM agora.objeto_cotizacion OC";
-                $cadenaSql .= " LEFT JOIN agora.solicitud_cotizacion SC ON SC.id_objeto = OC.id_objeto ";
-                $cadenaSql .= " LEFT JOIN agora.informacion_proveedor IP ON IP.id_proveedor = SC.id_proveedor";
-                $cadenaSql .= " WHERE OC.id_objeto = " . $variable . "  ;";
+                $cadenaSql .= " LEFT JOIN agora.solicitud_cotizacion SC ON SC.objeto_cotizacion = OC.id ";
+                $cadenaSql .= " LEFT JOIN agora.informacion_proveedor IP ON IP.id_proveedor = SC.proveedor";
+                $cadenaSql .= " WHERE OC.id = " . $variable . "  ;";
                 break;
 
             case "consultar_respuesta" :

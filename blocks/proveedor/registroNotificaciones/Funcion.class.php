@@ -54,6 +54,10 @@ class Funcion {
 	{
 		include_once($this->ruta."/funcion/certContratoPDF.php");
 	}
+	function observacion()
+	{
+		include_once($this->ruta."/funcion/observacion.php");
+	}
 	function certRegistro()
 	{
 		include_once($this->ruta."/funcion/certRegistroPDF.php");
@@ -140,6 +144,10 @@ class Funcion {
 
 				case 'registrarActividad' :
 					$this->registrarActividad ();
+					break;
+					
+				case 'observacion' :
+					$this->observacion ();
 					break;
 					
 				case "certContrato":

@@ -20,7 +20,6 @@ $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 //$funcion [$indice ++] = "miScript.js";
 $funcion [$indice++]  = "sweetalert2.min.js";
 
-
 $embebido [$indice] = true;
 $funcion [$indice ++] = "ajax.php";
 
