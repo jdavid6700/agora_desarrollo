@@ -59,21 +59,24 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 		unset ( $atributos );		
 }
 
-
-
-if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
+unset($resultado);
+if (isset ( $_REQUEST ['nit_proveedor'])) {
 	//-------------------------------------------------
 	//-------------------------------------------------
 	//Validación Petición POST Parametro SQL Injection
-	if(isset($_REQUEST ['id_proveedor']) && is_numeric($_REQUEST ['id_proveedor'])){
-		settype($_REQUEST ['id_proveedor'], 'integer');
+    	if(isset($_REQUEST ['id_proveedor']) && is_numeric($_REQUEST ['id_proveedor']))
+            {	settype($_REQUEST ['id_proveedor'], 'integer');
 		$secure = true;
-	}else{
-		$secure = false;
-	}
+            }
+        elseif(isset($_REQUEST ['nit_proveedor']) && $_REQUEST ['nit_proveedor']!='')
+            {$_REQUEST ['id_proveedor']=$_REQUEST ['nit_proveedor'];
+		$secure = true;
+            }
+        else{
+	     $secure = false;
+	    }
 	//-------------------------------------------------
 	//-------------------------------------------------
-	
 	if($secure){
 		
 		if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
@@ -93,10 +96,8 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 else{
 	$cadena_sql = $this->sql->getCadenaSql ( "supervisor");
 	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+        
 }
-
-
-
 if ($resultado) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";

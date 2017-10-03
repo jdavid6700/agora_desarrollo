@@ -207,9 +207,9 @@ class Sql extends \Sql {
 					$cadenaSql.=" agora.informacion_interventor S";
 					$cadenaSql.=" JOIN agora.parametro_dependencia D ON D.id_dependencia = S.id_dependencia";
 					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
-					$cadenaSql.=" WHERE 1=1 ";
+					//$cadenaSql.=" WHERE 1=1 ";
 					if ($variable != '') {
-						$cadenaSql .= " AND P.num_documento = '" . $variable . "'";
+						$cadenaSql .= " AND trim(P.num_documento) LIKE '%". $variable . "%'";
 					}					
 					break;
 
