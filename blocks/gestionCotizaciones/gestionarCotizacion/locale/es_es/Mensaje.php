@@ -1,6 +1,15 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+
+$this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
+$this->idioma["observacion"] = "Observación: ";
+$this->idioma["observacionTitulo"]="Observación";
+$this->idioma["tabProveedorObs"]="Gestión de Observaciones";
+$this->idioma["marcoObservacionView"]="Observaciones Registradas";
+
+
+
 $this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
@@ -25,6 +34,7 @@ $this->idioma["precioTotalIva"] = "PRECIO IVA : ";
 $this->idioma["precioTotalIvaTitulo"]="Precio Iva";
 
 $this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
+$this->idioma["marcoDescripcionModProducto"]="Modificación de Productos o Servicios";
 
 $this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
 
@@ -258,6 +268,11 @@ $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primer
 $this->idioma["botonActualizar"] = "Actualizar";
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
+$this->idioma["botonModificarItem"] = "Guardar Modificación de Items";
+$this->idioma["botonModificarItemInd"] = "Modificar Item";
+
+
+
 $this->idioma["botonEnviarSolicitud"] = "Enviar Solicitud";
 
 
@@ -295,6 +310,10 @@ $this->idioma["mensajeConvocatoria"] =  "Registro Exitoso.<br> Se envío la info
 $this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeEnConvocatoria"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
+
+$this->idioma["mensajeErrorSolicitudModificacion"] =  "Error al Solicitar la Módificación de Cotización.";
+
+
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
@@ -400,6 +419,7 @@ $this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotizació
 
 $this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudModCot"]="Histórico Solicitudes de Modificación";
 
 $this->idioma["nombresResponsable"] = "Nombres: ";
 $this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";

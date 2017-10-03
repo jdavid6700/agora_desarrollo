@@ -1569,7 +1569,47 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         }
         return x1 + x2;
     }
+    
+    
+    $("#botonModificarItemInd").click(function () {
+        $("#<?php echo $this->campoSeguro('cargar_elemento')?>").css('display','none'); 
+        $("#<?php echo $this->campoSeguro('cargar_boton')?>").css('display','block'); 
+        
+        var item_modificar=id_modificacion;
+        
+      
+        
+        
+         fullParamIt = "";
+                    $('#tablaFP2 tr').each(function () {
+                        
+                        /* Obtener todas las celdas */
+                        var celdas = $(this).find('td');
+                        json ="";
+                        
+                        var celda_actual=String($(celdas[7]).html());
+                        
+                        if(parseInt(celda_actual) === item_modificar){
+                          
+                            $(celdas[3]).innerHTML = "aaaa";
+                            
+                            
+                        }
+                        
+                      
+                     
+                 
 
+                    });
+                    
+                   
+        
+        
+        
+        
+
+        
+    });
     
     
     $("#botonAgregarItem").click(function () {
@@ -1817,8 +1857,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
                     nuevaFila += "</tr>";
 
-
-
                     $("#tablaFP2").append(nuevaFila);
 
 
@@ -1835,8 +1873,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     $('#parametros3').fadeOut(600);
                     $('#parametros4').fadeOut(600);
 
-
-
                     fullParamIt = "";
                     $('#tablaFP2 tr').each(function () {
 
@@ -1848,8 +1884,9 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             fullParamIt += String($(this).html()) + "&";
                         });
 
-
                     });
+                    
+                
 
                     $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
                     
@@ -2006,9 +2043,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
             /* Obtener todas las celdas */
             var celdas = $(this).find('td');
-            
-            
-             $(celdas[0]).text(contNumeral);
+                        
+            $(celdas[0]).text(contNumeral);
             
             /* Mostrar el valor de cada celda */
             celdas.each(function () {
@@ -2054,6 +2090,76 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
         
     });
+    
+    
+    var id_modificacion;
+    var arreglo_modificados;
+    
+    $(document).on("click", ".modificarItem", function () {
+        $("#<?php echo $this->campoSeguro('cargar_elemento')?>").css('display','block'); 
+        
+        
+        var parent = $(this).parents().get(0);
+        
+        var celdas = $(parent).find('td');
+        
+        var id_item = String($(celdas[7]).html())
+        
+        var tipo_item = String($(celdas[3]).html());
+     
+        var nombre_item = String($(celdas[1]).html());
+        var descripcion_item = String($(celdas[2]).html());
+  
+        var cantidad_item = String($(celdas[6]).html());
+        
+        id_modificacion = parseInt(id_item);
+        
+       
+        
+        
+        
+        $("#<?php echo $this->campoSeguro('nombreItem') ?>").val(nombre_item);
+        $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val(descripcion_item);
+        $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val(cantidad_item);
+        
+        if(tipo_item === '1 - BIEN'){
+    
+            $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2('val', 1);
+            var unidad_item = String($(celdas[4]).html()).substring(0, 2);
+            $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2('val', parseInt(unidad_item));
+            $('#parametros2').fadeIn(500);
+            $('#parametros3').fadeOut(100);
+            $('#parametros1').fadeIn(500);
+            $('#parametros4').fadeIn(500);
+        }
+        else{
+            if(tipo_item === '2 - SERVICIO'){
+            
+                var ejecucion_año = String($(celdas[5]).html().substring(0, 2));
+                var ejecucion_mes = String($(celdas[5]).html().substring(11, 13));
+                var ejecucion_dia = String($(celdas[5]).html().substring(23, 25));
+                $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val(parseInt(ejecucion_año));
+                $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val(parseInt(ejecucion_mes));
+                $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val(parseInt(ejecucion_dia));
+                $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2('val', 2);
+                $('#parametros2').fadeOut(100);
+                $('#parametros3').fadeIn(500);
+                $('#parametros1').fadeIn(500);
+                $('#parametros4').fadeIn(500);
+            }
+            else{
+                $('#parametros1').fadeIn(500);
+                $('#parametros4').fadeIn(500);
+            }
+        }
+        
+        
+        
+        
+        
+        
+    });
+    
 
 
     var fileArchivo;
@@ -2184,7 +2290,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             nuevaFila += "<td>" + (data[indice].nombre.toUpperCase()) + "</td>";
                             nuevaFila += "<td>" + (data[indice].descripcion.toUpperCase()) + "</td>";
                             nuevaFila += "<td>2 - SERVICIO</td>";
-                            nuevaFila += "<td>" + (data[indice].unidad) + "</td>";
+                            nuevaFila += "<td>0 - NO APLICA</td>";
                             nuevaFila += "<td>" + (inverseTotalDias(countDays)) + "</td>";
                             nuevaFila += "<td>" + formatearNumero(data[indice].cantidad) + "</td>";
                             nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
