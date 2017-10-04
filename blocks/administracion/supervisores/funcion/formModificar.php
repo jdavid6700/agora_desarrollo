@@ -24,14 +24,14 @@ $resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
 //-------------------------------------------------
 //-------------------------------------------------
 //Validación Petición AJAX Parametro SQL Injection
-if(is_numeric($_REQUEST['cedula']) && is_numeric($_REQUEST['dependencia'])){
-	settype($_REQUEST['cedula'], 'integer');
-	settype($_REQUEST['dependencia'], 'integer');
-	
-	if (ereg("[^A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s]+", $_REQUEST['nombre'])) {//Validación Petición AJAX Parametro SQL Injection
+
+if(isset($_REQUEST['cedula']) && is_numeric($_REQUEST['dependencia'])){
+	//settype($_REQUEST['cedula'], 'integer');
+	settype($_REQUEST['dependencia'], 'integer');        
+
+        if (ereg("[^A-Za-z0-9ñÑáéíóúÁÉÍÓÚ\s]+", $_REQUEST['nombre'])) {//Validación Petición AJAX Parametro SQL Injection
 		
-		if (ereg("^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})", $_REQUEST['correo'])) {//Validación Petición AJAX Parametro SQL Injection
-					
+		if (preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/", $_REQUEST['correo'])) {//Validación Petición AJAX Parametro SQL Injection
 
 			if(isset($_REQUEST['estado'])){//CAST
 					switch($_REQUEST['estado']){

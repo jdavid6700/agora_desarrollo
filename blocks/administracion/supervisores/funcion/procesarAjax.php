@@ -8,8 +8,9 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexio
 //-------------------------------------------------
 //-------------------------------------------------
 //Validación Petición AJAX Parametro SQL Injection
-if(isset($_REQUEST['valor']) && is_numeric($_REQUEST['valor'])){
-	settype($_REQUEST['valor'], 'integer');
+//if(isset($_REQUEST['valor']) && is_numeric($_REQUEST['valor'])){//se elimina para permitir tipo de datos varchar
+  if(isset($_REQUEST['valor']) && $_REQUEST['valor']!=''){
+	//settype($_REQUEST['valor'], 'integer');//se elimina por tipo de datos 
 	$secure = true;
 }else{
 	$secure = false;

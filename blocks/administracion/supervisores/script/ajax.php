@@ -40,6 +40,11 @@ function consultarPersona(elem, request, response){
 				$("#<?php echo $this->campoSeguro('correo')?>").val(data[0].correo);
 				$("#<?php echo $this->campoSeguro('id_proveedor')?>").val(data[0].id_proveedor);
 			}
+                        else {
+				$("#<?php echo $this->campoSeguro('nombre')?>").val('');
+				$("#<?php echo $this->campoSeguro('correo')?>").val('');
+				$("#<?php echo $this->campoSeguro('id_proveedor')?>").val('');
+			}
 		}
 	});
 };

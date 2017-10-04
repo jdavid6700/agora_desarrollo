@@ -60,7 +60,7 @@ $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conex
 }
 
 unset($resultado);
-if (isset ( $_REQUEST ['nit_proveedor'])) {
+if (isset ( $_REQUEST ['nit_proveedor'])  && $_REQUEST ['nit_proveedor']!='' ) {
 	//-------------------------------------------------
 	//-------------------------------------------------
 	//Validación Petición POST Parametro SQL Injection

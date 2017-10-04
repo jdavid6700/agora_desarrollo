@@ -210,7 +210,7 @@ class Sql extends \Sql {
 					$cadenaSql.=" JOIN agora.informacion_proveedor P ON P.id_proveedor = S.id_proveedor";
 					$cadenaSql.=" WHERE 1=1 ";
 					if ($variable != '') {
-						$cadenaSql .= " AND P.num_documento = '" . $variable . "'";
+						$cadenaSql .= " AND trim(P.num_documento) LIKE '%". $variable . "%'";    
 					}					
 					break;
 
