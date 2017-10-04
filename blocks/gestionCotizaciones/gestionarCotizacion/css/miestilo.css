@@ -1,4 +1,12 @@
 
+.adendas{
+	width: 80%;
+}
+
+#accordion .ui-accordion-content {
+    min-height: 1000px;
+}
+
 ul.semaforo {
 	position: relative;
 	width: 100px; /* para 5 (ancho li x nº de círculos total) */

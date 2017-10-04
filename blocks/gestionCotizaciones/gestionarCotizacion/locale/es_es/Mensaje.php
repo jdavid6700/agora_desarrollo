@@ -1,6 +1,8 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
+$this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
 
 $this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
 $this->idioma["observacion"] = "Observación: ";
@@ -313,6 +315,7 @@ $this->idioma["mensajeError"] =  "Error al cargar los datos.";
 
 $this->idioma["mensajeErrorSolicitudModificacion"] =  "Error al Solicitar la Módificación de Cotización.";
 
+$this->idioma["mensajeErrorModificacionSolicitud"] =  "Error al Realizar la Módificación de Cotización Solicitada.";
 
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
@@ -442,6 +445,10 @@ $this->idioma["objetivo"] = "Objetivo / Tema :";
 $this->idioma["objetivoTitulo"]="Objetivo / Tema";
 $this->idioma["solicitudModificacion"] = "Solicitud de Modificación :";
 $this->idioma["solicitudModificacionTitulo"]="Solicitud de Modificación : ";
+$this->idioma["justificacionModificacionItem"] = "Justificación de Modificación :";
+$this->idioma["justificacionModificacionItemTitulo"]="Justificación de Modificación : ";
+
+
 $this->idioma["requisitos"] = "Requisitos :";
 $this->idioma["requisitosTitulo"]="Requisitos";
 $this->idioma["observaciones"] = "Observaciones Adicionales :";

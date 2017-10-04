@@ -59,10 +59,16 @@ function detectarCarga(){
 		
 	}
 	
-	
+	$("#accordion").accordion({
+	    header: "h3",
+	    collapsible: true,
+	    autoHeight: false,
+	    navigation: true 
+	});
 	
 	
 }
+
 
 
 	$(':checkbox[readonly=readonly]').click(function(){
