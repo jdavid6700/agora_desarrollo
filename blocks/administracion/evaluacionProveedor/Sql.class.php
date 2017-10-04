@@ -339,7 +339,7 @@ class Sql extends \Sql {
 					
 			case "consultar_DatosProveedor" :
 				$cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
-				$cadenaSql .= " WHERE num_documento = " . $variable . ";";
+				$cadenaSql .= " WHERE num_documento = '" . $variable . "';";
 				break;
 			
 			case "Roles" :

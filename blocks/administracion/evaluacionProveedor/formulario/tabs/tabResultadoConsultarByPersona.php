@@ -140,8 +140,8 @@ unset($resultadoContratos);
 //-------------------------------------------------
 //-------------------------------------------------
 //Validación Petición POST Parametro SQL Injection
-if(isset($_REQUEST ['nit_proveedor']) && is_numeric($_REQUEST ['nit_proveedor'])){
-	settype($_REQUEST ['nit_proveedor'], 'integer');
+if(isset($_REQUEST ['nit_proveedor']) && $_REQUEST ['nit_proveedor']!=''){
+	//settype($_REQUEST ['nit_proveedor'], 'integer');
 	
 	
 	$cadena_sql = $this->sql->getCadenaSql ( "consultarProveedor", $_REQUEST ['nit_proveedor'] );

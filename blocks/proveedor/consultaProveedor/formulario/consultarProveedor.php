@@ -67,7 +67,11 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 	if(isset($_REQUEST ['id_proveedor']) && is_numeric($_REQUEST ['id_proveedor'])){
 		settype($_REQUEST ['id_proveedor'], 'integer');
 		$secure = true;
-	}else{
+            }
+        elseif(isset($_REQUEST ['nit_proveedor']) && $_REQUEST ['nit_proveedor']!='')
+            {$_REQUEST ['id_proveedor']=$_REQUEST ['nit_proveedor'];
+		$secure = true;
+            }else{
 		$secure = false;
 	}
 	//-------------------------------------------------

@@ -102,7 +102,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.informacion_proveedor";
 				$cadenaSql .= " WHERE 1=1 ";
 				if ($variable [0] != '') {
-					$cadenaSql .= " AND  num_documento = '" . $variable [0] . "'";
+					$cadenaSql .= " AND  num_documento LIKE '%" . $variable [0] . "%'";
 				}
 				if ($variable [1] != '') {
 					$cadenaSql .= " AND nom_proveedor LIKE '%" . $variable [1] . "%'";
