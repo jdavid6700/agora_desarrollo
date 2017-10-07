@@ -123,7 +123,7 @@ class registrarForm {
 						Es necesario invertir un poco de tiempo y esfuerzo en generar una contraseña segura.
 						<br>
 						<br>
-						Digite el usuario o número de identificación y haga click en 'Consultar':</b>";
+						Digite el usuario y haga click en 'Consultar':</b>";
 					
 				$atributos["mensaje"] = $mensajeLey;
 				echo $this->miFormulario->cuadroMensaje($atributos);
@@ -143,7 +143,7 @@ class registrarForm {
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar']="required, minSize[5]";
+				$atributos ['validar']="required, minSize[5],custom[onlyLetterNumber]";
                                 
 				$atributos ['valor'] = '';
 				

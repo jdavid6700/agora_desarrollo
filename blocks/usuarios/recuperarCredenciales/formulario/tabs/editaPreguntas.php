@@ -105,18 +105,9 @@ class registrarForm {
                        // echo $this->miFormulario->enlace ( $atributos );
                         unset ( $atributos );
                         
-                        
-                        
-            //var_dump($_REQUEST);   
-            
-            
+           
             $cadena_sql = $this->miSql->getCadenaSql("consultarUsuario", $_REQUEST['id_usuario']);
             $resultadoUs = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-            
-            
-            //echo $cadena_sql;
-            //var_dump($resultadoUs);
-            
             
             if($resultadoUs){
             	
@@ -183,8 +174,8 @@ class registrarForm {
             		$cardinales=array("","Sur","Este");
             		$cierto=0;
             		
-            		
-					$cadena_sql = $this->miSql->getCadenaSql ( "datosPersonas", $resultadoUs [0] ['identificacion'] );
+                                        $parametro=array('tipo_identificacion'=>$resultadoUs [0] ['tipo_identificacion'], 'identificacion'=>$resultadoUs [0] ['identificacion']);
+					$cadena_sql = $this->miSql->getCadenaSql ( "datosPersonas", $parametro );
 					$datos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 					
 					if ($datos) {
@@ -513,7 +504,7 @@ class registrarForm {
             				$atributos["estilo"] = "centrar";
             				$atributos["tipo"] = $tipo;
             				 
-            				$mensajeLey = "El Usuario o Número de Identificación: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> se encuentra Registrado en el Sistema
+            				$mensajeLey = "El Usuario: <b>".$_REQUEST['id_usuario']."</b> <br> <br> se encuentra Registrado en el Sistema
             				de Registro Único de Personas y Banco de Proveedores ÁGORA. Pero ha ocurrido un Error de Procedimiento(1180) por favor comuníquese con el Administrador del Sistema.";
             				 
             				$atributos["mensaje"] = $mensajeLey;
@@ -588,7 +579,7 @@ class registrarForm {
             		$atributos["estilo"] = "centrar";
             		$atributos["tipo"] = $tipo;
             		 
-            		$mensajeLey = "El Usuario o Número de Identificación: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> No se encuentra Registrado en el Sistema
+            		$mensajeLey = "El Usuario: <b>".$_REQUEST['id_usuario']."</b> <br> <br> No se encuentra Registrado en el Sistema
             				de Registro Único de Personas y Banco de Proveedores ÁGORA. Si considera que es un Error por favor comuníquese con el Administrador del Sistema.";
             		 
             		$atributos["mensaje"] = $mensajeLey;
@@ -605,7 +596,7 @@ class registrarForm {
             			 
             			$esteCampo = 'botonTerminar';
             			$atributos ['id'] = $esteCampo;
-            			$atributos ['enlace'] = '/agora';
+            			$atributos ['enlace'] = $this->miConfigurador->getVariableConfiguracion ( "site" );
             			$atributos ['tabIndex'] = 1;
             			$atributos ['estilo'] = 'jqueryui';
             			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );

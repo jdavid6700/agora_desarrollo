@@ -97,10 +97,16 @@ class Sql extends \Sql {
 						$cadenaSql.="IP.correo, ";
 						$cadenaSql.="IP.num_cuenta_bancaria ";
 						$cadenaSql.="FROM agora.informacion_proveedor IP ";
-						$cadenaSql.="JOIN agora.proveedor_telefono PT ON PT.id_proveedor = IP.id_proveedor ";
-						$cadenaSql.="JOIN agora.telefono T ON T.id_telefono = PT.id_telefono ";
+						$cadenaSql.="INNER JOIN agora.proveedor_telefono PT ON PT.id_proveedor = IP.id_proveedor ";
+						$cadenaSql.="INNER JOIN agora.telefono T ON T.id_telefono = PT.id_telefono ";
+                                                
 						$cadenaSql.="WHERE ";
-						$cadenaSql.="IP.num_documento IN ('".$variable."') LIMIT 1";
+						$cadenaSql.="IP.num_documento IN ('".$variable['identificacion']."') ";
+                                                if($variable['tipo_identificacion']=='NIT')
+                                                     { $cadenaSql .= " AND tipopersona <> 'NATURAL'"; }
+                                                else { $cadenaSql .= " AND tipopersona = 'NATURAL'"; }    
+                                                
+                                                $cadenaSql.=" LIMIT 1";
 						break;
 						
 						
