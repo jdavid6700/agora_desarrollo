@@ -1,6 +1,9 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
+$this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
+
 $this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 

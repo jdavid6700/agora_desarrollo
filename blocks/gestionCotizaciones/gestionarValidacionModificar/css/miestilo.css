@@ -1,4 +1,12 @@
 
+.adendas{
+	width: 80%;
+}
+
+#accordion .ui-accordion-content {
+    min-height: 1000px;
+}
+
 .lefht{
 	text-align:left;
 	margin-left:10px;

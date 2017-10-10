@@ -175,7 +175,7 @@ class Formulario {
 								<th><center>Estado</center></th>
 								<th><center>Detalle</center></th>
 								<th><center>Petición</center></th>
-								<th><center>Aprobar</center></th>
+								<th><center>Evaluar<br>Solicitud</center></th>
 							</tr>
 							</thead>
 							<tbody>";
