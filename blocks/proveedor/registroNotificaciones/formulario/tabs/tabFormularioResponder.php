@@ -39,8 +39,9 @@ class FormularioRegistro {
         $conexion = 'estructura';
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
-        //$conexion = 'sicapital';
-        //$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        $conexion = 'sicapital';
+        $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+        
         //$conexion = 'centralUD';
         //$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
@@ -150,10 +151,50 @@ class FormularioRegistro {
 
 
         $datosSolicitudNecesidad = array(
-            'idObjeto' => $_REQUEST['idSolicitud']
+        
+        		'idObjeto' => $_REQUEST['idSolicitud']
         );
+        
+        
+        //********************************** TOPE DE PRESUPUESTO **************************************
+        $cadena_sql = $this->miSql->getCadenaSql("informacionSolicitudAgoraNoCast", $datosSolicitudNecesidad['idObjeto']);
+        $resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
-
+		$datos = array (
+				'numero_disponibilidad' => $resultadoNecesidadRelacionada[0]['numero_necesidad'],
+				'vigencia' => $resultadoNecesidadRelacionada[0]['vigencia'],
+				'unidad_ejecutora' => $resultadoNecesidadRelacionada[0]['unidad_ejecutora']
+		);
+		$cadenaSql = $this->miSql->getCadenaSql ( 'obtenerInfoNec', $datos );
+		$resultadoItemsNec = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        
+        
+		$esteCampo = 'tope_contratacion';
+		$atributos ['id'] = $esteCampo;
+		$atributos ['nombre'] = $esteCampo;
+		$atributos ['tipo'] = 'hidden';
+		$atributos ['estilo'] = 'jqueryui';
+		$atributos ['dobleLinea'] = false;
+		$atributos ['tabIndex'] = $tab;
+		
+		if($resultadoItemsNec){
+			$atributos ['valor'] = $resultadoItemsNec[0]['VALOR_CONTRATACION'];
+		}else{
+			$atributos ['valor'] = 0;
+		}
+		
+		
+		$atributos ['deshabilitado'] = false;
+		$atributos ['tamanno'] = 30;
+		$atributos ['maximoTamanno'] = '';
+		$tab ++;
+		// Aplica atributos globales al control
+		$atributos = array_merge($atributos, $atributosGlobales);
+		echo $this->miFormulario->campoCuadroTexto($atributos);
+		unset($atributos);
+		
+		
+		//**********************************************************************************************
 
         $cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItems", $datosSolicitudNecesidad);
         $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
@@ -210,7 +251,7 @@ class FormularioRegistro {
         $tipo = 'information';
         $mensaje = "<b>IMPORTANTE</b><br>
 							<br>
-							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
+							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el Estatuto de Contratación y sus Resoluciones Reglamentarias y el manual de supervisión e interventoría estipulados por
 				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i>, la
 				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b> <i>'Por medio de la cual se adopta el Manual de Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>,
         		la <b>RESOLUCIÓN  No. 262 (2 de Junio de 2015)</b> <i>'Por medio de la cual se reglamenta el Acuerdo 03 de 2015, Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas y se dictan otras disposiciones'</i> y
@@ -259,13 +300,13 @@ class FormularioRegistro {
             $atributos ['anchoEtiqueta'] = 220;
             $atributos ['textoEnriquecido'] = true; //Este atributo se coloca una sola vez en todo el formulario (ERROR paso de datos)
 
-            $atributos ['valor'] = '';
+            $atributos ['valor'] = 'NO APLICA';
 
             $tab++;
 
             // Aplica atributos globales al control
             $atributos = array_merge($atributos, $atributosGlobales);
-            echo $this->miFormulario->campoTextArea($atributos);
+            //echo $this->miFormulario->campoTextArea($atributos);
             unset($atributos);
 
 
@@ -292,13 +333,13 @@ class FormularioRegistro {
 
 
 
-            $atributos ['valor'] = '';
+            $atributos ['valor'] = 'NO APLICA';
 
             $tab++;
 
             // Aplica atributos globales al control
             $atributos = array_merge($atributos, $atributosGlobales);
-            echo $this->miFormulario->campoTextArea($atributos);
+            //echo $this->miFormulario->campoTextArea($atributos);
             unset($atributos);
 
 
@@ -377,9 +418,9 @@ class FormularioRegistro {
                                 <th width="10%" >Unidad</th>
                                 <th width="8%" >Tiempo de Ejecución</th>
                                 <th width="4%" >Cantidad</th>
-                                <th width="6%" >Valor Unitario</th>
-                                <th width="8%" >Iva</th>
-                                <th width="31%" >Descripción Producto Ofrecido</th>
+                                <th width="6%" >Valor Unitario <br> Del Bien ó Servicio <br> Ofrecido</th>
+                                <th width="10%" >Tarifa Iva <br> que  Aplica <br> Sobre el<br> Bien ó Servicio <br> Ofrecido</th>
+                                <th width="29%" >Descripción <br>Del Bien ó <br>Servicio Ofrecido</th>
                             </tr>
                         </thead>
 
@@ -749,6 +790,7 @@ class FormularioRegistro {
                 $atributos ['tamanno'] = 20;
                 $atributos ['maximoTamanno'] = '';
                 $atributos ['anchoEtiqueta'] = 220;
+                $atributos ['textoEnriquecido'] = true;
 
 
                 $atributos ['valor'] = '';

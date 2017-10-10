@@ -31,6 +31,20 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "obtenerInfoNec" :
+        		$cadenaSql = " SELECT SN.NUM_SOL_ADQ, SN.PLAZO_EJECUCION, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
+        		$cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION, ";
+        		$cadenaSql .= " DP2.NOMBRE_DEPENDENCIA as DEP_DESTINO";
+        		$cadenaSql .= " FROM CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP , CO.CO_DEPENDENCIAS DP, CO.CO_DEPENDENCIAS DP2, PR.PR_RUBRO RB, CO.CO_SOLICITUD_ADQ SN   ";
+        		$cadenaSql .= " LEFT JOIN CO.CO_DTLLE_SOL_ADQ_S DE ON  DE.VIGENCIA = SN.VIGENCIA and DE.NUM_SOL_ADQ = SN.NUM_SOL_ADQ   ";
+        		$cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA and SN.DEPENDENCIA = DP.COD_DEPENDENCIA and SN.DEPENDENCIA_DESTINO = DP2.COD_DEPENDENCIA";
+        		$cadenaSql .= " and SN.VIGENCIA = RB.VIGENCIA and SN.RUBRO_INTERNO = RB.INTERNO  ";
+        		$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
+        		$cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and SN.VIGENCIA=" . $variable ['vigencia'] . " and ";
+        		$cadenaSql .= "  SN.CODIGO_UNIDAD_EJECUTORA='0" . $variable ['unidad_ejecutora'] . "' and SN.NUM_SOL_ADQ=" . $variable ['numero_disponibilidad'] . " ";
+        		$cadenaSql .= "  ORDER BY SN.NUM_SOL_ADQ ";
+        		break;
+        	
         	case "consultarObservacionesReg" :
         		$cadenaSql = "SELECT * ";
         		$cadenaSql .= "FROM agora.observacion_solicitud_cotizacion ";

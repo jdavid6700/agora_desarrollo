@@ -258,9 +258,10 @@ class registrarForm {
 						$variableObservaciones .= "&id_proveedor=" . $idProveedor;
 						$variableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableObservaciones, $directorio );
 						$imagenObservaciones = 'iconObs.png';
+			
 						
-						if ($dato ['estado_cotizacion'] == 2 && $dato ['fecha_cierre'] > date ( 'Y-m-d' ) && $dato ['fecha_apertura'] < date ( 'Y-m-d' )) { // Antes estaba ABIERTO revisar......
-							
+						if ($dato ['estado_cotizacion'] == 2 && $dato ['fecha_cierre'] > date ( 'Y-m-d' ) && $dato ['fecha_apertura'] <= date ( 'Y-m-d' ) ) { // Antes estaba ABIERTO revisar......
+
 							$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 							$variableMod .= "&opcion=modificarSolicitudRelacionada";
 							$variableMod .= "&idSolicitud=" . $dato ['id'];
@@ -364,7 +365,7 @@ class registrarForm {
 							
 							$variableMod = "#";
 							$imagenMod = 'cancel.png';
-						} else if ($dato ['fecha_apertura'] < date ( 'Y-m-d' )) {
+						} else if ($dato ['fecha_apertura'] <= date ( 'Y-m-d' )) {
 							
 							if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 8) {
 								$dato ['estado'] = 'FINALIZADA';

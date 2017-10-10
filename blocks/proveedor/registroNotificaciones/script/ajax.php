@@ -3061,6 +3061,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
     
     
     $("#botonAgregarInfo").click(function () {
+
+	var tope = $('#<?php echo $this->campoSeguro('tope_contratacion') ?>').val();
     
                             var nFilas = $("#tablaFP2 tr").length;
 
@@ -3241,6 +3243,42 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                 
                                 }
                                 
+								var limiteCon = parseFloat(tope);
+								var total = parseFloat(cotizacion_total);
+								if(total > limiteCon){
+									
+									swal({
+                                                title: 'Atención',
+                                                type: 'warning',
+                                                html:
+                                                		'Registros Ingresados...  <br>Cálculo realizado correctamente.<br><br>' +
+                                                		'<b>IMPORTANTE</b> <br>' +
+                                                        'El Precio de la Cotización excede el Limite del Presupuesto destinado ' +
+                                                        'para la cotización, por favor verifique los valores ingresados, las ' +
+                                                        'cotizaciones con valores superiores al limite presupuestal no serán tenidas ' +
+                                                        'en cuenta <br><br>' + 'LIMITE CONTRATACIÓN: '+ '<br>$ ' + currency(limiteCon, 0) + ' pesos (COP)' +
+                                                        '<br><br>' + 'SU PRECIO DE COTIZACIÓN ES: '+ '<br>$ ' + currency(total, 0) + ' pesos (COP)',
+                                                confirmButtonText:
+                                                        'Ok'
+
+                                            })
+									
+								}else{
+									
+									
+									 swal({
+                                                title: 'Registros Ingresados...',
+                                                type: 'success',
+                                                html:
+                                                        'Cálculo realizado correctamente.  ' ,
+                                                confirmButtonText:
+                                                        'Ok'
+
+                                            })
+									
+									
+								}
+                                
                                 var nFilas = $("#tablaFP2 tr").length;
                                 
                                 
@@ -3254,15 +3292,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                             
                                   
                             
-                                swal({
-                                                title: 'Registros Ingresados...',
-                                                type: 'success',
-                                                html:
-                                                        'Cálculo realizado correctamente.  ' ,
-                                                confirmButtonText:
-                                                        'Ok'
-
-                                            })
+                               
                                             
                                             
                                  
