@@ -888,7 +888,7 @@ class FormularioRegistro {
 
 
             // ------------------Division para los botones-------------------------
-            $atributos ["id"] = "botones";
+            $atributos ["id"] = "botonesRegCot";
             $atributos ["estilo"] = "marcoBotones";
             echo $this->miFormulario->division("inicio", $atributos);
             {
@@ -926,6 +926,10 @@ class FormularioRegistro {
             }
             // ------------------Fin Division para los botones-------------------------
             echo $this->miFormulario->division("fin");
+            
+            
+            echo "";
+            
         }
         echo $this->miFormulario->marcoAgrupacion('fin', $atributos);
 

@@ -88,8 +88,14 @@ if (!isset($GLOBALS["autorizado"])) {
         
                         
         $tipo = 'success';
-        $mensaje = "Se registro la respuesta a la solicitud ".$_REQUEST['numero_solicitud']." con vigencia ".$_REQUEST['vigencia']."<br >";
-        $mensaje .= "La fecha de vencimiento de esta cotización es el ".$_REQUEST['fecha_cierre']." podra recibir notificaciones de respuesta del ordenador hasta la misma, asi como notificacion luego de esta indicando la decision del Ordenador.<br >";
+        $mensaje = "Se <b>Registro</b> la respuesta a la solicitud <b>".$_REQUEST['numero_solicitud']."</b> con vigencia ".$_REQUEST['vigencia']."<br >";
+        $mensaje .= "La fecha de cierre de esta cotización es el <b>".$_REQUEST['fecha_cierre']."</b> podra recibir notificaciones de respuesta del ordenador hasta la misma, <br>así como notificación luego de esta indicando la decision del Ordenador.<br >
+        		<br><br>
+        		<b>IMPORTANTE:</b> Le recordamos nuevamente tener presente los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><b>
+        		- Estampilla UD (1%)<br>
+				- Adulto Mayor (2%)<br>
+				- Pro Cultura (0.5%)</b>
+        		";
         $mensaje .= "<strong><br >";
         $boton = "continuar";
 

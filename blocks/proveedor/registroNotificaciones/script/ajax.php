@@ -3312,4 +3312,27 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
      });
      
-     
+   
+   
+   $("#botonesRegCot").hover(function() {
+					  alertCriterioReg();
+					  $(this).unbind('mouseenter mouseleave');
+	});
+   
+   function alertCriterioReg() {
+    	
+    	swal({
+			                title: 'Importante <br>DESCUENTOS',
+			                type: 'warning',
+			                html:
+			                        'Nos permitimos solicitarle tenga en cuenta los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><br><b>'
+									+'- Estampilla UD (1%)<br>'
+									+'- Adulto Mayor (2%)<br>'
+									+'- Pro Cultura (0.5%)<br><br></b>'
+			                        +'Por favor, tenga presente esta información. Gracias',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+    	
+    }
+   

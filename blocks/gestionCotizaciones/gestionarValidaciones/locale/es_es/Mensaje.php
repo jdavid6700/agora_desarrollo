@@ -441,8 +441,8 @@ $this->idioma["precioCotTitulo"]="Precio Cotización";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
 
-$this->idioma["descuentos"] = "Descuentos Aplicables : ";
-$this->idioma["descuentosTitulo"]="Descuentos Aplicables";
+$this->idioma["descuentos"] = "Descuentos Ofrecidos : ";
+$this->idioma["descuentosTitulo"]="Descuentos Ofrecidos";
 $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
 
