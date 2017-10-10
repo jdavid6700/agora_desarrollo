@@ -289,7 +289,7 @@ class Registrar {
 
 
 
-        $cantidadParametros = ($countFPParam) * 7;
+        $cantidadParametros = ($countFPParam) * 6;
 
         $limitP = 0;
         while ($limitP < $cantidadParametros) {
@@ -304,7 +304,7 @@ class Registrar {
         while ($limit < $cantidadParametros) {
       
             
-            $registroCant =str_replace(".", "", $subCount[$limit + 6][0]);
+            $registroCant =str_replace(".", "", $subCount[$limit + 5][0]);
             $registroCant =str_replace(",", ".", $registroCant);
 
             if ($subCount[$limit + 3][0] == 1) {
@@ -315,7 +315,7 @@ class Registrar {
                     'descripcion' => $subFP[$limit + 2],
                     'tipo' => $subCount[$limit + 3][0],
                     'unidad' => $subCount[$limit + 4][0],
-                    'tiempo' => $subCount[$limit + 5][0],
+                    'tiempo' => 0,
                     'cantidad' => $registroCant
                 );
             }
@@ -323,8 +323,8 @@ class Registrar {
 
             if ($subCount[$limit + 3][0] == 2) {
 
-                $subTime = explode(" ", $subFP[$limit + 5]);
-                $totalDays = (intval($subTime[0]) * 360) + (intval($subTime[3]) * 30) + intval($subTime[6]);
+
+
                 
                 
                 
@@ -334,7 +334,7 @@ class Registrar {
                     'descripcion' => $subFP[$limit + 2],
                     'tipo' => $subCount[$limit + 3][0],
                     'unidad' => $subCount[$limit + 4][0],
-                    'tiempo' => $totalDays,
+                    'tiempo' => 0,
                     'cantidad' => $registroCant
                 );
             }
@@ -345,7 +345,7 @@ class Registrar {
             array_push($SQLs, $datoRegItem);
 
 
-            $limit = $limit + 7;
+            $limit = $limit + 6;
         }
         
        

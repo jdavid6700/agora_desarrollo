@@ -162,7 +162,7 @@ class Formulario {
 								<th><center>Observaciones</center></th>			
 								<th><center>Cotizaciones</center></th>
 								<th><center>Cancelar</center></th>
-                                <th><center>Solicitar<br>Modificación</center></th>
+                                                                <th><center>Gestión de<br>Modificaciónes</center></th>
                                                                 
 							</tr>
 							</thead>

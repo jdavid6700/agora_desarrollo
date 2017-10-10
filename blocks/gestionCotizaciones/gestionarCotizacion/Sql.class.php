@@ -31,24 +31,65 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "insertarLogItemBase" :
+        		$cadenaSql = " INSERT INTO ";
+        		$cadenaSql .= "agora.modificacion_item";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " registro_anterior,";
+        		$cadenaSql .= " item_cotizacion_padre,";
+        		$cadenaSql .= " fecha,";
+        		$cadenaSql .= " solicitud_modificacion_cotizacion,";
+        		$cadenaSql .= " base";
+        		$cadenaSql .= " )";
+        		$cadenaSql .= " VALUES";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " '" . $variable ['json'] . "',";
+        		$cadenaSql .= " " . $variable ['item'] . ",";
+        		$cadenaSql .= " '" . $variable ['fecha'] . "',";
+        		$cadenaSql .= " " . $variable ['idSolMod'] . ", ";
+        		$cadenaSql .= " 'TRUE' ";
+        		$cadenaSql .= " );";
+        		break;
+        	
+        	case "buscarDetalleItemsCastArray" :
+        		$cadenaSql = " SELECT ";
+        		$cadenaSql.=" id ";
+        		$cadenaSql.=" FROM agora.item_cotizacion_padre";
+        		$cadenaSql.=" WHERE objeto_cotizacion_id = " . $variable['idObjeto'] . ";";
+        		break;
+        	
         	case "adendasModificacionValuesEst" :
         		$cadenaSql = "SELECT ";
         		$cadenaSql.=" * ";
         		$cadenaSql.= "FROM agora.relacion_estado_solicitud_modificacion ";
         		$cadenaSql.= "WHERE solicitud_modificacion_cotizacion = '". $variable . "'; ";
         		break;
+        		
+        		case "adendasModificacionValuesBase" :
+        			$cadenaSql = "SELECT ";
+        			$cadenaSql.=" * ";
+        			$cadenaSql.= "FROM agora.modificacion_item ";
+        			$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base = 'TRUE'; ";
+        			break;
         	
         	case "adendasModificacionValues" :
         		$cadenaSql = "SELECT ";
         		$cadenaSql.=" * ";
         		$cadenaSql.= "FROM agora.modificacion_item ";
-        		$cadenaSql.= "WHERE solicitud_modificacion_cotizacion = '". $variable . "'; ";
+        		$cadenaSql.= "WHERE solicitud_modificacion_cotizacion = '". $variable . "' AND base != 'TRUE'; ";
         		break;
+        		
+                case "justificacionAdendas" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.relacion_item_solicitud_modificacion ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre = '". $variable . "'; ";
+        		break;    
         	
         	case "adendasModificacionSolCastArray" :
         		$cadenaSql = "SELECT DISTINCT solicitud_modificacion_cotizacion ";
         		$cadenaSql.= "FROM agora.modificacion_item ";
-        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'";
         		$cadenaSql.= "ORDER BY solicitud_modificacion_cotizacion ASC;";
         		break;
         	
@@ -57,13 +98,13 @@ class Sql extends \Sql {
         		$cadenaSql.=" string_agg(DISTINCT '''' || cast(solicitud_modificacion_cotizacion as text) || '''',','), ";
         		$cadenaSql.=" count(DISTINCT solicitud_modificacion_cotizacion)";
         		$cadenaSql.= "FROM agora.modificacion_item ";
-        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . "); ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'; ";
         		break;
         	
         	case "adendasModificacion" :
         		$cadenaSql = "SELECT * ";
         		$cadenaSql.= "FROM agora.modificacion_item ";
-        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'";
         		$cadenaSql.= "ORDER BY solicitud_modificacion_cotizacion;";
         		break;
         	
@@ -157,7 +198,7 @@ class Sql extends \Sql {
             case "argoTipoContratoUdistrital" :
                 $year = date('Y');
                 $cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";
-                $cadenaSql.= "WHERE estado = 'TRUE' ";
+                $cadenaSql.= "WHERE estado = 'TRUE' AND id_grupo_tipo_contrato > 0 ";
                 break;
 
             case "salarioMinimoVigente" :
@@ -1714,6 +1755,21 @@ class Sql extends \Sql {
                 $cadenaSql .= " " . $variable ['item'] . ",";
                 $cadenaSql .= " '" . $variable ['fecha'] . "',";
                 $cadenaSql .= " " . $variable ['idSolMod'] . " ";
+                $cadenaSql .= " );";
+                break;
+             case "insertarLogJustificacionItem" :
+                $cadenaSql = " INSERT INTO ";
+                $cadenaSql .= "agora.relacion_item_solicitud_modificacion";
+                $cadenaSql .= " (";
+                $cadenaSql .= " solicitud_modificacion_cotizacion,";
+                $cadenaSql .= " item_cotizacion_padre,";
+                $cadenaSql .= " justificacion";
+                $cadenaSql .= " )";
+                $cadenaSql .= " VALUES";
+                $cadenaSql .= " (";
+                $cadenaSql .= " " . $variable ['idSolMod'] . ",";
+                $cadenaSql .= " " . $variable ['item'] . ",";
+                $cadenaSql .= " '" . $variable ['justificacion'] . "' ";
                 $cadenaSql .= " );";
                 break;
            

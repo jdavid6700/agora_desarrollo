@@ -757,7 +757,7 @@ class FormularioRegistro {
         $tipo = 'information';
         $mensaje = "<b>IMPORTANTE</b><br>
 							<br>
-							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
+							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el Estatuto de Contratación y sus Resoluciones Reglamentarias y el manual de supervisión e interventoría estipulados por
 				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i>, la
 				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b> <i>'Por medio de la cual se adopta el Manual de Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>,
         		la <b>RESOLUCIÓN  No. 262 (2 de Junio de 2015)</b> <i>'Por medio de la cual se reglamenta el Acuerdo 03 de 2015, Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas y se dictan otras disposiciones'</i> y
@@ -1395,7 +1395,7 @@ class FormularioRegistro {
         
         $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionSolCast', $resultadoItemsCast[0][0]);
         $resultadoAdendasSolCast = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        
+
         ?>
 		
 		<div align="center">
@@ -1416,10 +1416,146 @@ class FormularioRegistro {
        		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); 
        		
        		
-       		
 				?>       		
        		
        		<div id="accordion">
+				 
+				 <h3>Información Inicial</h3>
+						  <div class="temp" id="num0r">
+						  
+						  <?php 
+						  
+						  $tipo = 'information';
+						  $mensaje = "<b>INFORMACIÓN INICIAL # (" . $resultadoNecesidadRelacionada[0]['numero_solicitud'] . ")</b><br>
+							<br>
+							<i>A continuación se presenta la información registrada incialmente en la Cotización sobre los Productos y/o Servicios</i>.<br>
+	       						<center>
+	       						La información que se presenta a continuación es el estado inicial de la información antes de hacer los Cambios APROBADO.</center>
+						  
+							";
+						  // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+						  $esteCampo = 'mensaje';
+						  $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+						  $atributos["etiqueta"] = "";
+						  $atributos["estilo"] = "centrar";
+						  $atributos["tipo"] = $tipo;
+						  $atributos["mensaje"] = $mensaje;
+						  echo $this->miFormulario->cuadroMensaje($atributos);
+						  unset($atributos);
+						  
+						  $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesBase', $resultadoItemsCast[0][0]);
+						  $resultadoAdendasValues = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+						  
+						  $contReg = 0;
+						  
+						  ?>
+						  
+						  
+						  
+						  
+						  
+						  
+						   <table id="tablaFP2" class="table1" width="100%" >
+	       				                <!-- Cabecera de la tabla -->
+	       				                <thead>
+	       				                    <tr>
+	       				                        <th width="5%" >#</th>
+	       				                        <th width="10%" >Nombre</th>
+	       				                        <th width="20%" >Descripción</th>
+	       				                        <th width="10%" >Tipo</th>
+	       				                        <th width="10%" >Unidad</th>
+	       				                        <th width="5%" >Cantidad</th>
+	       				                    </tr>
+	       				                </thead>
+	       				
+	       				                <!-- Cuerpo de la tabla con los campos -->
+	       				                <tbody>
+	       				
+	       				
+	       				
+	       				                    <?php
+	       				
+	       				                        while($contReg < count($resultadoAdendasValues)){
+                                                                        
+                                                    $id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion_padre'];
+	       				                        	
+	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
+	       				                        	 
+	       				                        	$valoresJson = json_decode($jsonReg, true);
+	       				                        	 
+	       				                        	$resultadoItemsJson = $valoresJson[0];
+	       				                        	
+	       				                        	
+	       				                            if (intval($resultadoItemsJson[5]) === 0) {
+	       				                                $ejecucion = '0 - NO APLICA';
+	       				                            } else {
+	       				
+	       											
+	       				
+	       				                                $nyears = intval(intval($resultadoItemsJson[5]) / 360);
+	       				                                $nmonths = intval((intval($resultadoItemsJson[5]) - intval(intval($resultadoItemsJson[5]) / 360) * 360) / 30);
+	       				                                $ndays = intval(intval($resultadoItemsJson[5]) - (intval(intval($resultadoItemsJson[5]) / 360) * 360 + intval((intval($resultadoItemsJson[5]) - intval(intval($resultadoItemsJson[5]) / 360) * 360) / 30) * 30));
+	       				
+	       				                                $ejecucion = $nyears . " AÑO(S) - " . $nmonths . " MES(ES) - " . $ndays . " DÍA(S)";
+	       				                            }
+	       										
+	       											
+	       				
+	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa3', $resultadoItemsJson[3]);
+	       				                            $matrizItemsTipoItem = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+	       				
+	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('unidadUdistrital2', $resultadoItemsJson[4]);
+	       				                            $matrizItemsUnidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+	       				
+	       				                            if ($resultadoItemsJson[4] === '0') {
+	       				
+	       				                                $matrizItemsUnidad[0][0] = 0;
+	       				                                $matrizItemsUnidad[0][1] = 'NO APLICA';
+	       				                            }
+	       				
+	       				
+	       				                            if ($resultadoItemsJson[6] - intval($resultadoItemsJson[6])) { // Sobra 0.24 por lo que devuelve verdadero
+	       				                                $numero_cantidad = number_format($resultadoItemsJson[6], 2, ',', '.');
+	       				                            } else {
+	       				                                $numero_cantidad = intval($resultadoItemsJson[6]);
+	       				                            }
+	       				                            ?>
+	       				
+	       				
+	       				                            <tr id="nFilas" >
+	       				                                <td><?php echo "SP".$resultadoItemsJson['id'] ?></td>
+	       				                                <td><?php echo $resultadoItemsJson[1] ?></td>
+	       				                                <td><?php echo $resultadoItemsJson[2] ?></td>
+	       				                                <td><?php echo $matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1] ?></td>
+	       				                                <td><?php echo $matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1] ?></td>
+	       				                                <td><?php echo $numero_cantidad ?></td>
+	       				                            </tr>
+	       				
+	       				
+	       				                    		<?php
+	       				                    		
+	       				                        	
+	       				                    		$contReg++;
+	       				                		}
+	       				            
+	       				            ?>
+	       				                </tbody>
+	       				            </table>
+	       				            <!-- Botón para agregar filas -->
+	       				            <!-- 
+	       				            <input type="button" id="agregar" value="Agregar fila" /> -->
+	       				
+	       				
+	       				
+	       				
+						  
+						  
+						  
+						  
+						  
+						  
+						  
+						  </div>
 				  
        		
        			<?php
@@ -1471,21 +1607,20 @@ class FormularioRegistro {
 	       					
 	       				}
 	       				
+	       				$titulo5 = str_replace ( "<p>" , "" , $titulo5 );
+	       				$titulo5 = str_replace ( "</p>" , "" , $titulo5 );
+	       				
 	       				$tipo = 'warning';
 	       				$mensaje = "<b>DETALLE SOLICITUD DE MODIFICACIÓN (".$titulo.")</b><br>
 							<br>
 							<i>A continuación se presenta la información de justificación de los Cambios Realizados, en la parte Inferior se presenta una tabla Con los Valores
-	       						antes del Cambio</i>.<br><br><br>
-	       						
+	       						antes del Cambio</i>.<br>
+	       						<br>
 	       						<b>FECHA SOLICITUD DE MODIFICACIÓN:</b> ".$titulo2." <br>
 	       						<b>JUSTIFICACIÓN SOLICITUD:</b> ".$titulo3." <br> 
-	       						<br>
-								<br>
 	       						<b>FECHA APROBACIÓN DE MODIFICACIÓN:</b> ".$titulo4." <br>
 	       						<b>JUSTIFICACIÓN APROBACIÓN:</b> ".$titulo5." <br>
 	       						<br>
-	       								<br>
-	       								<br>
 	       						<center>
 	       						La información que se presenta a continuación es el estado anterior de la información antes de hacer el Cambio APROBADO.</center>
 	       						
@@ -1515,8 +1650,8 @@ class FormularioRegistro {
 	       				                        <th width="20%" >Descripción</th>
 	       				                        <th width="10%" >Tipo</th>
 	       				                        <th width="10%" >Unidad</th>
-	       				                        <th width="10%" >Tiempo de Ejecución</th>
 	       				                        <th width="5%" >Cantidad</th>
+                                                                <th width="20%" >Justificación</th>
 	       				                    </tr>
 	       				                </thead>
 	       				
@@ -1528,7 +1663,11 @@ class FormularioRegistro {
 	       				                    <?php
 	       				
 	       				                        while($contReg < count($resultadoAdendasValues)){
-	       				
+                                                                        
+                                                    $id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion_padre'];
+                                                                        
+                                                    $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('justificacionAdendas', $id_padre);
+                                                    $justificacion_item = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 	       				                        	
 	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
 	       				                        	 
@@ -1579,8 +1718,8 @@ class FormularioRegistro {
 	       				                                <td><?php echo $resultadoItemsJson[2] ?></td>
 	       				                                <td><?php echo $matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1] ?></td>
 	       				                                <td><?php echo $matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1] ?></td>
-	       				                                <td><?php echo $ejecucion ?></td>
 	       				                                <td><?php echo $numero_cantidad ?></td>
+                                                                        <td><?php echo $justificacion_item[0]['justificacion'] ?></td>
 	       				                            </tr>
 	       				
 	       				
@@ -1626,6 +1765,27 @@ class FormularioRegistro {
        			       		
        			       			<?php
        			
+       			       			
+       			       			$tipo = 'information';
+       			       			$mensaje = "<b>IMPORTANTE</b><br>
+							<br>
+							<i>La Información actual de los Productos y Servicios, relacionados en la Cotización, son los que se presentan en la sección<br>
+	       							<b>Información Productos o Servicios</b>, que se encuentra en la parte inferior de está sección.	<br>
+	       						<center>
+	       						La información que se presenta allí es la actual y es la que debe tenerse en cuenta para responder y/o atender la COTIZACIÓN.</center></i>
+       			       			
+							";
+       			       			
+       			       			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+       			       			$esteCampo = 'mensaje';
+       			       			$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+       			       			$atributos["etiqueta"] = "";
+       			       			$atributos["estilo"] = "centrar";
+       			       			$atributos["tipo"] = $tipo;
+       			       			$atributos["mensaje"] = $mensaje;
+       			       			echo $this->miFormulario->cuadroMensaje($atributos);
+       			       			unset($atributos);
+       			       			
        			
        		echo $this->miFormulario->marcoAgrupacion('fin');
        		
@@ -1666,7 +1826,6 @@ class FormularioRegistro {
                         <th width="20%" >Descripción</th>
                         <th width="10%" >Tipo</th>
                         <th width="10%" >Unidad</th>
-                        <th width="10%" >Tiempo de Ejecución</th>
                         <th width="5%" >Cantidad</th>
                     </tr>
                 </thead>
@@ -1727,7 +1886,6 @@ class FormularioRegistro {
                                 <td><?php echo $resultadoItems[$i][2] ?></td>
                                 <td><?php echo $matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1] ?></td>
                                 <td><?php echo $matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1] ?></td>
-                                <td><?php echo $ejecucion ?></td>
                                 <td><?php echo $numero_cantidad ?></td>
                             </tr>
 

@@ -61,6 +61,7 @@ function detectarCarga(){
 	
 	$("#accordion").accordion({
 	    header: "h3",
+	    active: false,
 	    collapsible: true,
 	    autoHeight: false,
 	    navigation: true 

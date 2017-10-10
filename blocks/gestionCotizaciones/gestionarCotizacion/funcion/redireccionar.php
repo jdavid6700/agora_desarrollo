@@ -176,6 +176,18 @@ class redireccion {
                 $variable .= "&opcion=mensaje";
                 $variable .= "&mensaje=errorSolicitudModificacion";
                 break;
+             case "insertoModificacionSolicitudCotizacion" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=confirmaModificacionSolicitud";
+                $variable .= "&idObjeto=" . $valor ["objeto"];
+                $variable .= "&usuario=" . $valor ['usuario'];
+                break;
+            case "noInsertoModificacionSolicitudCotizacion" :
+                $variable = "pagina=" . $miPaginaActual;
+                $variable .= "&opcion=mensaje";
+                $variable .= "&mensaje=errorModificacionSolicitud";
+                break;
         }
 
         foreach ($_REQUEST as $clave => $valor) {

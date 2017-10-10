@@ -386,9 +386,44 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     }
+    else if ($_REQUEST['mensaje'] == 'confirmaModificacionSolicitud') {
+        $hoy = date("d/m/Y");
+        
+        $tipo = 'success';
+
+        $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+        $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+        
+    
+        
+
+        
+        $mensaje = "Se realizó la <b> MODIFICACIÓN SOLICITADA</b> sobre Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> .
+				</br>
+				</br><b>Fecha del Proceso:</b> " . $hoy . "
+				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
+        
+        $boton = "continuar";
+        
+        $valorCodificado = "pagina=" . $esteBloque['nombre'];
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    }
     else if ($_REQUEST['mensaje'] == 'errorSolicitudModificacion') {
         $tipo = 'error';
         $mensaje = $this->lenguaje->getCadena('mensajeErrorSolicitudModificacion') . ".";
+        $boton = "continuar";
+
+        $valorCodificado = "pagina=" . $esteBloque['nombre'];
+        $valorCodificado.="&opcion=nuevo";
+        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        
+    }
+    else if ($_REQUEST['mensaje'] == 'errorModificacionSolicitud') {
+        $tipo = 'error';
+        $mensaje = $this->lenguaje->getCadena('mensajeErrorModificacionSolicitud') . ".";
         $boton = "continuar";
 
         $valorCodificado = "pagina=" . $esteBloque['nombre'];

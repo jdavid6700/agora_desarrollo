@@ -465,7 +465,7 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Título Cotización</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] . ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] .  ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
@@ -474,16 +474,16 @@ class RegistradorOrden {
                                     <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $contenidoAct . ' </div>
                                   </div>
                                 </div>
-                                <div class="todo">
+                                <div class="todo" >
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Fecha Apertura</b></div>
-                                    <div class="column" height="4%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana2 . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana2 .' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Fecha Cierre</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . fechana3 . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana3 . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
@@ -507,19 +507,19 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Solicitante</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenador . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenador . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Dependencia Solicitante</b></div>
-                                    <div class="column" height="4%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoDependencia[0][1] . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoDependencia[0][1] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Responsable de la Cotización</b></div>
-                                    <div class="column" height="6%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
                                   </div>
                                 </div>
 
@@ -609,5 +609,6 @@ $mpdf->WriteHTML($textos[1]);
 //$mpdf->setHTMLFooter($textos[2]);
 //$mpdf->setFooter('{PAGENO}');
 // establecemos el nombre del archivo
+
 $mpdf->Output($textos[4] . '.pdf', 'D');
 ?>
