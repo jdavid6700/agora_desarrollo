@@ -166,11 +166,10 @@ class redireccion {
 				$variable .= "&mensaje=respondioCotizacionOrdenador";
 				$variable .= "&idObjeto=" . $valor ["objeto"];
 				$variable .= "&estado=" . $valor ["estado"];
-				$variable .= "&usuario=" . $valor ['usuario'];
 				break;
 				
 		}
-		
+
 		foreach ( $_REQUEST as $clave => $valor ) {
 			unset ( $_REQUEST [$clave] );
 		}

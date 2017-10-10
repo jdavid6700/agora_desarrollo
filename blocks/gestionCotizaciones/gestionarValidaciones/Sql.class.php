@@ -31,6 +31,116 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "buscarDetalleItemsCastArray" :
+        		$cadenaSql = " SELECT ";
+        		$cadenaSql.=" id ";
+        		$cadenaSql.=" FROM agora.item_cotizacion_padre";
+        		$cadenaSql.=" WHERE objeto_cotizacion_id = " . $variable['idObjeto'] . ";";
+        		break;
+        		 
+        	case "adendasModificacionValuesEst" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.relacion_estado_solicitud_modificacion ";
+        		$cadenaSql.= "WHERE solicitud_modificacion_cotizacion = '". $variable . "'; ";
+        		break;
+        	
+        	case "adendasModificacionValuesBase" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.modificacion_item ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base = 'TRUE'; ";
+        		break;
+        		 
+        	case "adendasModificacionValues" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.modificacion_item ";
+        		$cadenaSql.= "WHERE solicitud_modificacion_cotizacion = '". $variable . "' AND base != 'TRUE'; ";
+        		break;
+        	
+        	case "justificacionAdendas" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.relacion_item_solicitud_modificacion ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre = '". $variable . "'; ";
+        		break;
+        		 
+        	case "adendasModificacionSolCastArray" :
+        		$cadenaSql = "SELECT DISTINCT solicitud_modificacion_cotizacion ";
+        		$cadenaSql.= "FROM agora.modificacion_item ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'";
+        		$cadenaSql.= "ORDER BY solicitud_modificacion_cotizacion ASC;";
+        		break;
+        		 
+        	case "adendasModificacionSolCast" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" string_agg(DISTINCT '''' || cast(solicitud_modificacion_cotizacion as text) || '''',','), ";
+        		$cadenaSql.=" count(DISTINCT solicitud_modificacion_cotizacion)";
+        		$cadenaSql.= "FROM agora.modificacion_item ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'; ";
+        		break;
+        		 
+        	case "adendasModificacion" :
+        		$cadenaSql = "SELECT * ";
+        		$cadenaSql.= "FROM agora.modificacion_item ";
+        		$cadenaSql.= "WHERE item_cotizacion_padre IN (". $variable . ") AND base != 'TRUE'";
+        		$cadenaSql.= "ORDER BY solicitud_modificacion_cotizacion;";
+        		break;
+        		 
+        	case "buscarDetalleItemsCast" :
+        		$cadenaSql = " SELECT ";
+        		$cadenaSql.=" string_agg(DISTINCT '''' || cast(id as text) || '''',',') ";
+        		$cadenaSql.=" FROM agora.item_cotizacion_padre";
+        		$cadenaSql.=" WHERE objeto_cotizacion_id = " . $variable['idObjeto'] . ";";
+        		break;
+        		 
+        	case 'cambioEstadoObs' :
+        		$cadenaSql = "UPDATE agora.observacion_solicitud_cotizacion SET ";
+        		$cadenaSql .= "visto = 'TRUE' ";
+        		$cadenaSql .= " WHERE id = ";
+        		$cadenaSql .= "'" . $variable . "' ";
+        		break;
+        	
+        	case "consultar_DatosRespuestaOrdenadorResultado" :
+        		$cadenaSql = " SELECT *  ";
+        		$cadenaSql .= " FROM ";
+        		$cadenaSql .= " agora.resultado_cotizacion";
+        		$cadenaSql .= " WHERE id = " . $variable;
+        	
+        		break;
+        	
+        	case "consultar_DatosRespuestaOrdenador" :
+        		$cadenaSql = " SELECT *  ";
+        		$cadenaSql .= " FROM ";
+        		$cadenaSql .= " agora.respuesta_cotizacion_solicitante";
+        		$cadenaSql .= " WHERE solicitud_cotizacion = " . $variable ['solicitud'];
+        	
+        		break;
+        	
+        	case "buscarUsuarioDoc" : // ****************************************************************************
+        		$cadenaSql = " SELECT";
+        		$cadenaSql .= " *";
+        		$cadenaSql .= " FROM ";
+        		$cadenaSql .= " prov_usuario";
+        		$cadenaSql .= " WHERE identificacion = '" . $variable . "'";
+        		break;
+        	
+        	case "informacionPersonaOrdenador" :
+        		$cadenaSql = " SELECT *";
+        		$cadenaSql .= " FROM agora.informacion_proveedor WHERE estado = 1 AND num_documento = " . $variable . ";";
+        		break;
+        	
+        	case "ordenadorUdistritalByIdCastDoc" :
+        		$cadenaSql = " SELECT DISTINCT ON (CR.id) CR.id , ( UPPER(CR.cargo) ) as ordenador , DP.nombre, JD.fecha_inicio, JD.fecha_fin, JD.tercero_id";
+        		$cadenaSql .= " FROM core.ordenador_gasto CR";
+        		$cadenaSql .= " JOIN oikos.dependencia DP ON CR.dependencia_id = DP.id";
+        		$cadenaSql .= " JOIN core.jefe_dependencia JD ON JD.dependencia_id = DP.id";
+        		$cadenaSql .= " WHERE CR.id = " . $variable;
+        		$cadenaSql .= " GROUP BY CR.id, CR.cargo, DP.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
+        		$cadenaSql .= " ORDER BY CR.id, CR.cargo, JD.fecha_fin DESC";
+        		break;
+        	
         	case "argoTipoContratoUdistrital" :
         		$year = date('Y');
         		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";

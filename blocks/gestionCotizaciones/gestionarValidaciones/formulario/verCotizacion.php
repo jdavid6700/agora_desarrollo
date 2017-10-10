@@ -408,7 +408,7 @@ class FormularioRegistro {
 			$tipo = 'information';
 			$mensaje = "<b>IMPORTANTE</b><br>
 							<br>
-							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el estatuto de contratación de la universidad y el acuerdo de supervisión e interventoria de contratos estipulados en el
+							Recuerde que la reglamentación a tener en cuenta para los procesos derivados de las cotizaciones, son el Estatuto de Contratación y sus Resoluciones Reglamentarias y el manual de supervisión e interventoría estipulados por
 				<b>ACUERDO No. 03 (11 de Marzo de 2015)</b> <i>'Por el cual se expide el Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas'</i>, la
 				<b>RESOLUCIÓN  No. 629 (17 de Noviembre de 2016)</b> <i>'Por medio de la cual se adopta el Manual de Supervisión e Interventoría de la Universidad Distrital Francisco José de Caldas'</i>,
         		la <b>RESOLUCIÓN  No. 262 (2 de Junio de 2015)</b> <i>'Por medio de la cual se reglamenta el Acuerdo 03 de 2015, Estatuto de Contratación de la Universidad Distrital Francisco José de Caldas y se dictan otras disposiciones'</i> y
@@ -462,7 +462,7 @@ class FormularioRegistro {
 			
 				// Aplica atributos globales al control
 				$atributos = array_merge($atributos, $atributosGlobales);
-				echo $this->miFormulario->campoTextArea($atributos);
+				//echo $this->miFormulario->campoTextArea($atributos);
 				unset($atributos);
 			
 			
@@ -495,7 +495,7 @@ class FormularioRegistro {
 			
 				// Aplica atributos globales al control
 				$atributos = array_merge($atributos, $atributosGlobales);
-				echo $this->miFormulario->campoTextArea($atributos);
+				//echo $this->miFormulario->campoTextArea($atributos);
 				unset($atributos);
 			
 				$cadena_sql = $this->miSql->getCadenaSql ( "buscarDetalleItemsProducto", $resultadoRespuesta[0]['id']);
@@ -532,7 +532,6 @@ class FormularioRegistro {
                                                                                                                         <th width="25%" >Descripción</th>
                                                                                                                         <th width="10%" >Tipo</th>
                                                                                                                         <th width="10%" >Unidad</th>
-                                                                                                                        <th width="10%" >Tiempo de Ejecución</th>
                                                                                                                         <th width="5%" >Cantidad</th>
                                                                                                                         <th width="10%" >Valor Unitario</th>
                                                                                                                         <th width="15%" >Iva</th>
@@ -604,7 +603,6 @@ class FormularioRegistro {
 																 				<td><?php echo $resultadoItems[$i]['descripcion']  ?></td>
 																 				<td><?php echo $tipo  ?></td>
 																 				<td><?php echo $unidad  ?></td>
-																 				<td><?php echo $tiempo  ?></td>
 																 				<td><?php echo number_format(round($resultadoItems[$i]['cantidad'],0), 0, '', '.')  ?></td>
 																 				<td><?php echo "$ " . number_format(round($resultadoItems[$i]['valor_unitario'],0), 0, '', '.')  ?></td>
 																 				<td><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
@@ -954,6 +952,7 @@ class FormularioRegistro {
 			                            $atributos ['tamanno'] = 20;
 			                            $atributos ['maximoTamanno'] = '';
 			                            $atributos ['anchoEtiqueta'] = 220;
+			                            $atributos ['textoEnriquecido'] = true;
 			            
 			            
 			                            $atributos ['valor'] = $resultadoRespuesta[0]['descuentos'];

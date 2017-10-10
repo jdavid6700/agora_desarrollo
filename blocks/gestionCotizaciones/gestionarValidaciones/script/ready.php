@@ -11,15 +11,59 @@ function detectarCarga(){
 		
 	});
 	
-	if($('#<?php echo $this->campoSeguro('unidadPresupuestal')?>').val() == 1){
-        InfoCDPMod();
+	if ( $('#<?php echo $this->campoSeguro('unidadPresupuestal')?>').length &&
+		 $('#<?php echo $this->campoSeguro('criterioSeleccion')?>').length &&
+		 $('#<?php echo $this->campoSeguro('plazoEjecucion')?>').length &&
+		 $('#<?php echo $this->campoSeguro('observaciones')?>').length
+	   ) {
+	   
+	   
+	    if($('#<?php echo $this->campoSeguro('unidadPresupuestal')?>').val() == 1){
+        	InfoCDPMod();
+		}
+		
+		tinyMCE.get('<?php echo $this->campoSeguro('criterioSeleccion')?>').theme.resizeTo("100%", 150);
+		tinyMCE.get('<?php echo $this->campoSeguro('plazoEjecucion')?>').theme.resizeTo("100%", 50);
+		
+		tinyMCE.get('<?php echo $this->campoSeguro('observaciones')?>').theme.resizeTo("100%", 60);
+	   
+	   
 	}
 	
-	tinyMCE.get('<?php echo $this->campoSeguro('criterioSeleccion')?>').theme.resizeTo("100%", 150);
-	tinyMCE.get('<?php echo $this->campoSeguro('plazoEjecucion')?>').theme.resizeTo("100%", 50);
 	
-	tinyMCE.get('<?php echo $this->campoSeguro('observaciones')?>').theme.resizeTo("100%", 60);
 	
+	if($('#<?php echo $this->campoSeguro('countObservacionesByPro') ?>').val() > 0){
+		
+		
+		var tempj = $('#<?php echo $this->campoSeguro('countObservacionesByPro') ?>').val();
+		var contj = 0;
+		
+		while(contj < tempj){
+		
+			var temp = $('#countObservaciones'+contj).val();
+			var cont = 0;
+			
+			while(cont < temp){
+			
+				tinyMCE.get('observacion'+contj+cont).theme.resizeTo("80%", 100);
+				
+				tinyMCE.get('observacion'+contj+cont).setMode('readonly');
+	
+				cont++;
+			}
+		
+			contj++;		
+		}	
+		
+	}
+	
+	$("#accordion").accordion({
+	    header: "h3",
+	    active: false,
+	    collapsible: true,
+	    autoHeight: false,
+	    navigation: true 
+	});
 }
 
 
