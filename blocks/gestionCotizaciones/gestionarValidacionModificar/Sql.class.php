@@ -138,7 +138,7 @@ class Sql extends \Sql {
         		$cadenaSql.=" FROM agora.relacion_estado_solicitud_modificacion RESM";
         		$cadenaSql.=" JOIN agora.estado_solicitud_modificacion ESM ON ESM.id = RESM.estado_solicitud";
         		$cadenaSql.=" WHERE RESM.solicitud_modificacion_cotizacion = '" . $variable . "'";
-        		$cadenaSql.=" ORDER BY RESM.fecha_estado DESC LIMIT 1";
+        		$cadenaSql.=" ORDER BY RESM.id DESC LIMIT 1";
         		break;
         	
         	case "listarObjetosParaModificacionByOrdenador" :

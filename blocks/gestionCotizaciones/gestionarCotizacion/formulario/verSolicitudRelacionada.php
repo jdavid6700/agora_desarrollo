@@ -1492,7 +1492,7 @@ class FormularioRegistro {
 	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
 	       				                        	 
 	       				                        	$valoresJson = json_decode($jsonReg, true);
-	       				                        	 
+
 	       				                        	$resultadoItemsJson = $valoresJson[0];
 	       				                        	
 	       				                        	
@@ -1600,7 +1600,6 @@ class FormularioRegistro {
 	       				
 	       				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesEst', $resultadoAdendasSolCastArray[$controlAd][0]);
 	       				$resultadoAdendasValuesEst = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-	       			
 	       				
 	       				$titulo = "SMC-" . sprintf("%06d", $resultadoAdendasValuesEst[0]['solicitud_modificacion_cotizacion']);
 	       				
@@ -1629,7 +1628,7 @@ class FormularioRegistro {
 	       				$mensaje = "<b>DETALLE SOLICITUD DE MODIFICACIÓN (".$titulo.")</b><br>
 							<br>
 							<i>A continuación se presenta la información de justificación de los Cambios Realizados, en la parte Inferior se presenta una tabla Con los Valores
-	       						antes del Cambio</i>.<br>
+	       						del Cambio</i>.<br>
 	       						<br>
 	       						<b>FECHA SOLICITUD DE MODIFICACIÓN:</b> ".$titulo2." <br>
 	       						<b>JUSTIFICACIÓN SOLICITUD:</b> ".$titulo3." <br> 
@@ -1637,7 +1636,7 @@ class FormularioRegistro {
 	       						<b>JUSTIFICACIÓN APROBACIÓN:</b> ".$titulo5." <br>
 	       						<br>
 	       						<center>
-	       						La información que se presenta a continuación es el estado anterior de la información antes de hacer el Cambio APROBADO.</center>
+	       						La información que se presenta a continuación es la información que se Cambio con la APROBACIÓN correspondiente.</center>
 	       						
 							";
 	       				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -1684,53 +1683,53 @@ class FormularioRegistro {
                                                     $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('justificacionAdendas', $id_padre);
                                                     $justificacion_item = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 	       				                        	
-	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
-	       				                        	 
+	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_nuevo'];
+	       				                        	
 	       				                        	$valoresJson = json_decode($jsonReg, true);
 	       				                        	 
-	       				                        	$resultadoItemsJson = $valoresJson[0];
+	       				                        	$resultadoItemsJson = $valoresJson;
 	       				                        	
 	       				                        	
-	       				                            if (intval($resultadoItemsJson[5]) === 0) {
+	       				                            if (intval($resultadoItemsJson['tiempo_ejecucion']) === 0) {
 	       				                                $ejecucion = '0 - NO APLICA';
 	       				                            } else {
 	       				
 	       											
 	       				
-	       				                                $nyears = intval(intval($resultadoItemsJson[5]) / 360);
-	       				                                $nmonths = intval((intval($resultadoItemsJson[5]) - intval(intval($resultadoItemsJson[5]) / 360) * 360) / 30);
-	       				                                $ndays = intval(intval($resultadoItemsJson[5]) - (intval(intval($resultadoItemsJson[5]) / 360) * 360 + intval((intval($resultadoItemsJson[5]) - intval(intval($resultadoItemsJson[5]) / 360) * 360) / 30) * 30));
+	       				                                $nyears = intval(intval($resultadoItemsJson['tiempo_ejecucion']) / 360);
+	       				                                $nmonths = intval((intval($resultadoItemsJson['tiempo_ejecucion']) - intval(intval($resultadoItemsJson['tiempo_ejecucion']) / 360) * 360) / 30);
+	       				                                $ndays = intval(intval($resultadoItemsJson['tiempo_ejecucion']) - (intval(intval($resultadoItemsJson['tiempo_ejecucion']) / 360) * 360 + intval((intval($resultadoItemsJson['tiempo_ejecucion']) - intval(intval($resultadoItemsJson['tiempo_ejecucion']) / 360) * 360) / 30) * 30));
 	       				
 	       				                                $ejecucion = $nyears . " AÑO(S) - " . $nmonths . " MES(ES) - " . $ndays . " DÍA(S)";
 	       				                            }
 	       										
 	       											
 	       				
-	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa3', $resultadoItemsJson[3]);
+	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa3', $resultadoItemsJson['tipo_necesidad']);
 	       				                            $matrizItemsTipoItem = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 	       				
-	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('unidadUdistrital2', $resultadoItemsJson[4]);
+	       				                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('unidadUdistrital2', $resultadoItemsJson['unidad']);
 	       				                            $matrizItemsUnidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 	       				
-	       				                            if ($resultadoItemsJson[4] === '0') {
+	       				                            if ($resultadoItemsJson['unidad'] === '0') {
 	       				
 	       				                                $matrizItemsUnidad[0][0] = 0;
 	       				                                $matrizItemsUnidad[0][1] = 'NO APLICA';
 	       				                            }
 	       				
 	       				
-	       				                            if ($resultadoItemsJson[6] - intval($resultadoItemsJson[6])) { // Sobra 0.24 por lo que devuelve verdadero
-	       				                                $numero_cantidad = number_format($resultadoItemsJson[6], 2, ',', '.');
+	       				                            if ($resultadoItemsJson['cantidad'] - intval($resultadoItemsJson['cantidad'])) { // Sobra 0.24 por lo que devuelve verdadero
+	       				                                $numero_cantidad = number_format($resultadoItemsJson['cantidad'], 2, ',', '.');
 	       				                            } else {
-	       				                                $numero_cantidad = intval($resultadoItemsJson[6]);
+	       				                                $numero_cantidad = intval($resultadoItemsJson['cantidad']);
 	       				                            }
 	       				                            ?>
 	       				
 	       				
 	       				                            <tr id="nFilas" >
 	       				                                <td><?php echo "SP".$resultadoItemsJson['id'] ?></td>
-	       				                                <td><?php echo $resultadoItemsJson[1] ?></td>
-	       				                                <td><?php echo $resultadoItemsJson[2] ?></td>
+	       				                                <td><?php echo $resultadoItemsJson['nombre'] ?></td>
+	       				                                <td><?php echo $resultadoItemsJson['descripcion'] ?></td>
 	       				                                <td><?php echo $matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1] ?></td>
 	       				                                <td><?php echo $matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1] ?></td>
 	       				                                <td><?php echo $numero_cantidad ?></td>

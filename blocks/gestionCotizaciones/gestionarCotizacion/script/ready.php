@@ -62,7 +62,8 @@ function detectarCarga(){
 	$("#accordion").bwlAccordion({
 		search: false,
         theme: 'theme-blue',
-        toggle: true
+        toggle: true,
+        animation: 'faderight'
     });
 	
 	

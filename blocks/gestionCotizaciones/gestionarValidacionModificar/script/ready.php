@@ -57,13 +57,12 @@ function detectarCarga(){
 		
 	}
 	
-	$("#accordion").accordion({
-	    header: "h3",
-	    active: false,
-	    collapsible: true,
-	    autoHeight: false,
-	    navigation: true 
-	});
+	$("#accordion").bwlAccordion({
+		search: false,
+        theme: 'theme-blue',
+        toggle: true,
+        animation: 'faderight'
+    });
 	
 }
 
@@ -314,7 +313,7 @@ $('#tablaPersonas').dataTable({
 
 
 $('#tablaObjetosEnCotizacion').dataTable({
-        
+    "aaSorting": [[ 0, "desc" ]] , 
     "language": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",
