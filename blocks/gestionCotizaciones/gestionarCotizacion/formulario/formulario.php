@@ -384,6 +384,13 @@ class Formulario {
 			}else{
 				$dateSolicitud = 'SIN PROCESAR';
 			}
+                        
+                        
+                        if (date('Y-m-d') > $dato['fecha_cierre']){
+                             $variableSolMod = "#";
+                             $imagenSolMod = 'cancel.png';
+                        }
+                        
 			
 			$mostrarHtml = "<tr>
 									<td><center>" . $dato['numero_solicitud'] . "</center></td>

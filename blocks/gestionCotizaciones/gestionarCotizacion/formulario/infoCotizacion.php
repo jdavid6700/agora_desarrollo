@@ -620,8 +620,7 @@ class Formulario {
 				
 			
 		}
-
-
+		
 			
 			
 			//------------------Division para los botones-------------------------

@@ -51,7 +51,7 @@ class SolicitudModificacion {
 
 		
 		
-		
+		//perfil_ordenador
 
 		
 		$datosSolicitud = array (
@@ -66,13 +66,37 @@ class SolicitudModificacion {
 		$cadenaSqlRelSol = $this->miSql->getCadenaSql ( 'IngresarRelacionSolModificacion', $datosSolicitud );
 		array_push($SQLs, $cadenaSqlRelSol);
 		
-		$insertoSolicitud = $esteRecursoDB->transaccion($SQLs);
-		
 		$datos = array (
 				'objeto' => $_REQUEST ['idObjeto'],
                                 'estado' => 1,
 				'usuario' =>$_REQUEST ['usuario']
-		);               
+		);      
+                
+                if(isset($_REQUEST['perfil_ordenador']) && $_REQUEST['perfil_ordenador']=='activo'){
+                    
+                    $datosSolicitud2 = array (
+				'idSolicitud' => "currval('agora.solicitud_modificacion_cotizacion_id_seq')",
+				'justificacion' => "<p>".$_REQUEST['solicitudModificacion']."</p>",
+				'estado_solmod' => 3, // solicitud de cotizacion
+				'fecha' => date("Y-m-d H:i:s") ,
+				'responsable2' => $_REQUEST ['usuario'],
+                                'responsable' => 125647                                
+		);
+		
+		$cadenaSqlRelSol2 = $this->miSql->getCadenaSql ( 'IngresarRelacionSolModificacion', $datosSolicitud2 );
+		array_push($SQLs, $cadenaSqlRelSol2);
+                
+                $datos = array (
+				'objeto' => $_REQUEST ['idObjeto'],
+                                'estado' => 3,
+				'usuario' =>$_REQUEST ['usuario']
+		);      
+                
+                }
+                
+                $insertoSolicitud = $esteRecursoDB->transaccion($SQLs);
+		
+		         
                   
 		if ($insertoSolicitud) {
 			redireccion::redireccionar ( 'insertoSolicitudModificacionCotizacion', $datos );

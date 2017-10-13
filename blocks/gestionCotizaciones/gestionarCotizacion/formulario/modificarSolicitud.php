@@ -1943,7 +1943,6 @@ class FormularioRegistro {
                      $valoresItem .= ($resultadoItems[$i][2]) ."&";
                      $valoresItem .= ($matrizItemsTipoItem[0][0] . " - ".$matrizItemsTipoItem[0][1]) ."&";
                      $valoresItem .= ($matrizItemsUnidad[0][0] . " - ".$matrizItemsUnidad[0][1]) ."&";
-                     $valoresItem .= ($ejecucion) ."&";
                      $valoresItem .= ($numero_cantidad) ."&";
                      
                     $i++;

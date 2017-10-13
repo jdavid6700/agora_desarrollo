@@ -76,8 +76,8 @@ class FormularioRegistro {
 
 
 
-        
-        
+
+
 
         // ---------------- SECCION: Parámetros Globales del Formulario ----------------------------------
         /**
@@ -126,6 +126,19 @@ class FormularioRegistro {
         );
 
         //*********************************************************************************************************************************
+
+        $cadenaSql = $this->miSql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+        $resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+
+        //************************** CONSULTAR ESTADO ACTIVO Jefe Dependencia (Core - Jefe de Dependencia) *******************
+
+        $cadenaSql = $this->miSql->getCadenaSql('buscarOrdenadorActivo', $resultadoUsuario[0]['identificacion']);
+        $resultadoJefe = $coreRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+
+
+
         $cadena_sql = $this->miSql->getCadenaSql("estadoSolicitudAgora", $datosSolicitudNecesidad);
         $resultado = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
@@ -337,6 +350,9 @@ class FormularioRegistro {
 
         $cadena_sql = $this->miSql->getCadenaSql("buscarSolicitudesModificacion", $_REQUEST['idSolicitud']);
         $resultadoSolicitudesMod = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+        
+        
+        
 
         if ($resultadoSolicitudesMod) {
             $visualizarSolcicitudes = "display:block";
@@ -380,16 +396,15 @@ class FormularioRegistro {
                         $count = count($resultadoSolicitudesMod);
                         $i = 0;
                         $j = 0;
-                        $hayRegistro =0;
+                        $hayRegistro = 0;
 
                         while ($i < $count) {
 
                             $cadena_sql = $this->miSql->getCadenaSql("buscarSolicitudesModificacionLog", $resultadoSolicitudesMod[$i]['id']);
                             $resultadoSolicitudesLog = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-                            
-                            if($i==0 && $resultadoSolicitudesLog){
-                                $hayRegistro=1;
-                                
+
+                            if ($i == 0 && $resultadoSolicitudesLog) {
+                                $hayRegistro = 1;
                             }
 
                             if ($resultadoSolicitudesLog != false) {
@@ -437,11 +452,11 @@ class FormularioRegistro {
 
                                     </td>
                                 </tr>
-                        <?php
-                        $i++;
-                        } else {
-                        if ($resultadoSolicitudesMod[$i]['estado_solicitud'] === '3') {
-                            ?>
+                                <?php
+                                $i++;
+                            } else {
+                                if ($resultadoSolicitudesMod[$i]['estado_solicitud'] === '3') {
+                                    ?>
                                     <tr id="nFilas" >
                                         <td><?php echo $j + 1 ?></td>
                                         <td><?php echo $resultadoSolicitudesMod[$i + 1]['fecha_estado'] ?></td>
@@ -453,9 +468,9 @@ class FormularioRegistro {
 										</a>" ?> 
                                         </td>
                                     </tr>
-                            <?php
-                        } else {
-                            ?>
+                                    <?php
+                                } else {
+                                    ?>
                                     <tr id="nFilas" >
                                         <td><?php echo $j + 1 ?></td>
                                         <td><?php echo $resultadoSolicitudesMod[$i + 1]['fecha_estado'] ?></td>
@@ -466,14 +481,14 @@ class FormularioRegistro {
 											<img src='" . $rutaBloque . "/images/" . $imagenMod2 . "' width='15px'>
 										</a>" ?> </td>
                                     </tr>
-                                            <?php
-                                        }
-                                        $i = $i + 2;
-                                    }
-                                    $j = $j +1;
+                                    <?php
                                 }
+                                $i = $i + 2;
                             }
-                            ?>
+                            $j = $j + 1;
+                        }
+                    }
+                    ?>
                 </tbody>
             </table>
             <?php
@@ -877,35 +892,58 @@ class FormularioRegistro {
 
         // ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
 
+        $esteCampo = 'perfil_ordenador';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'hidden';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['dobleLinea'] = false;
+        $atributos ['tabIndex'] = $tab;
+        if($resultadoJefe!=false){
+            $atributos ['valor'] = 'activo';
+        }else{
+             $atributos ['valor'] = 'inactivo';
+            
+        }
+        
+        
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 30;
+        $atributos ['maximoTamanno'] = '';
+        $tab ++;
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
 
 
         $atributos["id"] = "criteriosEva";
         $atributos["estilo"] = "";
         echo $this->miFormulario->division("inicio", $atributos);
-        
-        
+
+
         $visualizarSolcitudMod = "display:block";
 
-    
+
         if ($resultadoSolicitudesMod[0]['estado_solicitud'] == 1) {
             $visualizarSolcitudMod = "display:none";
-        } 
+        }
         if ($resultadoSolicitudesMod[0]['estado_solicitud'] == 2) {
             $visualizarSolcitudMod = "display:block";
-        } 
+        }
         if ($resultadoSolicitudesMod[0]['estado_solicitud'] == 3 && $hayRegistro == 1) {
-            
+
             $visualizarSolcitudMod = "display:block";
         }
         if ($resultadoSolicitudesMod[0]['estado_solicitud'] == 3 && $hayRegistro == 0) {
-           
+
             $visualizarSolcitudMod = "display:none";
         }
-        
-        
-        
-        
-        
+
+
+
+
+
 //        else {
 //            if ($resultadoSolicitudesMod[0]['estado_solicitud'] == 3 && $resultadoSolicitudesLog) {
 //                $visualizarSolcitudMod = "display:block";
@@ -1020,6 +1058,8 @@ class FormularioRegistro {
 //
 //
 //        echo $this->miFormulario->division("fin");
+//        
+//        
         //------------------Division para los botones-------------------------
         // ------------------Division para los botones-------------------------
         $atributos ["id"] = "botones";

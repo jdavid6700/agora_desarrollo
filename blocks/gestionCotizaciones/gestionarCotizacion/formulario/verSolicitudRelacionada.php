@@ -1416,12 +1416,22 @@ class FormularioRegistro {
        		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); 
        		
        		
-				?>       		
+				?>    
+				
+				
+			<div class="bwl_acc_container" id="accordion">
+				    <div class="accordion_search_container">
+				        <input type="text" class="accordion_search_input_box search_icon" value="" placeholder="Search ..."/>
+				        </div> <!-- end .bwl_acc_container -->
+					<div class="search_result_container"></div> <!-- end .search_result_container -->	   		
        		
-       		<div id="accordion">
-				 
-				 <h3>Información Inicial</h3>
-						  <div class="temp" id="num0r">
+       		
+       		<section>
+			    <h2 class="acc_title_bar"><a href="#">Información Inicial</a></h2>
+			    <div class="acc_container">
+			        <div class="block">
+       		
+       	
 						  
 						  <?php 
 						  
@@ -1556,6 +1566,8 @@ class FormularioRegistro {
 						  
 						  
 						  </div>
+					</div>
+				</section>
 				  
        		
        			<?php
@@ -1565,8 +1577,11 @@ class FormularioRegistro {
        				
 		       		?>
 		       		
-		       		<h3>Adenda Cotización <?php echo $controlAd + 1?></h3>
-						  <div class="temp" id="num<?php echo $controlAd?>">
+		       	<section>
+				    <h2 class="acc_title_bar"><a href="#">Adenda Cotización <?php echo $controlAd + 1?></a></h2>
+				    <div class="acc_container">
+				        <div class="block">	
+		   
 		       		
 		       		<?php 
        				
@@ -1750,7 +1765,10 @@ class FormularioRegistro {
 	       			?>
 	       					       		
 
+	       				</div>
+	       			
 	       			</div>
+				</section>
 	       					       		
 	       	        <?php 
        		
@@ -1794,6 +1812,7 @@ class FormularioRegistro {
        	?>
        		</div>
        	</div>
+       	
        			
       <?php
         

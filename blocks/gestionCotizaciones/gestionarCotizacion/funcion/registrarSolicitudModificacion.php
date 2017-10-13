@@ -44,7 +44,6 @@ class SolicitudModificacion {
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/asignacionPuntajes/salariales/";
         $rutaBloque .= $esteBloque ['nombre'];
 
-       
 
 
         $fechaCierre = $this->cambiafecha_format($_REQUEST['fechaCierre']);
@@ -60,59 +59,56 @@ class SolicitudModificacion {
             'idObjeto' => $_REQUEST['idObjeto'],
             'fecha_cierre' => $fechaCierre
         );
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
         //********************************** Registro Base INFORMACIÓN INICIAL Adendas ********************************************
-        
+
         $cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItemsCast", $datosSolicitud);
         $resultadoItemsCast = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-        
+
         $cadenaSql = $this->miSql->getCadenaSql('adendasModificacion', $resultadoItemsCast[0][0]);
         $resultadoAdendas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        
-        if(!$resultadoAdendas){ // Ejecutar Registro de ITEMS Base SOLO Para la Primera Adenda (Caso ´Único para la Primera Modificación)
-        	//No existen adendas registradas
-        	$cadenaSql = $this->miSql->getCadenaSql('buscarDetalleItemsCastArray', $datosSolicitud);
-        	$resultadoAdendasSolCastArray = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        	
-        	$cantidadParametros = count($resultadoAdendasSolCastArray);
-        	$limitb = 0;
-        	
-        	while ($limitb < $cantidadParametros) {
-        	
-        		$cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItem", $resultadoAdendasSolCastArray[$limitb][0]);
-        		$resultadoItem = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-        	
-        		$arregloDefinitivo = array_merge($resultadoItem, $arregloFecha);
-        		$json_item = json_encode($arregloDefinitivo);
-        	
-        		$datosSolicitudLog = array(
-        				'item' => $resultadoAdendasSolCastArray[$limitb][0],
-        				'json' => $json_item,
-        				'fecha' => date("Y-m-d H:i:s"),
-        				'idSolMod' => $_REQUEST['idSolicitudMod']
-        		);
-        	
-        		$cadenaSqlLogB = $this->miSql->getCadenaSql('insertarLogItemBase', $datosSolicitudLog);
-        		array_push($SQLs, $cadenaSqlLogB);
-        		
-        		$limitb++;
-        		
-        	}	
-        	
-        	
-        }
-       
-        //**************************************************************************************************************************
-        
 
-        
-        
-        
+        if (!$resultadoAdendas) { // Ejecutar Registro de ITEMS Base SOLO Para la Primera Adenda (Caso ´Único para la Primera Modificación)
+            //No existen adendas registradas
+            $cadenaSql = $this->miSql->getCadenaSql('buscarDetalleItemsCastArray', $datosSolicitud);
+            $resultadoAdendasSolCastArray = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+            $cantidadParametros = count($resultadoAdendasSolCastArray);
+            $limitb = 0;
+
+            while ($limitb < $cantidadParametros) {
+
+                $cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItem", $resultadoAdendasSolCastArray[$limitb][0]);
+                $resultadoItem = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+
+                $arregloDefinitivo = array_merge($resultadoItem, $arregloFecha);
+                $json_item = json_encode($arregloDefinitivo);
+
+                $datosSolicitudLog = array(
+                    'item' => $resultadoAdendasSolCastArray[$limitb][0],
+                    'json' => $json_item,
+                    'fecha' => date("Y-m-d H:i:s"),
+                    'idSolMod' => $_REQUEST['idSolicitudMod']
+                );
+
+                $cadenaSqlLogB = $this->miSql->getCadenaSql('insertarLogItemBase', $datosSolicitudLog);
+                array_push($SQLs, $cadenaSqlLogB);
+
+                $limitb++;
+            }
+        }
+
+        //**************************************************************************************************************************
+
+
+
+
+
         $cadenaSqlFechaCierre = $this->miSql->getCadenaSql('actualizarFechaCierre', $datosSolicitud);
 
         array_push($SQLs, $cadenaSqlFechaCierre);
@@ -129,9 +125,9 @@ class SolicitudModificacion {
         }
 
         $limit = 0;
-     
+
         while ($limit < $cantidadParametros) {
-            
+
 
             $registroCant = str_replace(".", "", $subCount[$limit + 5][0]);
             $registroCant = str_replace(",", ".", $registroCant);
@@ -142,36 +138,45 @@ class SolicitudModificacion {
             $arregloDefinitivo = array_merge($resultadoItem, $arregloFecha);
             $json_item = json_encode($arregloDefinitivo);
             
+            
+             $datosSolicitudLogNuevo = array(
+                'id' => $subFP[$limit],
+                'nombre' => $subFP[$limit + 1],
+                'descripcion' => $subFP[$limit + 2],
+                'tipo_necesidad' => $subCount[$limit + 3][0],
+                'unidad' => $subCount[$limit + 4][0],
+                'tiempo_ejecucion' => 0,
+                'cantidad' => $registroCant
+            );
+             
+            $json_item_Nuevo = json_encode($datosSolicitudLogNuevo);
+
             $datosSolicitudLog = array(
                 'item' => $subFP[$limit],
                 'json' => $json_item,
                 'fecha' => date("Y-m-d H:i:s"),
-                'idSolMod' => $_REQUEST['idSolicitudMod']
+                'idSolMod' => $_REQUEST['idSolicitudMod'],
+                'jsonNuevo' => $json_item_Nuevo
             );
-            
+
+           
+
+    
             $cadenaSqlLog = $this->miSql->getCadenaSql('insertarLogItem', $datosSolicitudLog);
             array_push($SQLs, $cadenaSqlLog);
-            
-          
-            
-             $datosSolicitudJustificacionLog = array(
+
+
+
+            $datosSolicitudJustificacionLog = array(
                 'item' => $subFP[$limit],
                 'justificacion' => $subFP[$limit + 6],
                 'idSolMod' => $_REQUEST['idSolicitudMod']
             );
-            
+
             $cadenaSqlJustificacionLog = $this->miSql->getCadenaSql('insertarLogJustificacionItem', $datosSolicitudJustificacionLog);
             array_push($SQLs, $cadenaSqlJustificacionLog);
-           
-            
-//            $datosSolicitudLog2 = array(
-//                'item' => $subFP[$limit],
-//                'justificacion' => 'aaaaaaaaaaa',
-//                'idSolMod' => $_REQUEST['idSolicitudMod']
-//            );
-//            
-//            $cadenaSqlLog2 = $this->miSql->getCadenaSql('insertarLogItem2', $datosSolicitudLog2);
-//            array_push($SQLs, $cadenaSqlLog2);
+
+
 
             if ($subCount[$limit + 3][0] == 1) {
 
@@ -189,7 +194,7 @@ class SolicitudModificacion {
 
             if ($subCount[$limit + 3][0] == 2) {
 
-    
+
 
 
 
@@ -205,15 +210,29 @@ class SolicitudModificacion {
             }
             $datoRegItem = $this->miSql->getCadenaSql('actualizarItemProducto', $datoFP);
             array_push($SQLs, $datoRegItem);
-            
+
             $limit = $limit + 7;
         }
-        
-        $insertoModificacionSolicitud = $esteRecursoDB->transaccion($SQLs);
-        
-     
 
-       
+        $cadena_sql = $this->miSql->getCadenaSql("buscarRespuestaDeCotizacion", $_REQUEST['idObjeto']);
+        $resultadoRespuestaCotizacion = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+
+        if ($resultadoRespuestaCotizacion != false) {
+
+            $cantidadRespuestas = count($resultadoRespuestaCotizacion);
+            $i = 0;
+            while ($i < $cantidadRespuestas) {
+                $datoActRespuestaCotizacion = $this->miSql->getCadenaSql('actualizarRespuestaDeCotizacion', $resultadoRespuestaCotizacion[$i]['id']);
+                array_push($SQLs, $datoActRespuestaCotizacion);
+                $i = $i + 1;
+            }
+        }
+
+
+        $insertoModificacionSolicitud = $esteRecursoDB->transaccion($SQLs);
+
+
+
         $datos = array(
             'objeto' => $_REQUEST ['idObjeto'],
             'usuario' => $_REQUEST ['usuario']
