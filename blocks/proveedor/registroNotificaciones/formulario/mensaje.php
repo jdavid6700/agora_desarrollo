@@ -83,6 +83,27 @@ if (!isset($GLOBALS["autorizado"])) {
     echo $this->miFormulario->division("inicio", $atributos);
 
 
+    if ($_REQUEST['mensaje'] == 'actualizoRespuesta') {
+    
+    
+    
+    	$tipo = 'success';
+    	$mensaje = "Se <b>Actualizo</b> la respuesta a la solicitud <b>".$_REQUEST['numero_solicitud']."</b> con vigencia ".$_REQUEST['vigencia']."<br >";
+    	$mensaje .= "La fecha de cierre de esta cotización es el <b>".$_REQUEST['fecha_cierre']."</b> podra recibir notificaciones de respuesta del ordenador hasta la misma, <br>así como notificación luego de esta indicando la decision del Ordenador.<br >
+        		<br><br>
+        		<b>IMPORTANTE:</b> Le recordamos nuevamente tener presente los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><b>
+        		- Estampilla UD (1%)<br>
+				- Adulto Mayor (2%)<br>
+				- Pro Cultura (0.5%)</b>
+        		";
+    	$mensaje .= "<strong><br >";
+    	$boton = "continuar";
+    
+    	$valorCodificado = "pagina=" . $miPaginaActual;
+    	$valorCodificado.="&opcion=mostrar";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    }
     if ($_REQUEST['mensaje'] == 'insertoRespuesta') {
         
         

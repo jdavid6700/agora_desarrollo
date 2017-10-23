@@ -503,7 +503,6 @@ class FormularioRegistro {
                             									<th width="25%" >Descripción</th>
                             									<th width="10%" >Tipo</th>
                             									<th width="10%" >Unidad</th>
-                            									<th width="10%" >Tiempo de Ejecución</th>
                             									<th width="5%" >Cantidad</th>
                             									<th width="10%" >Valor Unitario</th>
                                                                 <th width="15%" >Iva</th>
@@ -577,7 +576,6 @@ class FormularioRegistro {
 													 				<td><?php echo $resultadoItems[$i]['descripcion']  ?></td>
 													 				<td><?php echo $tipo  ?></td>
 													 				<td><?php echo $unidad  ?></td>
-													 				<td><?php echo $tiempo  ?></td>
 													 				<td><?php echo number_format(round($resultadoItems[$i]['cantidad'],0), 0, '', '.')  ?></td>
 													 				<td><?php echo "$ " . number_format(round($resultadoItems[$i]['valor_unitario'],0), 0, '', '.')  ?></td>
                                                                     <td><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
@@ -927,7 +925,7 @@ class FormularioRegistro {
                             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
                             $atributos ['validar'] = '';
                             $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                            $atributos ['deshabilitado'] = false;
+                            $atributos ['deshabilitado'] = true;
                             $atributos ['tamanno'] = 20;
                             $atributos ['maximoTamanno'] = '';
                             $atributos ['anchoEtiqueta'] = 220;
@@ -1010,7 +1008,7 @@ class FormularioRegistro {
             $atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
             $atributos ['validar'] = '';
             $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-            $atributos ['deshabilitado'] = false;
+            $atributos ['deshabilitado'] = true;
             $atributos ['tamanno'] = 20;
             $atributos ['maximoTamanno'] = '';
             $atributos ['anchoEtiqueta'] = 220;

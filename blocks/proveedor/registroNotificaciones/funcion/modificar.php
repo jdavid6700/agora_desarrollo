@@ -124,8 +124,9 @@ class Registrar {
             $destino1 = NULL;
             $archivo1 = NULL;
         }
-
 		
+
+
         $entregaServicio = '';
         $plazoEjecucion = '';
 
@@ -191,8 +192,87 @@ class Registrar {
         );
 
         
-        $datosRespuestaSolicitudCotizacion = $this->miSql->getCadenaSql ( 'registrarRespuesta', $datosSolicitud );
-        array_push($SQLs, $datosRespuestaSolicitudCotizacion);
+        $datosRespuestaSolicitudCotizacionOld = $this->miSql->getCadenaSql ( 'buscarRespuesta', $id_solicitud[0][0] );
+        $resultadoRespuesta = $esteRecursoDB->ejecutarAcceso($datosRespuestaSolicitudCotizacionOld, "busqueda");
+        
+        $datosRespuesta = array(
+        		'id' => $resultadoRespuesta[0]['id'],
+        		'solicitud_cotizacion' => $id_solicitud[0][0],
+        		'informacion_entrega' => $datosTextoEnriquecido['entregables'],
+        		'observaciones' => $datosTextoEnriquecido['observaciones'],
+        		'fecha_vencimiento' => $fechaVencimiento,
+        		'soporte_cotizacion' => $destino1,
+        		'fecha_registro' => $resultadoRespuesta[0]['fecha_registro'],
+        		'descripcion' => $datosTextoEnriquecido['plazoEntrega'],
+        		'descuentos' => $datosTextoEnriquecido['descuentos'],
+        		'estado' => 't'
+        );
+        
+        
+        $json_anterior = json_encode($resultadoRespuesta);
+        
+        $json_nuevo = json_encode($datosRespuesta);
+        
+        																	//$json_decode = json_decode($json_item, true);
+        
+        $datosSolicitudLog = array(
+        		'registro_anterior' => $json_anterior,
+        		'id_respuesta' => $resultadoRespuesta[0]['id'],
+        		'fecha' => date("Y-m-d H:i:s"),
+        		'registro_nuevo' => $json_nuevo
+        );
+        
+        $cadenaSqlLogRes = $this->miSql->getCadenaSql('insertarLogRespuestaBase', $datosSolicitudLog);
+        array_push($SQLs, $cadenaSqlLogRes);
+        
+        
+        if($destino1 != null){ //Se actualizó el archivo adjunto
+        	//UPDATE File
+        	
+        	$datosRespuestaSolicitudCotizacionUpd = $this->miSql->getCadenaSql ( 'actualizarRespuestaWithFile', $datosRespuesta );
+        	array_push($SQLs, $datosRespuestaSolicitudCotizacionUpd);
+        	
+        }else{
+        	
+        	$datosRespuestaSolicitudCotizacionUpd = $this->miSql->getCadenaSql ( 'actualizarRespuestaNotFile', $datosRespuesta );
+        	array_push($SQLs, $datosRespuestaSolicitudCotizacionUpd);
+        	
+        }
+        
+        
+        
+        
+        //echo "" . $datosRespuestaSolicitudCotizacionUpd . "<br>";
+        //-var_dump($resultadoRespuesta);
+        
+        //var_dump(json_decode($json_anterior, true));
+        //var_dump(json_decode($json_nuevo, true));
+        
+        //-var_dump($json_item);
+        //echo $datosRespuestaSolicitudCotizacionOld;
+        //-var_dump($id_solicitud);
+        
+        //-var_dump($json_decode);
+        
+        //-var_dump($_REQUEST);
+        
+        //-var_dump($datosSolicitud);
+        
+        
+//         $countFPParam = $_REQUEST ['countItems'];
+//         var_dump($_REQUEST ['countItems']);
+//         $subFP = explode("&", $_REQUEST ['idsItems']);
+//         var_dump($subFP);
+//         $subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
+//         var_dump($subFPValores);
+        
+//         $cantidadParametrosValores = ($countFPParam-1) * 3;
+//         $cantidadParametros = ($countFPParam-1);
+        
+//         var_dump($cantidadParametrosValores);
+//         var_dump($cantidadParametros);
+//         exit();
+        
         
         
         
@@ -204,10 +284,6 @@ class Registrar {
         $subFP = explode("&", $_REQUEST ['idsItems']);
         
         $subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
-        
-   
-        
-     
        
         $cantidadParametrosValores = ($countFPParam-1) * 3;
         $cantidadParametros = ($countFPParam-1);
@@ -224,61 +300,68 @@ class Registrar {
         $limitP = 0;
         while($limitP < $cantidadParametros){
         	 
+        	$limitP++;
         	$subCount[$limitP] = explode(" ", $subFP[$limitP]);
         	 
-        	$limitP++;
-        	 
         }
-       
-     
-        $limit = 0;
-        $limitIds = 0;
-        while($limit < $cantidadParametrosValores){
-        	 
-        
-        	
-                $valorMod = str_replace(".", "",$subFPValores[$limit]);
-                $valorMod = str_replace(",", ".",$valorMod);
-                
-                $valorIva = $subFPValores[$limit+1];
-                $valorIva=str_replace("\\", "", $valorIva);
-                $valorFicha =  $subFPValores[$limit+2];
-                
-                $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('consultar_id_iva_Item', $valorIva);
-                $matrizItemsIva = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-
-                
-                $datoFP = array (       
-                                        'respuesta_cotizacion_proveedor' => "currval('agora.prov_respuesta_cotizacion_id_respuesta_seq')",
-        				'id_item' => $subFP[$limitIds+1],
-        				'iva' => $matrizItemsIva[0][0],
-        				'valor' => $valorMod,
-        				'ficha' => $valorFicha,
-        		);
-                
-                      
-                
-        	
-        	
-        	
-        	
-        	
-        	$datoRegFP = $this->miSql->getCadenaSql ( 'insertarRespuestaItemsProveedor', $datoFP );
-            
-        	array_push($SQLs, $datoRegFP);
-        	 
-        	 
-        	$limit = $limit + 3;
-                $limitIds = $limitIds + 1;
-        }
-      
+		$limit = 0;
+		$limitIds = 0;
+		
+		while ( $limit < $cantidadParametrosValores ) {
+			
+			$valorMod = str_replace ( ".", "", $subFPValores [$limit] );
+			$valorMod = str_replace ( ",", ".", $valorMod );
+			
+			$valorIva = $subFPValores [$limit + 1];
+			$valorIva = str_replace ( "\\", "", $valorIva );
+			$valorFicha = $subFPValores [$limit + 2];
+			
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'consultar_id_iva_Item', $valorIva );
+			$matrizItemsIva = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'respuestaItemActual', $subFP [$limitIds + 1] );
+			$datoFPActual = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+			
+			$datoFP = array (
+					'id' => $subFP [$limitIds + 1],
+					'respuesta_cotizacion_proveedor' => $datoFPActual[0]['respuesta_cotizacion_proveedor'],
+					'item_cotizacion_padre_id' => $datoFPActual[0]['item_cotizacion_padre_id'],
+					'valor_unitario' => $valorMod,
+					'iva' => $matrizItemsIva [0] [0],
+					'ficha_tecnica' => $valorFicha 
+			);
+			
+			
+			$json_anterior = json_encode($datoFPActual);
+			$json_nuevo = json_encode($datoFP);
+			
+			$datosFPLog = array(
+					'registro_anterior' => $json_anterior,
+					'item_cotizacion' => $subFP [$limitIds + 1],
+					'fecha' => date("Y-m-d H:i:s"),
+					'registro_nuevo' => $json_nuevo,
+					'modificacion_respuesta_cotizacion_proveedor' => "currval('agora.modificacion_respuesta_cotizacion_proveedor_id_seq')"
+			);
+			
+			$cadenaSqlLogFP = $this->miSql->getCadenaSql('insertarLogRespuestaBaseItem', $datosFPLog);
+			array_push($SQLs, $cadenaSqlLogFP);
+			
+			
+			$datoRegFP = $this->miSql->getCadenaSql ( 'actualizarRespuestaItemsProveedor', $datoFP );
+			array_push ( $SQLs, $datoRegFP );
+			
+			$limit = $limit + 3;
+			$limitIds = $limitIds + 1;
+		}
        
         //*************************************************************************************************************
 
-        $registroRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
-      
-       
-        if ($registroRespuestaProveedorCotizacion) {
+		
+		
+        $actualizoRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
+        
+        if ($actualizoRespuestaProveedorCotizacion) {
         	
         	
 			$datos = array (
@@ -301,7 +384,7 @@ class Registrar {
 			);
 
             
-            redireccion::redireccionar('inserto', $datos);
+            redireccion::redireccionar('actualizo', $datos);
             exit();
         } else {
            

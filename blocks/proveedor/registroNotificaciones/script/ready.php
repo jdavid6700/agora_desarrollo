@@ -527,7 +527,7 @@ if($("#<?php echo $this->campoSeguro('tipoCuenta')?>").val() == 4){
 
 
 $('#tablaReporteCont').DataTable({
-        
+   "aaSorting": [[ 0, "desc" ]] ,      
     "language": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

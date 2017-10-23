@@ -109,8 +109,6 @@ class registrarForm {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			
-			unset ( $resultado );
-			
 			// ****************************************************************************************
 			// ****************************************************************************************
 			
@@ -291,6 +289,7 @@ class registrarForm {
 								'objeto' => $dato ['id'],
 								'solicitud' => $dato ['id_solicitud'] 
 						);
+                                               
 						$cadena_sql = $this->miSql->getCadenaSql ( "consultarRespuestaProveedor", $datosConsultaResPro );
 						$validacionResPro = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 						
@@ -386,7 +385,36 @@ class registrarForm {
 							$dateSolicitud = $dato ['fecha_solicitud_cotizacion'];
 						}
 						
-						$mostrarHtml = "<tr>
+						$modCot = false;
+						if ($validacionResPro [0] ['estado'] == 'f' && date ( 'Y-m-d' ) < $dato ['fecha_cierre']) {
+							
+							$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+							$variableMod .= "&opcion=modificarItemsSolMod";
+							$variableMod .= "&idSolicitud=" . $dato ['id'];
+							$variableMod .= "&vigencia=" . $dato ['vigencia'];
+							$variableMod .= "&unidadEjecutora=" . $dato ['unidad_ejecutora'];
+							$variableMod .= "&numero_solicitud=" . $dato ['numero_solicitud'];
+							$variableMod .= "&vigencia=" . $dato ['vigencia'];
+							$variableMod .= "&titulo_cotizacion=" . $dato ['titulo_cotizacion'];
+							$variableMod .= "&fecha_cierre=" . $this->cambiafecha_format ( $dato ['fecha_cierre'] );
+							$variableMod .= "&usuario=" . $_REQUEST ['usuario'];
+							$variableMod .= "&id_proveedor=" . $idProveedor;
+							$variableMod .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
+							$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
+							$imagenMod = 'editPro.png';
+							
+							$modCot = true;
+							
+						}
+                              
+						if($modCot){
+							$colorAlert = '<tr style="background-color:#FAAC58;">';
+						}else{
+							$colorAlert = '<tr>';
+						}
+						
+						
+						$mostrarHtml = $colorAlert."
 									<td><center>" . $dato ['numero_solicitud'] . "</center></td>
 									<td><center>" . $dato ['vigencia'] . "</center></td>".
 									/*<td><center>" . $unidadEjecutora. "</center></td>

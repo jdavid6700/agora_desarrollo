@@ -13,7 +13,7 @@ $this->idioma["marcoObservacionView"]="Observaciones Registradas";
 
 
 
-
+$this->idioma ["botonModificar"] = "Modificar";
 $this->idioma ["botonAgregar"] ="Agregar";
 $this->idioma ["botonCargarArchivo"] ="Cargar Items";
 

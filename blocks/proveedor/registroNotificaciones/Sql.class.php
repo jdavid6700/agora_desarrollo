@@ -31,6 +31,98 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "actualizarRespuestaItemsProveedor" :
+        		$cadenaSql = "UPDATE ";
+        		$cadenaSql .= "agora.item_cotizacion ";
+        		$cadenaSql .= " SET";
+        		$cadenaSql .= " respuesta_cotizacion_proveedor = '".$variable ['respuesta_cotizacion_proveedor']."' ,";
+        		$cadenaSql .= " item_cotizacion_padre_id = '".$variable ['item_cotizacion_padre_id']."' ,";
+        		$cadenaSql .= " valor_unitario = '".$variable ['valor_unitario']."' ,";
+        		$cadenaSql .= " iva = '".$variable ['iva']."',";
+        		$cadenaSql .= " ficha_tecnica = '".$variable ['ficha_tecnica']."'";
+        		$cadenaSql .= " WHERE id = '".$variable ['id']."';";
+        	
+        		break;
+        	
+        	case "insertarLogRespuestaBaseItem" :
+        		$cadenaSql = " INSERT INTO ";
+        		$cadenaSql .= "agora.modificacion_item_cotizacion";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " registro_anterior,";
+        		$cadenaSql .= " item_cotizacion,";
+        		$cadenaSql .= " fecha,";
+        		$cadenaSql .= " registro_nuevo,";
+        		$cadenaSql .= " modificacion_respuesta_cotizacion_proveedor";
+        		$cadenaSql .= " )";
+        		$cadenaSql .= " VALUES";
+        		$cadenaSql .= " (";
+        		$cadenaSql .= " '" . $variable ['registro_anterior'] . "',";
+        		$cadenaSql .= " " . $variable ['item_cotizacion'] . ",";
+        		$cadenaSql .= " '" . $variable ['fecha'] . "',";
+        		$cadenaSql .= " '" . $variable ['registro_nuevo'] . "', ";
+        		$cadenaSql .= " " . $variable ['modificacion_respuesta_cotizacion_proveedor'] . " ";
+        		$cadenaSql .= " );";
+        		break;
+        	
+        	case "respuestaItemActual" :
+        		$cadenaSql = "SELECT * FROM ";
+        		$cadenaSql .= " agora.item_cotizacion";
+        		$cadenaSql .= " WHERE id = '".$variable."';";
+        		break;
+        	
+        	case "actualizarRespuestaNotFile" :
+        		$cadenaSql = " UPDATE ";
+        		$cadenaSql .= "agora.respuesta_cotizacion_proveedor";
+        		$cadenaSql .= " SET";
+        		$cadenaSql .= " solicitud_cotizacion = '".$variable ['solicitud_cotizacion']."' ,";
+        		$cadenaSql .= " descripcion = '".$variable ['descripcion']."',";
+        		$cadenaSql .= " informacion_entrega = '".$variable ['informacion_entrega']."',";
+        		$cadenaSql .= " descuentos = '".$variable ['descuentos']."',";
+        		$cadenaSql .= " observaciones = '".$variable ['observaciones']."', ";
+        		$cadenaSql .= " fecha_vencimiento = '".$variable ['fecha_vencimiento']."', ";
+        		$cadenaSql .= " estado = 'TRUE' ";
+        		$cadenaSql .= " WHERE id = '".$variable ['id']."';";
+        		break;
+        	
+        	case "actualizarRespuestaWithFile" :
+        		$cadenaSql = " UPDATE ";
+        		$cadenaSql .= "agora.respuesta_cotizacion_proveedor";
+        		$cadenaSql .= " SET";
+        		$cadenaSql .= " solicitud_cotizacion = '".$variable ['solicitud_cotizacion']."' ,";
+        		$cadenaSql .= " descripcion = '".$variable ['descripcion']."',";
+        		$cadenaSql .= " informacion_entrega = '".$variable ['informacion_entrega']."',";
+        		$cadenaSql .= " descuentos = '".$variable ['descuentos']."',";
+        		$cadenaSql .= " observaciones = '".$variable ['observaciones']."', ";
+        		$cadenaSql .= " fecha_vencimiento = '".$variable ['fecha_vencimiento']."', ";
+        		$cadenaSql .= " soporte_cotizacion = '".$variable ['soporte_cotizacion']."',";
+        		$cadenaSql .= " estado = 'TRUE' ";
+        		$cadenaSql .= " WHERE id = '".$variable ['id']."';";
+        		break;
+        	
+        	case "insertarLogRespuestaBase" :
+                $cadenaSql = " INSERT INTO ";
+                $cadenaSql .= "agora.modificacion_respuesta_cotizacion_proveedor";
+                $cadenaSql .= " (";
+                $cadenaSql .= " registro_anterior,";
+                $cadenaSql .= " respuesta_cotizacion_proveedor,";
+                $cadenaSql .= " fecha,";
+                $cadenaSql .= " registro_nuevo";
+                $cadenaSql .= " )";
+                $cadenaSql .= " VALUES";
+                $cadenaSql .= " (";
+                $cadenaSql .= " '" . $variable ['registro_anterior'] . "',";
+                $cadenaSql .= " " . $variable ['id_respuesta'] . ",";
+                $cadenaSql .= " '" . $variable ['fecha'] . "',";
+                $cadenaSql .= " '" . $variable ['registro_nuevo'] . "' ";
+                $cadenaSql .= " );";
+                break;
+        	
+        	case "buscarRespuesta" :
+        		$cadenaSql = " SELECT * ";
+        		$cadenaSql .= " FROM agora.respuesta_cotizacion_proveedor";
+        		$cadenaSql .= " WHERE solicitud_cotizacion = ".$variable.";";
+        		break;
+        	
         	case "obtenerInfoNec" :
         		$cadenaSql = " SELECT SN.NUM_SOL_ADQ, SN.PLAZO_EJECUCION, SCDP.ID_SOL_CDP, CDP.NUMERO_DISPONIBILIDAD,SN.VIGENCIA, CDP.ID_RESPONSABLE_PRESUPUESTO, CDP.ID_SOLICITANTE ,DP.NOMBRE_DEPENDENCIA,DE.OBSERVACIONES, ";
         		$cadenaSql .= " SN.ESTADO, SN.JUSTIFICACION, SN.OBJETO,SN.VALOR_CONTRATACION,CDP.ESTADO as ESTADOCDP , CDP.FECHA_REGISTRO,SN.RUBRO_INTERNO, RB.DESCRIPCION, ";

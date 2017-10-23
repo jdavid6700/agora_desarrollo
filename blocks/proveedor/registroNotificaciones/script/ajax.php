@@ -2647,6 +2647,9 @@ $urlFinalArchivo = $url . $cadenaArchivo;
     if ($("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val() > 0) {
         $("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val(), 0) + " pesos (COP)");
     }
+    if ($("#<?php echo $this->campoSeguro('precioIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val() > 0) {
+        $("#<?php echo $this->campoSeguro('precioIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val(), 0) + " pesos (COP)");
+    }
 
 
     var fileArchivo;
@@ -3207,7 +3210,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                 
                                      var combo = document.getElementById("producto");
  
-                                 
+                                 	
                                     
                                     if(myselects[i].value =='Exento' || myselects[i].value=='Tarifa de Cero' ){
                                             
@@ -3233,8 +3236,6 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                         iva_cotizacion_total+= (cantidad * parseFloat(valor_item)) + ((cantidad * parseFloat(valor_item)) * (parseFloat(myselects[i].value)/100));
                                         
                                         iva_total += (cantidad * parseFloat(valor_item)) * (parseFloat(myselects[i].value)/100);
-                                        
-                                        
                                       
                                     
                                     }

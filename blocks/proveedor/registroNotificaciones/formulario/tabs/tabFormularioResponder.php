@@ -416,7 +416,7 @@ class FormularioRegistro {
                                 <th width="14%" >Descripción</th>
                                 <th width="6%" >Tipo</th>
                                 <th width="10%" >Unidad</th>
-                                <th width="8%" >Tiempo de Ejecución</th>
+                                <th width="0%" style="display:none;">Tiempo de Ejecución</th>
                                 <th width="4%" >Cantidad</th>
                                 <th width="6%" >Valor Unitario <br> Del Bien ó Servicio <br> Ofrecido</th>
                                 <th width="10%" >Tarifa Iva <br> que  Aplica <br> Sobre el<br> Bien ó Servicio <br> Ofrecido</th>
@@ -477,7 +477,7 @@ class FormularioRegistro {
                                         <td><?php echo $resultadoItems[$i][2] ?></td>
                                         <td><?php echo $matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1] ?></td>
                                         <td><?php echo $matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1] ?></td>
-                                        <td><?php echo $ejecucion ?></td>
+                                        <td style="display:none;"><?php echo $ejecucion ?></td>
                                         <td><?php echo $numero_cantidad ?></td>
                                         <td><?php echo '<input type="text" id="valorUnitario" name="valorUnitario" placeholder="Valor 123456.24" maxlength="22" class="form-control  custom[number]"/>'
                                     ?></td>
