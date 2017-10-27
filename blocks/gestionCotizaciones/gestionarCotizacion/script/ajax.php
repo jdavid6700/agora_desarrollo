@@ -1037,9 +1037,27 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
 ?>
 
+function refreshData()
+{
+    x = 5;  // 5 Seconds
+
+    // Do your thing here
+    console.log($("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val());
+
+    setTimeout(refreshData, x*1000);
+}
+refreshData(); // execute function
+
 
 //---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
 
+	$("#<?php echo $this->campoSeguro('ordenador') ?>").change(function () {
+        if ($("#<?php echo $this->campoSeguro('ordenador') ?>").val() != '') {
+            $("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val($("#<?php echo $this->campoSeguro('ordenador') ?>").val());
+        } else {
+			$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(null);
+        }
+    });
 
     $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").change(function () {
         if ($("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").val() != '') {
@@ -1325,6 +1343,10 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 }
                 
                 if(data[2] != "" && data[3] != ""){
+                
+                	$("#<?php echo $this->campoSeguro('ordenador') ?>").attr('disabled', '');
+                   	$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    $("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
                 	
                 	var i = 0;
                 	var control = false;
@@ -1342,17 +1364,21 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	
                 		swal({
 			                title: 'Inconsistencia datos SICAPITAL y ÁGORA',
-			                type: 'error',
+			                type: 'warning',
 			                html:
 			                        'Atención, la información del ordenador del gasto no esta actualizada,'
 			                        +' existen inconsistencias con el Sistema ÁGORA, la necesidad N°'+data[0].NUM_SOL_ADQ+' de SICAPITAL presenta'
 			                        +' como ordenador de gasto al Señor(a):<br><br> <b>('+data[2].NUMERO_DOCUMENTO+') - '+data[2].NOMBRES+' '+data[2].PRIMER_APELLIDO
-			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>',
+			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>, debe seleccionar manualmente el Ordenador del Gasto',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
 			            
-			            eliminarCDP();
+			            $("#<?php echo $this->campoSeguro('ordenador') ?>").removeAttr('disabled');
+                   		$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    	$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+			            
+			            //eliminarCDP();
                 	
                 	}
                 	
