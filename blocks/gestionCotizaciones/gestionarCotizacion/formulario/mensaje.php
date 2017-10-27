@@ -62,6 +62,9 @@ if (!isset($GLOBALS["autorizado"])) {
 
     $atributos["id"] = "divNoEncontroEgresado";
     $atributos["estilo"] = "marcoBotones";
+    
+    $atributosGlobales ['campoSeguro'] = 'true';
+    $_REQUEST['tiempo'] = time();
 
     //$atributos["estiloEnLinea"]="display:none"; 
     echo $this->miFormulario->division("inicio", $atributos);
@@ -75,17 +78,17 @@ if (!isset($GLOBALS["autorizado"])) {
         }
         $hoy = date("d/m/Y");
 
-        $cadenaSql = $this->sql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
-    	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso ( $cadenaSql, "busqueda" );
-    	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $_REQUEST['dependencia'] );
-    	$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-    	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $_REQUEST['dependencia_destino'] );
-    	$resultadoDependenciaDes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-    	
-    	$cadenaSql = $this->sql->getCadenaSql ( 'ordenadorUdistritalById', $_REQUEST['ordenador'] );
-    	$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+        $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $cadenaSql = $this->sql->getCadenaSql('dependenciaUdistritalById', $_REQUEST['dependencia']);
+        $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $cadenaSql = $this->sql->getCadenaSql('dependenciaUdistritalById', $_REQUEST['dependencia_destino']);
+        $resultadoDependenciaDes = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalById', $_REQUEST['ordenador']);
+        $resultadoOrdenador = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         if (isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "RELACIONADO") {
 
@@ -112,41 +115,40 @@ if (!isset($GLOBALS["autorizado"])) {
         } else {
 
             //***************************************************************************
-        	$numberSolicitud = "SC-" . sprintf("%06d", $_REQUEST['idObjeto']);
-        	
-        	$parametros = array (
-        			'idObjeto' => $_REQUEST ['idObjeto'],
-        			'numero_solicitud' => $numberSolicitud,
-        	);
-        	
-        	$cadenaSql = $this->sql->getCadenaSql ( 'actualizarObjetoNum', $parametros );
-        	$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
-        	//***************************************************************************
-        	
-        	$Proceso = "el <b>Registro</b>";
-        	
-        	$valorCodificado = "pagina=".$miPaginaActual;
-        	$valorCodificado.="&opcion=actividad";
-        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        	$valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
-        	$valorCodificado.="&vigencia=".$_REQUEST['vigencia'];
-        	$valorCodificado.="&unidadEjecutora=".$_REQUEST['unidadEjecutora'];
-        	$valorCodificado.="&tipoNecesidad=".$_REQUEST['tipoNecesidad'];
-        	$valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
+            $numberSolicitud = "SC-" . sprintf("%06d", $_REQUEST['idObjeto']);
+
+            $parametros = array(
+                'idObjeto' => $_REQUEST ['idObjeto'],
+                'numero_solicitud' => $numberSolicitud,
+            );
+
+            $cadenaSql = $this->sql->getCadenaSql('actualizarObjetoNum', $parametros);
+            $resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "insertar");
+            //***************************************************************************
+
+            $Proceso = "el <b>Registro</b>";
+
+            $valorCodificado = "pagina=" . $miPaginaActual;
+            $valorCodificado.="&opcion=actividad";
+            $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+            $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+            $valorCodificado.="&idObjeto=" . $_REQUEST["idObjeto"];
+            $valorCodificado.="&vigencia=" . $_REQUEST['vigencia'];
+            $valorCodificado.="&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
+            $valorCodificado.="&tipoNecesidad=" . $_REQUEST['tipoNecesidad'];
+            $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES";
         }
 
         $tipo = 'success';
-        $mensaje =  "Se realizo " . $Proceso . " de la Solicitud de Cotización <b>N° ".$_REQUEST['idObjeto']."</b> con Vigencia <b>".$_REQUEST['vigencia']."</b> para la
-					Unidad Ejecutora <b>". $valorUnidadEjecutoraText . "</b>
+        $mensaje = "Se realizo " . $Proceso . " de la Solicitud de Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> con Vigencia <b>" . $_REQUEST['vigencia'] . "</b> para la
+					Unidad Ejecutora <b>" . $valorUnidadEjecutoraText . "</b>
 				</br>
-				</br><b>Ordenador del Gasto Relacionado: </b> ".$resultadoOrdenador[0][1]."
-				</br><b>Dependencia Solicitante: </b> ".$resultadoDependencia[0][1]."
-				</br><b>Dependencia Destino: </b> ".$resultadoDependenciaDes[0][1]."
-				</br><b>Fecha del Proceso: </b> ".$hoy."
+				</br><b>Ordenador del Gasto Relacionado: </b> " . $resultadoOrdenador[0][1] . "
+				</br><b>Dependencia Solicitante: </b> " . $resultadoDependencia[0][1] . "
+				</br><b>Dependencia Destino: </b> " . $resultadoDependenciaDes[0][1] . "
+				</br><b>Fecha del Proceso: </b> " . $hoy . "
 				</br><b>Responsable: </b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
         $boton = "continuar";
-        
     } else if ($_REQUEST['mensaje'] == 'confirmaCotizacion') {
 
         $hoy = date("d/m/Y");
@@ -162,11 +164,11 @@ if (!isset($GLOBALS["autorizado"])) {
         $cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
         $objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-        $cadenaSql = $this->sql->getCadenaSql ( 'dependenciaUdistritalById', $objetoEspecifico[0]['jefe_dependencia'] );
-        $resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        	
-        $cadenaSql = $this->sql->getCadenaSql ( 'ordenadorUdistritalByIdCast', $objetoEspecifico[0]['ordenador_gasto'] );
-        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        $cadenaSql = $this->sql->getCadenaSql('dependenciaUdistritalById', $objetoEspecifico[0]['jefe_dependencia']);
+        $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalByIdCast', $objetoEspecifico[0]['ordenador_gasto']);
+        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $objetoEspecifico[0]['usuario_creo']);
         $resultadoUsuarioCot = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
@@ -195,6 +197,18 @@ if (!isset($GLOBALS["autorizado"])) {
         }
         $boton = "regresar";
 
+        $esteCampo = 'tamanoLetra';
+        $atributos ["id"] = $esteCampo; // No cambiar este nombre
+        $atributos ["tipo"] = "hidden";
+        $atributos ['estilo'] = '';
+        $atributos ["obligatorio"] = false;
+        $atributos ['marco'] = true;
+        $atributos ["etiqueta"] = "";
+        $atributos ['valor'] = '';
+
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
 
 
         //INICIO enlace boton descargar resumen
@@ -206,14 +220,14 @@ if (!isset($GLOBALS["autorizado"])) {
         $variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
         $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
         $variableResumen.= "&proveedoresView=false";
-        $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+//        $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 
         //------------------Division para los botones-------------------------
         $atributos["id"] = "botones";
         $atributos["estilo"] = "marcoBotones widget";
         echo $this->miFormulario->division("inicio", $atributos);
 
-        $enlace = "<a href='" . $variableResumen . "'>";
+        $enlace = "<a href='javascript:void(0);' onclick='GenerarDocumentoCotizacion(" . json_encode($variableResumen) . ");'>";
         if ($convocatoria) {
             $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
         } else {
@@ -262,8 +276,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail->FromName = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
         $mail->Subject = "Solicitud de Cotización N° (" . $objetoEspecifico[0]['numero_solicitud'] . ") BANCO ÁGORA UDISTRITAL";
 
-        
-        
+
+
         $contenido = "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
 
         $contenido.= "<br>";
@@ -316,7 +330,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
         $contenido.= "<br>";
         $contenido.= "<br>";
-		
+
         $mail->Body = $contenido;
 
         foreach ($resultadoProveedor as $dato):
@@ -359,18 +373,18 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     } else if ($_REQUEST['mensaje'] == 'confirmaSolicitudModificacion') {
         $hoy = date("d/m/Y");
-        
+
         $tipo = 'success';
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
         $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
-        
-        $cadenaSql = $this->sql->getCadenaSql('buscarEstadoSolicitud', $_REQUEST['estado']);
-  
-        $resultadoEstado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-        
 
-        
+        $cadenaSql = $this->sql->getCadenaSql('buscarEstadoSolicitud', $_REQUEST['estado']);
+
+        $resultadoEstado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+
+
         $mensaje = "Se realizó <b>SOLICITUD DE MODIFICACIÓN</b> sobre Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> .
 				</br>
 							</br>
@@ -378,39 +392,37 @@ if (!isset($GLOBALS["autorizado"])) {
 							</br>
 				</br><b>Fecha del Proceso:</b> " . $hoy . "
 				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
-        
+
         $boton = "continuar";
-        
+
         $valorCodificado = "pagina=" . $esteBloque['nombre'];
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-    }
-    else if ($_REQUEST['mensaje'] == 'confirmaModificacionSolicitud') {
+    } else if ($_REQUEST['mensaje'] == 'confirmaModificacionSolicitud') {
         $hoy = date("d/m/Y");
-        
+
         $tipo = 'success';
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
         $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
-        
-    
-        
 
-        
+
+
+
+
         $mensaje = "Se realizó la <b> MODIFICACIÓN SOLICITADA</b> sobre Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> .
 				</br>
 				</br><b>Fecha del Proceso:</b> " . $hoy . "
 				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
-        
+
         $boton = "continuar";
-        
+
         $valorCodificado = "pagina=" . $esteBloque['nombre'];
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-    }
-    else if ($_REQUEST['mensaje'] == 'errorSolicitudModificacion') {
+    } else if ($_REQUEST['mensaje'] == 'errorSolicitudModificacion') {
         $tipo = 'error';
         $mensaje = $this->lenguaje->getCadena('mensajeErrorSolicitudModificacion') . ".";
         $boton = "continuar";
@@ -419,9 +431,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        
-    }
-    else if ($_REQUEST['mensaje'] == 'errorModificacionSolicitud') {
+    } else if ($_REQUEST['mensaje'] == 'errorModificacionSolicitud') {
         $tipo = 'error';
         $mensaje = $this->lenguaje->getCadena('mensajeErrorModificacionSolicitud') . ".";
         $boton = "continuar";
@@ -430,9 +440,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-        
-    }
-    else if ($_REQUEST['mensaje'] == 'error') {
+    } else if ($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
         $mensaje = $this->lenguaje->getCadena('mensajeError');
         $boton = "regresar";
@@ -579,24 +587,24 @@ if (!isset($GLOBALS["autorizado"])) {
 //         $valorCodificado.="&objetoNBC=".$_REQUEST['nucleo'];
 //         $valorCodificado.="&estadoSolicitudAct=CON ACTIVIDADES Y NBC";
     } else if ($_REQUEST['mensaje'] == 'eliminoCotizacion') {
-    	
-    	$cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
-    	$resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
-    	
-    	//Buscar usuario para enviar correo
-    	$cadenaSql = $this->sql->getCadenaSql('buscarProveedores', $_REQUEST['idObjeto']);
-    	$resultadoProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-    	
-    	//Buscar usuario para enviar correo
-    	$cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
-    	$objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
-    	
-    	$hoy = date("d/m/Y");
-    	
+
+        $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
+        $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+
+        //Buscar usuario para enviar correo
+        $cadenaSql = $this->sql->getCadenaSql('buscarProveedores', $_REQUEST['idObjeto']);
+        $resultadoProveedor = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        //Buscar usuario para enviar correo
+        $cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
+        $objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+        $hoy = date("d/m/Y");
+
         $tipo = 'success';
-        $mensaje = "Se eliminó satisfactoriamente la Solicitud de Cotización <b>(".$objetoEspecifico[0]['numero_solicitud'].")</b>.<br>
+        $mensaje = "Se eliminó satisfactoriamente la Solicitud de Cotización <b>(" . $objetoEspecifico[0]['numero_solicitud'] . ")</b>.<br>
         		<br>
-        		<b>Fecha de Eliminación:</b> ".$hoy."
+        		<b>Fecha de Eliminación:</b> " . $hoy . "
         		";
         $boton = "continuar";
 
@@ -626,8 +634,7 @@ if (!isset($GLOBALS["autorizado"])) {
      * Si se utiliza esta técnica es necesario realizar un mezcla entre este arreglo y el específico en cada control:
      * $atributos= array_merge($atributos,$atributosGlobales);
      */
-    $atributosGlobales ['campoSeguro'] = 'true';
-    $_REQUEST['tiempo'] = time();
+    
 
     // -------------------------------------------------------------------------------------------------
     // ---------------- SECCION: Parámetros Generales del Formulario ----------------------------------

@@ -98,6 +98,7 @@ $cadenaActividad = $this->miConfigurador->fabricaConexiones->crypto->codificar_u
 
 // URL definitiva
 $urlFinalActividad = $url . $cadenaActividad;
+ 
 
 //Variables
 $cadenaACodificarArchivo = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
@@ -115,6 +116,28 @@ $cadenaArchivo = $this->miConfigurador->fabricaConexiones->crypto->codificar_url
 
 // URL definitiva
 $urlFinalArchivo = $url . $cadenaArchivo;
+
+
+//Variables
+$cadenaACodificarDocCot = "pagina=" . $this->miConfigurador->getVariableConfiguracion("pagina");
+$cadenaACodificarDocCot .= "&procesarAjax=true";
+$cadenaACodificarDocCot .= "&action=index.php";
+$cadenaACodificarDocCot .= "&bloqueNombre=" . $esteBloque ["nombre"];
+$cadenaACodificarDocCot .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+$cadenaACodificarDocCot .= $cadenaACodificarDocCot . "&funcion=generarDocumentoCotizacion";
+$cadenaACodificarDocCot .= "&tiempo=" . $_REQUEST ['tiempo'];
+
+// Codificar las variables
+$enlace = $this->miConfigurador->getVariableConfiguracion("enlace");
+
+$cadenaDocumentoCotizacion = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($cadenaACodificarDocCot, $enlace);
+
+// URL definitiva
+$urlDocumentoCotizacion = $url . $cadenaDocumentoCotizacion;
+
+
+
+
 ?>
 
 
@@ -2522,3 +2545,107 @@ $("#<?php echo $this->campoSeguro('medioPago')?>").change(function() {
      }
 
 });    
+
+
+
+
+ $("#descargaCotizacion").on('click', function(e) {
+     e.preventDefault();   
+     swal.setDefaults({
+        input: 'text',
+        confirmButtonText: 'Next &rarr;',
+        showCancelButton: true,
+        progressSteps: ['1']
+      })
+      
+    var steps = [
+        {
+          title: 'Tamano Letra',
+          text: 'Tamaño de Letra'
+        }
+    ]
+    
+    swal.queue(steps).then(function (result) {
+      swal.resetDefaults()
+      swal({
+        title: 'All done!',
+        html:
+          'Your answers: <pre>' +
+            JSON.stringify(result) +
+          '</pre>',
+        confirmButtonText: 'Acept!'
+      })
+      
+      
+      
+       $("#<?php echo $this->campoSeguro('tamanoLetra') ?>").val(JSON.stringify(result));
+       
+       var href = $("#descargaCotizacion").attr("href");
+       window.location = href;
+    }, function () {
+      swal.resetDefaults()
+    })
+    
+    
+ 
+    
+    
+     
+ });      
+ 
+  var tamanoL = '';
+ function GenerarDocumentoCotizacion(InfoCotizacion) {
+    
+          var url_cotizacion=InfoCotizacion;
+         
+         swal.setDefaults({
+            input: 'text',
+            confirmButtonText: 'Siguiente &rarr;',
+            showCancelButton: true,
+            progressSteps: ['1']
+          })
+
+            var steps = [
+                {
+                  title: 'Imprimir Cotización',
+                  html: 'Por Favor Ingrese <br> Tamaño de Letra en Números <br> <br> ' +
+                  'Si Desea Valor por Defecto, Dar en Siguiente'
+                }
+            ]
+
+            swal.queue(steps).then(function (result) {
+              swal.resetDefaults()
+              swal({
+                title: 'Documento Generado!',
+                confirmButtonText: 'Aceptar!'
+              })
+              tamanoL = JSON.stringify(result);
+            
+              $.ajax({
+                        url: "<?php echo $urlDocumentoCotizacion ?>",
+                        dataType: "json",
+                        data: {tamanoLetra: tamanoL, urlCot: url_cotizacion},
+                        success: function (data) {
+                            window.open(data, "_target")
+                        }
+
+                    });
+               
+              
+              
+             
+
+
+            }, function (isConfirm) {
+              swal.resetDefaults()
+              
+
+            })
+            
+              
+    
+     
+
+    }
+    ;
+     

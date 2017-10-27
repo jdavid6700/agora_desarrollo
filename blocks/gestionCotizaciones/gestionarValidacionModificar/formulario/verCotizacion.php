@@ -950,7 +950,7 @@ class FormularioRegistro {
 			                            $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
 			                            $atributos ['validar'] = 'required,minSize[4]';
 			                            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-			                            $atributos ['deshabilitado'] = false;
+			                            $atributos ['deshabilitado'] = true;
 			                            $atributos ['tamanno'] = 20;
 			                            $atributos ['maximoTamanno'] = '';
 			                            $atributos ['anchoEtiqueta'] = 220;
@@ -1032,7 +1032,7 @@ class FormularioRegistro {
 			            $atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			            $atributos ['validar'] = 'required,minSize[30]';
 			            $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			            $atributos ['deshabilitado'] = false;
+			            $atributos ['deshabilitado'] = true;
 			            $atributos ['tamanno'] = 20;
 			            $atributos ['maximoTamanno'] = '';
 			            $atributos ['anchoEtiqueta'] = 220;

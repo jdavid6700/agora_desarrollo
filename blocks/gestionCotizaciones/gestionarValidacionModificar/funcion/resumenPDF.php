@@ -453,73 +453,73 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Número de Solicitud de Cotización - Vigencia</b></div>
-                                    <div class="column" height="9%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['numero_solicitud'] . " - " . $resultadoObjeto[0]['vigencia'] . ' </div>
+                                    <div class="column" height="9%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['numero_solicitud'] . " - " . $resultadoObjeto[0]['vigencia'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Fecha Solicitud</b></div>
-                                    <div class="column" height="4%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana1 . ' </div>
+                                    <div class="column" height="4%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $fechana1 . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Título Cotización</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] .  ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] .  ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Actividad Económica</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $contenidoAct . ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $contenidoAct . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo" >
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Fecha Apertura</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana2 .' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $fechana2 .' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Fecha Cierre</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $fechana3 . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $fechana3 . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Objetivos<br>/Temas</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['objetivo'] . ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['objetivo'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Requisitos</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['requisitos'] . ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['requisitos'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Observaciones Adicionales</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['observaciones'] . ' </div>
+                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['observaciones'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Solicitante</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenador . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoOrdenador . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Dependencia Solicitante</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoDependencia[0][1] . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoDependencia[0][1] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Responsable de la Cotización</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
+                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
                                   </div>
                                 </div>
 

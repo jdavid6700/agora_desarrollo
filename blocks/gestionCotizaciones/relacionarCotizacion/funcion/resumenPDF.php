@@ -203,7 +203,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Número de Solicitud de Cotización - Vigencia</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoObjeto[0]['numero_solicitud'] . " - " .$resultadoObjeto[0]['vigencia'] ."
                 </td>
             </tr>
@@ -211,16 +211,16 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Fecha Solicitud</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $fechana1 . "
                 </td>
             </tr>
                     	
             <tr>
-                <td align='center' style='width:20%;background:#BDD6EE'>
+                <td align='center' style='width:20%;background:#BDD6EE;text-align:justify'>
                     <b>Título Cotización</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoObjeto[0]['titulo_cotizacion']. "
                 </td>
             </tr>
@@ -238,7 +238,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Fecha Apertura</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $fechana2 . "
                 </td>
             </tr>
@@ -247,7 +247,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Fecha Cierre</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $fechana3 . "
                 </td>
             </tr>       		
@@ -255,7 +255,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Objetivos/Temas</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                 " . $resultadoObjeto[0]['objetivo']. "
                 </td>
             </tr>  
@@ -263,7 +263,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Requisitos</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoObjeto[0]['requisitos']. "
                 </td>
             </tr>
@@ -271,7 +271,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Observaciones Adicionales</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoObjeto[0]['observaciones']. "
                 </td>
             </tr>
@@ -279,7 +279,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Dependencia</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoObjeto[0]['dependencia']. "
                 </td>
             </tr>
@@ -287,7 +287,7 @@ normal'><span style='font-size:18.0pt;mso-bidi-font-size:11.0pt;line-height:
                 <td align='center' style='width:20%;background:#BDD6EE'>
                     <b>Responsable de la Cotización</b>
                 </td>
-                <td align='left' style='width:80%;'>
+                <td align='left' style='width:80%;text-align:justify;'>
                     " . $resultadoUsuario[0]['identificacion']. " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido']. "
                 </td>
             </tr>
