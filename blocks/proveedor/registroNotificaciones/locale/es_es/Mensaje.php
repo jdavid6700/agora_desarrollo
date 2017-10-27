@@ -2,6 +2,8 @@
 
 //Formulario 
 
+$this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
+$this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
 
 $this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
 $this->idioma["observacion"] = "Observación: ";

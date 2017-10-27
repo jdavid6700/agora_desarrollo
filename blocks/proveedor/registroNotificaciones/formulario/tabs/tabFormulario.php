@@ -149,15 +149,23 @@ class registrarForm {
 				
 				?>
 
-<div id="dialogo">
-	<p>A continuación podrá observar las distintas cotizaciones en las
-		cuales ha recibido una invitación a participar.</p>
-</div>
-
+			<div id="dialogo">
+				<span>MÓDULO COTIZACIONES </span><br><br><div align="justify">A continuación podrá observar las distintas cotizaciones en las cuales
+				ha recibido una invitación a participar.</div>
+			</div>
 
 <?php
 			}
 			echo $this->miFormulario->marcoAgrupacion ( 'fin', $atributos );
+			
+			
+			echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+			
 			
 			$esteCampo = "marcoContratosTabla";
 			$atributos ['id'] = $esteCampo;

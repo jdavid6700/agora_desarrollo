@@ -1,6 +1,9 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
+$this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
+
 $this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
 $this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
 

@@ -11,7 +11,9 @@ $conexion = 'core_central';
 $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 //Estas funciones se llaman desde ajax.php y estas a la vez realizan las consultas de Sql.class.php 
 
-
+$directorio = $this->miConfigurador->getVariableConfiguracion("host");
+$directorio .= $this->miConfigurador->getVariableConfiguracion("site") . "/index.php?";
+$directorio .= $this->miConfigurador->getVariableConfiguracion("enlace");
 //-------------------------------------------------
 //-------------------------------------------------
 //Validación Petición AJAX Parametro SQL Injection
@@ -137,6 +139,28 @@ if($secure){
 		echo $resultado;
 	}
 
+}
+else{
+    if ($_REQUEST ['funcion'] == 'generarDocumentoCotizacion') {
+
+
+
+
+
+        $tamaño_arreglo = json_decode($_REQUEST['tamanoLetra']);
+        $tamaño_letra = $tamaño_arreglo[0];
+        $variable_url = $_REQUEST['urlCot'];
+
+
+        $variable_tamaño = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variable_url . '&tamanoletra=' . $tamaño_letra, $directorio);
+
+
+
+
+
+        echo json_encode($variable_tamaño);
+    }
+    
 }
 
 ?>

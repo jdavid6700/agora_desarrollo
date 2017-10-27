@@ -1,4 +1,16 @@
 
+.textCon{
+	padding:10px;
+    text-align:center;
+    background-color:#fce94f;
+    border: 2px solid #edd400;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
+}
+
 .adendas{
 	width: 80%;
 }
@@ -183,6 +195,18 @@ table.table1 {
      padding: 10px;
      text-align: center;
      text-shadow: 1px 1px 1px #ffffff;
+}
+
+.table1 tbody td.tdAlert{
+    padding:10px;
+    text-align:center;
+    background-color:#fce94f;
+    border: 2px solid #edd400;
+    -moz-border-radius:2px;
+    -webkit-border-radius:2px;
+    border-radius:2px;
+    color:#666;
+    text-shadow:1px 1px 1px #fff;
 }
 
 .table1 tbody span.check::before {

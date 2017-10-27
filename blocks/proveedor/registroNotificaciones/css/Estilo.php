@@ -6,6 +6,9 @@ $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="miestilo.css";
+
+$estilo[$indice++]="jquery.modal.min.css";
+
 // $estilo[$indice++]="formToWizard.css";
 
 // Tablas
@@ -17,6 +20,9 @@ if(!isset($_REQUEST['opcion']) || $_REQUEST['opcion'] == 'mostrar' || $_REQUEST[
 	$estilo[$indice++]="jquery.dataTables.min.css";
 	$estilo[$indice++]="jquery.dataTables_themeroller.css";
 }
+
+$estilo[$indice++]="accordion.css";
+$estilo[$indice++]="animate.min.css";
 
 $estilo[$indice++]="sweetalert2.min.css";
 

@@ -504,6 +504,710 @@ class FormularioRegistro {
 				$cadena_sql = $this->miSql->getCadenaSql ( "buscarDetalleItemsProducto", $resultadoRespuesta[0]['id']);
 				$resultadoItems = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
+				
+				
+				
+				
+				
+				
+
+				//******************************************* VISTA LOG *****************************************************************************
+				
+				$cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItemsCastRes", $resultadoRespuesta[0]['id']);
+				$resultadoItemsCast = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+				
+				$cadena_sql = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionRes', $resultadoItemsCast[0][0]);
+				$resultadoAdendas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				
+				$cadena_sql = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionSolCastRes', $resultadoItemsCast[0][0]);
+				$resultadoAdendasSolCast = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				
+				?>
+				            		
+				            		<div align="center">
+				            			<div class="adendas">
+				            		<?php  
+				            		
+				                   	if($resultadoAdendas && $resultadoAdendasSolCast){
+				                   		
+				                   		
+				                   		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionSolCastArrayRes', $resultadoItemsCast[0][0]);
+				                   		$resultadoAdendasSolCastArray = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				                   		
+				                   		$esteCampo = "marcoDescripcionProductoAdendaRes";
+				                   		$atributos ['id'] = $esteCampo;
+				                   		$atributos ["estilo"] = "jqueryui";
+				                   		$atributos ['tipoEtiqueta'] = 'inicio';
+				                   		$atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+				                   		echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); 
+				                   		
+				                   		
+				            				?>    
+				            				
+				            				
+				            			<div class="bwl_acc_container" id="accordionRes">
+				            				    <div class="accordion_search_container">
+				            				        <input type="text" class="accordion_search_input_box search_icon" value="" placeholder="Search ..."/>
+				            				        </div> <!-- end .bwl_acc_container -->
+				            					<div class="search_result_container"></div> <!-- end .search_result_container -->	   		
+				                   		
+				                   		
+				                   		<section>
+				            			    <h2 class="acc_title_bar"><a href="#">Información Inicial</a></h2>
+				            			    <div class="acc_container">
+				            			        <div class="block">
+				                   		
+				                   	
+				            						  
+				            						  <?php 
+				            						  
+				            						  $tipo = 'information';
+				            						  $mensaje = "<b>INFORMACIÓN INICIAL COTIZACIÓN</b><br>
+				            							<br>
+				            							<i>A continuación se presenta la información registrada incialmente en la Cotización sobre los <b>Valores Unitarios, IVA y Ficha Técnica</b> de Productos y/o Servicios</i>.<br>
+				            	       						<center>
+				            	       						La información que se presenta a continuación es el estado inicial de la información antes de hacer los Cambios por parte del PROVEEDOR.</center>
+				            						  
+				            							";
+				            						  // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				            						  $esteCampo = 'mensaje';
+				            						  $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				            						  $atributos["etiqueta"] = "";
+				            						  $atributos["estilo"] = "centrar";
+				            						  $atributos["tipo"] = $tipo;
+				            						  $atributos["mensaje"] = $mensaje;
+				            						  echo $this->miFormulario->cuadroMensaje($atributos);
+				            						  unset($atributos);
+				            						  
+				            						  $cadena_sql = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesBaseRes', $resultadoItemsCast[0][0]);
+				            						  $resultadoAdendasValues = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+				
+				            						  $contReg = 0;
+				            						  ?>
+				            						  
+				            						  
+				            						  
+				            						  
+				            						  
+				            						  
+				            						   <table id="tablaFP2" class="table1" width="100%" >
+				            	       				                <!-- Cabecera de la tabla -->
+				            	       				                <thead>
+				            	       				                    <tr>
+				            	       				                        <th width="10%" >Nombre</th>
+				                            									<th width="25%" >Descripción</th>
+				                            									<th width="10%" >Tipo</th>
+				                            									<th width="10%" >Unidad</th>
+				                            									<th width="5%" >Cantidad</th>
+				                            									<th width="10%" >Valor Unitario</th>
+				                                                                <th width="15%" >Iva</th>
+				                                                                <th width="15%" >Ficha Técnica</th>
+				                            									<th width="5%" >&nbsp;</th>
+				            	       				                    </tr>
+				            	       				                </thead>
+				            	       				
+				            	       				                <!-- Cuerpo de la tabla con los campos -->
+				            	       				                <tbody>
+				            	       				
+				            	       				
+				            	       				
+				            	       				                    <?php
+				            	       				                    
+				            	       				                    $valorPrecioTotal = 0;
+				            	       				                    $valorPrecioTotalIva=0;
+				            	       										
+				            	       				                        while($contReg < count($resultadoAdendasValues)){
+				                                                                                    
+				                                                                $id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion'];
+				            	       				                        	
+				            	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
+				            	       				                        	 
+				            	       				                        	$valoresJson = json_decode($jsonReg, true);
+				            
+				            	       				                        	$resultadoItemsJson = $valoresJson[0];
+				            	       				                        	
+				            	       				                        	
+				            	       				                        	$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesEstRes', $resultadoAdendasValues[0]['modificacion_respuesta_cotizacion_proveedor']);
+				            	       				                        	$resultadoAdendasValuesEst = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				            	       				                        	
+				            	       				                        	$jsonRegVal = $resultadoAdendasValuesEst[0]['registro_anterior'];
+				            	       				                        	
+				            	       				                        	$valoresJsonReg = json_decode($jsonRegVal, true);
+				
+				            	       				                        	$titulo3 = $valoresJsonReg [0] ['descuentos'];
+				            	       				                        	$titulo5 = $valoresJsonReg [0] ['observaciones'];
+				
+				            	       				                        		
+				            	       				                        		$sumaIva = 0;
+				            	       				                        		
+				            	       				                        		
+				            	       				                        		$cadena_sql = $this->miSql->getCadenaSql ( "buscarDetalleItemRes", $resultadoItemsJson ['item_cotizacion_padre_id'] );
+				            	       				                        		$resultadoDetItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				            	       				                        		
+				            	       				                        		array_push($resultadoItemsJson, $resultadoDetItem[0]);
+				            	       				                        	
+				            	       				                        		$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_iva_Item", $resultadoItemsJson ['iva'] );
+				            	       				                        		$IvaItem = $esteRecursoDBArka->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				            	       				                        	
+				            	       				                        		if ($resultadoItemsJson [6] ['tipo_necesidad'] == 1) {
+				            	       				                        			$tipo = "1 - BIEN";
+				            	       				                        		} else {
+				            	       				                        			$tipo = "2 - SERVICIO";
+				            	       				                        		}
+				            	       				                        	
+				            	       				                        		if ($resultadoItemsJson [6] ['unidad'] == 0) {
+				            	       				                        			$unidad = "0 - NO APLICA";
+				            	       				                        		} else {
+				            	       				                        				
+				            	       				                        			$cadena_sql = $this->miSql->getCadenaSql ( "buscarUnidadItem", $resultadoItemsJson [6] ['unidad'] );
+				            	       				                        			$resultadoUnidadItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				            	       				                        				
+				            	       				                        			$unidad = $resultadoUnidadItem [0] ['id'] . " - " . $resultadoUnidadItem [0] ['unidad'];
+				            	       				                        		}
+				            	       				                        	
+				            	       				                        		if ($resultadoItemsJson [6] ['tiempo_ejecucion'] == 0) {
+				            	       				                        			$tiempo = "0 - NO APLICA";
+				            	       				                        		} else {
+				            	       				                        			$tiempo = $this->inverseTotalDias ( $resultadoItemsJson [6] ['tiempo_ejecucion'] );
+				            	       				                        		}
+				            	       				                        	
+				            	       				                        		$valorPrecioTotal += ($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
+				            	       				                        		if ($IvaItem [0] ['descripcion'] == 'Tarifa de Cero' || $IvaItem [0] ['descripcion'] == 'Exento') {
+				            	       				                        			$valorPrecioTotalIva += ($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
+				            	       				                        		} else {
+				            	       				                        			$valorPrecioTotalIva += (($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario'])) * (1 + ($IvaItem [0] ['iva']));
+				            	       				                        		}
+				            	       				                        	
+				            	       				                        		?>
+				            	       				                        	
+				            	       				                        			<tr id="nFilas">
+				            	       				                        				<td><?php echo $resultadoItemsJson[6] ['nombre']  ?></td>
+				            	       				                        				<td><?php echo $resultadoItemsJson[6] ['descripcion']  ?></td>
+				            	       				                        				<td><?php echo $tipo  ?></td>
+				            	       				                        				<td><?php echo $unidad  ?></td>
+				            	       				                        				<td><?php echo number_format(round($resultadoItemsJson[6] ['cantidad'],0), 0, '', '.')  ?></td>
+				            	       				                        				<td class="tdAlert"><?php echo "$ " . number_format(round($resultadoItemsJson['valor_unitario'],0), 0, '', '.')  ?></td>
+				            	       				                        				<td class="tdAlert"><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
+				            	       				                        				<td class="tdAlert"><?php echo $resultadoItemsJson['ficha_tecnica']  ?></td>
+				            	       				                        				<th scope="row"><div class="widget"><?php echo $contReg+1  ?></div></th>
+				            	       				                        			</tr>
+				            	       				                        			<?php
+				            	       				                        
+				            	       				                        	
+				            	       				                    		$contReg++;
+				            	       				                		}
+				            	       				            			
+				            	       				            ?>
+				            	       				                </tbody>
+				            	       				            </table>
+				            	       				            <!-- Botón para agregar filas -->
+				            	       				            <!-- 
+				            	       				            <input type="button" id="agregar" value="Agregar fila" /> -->
+				            	       				
+				            	       				
+				            	       				
+				            	       				
+				            					           	       				
+				            	       				
+				            	       				<?php 
+				            	       				
+				            	       				
+				            	       				$promedio = $valorPrecioTotal;
+				            	       				if($promedio > 999999999 && $promedio <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedio, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedio );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$converted = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$converted = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$converted .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$converted = $this->to_word($promedio, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCast = $converted;
+				            	       				
+				            	       				$promedioIva = $valorPrecioTotalIva;
+				            	       				if($promedioIva > 999999999 && $promedioIva <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedioIva, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedioIva );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$convertedIva = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$convertedIva = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$convertedIva .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$convertedIva = $this->to_word($promedioIva, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCastIva = $convertedIva;
+				            	       				
+				            	       				
+				            	       				$promedioSoloIva = $valorPrecioTotalIva-$valorPrecioTotal;
+				            	       				if($promedioSoloIva > 999999999 && $promedioSoloIva <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedioSoloIva, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedioSoloIva );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$convertedSoloIva = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$convertedSoloIva = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$convertedSoloIva .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$convertedSoloIva = $this->to_word($promedioSoloIva, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCastSoloIva = $convertedSoloIva;
+				            	       				
+				            	       				
+				            	       				?>
+				            	       				
+				            	       				
+				            	       				<div id="simpaleTabs<?php echo 0?>" class="ui-tabs ui-widget ui-widget-content ui-corner-all simpaleTabs">  
+													    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+													    	<li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active">
+													            <a href="#d1<?php echo 0?>" class="ui-tabs-anchor">PRECIO COTIZACIÓN</a>
+													        </li>
+													        <li class="ui-state-default ui-corner-top">
+													            <a href="#d2<?php echo 0?>" class="ui-tabs-anchor">DESCUENTOS OFRECIDOS</a>
+													        </li>
+													        <li class="ui-state-default ui-corner-top">
+													            <a href="#d3<?php echo 0?>" class="ui-tabs-anchor">OBSERVACIONES ADICIONALES</a>
+													        </li>
+													    </ul>
+													    <div id="d1<?php echo 0?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													    	<div class="textCon"><?php
+													    	
+													    	$valorPrecioTotal = number_format($valorPrecioTotal, 0, ',', '.');
+													    	$promedioSoloIva = number_format($promedioSoloIva, 0, ',', '.');
+													    	$valorPrecioTotalIva = number_format($valorPrecioTotalIva, 0, ',', '.');
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO COTIZACIÓN: </span></b>$ '.$valorPrecioTotal.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE LA COTIZACIÓN EN LETRAS:</b>  ". $dineroCast;
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO IVA: </span></b>$ '.$promedioSoloIva.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE IVA EN LETRAS:</b>  ". $dineroCastSoloIva;
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO COTIZACIÓN CON IVA: </span></b>$ '.$valorPrecioTotalIva.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE LA COTIZACIÓN CON IVA EN LETRAS:</b>  ". $dineroCastIva;
+													    	echo "</div>";
+													    	
+													    	?> </div>
+													        
+													    </div>
+													    <div id="d2<?php echo 0?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													    	<div class="textCon"><?php echo $titulo3?> </div>
+													        
+													    </div>
+													    <div id="d3<?php echo 0?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													        <div class="textCon"><?php echo $titulo5?> </div>
+													    </div>
+													</div>
+				            	       				
+				            	       				
+				 
+				            						  
+				            						  
+				            						  </div>
+				            					</div>
+				            				</section>
+				            				  
+				                   		
+				                   			<?php
+				                   			$controlAd = 0;
+				                   			
+				                   			while($controlAd < $resultadoAdendasSolCast[0]['count']){
+				                   				
+				            		       		?>
+				            		       		
+				            		       	<section>
+				            				    <h2 class="acc_title_bar"><a href="#">Información Registrada por Modificación N°(<?php echo $controlAd + 1?>)</a></h2>
+				            				    <div class="acc_container">
+				            				        <div class="block">	
+				            		   
+				            		       		
+				            		       		<?php 
+				                   				
+				                   				
+				            	       			$esteCampo = "marcoDetalleProAdendaRes";
+				            	       			$atributos ['id'] = $esteCampo;
+				            	       			$atributos ["estilo"] = "jqueryui";
+				            	       			$atributos ['tipoEtiqueta'] = 'inicio';
+				            	       			$atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo).($controlAd + 1) ;
+				            	       			echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+				            	       		
+				            	       				
+				            	       				$cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesRes', $resultadoAdendasSolCastArray[$controlAd][0]);
+				            	       				$resultadoAdendasValues = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				            	       				
+				            	       				
+				            	       				
+				            	       				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionValuesEstRes', $resultadoAdendasValues[0]['modificacion_respuesta_cotizacion_proveedor']);
+				            	       				$resultadoAdendasValuesEst = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+				            	       				
+				            	       				$jsonRegVal = $resultadoAdendasValuesEst[0]['registro_nuevo'];
+				            	       				
+				            	       				$valoresJson = json_decode($jsonRegVal, true);
+				            	       				
+				            	       					
+				            	       					$titulo2 = $resultadoAdendasValuesEst[0]['fecha'];
+				            	       					$titulo3 = $valoresJson['descuentos'];
+				            	       					$titulo5 = $valoresJson['observaciones'];
+				            	       					
+				            	       				
+				            	       				
+				            	       				
+				            	       				$tipo = 'warning';
+				            	       				$mensaje = "<b>DETALLE MODIFICACIÓN COTIZACIÓN</b><br>
+				            							<br>
+				            							<i>A continuación se presenta la información registrada en la modificación, en la parte Inferior se presenta una tabla con los <b>Valores Unitarios, IVA y Ficha Técnica</b> de Productos y/o Servicios</i>.<br>
+				            	       						<br>
+				            	       						<b>FECHA DE MODIFICACIÓN:</b> ".$titulo2." <br>
+				            	       						<center>
+				            	       						La información que se presenta a continuación es la información que se registro en TODO EL FORMULARIO con la MODIFICACIÓN ejecutada.</center>
+				            	       						
+				            							";
+				            	       				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				            	       				$esteCampo = 'mensaje';
+				            	       				$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				            	       				$atributos["etiqueta"] = "";
+				            	       				$atributos["estilo"] = "centrar";
+				            	       				$atributos["tipo"] = $tipo;
+				            	       				$atributos["mensaje"] = $mensaje;
+				            	       				echo $this->miFormulario->cuadroMensaje($atributos);
+				            	       				unset($atributos);
+				
+				            	       				$contReg = 0;
+				            	       				
+				            	       				?>
+				            	       				
+				            	       				
+				            	       				            <table id="tablaFP2" class="table1" width="100%" >
+				            	       				                <!-- Cabecera de la tabla -->
+				            	       				                <thead>
+				            	       				                    <tr>
+				            	       				                        <th width="10%" >Nombre</th>
+				                            									<th width="25%" >Descripción</th>
+				                            									<th width="10%" >Tipo</th>
+				                            									<th width="10%" >Unidad</th>
+				                            									<th width="5%" >Cantidad</th>
+				                            									<th width="10%" >Valor Unitario</th>
+				                                                                <th width="15%" >Iva</th>
+				                                                                <th width="15%" >Ficha Técnica</th>
+				                            									<th width="5%" >&nbsp;</th>
+				            	       				                    </tr>
+				            	       				                </thead>
+				            	       				
+				            	       				                <!-- Cuerpo de la tabla con los campos -->
+				            	       				                <tbody>
+				            	       				
+				            	       				
+				            	       				
+				            	       				                    <?php
+				            	       				                    
+				            	       				                    $valorPrecioTotal = 0;
+				            	       				                    $valorPrecioTotalIva=0;
+				            	       				                    
+				            	       				                    while($contReg < count($resultadoAdendasValues)){
+				            	       				                    
+				            	       				                    	$id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion'];
+				            	       				                    	 
+				            	       				                    	$jsonReg = $resultadoAdendasValues[$contReg]['registro_nuevo'];
+				            	       				                    
+				            	       				                    	$valoresJson = json_decode($jsonReg, true);
+				            	       				                    
+				            	       				                    	$resultadoItemsJson = $valoresJson;
+				            	       				                    	 
+				            	       				                    
+				            	       				                    
+				            	       				                    	$sumaIva = 0;
+				            	       				                    
+				            	       				                    
+				            	       				                    	$cadena_sql = $this->miSql->getCadenaSql ( "buscarDetalleItemRes", $resultadoItemsJson ['item_cotizacion_padre_id'] );
+				            	       				                    	$resultadoDetItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				            	       				                    
+				            	       				                    	array_push($resultadoItemsJson, $resultadoDetItem[0]);
+				            	       				                    	
+				            	       				                    	$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_iva_Item", $resultadoItemsJson ['iva'] );
+				            	       				                    	$IvaItem = $esteRecursoDBArka->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+				            	       				                    	 
+				            	       				                    	if ($resultadoItemsJson [0] ['tipo_necesidad'] == 1) {
+				            	       				                    		$tipo = "1 - BIEN";
+				            	       				                    	} else {
+				            	       				                    		$tipo = "2 - SERVICIO";
+				            	       				                    	}
+				            	       				                    	 
+				            	       				                    	if ($resultadoItemsJson [0] ['unidad'] == 0) {
+				            	       				                    		$unidad = "0 - NO APLICA";
+				            	       				                    	} else {
+				            	       				                    
+				            	       				                    		$cadena_sql = $this->miSql->getCadenaSql ( "buscarUnidadItem", $resultadoItemsJson [0] ['unidad'] );
+				            	       				                    		$resultadoUnidadItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				            	       				                    
+				            	       				                    		$unidad = $resultadoUnidadItem [0] ['id'] . " - " . $resultadoUnidadItem [0] ['unidad'];
+				            	       				                    	}
+				            	       				                    	 
+				            	       				                    	if ($resultadoItemsJson [0] ['tiempo_ejecucion'] == 0) {
+				            	       				                    		$tiempo = "0 - NO APLICA";
+				            	       				                    	} else {
+				            	       				                    		$tiempo = $this->inverseTotalDias ( $resultadoItemsJson [0] ['tiempo_ejecucion'] );
+				            	       				                    	}
+				            	       				                    	 
+				            	       				                    	$valorPrecioTotal += ($resultadoItemsJson [0] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
+				            	       				                    	if ($IvaItem [0] ['descripcion'] == 'Tarifa de Cero' || $IvaItem [0] ['descripcion'] == 'Exento') {
+				            	       				                    		$valorPrecioTotalIva += ($resultadoItemsJson [0] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
+				            	       				                    	} else {
+				            	       				                    		$valorPrecioTotalIva += (($resultadoItemsJson [0] ['cantidad'] * $resultadoItemsJson ['valor_unitario'])) * (1 + ($IvaItem [0] ['iva']));
+				            	       				                    	}
+				            	       				                    	 
+											            	       			?>
+											
+																			<tr id="nFilas">
+																				<td><?php echo $resultadoItemsJson[0] ['nombre']  ?></td>
+																				<td><?php echo $resultadoItemsJson[0] ['descripcion']  ?></td>
+																				<td><?php echo $tipo  ?></td>
+																				<td><?php echo $unidad  ?></td>
+																				<td><?php echo number_format(round($resultadoItemsJson[0] ['cantidad'],0), 0, '', '.')  ?></td>
+																				<td class="tdAlert"><?php echo "$ " . number_format(round($resultadoItemsJson['valor_unitario'],0), 0, '', '.')  ?></td>
+																				<td class="tdAlert"><?php echo $IvaItem[0]['id_iva'] ." - ". $IvaItem[0]['descripcion'] ?></td>
+																				<td class="tdAlert"><?php echo $resultadoItemsJson['ficha_tecnica']  ?></td>
+																				<th scope="row"><div class="widget"><?php echo $contReg+1  ?></div></th>
+																			</tr>
+																			<?php
+										
+																		$contReg ++;
+																	}
+																	
+																	?>
+				            	       				                </tbody>
+				            	       				            </table>
+				            	       				            <!-- Botón para agregar filas -->
+				            	       				            <!-- 
+				            	       				            <input type="button" id="agregar" value="Agregar fila" /> -->
+				            	       				
+				            	       				
+				            	       				<?php 
+				            	       				
+				            	       				
+				            	       				$promedio = $valorPrecioTotal;
+				            	       				if($promedio > 999999999 && $promedio <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedio, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedio );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$converted = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$converted = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$converted .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$converted = $this->to_word($promedio, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCast = $converted;
+				            	       				
+				            	       				$promedioIva = $valorPrecioTotalIva;
+				            	       				if($promedioIva > 999999999 && $promedioIva <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedioIva, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedioIva );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$convertedIva = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$convertedIva = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$convertedIva .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$convertedIva = $this->to_word($promedioIva, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCastIva = $convertedIva;
+				            	       				
+				            	       				
+				            	       				$promedioSoloIva = $valorPrecioTotalIva-$valorPrecioTotal;
+				            	       				if($promedioSoloIva > 999999999 && $promedioSoloIva <= 999999999999){
+				            	       				
+				            	       					$restCast = substr((int)$promedioSoloIva, -9);
+				            	       					$rest = str_replace ( $restCast , "" , (int)$promedioSoloIva );
+				            	       					$rest = str_pad($rest, 3, '0', STR_PAD_LEFT);
+				            	       				
+				            	       					if ($rest == '001') {
+				            	       						$convertedSoloIva = 'MIL ';
+				            	       					} else if (intval($rest) > 0) {
+				            	       						$convertedSoloIva = sprintf('%sMIL ', $this->convertGroup($rest));
+				            	       					}
+				            	       				
+				            	       					$convertedSoloIva .= $this->to_word($restCast, 'COP');
+				            	       				}else{
+				            	       					$convertedSoloIva = $this->to_word($promedioSoloIva, 'COP');
+				            	       				}
+				            	       				
+				            	       				$dineroCastSoloIva = $convertedSoloIva;
+				            	       				
+				            	       				
+				            	       				?>
+				            	       				
+				            	       				
+				            	       				<div id="simpaleTabs<?php echo $controlAd + 1?>" class="ui-tabs ui-widget ui-widget-content ui-corner-all simpaleTabs">  
+													    <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+													    	<li class="ui-state-default ui-corner-top ui-tabs-active ui-state-active">
+													            <a href="#d1<?php echo $controlAd + 1?>" class="ui-tabs-anchor">PRECIO COTIZACIÓN</a>
+													        </li>
+													        <li class="ui-state-default ui-corner-top">
+													            <a href="#d2<?php echo $controlAd + 1?>" class="ui-tabs-anchor">DESCUENTOS OFRECIDOS</a>
+													        </li>
+													        <li class="ui-state-default ui-corner-top">
+													            <a href="#d3<?php echo $controlAd + 1?>" class="ui-tabs-anchor">OBSERVACIONES ADICIONALES</a>
+													        </li>
+													    </ul>
+													    <div id="d1<?php echo $controlAd + 1?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													    	<div class="textCon"><?php
+													    	
+													    	$valorPrecioTotal = number_format($valorPrecioTotal, 0, ',', '.');
+													    	$promedioSoloIva = number_format($promedioSoloIva, 0, ',', '.');
+													    	$valorPrecioTotalIva = number_format($valorPrecioTotalIva, 0, ',', '.');
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO COTIZACIÓN: </span></b>$ '.$valorPrecioTotal.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE LA COTIZACIÓN EN LETRAS:</b>  ". $dineroCast;
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO IVA: </span></b>$ '.$promedioSoloIva.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE IVA EN LETRAS:</b>  ". $dineroCastSoloIva;
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo '<b><span>PRECIO COTIZACIÓN CON IVA: </span></b>$ '.$valorPrecioTotalIva.' pesos (COP)';
+													    	echo "</div>";
+													    	
+													    	echo "<div class='lefht' >";
+													    	echo "<b>VALOR DE LA COTIZACIÓN CON IVA EN LETRAS:</b>  ". $dineroCastIva;
+													    	echo "</div>";
+													    	
+													    	?> </div>
+													        
+													    </div>
+													    <div id="d2<?php echo $controlAd + 1?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													    	<div class="textCon"><?php echo $titulo3?> </div>
+													        
+													    </div>
+													    <div id="d3<?php echo $controlAd + 1?>" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+													        <div class="textCon"><?php echo $titulo5?> </div>
+													    </div>
+													</div>
+				            	       				
+				            	       				
+				            	       				            <?php
+									
+									echo $this->miFormulario->marcoAgrupacion ( 'fin' );
+									
+									$controlAd ++;
+									
+									?>
+				            	       					       		
+				            
+				            	       				</div>
+				            	       			
+				            	       			</div>
+				            				</section>
+				            	       					       		
+				            	       	        <?php 
+				                   		
+				                   			}
+				                   			
+				                   			
+				                   		
+				                   			?>
+				                   			       		
+				                   			       		</div>
+				                   							  
+				                   			       		
+				                   			       			<?php
+				                   			
+				                   			       			
+				                   			       			$tipo = 'information';
+				                   			       			$mensaje = "<b>IMPORTANTE</b><br>
+				            							<br>
+				            							<i>La Información actual de los <b>Valores Unitarios, IVA y Ficha Técnica</b> de Productos y Servicios, relacionados en la Cotización por parte del PROVEEDOR, son los que se presentan en la sección<br>
+				            	       							<b>Información Productos o Servicios</b>, que se encuentra en la parte inferior de está sección.	<br>
+				            	       						<center>
+				            	       						La información que se presenta allí es la actual y es la que debe tenerse en cuenta para aprobar o rechazar la COTIZACIÓN.</center></i>
+				                   			       			
+				            							";
+				                   			       			
+				                   			       			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+				                   			       			$esteCampo = 'mensaje';
+				                   			       			$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+				                   			       			$atributos["etiqueta"] = "";
+				                   			       			$atributos["estilo"] = "centrar";
+				                   			       			$atributos["tipo"] = $tipo;
+				                   			       			$atributos["mensaje"] = $mensaje;
+				                   			       			echo $this->miFormulario->cuadroMensaje($atributos);
+				                   			       			unset($atributos);
+				                   			       			
+				                   			
+				                   		echo $this->miFormulario->marcoAgrupacion('fin');
+				                   		
+				                   	}
+				                   	
+				                   	?>
+				                   		</div>
+				                   	</div>
+				                   	
+				                   			
+				                  <?php
+				                    
+				            //*********************************************************************************************************************************************************
+				            
+				            
+				
+				
+				
+				
+				
+				
+				
 				$esteCampo = "marcoDescripcionProducto";
 				$atributos ['id'] = $esteCampo;
 				$atributos ["estilo"] = "jqueryui";
@@ -560,42 +1264,39 @@ class FormularioRegistro {
 																 		$i = 0;
 																 		
 																	 		while ($i < $count){
-                                                                                                                                                            
-                                                                                                                                                             $sumaIva=0;
-                                                                                                                                    
-                                                                                                                                                            $atributos ['cadena_sql'] = $this->miSql->getCadenaSql("consultar_tipo_iva_Item", $resultadoItems[$i]['iva']);
-                                                                                                                                                            $IvaItem = $esteRecursoDBArka->ejecutarAcceso($atributos ['cadena_sql'], "busqueda");
-
-																	 			
-																	 			if($resultadoItems[$i]['tipo_necesidad'] == 1){
-																	 				$tipo = "1 - BIEN";
-																	 			}else{
-																	 				$tipo = "2 - SERVICIO";
-																	 			}
-																	 			
-																	 			if($resultadoItems[$i]['unidad'] == 0){
-																	 				$unidad = "0 - NO APLICA";
-																	 			}else{
-																	 				
-																	 				$cadena_sql = $this->miSql->getCadenaSql ( "buscarUnidadItem", $resultadoItems[$i]['unidad']);
-																	 				$resultadoUnidadItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-											
-																	 				$unidad = $resultadoUnidadItem[0]['id']." - ".$resultadoUnidadItem[0]['unidad'];
-																	 			}
-																	 			
-																	 			if($resultadoItems[$i]['tiempo_ejecucion'] == 0){
-																	 				$tiempo = "0 - NO APLICA";
-																	 			}else{
-																	 				$tiempo = $this->inverseTotalDias($resultadoItems[$i]['tiempo_ejecucion']);
-																	 			}
-																	 			
-																	 			$valorPrecioTotal += ($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario']);
-																	 			if($IvaItem[0]['descripcion']=='Tarifa de Cero' || $IvaItem[0]['descripcion']=='Exento'){
-                                                                                                                                                                    $valorPrecioTotalIva +=($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario']);
-                                                                                                                                                                }
-                                                                                                                                                                else{
-                                                                                                                                                                     $valorPrecioTotalIva += (($resultadoItems[$i]['cantidad'] * $resultadoItems[$i]['valor_unitario'])) * (1+($IvaItem[0]['iva']));
-                                                                                                                                                                }
+						$sumaIva = 0;
+						
+						$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultar_tipo_iva_Item", $resultadoItems [$i] ['iva'] );
+						$IvaItem = $esteRecursoDBArka->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
+						
+						if ($resultadoItems [$i] ['tipo_necesidad'] == 1) {
+							$tipo = "1 - BIEN";
+						} else {
+							$tipo = "2 - SERVICIO";
+						}
+						
+						if ($resultadoItems [$i] ['unidad'] == 0) {
+							$unidad = "0 - NO APLICA";
+						} else {
+							
+							$cadena_sql = $this->miSql->getCadenaSql ( "buscarUnidadItem", $resultadoItems [$i] ['unidad'] );
+							$resultadoUnidadItem = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+							
+							$unidad = $resultadoUnidadItem [0] ['id'] . " - " . $resultadoUnidadItem [0] ['unidad'];
+						}
+						
+						if ($resultadoItems [$i] ['tiempo_ejecucion'] == 0) {
+							$tiempo = "0 - NO APLICA";
+						} else {
+							$tiempo = $this->inverseTotalDias ( $resultadoItems [$i] ['tiempo_ejecucion'] );
+						}
+						
+						$valorPrecioTotal += ($resultadoItems [$i] ['cantidad'] * $resultadoItems [$i] ['valor_unitario']);
+						if ($IvaItem [0] ['descripcion'] == 'Tarifa de Cero' || $IvaItem [0] ['descripcion'] == 'Exento') {
+							$valorPrecioTotalIva += ($resultadoItems [$i] ['cantidad'] * $resultadoItems [$i] ['valor_unitario']);
+						} else {
+							$valorPrecioTotalIva += (($resultadoItems [$i] ['cantidad'] * $resultadoItems [$i] ['valor_unitario'])) * (1 + ($IvaItem [0] ['iva']));
+						}
 																	 		?>
 																			<tr id="nFilas" >
 																				<td><?php echo $resultadoItems[$i]['nombre']  ?></td>
@@ -952,7 +1653,7 @@ class FormularioRegistro {
 			                            $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
 			                            $atributos ['validar'] = 'required,minSize[4]';
 			                            $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-			                            $atributos ['deshabilitado'] = false;
+			                            $atributos ['deshabilitado'] = true;
 			                            $atributos ['tamanno'] = 20;
 			                            $atributos ['maximoTamanno'] = '';
 			                            $atributos ['anchoEtiqueta'] = 220;
@@ -1035,7 +1736,7 @@ class FormularioRegistro {
 			            $atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 			            $atributos ['validar'] = 'required,minSize[30]';
 			            $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-			            $atributos ['deshabilitado'] = false;
+			            $atributos ['deshabilitado'] = true;
 			            $atributos ['tamanno'] = 20;
 			            $atributos ['maximoTamanno'] = '';
 			            $atributos ['anchoEtiqueta'] = 220;

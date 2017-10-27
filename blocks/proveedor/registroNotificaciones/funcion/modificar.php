@@ -209,6 +209,119 @@ class Registrar {
         );
         
         
+        
+        
+        //*****************************************************************************************
+        
+        
+        $cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItemsCastRes", $resultadoRespuesta[0]['id']);
+        $resultadoItemsCast = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+        
+        $cadena_sql = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionRes', $resultadoItemsCast[0][0]);
+        $resultadoAdendas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        $cadena_sql = $cadenaSql = $this->miSql->getCadenaSql('adendasModificacionSolCastRes', $resultadoItemsCast[0][0]);
+        $resultadoAdendasSolCast = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        if($resultadoAdendas && $resultadoAdendasSolCast){
+        	$existeRegistroBase = true;
+        }else{
+        	$existeRegistroBase = false;
+        }
+        
+        
+        
+        if(!$existeRegistroBase){//Hacer REGISTRO BASE Información Inicial
+        	
+        	$json_anterior = json_encode($resultadoRespuesta);    	
+        	$json_nuevo = "[{}]";
+        	
+        	$datosSolicitudLog = array(
+        			'registro_anterior' => $json_anterior,
+        			'id_respuesta' => $resultadoRespuesta[0]['id'],
+        			'fecha' => date("Y-m-d H:i:s"),
+        			'registro_nuevo' => $json_nuevo
+        	);
+        	
+        	$cadenaSqlLogRes = $this->miSql->getCadenaSql('insertarLogRespuestaBaseOne', $datosSolicitudLog);
+        	array_push($SQLs, $cadenaSqlLogRes);
+        	
+        	
+        	//******************************** ITEMS ****
+        	
+        	$countFPParam = $_REQUEST ['countItems'];
+        	
+        	 
+        	$subFP = explode("&", $_REQUEST ['idsItems']);
+        	
+        	$subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
+        	 
+        	$cantidadParametrosValores = ($countFPParam-1) * 3;
+        	$cantidadParametros = ($countFPParam-1);
+        	
+        	$limitP = 0;
+        	while($limitP < $cantidadParametrosValores){
+        	
+        		$subCountValores[$limitP] = explode(" ", $subFPValores[$limitP]);
+        	
+        		$limitP++;
+        	
+        	}
+        	
+        	$limitP = 0;
+        	while($limitP < $cantidadParametros){
+        	
+        		$limitP++;
+        		$subCount[$limitP] = explode(" ", $subFP[$limitP]);
+        	
+        	}
+        	$limit = 0;
+        	$limitIds = 0;
+        	
+        	while ( $limit < $cantidadParametrosValores ) {
+        			
+        		$valorMod = str_replace ( ".", "", $subFPValores [$limit] );
+        		$valorMod = str_replace ( ",", ".", $valorMod );
+        			
+        		$valorIva = $subFPValores [$limit + 1];
+        		$valorIva = str_replace ( "\\", "", $valorIva );
+        		$valorFicha = $subFPValores [$limit + 2];
+        			
+        		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'consultar_id_iva_Item', $valorIva );
+        		$matrizItemsIva = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        			
+        		$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql ( 'respuestaItemActual', $subFP [$limitIds + 1] );
+        		$datoFPActual = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        			
+        			
+        		$json_anterior = json_encode($datoFPActual);
+        		$json_nuevo = "[{}]";
+        			
+        		$datosFPLog = array(
+        				'registro_anterior' => $json_anterior,
+        				'item_cotizacion' => $subFP [$limitIds + 1],
+        				'fecha' => date("Y-m-d H:i:s"),
+        				'registro_nuevo' => $json_nuevo,
+        				'modificacion_respuesta_cotizacion_proveedor' => "currval('agora.modificacion_respuesta_cotizacion_proveedor_id_seq')"
+        		);
+        			
+        		$cadenaSqlLogFP = $this->miSql->getCadenaSql('insertarLogRespuestaBaseItemOne', $datosFPLog);
+        		array_push($SQLs, $cadenaSqlLogFP);
+        			
+        		$limit = $limit + 3;
+        		$limitIds = $limitIds + 1;
+        	}
+        	 
+        	//****************************************
+        	     
+        	
+        	
+        }
+        
+        
+        //*****************************************************************************************
+        
+
         $json_anterior = json_encode($resultadoRespuesta);
         
         $json_nuevo = json_encode($datosRespuesta);
@@ -238,42 +351,6 @@ class Registrar {
         	array_push($SQLs, $datosRespuestaSolicitudCotizacionUpd);
         	
         }
-        
-        
-        
-        
-        //echo "" . $datosRespuestaSolicitudCotizacionUpd . "<br>";
-        //-var_dump($resultadoRespuesta);
-        
-        //var_dump(json_decode($json_anterior, true));
-        //var_dump(json_decode($json_nuevo, true));
-        
-        //-var_dump($json_item);
-        //echo $datosRespuestaSolicitudCotizacionOld;
-        //-var_dump($id_solicitud);
-        
-        //-var_dump($json_decode);
-        
-        //-var_dump($_REQUEST);
-        
-        //-var_dump($datosSolicitud);
-        
-        
-//         $countFPParam = $_REQUEST ['countItems'];
-//         var_dump($_REQUEST ['countItems']);
-//         $subFP = explode("&", $_REQUEST ['idsItems']);
-//         var_dump($subFP);
-//         $subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
-//         var_dump($subFPValores);
-        
-//         $cantidadParametrosValores = ($countFPParam-1) * 3;
-//         $cantidadParametros = ($countFPParam-1);
-        
-//         var_dump($cantidadParametrosValores);
-//         var_dump($cantidadParametros);
-//         exit();
-        
-        
         
         
         //******************************** ITEMS ****************************************************************
@@ -357,8 +434,6 @@ class Registrar {
        
         //*************************************************************************************************************
 
-		
-		
         $actualizoRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
         
         if ($actualizoRespuestaProveedorCotizacion) {

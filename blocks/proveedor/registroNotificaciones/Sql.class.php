@@ -31,6 +31,71 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "adendasModificacionValuesEstRes" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.modificacion_respuesta_cotizacion_proveedor ";
+        		$cadenaSql.= "WHERE id = '". $variable . "'; ";
+        		break;
+        	
+        	case "adendasModificacionValuesRes" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.modificacion_item_cotizacion ";
+        		$cadenaSql.= "WHERE modificacion_respuesta_cotizacion_proveedor = '". $variable . "' AND base != 'TRUE'; ";
+        		break;
+        	
+        	case "buscarDetalleItemRes" :
+        		$cadenaSql = " SELECT ";
+        		$cadenaSql.=" id, ";
+        		$cadenaSql.=" nombre, ";
+        		$cadenaSql.=" descripcion, ";
+        		$cadenaSql.=" tipo_necesidad, ";
+        		$cadenaSql.=" unidad, ";
+        		$cadenaSql.=" tiempo_ejecucion, ";
+        		$cadenaSql.=" cantidad ";
+        		$cadenaSql.=" FROM agora.item_cotizacion_padre";
+        		$cadenaSql.=" WHERE id = " . $variable . ";";
+        		break;
+        	
+        	case "adendasModificacionValuesBaseRes" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" * ";
+        		$cadenaSql.= "FROM agora.modificacion_item_cotizacion ";
+        		$cadenaSql.= "WHERE item_cotizacion IN (". $variable . ") AND base = 'TRUE'; ";
+        		break;
+        	
+        	case "adendasModificacionSolCastArrayRes" :
+        		$cadenaSql = "SELECT DISTINCT modificacion_respuesta_cotizacion_proveedor ";
+        		$cadenaSql.= "FROM agora.modificacion_item_cotizacion ";
+        		$cadenaSql.= "WHERE item_cotizacion IN (". $variable . ") AND base != 'TRUE'";
+        		$cadenaSql.= "ORDER BY modificacion_respuesta_cotizacion_proveedor ASC;";
+        		break;
+        	
+        	case "adendasModificacionSolCastRes" :
+        		$cadenaSql = "SELECT ";
+        		$cadenaSql.=" string_agg(DISTINCT '''' || cast(modificacion_respuesta_cotizacion_proveedor as text) || '''',','), ";
+        		$cadenaSql.=" count(DISTINCT modificacion_respuesta_cotizacion_proveedor)";
+        		$cadenaSql.= "FROM agora.modificacion_item_cotizacion ";
+        		$cadenaSql.= "WHERE item_cotizacion IN (". $variable . ") AND base != 'TRUE'; ";
+        		break;
+        	
+			case "buscarDetalleItemsCastRes" :
+				$cadenaSql = " SELECT ";
+				$cadenaSql .= " string_agg(DISTINCT '''' || cast(it.id as text) || '''',',') ";
+				$cadenaSql .= " FROM agora.item_cotizacion it";
+				$cadenaSql .= " JOIN agora.item_cotizacion_padre itp ON itp.id = it.item_cotizacion_padre_id";
+				$cadenaSql .= " WHERE it.respuesta_cotizacion_proveedor = " . $variable . ";";
+				break;
+			
+			case "adendasModificacionRes" :
+				$cadenaSql = "SELECT * ";
+				$cadenaSql .= "FROM agora.modificacion_item_cotizacion ";
+				$cadenaSql .= "WHERE item_cotizacion IN (" . $variable . ") AND base != 'TRUE'";
+				$cadenaSql .= "ORDER BY modificacion_respuesta_cotizacion_proveedor;";
+				break;
+        	
+        	
         	case "actualizarRespuestaItemsProveedor" :
         		$cadenaSql = "UPDATE ";
         		$cadenaSql .= "agora.item_cotizacion ";
@@ -44,6 +109,28 @@ class Sql extends \Sql {
         	
         		break;
         	
+        		case "insertarLogRespuestaBaseItemOne" :
+        			$cadenaSql = " INSERT INTO ";
+        			$cadenaSql .= "agora.modificacion_item_cotizacion";
+        			$cadenaSql .= " (";
+        			$cadenaSql .= " registro_anterior,";
+        			$cadenaSql .= " item_cotizacion,";
+        			$cadenaSql .= " fecha,";
+        			$cadenaSql .= " registro_nuevo,";
+        			$cadenaSql .= " modificacion_respuesta_cotizacion_proveedor,";
+        			$cadenaSql .= " base";
+        			$cadenaSql .= " )";
+        			$cadenaSql .= " VALUES";
+        			$cadenaSql .= " (";
+        			$cadenaSql .= " '" . $variable ['registro_anterior'] . "',";
+        			$cadenaSql .= " " . $variable ['item_cotizacion'] . ",";
+        			$cadenaSql .= " '" . $variable ['fecha'] . "',";
+        			$cadenaSql .= " '" . $variable ['registro_nuevo'] . "', ";
+        			$cadenaSql .= " " . $variable ['modificacion_respuesta_cotizacion_proveedor'] . ", ";
+        			$cadenaSql .= " 'TRUE' ";
+        			$cadenaSql .= " );";
+        			break;
+        		
         	case "insertarLogRespuestaBaseItem" :
         		$cadenaSql = " INSERT INTO ";
         		$cadenaSql .= "agora.modificacion_item_cotizacion";
@@ -52,7 +139,8 @@ class Sql extends \Sql {
         		$cadenaSql .= " item_cotizacion,";
         		$cadenaSql .= " fecha,";
         		$cadenaSql .= " registro_nuevo,";
-        		$cadenaSql .= " modificacion_respuesta_cotizacion_proveedor";
+        		$cadenaSql .= " modificacion_respuesta_cotizacion_proveedor,";
+        		$cadenaSql .= " base";
         		$cadenaSql .= " )";
         		$cadenaSql .= " VALUES";
         		$cadenaSql .= " (";
@@ -60,7 +148,8 @@ class Sql extends \Sql {
         		$cadenaSql .= " " . $variable ['item_cotizacion'] . ",";
         		$cadenaSql .= " '" . $variable ['fecha'] . "',";
         		$cadenaSql .= " '" . $variable ['registro_nuevo'] . "', ";
-        		$cadenaSql .= " " . $variable ['modificacion_respuesta_cotizacion_proveedor'] . " ";
+        		$cadenaSql .= " " . $variable ['modificacion_respuesta_cotizacion_proveedor'] . ", ";
+        		$cadenaSql .= " 'FALSE' ";
         		$cadenaSql .= " );";
         		break;
         	
@@ -99,6 +188,26 @@ class Sql extends \Sql {
         		$cadenaSql .= " WHERE id = '".$variable ['id']."';";
         		break;
         	
+        		case "insertarLogRespuestaBaseOne" :
+        			$cadenaSql = " INSERT INTO ";
+        			$cadenaSql .= "agora.modificacion_respuesta_cotizacion_proveedor";
+        			$cadenaSql .= " (";
+        			$cadenaSql .= " registro_anterior,";
+        			$cadenaSql .= " respuesta_cotizacion_proveedor,";
+        			$cadenaSql .= " fecha,";
+        			$cadenaSql .= " registro_nuevo,";
+        			$cadenaSql .= " base";
+        			$cadenaSql .= " )";
+        			$cadenaSql .= " VALUES";
+        			$cadenaSql .= " (";
+        			$cadenaSql .= " '" . $variable ['registro_anterior'] . "',";
+        			$cadenaSql .= " " . $variable ['id_respuesta'] . ",";
+        			$cadenaSql .= " '" . $variable ['fecha'] . "',";
+        			$cadenaSql .= " '" . $variable ['registro_nuevo'] . "', ";
+        			$cadenaSql .= " 'TRUE' ";
+        			$cadenaSql .= " );";
+        			break;
+        		
         	case "insertarLogRespuestaBase" :
                 $cadenaSql = " INSERT INTO ";
                 $cadenaSql .= "agora.modificacion_respuesta_cotizacion_proveedor";
@@ -106,14 +215,16 @@ class Sql extends \Sql {
                 $cadenaSql .= " registro_anterior,";
                 $cadenaSql .= " respuesta_cotizacion_proveedor,";
                 $cadenaSql .= " fecha,";
-                $cadenaSql .= " registro_nuevo";
+                $cadenaSql .= " registro_nuevo,";
+        		$cadenaSql .= " base";
                 $cadenaSql .= " )";
                 $cadenaSql .= " VALUES";
                 $cadenaSql .= " (";
                 $cadenaSql .= " '" . $variable ['registro_anterior'] . "',";
                 $cadenaSql .= " " . $variable ['id_respuesta'] . ",";
                 $cadenaSql .= " '" . $variable ['fecha'] . "',";
-                $cadenaSql .= " '" . $variable ['registro_nuevo'] . "' ";
+                $cadenaSql .= " '" . $variable ['registro_nuevo'] . "', ";
+                $cadenaSql .= " 'FALSE' ";
                 $cadenaSql .= " );";
                 break;
         	

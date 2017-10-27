@@ -66,6 +66,15 @@ function detectarCarga(){
 }
 
 
+$("#accordionRes").bwlAccordion({
+		search: false,
+        theme: 'theme-orange',
+        toggle: true,
+        animation: 'faderight'
+});
+
+$( ".simpaleTabs" ).tabs();
+
 	$(':checkbox[readonly=readonly]').click(function(){
 	
 		return false;        

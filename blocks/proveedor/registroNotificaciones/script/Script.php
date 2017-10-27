@@ -19,6 +19,9 @@ $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 
 //$funcion [$indice ++] = "miScript.js";
 $funcion [$indice++]  = "sweetalert2.min.js";
+$funcion [$indice++]  = "jquery.bwlaccordion.min.js";
+
+$funcion [$indice++]  = "jquery.modal.min.js";
 
 $embebido [$indice] = true;
 $funcion [$indice ++] = "ajax.php";
