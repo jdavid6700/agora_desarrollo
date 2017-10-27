@@ -1037,17 +1037,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
 ?>
 
-function refreshData()
-{
-    x = 5;  // 5 Seconds
-
-    // Do your thing here
-    console.log($("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val());
-
-    setTimeout(refreshData, x*1000);
-}
-refreshData(); // execute function
-
 
 //---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
 
