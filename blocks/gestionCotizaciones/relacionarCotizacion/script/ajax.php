@@ -1020,13 +1020,24 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
 //---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
 
+	$("#<?php echo $this->campoSeguro('ordenador') ?>").change(function () {
+        if ($("#<?php echo $this->campoSeguro('ordenador') ?>").val() != '') {
+            $("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val($("#<?php echo $this->campoSeguro('ordenador') ?>").val());
+        } else {
+			$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(null);
+        }
+    });
+
 
     $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").change(function () {
+    	$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(null);
+    	$("#<?php echo $this->campoSeguro('ordenador') ?>").val(null);
         if ($("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").val() != '') {
             InfoCDP();
         } else {
 
         }
+        
     });
 
     function InfoCDP(elem, request, response) {
@@ -1253,10 +1264,15 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 
                 if(data[2] != "" && data[3] != ""){
                 	
+                	$("#<?php echo $this->campoSeguro('ordenador') ?>").attr('disabled', '');
+                   	$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    $("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+                	
                 	var i = 0;
                 	var control = false;
                 	while(i < data[3].length){
                 		if(data[3][i].tercero_id == data[2].NUMERO_DOCUMENTO){
+                		
                 			$("#<?php echo $this->campoSeguro('ordenador') ?>").val(data[3][i].id);
                     		$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
                     		$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(data[3][i].id);
@@ -1269,17 +1285,23 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	
                 		swal({
 			                title: 'Inconsistencia datos SICAPITAL y ÁGORA',
-			                type: 'error',
+			                type: 'warning',
 			                html:
 			                        'Atención, la información del ordenador del gasto no esta actualizada,'
 			                        +' existen inconsistencias con el Sistema ÁGORA, la necesidad N°'+data[0].NUM_SOL_ADQ+' de SICAPITAL presenta'
 			                        +' como ordenador de gasto al Señor(a):<br><br> <b>('+data[2].NUMERO_DOCUMENTO+') - '+data[2].NOMBRES+' '+data[2].PRIMER_APELLIDO
-			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>',
+			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>, debe seleccionar manualmente el Ordenador del Gasto',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
 			            
-			            eliminarCDP();
+			            
+			            $("#<?php echo $this->campoSeguro('ordenador') ?>").removeAttr('disabled');
+                   		$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    	$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+			            
+			            
+			            //eliminarCDP();
                 	
                 	}
                 	
