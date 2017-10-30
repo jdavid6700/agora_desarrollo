@@ -253,24 +253,44 @@ if (!isset($GLOBALS["autorizado"])) {
 
         $dateEnd = date_create($objetoEspecifico[0]['fecha_cierre']);
         $stringDateEnd = date_format($dateEnd, 'd/m/Y');
+        
+        $datoActRespuestaCotizacionInfo = $this->sql->getCadenaSql('buscarEstadoInformadoProveedor', $_REQUEST['idObjeto']);
+        $resultadoInformado = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfo, "busqueda");
 
+        
+        
         //INICIO ENVIO DE CORREO AL USUARIO
-        $rutaClases = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/classes";
-
-        include_once($rutaClases . "/mail/class.phpmailer.php");
-        include_once($rutaClases . "/mail/class.smtp.php");
-
+        $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+         
+        include_once($rutaClases."/mail/class.phpmailer.php");
+        include_once($rutaClases."/mail/class.smtp.php");
+         
         $mail = new PHPMailer();
-
-        //configuracion de cuenta de envio
-        $mail->Host = "200.69.103.49";
+         
+        $mail->SMTPOptions = array (
+        		'ssl' => array (
+        				'verify_peer' => false,
+        				'verify_peer_name' => false,
+        				'allow_self_signed' => true
+        		)
+        );
+         
+        // configuracion de cuenta de envio
+        $mail->SMTPSecure = 'tls';
+        $mail->Host = "mail.udistrital.edu.co";
+        $mail->Port = 587;
         $mail->Mailer = "smtp";
         $mail->SMTPAuth = true;
-        $mail->Username = "condor@udistrital.edu.co";
-        $mail->Password = "CondorOAS2012";
+        $mail->Username = "agora@udistrital.edu.co";
+        $mail->Password = "Beedoh9Ohd";
         $mail->Timeout = 1200;
         $mail->Charset = "utf-8";
-        $mail->IsHTML(true);
+        $mail->SMTPDebug = 0;
+        $mail->IsHTML ( true );
+        
+        
+        //remitente
+        $fecha = date("d-M-Y g:i:s A");
 
         $mail->From = 'agora@udistrital.edu.co';
         $mail->FromName = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
@@ -333,13 +353,62 @@ if (!isset($GLOBALS["autorizado"])) {
 
         $mail->Body = $contenido;
 
+        
+        
+        $mensajeEnvio = "ya han sido informados mediante correo.";
+        $tipo = 'success';
+        $limit = count($resultadoInformado);
+        $controlSend = 0;
+        $controlFail = 0;
+        $activeSend = false;
+        $i = 0;
+        while($i < $limit){
+        	 
+        	if($resultadoInformado[$i]['informado'] == 'f'){
+        		 
+        		$activeSend = true;
+        		$datoActRespuestaCotizacionInfoSend = $this->sql->getCadenaSql('buscarInfoProveedorSendMail', $resultadoInformado[$i]['proveedor']);
+        		$resultadoInfoProveedorSend = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfoSend, "busqueda");
+        		//$correo = $resultadoInfoProveedorSend[0]['correo'];
+        		$correo = "jdavid.6700@gmail.com";
+        
+        		$to_mail = $correo;
+        		$mail->AddAddress($to_mail);
+        
+        		if(!$mail->Send())
+        		{
+        			$controlFail++;
+        			$_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
+        			$mensajeEnvio = "<b>no</b> han sido informados mediante correo, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
+                	$tipo = 'warning';
+        		}
+        		else
+        		{
+        			$controlSend++;
+        			$cadenaSqlExitSend = $this->sql->getCadenaSql ( "actualizarEstadoInformadoConfirm", $resultadoInformado[$i]['id'] );
+        			$resultadoSendUp = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlExitSend, 'acceso' );
+        			$mensajeEnvio = "ya han sido informados mediante correo.";
+                	$tipo = 'success';
+        		}
+        		 
+        	}
+        	$i++;
+        
+        	 
+        }
+        
+        $mail->ClearAllRecipients();
+        $mail->ClearAttachments();
+        
+        
+        /*
         foreach ($resultadoProveedor as $dato):
             //$to_mail=$dato ['correo'];
             $to_mail = "jdavid.6700@gmail.com"; //PRUEBAS**********************************************************************************
             $mail->AddAddress($to_mail);
 
             if (!$mail->Send()) {
-                echo "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
+                $_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
                 $mensajeEnvio = "<b>no</b> han sido informados mediante correo, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
                 $tipo = 'warning';
             } else {
@@ -351,6 +420,7 @@ if (!isset($GLOBALS["autorizado"])) {
 
         $mail->ClearAllRecipients();
         $mail->ClearAttachments();
+        */
 
         //FIN ENVIO DE CORREO AL USUARIO
 
@@ -400,18 +470,215 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     } else if ($_REQUEST['mensaje'] == 'confirmaModificacionSolicitud') {
-        $hoy = date("d/m/Y");
-
-        $tipo = 'success';
+        $hoy = date("d/m/Y");        
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
         $resultadoUsuario = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
 
+        
+        //******************************************************************************************************************************
+        $datoActRespuestaCotizacionInfo = $this->sql->getCadenaSql('buscarEstadoInformadoProveedor', $_REQUEST['idObjeto']);
+        $resultadoInformado = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfo, "busqueda");
+        
+        
+        $cadenaSql = $this->sql->getCadenaSql('infoCotizacion', $_REQUEST["idObjeto"]);
+        $objetoEspecifico = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        $cadenaSql = $this->sql->getCadenaSql('dependenciaUdistritalById', $objetoEspecifico[0]['jefe_dependencia']);
+        $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalByIdCast', $objetoEspecifico[0]['ordenador_gasto']);
+        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $objetoEspecifico[0]['usuario_creo']);
+        $resultadoUsuarioCot = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
+        $resultadoOrdenador = $resultadoUsuarioCot[0]['nombre'] . " " . $resultadoUsuarioCot[0]['apellido'];
+        
+        $datos = array(
+        		'idSolicitud' => $objetoEspecifico[0]['numero_solicitud'],
+        		'vigencia' => $objetoEspecifico[0]['vigencia'],
+        		'unidadEjecutora' => $objetoEspecifico[0]['unidad_ejecutora']
+        );
+        
+        $cadenaSql = $this->sql->getCadenaSql('consultarActividadesImp', $_REQUEST['idObjeto']);
+        $resultadoActividades = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
+        
+        if ($objetoEspecifico[0]['tipo_necesidad'] == 2 || $objetoEspecifico[0]['tipo_necesidad'] == 3) {
+        	$convocatoria = true;
+        	$mensaje = $this->lenguaje->getCadena('mensajeConvocatoria');
+        
+        	$cadenaSql = $this->sql->getCadenaSql('consultarNBCImp', $_REQUEST["idObjeto"]);
+        	$resultadoNBC = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        } else {
+        	$convocatoria = false;
+        	$mensaje = $this->lenguaje->getCadena('mensajeCotizacion');
+        }
+        
+        $contenidoAct = '<br>';
+        
+        foreach ($resultadoActividades as $dato):
+        	$contenidoAct .= $dato['subclase'] . ' - ' . $dato['nombre'] . "<br>";
+        	$contenidoAct .= "<br>";
+        endforeach;
+        
+        
+        $dateInit = date_create($objetoEspecifico[0]['fecha_apertura']);
+        $stringDateInit = date_format($dateInit, 'd/m/Y');
+        
+        $dateEnd = date_create($objetoEspecifico[0]['fecha_cierre']);
+        $stringDateEnd = date_format($dateEnd, 'd/m/Y');
+        
+        
+        
+        
+        
+        //INICIO ENVIO DE CORREO AL USUARIO
+        $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
+         
+        include_once($rutaClases."/mail/class.phpmailer.php");
+        include_once($rutaClases."/mail/class.smtp.php");
+         
+        $mail = new PHPMailer();
+         
+        $mail->SMTPOptions = array (
+        		'ssl' => array (
+        				'verify_peer' => false,
+        				'verify_peer_name' => false,
+        				'allow_self_signed' => true
+        		)
+        );
+         
+        // configuracion de cuenta de envio
+        $mail->SMTPSecure = 'tls';
+        $mail->Host = "mail.udistrital.edu.co";
+        $mail->Port = 587;
+        $mail->Mailer = "smtp";
+        $mail->SMTPAuth = true;
+        $mail->Username = "agora@udistrital.edu.co";
+        $mail->Password = "Beedoh9Ohd";
+        $mail->Timeout = 1200;
+        $mail->Charset = "utf-8";
+        $mail->SMTPDebug = 0;
+        $mail->IsHTML ( true );
+        
+        
+        //remitente
+        $fecha = date("d-M-Y g:i:s A");
+        
+        
+        $mail->From = 'agora@udistrital.edu.co';
+        $mail->FromName = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
+        $mail->Subject = "Modificación  Adenda Solicitud de Cotización N° (" . $objetoEspecifico[0]['numero_solicitud'] . ") BANCO ÁGORA UDISTRITAL";
 
+        
+        $contenido = "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas le informa que la solicitud de cotización, con las siguientes caracteristicas: </p>";
+        
+        $contenido.= "<br>";
+        $contenido.= "<b>Número Cotización : </b>" . $objetoEspecifico[0]['numero_solicitud'] . "<br>";
+        $contenido.= "<b>Título Cotización : </b>" . $objetoEspecifico[0]['titulo_cotizacion'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Objeto/Tema Solicitud de Cotización : </b><br>" . $objetoEspecifico[0]['objetivo'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Requisitos : </b><br>" . $objetoEspecifico[0]['requisitos'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Observaciones Adicionales : </b><br>" . $objetoEspecifico[0]['observaciones'] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Fecha Apertura : </b><u>" . $stringDateInit . "</u><br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Fecha Cierre : </b><u>" . $stringDateEnd . "</u><br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
+        $contenido.= "<br>";
+        
+        if ($convocatoria) {
+        	$contenido.= "<b>Profesión Relacionada en la Cotización (Núcleo Básico de Conocimiento SNIES): </b><br>" . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
+        	$contenido.= "<br>";
+        }
+        
+        $contenido.= "<b>Solicitante : </b>" . $resultadoOrdenador . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Dependencia Solicitante : </b>" . $resultadoDependencia[0][1] . "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<b>Responsable : </b>" . $resultadoOrdenadorDef[0][1];
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<p>Ha presentado una novedad de modificación (adenda), por tanto lo invitamos a ingresar al Sistema, se ha habilitado la modificación de su respuesta, si esta ya fue hecha, de lo contrario lo invitamos a presentar su cotización en las fechas indicadas como se relaciona en este presente comunicado (<b>Fecha Apertura y Fecha de Cierre</b>), recuerde que este
+    			proceso debe ser realizado ingresando al Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA (<a href='https://funcionarios.portaloas.udistrital.edu.co/agora/'>Click Aquí</a>).</p>";
+        $contenido.= "<br>";
+        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "Cordialmente,<br>";
+        $contenido.= "<b>UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</b>";
+        $contenido.= "<br>";
+        $contenido.= "<b>NIT 899999230-7</b>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+         
+        $mail->Body=$contenido;
+        
+        
+        $mensajeEnvio = "ya han sido informados mediante correo sobre la modificación.";
+        $tipo = 'success';
+        $limit = count($resultadoInformado);
+        $controlSend = 0;
+        $controlFail = 0;
+        $activeSend = false;
+        $i = 0;
+        while($i < $limit){
+        	
+        	if($resultadoInformado[$i]['informado'] == 'f'){
+        		 
+        		$activeSend = true;
+        		$datoActRespuestaCotizacionInfoSend = $this->sql->getCadenaSql('buscarInfoProveedorSendMail', $resultadoInformado[$i]['proveedor']);
+        		$resultadoInfoProveedorSend = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfoSend, "busqueda");
+        		//$correo = $resultadoInfoProveedorSend[0]['correo'];
+        		$correo = "jdavid.6700@gmail.com";
 
+        		$to_mail = $correo;
+        		$mail->AddAddress($to_mail);
 
-        $mensaje = "Se realizó la <b> MODIFICACIÓN SOLICITADA</b> sobre Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> .
+        		if(!$mail->Send())
+        		{
+        			$controlFail++;
+        			$_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
+        			$mensajeEnvio = "<b>no</b> han sido informados mediante correo sobre la modificación, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
+        			$tipo = 'warning';
+        	    }
+        	    else
+        	    {
+        	    	$controlSend++;
+        	        $cadenaSqlExitSend = $this->sql->getCadenaSql ( "actualizarEstadoInformadoConfirm", $resultadoInformado[$i]['id'] );
+        	        $resultadoSendUp = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlExitSend, 'acceso' );
+        	        $mensajeEnvio = "ya han sido informados mediante correo sobre la modificación.";
+        	        $tipo = 'success';
+        	    }    
+        	        	
+
+        	 }
+        	 $i++;
+        	 
+        	
+        }
+        
+        $mail->ClearAllRecipients();
+        $mail->ClearAttachments();
+        
+        //FIN ENVIO DE CORREO AL USUARIO
+		
+		$mensaje = "Se realizó la <b> MODIFICACIÓN SOLICITADA</b> sobre Cotización <b>N° " . $_REQUEST['idObjeto'] . "</b> .
+				</br>
+					Los Proveedores relacionados a la cotización " . $mensajeEnvio . "
 				</br>
 				</br><b>Fecha del Proceso:</b> " . $hoy . "
 				</br><b>Usuario:</b> (" . $resultadoUsuario[0]['identificacion'] . " - " . $resultadoUsuario[0]['nombre'] . " " . $resultadoUsuario[0]['apellido'] . ")<br>";
