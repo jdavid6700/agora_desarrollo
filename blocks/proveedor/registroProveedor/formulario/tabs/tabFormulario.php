@@ -606,7 +606,7 @@ class registrarForm {
 								$atributos ['dobleLinea'] = 0;
 								$atributos ['tabIndex'] = $tab ++;
 								$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-								$atributos ['validar'] = 'required, minSize[1],maxSize[30],custom[onlyLetterNumber]';
+								$atributos ['validar'] = 'required, minSize[1],maxSize[30],custom[onlyNumberSp]';
 									
 								if (isset ( $_REQUEST [$esteCampo] )) {
 									$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -648,7 +648,7 @@ class registrarForm {
 								$atributos ['dobleLinea'] = 0;
 								$atributos ['tabIndex'] = $tab;
 								$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-								$atributos ['validar'] = 'required, minSize[1],maxSize[30],custom[onlyLetterNumber]';
+								$atributos ['validar'] = 'required, minSize[1],maxSize[30],custom[onlyNumberSp]';
 									
 								if (isset ( $_REQUEST [$esteCampo] )) {
 									$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1575,7 +1575,7 @@ class registrarForm {
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
 						$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-						$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyLetterNumber]';
+						$atributos ['validar'] = 'required, minSize[1],maxSize[15],custom[onlyNumberSp]';
 						
 						if (isset ( $_REQUEST [$esteCampo] )) {
 							$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -1603,7 +1603,7 @@ class registrarForm {
 						$atributos ['estilo'] = 'jqueryui';
 						$atributos ['marco'] = true;
 						$atributos ['estiloMarco'] = '';
-						$atributos ["etiquetaObligatorio"] = false;
+						$atributos ["etiquetaObligatorio"] = true;
 						$atributos ['columnas'] = 2;
 						$atributos ['dobleLinea'] = 0;
 						$atributos ['tabIndex'] = $tab;
@@ -3077,7 +3077,6 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarTipoDocumento" );
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-                               // var_dump($matrizItems);
 				/*$matrizItems = array (
 				 array ( 1, 'Registro Civil de Nacimiento' ),
 				 array ( 2, 'Tarjeta de Identidad' ),
@@ -3108,7 +3107,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ['validar'] = 'required, minSize[1],maxSize[14],custom[onlyLetterNumber]';
+				$atributos ['validar'] = 'required, minSize[1],maxSize[14],custom[onlyNumberSp]';
 					
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
@@ -3136,7 +3135,7 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['marco'] = true;
 				$atributos ['estiloMarco'] = '';
-				$atributos ["etiquetaObligatorio"] = false;
+				$atributos ["etiquetaObligatorio"] = true;
 				$atributos ['columnas'] = 2;
 				$atributos ['dobleLinea'] = 0;
 				$atributos ['tabIndex'] = $tab;

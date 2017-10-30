@@ -28,6 +28,15 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			/* VERIFICAR NUMERO DE DOCUMENTO Y TIPO PERSONA */
+			case "consultarProveedorNat" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor ";
+				$cadenaSql .= " WHERE num_documento = '" . $variable ['num_documento'] . "' AND tipopersona = '".$variable ['tipo_persona']."';";
+				break;
+			
 			/* DATOS DEL PROVEEDOR */
 			case "buscarProveedorByDocumentoUnique" : // ****************************************************************************
 				$cadenaSql = " SELECT";
@@ -58,7 +67,7 @@ class Sql extends \Sql {
 			case "buscarProveedorByUnique" :
 				$cadenaSql = "SELECT * ";
 				$cadenaSql.= "FROM agora.informacion_proveedor ";
-				$cadenaSql.= "WHERE tipopersona='". $variable['tipo_persona'] ."' AND num_documento='". $variable['num_documento'] ."';";
+				$cadenaSql.= "WHERE tipopersona='". $variable['tipo_persona'] ."' AND num_documento=". $variable['num_documento'] .";";
 				break;
 			
 			case "ciiuSubClaseByNum" :
@@ -347,13 +356,13 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " informacion_proveedor_id,";
-				//$cadenaSql .= " num_documento,";
+				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= " " . $variable ['fk_id_proveedor'] . ",";
-				//$cadenaSql .= " '" . $variable ['num_documento'] . "',";
+				$cadenaSql .= " '" . $variable ['num_documento'] . "',";
 				$cadenaSql .= " '" . $variable ['actividad'] . "'";
 				$cadenaSql .= " );";
 				break;
@@ -439,7 +448,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " VALUES ";
 				$cadenaSql .= " ( ";
 				$cadenaSql .= " '" . $variable ['tipoPersona'] . "', ";
-				$cadenaSql .= " '" .$variable ['numero_documento'] . "', ";
+				$cadenaSql .= $variable ['numero_documento'] . ", ";
 				$cadenaSql .= " '" . $variable ['nombre_proveedor'] . "', ";
 				$cadenaSql .= $variable ['id_ciudad_contacto'] . ", ";
 				$cadenaSql .= " '" . $variable ['direccion_contacto'] . "', ";
@@ -504,9 +513,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipo_documento,";
 				$cadenaSql .= " num_documento_persona,";
-                                if ($variable ['digito_verificacion'] != null) 
-                                    { $cadenaSql .= " digito_verificacion,";}
-                                $cadenaSql .= " primer_apellido, ";
+				$cadenaSql .= " digito_verificacion,";
+				$cadenaSql .= " primer_apellido, ";
 				$cadenaSql .= " segundo_apellido, ";
 				$cadenaSql .= " primer_nombre,";
 				$cadenaSql .= " segundo_nombre,";
@@ -567,10 +575,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= " " . $variable ['id_tipo_documento'] . ",";
-				$cadenaSql .= " '" . $variable ['fki_numero_documento'] . "',";
-				if ($variable ['digito_verificacion'] != null) 
-                                    { $cadenaSql .= " " . $variable ['digito_verificacion'] . ",";}
-                                
+				$cadenaSql .= " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " " . $variable ['digito_verificacion'] . ",";
 				$cadenaSql .= " '" . $variable ['primer_apellido'] . "',";
 				$cadenaSql .= " '" . $variable ['segundo_apellido'] . "',";
 				$cadenaSql .= " '" . $variable ['primer_nombre'] . "',";
@@ -638,7 +644,7 @@ class Sql extends \Sql {
 			
 			case "consultar_DatosProveedor" :
 				$cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
-				$cadenaSql .= " WHERE num_documento = '" . $variable . "';";
+				$cadenaSql .= " WHERE num_documento = " . $variable . ";";
 				break;
 				
 			case "consultarConsorciosUniones" :
@@ -654,7 +660,7 @@ class Sql extends \Sql {
 				
 			case "consultar_tipo_proveedor" :
 				$cadenaSql = " SELECT P.tipoPersona FROM agora.informacion_proveedor P";
-				$cadenaSql .= " WHERE P.num_documento = '" . $variable . "';";
+				$cadenaSql .= " WHERE P.num_documento = $variable ";
 				break;
 			
 			case "consultarContactoTelProveedor" :
@@ -748,8 +754,7 @@ class Sql extends \Sql {
 				$cadenaSql = " UPDATE ";
 				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " SET";
-				$cadenaSql .= " num_documento = '" . $variable ['numero_documento'] . "', ";
-				;
+				$cadenaSql .= " num_documento = " . $variable ['numero_documento'] . ", ";
 				$cadenaSql .= " nom_proveedor = " . " '" . $variable ['nombre_proveedor'] . "', ";
 				$cadenaSql .= " id_ciudad_contacto = " . $variable ['id_ciudad_contacto'] . ", ";
 				$cadenaSql .= " direccion = " . " '" . $variable ['direccion_contacto'] . "', ";
@@ -786,11 +791,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.informacion_persona_natural ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " tipo_documento = " . " " . $variable ['id_tipo_documento'] . ",";
-				$cadenaSql .= " num_documento_persona = " . " '" . $variable ['fki_numero_documento'] . "',";
-				if ($variable ['digito_verificacion'] != null) {
-					$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
-				}
-                                $cadenaSql .= " primer_apellido = " . " '" . $variable ['primer_apellido'] . "',";
+				$cadenaSql .= " num_documento_persona = " . " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
+				$cadenaSql .= " primer_apellido = " . " '" . $variable ['primer_apellido'] . "',";
 				$cadenaSql .= " segundo_apellido = " . " '" . $variable ['segundo_apellido'] . "',";
 				$cadenaSql .= " primer_nombre = " . " '" . $variable ['primer_nombre'] . "',";
 				$cadenaSql .= " segundo_nombre = " . " '" . $variable ['segundo_nombre'] . "',";
@@ -892,7 +895,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " VALUES ";
 				$cadenaSql .= " ( ";
 				$cadenaSql .= $variable ['fki_id_Proveedor'] . ", ";
-				$cadenaSql .= " '" .$variable ['fki_id_Representante'] . "', ";
+				$cadenaSql .= $variable ['fki_id_Representante'] . ", ";
 				$cadenaSql .= $variable ['tel_Repre'] . ", ";
 				$cadenaSql .= " '" . $variable ['correo_Repre'] . "' ";
 				$cadenaSql .= " ); ";
@@ -936,7 +939,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
-				$cadenaSql .= " '".$variable ['fki_numero_documento']."',";
+				$cadenaSql .= " " . $variable ['fki_numero_documento'] . ",";
 				$cadenaSql .= " " . $variable ['digito_verificacion'] . ",";
 				if ($variable ['procedencia_empresa'] == 'NACIONAL') {
 					$cadenaSql .= " '" . $variable ['procedencia_empresa'] . "',";
@@ -949,9 +952,9 @@ class Sql extends \Sql {
 					}
 					$cadenaSql .= " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
-						$cadenaSql .= " '" . $variable ['num_pasaporte'] . "',";
+						$cadenaSql .= " " . $variable ['num_pasaporte'] . ",";
 					} else {
-						$cadenaSql .= " '" . $variable ['num_cedula_extranjeria'] . "',";
+						$cadenaSql .= " " . $variable ['num_cedula_extranjeria'] . ",";
 					}
 				}
 				$cadenaSql .= " " . $variable ['id_tipo_conformacion'] . ",";
@@ -1023,6 +1026,14 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_representante = ";
 				$cadenaSql .= "'" . $variable ['fki_id_Representante'] . "' ";
 				break;
+				
+				case 'limpiarInformacionProveedorXRepresentante' :
+					$cadenaSql = " DELETE ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.proveedor_representante_legal";
+					$cadenaSql .= " WHERE id_proveedor = ";
+					$cadenaSql .= "'" . $variable ['fki_id_Proveedor'] . "'; ";
+					break;
 			
 			/* ACTUALIZAR DATOS - USUARIO JURIDICA */
 			case "actualizarProveedorJuridica" :
@@ -1042,9 +1053,9 @@ class Sql extends \Sql {
 					}
 					$cadenaSql .= " tipo_identificacion_extranjera = " . " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
-						$cadenaSql .= " num_pasaporte = " . " '" . $variable ['num_pasaporte'] . "',";
+						$cadenaSql .= " num_pasaporte = " . " " . $variable ['num_pasaporte'] . ",";
 					} else {
-						$cadenaSql .= " num_cedula_extranjeria = " . " '" . $variable ['num_cedula_extranjeria'] . "',";
+						$cadenaSql .= " num_cedula_extranjeria = " . " " . $variable ['num_cedula_extranjeria'] . ",";
 					}
 				}
 				$cadenaSql .= " id_tipo_conformacion = " . " " . $variable ['id_tipo_conformacion'] . ",";
@@ -1091,7 +1102,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " estado";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor ";
-				$cadenaSql .= " WHERE num_documento = '" . $variable . "';";
+				$cadenaSql .= " WHERE num_documento = " . $variable;
 				break;
 				
 				/* DATOS DEL PROVEEDOR POR USUARIO */
@@ -1137,7 +1148,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " t1.num_documento";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_proveedor t1";
-				$cadenaSql .= " WHERE t1.num_documento = '" . $variable . "';";
+				$cadenaSql .= " WHERE t1.num_documento = " . $variable . ";";
 				break;
 			
 			/* CONSULTAR CONTRATOS DEL PROVEEDOR */
@@ -1683,7 +1694,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " 'es_es', ";
 				$cadenaSql .= " 2, ";
 				$cadenaSql .= " '" . $variable ['fechaIni'] . "', ";
-				$cadenaSql .= " '" . $variable ['identificacion'] . "', ";
+				$cadenaSql .= " " . $variable ['identificacion'] . ", ";
 				$cadenaSql .= " '" . $variable ['tipo_identificacion'] . "', ";
 				$cadenaSql .= " 'FALSE' ";
 				$cadenaSql .= " )";
