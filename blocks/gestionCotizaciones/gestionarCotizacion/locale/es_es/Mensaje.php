@@ -1,6 +1,20 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
+$this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
+
+$this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
+$this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
+
+$this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
+$this->idioma["observacion"] = "Observación: ";
+$this->idioma["observacionTitulo"]="Observación";
+$this->idioma["tabProveedorObs"]="Gestión de Observaciones";
+$this->idioma["marcoObservacionView"]="Observaciones Registradas";
+
+
+
 $this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
@@ -25,6 +39,7 @@ $this->idioma["precioTotalIva"] = "PRECIO IVA : ";
 $this->idioma["precioTotalIvaTitulo"]="Precio Iva";
 
 $this->idioma["marcoDescripcionProducto"]="Información Productos o Servicios";
+$this->idioma["marcoDescripcionModProducto"]="Modificación de Productos o Servicios";
 
 $this->idioma["marcoParametrosItem"]="Item (Producto o Servicio) Cotización";
 
@@ -258,6 +273,11 @@ $this->idioma["mensajeValidacion"] = "<center> Para registrar el docente, primer
 $this->idioma["botonActualizar"] = "Actualizar";
 $this->idioma["botonValidar"] = "Validar";
 $this->idioma["botonModificar"] = "Modificar";
+$this->idioma["botonModificarItem"] = "Guardar Modificación de Items";
+$this->idioma["botonModificarItemInd"] = "Modificar Item";
+
+
+
 $this->idioma["botonEnviarSolicitud"] = "Enviar Solicitud";
 
 
@@ -295,6 +315,11 @@ $this->idioma["mensajeConvocatoria"] =  "Registro Exitoso.<br> Se envío la info
 $this->idioma["mensajeEnCotizacion"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeEnConvocatoria"] =  "Estado del Objeto a Contratar: COTIZACIÓN.<br> Los Proveedores Interesados han sido informados. <br>" ;
 $this->idioma["mensajeError"] =  "Error al cargar los datos.";
+
+$this->idioma["mensajeErrorSolicitudModificacion"] =  "Error al Solicitar la Módificación de Cotización.";
+
+$this->idioma["mensajeErrorModificacionSolicitud"] =  "Error al Realizar la Módificación de Cotización Solicitada.";
+
 $this->idioma["mensajeNoRegistros"] =  "No Se Encontraron  </br> Registros de Títulos Académicos Para los Criterios Ingresados";
 $this->idioma["mensajeNoActualizo"] =  "Error al tratar de actualizar </br>el registro de la Título Académico Para el Docente </br>";
 
@@ -400,6 +425,7 @@ $this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotizació
 
 $this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudModCot"]="Histórico Solicitudes de Modificación";
 
 $this->idioma["nombresResponsable"] = "Nombres: ";
 $this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";
@@ -422,6 +448,10 @@ $this->idioma["objetivo"] = "Objetivo / Tema :";
 $this->idioma["objetivoTitulo"]="Objetivo / Tema";
 $this->idioma["solicitudModificacion"] = "Solicitud de Modificación :";
 $this->idioma["solicitudModificacionTitulo"]="Solicitud de Modificación : ";
+$this->idioma["justificacionModificacionItem"] = "Justificación de Modificación :";
+$this->idioma["justificacionModificacionItemTitulo"]="Justificación de Modificación : ";
+
+
 $this->idioma["requisitos"] = "Requisitos :";
 $this->idioma["requisitosTitulo"]="Requisitos";
 $this->idioma["observaciones"] = "Observaciones Adicionales :";
@@ -447,8 +477,8 @@ $this->idioma["precioCotTitulo"]="Precio Cotización";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
 
-$this->idioma["descuentos"] = "Descuentos Aplicables : ";
-$this->idioma["descuentosTitulo"]="Descuentos Aplicables";
+$this->idioma["descuentos"] = "Descuentos Ofrecidos : ";
+$this->idioma["descuentosTitulo"]="Descuentos Ofrecidos";
 $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
 

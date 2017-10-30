@@ -2,6 +2,20 @@
 
 //Formulario 
 
+$this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
+$this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
+
+$this->idioma["marcoObservacionAdd"]="Registrar Observación a la Solicitud de Cotización";
+$this->idioma["observacion"] = "Observación: ";
+$this->idioma["observacionTitulo"]="Observación";
+$this->idioma["tabProveedorObs"]="Gestión de Observaciones";
+$this->idioma["marcoObservacionView"]="Observaciones Registradas";
+
+
+
+
+
+$this->idioma ["botonModificar"] = "Modificar";
 $this->idioma ["botonAgregar"] ="Agregar";
 $this->idioma ["botonCargarArchivo"] ="Cargar Items";
 
@@ -32,7 +46,7 @@ $this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
 $this->idioma["tiempoItem3"] = "Días: ";
 $this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
 
-$this->idioma["botonAgregarInfo"] = "Calcular ";
+$this->idioma["botonAgregarInfo"] = "Almacenar Items ";
 $this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
 
 
@@ -528,8 +542,8 @@ $this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
 
-$this->idioma["descuentos"] = "Descuentos Aplicables : ";
-$this->idioma["descuentosTitulo"]="Descuentos Aplicables";
+$this->idioma["descuentos"] = "Descuentos Ofrecidos : ";
+$this->idioma["descuentosTitulo"]="Descuentos Ofrecidos";
 $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
 $this->idioma["fechaVencimientoCotRead"] = "Fecha de Vencimiento Cotización : ";

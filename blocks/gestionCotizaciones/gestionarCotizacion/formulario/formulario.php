@@ -159,9 +159,10 @@ class Formulario {
 								<th><center>Detalle</center></th>
 								<th><center>Modificar</center></th>
 								<th><center>Procesar</center></th>
+								<th><center>Observaciones</center></th>			
 								<th><center>Cotizaciones</center></th>
 								<th><center>Cancelar</center></th>
-                                <th><center>Solicitar<br>Modificación</center></th>
+                                                                <th><center>Gestión de<br>Modificaciónes</center></th>
                                                                 
 							</tr>
 							</thead>
@@ -237,6 +238,17 @@ class Formulario {
 			if($estadoCotizacionArq == "COTIZACION" || $estadoCotizacionArq == "SELECCIONADO" || $estadoCotizacionArq == "RECHAZADO"){
 				
 				
+				$variableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				$variableObservaciones .= "&opcion=observaciones";
+				$variableObservaciones .= "&idSolicitud=" . $dato ['id'];
+				$variableObservaciones .= "&vigencia=" . $dato ['vigencia'];
+				$variableObservaciones .= "&unidadEjecutora=" . $dato ['unidad_ejecutora'];
+				$variableObservaciones .= "&usuario=" . $_REQUEST ['usuario'];
+				$variableObservaciones .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
+				$variableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableObservaciones, $directorio );
+				$imagenObservaciones = 'iconObs.png';
+				
+				
 				/* VALIDAR FECHA DE CIERRE ++++++++++++++++++++++++++++++++++++*/
 				$fecha = date('Y-m-d h:i:s A');
 					
@@ -309,7 +321,7 @@ class Formulario {
 				$variableMod = "#";
 				$imagenMod = 'cancel.png';
                                 
-                                $variableSolMod = "#";
+                $variableSolMod = "#";
 				$imagenSolMod = 'cancel.png';
 				
 				$variableCal = "#";
@@ -317,6 +329,9 @@ class Formulario {
 				
 				$variableCan = "#";
 				$imagenCan = 'cancel.png';
+				
+				$variableObservaciones = "#";
+				$imagenObservaciones = 'cancel.png';
 				
 			}else{
 				
@@ -356,8 +371,11 @@ class Formulario {
 				$variableCan = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableCan, $directorio );
 				$imagenCan = 'canPro.png';
                                 
-                                $variableSolMod = "#";
+                $variableSolMod = "#";
 				$imagenSolMod = 'cancel.png';
+				
+				$variableObservaciones = "#";
+				$imagenObservaciones = 'cancel.png';
 				
 				
 			}
@@ -366,6 +384,13 @@ class Formulario {
 			}else{
 				$dateSolicitud = 'SIN PROCESAR';
 			}
+                        
+                        
+                        if (date('Y-m-d') > $dato['fecha_cierre']){
+                             $variableSolMod = "#";
+                             $imagenSolMod = 'cancel.png';
+                        }
+                        
 			
 			$mostrarHtml = "<tr>
 									<td><center>" . $dato['numero_solicitud'] . "</center></td>
@@ -399,18 +424,24 @@ class Formulario {
 											<img src='" . $rutaBloque . "/images/" . $imagenCal . "' width='15px'>
 										</a>
 									</center></td>
+													
+									<td><center>
+										<a href='" . $variableObservaciones . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenObservaciones . "' width='15px'>
+										</a>
+									</center></td>					
 		
 									<td><center>
 										<a href='" . $variableAdd . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenAdd . "' width='15px'>
 										</a>
-									</center></td>
+									</center></td>				
 													
 									<td><center>
 										<a href='" . $variableCan . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenCan . "' width='15px'>
 										</a>
-									</center></td>					
+									</center></td>	
                                                                         <td><center>
 										<a href='" . $variableSolMod . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenSolMod . "' width='15px'>

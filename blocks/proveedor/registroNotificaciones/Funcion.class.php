@@ -44,6 +44,9 @@ class Funcion {
 	function registroRespuestaCotizacion() {
 		include_once ($this->ruta . "/funcion/registrar.php");
 	}
+	function modificaRespuestaCotizacion() {
+		include_once ($this->ruta . "/funcion/modificar.php");
+	}
 	function formProcessorNatural() {
 		include_once ($this->ruta . "/funcion/formProcessorNatural.php");
 	}
@@ -53,6 +56,10 @@ class Funcion {
 	function certContrato()
 	{
 		include_once($this->ruta."/funcion/certContratoPDF.php");
+	}
+	function observacion()
+	{
+		include_once($this->ruta."/funcion/observacion.php");
 	}
 	function certRegistro()
 	{
@@ -126,6 +133,8 @@ class Funcion {
 		if (isset ( $_REQUEST ['procesarAjax'] )) {
 			$this->procesarAjax ();
 		} else if (isset ( $_REQUEST ["opcion"] )) {
+                    
+                   
 			
 			switch ($_REQUEST ["opcion"]) {
 				case 'consultar' :
@@ -136,10 +145,19 @@ class Funcion {
 					
 					$this->registroRespuestaCotizacion();
 					
-					break;					
+					break;
+				case 'modificarCot' :
+					
+					$this->modificaRespuestaCotizacion();
+					
+					break;
 
 				case 'registrarActividad' :
 					$this->registrarActividad ();
+					break;
+					
+				case 'observacion' :
+					$this->observacion ();
 					break;
 					
 				case "certContrato":

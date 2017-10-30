@@ -1020,13 +1020,24 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
 //---------------------Inicio Ajax Numero de Solicitud de Necesidad------------------
 
+	$("#<?php echo $this->campoSeguro('ordenador') ?>").change(function () {
+        if ($("#<?php echo $this->campoSeguro('ordenador') ?>").val() != '') {
+            $("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val($("#<?php echo $this->campoSeguro('ordenador') ?>").val());
+        } else {
+			$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(null);
+        }
+    });
+
 
     $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").change(function () {
+    	$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(null);
+    	$("#<?php echo $this->campoSeguro('ordenador') ?>").val(null);
         if ($("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").val() != '') {
             InfoCDP();
         } else {
 
         }
+        
     });
 
     function InfoCDP(elem, request, response) {
@@ -1253,10 +1264,15 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 
                 if(data[2] != "" && data[3] != ""){
                 	
+                	$("#<?php echo $this->campoSeguro('ordenador') ?>").attr('disabled', '');
+                   	$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    $("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+                	
                 	var i = 0;
                 	var control = false;
                 	while(i < data[3].length){
                 		if(data[3][i].tercero_id == data[2].NUMERO_DOCUMENTO){
+                		
                 			$("#<?php echo $this->campoSeguro('ordenador') ?>").val(data[3][i].id);
                     		$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
                     		$("#<?php echo $this->campoSeguro('ordenador_hidden') ?>").val(data[3][i].id);
@@ -1269,17 +1285,23 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 	
                 		swal({
 			                title: 'Inconsistencia datos SICAPITAL y ÁGORA',
-			                type: 'error',
+			                type: 'warning',
 			                html:
 			                        'Atención, la información del ordenador del gasto no esta actualizada,'
 			                        +' existen inconsistencias con el Sistema ÁGORA, la necesidad N°'+data[0].NUM_SOL_ADQ+' de SICAPITAL presenta'
 			                        +' como ordenador de gasto al Señor(a):<br><br> <b>('+data[2].NUMERO_DOCUMENTO+') - '+data[2].NOMBRES+' '+data[2].PRIMER_APELLIDO
-			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>',
+			                        +' '+data[2].SEGUNDO_APELLIDO+'</b>, como <b>'+data[2].CARGO+'</b>, debe seleccionar manualmente el Ordenador del Gasto',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
 			            
-			            eliminarCDP();
+			            
+			            $("#<?php echo $this->campoSeguro('ordenador') ?>").removeAttr('disabled');
+                   		$('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+                    	$("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+			            
+			            
+			            //eliminarCDP();
                 	
                 	}
                 	
@@ -1558,9 +1580,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
             if ($("#<?php echo $this->campoSeguro('nombreItem') ?>").val() != '' &&
                     $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val() != '' &&
-                    $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val() != '' &&
-                    $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val() != '' &&
-                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val() != '' &&
                     $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val() != '' ) {
 
 
@@ -1570,104 +1589,10 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                     
 
-                 
-
-                        if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val())) {
-
-                            $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").css('border-color', '#DDDDDD');
-
-
-                            if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val())) {
-
-                                $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").css('border-color', '#DDDDDD');
-
-
-                                if (isNormalInteger($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val())) {
-
-                                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").css('border-color', '#DDDDDD');
-
-
-
-                                    var tiempo = parseInt($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val()) +
-                                            parseInt($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val()) +
-                                            parseInt($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val());
-
-                                    if (tiempo > 0) {
-
-                                        //-----------------------------------------------------------------------------
+                                      
 
                                         consultarItemPushServicio();
-
-                                        //-----------------------------------------------------------------------------
-
-
-                                    } else {
-
-                                        swal({
-                                            title: 'Ocurrio un problema...',
-                                            type: 'error',
-                                            html:
-                                                    'El Contenido de <big>Tiempo de Ejecución</big>, es Cero. (ERROR) ',
-                                            confirmButtonText:
-                                                    'Ok'
-                                        })
-
-                                    }
-
-
-                                } else {
-
-                                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").css('border-color', '#FF0000');
-
-                                    swal({
-                                        title: 'Ocurrio un problema...',
-                                        type: 'error',
-                                        html:
-                                                'El Contenido de <big>Días</big>, no es Númerico Entero. (ERROR) ',
-                                        confirmButtonText:
-                                                'Ok'
-                                    })
-
-                                }
-
-
-                            } else {
-
-                                $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").css('border-color', '#FF0000');
-
-                                swal({
-                                    title: 'Ocurrio un problema...',
-                                    type: 'error',
-                                    html:
-                                            'El Contenido de <big>Meses</big>, no es Númerico Entero. (ERROR) ',
-                                    confirmButtonText:
-                                            'Ok'
-                                })
-
-                            }
-
-
-
-                        } else {
-
-                            $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").css('border-color', '#FF0000');
-
-                            swal({
-                                title: 'Ocurrio un problema...',
-                                type: 'error',
-                                html:
-                                        'El Contenido de <big>Año</big>, no es Númerico Entero. (ERROR) ',
-                                confirmButtonText:
-                                        'Ok'
-                            })
-
-                        }
-
-
-
-
-
-
+   
                     
 
 
@@ -1756,7 +1681,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('descripcionItem') ?>").val().toUpperCase()) + "</td>";
                     nuevaFila += "<td>1 - BIEN</td>";
                     nuevaFila += "<td>" + (data[0][0]) + " - " + (data[0][1]) + "</td>";
-                    nuevaFila += "<td>0 - NO APLICA</td>";
                     nuevaFila += "<td>" + formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())) + "</td>";
                     nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
                     nuevaFila += "</tr>";
@@ -1769,9 +1693,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                     $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
                     $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
                     $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
-                    $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
-                    $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
-                    $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
                     $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
                     $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2("val", -1);
                     $('#parametros1').fadeOut(600);
@@ -1836,9 +1757,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
     
     function consultarItemPushServicio() {
 
-        var countDays = totalDias(parseInt($("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val()),
-                parseInt($("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val()),
-                parseInt($("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val()));
+
 
         var nFilas = $("#tablaFP2 tr").length;
         var tds = 8;
@@ -1863,7 +1782,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         nuevaFila += "<td>" + ($("#<?php echo $this->campoSeguro('descripcionItem') ?>").val().toUpperCase()) + "</td>";
         nuevaFila += "<td>2 - SERVICIO</td>";
         nuevaFila += "<td>0 - NO APLICA</td>";
-        nuevaFila += "<td>" + (inverseTotalDias(countDays)) + "</td>";
         nuevaFila += "<td>" + formatearNumero(($("#<?php echo $this->campoSeguro('cantidadItem') ?>").val())) + "</td>";
         nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
         nuevaFila += "</tr>";
@@ -1876,9 +1794,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         $("#<?php echo $this->campoSeguro('nombreItem') ?>").val('');
         $("#<?php echo $this->campoSeguro('descripcionItem') ?>").val('');
         $("#<?php echo $this->campoSeguro('cantidadItem') ?>").val('');
-        $("#<?php echo $this->campoSeguro('tiempoItem1') ?>").val('0');
-        $("#<?php echo $this->campoSeguro('tiempoItem2') ?>").val('0');
-        $("#<?php echo $this->campoSeguro('tiempoItem3') ?>").val('0');
         $("#<?php echo $this->campoSeguro('unidadItem') ?>").select2("val", "");
         $("#<?php echo $this->campoSeguro('tipoItem') ?>").select2("val", -1);
         $('#parametros1').fadeOut(600);
@@ -2056,7 +1971,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             nuevaFila += "<td>" + (data[indice].descripcion.toUpperCase()) + "</td>";
                             nuevaFila += "<td>1 - BIEN</td>";
                             nuevaFila += "<td>" + (data[indice].unidad) + "</td>";
-                            nuevaFila += "<td>" + "0 - NO APLICA" + "</td>";
                             nuevaFila += "<td>" + formatearNumero(data[indice].cantidad) + "</td>";
                             nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
                             nuevaFila += "</tr>";
@@ -2111,9 +2025,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             if (($("#<?php echo $this->campoSeguro('permisoItem') ?>").val() == 'ambos' && data[indice].tipo.toUpperCase() == '2 - SERVICIO')) {
                             var nFilas = $("#tablaFP2 tr").length;
                             
-                             var countDays = totalDias(parseInt(data[indice].tiempo_ejecucion_ano),
-                                    parseInt(data[indice].tiempo_ejecucion_mes),
-                                    parseInt(data[indice].tiempo_ejecucion_dia));
+                           
 
                             var count = nFilas;
                 
@@ -2124,8 +2036,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             nuevaFila += "<td>" + (data[indice].nombre.toUpperCase()) + "</td>";
                             nuevaFila += "<td>" + (data[indice].descripcion.toUpperCase()) + "</td>";
                             nuevaFila += "<td>2 - SERVICIO</td>";
-                            nuevaFila += "<td>" + (data[indice].unidad) + "</td>";
-                            nuevaFila += "<td>" + (inverseTotalDias(countDays)) + "</td>";
+                            nuevaFila += "<td>0 - NO APLICA </td>";
                             nuevaFila += "<td>" + formatearNumero(data[indice].cantidad) + "</td>";
                             nuevaFila += "<th class=\"eliminarItem\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";
                             nuevaFila += "</tr>";

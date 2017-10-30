@@ -354,7 +354,7 @@ $('#tablaObjetosSinCotizacion').dataTable({
 
 
 $('#tablaObjetosEnCotizacion').dataTable({
-        
+    "aaSorting": [[ 0, "desc" ]] , 
     "language": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

@@ -2,8 +2,50 @@
 window.onload = detectarCarga;
 function detectarCarga(){
 
+	$('#marcoDatosLoad').fadeOut(1000, function (){
+		$('#marcoContratosTabla').fadeIn(500, function (){
+
+		});
+	});
+
+
 	$('#marcoGeneral').show('slow');
+	
+	tinyMCE.get('<?php echo $this->campoSeguro('observacion')?>').theme.resizeTo("100%", 100);
+	
+	if($('#<?php echo $this->campoSeguro('countObservaciones') ?>').val() > 0){
+		
+		var temp = $('#<?php echo $this->campoSeguro('countObservaciones') ?>').val();
+		var cont = 0;
+		
+		while(cont < temp){
+		
+			tinyMCE.get('observacion'+cont).theme.resizeTo("80%", 100);
+			
+			tinyMCE.get('observacion'+cont).setMode('readonly');
+
+			cont++;
+		}		
+		
+	}
+
 }
+
+
+$("#dialogo").modal({
+  	fadeDuration: 1000,
+  	fadeDelay: 0.50
+});
+
+
+$("#accordion").bwlAccordion({
+		search: false,
+        theme: 'theme-orange',
+        toggle: true,
+        animation: 'faderight'
+});
+
+$( ".simpaleTabs" ).tabs();
 
 
 $('#<?php echo $this->campoSeguro('direccionNat')?>').bind("cut copy paste",function(e) {
@@ -65,15 +107,6 @@ $("#botonesNat").hide("fast");
 
 $( ".widget input[type=submit], .widget a, .widget button" ).button();
 
-$("#dialogo").dialog({
-      modal: true,
-      title: "Cotizaciones",
-      width: 550,
-      minWidth: 400,
-      maxWidth: 650,
-      show: "fold",
-      hide: "scale"
-   });
 
 
 $("#registroNotificaciones").validationEngine({
@@ -507,7 +540,7 @@ if($("#<?php echo $this->campoSeguro('tipoCuenta')?>").val() == 4){
 
 
 $('#tablaReporteCont').DataTable({
-        
+   "aaSorting": [[ 0, "desc" ]] ,      
     "language": {
         "sProcessing":     "Procesando...",
         "sLengthMenu":     "Mostrar _MENU_ registros",

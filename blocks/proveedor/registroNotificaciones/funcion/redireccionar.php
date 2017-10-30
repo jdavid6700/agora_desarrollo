@@ -14,6 +14,18 @@ class redireccion {
 		
 		switch ($opcion) {
 			
+			case "actualizo" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=actualizoRespuesta";
+				$variable .= "&solicitud=" . $valor ['solicitud'];
+				$variable .= "&objeto=" . $valor ['objeto'];
+				$variable .= "&numero_solicitud=" . $valor ['numero_solicitud'];
+				$variable .= "&vigencia=" . $valor ['vigencia'];
+				$variable .= "&titulo_cotizacion=" . $valor ['titulo_cotizacion'];
+				$variable .= "&fecha_cierre=" . $valor ['fecha_cierre'];
+				break;
+			
 			case "registroProveedor" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
@@ -63,6 +75,16 @@ class redireccion {
 				$variable .= "&vigencia=" . $valor ['vigencia'];
 				$variable .= "&titulo_cotizacion=" . $valor ['titulo_cotizacion'];
 				$variable .= "&fecha_cierre=" . $valor ['fecha_cierre'];
+				break;
+				
+			case "insertoObs" :
+				$variable = "pagina=" . $miPaginaActual;
+				$variable .= "&opcion=mensaje";
+				$variable .= "&mensaje=insertoObs";
+				$variable .= "&solicitud=" . $valor ['solicitud'];
+				$variable .= "&objeto=" . $valor ['objeto'];
+				$variable .= "&fecha=" . $valor ['fechaRegistro'];
+				$variable .= "&usuario=" . $valor ['usuario'];
 				break;
 			
 			case "noInserto" :

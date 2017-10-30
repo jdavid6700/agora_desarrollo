@@ -18,7 +18,8 @@ $estilo[$indice++]="miestilo.css";
 // $estilo[$indice++]="formToWizard.css";
 
 // Tablas
-$estilo[$indice++]="demo_page.css";
+$estilo[$indice++]="accordion.css";
+$estilo[$indice++]="animate.min.css";
 // $estilo[$indice++]="demo_table.css";
 
 $estilo[$indice++]="sweetalert2.min.css";

@@ -76,6 +76,10 @@ class SolicitudCotizacion {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 		
+
+		$tipoAcceso = $_REQUEST['tipo_acceso'];
+		$SQLs = [];
+		
 		
 		$respuestaGen = $_POST[$this->campoSeguroCodificar('respuestaGen', $_REQUEST['tiempo'])];
 		$justificacion = $_POST[$this->campoSeguroCodificar('justificacion', $_REQUEST['tiempo'])];
@@ -110,8 +114,9 @@ class SolicitudCotizacion {
 				);
 
 				// Inserto las solicitudes de cotizacion para cada proveedor
-				$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
-				$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+				$cadenaSqlReg = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
+				//$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+				array_push($SQLs, $cadenaSqlReg);
 				
 				$estadoPro = 2;
 				
@@ -152,13 +157,16 @@ class SolicitudCotizacion {
 			);
 
 			// Inserto las solicitudes de cotizacion para cada proveedor
-			$cadenaSql = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
-			$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			$cadenaSqlRegRes = $this->miSql->getCadenaSql ( 'ingresarRespuestaCotizacion', $datos );
+			//$resultadoRegRes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			array_push($SQLs, $cadenaSqlRegRes);
 			
 			$i++;
 			
 		}
 		
+		$respuestasCotizacion = $esteRecursoDB->transaccion($SQLs);
+		$SQLs = [];
 		
 		if($rechazado){
 			
@@ -170,8 +178,9 @@ class SolicitudCotizacion {
 					'usuario' => $_REQUEST ['usuario']
 			);
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjetoDecNo', $datos );
-			$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			$cadenaSqlAct = $this->miSql->getCadenaSql ( 'actualizarObjetoDecNo', $datos );
+			//$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			array_push($SQLs, $cadenaSqlAct);
 			
 		}else{
 			
@@ -193,16 +202,54 @@ class SolicitudCotizacion {
 					'usuario' => $_REQUEST ['usuario']
 			);
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'actualizarObjetoDec', $datos );
-			$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			$cadenaSqlAct = $this->miSql->getCadenaSql ( 'actualizarObjetoDec', $datos );
+			//$resultadoAct = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "insertar" );
+			array_push($SQLs, $cadenaSqlAct);
 			
 		}
 		
-	
+		//************************************** VALIDACION AUTOMATICA PARA ORDENADOR DE GASTO *******************************
+		if($tipoAcceso == '1'){
+			
+			if(!$rechazado){// Cotización APROBADA por el Ordenador
+			
+				$datos = array (
+						'id_objeto' => $_REQUEST ['idObjeto'],
+						'observaciones' => $justificacion,
+						'estado' => '3',
+						'usuario' => $_REQUEST ['usuario']
+				);
+			
+				$validacionOrdenador = $this->miSql->getCadenaSql ( 'validacionOrdenador', $datos );
+				array_push($SQLs, $validacionOrdenador);
+			
+				$validacionOrdenador = $this->miSql->getCadenaSql ( 'validacionObjetoCotizacion', $datos );
+				array_push($SQLs, $validacionOrdenador);
+			
+			}else{
+			
+				$datos = array (
+						'id_objeto' => $_REQUEST ['idObjeto'],
+						'observaciones' => $justificacion,
+						'estado' => '8',
+						'usuario' => $_REQUEST ['usuario']
+				);
+			
+				$validacionOrdenador = $this->miSql->getCadenaSql ( 'validacionOrdenador', $datos );
+				array_push($SQLs, $validacionOrdenador);
+			
+				$validacionOrdenador = $this->miSql->getCadenaSql ( 'validacionObjetoCotizacion', $datos );
+				array_push($SQLs, $validacionOrdenador);
+			
+			}
+			
+		}
+		//**********************************************************************************************************************
 		
+		$updateCotizacion = $esteRecursoDB->transaccion($SQLs);
+
 		
-		
-		if ($resultadoAct) {
+		if ($respuestasCotizacion && $updateCotizacion) {
 			redireccion::redireccionar ( 'respondioCotizacionGen', $datos );
 			exit ();
 		} else {

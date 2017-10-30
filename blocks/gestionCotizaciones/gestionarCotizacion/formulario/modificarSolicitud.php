@@ -1593,105 +1593,105 @@ class FormularioRegistro {
 
                             echo '<div id="parametros3">';
                             {
+//
+//                                $esteCampo = "marcoParametrosItemTiempo";
+//                                $atributos ['id'] = $esteCampo;
+//                                $atributos ["estilo"] = "jqueryui";
+//                                $atributos ['tipoEtiqueta'] = 'inicio';
+//                                $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+//                                echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+//                                {
 
-                                $esteCampo = "marcoParametrosItemTiempo";
-                                $atributos ['id'] = $esteCampo;
-                                $atributos ["estilo"] = "jqueryui";
-                                $atributos ['tipoEtiqueta'] = 'inicio';
-                                $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
-                                echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-                                {
-
-                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                    $esteCampo = 'tiempoItem1';
-                                    $atributos ['id'] = $esteCampo;
-                                    $atributos ['nombre'] = $esteCampo;
-                                    $atributos ['tipo'] = 'text';
-                                    $atributos ['estilo'] = 'jqueryui';
-                                    $atributos ['marco'] = true;
-                                    $atributos ['estiloMarco'] = '';
-                                    $atributos ["etiquetaObligatorio"] = false;
-                                    $atributos ['columnas'] = 3;
-                                    $atributos ['dobleLinea'] = 0;
-                                    $atributos ['tabIndex'] = $tab;
-                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                                    $atributos ['validar'] = 'custom[integer]';
-
-                                    $atributos ['valor'] = '0';
-
-                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                                    $atributos ['deshabilitado'] = false;
-                                    $atributos ['tamanno'] = 10;
-                                    $atributos ['maximoTamanno'] = '20';
-                                    $atributos ['anchoEtiqueta'] = 100;
-                                    $tab++;
-
-                                    // Aplica atributos globales al control
-                                    $atributos = array_merge($atributos, $atributosGlobales);
-                                    echo $this->miFormulario->campoCuadroTexto($atributos);
-                                    unset($atributos);
+//                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+//                                    $esteCampo = 'tiempoItem1';
+//                                    $atributos ['id'] = $esteCampo;
+//                                    $atributos ['nombre'] = $esteCampo;
+//                                    $atributos ['tipo'] = 'text';
+//                                    $atributos ['estilo'] = 'jqueryui';
+//                                    $atributos ['marco'] = true;
+//                                    $atributos ['estiloMarco'] = '';
+//                                    $atributos ["etiquetaObligatorio"] = false;
+//                                    $atributos ['columnas'] = 3;
+//                                    $atributos ['dobleLinea'] = 0;
+//                                    $atributos ['tabIndex'] = $tab;
+//                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+//                                    $atributos ['validar'] = 'custom[integer]';
+//
+//                                    $atributos ['valor'] = '0';
+//
+//                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+//                                    $atributos ['deshabilitado'] = false;
+//                                    $atributos ['tamanno'] = 10;
+//                                    $atributos ['maximoTamanno'] = '20';
+//                                    $atributos ['anchoEtiqueta'] = 100;
+//                                    $tab++;
+//
+//                                    // Aplica atributos globales al control
+//                                    $atributos = array_merge($atributos, $atributosGlobales);
+//                                    echo $this->miFormulario->campoCuadroTexto($atributos);
+//                                    unset($atributos);
+//                                    // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+//                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+//                                    $esteCampo = 'tiempoItem2';
+//                                    $atributos ['id'] = $esteCampo;
+//                                    $atributos ['nombre'] = $esteCampo;
+//                                    $atributos ['tipo'] = 'text';
+//                                    $atributos ['estilo'] = 'jqueryui';
+//                                    $atributos ['marco'] = true;
+//                                    $atributos ['estiloMarco'] = '';
+//                                    $atributos ["etiquetaObligatorio"] = false;
+//                                    $atributos ['columnas'] = 3;
+//                                    $atributos ['dobleLinea'] = 0;
+//                                    $atributos ['tabIndex'] = $tab;
+//                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+//                                    $atributos ['validar'] = 'custom[integer]';
+//
+//                                    $atributos ['valor'] = '0';
+//
+//                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+//                                    $atributos ['deshabilitado'] = false;
+//                                    $atributos ['tamanno'] = 10;
+//                                    $atributos ['maximoTamanno'] = '20';
+//                                    $atributos ['anchoEtiqueta'] = 100;
+//                                    $tab++;
+//
+//                                    // Aplica atributos globales al control
+//                                    $atributos = array_merge($atributos, $atributosGlobales);
+//                                    echo $this->miFormulario->campoCuadroTexto($atributos);
+//                                    unset($atributos);
+//                                    // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+//                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+//                                    $esteCampo = 'tiempoItem3';
+//                                    $atributos ['id'] = $esteCampo;
+//                                    $atributos ['nombre'] = $esteCampo;
+//                                    $atributos ['tipo'] = 'text';
+//                                    $atributos ['estilo'] = 'jqueryui';
+//                                    $atributos ['marco'] = true;
+//                                    $atributos ['estiloMarco'] = '';
+//                                    $atributos ["etiquetaObligatorio"] = false;
+//                                    $atributos ['columnas'] = 3;
+//                                    $atributos ['dobleLinea'] = 0;
+//                                    $atributos ['tabIndex'] = $tab;
+//                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+//                                    $atributos ['validar'] = 'custom[integer]';
+//
+//                                    $atributos ['valor'] = '0';
+//
+//                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+//                                    $atributos ['deshabilitado'] = false;
+//                                    $atributos ['tamanno'] = 10;
+//                                    $atributos ['maximoTamanno'] = '20';
+//                                    $atributos ['anchoEtiqueta'] = 100;
+//                                    $tab++;
+//
+//                                    // Aplica atributos globales al control
+//                                    $atributos = array_merge($atributos, $atributosGlobales);
+//                                    echo $this->miFormulario->campoCuadroTexto($atributos);
+//                                    unset($atributos);
                                     // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                    $esteCampo = 'tiempoItem2';
-                                    $atributos ['id'] = $esteCampo;
-                                    $atributos ['nombre'] = $esteCampo;
-                                    $atributos ['tipo'] = 'text';
-                                    $atributos ['estilo'] = 'jqueryui';
-                                    $atributos ['marco'] = true;
-                                    $atributos ['estiloMarco'] = '';
-                                    $atributos ["etiquetaObligatorio"] = false;
-                                    $atributos ['columnas'] = 3;
-                                    $atributos ['dobleLinea'] = 0;
-                                    $atributos ['tabIndex'] = $tab;
-                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                                    $atributos ['validar'] = 'custom[integer]';
-
-                                    $atributos ['valor'] = '0';
-
-                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                                    $atributos ['deshabilitado'] = false;
-                                    $atributos ['tamanno'] = 10;
-                                    $atributos ['maximoTamanno'] = '20';
-                                    $atributos ['anchoEtiqueta'] = 100;
-                                    $tab++;
-
-                                    // Aplica atributos globales al control
-                                    $atributos = array_merge($atributos, $atributosGlobales);
-                                    echo $this->miFormulario->campoCuadroTexto($atributos);
-                                    unset($atributos);
-                                    // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                    // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                    $esteCampo = 'tiempoItem3';
-                                    $atributos ['id'] = $esteCampo;
-                                    $atributos ['nombre'] = $esteCampo;
-                                    $atributos ['tipo'] = 'text';
-                                    $atributos ['estilo'] = 'jqueryui';
-                                    $atributos ['marco'] = true;
-                                    $atributos ['estiloMarco'] = '';
-                                    $atributos ["etiquetaObligatorio"] = false;
-                                    $atributos ['columnas'] = 3;
-                                    $atributos ['dobleLinea'] = 0;
-                                    $atributos ['tabIndex'] = $tab;
-                                    $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                                    $atributos ['validar'] = 'custom[integer]';
-
-                                    $atributos ['valor'] = '0';
-
-                                    $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
-                                    $atributos ['deshabilitado'] = false;
-                                    $atributos ['tamanno'] = 10;
-                                    $atributos ['maximoTamanno'] = '20';
-                                    $atributos ['anchoEtiqueta'] = 100;
-                                    $tab++;
-
-                                    // Aplica atributos globales al control
-                                    $atributos = array_merge($atributos, $atributosGlobales);
-                                    echo $this->miFormulario->campoCuadroTexto($atributos);
-                                    unset($atributos);
-                                    // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
-                                }
-
-                                echo $this->miFormulario->marcoAgrupacion('fin');
+//                                }
+//
+//                                echo $this->miFormulario->marcoAgrupacion('fin');
                             }
 
                             echo '</div>';
@@ -1862,7 +1862,6 @@ class FormularioRegistro {
                         <th width="20%" >Descripción</th>
                         <th width="10%" >Tipo</th>
                         <th width="10%" >Unidad</th>
-                        <th width="10%" >Tiempo de Ejecución</th>
                         <th width="5%" >Cantidad</th>
                         <th width="10%" >&nbsp;</th>
                     </tr>
@@ -1931,7 +1930,6 @@ class FormularioRegistro {
                                 <td><?php echo $resultadoItems[$i][2] ?></td>
                                 <td><?php echo $matrizItemsTipoItem[0][0] . " - ".$matrizItemsTipoItem[0][1] ?></td>
                                 <td><?php echo $matrizItemsUnidad[0][0] . " - ".$matrizItemsUnidad[0][1] ?></td>
-                                <td><?php echo $ejecucion ?></td>
                                 <td><?php echo $numero_cantidad?></td>
                                 <th class="eliminarItem" scope="row"><div class = "widget">Eliminar</div></th>
                             </tr>
@@ -1945,7 +1943,6 @@ class FormularioRegistro {
                      $valoresItem .= ($resultadoItems[$i][2]) ."&";
                      $valoresItem .= ($matrizItemsTipoItem[0][0] . " - ".$matrizItemsTipoItem[0][1]) ."&";
                      $valoresItem .= ($matrizItemsUnidad[0][0] . " - ".$matrizItemsUnidad[0][1]) ."&";
-                     $valoresItem .= ($ejecucion) ."&";
                      $valoresItem .= ($numero_cantidad) ."&";
                      
                     $i++;

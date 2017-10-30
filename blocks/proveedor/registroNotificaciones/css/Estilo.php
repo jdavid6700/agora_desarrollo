@@ -6,14 +6,24 @@ $estilo[$indice++]="timepicker.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
 $estilo[$indice++]="miestilo.css";
+
+$estilo[$indice++]="jquery.modal.min.css";
+
 // $estilo[$indice++]="formToWizard.css";
 
 // Tablas
 $estilo[$indice++]="demo_page.css";
 // $estilo[$indice++]="demo_table.css";
-//$estilo[$indice++]="jquery.dataTables.css";
-//$estilo[$indice++]="jquery.dataTables.min.css";
-$estilo[$indice++]="jquery.dataTables_themeroller.css";
+
+if(!isset($_REQUEST['opcion']) || $_REQUEST['opcion'] == 'mostrar' || $_REQUEST['opcion'] == 'cotizacion'){
+	$estilo[$indice++]="jquery.dataTables.css";
+	$estilo[$indice++]="jquery.dataTables.min.css";
+	$estilo[$indice++]="jquery.dataTables_themeroller.css";
+}
+
+$estilo[$indice++]="accordion.css";
+$estilo[$indice++]="animate.min.css";
+
 $estilo[$indice++]="sweetalert2.min.css";
 
 //if(isset($_REQUEST['pagina'])){

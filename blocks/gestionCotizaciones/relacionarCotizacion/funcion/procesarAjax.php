@@ -299,10 +299,7 @@ else {
                         exit();
                     }
                     
-                     $datos [$i] ['Tiempo_Ejecucion_Ano'] = 0;
-                     $datos [$i] ['Tiempo_Ejecucion_Mes']=0;
-                     $datos [$i] ['Tiempo_Ejecucion_Dia'] = 0;  
-           
+                   
                  
                }
                
@@ -315,9 +312,6 @@ else {
                             'nombre' => trim($datos [$i] ['Nombre'], "'"),
                             'descripcion' => trim($datos [$i] ['Descripcion'], "'"),
                             'unidad' => trim($datos [$i] ['Unidad'], "'"),
-                            'tiempo_ejecucion_ano' => $datos [$i] ['Tiempo_Ejecucion_Ano'],
-                            'tiempo_ejecucion_mes' => $datos [$i] ['Tiempo_Ejecucion_Mes'],
-                            'tiempo_ejecucion_dia' => $datos [$i] ['Tiempo_Ejecucion_Dia'],
                             'cantidad' => $datos [$i] ['Cantidad']
                         );
                     }
@@ -357,39 +351,11 @@ else {
                         echo json_encode($tipo_validacion);
                         exit();
                     }
-                    $datosServicio [$i] ['Unidad'] = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
-                    if (is_null($datosServicio [$i] ['Unidad']) == true) {
-
-                        $tipo_validacion = ' Datos vacios en Columna D - Fila Pestaña Servicios' . $i;
-                        echo json_encode($tipo_validacion);
-                        exit();
-                    }
-                    
-                    $datosServicio [$i] ['Tiempo_Ejecucion_Ano'] = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
-                    if (($datosServicio [$i] ['Tipo'] == 'SERVICIO') && is_null($datosServicio [$i] ['Tiempo_Ejecucion_Ano']) == true) {
-
-                        $tipo_validacion = ' Datos vacios para Tiempo de Ejecucion en Columna E - Fila Pestaña Servicios' . $i;
-                        echo json_encode($tipo_validacion);
-                        exit();
-                    }
-                    $datosServicio [$i] ['Tiempo_Ejecucion_Mes'] = $objPHPExcel->getActiveSheet()->getCell('F' . $i)->getCalculatedValue();
-                    if (($datosServicio [$i] ['Tipo'] == 'SERVICIO') && is_null($datosServicio [$i] ['Tiempo_Ejecucion_Mes']) == true) {
-
-                        $tipo_validacion = ' Datos vacios para Tiempo de Ejecucion en Columna F - Fila Pestaña Servicios' . $i;
-                        echo json_encode($tipo_validacion);
-                        exit();
-                    }
-                    $datosServicio [$i] ['Tiempo_Ejecucion_Dia'] = $objPHPExcel->getActiveSheet()->getCell('G' . $i)->getCalculatedValue();
-                    if (($datosServicio [$i] ['Tipo'] == 'SERVICIO') && is_null($datosServicio [$i] ['Tiempo_Ejecucion_Dia']) == true) {
-
-                        $tipo_validacion = ' Datos vacios para Tiempo de Ejecucion en Columna G - Fila Pestaña Servicios' . $i;
-                        echo json_encode($tipo_validacion);
-                        exit();
-                    }
-                       $datosServicio [$i] ['Cantidad'] = $objPHPExcel->getActiveSheet()->getCell('H' . $i)->getCalculatedValue();
+             
+                    $datosServicio [$i] ['Cantidad'] = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
                     if (is_null($datosServicio [$i] ['Cantidad']) == true) {
 
-                        $tipo_validacion = ' Datos vacios en Columna H - Fila Pestaña Servicios' . $i;
+                        $tipo_validacion = ' Datos vacios en Columna D - Fila Pestaña Servicios' . $i;
                         echo json_encode($tipo_validacion);
                         exit();
                     }
@@ -407,10 +373,6 @@ else {
                             'tipo' => trim($datosServicio [$i] ['Tipo'], "'"),
                             'nombre' => trim($datosServicio [$i] ['Nombre'], "'"),
                             'descripcion' => trim($datosServicio [$i] ['Descripcion'], "'"),
-                            'unidad' => trim($datosServicio [$i] ['Unidad'], "'"),
-                            'tiempo_ejecucion_ano' => $datosServicio [$i] ['Tiempo_Ejecucion_Ano'],
-                            'tiempo_ejecucion_mes' => $datosServicio [$i] ['Tiempo_Ejecucion_Mes'],
-                            'tiempo_ejecucion_dia' => $datosServicio [$i] ['Tiempo_Ejecucion_Dia'],
                             'cantidad' => $datosServicio [$i] ['Cantidad']
                         );
                 }

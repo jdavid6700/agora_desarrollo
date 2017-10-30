@@ -83,13 +83,40 @@ if (!isset($GLOBALS["autorizado"])) {
     echo $this->miFormulario->division("inicio", $atributos);
 
 
+    if ($_REQUEST['mensaje'] == 'actualizoRespuesta') {
+    
+    
+    
+    	$tipo = 'success';
+    	$mensaje = "Se <b>Actualizo</b> la respuesta a la solicitud <b>".$_REQUEST['numero_solicitud']."</b> con vigencia ".$_REQUEST['vigencia']."<br >";
+    	$mensaje .= "La fecha de cierre de esta cotización es el <b>".$_REQUEST['fecha_cierre']."</b> podra recibir notificaciones de respuesta del ordenador hasta la misma, <br>así como notificación luego de esta indicando la decision del Ordenador.<br >
+        		<br><br>
+        		<b>IMPORTANTE:</b> Le recordamos nuevamente tener presente los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><b>
+        		- Estampilla UD (1%)<br>
+				- Adulto Mayor (2%)<br>
+				- Pro Cultura (0.5%)</b>
+        		";
+    	$mensaje .= "<strong><br >";
+    	$boton = "continuar";
+    
+    	$valorCodificado = "pagina=" . $miPaginaActual;
+    	$valorCodificado.="&opcion=mostrar";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    }
     if ($_REQUEST['mensaje'] == 'insertoRespuesta') {
         
         
                         
         $tipo = 'success';
-        $mensaje = "Se registro la respuesta a la solicitud ".$_REQUEST['numero_solicitud']." con vigencia ".$_REQUEST['vigencia']."<br >";
-        $mensaje .= "La fecha de vencimiento de esta cotización es el ".$_REQUEST['fecha_cierre']." podra recibir notificaciones de respuesta del ordenador hasta la misma, asi como notificacion luego de esta indicando la decision del Ordenador.<br >";
+        $mensaje = "Se <b>Registro</b> la respuesta a la solicitud <b>".$_REQUEST['numero_solicitud']."</b> con vigencia ".$_REQUEST['vigencia']."<br >";
+        $mensaje .= "La fecha de cierre de esta cotización es el <b>".$_REQUEST['fecha_cierre']."</b> podra recibir notificaciones de respuesta del ordenador hasta la misma, <br>así como notificación luego de esta indicando la decision del Ordenador.<br >
+        		<br><br>
+        		<b>IMPORTANTE:</b> Le recordamos nuevamente tener presente los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><b>
+        		- Estampilla UD (1%)<br>
+				- Adulto Mayor (2%)<br>
+				- Pro Cultura (0.5%)</b>
+        		";
         $mensaje .= "<strong><br >";
         $boton = "continuar";
 
@@ -97,6 +124,25 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&opcion=mostrar";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+    }
+    
+    if ($_REQUEST['mensaje'] == 'insertoObs') {
+    	
+    	$cadenaSql = $this->sql->getCadenaSql('listarObjetosParaMensajeJoin', $_REQUEST['objeto']);
+    	$datosSolicitud= $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $_REQUEST['objeto'], 'listarObjetosParaMensajeJoin');
+    	
+    	$timeStamp = date( "m/d/Y h:i A", strtotime($_REQUEST['fecha']));
+    	
+    	$tipo = 'success';
+    	$mensaje = "Se registro la <b>Observación</b> a la solicitud <b>".$datosSolicitud[0]['numero_solicitud']."</b> con vigencia <b>".$datosSolicitud[0]['vigencia']."</b><br >";
+    	$mensaje .= "La fecha de registro es (".$timeStamp.").<br><br> Podra ver en el anterior módulo cuando, su observación sea vista por el solicitante.<br >";
+    	$mensaje .= "<strong><br >";
+    	$boton = "continuar";
+    
+    	$valorCodificado = "pagina=" . $miPaginaActual;
+    	$valorCodificado.="&opcion=mostrar";
+    	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+    	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     }
     
      if ($_REQUEST['mensaje'] == 'NoinsertoRespuesta') {

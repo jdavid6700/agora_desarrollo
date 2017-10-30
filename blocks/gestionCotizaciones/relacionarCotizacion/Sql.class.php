@@ -49,7 +49,7 @@ class Sql extends \Sql {
         	case "argoTipoContratoUdistrital" :
         		$year = date('Y');
         		$cadenaSql = "SELECT id, id || '- ' || UPPER(tipo_contrato) as tipo FROM argo.tipo_contrato ";
-        		$cadenaSql.= "WHERE estado = 'TRUE' ";
+        		$cadenaSql.= "WHERE estado = 'TRUE' AND id_grupo_tipo_contrato > 0 ";
         		break;
         	
         	case "salarioMinimoVigente" :

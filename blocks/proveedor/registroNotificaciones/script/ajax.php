@@ -2647,6 +2647,9 @@ $urlFinalArchivo = $url . $cadenaArchivo;
     if ($("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val() > 0) {
         $("#<?php echo $this->campoSeguro('precioTotalIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val(), 0) + " pesos (COP)");
     }
+    if ($("#<?php echo $this->campoSeguro('precioIva') ?>").val() != null && $("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val() > 0) {
+        $("#<?php echo $this->campoSeguro('precioIva') ?>").val("$ " + currency($("#<?php echo $this->campoSeguro('precioTotaldeIva') ?>").val(), 0) + " pesos (COP)");
+    }
 
 
     var fileArchivo;
@@ -3061,6 +3064,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
     
     
     $("#botonAgregarInfo").click(function () {
+
+	var tope = $('#<?php echo $this->campoSeguro('tope_contratacion') ?>').val();
     
                             var nFilas = $("#tablaFP2 tr").length;
 
@@ -3205,7 +3210,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                 
                                      var combo = document.getElementById("producto");
  
-                                 
+                                 	
                                     
                                     if(myselects[i].value =='Exento' || myselects[i].value=='Tarifa de Cero' ){
                                             
@@ -3231,8 +3236,6 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                         iva_cotizacion_total+= (cantidad * parseFloat(valor_item)) + ((cantidad * parseFloat(valor_item)) * (parseFloat(myselects[i].value)/100));
                                         
                                         iva_total += (cantidad * parseFloat(valor_item)) * (parseFloat(myselects[i].value)/100);
-                                        
-                                        
                                       
                                     
                                     }
@@ -3240,6 +3243,42 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                     
                                 
                                 }
+                                
+								var limiteCon = parseFloat(tope);
+								var total = parseFloat(cotizacion_total);
+								if(total > limiteCon){
+									
+									swal({
+                                                title: 'Atención',
+                                                type: 'warning',
+                                                html:
+                                                		'Registros Ingresados...  <br>Cálculo realizado correctamente.<br><br>' +
+                                                		'<b>IMPORTANTE</b> <br>' +
+                                                        'El Precio de la Cotización excede el Limite del Presupuesto destinado ' +
+                                                        'para la cotización, por favor verifique los valores ingresados, las ' +
+                                                        'cotizaciones con valores superiores al limite presupuestal no serán tenidas ' +
+                                                        'en cuenta <br><br>' + 'LIMITE CONTRATACIÓN: '+ '<br>$ ' + currency(limiteCon, 0) + ' pesos (COP)' +
+                                                        '<br><br>' + 'SU PRECIO DE COTIZACIÓN ES: '+ '<br>$ ' + currency(total, 0) + ' pesos (COP)',
+                                                confirmButtonText:
+                                                        'Ok'
+
+                                            })
+									
+								}else{
+									
+									
+									 swal({
+                                                title: 'Registros Ingresados...',
+                                                type: 'success',
+                                                html:
+                                                        'Cálculo realizado correctamente.  ' ,
+                                                confirmButtonText:
+                                                        'Ok'
+
+                                            })
+									
+									
+								}
                                 
                                 var nFilas = $("#tablaFP2 tr").length;
                                 
@@ -3254,15 +3293,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                             
                                   
                             
-                                swal({
-                                                title: 'Registros Ingresados...',
-                                                type: 'success',
-                                                html:
-                                                        'Cálculo realizado correctamente.  ' ,
-                                                confirmButtonText:
-                                                        'Ok'
-
-                                            })
+                                 $("#<?php echo $this->campoSeguro('validacion_modificar')?>").css('display','block');
                                             
                                             
                                  
@@ -3282,4 +3313,27 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
      });
      
-     
+   
+   
+   $("#botonesRegCot").hover(function() {
+					  alertCriterioReg();
+					  $(this).unbind('mouseenter mouseleave');
+	});
+   
+   function alertCriterioReg() {
+    	
+    	swal({
+			                title: 'Importante <br>DESCUENTOS',
+			                type: 'warning',
+			                html:
+			                        'Nos permitimos solicitarle tenga en cuenta los descuentos que realiza la Universidad los cuales se calculan antes de IVA, así:<br><br><b>'
+									+'- Estampilla UD (1%)<br>'
+									+'- Adulto Mayor (2%)<br>'
+									+'- Pro Cultura (0.5%)<br><br></b>'
+			                        +'Por favor, tenga presente esta información. Gracias',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+    	
+    }
+   

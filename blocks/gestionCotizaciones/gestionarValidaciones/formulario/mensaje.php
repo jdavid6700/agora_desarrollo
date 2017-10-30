@@ -202,14 +202,14 @@ if (!isset($GLOBALS["autorizado"])) {
         $variableResumen.= "&idObjeto=" . $_REQUEST['idObjeto'];
         $variableResumen.= "&idCodigo=" . $_REQUEST['idCodigo'];
         $variableResumen.= "&proveedoresView=false";
-        $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+//        $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 
         //------------------Division para los botones-------------------------
         $atributos["id"] = "botones";
         $atributos["estilo"] = "marcoBotones widget";
         echo $this->miFormulario->division("inicio", $atributos);
 
-        $enlace = "<a href='" . $variableResumen . "'>";
+        $enlace = "<a href='javascript:void(0);' onclick='GenerarDocumentoCotizacion(" . json_encode($variableResumen) . ");'>";
         if ($convocatoria) {
             $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Descargar Solicitud Cotización ";
         } else {

@@ -219,14 +219,14 @@ class Formulario {
 		$variableResumen.= "&idObjeto=" . $resultadoNecesidadRelacionada[0]['id'];
 		$variableResumen.= "&idCodigo=" . "1112";
 		$variableResumen.= "&proveedoresView=true";
-		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+//		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 		
 		//------------------Division para los botones-------------------------
 		$atributos["id"]="botones";
 		$atributos["estilo"]="marcoBotones widget";
 		echo $this->miFormulario->division("inicio",$atributos);
 
-		$enlace = "<a href='".$variableResumen."'>";		
+		$enlace = "<a href='javascript:void(0);' onclick='GenerarDocumentoCotizacion(" . json_encode($variableResumen) . ");'>";		
 		if($convocatoria){
 			$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Ver Solicitud Cotización";
 		}else{
@@ -487,6 +487,7 @@ class Formulario {
 			 <th><center>Clasificación Evaluación</center></th>*/."
     							<th><center>Estado Cotización</center></th>
 								<th><center>Detalle Persona</center></th>
+			 					<th><center>Respuesta Solicitante</center></th>
 								<th><center> " . $tipoMN . "</center></th>
 							</tr>
 							</thead>
@@ -584,6 +585,20 @@ class Formulario {
 				$imagenViewPro = 'verPro.png';
 					
 				
+				$variableViewAdd = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
+				$variableViewAdd .= "&opcion=verResCotizacionProveedor";
+				$variableViewAdd .= "&idSolicitudCotizacion=" . "XXXX";
+				$variableViewAdd .= "&idProveedor=" . $dato['id_proveedor'];
+				$variableViewAdd .= "&idSolicitud=" . $objetoEspecifico[0]['numero_solicitud'];
+				$variableViewAdd .= "&vigencia=" . $objetoEspecifico[0]['vigencia'];
+				$variableViewAdd .= "&unidadEjecutora=" . $_REQUEST['unidadEjecutora'];
+				$variableViewAdd .= "&tipoCotizacion=" . $objetoEspecifico[0]['tipo_necesidad'];
+				$variableViewAdd .= "&idObjeto=". $datosSolicitudNecesidad['idObjeto'];
+				$variableViewAdd .= "&idSolicitudIndividual=" . $resultadoSolicitudxPersona[0]['id'];
+				$variableViewAdd = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableViewAdd, $directorio );
+				$imagenViewAdd = 'resPro.png';
+				
+				
 				if($dato['id_proveedor'] == $objetoEspecifico[0]['informacion_proveedor']){
 					echo '<tr style="background-color:#D7DF01;">';
 				}else{
@@ -604,6 +619,13 @@ class Formulario {
 											<img src='" . $rutaBloque . "/images/" . $imagenViewPro . "' width='15px'>
 										</a>
 									</center></td>
+										
+									<td><center>
+										<a href='" . $variableViewAdd . "'>
+											<img src='" . $rutaBloque . "/images/" . $imagenViewAdd . "' width='15px'>
+										</a>
+									</center></td>				
+													
 									<td><center>
 										<a href='" . $variableAdd . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenAdd . "' width='15px'>

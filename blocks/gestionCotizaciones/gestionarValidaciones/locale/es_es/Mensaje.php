@@ -1,6 +1,12 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
+$this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
+
+$this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
+$this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
+
 $this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
@@ -438,8 +444,8 @@ $this->idioma["precioCotTitulo"]="Precio Cotización";
 $this->idioma["formaPagoCot"] = "Forma de Pago : ";
 $this->idioma["formaPagoCotTitulo"]="Forma de Pago";
 
-$this->idioma["descuentos"] = "Descuentos Aplicables : ";
-$this->idioma["descuentosTitulo"]="Descuentos Aplicables";
+$this->idioma["descuentos"] = "Descuentos Ofrecidos : ";
+$this->idioma["descuentosTitulo"]="Descuentos Ofrecidos";
 $this->idioma["fechaVencimientoCot"] = "Fecha de Vencimiento Cotización : ";
 $this->idioma["fechaVencimientoCotTitulo"]="Fecha de Vencimiento Cotización";
 

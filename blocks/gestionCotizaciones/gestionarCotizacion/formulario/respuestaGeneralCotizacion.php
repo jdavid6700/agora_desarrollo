@@ -638,7 +638,37 @@ class FormularioRegistro {
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
 			
+			//*********************************************************************************************************
+			$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $_REQUEST['usuario'] );
+			$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
+			$cadenaSql = $this->miSql->getCadenaSql ( 'validarOrdenador', $resultadoUsuario[0]['identificacion'] );
+			$resultadoOrdenador = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+			
+			if($resultadoOrdenador && $resultadoOrdenador[0]['fecha_fin'] > date("Y-M-D")){
+				// Significa que es un Ordenador Activo
+				$ordenador = true;
+			}else{
+				$ordenador = false;
+			}
+			
+			$esteCampo = 'tipo_acceso';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['nombre'] = $esteCampo;
+			$atributos ['tipo'] = 'hidden';
+			$atributos ['estilo'] = 'jqueryui';
+			$atributos ['dobleLinea'] = false;
+			$atributos ['tabIndex'] = $tab;
+			$atributos ['valor'] = $ordenador;
+			$atributos ['deshabilitado'] = false;
+			$atributos ['tamanno'] = 30;
+			$atributos ['maximoTamanno'] = '';
+			$tab ++;
+			// Aplica atributos globales al control
+			$atributos = array_merge($atributos, $atributosGlobales);
+			echo $this->miFormulario->campoCuadroTexto($atributos);
+			unset($atributos);
+			//**************************************************************************************************************
 			
 			$tipo = 'warning';
 			$mensaje =  "<b>IMPORTANTE</b><br>

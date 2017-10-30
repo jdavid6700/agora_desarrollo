@@ -68,6 +68,13 @@ class Funcion {
 		include_once($this->ruta."/funcion/solicitudModificacion.php");
 	}
         
+        function registrarSolicitudModificacion()
+	{
+		include_once($this->ruta."/funcion/registrarSolicitudModificacion.php");
+	}
+        
+        
+        
         
 	function eliminarSolicitud() {
 		include_once ($this->ruta . "/funcion/eliminarSolicitud.php");
@@ -160,7 +167,11 @@ class Funcion {
 				case 'cotizacion' :
 					$this->solicitudCotizacion ();
 					break;
+                                case 'registrarSolicitudModificacion' :
+					$this->registrarSolicitudModificacion ();
+					break;     
 					
+                                    
 				case 'eliminarSolicitud' :
 					$this->eliminarSolicitud ();
 					break;
