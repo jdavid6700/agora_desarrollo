@@ -66,10 +66,6 @@ class Formulario {
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
 
-		
-		$SQLs = [];
-		$representanteExiste = false;
-		
 		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
 		if(isset($_REQUEST['correoPer'])){$_REQUEST['correoPer'] = str_replace('\\', "", $_REQUEST['correoPer']);}
 		
@@ -240,9 +236,10 @@ class Formulario {
 			}
 		}
 		
-		$fechaActual = date ( 'Y-m-d' . ' - ' .'h:i:s A');
+		
 		$fechaActualCambio = date ( 'Y-m-d' . ' - ' .'h:i:s A');
-			
+		
+		
 		$datosInformacionProveedorPersonaNatural = array (
 				'id_Proveedor' => $_REQUEST['id_Proveedor'],
 				'numero_documento' => $_REQUEST['nit'],
@@ -259,44 +256,20 @@ class Formulario {
 				'descripcion_proveedor' => $_REQUEST['descripcion'],
 				'fecha_modificación' => $fechaActualCambio,
 		);
-			
-		$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
-		array_push($SQLs, $cadenaSqlProveedorNatural);
-			
+		
+		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+		
 		$datosTelefonoFijoPersonaProveedor = array (
 				'id_telefono' => $_REQUEST['id_Telefono'],
 				'num_telefono' => $_REQUEST['telefono'],
 				'extension_telefono' => $_REQUEST['extension'],
 				'tipo' => '1'
 		);
-			
-			
-		$cadenaSqlTelFijo = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
-		array_push($SQLs, $cadenaSqlTelFijo);
-			
 		
 		
-		
-		
-		
-		
-		//***************************** ACTUALIZAR REPRESENTANTE ***************************************************
-		
-		
-		
-		$arregloUnique = array (
-				'num_documento' => $_REQUEST['numeroDocumento'],
-				'tipo_persona' => 'NATURAL'
-		);
-			
-		//VERIFICAR SI LA CEDULA YA SE ENCUENTRA REGISTRADA
-		$cadenaSql = $this->miSql->getCadenaSql ( "verificarProveedor", $arregloUnique);
-		$resultadoVerificar = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-		if ($resultadoVerificar) {
-			$representanteExiste = true;
-		}else{
-			$representanteExiste = false;
-		}
+		$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
+		$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 		
 		
 		//CAST****************************************************************
@@ -306,214 +279,65 @@ class Formulario {
 		//********************************************************************
 		
 		
+		
+		$datosInformacionPersonaNatural = array (
+				'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
+				'fki_numero_documento' => $_REQUEST['numeroDocumento'],
+				'digito_verificacion' => $_REQUEST['digitoRepre'],
+				'primer_apellido' => $_REQUEST['primerApellido'],
+				'segundo_apellido' => $_REQUEST['segundoApellido'],
+				'primer_nombre' => $_REQUEST['primerNombre'],
+				'segundo_nombre' => $_REQUEST['segundoNombre'],
+				'genero' => $_REQUEST['genero'],
+				'cargo' => $_REQUEST['cargo'],
+				'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
+				'id_perfil' => $_REQUEST['perfil'],
+				'id_nucleo_basico' => $_REQUEST['personaNBC'],
+				'profesion' => $_REQUEST['profesion'],
+				'especialidad' => $_REQUEST['especialidad'],
+				'monto_capital_autorizado' => null,
+				'grupoEtnico' => null,
+				'comunidadLGBT' => 'FALSE',
+				'cabezaFamilia' => 'FALSE',
+				'personasCargo' => 'FALSE',
+				'numeroPersonasCargo' => null,
+				'estadoCivil' => 'SOLTERO',
+				'discapacidad' => 'FALSE',
+				'tipoDiscapacidad' => null,
+				'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
+				'medicina_prepagada' => 'FALSE',
+				'valor_uvt_prepagada' => null,
+				'cuenta_ahorro_afc' => 'FALSE',
+				'num_cuenta_bancaria_afc' => null,
+				'id_entidad_bancaria_afc' => null,
+				'interes_vivienda_afc' => null,
+				'dependiente_hijo_menor_edad' => 'FALSE',
+				'dependiente_hijo_menos23_estudiando' => 'FALSE',
+				'dependiente_hijo_mas23_discapacitado' => 'FALSE',
+				'dependiente_conyuge' => 'FALSE',
+				'dependiente_padre_o_hermano' => 'FALSE',
+				'id_eps' => null,
+				'id_fondo_pension' => null,
+				'id_caja_compensacion' => null,
+				'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
+				'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
+		);
+		
+		
+		//Guardar datos PROVEEDOR REPRESENTANTE
+		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+		
+		
 		$datosProveedorXRepre = array (
 				'fki_id_Proveedor' => $_REQUEST['id_Proveedor'],
 				'fki_id_Representante' => $_REQUEST['numeroDocumento'],
 				'correo_Repre' => $_REQUEST['correoPer'],
 				'tel_Repre' => $_REQUEST['numeroContacto'],
 		);
-			
-		$cadenaSqlProvRepreClean = $this->miSql->getCadenaSql("limpiarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-		array_push($SQLs, $cadenaSqlProvRepreClean);
 		
-		
-		
-		
-		
-		if($representanteExiste){
-			
-			//**********************************************************
-			
-			$arregloUnique = array (
-					'num_documento' => $_REQUEST['numeroDocumento'],
-					'tipo_persona' => 'NATURAL'
-			);
-				
-			$cadenaSql = $this->miSql->getCadenaSql ( "consultarProveedorNat", $arregloUnique);
-			$resultadoProveedorNat = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
-			
-			$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
-				
-			$datosInformacionProveedorPersonaNaturalRepresentante = array (
-					'id_Proveedor' => $resultadoProveedorNat[0]['id_proveedor'],
-					'tipoPersona' => 'NATURAL',
-					'numero_documento' => $_REQUEST['numeroDocumento'],
-					'nombre_proveedor' => $nombrePersonaRepre,
-					'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
-					'direccion_contacto' => $_REQUEST['direccion'],
-					'correo_contacto' => $_REQUEST['correoPer'],
-					'web_contacto' => '',
-					'nom_asesor_comercial_contacto' => '',
-					'tel_asesor_comercial_contacto' => '',
-					'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],
-					'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
-					'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
-					'anexo_rut' => null,
-					'anexo_rup' => null,
-					'descripcion_proveedor' => '',
-					'fecha_registro' => $fechaActual,
-					'fecha_modificación' => $fechaActual,
-					'id_estado' => '2' //Estado Inactivo
-			);
-			//Guardar datos PROVEEDOR Representante
-			$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql("actualizarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
-			array_push($SQLs, $cadenaSqlProveedorNatural);
-			//*********************************************************
-			
-			$datosInformacionPersonaNatural = array (
-					'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
-					'fki_numero_documento' => $_REQUEST['numeroDocumento'],
-					'digito_verificacion' => $_REQUEST['digitoRepre'],
-					'primer_apellido' => $_REQUEST['primerApellido'],
-					'segundo_apellido' => $_REQUEST['segundoApellido'],
-					'primer_nombre' => $_REQUEST['primerNombre'],
-					'segundo_nombre' => $_REQUEST['segundoNombre'],
-					'genero' => $_REQUEST['genero'],
-					'cargo' => $_REQUEST['cargo'],
-					'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
-					'id_perfil' => $_REQUEST['perfil'],
-					'id_nucleo_basico' => $_REQUEST['personaNBC'],
-					'profesion' => $_REQUEST['profesion'],
-					'especialidad' => $_REQUEST['especialidad'],
-					'monto_capital_autorizado' => null,
-					'grupoEtnico' => null,
-					'comunidadLGBT' => 'FALSE',
-					'cabezaFamilia' => 'FALSE',
-					'personasCargo' => 'FALSE',
-					'numeroPersonasCargo' => null,
-					'estadoCivil' => 'SOLTERO',
-					'discapacidad' => 'FALSE',
-					'tipoDiscapacidad' => null,
-					'declarante_renta' => 'FALSE',//AGREGADO Beneficios Tributarios *****************
-					'medicina_prepagada' => 'FALSE',
-					'valor_uvt_prepagada' => null,
-					'cuenta_ahorro_afc' => 'FALSE',
-					'num_cuenta_bancaria_afc' => null,
-					'id_entidad_bancaria_afc' => null,
-					'interes_vivienda_afc' => null,
-					'dependiente_hijo_menor_edad' => 'FALSE',
-					'dependiente_hijo_menos23_estudiando' => 'FALSE',
-					'dependiente_hijo_mas23_discapacitado' => 'FALSE',
-					'dependiente_conyuge' => 'FALSE',
-					'dependiente_padre_o_hermano' => 'FALSE',
-					'id_eps' => null,
-					'id_fondo_pension' => null,
-					'id_caja_compensacion' => null,
-					'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
-					'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
-			);
-			
-			
-			//Guardar datos PROVEEDOR REPRESENTANTE
-			$cadenaSqlPersonaNatural = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
-			array_push($SQLs, $cadenaSqlPersonaNatural);
-			
-			
-			$datosProveedorXRepre = array (
-					'fki_id_Proveedor' => $_REQUEST['id_Proveedor'],
-					'fki_id_Representante' => $_REQUEST['numeroDocumento'],
-					'correo_Repre' => $_REQUEST['correoPer'],
-					'tel_Repre' => $_REQUEST['numeroContacto'],
-			);
-			
-			$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-			array_push($SQLs, $cadenaSqlProveedorXRepresentante);
-			
-		}else{
-			
-			$datosInformacionPersonaNaturalRepresentante = array (
-					'id_tipo_documento' =>	$_REQUEST['tipoDocumento'],
-					'fki_numero_documento' => $_REQUEST['numeroDocumento'],
-					'digito_verificacion' => $_REQUEST['digitoRepre'],
-					'primer_apellido' => $_REQUEST['primerApellido'],
-					'segundo_apellido' => $_REQUEST['segundoApellido'],
-					'primer_nombre' => $_REQUEST['primerNombre'],
-					'segundo_nombre' => $_REQUEST['segundoNombre'],
-					'genero' => $_REQUEST['genero'],
-					'cargo' => $_REQUEST['cargo'],
-					'id_pais_nacimiento' => $_REQUEST['paisNacimiento'],
-					'id_perfil' => $_REQUEST['perfil'],
-					'id_nucleo_basico' => $_REQUEST['personaNBC'],
-					'profesion' => $_REQUEST['profesion'],
-					'especialidad' => $_REQUEST['especialidad'],
-					'monto_capital_autorizado' => null,
-					'grupoEtnico' => null,
-					'comunidadLGBT' => 'FALSE',
-					'cabezaFamilia' => 'FALSE',
-					'personasCargo' => 'FALSE',
-					'numeroPersonasCargo' => null,
-					'estadoCivil' => 'SOLTERO',
-					'discapacidad' => 'FALSE',
-					'tipoDiscapacidad' => null,
-					'declarante_renta' => 'FALSE',
-					'medicina_prepagada' => 'FALSE',
-					'valor_uvt_prepagada' => null,
-					'cuenta_ahorro_afc' => 'FALSE',
-					'num_cuenta_bancaria_afc' => null,
-					'id_entidad_bancaria_afc' => null,
-					'interes_vivienda_afc' => null,
-					'dependiente_hijo_menor_edad' => 'FALSE',
-					'dependiente_hijo_menos23_estudiando' => 'FALSE',
-					'dependiente_hijo_mas23_discapacitado' => 'FALSE',
-					'dependiente_conyuge' => 'FALSE',
-					'dependiente_padre_o_hermano' => 'FALSE',
-					'id_eps' => null,
-					'id_fondo_pension' => null,
-					'id_caja_compensacion' => null,
-					'fecha_expedicion_doc' => $_REQUEST ['fechaExpeRep'],
-					'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeRep']
-			);
-				
-				
-			//Guardar datos PROVEEDOR NATURAL REPRESENTANTE
-			$cadenaSqlPersonaNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNaturalRepresentante );
-			array_push($SQLs, $cadenaSqlPersonaNatural);
-				
-			$datosProveedorXRepre = array (
-					'fki_id_Proveedor' => $_REQUEST['id_Proveedor'],
-					'fki_id_Representante' => $_REQUEST['numeroDocumento'],
-					'correo_Repre' => $_REQUEST['correoPer'],
-					'tel_Repre' => $_REQUEST['numeroContacto'],
-			);
-				
-			$cadenaSqlProveedorXRepresentante = $this->miSql->getCadenaSql("insertarInformacionProveedorXRepresentante",$datosProveedorXRepre);
-			array_push($SQLs, $cadenaSqlProveedorXRepresentante);
-			
-			
-			//********************************************************
-			$nombrePersonaRepre = $_REQUEST['primerNombre'] . ' ' . $_REQUEST['segundoNombre'] . ' ' . $_REQUEST['primerApellido'] . ' ' . $_REQUEST['segundoApellido'];
-			
-			$datosInformacionProveedorPersonaNaturalRepresentante = array (
-					'tipoPersona' => 'NATURAL',
-					'numero_documento' => $_REQUEST['numeroDocumento'],
-					'nombre_proveedor' => $nombrePersonaRepre,
-					'id_ciudad_contacto' =>	$_REQUEST['ciudad'],
-					'direccion_contacto' => $_REQUEST['direccion'],
-					'correo_contacto' => $_REQUEST['correoPer'],
-					'web_contacto' => '',
-					'nom_asesor_comercial_contacto' => '',
-					'tel_asesor_comercial_contacto' => '',
-					'tipo_cuenta_bancaria' => $_REQUEST['tipoCuenta'],
-					'num_cuenta_bancaria' => $_REQUEST['numeroCuenta'],
-					'id_entidad_bancaria' => $_REQUEST['entidadBancaria'],
-					'anexo_rut' => null,
-					'anexo_rup' => null,
-					'descripcion_proveedor' => '',
-					'fecha_registro' => $fechaActual,
-					'fecha_modificación' => $fechaActual,
-					'id_estado' => '2' //Estado Inactivo
-			);
-			//Guardar datos PROVEEDOR Representante
-			$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql("insertarInformacionProveedor",$datosInformacionProveedorPersonaNaturalRepresentante);
-			array_push($SQLs, $cadenaSqlProveedorNatural);
-			//********************************************************
-				
-		}
-		
-		//***********************************************************************************************************
-		
-		
-		
+		$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorXRepresentante",$datosProveedorXRepre);
+		$resultado = $esteRecursoDB->ejecutarAcceso($cadenaSql, "acceso");
 		
 		
 		
@@ -681,20 +505,18 @@ class Formulario {
 		);
 			
 		//Actualizar datos PROVEEDOR JURIDICA
-		$cadenaSqlProveedorJuridica = $this->miSql->getCadenaSql ( "actualizarProveedorJuridica", $datosInformacionPersonaJuridica );
-		array_push($SQLs, $cadenaSqlProveedorJuridica);
-		
+		$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorJuridica", $datosInformacionPersonaJuridica );
+		$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 
-		$actualizoPersona = $esteRecursoDB->transaccion($SQLs);
+				
 
-		
-		if ($actualizoPersona) {
-			redireccion::redireccionar ( 'actualizo', $_REQUEST ['nit'] );
-			exit ();
-		} else {
-			redireccion::redireccionar ( 'noActualizo', $_REQUEST ['nit'] );
-			exit ();
-		}
+				if ($resultado) {
+					redireccion::redireccionar ( 'actualizo',  $_REQUEST['nit']);
+					exit();
+				} else {
+					redireccion::redireccionar ( 'noActualizo',  $_REQUEST['nit']);
+					exit();
+				}
 
 	}
 	

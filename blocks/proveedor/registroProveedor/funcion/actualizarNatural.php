@@ -61,7 +61,6 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
-		$SQLs = [];
 		
 		if(isset($_REQUEST['correoNat'])){$_REQUEST['correoNat'] = str_replace('\\', "", $_REQUEST['correoNat']);}
 		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
@@ -487,8 +486,8 @@ class Formulario {
 						'fecha_modificación' => $fechaActualCambio,
 				);
 				
-				$cadenaSqlProveedorNatural = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
-				array_push($SQLs, $cadenaSqlProveedorNatural);
+				$cadenaSql = $this->miSql->getCadenaSql ( "actualizarInformacionProveedor", $datosInformacionProveedorPersonaNatural );
+				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
 				
 				
 				
@@ -500,8 +499,8 @@ class Formulario {
 				);
 				
 				
-				$cadenaSqlProveedorTelFijo = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
-				array_push($SQLs, $cadenaSqlProveedorTelFijo);
+				$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
+				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 				
 				$datosTelefonoMovilPersonaProveedor = array (
 						'id_telefono' => $_REQUEST['id_MovilNat'],
@@ -510,8 +509,8 @@ class Formulario {
 						'tipo' => '2'
 				);
 				
-				$cadenaSqlProveedorTelMovil = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
-				array_push($SQLs, $cadenaSqlProveedorTelMovil);
+				$cadenaSql = $this->miSql->getCadenaSql("actualizarInformacionProveedorTelefono",$datosTelefonoMovilPersonaProveedor);
+				$id_TelefonoMovil = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 				
 				
 				
@@ -562,21 +561,17 @@ class Formulario {
 				);
 				
 				
-		//Guardar datos PROVEEDOR NATURAL
-		$cadenaSqlProveedorPersonaNatural = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
-		array_push($SQLs, $cadenaSqlProveedorPersonaNatural);
-				
-		
-		$actualizoPersona = $esteRecursoDB->transaccion($SQLs);
-				
-				
-		if ($actualizoPersona) {
-			redireccion::redireccionar ( 'actualizo', $_REQUEST ['documentoNat'] );
-			exit ();
-		} else {
-			redireccion::redireccionar ( 'noActualizo', $_REQUEST ['documentoNat'] );
-			exit ();
-		}
+				//Guardar datos PROVEEDOR NATURAL
+				$cadenaSql = $this->miSql->getCadenaSql ( "actualizarProveedorNatural", $datosInformacionPersonaNatural );
+				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
+
+				if ($resultado) {
+					redireccion::redireccionar ( 'actualizo',  $_REQUEST['documentoNat']);
+					exit();
+				} else {
+					redireccion::redireccionar ( 'noActualizo',  $_REQUEST['documentoNat']);
+					exit();
+				}
 
 	}
 	
