@@ -1621,7 +1621,12 @@ class FormularioRegistro {
             echo $this->miFormulario->cuadroMensaje($atributos);
             unset($atributos);
             
-            
+            $atributos ["id"] = "validacion_modificar";
+            $atributos ["estiloEnLinea"] = "display:none";
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->division("inicio", $atributos);
+            unset($atributos);
+            {
             
             // ------------------Division para los botones-------------------------
             $atributos ["id"] = "botonesRegCot";
@@ -1655,7 +1660,8 @@ class FormularioRegistro {
             }
             // ------------------Fin Division para los botones-------------------------
             echo $this->miFormulario->division("fin");
-            
+            }
+            echo $this->miFormulario->division("fin");
             
             
         }

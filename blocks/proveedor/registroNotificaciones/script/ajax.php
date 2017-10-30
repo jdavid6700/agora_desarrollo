@@ -3293,7 +3293,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                             
                                   
                             
-                               
+                                 $("#<?php echo $this->campoSeguro('validacion_modificar')?>").css('display','block');
                                             
                                             
                                  

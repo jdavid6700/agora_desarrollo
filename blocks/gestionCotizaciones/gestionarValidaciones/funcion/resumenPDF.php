@@ -255,6 +255,16 @@ class RegistradorOrden {
 
 
                         endforeach;
+                        
+                        if($countTotal == 0){
+                            $valor_promedio = "SIN DATOS PARA CALCULAR";
+                            $promedio = 0;
+                        }
+                        else
+                        {
+                            $valor_promedio = money_format('%#15.0n', (int)($totalCotizacion/$countTotal));
+                            $promedio = ($totalCotizacion/$countTotal);
+                        }
 
                         $listProv .= "
                             <tr>
@@ -262,13 +272,13 @@ class RegistradorOrden {
                                     " . "VALOR PROMEDIO" . "
                                 </td>
                                                 <td align='center' >
-                                    " . money_format('%#15.0n', (int)($totalCotizacion/$countTotal)) . "
+                                    " . $valor_promedio . "
                                 </td>
                             </tr>
                             </tbody>";
 
 
-                        $promedio = ($totalCotizacion/$countTotal);
+                        
                         if($promedio > 999999999 && $promedio <= 999999999999){
 
                                 $restCast = substr((int)$promedio, -9);
@@ -283,10 +293,17 @@ class RegistradorOrden {
 
                                 $converted .= $converterNumber->to_word($restCast, 'COP');
                         }else{
+                             
                                 $converted = $converterNumber->to_word($promedio, 'COP');
                         }
-
-                        $dineroCast = $converted;
+                        
+                        if($promedio == 0){
+                             $dineroCast = "SIN INFORMACIÓN";
+                        }
+                        else{
+                               $dineroCast = $converted; 
+                        }
+                        
 
                         $listProv .= "</table>
 
@@ -312,7 +329,13 @@ class RegistradorOrden {
         //ARMAR PAGINA DE IMPRESION
 
 
-
+         if(isset($_REQUEST['tamanoletra']) && is_numeric($_REQUEST['tamanoletra'])){
+            $valorTamañoLetra = $_REQUEST['tamanoletra'];
+        }
+        else{
+            $valorTamañoLetra = 10;
+        }
+               
 
 
         $estilos = '                  
@@ -354,6 +377,7 @@ class RegistradorOrden {
                                 float: left;
                                 padding: 10px;
                                 display: table-cell;
+                                  font-size : '.$valorTamañoLetra.'pt;
                             }
 
                             /* Clear floats after the columns */
@@ -465,13 +489,13 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Título Cotización</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] .  ' </div>
+                                    <div class="column"  height="4%" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['titulo_cotizacion'] .  ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Actividad Económica</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $contenidoAct . ' </div>
+                                    <div class="column" width="79%"  height="4%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $contenidoAct . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo" >
@@ -489,7 +513,7 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Objetivos<br>/Temas</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['objetivo'] . ' </div>
+                                    <div class="column" width="79%"  height="4%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoObjeto[0]['objetivo'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
@@ -501,7 +525,7 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Observaciones Adicionales</b></div>
-                                    <div class="column" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['observaciones'] . ' </div>
+                                    <div class="column" width="79%"  height="4%" style="background-color:#ffffff;border-left: 0.5px solid black;"> ' . $resultadoObjeto[0]['observaciones'] . ' </div>
                                   </div>
                                 </div>
                                 <div class="todo">
@@ -519,7 +543,7 @@ class RegistradorOrden {
                                 <div class="todo">
                                   <div class="row" style="background-color:#b3ccff;">
                                     <div class="column" width="14.9%" style="background-color:#b3ccff;"><b>Responsable de la Cotización</b></div>
-                                    <div class="column" height="50px" width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
+                                    <div class="column" height="60px"  width="79%" style="background-color:#ffffff;border-left: 0.5px solid black;text-align:justify;"> ' . $resultadoOrdenadorDef[0][1] . ' </div>
                                   </div>
                                 </div>
 
