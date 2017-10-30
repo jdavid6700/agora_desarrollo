@@ -535,7 +535,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " observaciones, ";
                 $cadenaSql .= " fecha_vencimiento, ";
                 $cadenaSql .= " soporte_cotizacion, ";
-                $cadenaSql .= " fecha_registro";
+                $cadenaSql .= " fecha_registro,";
+                $cadenaSql .= " estado";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " agora.respuesta_cotizacion_proveedor";
                 $cadenaSql .= " WHERE  ";

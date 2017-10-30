@@ -46,7 +46,7 @@ $this->idioma["tiempoItem2Titulo"]="Tiempo de Ejecución Item";
 $this->idioma["tiempoItem3"] = "Días: ";
 $this->idioma["tiempoItem3Titulo"]="Tiempo de Ejecución Item";
 
-$this->idioma["botonAgregarInfo"] = "Calcular ";
+$this->idioma["botonAgregarInfo"] = "Almacenar Items ";
 $this->idioma["marcoParametrosItemTiempo"]="Tiempo de Ejecución";
 
 

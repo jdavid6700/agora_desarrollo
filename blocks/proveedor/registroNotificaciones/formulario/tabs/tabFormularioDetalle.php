@@ -321,8 +321,6 @@ class FormularioRegistro {
         $cadenaSql = $this->miSql->getCadenaSql('consultar_proveedor', $_REQUEST ["usuario"]);
         $resultadoDoc = $frameworkRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-		
-
 
         $numeroDocumento = $resultadoDoc[0]['identificacion'];
 
@@ -391,6 +389,9 @@ class FormularioRegistro {
         $atributos["mensaje"] = $mensaje;
         echo $this->miFormulario->cuadroMensaje($atributos);
         unset($atributos);
+        
+        
+     
         
 
         $esteCampo = "marcoContratosTablaRes";
@@ -1164,7 +1165,25 @@ class FormularioRegistro {
             
             
             
-            
+                  if($resultadoRespuesta[0]['estado'] == "f"){
+                  	$tipo = 'warning';
+                  	$mensaje = "<b>ATENCIÓN</b><br>
+							<br>
+							Actualmente, el solicitante de cotización ha realizado una <b>modificación</b> en la descripción y cantidades de bienes y/o servicios
+        					que están contenidos en la cotización, de manera automática se han actualizado los precios de su respuesta, de acuerdo a esta información, por tal motivo se
+        			ha <b>habilitado la modificación por única vez de su respuesta</b>, la información que se presenta a continuación es la que se encuentra actualmente en su registro,
+        			<i>si desea cambiar dicha información, por favor vuelva al panel anterior y modifique su respuesta, recuerde que solo lo podrá hacer una vez</i>.
+							";
+                  	// ---------------- SECCION: Controles del Formulario -----------------------------------------------
+                  	$esteCampo = 'mensaje';
+                  	$atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+                  	$atributos["etiqueta"] = "";
+                  	$atributos["estilo"] = "centrar";
+                  	$atributos["tipo"] = $tipo;
+                  	$atributos["mensaje"] = $mensaje;
+                  	echo $this->miFormulario->cuadroMensaje($atributos);
+                  	unset($atributos);
+                  }
             
             
             $esteCampo = "marcoDescripcionProducto";
