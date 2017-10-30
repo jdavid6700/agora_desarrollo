@@ -228,6 +228,9 @@ class SolicitudModificacion {
             }
         }
 
+        $datoActRespuestaCotizacionInfo = $this->miSql->getCadenaSql('actualizarEstadoInformadoProveedor', $datosSolicitud['idObjeto']);
+        array_push($SQLs, $datoActRespuestaCotizacionInfo);
+        
 
         $insertoModificacionSolicitud = $esteRecursoDB->transaccion($SQLs);
 

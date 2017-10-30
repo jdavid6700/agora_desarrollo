@@ -31,6 +31,34 @@ class Sql extends \Sql {
 
         switch ($tipo) {
         	
+        	case "actualizarEstadoInformadoConfirm" :
+        		$cadenaSql = " UPDATE ";
+        		$cadenaSql.= " agora.solicitud_cotizacion ";
+        		$cadenaSql.= " SET ";
+        		$cadenaSql.= " informado = 'TRUE' ";
+        		$cadenaSql.= " WHERE id = " . $variable . ";";
+        		break;
+        	
+        	case "buscarInfoProveedorSendMail" :
+        		$cadenaSql = " SELECT * ";
+        		$cadenaSql.= " FROM agora.informacion_proveedor ";
+        		$cadenaSql.= " WHERE id_proveedor = " . $variable . ";";
+        		break;
+        	
+        	case "buscarEstadoInformadoProveedor" :
+        		$cadenaSql = " SELECT * ";
+        		$cadenaSql.= " FROM agora.solicitud_cotizacion ";
+        		$cadenaSql.= " WHERE objeto_cotizacion = " . $variable . ";";
+        		break;
+        	
+        	case "actualizarEstadoInformadoProveedor" :
+        		$cadenaSql = " UPDATE ";
+        		$cadenaSql.= " agora.solicitud_cotizacion ";
+        		$cadenaSql.= " SET ";
+        		$cadenaSql.= " informado = 'FALSE' ";
+        		$cadenaSql.= " WHERE objeto_cotizacion = " . $variable . ";";
+        		break;
+        		
 
         	case "adendasModificacionValuesEstRes" :
         		$cadenaSql = "SELECT ";

@@ -13,6 +13,7 @@ function detectarCarga(){
 	});
 	
 	
+	
 	if ( $('#<?php echo $this->campoSeguro('unidadPresupuestal')?>').length &&
 		 $('#<?php echo $this->campoSeguro('criterioSeleccion')?>').length &&
 		 $('#<?php echo $this->campoSeguro('plazoEjecucion')?>').length &&

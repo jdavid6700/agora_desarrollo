@@ -2624,7 +2624,7 @@ $("#<?php echo $this->campoSeguro('medioPago')?>").change(function() {
                 {
                   title: 'Imprimir Cotización',
                   html: 'Por Favor Ingrese <br> Tamaño de Letra en Números <br> <br> ' +
-                  'Si Desea Valor por Defecto, Dar en Siguiente'
+                  'Si Desea Valor por Defecto (10), Dar en Siguiente'
                 }
             ]
 
