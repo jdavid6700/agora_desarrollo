@@ -282,7 +282,7 @@ class Sql extends \Sql {
 
             case "informacionPersonaOrdenador" :
                 $cadenaSql = " SELECT *";
-                $cadenaSql .= " FROM agora.informacion_proveedor WHERE estado = 1 AND num_documento = " . $variable . ";";
+                $cadenaSql .= " FROM agora.informacion_proveedor WHERE estado = 1 AND num_documento = '" . $variable . "';";
                 break;
 
             case "buscarUnidadItem" :
@@ -493,7 +493,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM agora.objeto_cotizacion OC ";
                 $cadenaSql .= " LEFT JOIN agora.solicitud_cotizacion SC ON SC.objeto_cotizacion = OC.id ";
                 $cadenaSql .= " LEFT JOIN agora.informacion_proveedor IP ON IP.id_proveedor = SC.proveedor ";
-                $cadenaSql .= " WHERE IP.num_documento = " . $variable . "  ;";
+                $cadenaSql .= " WHERE IP.num_documento = '" . $variable . "'  ;";
                 break;
             case "tipoNecesidadAdministrativa3" :
                 $cadenaSql = " SELECT id, nombre";
@@ -623,7 +623,7 @@ class Sql extends \Sql {
 
             case "buscarCiiuPersona" :
                 $cadenaSql = " SELECT P.num_documento, P.id_subclase FROM agora.proveedor_actividad_ciiu P";
-                $cadenaSql .= " WHERE P.num_documento = $variable ";
+                $cadenaSql .= " WHERE P.num_documento = '" . $variable."' ";
                 break;
 
             case "eliminarActividad" :
@@ -1260,7 +1260,7 @@ class Sql extends \Sql {
 
             case "consultar_DatosProveedor" :
                 $cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
-                $cadenaSql .= " WHERE num_documento = " . $variable . ";";
+                $cadenaSql .= " WHERE num_documento = '" . $variable . "';";
                 break;
 
             case "consultarConsorciosUniones" :
@@ -1276,7 +1276,7 @@ class Sql extends \Sql {
 
             case "consultar_tipo_proveedor" :
                 $cadenaSql = " SELECT P.tipoPersona FROM agora.informacion_proveedor P";
-                $cadenaSql .= " WHERE P.num_documento = $variable ";
+                $cadenaSql .= " WHERE P.num_documento = '". $variable ."' ";
                 break;
 
             case "consultarContactoTelProveedor" :
@@ -1757,7 +1757,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " t1.num_documento";
                 $cadenaSql .= " FROM ";
                 $cadenaSql .= " agora.informacion_proveedor t1";
-                $cadenaSql .= " WHERE t1.num_documento = " . $variable . ";";
+                $cadenaSql .= " WHERE t1.num_documento = '" . $variable . "';";
                 break;
 
             /* CONSULTAR CONTRATOS DEL PROVEEDOR */

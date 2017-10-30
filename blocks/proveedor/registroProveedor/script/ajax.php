@@ -1228,6 +1228,7 @@ function consultarDepartamentoLug(elem, request, response){
 	
 	
 	
+	
 	function clearFileInput($input) {
 	    if ($input.val() == '') {
 	        return;
@@ -1365,8 +1366,10 @@ function consultarDepartamentoLug(elem, request, response){
 		    	      });       		    	      
 		    	              
 		    	
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////    
-    $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
+
+
+$("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
             $("#<?php echo $this->campoSeguro('documentoNat')?>").val('');
             $("#<?php echo $this->campoSeguro('digitoNat')?>").val('');
             if($("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").val()==0){
@@ -1382,9 +1385,10 @@ function consultarDepartamentoLug(elem, request, response){
                  $("#<?php echo $this->campoSeguro('numeroDocumento')?>").attr('disabled','');
                 }
             else{$("#<?php echo $this->campoSeguro('numeroDocumento')?>").removeAttr('disabled');}
-          }); 		    	
-          
-                        $("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
+          }); 
+
+  
+		    	$("#<?php echo $this->campoSeguro('nit')?>").on('keyup', function(){//Ejecutar la Evaluación por Eventos de Teclado
         				var value = $(this).val().length;
         				if(value > 3){//Ejecutar solo Cuando se Completa el NIT
         					var cadenaNit = $(this).val();
@@ -1424,7 +1428,7 @@ function consultarDepartamentoLug(elem, request, response){
         					$("#<?php echo $this->campoSeguro('digitoRepre')?>").val(null);
         				}
         				
-    			}).keyup();      
+    			}).keyup();         
 	    	      
 		 });
 		  

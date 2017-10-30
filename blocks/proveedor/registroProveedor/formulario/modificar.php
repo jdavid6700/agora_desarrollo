@@ -2608,7 +2608,7 @@ class Formulario {
 					$atributos ['valor'] = '';
 				}
 				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
-				$atributos ['deshabilitado'] = true;
+				$atributos ['deshabilitado'] = false;
 				$atributos ['tamanno'] = 15;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 200;

@@ -156,10 +156,10 @@ if (!isset($GLOBALS["autorizado"])) {
         	$mail->Mailer = "smtp";
         	$mail->SMTPAuth = true;
         	$mail->Username = "agora@udistrital.edu.co";
-        	$mail->Password = "CondorOAS2012";
+        	$mail->Password = "Beedoh9Ohd";
         	$mail->Timeout = 1200;
         	$mail->Charset = "utf-8";
-        	$mail->SMTPDebug = 1;
+        	$mail->SMTPDebug = 0;
         	$mail->IsHTML ( true );
         	
         	//remitente

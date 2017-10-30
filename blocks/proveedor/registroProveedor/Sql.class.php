@@ -28,6 +28,15 @@ class Sql extends \Sql {
 		
 		switch ($tipo) {
 			
+			/* VERIFICAR NUMERO DE DOCUMENTO Y TIPO PERSONA */
+			case "consultarProveedorNat" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.informacion_proveedor ";
+				$cadenaSql .= " WHERE num_documento = '" . $variable ['num_documento'] . "' AND tipopersona = '".$variable ['tipo_persona']."';";
+				break;
+			
 			/* DATOS DEL PROVEEDOR */
 			case "buscarProveedorByDocumentoUnique" : // ****************************************************************************
 				$cadenaSql = " SELECT";
@@ -439,7 +448,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " VALUES ";
 				$cadenaSql .= " ( ";
 				$cadenaSql .= " '" . $variable ['tipoPersona'] . "', ";
-				$cadenaSql .= " '" .$variable ['numero_documento'] . "', ";
+				$cadenaSql .= " '" . $variable ['numero_documento'] . "', ";
 				$cadenaSql .= " '" . $variable ['nombre_proveedor'] . "', ";
 				$cadenaSql .= $variable ['id_ciudad_contacto'] . ", ";
 				$cadenaSql .= " '" . $variable ['direccion_contacto'] . "', ";
@@ -504,9 +513,9 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " tipo_documento,";
 				$cadenaSql .= " num_documento_persona,";
-                                if ($variable ['digito_verificacion'] != null) 
-                                    { $cadenaSql .= " digito_verificacion,";}
-                                $cadenaSql .= " primer_apellido, ";
+				if ($variable ['digito_verificacion'] != null)
+				{ $cadenaSql .= " digito_verificacion,";}
+				$cadenaSql .= " primer_apellido, ";
 				$cadenaSql .= " segundo_apellido, ";
 				$cadenaSql .= " primer_nombre,";
 				$cadenaSql .= " segundo_nombre,";
@@ -568,9 +577,8 @@ class Sql extends \Sql {
 				$cadenaSql .= " (";
 				$cadenaSql .= " " . $variable ['id_tipo_documento'] . ",";
 				$cadenaSql .= " '" . $variable ['fki_numero_documento'] . "',";
-				if ($variable ['digito_verificacion'] != null) 
-                                    { $cadenaSql .= " " . $variable ['digito_verificacion'] . ",";}
-                                
+				if ($variable ['digito_verificacion'] != null)
+				{ $cadenaSql .= " " . $variable ['digito_verificacion'] . ",";}
 				$cadenaSql .= " '" . $variable ['primer_apellido'] . "',";
 				$cadenaSql .= " '" . $variable ['segundo_apellido'] . "',";
 				$cadenaSql .= " '" . $variable ['primer_nombre'] . "',";
@@ -654,7 +662,7 @@ class Sql extends \Sql {
 				
 			case "consultar_tipo_proveedor" :
 				$cadenaSql = " SELECT P.tipoPersona FROM agora.informacion_proveedor P";
-				$cadenaSql .= " WHERE P.num_documento = '" . $variable . "';";
+				$cadenaSql .= " WHERE P.num_documento = '". $variable."'";
 				break;
 			
 			case "consultarContactoTelProveedor" :
@@ -749,7 +757,6 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.informacion_proveedor ";
 				$cadenaSql .= " SET";
 				$cadenaSql .= " num_documento = '" . $variable ['numero_documento'] . "', ";
-				;
 				$cadenaSql .= " nom_proveedor = " . " '" . $variable ['nombre_proveedor'] . "', ";
 				$cadenaSql .= " id_ciudad_contacto = " . $variable ['id_ciudad_contacto'] . ", ";
 				$cadenaSql .= " direccion = " . " '" . $variable ['direccion_contacto'] . "', ";
@@ -790,7 +797,7 @@ class Sql extends \Sql {
 				if ($variable ['digito_verificacion'] != null) {
 					$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
 				}
-                                $cadenaSql .= " primer_apellido = " . " '" . $variable ['primer_apellido'] . "',";
+				$cadenaSql .= " primer_apellido = " . " '" . $variable ['primer_apellido'] . "',";
 				$cadenaSql .= " segundo_apellido = " . " '" . $variable ['segundo_apellido'] . "',";
 				$cadenaSql .= " primer_nombre = " . " '" . $variable ['primer_nombre'] . "',";
 				$cadenaSql .= " segundo_nombre = " . " '" . $variable ['segundo_nombre'] . "',";
@@ -1023,6 +1030,14 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_representante = ";
 				$cadenaSql .= "'" . $variable ['fki_id_Representante'] . "' ";
 				break;
+				
+				case 'limpiarInformacionProveedorXRepresentante' :
+					$cadenaSql = " DELETE ";
+					$cadenaSql .= " FROM ";
+					$cadenaSql .= " agora.proveedor_representante_legal";
+					$cadenaSql .= " WHERE id_proveedor = ";
+					$cadenaSql .= "'" . $variable ['fki_id_Proveedor'] . "'; ";
+					break;
 			
 			/* ACTUALIZAR DATOS - USUARIO JURIDICA */
 			case "actualizarProveedorJuridica" :

@@ -3077,7 +3077,6 @@ echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 				
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "consultarTipoDocumento" );
 				$matrizItems = $esteRecursoDB->ejecutarAcceso ( $atributos ['cadena_sql'], "busqueda" );
-                               // var_dump($matrizItems);
 				/*$matrizItems = array (
 				 array ( 1, 'Registro Civil de Nacimiento' ),
 				 array ( 2, 'Tarjeta de Identidad' ),
