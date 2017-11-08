@@ -1,4 +1,32 @@
 
+#marcoRepresentanteMod {
+	display: none;
+}
+
+#marcoRepresentante {
+	background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+    
+    width: 70%;
+}
+
+#marcoRepresentanteMod {
+	background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+    
+    width: 70%;
+}
+
+#changeRepCancel {
+	display: none;
+}
+
 input {
   font-weight:bold;
   font-size: 1.2em;
@@ -14,12 +42,32 @@ textarea{
 
 span{
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.0em;
   font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
 }
 
 #pie {
      width: 100%;
+}
+
+#controlAdd {
+    background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+    
+    width: 65%;
+}
+
+#controlAddMod {
+    background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+    
+    width: 65%;
 }
 
 #parametros {
@@ -56,5 +104,9 @@ span{
 
 .mayuscula {
 	text-transform: uppercase; 
+}
+
+.swal2-input, .swal2-modal .swal2-textarea {
+    text-transform: uppercase; 
 }
 

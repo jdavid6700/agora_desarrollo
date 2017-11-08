@@ -205,6 +205,11 @@ class FormularioRegistro {
     }
 
     function formulario() {
+        
+        
+      
+        
+      
 
         /**
          * IMPORTANTE: Este formulario está utilizando jquery.
@@ -581,7 +586,7 @@ class FormularioRegistro {
             	       										
             	       				                        while($contReg < count($resultadoAdendasValues)){
                                                                                     
-                                                                $id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion'];
+                                                                                 $id_padre=$resultadoAdendasValues[$contReg]['item_cotizacion'];
             	       				                        	
             	       				                        	$jsonReg = $resultadoAdendasValues[$contReg]['registro_anterior'];
             	       				                        	 
@@ -633,8 +638,11 @@ class FormularioRegistro {
             	       				                        		} else {
             	       				                        			$tiempo = $this->inverseTotalDias ( $resultadoItemsJson [6] ['tiempo_ejecucion'] );
             	       				                        		}
-            	       				                        	
-            	       				                        		$valorPrecioTotal += ($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
+                                                                                        
+                                                                                        
+                                                                                         
+            	       				                        		$valorPrecioTotal += round(($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario']), 2);
+                                                                                            
             	       				                        		if ($IvaItem [0] ['descripcion'] == 'Tarifa de Cero' || $IvaItem [0] ['descripcion'] == 'Exento') {
             	       				                        			$valorPrecioTotalIva += ($resultadoItemsJson [6] ['cantidad'] * $resultadoItemsJson ['valor_unitario']);
             	       				                        		} else {

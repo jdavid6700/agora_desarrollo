@@ -41,7 +41,7 @@ class FormularioRegistro {
 
         $conexion = 'sicapital';
         $siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
-        
+
         //$conexion = 'centralUD';
         //$centralUDRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
@@ -151,50 +151,49 @@ class FormularioRegistro {
 
 
         $datosSolicitudNecesidad = array(
-        
-        		'idObjeto' => $_REQUEST['idSolicitud']
+            'idObjeto' => $_REQUEST['idSolicitud']
         );
-        
-        
+
+
         //********************************** TOPE DE PRESUPUESTO **************************************
         $cadena_sql = $this->miSql->getCadenaSql("informacionSolicitudAgoraNoCast", $datosSolicitudNecesidad['idObjeto']);
         $resultadoNecesidadRelacionada = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 
-		$datos = array (
-				'numero_disponibilidad' => $resultadoNecesidadRelacionada[0]['numero_necesidad'],
-				'vigencia' => $resultadoNecesidadRelacionada[0]['vigencia'],
-				'unidad_ejecutora' => $resultadoNecesidadRelacionada[0]['unidad_ejecutora']
-		);
-		$cadenaSql = $this->miSql->getCadenaSql ( 'obtenerInfoNec', $datos );
-		$resultadoItemsNec = $siCapitalRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
-        
-        
-		$esteCampo = 'tope_contratacion';
-		$atributos ['id'] = $esteCampo;
-		$atributos ['nombre'] = $esteCampo;
-		$atributos ['tipo'] = 'hidden';
-		$atributos ['estilo'] = 'jqueryui';
-		$atributos ['dobleLinea'] = false;
-		$atributos ['tabIndex'] = $tab;
-		
-		if($resultadoItemsNec){
-			$atributos ['valor'] = $resultadoItemsNec[0]['VALOR_CONTRATACION'];
-		}else{
-			$atributos ['valor'] = 0;
-		}
-		
-		
-		$atributos ['deshabilitado'] = false;
-		$atributos ['tamanno'] = 30;
-		$atributos ['maximoTamanno'] = '';
-		$tab ++;
-		// Aplica atributos globales al control
-		$atributos = array_merge($atributos, $atributosGlobales);
-		echo $this->miFormulario->campoCuadroTexto($atributos);
-		unset($atributos);
-		
-		
-		//**********************************************************************************************
+        $datos = array(
+            'numero_disponibilidad' => $resultadoNecesidadRelacionada[0]['numero_necesidad'],
+            'vigencia' => $resultadoNecesidadRelacionada[0]['vigencia'],
+            'unidad_ejecutora' => $resultadoNecesidadRelacionada[0]['unidad_ejecutora']
+        );
+        $cadenaSql = $this->miSql->getCadenaSql('obtenerInfoNec', $datos);
+        $resultadoItemsNec = $siCapitalRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+
+        $esteCampo = 'tope_contratacion';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'hidden';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['dobleLinea'] = false;
+        $atributos ['tabIndex'] = $tab;
+
+        if ($resultadoItemsNec) {
+            $atributos ['valor'] = $resultadoItemsNec[0]['VALOR_CONTRATACION'];
+        } else {
+            $atributos ['valor'] = 0;
+        }
+
+
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 30;
+        $atributos ['maximoTamanno'] = '';
+        $tab ++;
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
+
+
+        //**********************************************************************************************
 
         $cadena_sql = $this->miSql->getCadenaSql("buscarDetalleItems", $datosSolicitudNecesidad);
         $resultadoItems = $esteRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
@@ -207,8 +206,7 @@ class FormularioRegistro {
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
-        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-        {
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
 
 
             //INICIO INFORMACION
@@ -274,8 +272,7 @@ class FormularioRegistro {
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
-        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-        {
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
 
 
             // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
@@ -354,14 +351,13 @@ class FormularioRegistro {
             $atributos ["estilo"] = "jqueryui";
             $atributos ['tipoEtiqueta'] = 'inicio';
             $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
-            echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
-            {
+            echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); {
 
                 $esteCampo = 'tipo_registro';
                 $atributos ['columnas'] = 1;
                 $atributos ['nombre'] = $esteCampo;
                 $atributos ['id'] = $esteCampo;
-                $atributos ['seleccion'] = 1;
+                $atributos ['seleccion'] = 2;
                 $atributos ['evento'] = '';
                 $atributos ['deshabilitado'] = false;
                 $atributos ['tab'] = $tab;
@@ -395,11 +391,10 @@ class FormularioRegistro {
                 echo '<br><br><br>';
 
                 $atributos ["id"] = "cargue_elementos";
-                $atributos ["estiloEnLinea"] = "display:none";
+                $atributos ["estiloEnLinea"] = "display:block";
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->division("inicio", $atributos);
-                unset($atributos);
-                {
+                unset($atributos); {
 
                     $valoresItem = '';
                     $numerosItem = 0;
@@ -429,49 +424,49 @@ class FormularioRegistro {
 
 
 
-                            <?php
-                            $cadenaSql = $this->miSql->getCadenaSql('consultar_tipo_iva');
-                            $resultadoIva = $esteRecursoDBArka->ejecutarAcceso($cadenaSql, "busqueda");
+                    <?php
+                    $cadenaSql = $this->miSql->getCadenaSql('consultar_tipo_iva');
+                    $resultadoIva = $esteRecursoDBArka->ejecutarAcceso($cadenaSql, "busqueda");
 
-                            if (isset($resultadoItems) && $resultadoItems) {
-                                $count = count($resultadoItems);
-                                $i = 0;
+                    if (isset($resultadoItems) && $resultadoItems) {
+                        $count = count($resultadoItems);
+                        $i = 0;
 
-                                $numerosItem = $count;
+                        $numerosItem = $count;
 
-                                while ($i < $count) {
+                        while ($i < $count) {
 
-                                    if (intval($resultadoItems[$i][5]) === 0) {
-                                        $ejecucion = '0 - NO APLICA';
-                                    } else {
-                                        $nyears = intval(intval($resultadoItems[$i][5]) / 360);
-                                        $nmonths = intval((intval($resultadoItems[$i][5]) - intval(intval($resultadoItems[$i][5]) / 360) * 360) / 30);
-                                        $ndays = intval(intval($resultadoItems[$i][5]) - (intval(intval($resultadoItems[$i][5]) / 360) * 360 + intval((intval($resultadoItems[$i][5]) - intval(intval($resultadoItems[$i][5]) / 360) * 360) / 30) * 30));
-                                        $ejecucion = $nyears . " AÑO(S) - " . $nmonths . " MES(ES) - " . $ndays . " DÍA(S)";
-                                    }
+                            if (intval($resultadoItems[$i][5]) === 0) {
+                                $ejecucion = '0 - NO APLICA';
+                            } else {
+                                $nyears = intval(intval($resultadoItems[$i][5]) / 360);
+                                $nmonths = intval((intval($resultadoItems[$i][5]) - intval(intval($resultadoItems[$i][5]) / 360) * 360) / 30);
+                                $ndays = intval(intval($resultadoItems[$i][5]) - (intval(intval($resultadoItems[$i][5]) / 360) * 360 + intval((intval($resultadoItems[$i][5]) - intval(intval($resultadoItems[$i][5]) / 360) * 360) / 30) * 30));
+                                $ejecucion = $nyears . " AÑO(S) - " . $nmonths . " MES(ES) - " . $ndays . " DÍA(S)";
+                            }
 
-                                    $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa3', $resultadoItems[$i][3]);
-                                    $matrizItemsTipoItem = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa3', $resultadoItems[$i][3]);
+                            $matrizItemsTipoItem = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-                                    $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('unidadUdistrital2', $resultadoItems[$i][4]);
-                                    $matrizItemsUnidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+                            $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('unidadUdistrital2', $resultadoItems[$i][4]);
+                            $matrizItemsUnidad = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
-                                    if ($resultadoItems[$i][4] === '0') {
-                                        $matrizItemsUnidad[0][0] = 0;
-                                        $matrizItemsUnidad[0][1] = 'NO APLICA';
-                                    }
+                            if ($resultadoItems[$i][4] === '0') {
+                                $matrizItemsUnidad[0][0] = 0;
+                                $matrizItemsUnidad[0][1] = 'NO APLICA';
+                            }
 
 
-                                    if ($resultadoItems[$i][6] - intval($resultadoItems[$i][6])) { // Sobra 0.24 por lo que devuelve verdadero
-                                        $numero_cantidad = number_format($resultadoItems[$i][6], 2, ',', '.');
-                                    } else {
-                                        $numero_cantidad = intval($resultadoItems[$i][6]);
-                                    }
-                                    ?>
+                            if ($resultadoItems[$i][6] - intval($resultadoItems[$i][6])) { // Sobra 0.24 por lo que devuelve verdadero
+                                $numero_cantidad = number_format($resultadoItems[$i][6], 2, ',', '.');
+                            } else {
+                                $numero_cantidad = intval($resultadoItems[$i][6]);
+                            }
+                            ?>
 
 
                                     <tr id="nFilas" >
-                                        <td style="display:none;"><?php echo $resultadoItems[$i][0]?></td>
+                                        <td style="display:none;"><?php echo $resultadoItems[$i][0] ?></td>
                                         <td><?php echo $i + 1 ?></td>
                                         <td><?php echo $resultadoItems[$i][1] ?></td>
                                         <td><?php echo $resultadoItems[$i][2] ?></td>
@@ -480,35 +475,35 @@ class FormularioRegistro {
                                         <td style="display:none;"><?php echo $ejecucion ?></td>
                                         <td><?php echo $numero_cantidad ?></td>
                                         <td><?php echo '<input type="text" id="valorUnitario" name="valorUnitario" placeholder="Valor 123456.24" maxlength="22" class="form-control  custom[number]"/>'
-                                    ?></td>
+                            ?></td>
                                         <td>
-                                            <?php
-                                            echo '<select  id="iva" name="iva"  class="selectpicker  ">                                                                   
+                            <?php
+                            echo '<select  id="iva" name="iva"  class="selectpicker  ">                                                                   
                                                                                          <option value="">Seleccione  ....</option>';
-                                            for ($j = 0; $j < count($resultadoIva); $j++) {
-                                                echo '<option value="' . $resultadoIva[$j]['descripcion'] . '">' . $resultadoIva[$j]['descripcion'] . '</option>';
-                                            }
-                                            echo '</select> '
-                                            ?></td>
+                            for ($j = 0; $j < count($resultadoIva); $j++) {
+                                echo '<option value="' . $resultadoIva[$j]['descripcion'] . '">' . $resultadoIva[$j]['descripcion'] . '</option>';
+                            }
+                            echo '</select> '
+                            ?></td>
                                         <td><?php echo '<textarea name="explanation" class="NOTanEditor" rows="4" cols="50"  maxlength="2000"></textarea>' ?></td>
                                     </tr>
 
 
 
 
-                                    <?php
-                                    $valoresItem .= ($i + 1) . "&";
-                                    $valoresItem .= ( $resultadoItems[$i][1]) . "&";
-                                    $valoresItem .= ($resultadoItems[$i][2]) . "&";
-                                    $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "&";
-                                    $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "&";
-                                    $valoresItem .= ($ejecucion) . "&";
-                                    $valoresItem .= ($numero_cantidad) . "&";
+                            <?php
+                            $valoresItem .= ($i + 1) . "&";
+                            $valoresItem .= ( $resultadoItems[$i][1]) . "&";
+                            $valoresItem .= ($resultadoItems[$i][2]) . "&";
+                            $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "&";
+                            $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "&";
+                            $valoresItem .= ($ejecucion) . "&";
+                            $valoresItem .= ($numero_cantidad) . "&";
 
-                                    $i++;
-                                }
-                            }
-                            ?>
+                            $i++;
+                        }
+                    }
+                    ?>
 
 
 
@@ -529,7 +524,7 @@ class FormularioRegistro {
                     <?php
                 }
                 echo "<br><br>";
-                   //------------------Division para los botones-------------------------
+                //------------------Division para los botones-------------------------
                 $atributos["id"] = "botones";
                 $atributos["estilo"] = "marcoBotones widget";
                 echo $this->miFormulario->division("inicio", $atributos);
@@ -551,8 +546,8 @@ class FormularioRegistro {
                 //********************************************************************************************************************************
                 //------------------Fin Division para los botones-------------------------
                 echo $this->miFormulario->division("fin");
-                
-                
+
+
                 echo $this->miFormulario->division("fin");
                 unset($atributos);
 
@@ -589,7 +584,7 @@ class FormularioRegistro {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroTexto($atributos);
                 unset($atributos);
-                
+
                 $esteCampo = 'idsItemsProv';
                 $atributos ["id"] = $esteCampo; // No cambiar este nombre
                 $atributos ["tipo"] = "hidden";
@@ -606,8 +601,8 @@ class FormularioRegistro {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroTexto($atributos);
                 unset($atributos);
-                
-                
+
+
 
                 $esteCampo = 'permisoItem';
                 $atributos ["id"] = $esteCampo; // No cambiar este nombre
@@ -887,49 +882,56 @@ class FormularioRegistro {
             unset($atributos);
 
 
-            // ------------------Division para los botones-------------------------
-            $atributos ["id"] = "botonesRegCot";
-            $atributos ["estilo"] = "marcoBotones";
+            $atributos ["id"] = "validacion_modificar";
+            $atributos ["estiloEnLinea"] = "display:none";
+            $atributos = array_merge($atributos, $atributosGlobales);
             echo $this->miFormulario->division("inicio", $atributos);
-            {
-                // -----------------CONTROL: Botón ----------------------------------------------------------------
+            unset($atributos); {
 
 
-                if (isset($estadoSolicitud)) {
-                    $esteCampo = 'botonModificar';
-                } else {
-                    $esteCampo = 'botonRegistrar';
+                // ------------------Division para los botones-------------------------
+                $atributos ["id"] = "botonesRegCot";
+                $atributos ["estilo"] = "marcoBotones";
+                echo $this->miFormulario->division("inicio", $atributos); {
+                    // -----------------CONTROL: Botón ----------------------------------------------------------------
+
+
+                    if (isset($estadoSolicitud)) {
+                        $esteCampo = 'botonModificar';
+                    } else {
+                        $esteCampo = 'botonRegistrar';
+                    }
+
+
+
+
+                    $atributos ["id"] = $esteCampo;
+                    $atributos ["tabIndex"] = $tab;
+                    $atributos ["tipo"] = 'boton';
+                    // submit: no se coloca si se desea un tipo button genérico
+                    $atributos ['submit'] = 'true';
+                    $atributos ["estiloMarco"] = '';
+                    $atributos ["estiloBoton"] = 'jqueryui';
+                    // verificar: true para verificar el formulario antes de pasarlo al servidor.
+                    $atributos ["verificar"] = '';
+                    $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
+                    $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
+                    $atributos ['nombreFormulario'] = $esteBloque ['nombre'] . "Registrar";
+                    $tab++;
+
+                    // Aplica atributos globales al control
+                    $atributos = array_merge($atributos, $atributosGlobales);
+                    echo $this->miFormulario->campoBoton($atributos);
+
+                    // -----------------FIN CONTROL: Botón -----------------------------------------------------------
                 }
+                // ------------------Fin Division para los botones-------------------------
+                echo $this->miFormulario->division("fin");
 
 
-
-
-                $atributos ["id"] = $esteCampo;
-                $atributos ["tabIndex"] = $tab;
-                $atributos ["tipo"] = 'boton';
-                // submit: no se coloca si se desea un tipo button genérico
-                $atributos ['submit'] = 'true';
-                $atributos ["estiloMarco"] = '';
-                $atributos ["estiloBoton"] = 'jqueryui';
-                // verificar: true para verificar el formulario antes de pasarlo al servidor.
-                $atributos ["verificar"] = '';
-                $atributos ["tipoSubmit"] = 'jquery'; // Dejar vacio para un submit normal, en este caso se ejecuta la función submit declarada en ready.js
-                $atributos ["valor"] = $this->lenguaje->getCadena($esteCampo);
-                $atributos ['nombreFormulario'] = $esteBloque ['nombre'] . "Registrar";
-                $tab++;
-
-                // Aplica atributos globales al control
-                $atributos = array_merge($atributos, $atributosGlobales);
-                echo $this->miFormulario->campoBoton($atributos);
-
-                // -----------------FIN CONTROL: Botón -----------------------------------------------------------
+                echo "";
             }
-            // ------------------Fin Division para los botones-------------------------
             echo $this->miFormulario->division("fin");
-            
-            
-            echo "";
-            
         }
         echo $this->miFormulario->marcoAgrupacion('fin', $atributos);
 

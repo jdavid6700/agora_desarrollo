@@ -1873,6 +1873,10 @@ class FormularioRegistro {
 
 
                     <?php
+                    
+                    $cantidad_bienes=0;
+                    $cantidad_servicios=0;
+                    
                     if (isset($resultadoItems) && $resultadoItems) {
                         $count = count($resultadoItems);
                         $i = 0;
@@ -1911,6 +1915,19 @@ class FormularioRegistro {
                                $matrizItemsUnidad[0][1] = 'NO APLICA';
                            }
                            
+                           
+                           if($matrizItemsTipoItem[0][1] === 'BIEN'){
+                               
+                               $cantidad_bienes = $cantidad_bienes + 1;
+                           }
+                           if($matrizItemsTipoItem[0][1] === 'SERVICIO'){
+                               
+                               $cantidad_servicios = $cantidad_servicios + 1;
+                           }
+                           
+                           
+                           
+                           
                           
                             if($resultadoItems[$i][6] - intval($resultadoItems[$i][6])) // Sobra 0.24 por lo que devuelve verdadero
                             {
@@ -1920,6 +1937,8 @@ class FormularioRegistro {
                             {
                                $numero_cantidad = intval($resultadoItems[$i][6]);
                             }
+                            
+                            
       
                             ?>
                              
@@ -2022,6 +2041,36 @@ class FormularioRegistro {
             $atributos ["etiqueta"] = "";
 
             $atributos ['valor'] = $permiso;
+
+            $atributos ['validar'] = '';
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+            unset($atributos);
+            
+             $esteCampo = 'cantidadBienes';
+            $atributos ["id"] = $esteCampo; // No cambiar este nombre
+            $atributos ["tipo"] = "hidden";
+            $atributos ['estilo'] = '';
+            $atributos ["obligatorio"] = false;
+            $atributos ['marco'] = false;
+            $atributos ["etiqueta"] = "";
+
+            $atributos ['valor'] = $cantidad_bienes;
+
+            $atributos ['validar'] = '';
+            $atributos = array_merge($atributos, $atributosGlobales);
+            echo $this->miFormulario->campoCuadroTexto($atributos);
+            unset($atributos);
+            
+             $esteCampo = 'cantidadServicios';
+            $atributos ["id"] = $esteCampo; // No cambiar este nombre
+            $atributos ["tipo"] = "hidden";
+            $atributos ['estilo'] = '';
+            $atributos ["obligatorio"] = false;
+            $atributos ['marco'] = false;
+            $atributos ["etiqueta"] = "";
+
+            $atributos ['valor'] = $cantidad_servicios;
 
             $atributos ['validar'] = '';
             $atributos = array_merge($atributos, $atributosGlobales);
@@ -2613,7 +2662,7 @@ class FormularioRegistro {
         } else {
             $atributos ['seleccion'] = - 1;
         }
-        $atributos ['deshabilitado'] = true;
+        $atributos ['deshabilitado'] = false;
         $atributos ['columnas'] = 1;
         $atributos ['tamanno'] = 1;
         $atributos ['estilo'] = "jqueryui";
@@ -2624,6 +2673,8 @@ class FormularioRegistro {
 
         $atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('tipoNecesidadAdministrativa');
         $matrizItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        
+        
 
         $atributos ['matrizItems'] = $matrizItems;
         $atributos = array_merge($atributos, $atributosGlobales);

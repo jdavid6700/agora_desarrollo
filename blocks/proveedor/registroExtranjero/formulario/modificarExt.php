@@ -7374,7 +7374,7 @@ class Formulario {
 			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
-			$cadenaCiiu = $this->miSql->getCadenaSql ( "buscarCiiuPersona", $_REQUEST['nit']);
+			$cadenaCiiu = $this->miSql->getCadenaSql ( "buscarCiiuPersona", $_REQUEST['fki_idProveedorJur']);
 			$resultadoCiiuPersona = $esteRecursoDB->ejecutarAcceso ( $cadenaCiiu, "busqueda" );
 			
 			$_REQUEST ['claseCIIUJur'] = $resultadoCiiuPersona[0]['id_subclase'];
@@ -7462,6 +7462,7 @@ class Formulario {
 			$atributos ['tamanno'] = 20;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 220;
+			$atributos ['textoEnriquecido'] = true;
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
 			} else {

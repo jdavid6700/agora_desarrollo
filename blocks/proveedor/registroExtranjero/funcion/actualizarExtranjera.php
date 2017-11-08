@@ -26,6 +26,42 @@ class Formulario {
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
 	}
+	
+	function campoSeguroCodificar($cadena, $tiempoRequest) {
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Codificar) +++++++++++++++++++++++++++++++++++++++++++ */
+	    
+	    $tiempo = (int) substr($tiempoRequest, 0, -2);
+	    $tiempo = $tiempo * pow(10, 2);
+	    
+	    $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->codificar($cadena . $tiempo);
+	    
+	    
+	    
+	    
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    return $campoSeguro;
+	}
+	
+	function campoSeguroDecodificar($campoSeguroRequest, $tiempoRequest) {
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Decodificar) +++++++++++++++++++++++++++++++++++++++++ */
+	    
+	    $tiempo = (int) substr($tiempoRequest, 0, -2);
+	    $tiempo = $tiempo * pow(10, 2);
+	    
+	    $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->decodificar($campoSeguroRequest);
+	    
+	    $campo = str_replace($tiempo, "", $campoSeguro);
+	    
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    return $campo;
+	}
+	
 	function procesarFormulario() {
 		
 		
@@ -65,6 +101,11 @@ class Formulario {
 		$rutaBloque .= $esteBloque ['nombre'];
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/proveedor/" . $esteBloque ['nombre'];
 		
+		
+		/*Variables Texto Enriquecido ----------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------*/
+		$descripcion = $_POST[$this->campoSeguroCodificar('descripcion', $_REQUEST['tiempo'])];
+		$_REQUEST['descripcion'] = str_replace("'", "\"", $descripcion);
 
 		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
 		if(isset($_REQUEST['correoPer'])){$_REQUEST['correoPer'] = str_replace('\\', "", $_REQUEST['correoPer']);}

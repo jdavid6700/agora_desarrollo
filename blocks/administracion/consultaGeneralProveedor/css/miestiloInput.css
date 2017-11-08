@@ -1,4 +1,14 @@
 
+#marcoRepresentante {
+	background: #eee;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: relative;
+    
+    width: 70%;
+}
+
 input {
   font-weight:bold;
   font-size: 1.2em;
