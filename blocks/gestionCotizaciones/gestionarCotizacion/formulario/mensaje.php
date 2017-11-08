@@ -276,16 +276,19 @@ if (!isset($GLOBALS["autorizado"])) {
         );
          
         // configuracion de cuenta de envio
-        $mail->SMTPSecure = 'tls';
-        $mail->Host = "mail.udistrital.edu.co";
-        $mail->Port = 587;
-        $mail->Mailer = "smtp";
-        $mail->SMTPAuth = true;
-        $mail->Username = "agora@udistrital.edu.co";
-        $mail->Password = "Beedoh9Ohd";
-        $mail->Timeout = 1200;
-        $mail->Charset = "utf-8";
-        $mail->SMTPDebug = 0;
+        $servidorCorreo = $this->miConfigurador->getVariableConfiguracion ( "servidorCorreo" );
+        $configSer = json_decode($servidorCorreo, true);
+         
+        $mail->SMTPSecure = $configSer['SMTPSecure'];
+        $mail->Host = $configSer['Host'];
+        $mail->Port = $configSer['Port'];
+        $mail->Mailer = $configSer['Mailer'];
+        $mail->SMTPAuth = $configSer['SMTPAuth'];
+        $mail->Username = $configSer['Username'];
+        $mail->Password = $configSer['Password'];
+        $mail->Timeout = $configSer['Timeout'];
+        $mail->Charset = $configSer['Charset'];
+        $mail->SMTPDebug = $configSer['SMTPDebug'];
         $mail->IsHTML ( true );
         
         
@@ -550,16 +553,19 @@ if (!isset($GLOBALS["autorizado"])) {
         );
          
         // configuracion de cuenta de envio
-        $mail->SMTPSecure = 'tls';
-        $mail->Host = "mail.udistrital.edu.co";
-        $mail->Port = 587;
-        $mail->Mailer = "smtp";
-        $mail->SMTPAuth = true;
-        $mail->Username = "agora@udistrital.edu.co";
-        $mail->Password = "Beedoh9Ohd";
-        $mail->Timeout = 1200;
-        $mail->Charset = "utf-8";
-        $mail->SMTPDebug = 0;
+        $servidorCorreo = $this->miConfigurador->getVariableConfiguracion ( "servidorCorreo" );
+        $configSer = json_decode($servidorCorreo, true);
+        	
+        $mail->SMTPSecure = $configSer['SMTPSecure'];
+        $mail->Host = $configSer['Host'];
+        $mail->Port = $configSer['Port'];
+        $mail->Mailer = $configSer['Mailer'];
+        $mail->SMTPAuth = $configSer['SMTPAuth'];
+        $mail->Username = $configSer['Username'];
+        $mail->Password = $configSer['Password'];
+        $mail->Timeout = $configSer['Timeout'];
+        $mail->Charset = $configSer['Charset'];
+        $mail->SMTPDebug = $configSer['SMTPDebug'];
         $mail->IsHTML ( true );
         
         

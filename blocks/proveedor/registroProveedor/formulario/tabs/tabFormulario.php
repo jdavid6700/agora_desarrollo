@@ -1665,7 +1665,7 @@ class registrarForm {
 						// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 						$esteCampo = 'botonValidar';
 						$atributos ['id'] = $esteCampo;
-						$atributos ['enlace'] = "#";
+						$atributos ['enlace'] = "javascript:void(0);";
 						$atributos ['tabIndex'] = 1;
 						$atributos ['estilo'] = 'textoSubtitulo';
 						$atributos ['enlaceTexto'] = $this->lenguaje->getCadena($esteCampo);
