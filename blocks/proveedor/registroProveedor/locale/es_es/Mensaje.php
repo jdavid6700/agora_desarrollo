@@ -29,6 +29,8 @@ $this->idioma["marcoExpLugRep"] = "Lugar de Expedición";
 
 $this->idioma["fechaExpeRep"]="Fecha Expedición :";
 $this->idioma["fechaExpeRepTitulo"]="Digite Fecha Expedición Documento";
+$this->idioma["fechaExpeRepRead"]="Fecha Expedición :";
+$this->idioma["fechaExpeRepReadTitulo"]="Digite Fecha Expedición Documento";
 
 $this->idioma["ciudadExpeRep"]="Ciudad Expedición :";
 $this->idioma["ciudadExpeRepTitulo"]="Digite Ciudad Expedición";
@@ -103,6 +105,8 @@ $this->idioma["documentoNatTitulo"]="Digite Número Documento";
 
 $this->idioma["numeroDocumento"]="Número Documento : ";
 $this->idioma["numeroDocumentoTitulo"]="Digite Número Documento";
+$this->idioma["numeroDocumentoMod"]="Número Documento : ";
+$this->idioma["numeroDocumentoModTitulo"]="Digite Número Documento";
 
 $this->idioma["primerApellido"]="Primer Apellido : ";
 $this->idioma["primerApellidoTitulo"]="Digite Primer Apellido";
@@ -308,6 +312,8 @@ $this->idioma["botonRegistrar"] = "Registrar";
 $this->idioma["botonGuardar"] = "Guardar";
 $this->idioma["botonGuardarNat"] = "Guardar";
 $this->idioma["botonAceptar"] = "Buscar";
+$this->idioma["botonValidar"] = "Relacionar";
+$this->idioma["botonValidarMod"] = "Relacionar";
 $this->idioma["continuar"] = "Continuar";
 $this->idioma["regresar"] = "Regresar";
 $this->idioma["noDefinido"] = "No definido";
@@ -384,6 +390,7 @@ $this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o her
 $this->idioma["marcoProcedencia"] = "Información para Empresa Extranjera";
 $this->idioma["marcoContacto"] = "Información del Contacto";
 $this->idioma["marcoRepresentante"] = "Información del Representante Legal";
+$this->idioma["marcoRepresentanteMod"] = "Información del Representante Legal";
 $this->idioma["marcoCIIU"] = "Adicionar Actividad Económica";
 $this->idioma["marcoCIIUReg"] = "Actividad Económica Obligatoria";
 $this->idioma["marcoActividades"] = "Actividades Económicas Registradas";

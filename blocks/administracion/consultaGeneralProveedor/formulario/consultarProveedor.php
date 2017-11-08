@@ -89,6 +89,7 @@ $nombreFormulario = $esteBloque ["nombre"];
 		unset ( $atributos );		
 }
 
+
 if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
 	//-------------------------------------------------
 	//-------------------------------------------------
@@ -97,7 +98,13 @@ if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') 
 		settype($_REQUEST ['id_proveedor'], 'integer');
 		$secure = true;
 	}else{
-		$secure = false;
+		
+		if(preg_match("/^[0-9]+$/", $_REQUEST ['id_proveedor']) || preg_match("/^[0-9a-zA-Z]+$/", $_REQUEST ['id_proveedor'])){
+			$secure = true;
+		}else{
+			$secure = false;
+		}
+		
 	}
 	//-------------------------------------------------
 	//-------------------------------------------------
@@ -373,14 +380,17 @@ if ($resultado && !$consultor) {
 			}
 
 			
-			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $dato['num_documento'] );
+			$arregloUnique = array (
+			    'num_documento' => $dato['num_documento'],
+			    'tipo_persona' => $dato['tipopersona']
+			);
+			
+			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $arregloUnique );
 			$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
-			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $dato['num_documento'] );
+			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $arregloUnique );
 			$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
-			//var_dump($resultadoTel);
-			//var_dump($resultadoMovil);
 			
 			if($dato['tipopersona'] == 'EXTRANJERA'){
 				$variableEdit = "#";
@@ -481,10 +491,15 @@ if ($resultado && !$consultor) {
 		}
 		
 			
-		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $dato['num_documento'] );
+		$arregloUnique = array (
+		    'num_documento' => $dato['num_documento'],
+		    'tipo_persona' => $dato['tipopersona']
+		);
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoTelProveedor", $arregloUnique );
 		$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-			
-		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $dato['num_documento'] );
+		
+		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $arregloUnique );
 		$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
 		//var_dump($resultadoTel);

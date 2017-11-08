@@ -27,6 +27,15 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+		    
+		    /* VERIFICAR NUMERO DE DOCUMENTO Y TIPO PERSONA */
+		    case "consultarProveedorNat" :
+		        $cadenaSql = " SELECT";
+		        $cadenaSql .= " * ";
+		        $cadenaSql .= " FROM ";
+		        $cadenaSql .= " agora.informacion_proveedor ";
+		        $cadenaSql .= " WHERE num_documento = '" . $variable ['num_documento'] . "' AND tipopersona = '".$variable ['tipo_persona']."';";
+		        break;
 			
 			/* DATOS DEL PROVEEDOR */
 			case "buscarProveedorByDocumentoUnique" : // ****************************************************************************
@@ -297,46 +306,6 @@ class Sql extends \Sql {
 				$cadenaSql.=" AND pn.id_nucleo_basico = ".$variable;
 				$cadenaSql.=" AND tipopersona != 'UNION TEMPORAL' ";
 				$cadenaSql.=" AND tipopersona != 'CONSORCIO';";
-				break;
-				
-					
-					
-			case "consultarContactoTelProveedor" :
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " P.id_proveedor, ";
-				$cadenaSql .= " P.num_documento, ";
-				$cadenaSql .= " P.nom_proveedor, ";
-				$cadenaSql .= " C.id_telefono,  ";
-				$cadenaSql .= " T.numero_tel,  ";
-				$cadenaSql .= " T.tipo,  ";
-				$cadenaSql .= " T.extension,  ";
-				$cadenaSql .= " P.estado  ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.informacion_proveedor P ";
-				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
-				$cadenaSql .= " WHERE 1=1 ";
-				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
-				$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
-				break;
-				
-			case "consultarContactoMovilProveedor" :
-				$cadenaSql = "SELECT  ";
-				$cadenaSql .= " P.id_proveedor, ";
-				$cadenaSql .= " P.num_documento, ";
-				$cadenaSql .= " P.nom_proveedor, ";
-				$cadenaSql .= " C.id_telefono,  ";
-				$cadenaSql .= " T.numero_tel,  ";
-				$cadenaSql .= " T.tipo,  ";
-				$cadenaSql .= " T.extension,  ";
-				$cadenaSql .= " P.estado  ";
-				$cadenaSql .= " FROM ";
-				$cadenaSql .= " agora.informacion_proveedor P ";
-				$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-				$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
-				$cadenaSql .= " WHERE 1=1 ";
-				$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
-				$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
 				break;
 				
 				
@@ -637,43 +606,45 @@ class Sql extends \Sql {
 					
 					
 				
-				case "consultarContactoTelProveedor" :
-					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " P.id_proveedor, ";
-					$cadenaSql .= " P.num_documento, ";
-					$cadenaSql .= " P.nom_proveedor, ";
-					$cadenaSql .= " C.id_telefono,  ";
-					$cadenaSql .= " T.numero_tel,  ";
-					$cadenaSql .= " T.tipo,  ";
-					$cadenaSql .= " T.extension,  ";
-					$cadenaSql .= " P.estado  ";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.informacion_proveedor P ";
-					$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-					$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
-					$cadenaSql .= " WHERE 1=1 ";
-					$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
-					$cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
-					break;
-						
-				case "consultarContactoMovilProveedor" :
-					$cadenaSql = "SELECT  ";
-					$cadenaSql .= " P.id_proveedor, ";
-					$cadenaSql .= " P.num_documento, ";
-					$cadenaSql .= " P.nom_proveedor, ";
-					$cadenaSql .= " C.id_telefono,  ";
-					$cadenaSql .= " T.numero_tel,  ";
-					$cadenaSql .= " T.tipo,  ";
-					$cadenaSql .= " T.extension,  ";
-					$cadenaSql .= " P.estado  ";
-					$cadenaSql .= " FROM ";
-					$cadenaSql .= " agora.informacion_proveedor P ";
-					$cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
-					$cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
-					$cadenaSql .= " WHERE 1=1 ";
-					$cadenaSql .= " AND  P.num_documento = '" . $variable . "'";
-					$cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
-					break;
+					case "consultarContactoTelProveedor" :
+					    $cadenaSql = "SELECT  ";
+					    $cadenaSql .= " P.id_proveedor, ";
+					    $cadenaSql .= " P.num_documento, ";
+					    $cadenaSql .= " P.nom_proveedor, ";
+					    $cadenaSql .= " C.id_telefono,  ";
+					    $cadenaSql .= " T.numero_tel,  ";
+					    $cadenaSql .= " T.tipo,  ";
+					    $cadenaSql .= " T.extension,  ";
+					    $cadenaSql .= " P.estado  ";
+					    $cadenaSql .= " FROM ";
+					    $cadenaSql .= " agora.informacion_proveedor P ";
+					    $cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+					    $cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
+					    $cadenaSql .= " WHERE 1=1 ";
+					    $cadenaSql .= " AND  P.num_documento = '" . $variable['num_documento'] . "'";
+					    $cadenaSql .= " AND  P.tipopersona = '" . $variable['tipo_persona'] . "'";
+					    $cadenaSql .= " AND  T.tipo = '1' LIMIT 1;";
+					    break;
+					    
+					case "consultarContactoMovilProveedor" :
+					    $cadenaSql = "SELECT  ";
+					    $cadenaSql .= " P.id_proveedor, ";
+					    $cadenaSql .= " P.num_documento, ";
+					    $cadenaSql .= " P.nom_proveedor, ";
+					    $cadenaSql .= " C.id_telefono,  ";
+					    $cadenaSql .= " T.numero_tel,  ";
+					    $cadenaSql .= " T.tipo,  ";
+					    $cadenaSql .= " T.extension,  ";
+					    $cadenaSql .= " P.estado  ";
+					    $cadenaSql .= " FROM ";
+					    $cadenaSql .= " agora.informacion_proveedor P ";
+					    $cadenaSql .= " JOIN agora.proveedor_telefono C ON C.id_proveedor = P.id_proveedor ";
+					    $cadenaSql .= " JOIN agora.telefono T ON C.id_telefono = T.id_telefono ";
+					    $cadenaSql .= " WHERE 1=1 ";
+					    $cadenaSql .= " AND  P.num_documento = '" . $variable['num_documento'] . "'";
+					    $cadenaSql .= " AND  P.tipopersona = '" . $variable['tipo_persona'] . "'";
+					    $cadenaSql .= " AND  T.tipo = '2' LIMIT 1;";
+					    break;
 				
 					/* CONSULTAR DATOS - USUARIO NATURAL */
 				case "consultarProveedorNatural" :
@@ -864,16 +835,12 @@ class Sql extends \Sql {
 					$cadenaSql .= " agora.proveedor_representante_legal ";
 					$cadenaSql .= " (";
 					$cadenaSql .= " id_proveedor,";
-					$cadenaSql .= " id_representante,";
-					$cadenaSql .= " telefono_contacto,";
-					$cadenaSql .= " correo_representante";
+					$cadenaSql .= " id_representante ";
 					$cadenaSql .= " ) ";
 					$cadenaSql .= " VALUES ";
 					$cadenaSql .= " ( ";
 					$cadenaSql .= $variable ['fki_id_Proveedor'] . ", ";
-					$cadenaSql .= $variable ['fki_id_Representante'] . ", ";
-					$cadenaSql .= $variable ['tel_Repre'] . ", ";
-					$cadenaSql .= " '" . $variable ['correo_Repre'] . "' ";
+					$cadenaSql .= $variable ['fki_id_Representante'] . " ";
 					$cadenaSql .= " ); ";
 					break;
 				
@@ -953,9 +920,7 @@ class Sql extends \Sql {
 				case 'consultarInformacionProveedorXRepresentante' :
 					$cadenaSql = " SELECT ";
 					$cadenaSql .= " id_proveedor,";
-					$cadenaSql .= " id_representante,";
-					$cadenaSql .= " telefono_contacto,";
-					$cadenaSql .= " correo_representante";
+					$cadenaSql .= " id_representante ";
 					$cadenaSql .= " FROM ";
 					$cadenaSql .= " agora.proveedor_representante_legal ";
 					$cadenaSql .= " WHERE id_proveedor = ";
@@ -991,18 +956,18 @@ class Sql extends \Sql {
 					$cadenaSql .= "'" . $variable . "' ";
 					break;
 				
-					/* ACTUALIZAR - PROVEEEDOR DATOS X TELEFONO */
-				case 'actualizarInformacionProveedorXRepresentante' :
-					$cadenaSql = " UPDATE ";
-					$cadenaSql .= " agora.proveedor_representante_legal ";
-					$cadenaSql .= " SET";
-					$cadenaSql .= " telefono_contacto = " . $variable ['tel_Repre'] . ", ";
-					$cadenaSql .= " correo_representante = " . " '" . $variable ['correo_Repre'] . "' ";
-					$cadenaSql .= " WHERE id_proveedor = ";
-					$cadenaSql .= "'" . $variable ['fki_id_Proveedor'] . "' AND ";
-					$cadenaSql .= " id_representante = ";
-					$cadenaSql .= "'" . $variable ['fki_id_Representante'] . "' ";
-					break;
+// 					/* ACTUALIZAR - PROVEEEDOR DATOS X TELEFONO */
+// 				case 'actualizarInformacionProveedorXRepresentante' :
+// 					$cadenaSql = " UPDATE ";
+// 					$cadenaSql .= " agora.proveedor_representante_legal ";
+// 					$cadenaSql .= " SET";
+// 					$cadenaSql .= " telefono_contacto = " . $variable ['tel_Repre'] . ", ";
+// 					$cadenaSql .= " correo_representante = " . " '" . $variable ['correo_Repre'] . "' ";
+// 					$cadenaSql .= " WHERE id_proveedor = ";
+// 					$cadenaSql .= "'" . $variable ['fki_id_Proveedor'] . "' AND ";
+// 					$cadenaSql .= " id_representante = ";
+// 					$cadenaSql .= "'" . $variable ['fki_id_Representante'] . "' ";
+// 					break;
 				
 					/* ACTUALIZAR DATOS - USUARIO JURIDICA */
 				case "actualizarProveedorJuridica" :

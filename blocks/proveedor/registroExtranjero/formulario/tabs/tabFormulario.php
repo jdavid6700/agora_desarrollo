@@ -1668,6 +1668,7 @@ class registrarForm {
 				$atributos ['tamanno'] = 20;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 220;
+				$atributos ['textoEnriquecido'] = true;
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
 				} else {

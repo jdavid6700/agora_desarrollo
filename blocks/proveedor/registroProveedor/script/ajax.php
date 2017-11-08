@@ -1980,6 +1980,30 @@ $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
 		$urlFinalActividad = $url . $cadenaActividad;		
 		
 		
+		
+		
+		// URL base
+		$url = $this->miConfigurador->getVariableConfiguracion ( "host" );
+		$url .= $this->miConfigurador->getVariableConfiguracion ( "site" );
+		$url .= "/index.php?";
+		
+		$cadenaACodificarRepre= "pagina=" . $this->miConfigurador->getVariableConfiguracion ( "pagina" );
+		$cadenaACodificarRepre .= "&procesarAjax=true";
+		$cadenaACodificarRepre .= "&action=index.php";
+		$cadenaACodificarRepre .= "&bloqueNombre=" . $esteBloque ["nombre"];
+		$cadenaACodificarRepre .= "&bloqueGrupo=" . $esteBloque ["grupo"];
+		$cadenaACodificarRepre .= $cadenaACodificarRepre . "&funcion=consultarRepresentante";
+		$cadenaACodificarRepre .= "&tiempo=" . $_REQUEST ['tiempo'];
+		
+		// Codificar las variables
+		$enlace = $this->miConfigurador->getVariableConfiguracion ( "enlace" );
+		
+		$cadenaRepre = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $cadenaACodificarRepre, $enlace );
+		
+		// URL definitiva
+		$urlFinalRepre = $url . $cadenaRepre;
+		
+		
 		?>
     	 
 
@@ -2109,5 +2133,278 @@ function consultarActividadExistente(elem, request, response){
 								});
                                                                 
             
-            });    	 
+            });   
+            
+            
+            
+        $("#botonValidar").click(function () {
+        
+        
+        		// Validación Representante Legal -----------------------------------------------------------------------------------
+                    
+
+						
+				swal.setDefaults({
+				  cancelButtonText: 'No, cancelar!',
+				  confirmButtonText: 'Siguiente &rarr;',
+				  showCancelButton: true,
+				  progressSteps: ['1', '2']
+				})
+				
+				var steps = [
+				  {
+				    title: 'Atención',
+				    type: 'warning',
+				    html: 'Tenga en cuenta que el Representante Legal, debe estar registrado en el sistema como <b>Persona Natural</b>, esto con anterioridad, '
+							+'al registro de la <b>Persona Jurídica</b>, por ello en el presente modulo solo se le solicita relacionar el número de documento, para hacer '
+							+'la relación de la información automáticamente.'
+				  },
+				  {
+				    title: 'Persona Natural',
+				    type: 'info',
+				    html: 'A continuación, por favor relacione el <b>número de documento</b> del Representante Legal, para hacer la correspondiente validación, '
+				    		+'y permitir el registro.',
+					input: 'text'
+				  }
+				]
+				
+				swal.queue(steps).then(function (result) {
+				  swal.resetDefaults()
+				  
+				  if(result[1] != ""){
+				  	consultarRepre(result[1]);
+				  }else{
+				  
+				  	swal({
+			                title: 'ERROR<br>PERSONA NATURAL',
+			                type: 'error',
+			                html:
+			                        'El Número de Documento no fue Enviado Correctamente.',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+				  
+				  }
+					console.log(result);				  				  
+
+				}, function () {
+				  swal.resetDefaults()
+				})
+                    
+                    
+                // Fin Validación Representante Legal -----------------------------------------------------------------------------------
+                    
+        
+        
+        
+        });  
+        
+        
+        
+        function consultarRepre(numDoc) {
+
+	        $.ajax({
+				url: "<?php echo $urlFinalRepre?>",
+				dataType: "json",
+				data: { documento: numDoc},
+				success: function(data){
+				
+				console.log(data);
+				console.log(data['seguridad']);
+				
+					if(data){
+					
+						if(!data['seguridad']){
+						
+							swal({
+				                title: 'REGISTRO SATISFACTORIO<br>PERSONA NATURAL',
+				                type: 'success',
+				                html:
+				                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>se encuentra registrada</b> en la <i>Base de Datos,'
+				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y puede ser relacionada,'
+				                        +' como Representante Legal, por favor continue con el registro de información.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+							$("#<?php echo $this->campoSeguro('numeroDocumento') ?>").val(numDoc.toUpperCase())
+						
+						}else{
+							swal({
+				                title: 'ERROR<br>PERSONA NATURAL',
+				                type: 'error',
+				                html:
+				                        'El Número de Documento no fue Enviado Correctamente, posee caracteres invalidos.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+						}
+					
+						
+
+					}else{
+					
+						swal({
+			                title: 'ERROR<br>PERSONA NATURAL',
+			                type: 'error',
+			                html:
+			                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>no se encuentra registrada</b> en la <i>Base de Datos,'
+			                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y no puede ser relacionada,'
+			                        +' como Representante Legal, por favor verifique la información, o realice el registro de la Persona Natural.',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+					
+					}
+				}
+			});
+    	};
+        
+           	 
+         $("#changeRep").click(function () {
+         
+         		$('#marcoRepresentante').fadeOut(800, function (){
+         			$('#changeRepCancel').fadeIn(500);
+            		$('#marcoRepresentanteMod').fadeIn(500);
+            	});
+            	$('#changeRep').fadeOut(800);
+         		
+         
+         }); 
+         
+         $("#changeRepCancel").click(function () {
+         
+         		$('#marcoRepresentanteMod').fadeOut(800, function (){
+         			$('#changeRep').fadeIn(500);
+            		$('#marcoRepresentante').fadeIn(500);
+            	});
+         		$('#changeRepCancel').fadeOut(800);
+         		
+         		$("#<?php echo $this->campoSeguro('numeroDocumentoMod') ?>").val("")
+         
+         });
+         
+           	 
+           	 
+               $("#botonValidarMod").click(function () {
+        
+        
+        		// Validación Representante Legal -----------------------------------------------------------------------------------
+                    
+
+						
+				swal.setDefaults({
+				  cancelButtonText: 'No, cancelar!',
+				  confirmButtonText: 'Siguiente &rarr;',
+				  showCancelButton: true,
+				  progressSteps: ['1', '2']
+				})
+				
+				var steps = [
+				  {
+				    title: 'Atención',
+				    type: 'warning',
+				    html: 'Tenga en cuenta que el Representante Legal, debe estar registrado en el sistema como <b>Persona Natural</b>, esto con anterioridad, '
+							+'al registro de la <b>Persona Jurídica</b>, por ello en el presente modulo solo se le solicita relacionar el número de documento, para hacer '
+							+'la relación de la información automáticamente.'
+				  },
+				  {
+				    title: 'Persona Natural',
+				    type: 'info',
+				    html: 'A continuación, por favor relacione el <b>número de documento</b> del Representante Legal, para hacer la correspondiente validación, '
+				    		+'y permitir el registro.',
+					input: 'text'
+				  }
+				]
+				
+				swal.queue(steps).then(function (result) {
+				  swal.resetDefaults()
+				  
+				  if(result[1] != ""){
+				  	consultarRepreMod(result[1]);
+				  }else{
+				  
+				  	swal({
+			                title: 'ERROR<br>PERSONA NATURAL',
+			                type: 'error',
+			                html:
+			                        'El Número de Documento no fue Enviado Correctamente.',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+				  
+				  }
+					console.log(result);				  				  
+
+				}, function () {
+				  swal.resetDefaults()
+				})
+                    
+                    
+                // Fin Validación Representante Legal -----------------------------------------------------------------------------------
+                    
+        
+        
+        
+        });  
+        
+        
+        
+        function consultarRepreMod(numDoc) {
+
+	        $.ajax({
+				url: "<?php echo $urlFinalRepre?>",
+				dataType: "json",
+				data: { documento: numDoc},
+				success: function(data){
+				
+				console.log(data);
+				console.log(data['seguridad']);
+				
+					if(data){
+					
+						if(!data['seguridad']){
+						
+							swal({
+				                title: 'REGISTRO SATISFACTORIO<br>PERSONA NATURAL',
+				                type: 'success',
+				                html:
+				                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>se encuentra registrada</b> en la <i>Base de Datos,'
+				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y puede ser relacionada,'
+				                        +' como Representante Legal, por favor continue con el registro de información.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+							$("#<?php echo $this->campoSeguro('numeroDocumentoMod') ?>").val(numDoc.toUpperCase())
+						
+						}else{
+							swal({
+				                title: 'ERROR<br>PERSONA NATURAL',
+				                type: 'error',
+				                html:
+				                        'El Número de Documento no fue Enviado Correctamente, posee caracteres invalidos.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+						}
+					
+						
+
+					}else{
+					
+						swal({
+			                title: 'ERROR<br>PERSONA NATURAL',
+			                type: 'error',
+			                html:
+			                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>no se encuentra registrada</b> en la <i>Base de Datos,'
+			                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y no puede ser relacionada,'
+			                        +' como Representante Legal, por favor verifique la información, o realice el registro de la Persona Natural.',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+					
+					}
+				}
+			});
+    	};
+            	 
     	 

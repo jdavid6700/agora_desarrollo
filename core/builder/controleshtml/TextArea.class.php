@@ -57,17 +57,25 @@ class TextArea  extends HtmlBase{
         $this->mi_cuadro .= $this->atributosGeneralesAreaTexto ();
     
         
+        if(isset ( $this->atributos ["clase"] ) && $this->atributos ["clase"] != ""){
+            $class = $this->atributos ["clase"];
+        }else{
+            $class = "";
+        }
+        
+        $atributos ['clase'] = 'NOTanEditor';
+        
         if(isset ( $this->atributos ["validar"] ) && $this->atributos ["validar"] != ""){
         	if (isset ( $this->atributos [self::ESTILOAREA] ) && $this->atributos [self::ESTILOAREA] != "") {
-        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ."  validate[" . $this->atributos ["validar"]."]' ";
+        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ."  validate[" . $this->atributos ["validar"]."] ".$class."' ";
         	} else {
-        		$this->mi_cuadro .= "class='areaTexto validate[" . $this->atributos ["validar"]."]' ";
+        		$this->mi_cuadro .= "class='areaTexto validate[" . $this->atributos ["validar"]."] ".$class."' ";
         	}
         }else{
         	if (isset ( $this->atributos [self::ESTILOAREA] ) && $this->atributos [self::ESTILOAREA] != "") {
-        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ."' ";
+        		$this->mi_cuadro .= self::HTMLCLASS . "'" . $this->atributos [self::ESTILOAREA] ." ".$class."' ";
         	} else {
-        		$this->mi_cuadro .= "class='areaTexto' ";
+        		$this->mi_cuadro .= "class='areaTexto ".$class."' ";
         	}
         }
     

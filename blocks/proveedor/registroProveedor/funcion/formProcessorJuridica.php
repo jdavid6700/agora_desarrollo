@@ -29,6 +29,42 @@ class Formulario {
 		$this->miLogger= $miLogger;
 
 	}
+	
+	function campoSeguroCodificar($cadena, $tiempoRequest) {
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Codificar) +++++++++++++++++++++++++++++++++++++++++++ */
+	    
+	    $tiempo = (int) substr($tiempoRequest, 0, -2);
+	    $tiempo = $tiempo * pow(10, 2);
+	    
+	    $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->codificar($cadena . $tiempo);
+	    
+	    
+	    
+	    
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    return $campoSeguro;
+	}
+	
+	function campoSeguroDecodificar($campoSeguroRequest, $tiempoRequest) {
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Decodificar) +++++++++++++++++++++++++++++++++++++++++ */
+	    
+	    $tiempo = (int) substr($tiempoRequest, 0, -2);
+	    $tiempo = $tiempo * pow(10, 2);
+	    
+	    $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->decodificar($campoSeguroRequest);
+	    
+	    $campo = str_replace($tiempo, "", $campoSeguro);
+	    
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+	    return $campo;
+	}
+	
 	function procesarFormulario() {
 		
 		
@@ -68,6 +104,12 @@ class Formulario {
 		$SQLs = [];
 		$representanteExiste = false;
 		
+		/*Variables Texto Enriquecido ----------------------------------------------------------*/
+		/*--------------------------------------------------------------------------------------*/
+		$descripcion = $_POST[$this->campoSeguroCodificar('descripcion', $_REQUEST['tiempo'])];
+		$_REQUEST['descripcion'] = str_replace("'", "\"", $descripcion);
+		
+		
 		if(isset($_REQUEST['correo'])){$_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);}
 		if(isset($_REQUEST['correoPer'])){$_REQUEST['correoPer'] = str_replace('\\', "", $_REQUEST['correoPer']);}
 		
@@ -84,6 +126,9 @@ class Formulario {
 		if(isset($_REQUEST['descripcion'])){$_REQUEST['descripcion']=mb_strtoupper($_REQUEST['descripcion'],'utf-8');}
 		
 
+		$_REQUEST['correoPer'] = "pruebas@udistrital.edu.co";
+		$_REQUEST['numeroContacto'] = 3239300;
+		
 		//Guardar RUT adjuntado Persona Juridica*********************************************************************
 		$_REQUEST ['destino'] = '';
 		// Guardar el archivo
@@ -783,7 +828,6 @@ class Formulario {
 					
 				}
 
-				
 				$registroPersona = $esteRecursoDB->transaccion($SQLs);
 
 				if ($registroPersona != false) {

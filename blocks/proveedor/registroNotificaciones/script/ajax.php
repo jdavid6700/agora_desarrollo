@@ -2376,8 +2376,6 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                         celdas.each(function () {
                             fullParamIt += String($(this).html()) + "&";
                         });
-
-
                     });
 
                     $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
@@ -2435,7 +2433,6 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                            
                     }
 
-   
 
         totalPrecio += totalItem;
         totalPrecioIva += totalItemiva;
@@ -3062,6 +3059,19 @@ $urlFinalArchivo = $url . $cadenaArchivo;
     ;
 
     
+    function round(num, decimales = 1) {
+        var signo = (num >= 0 ? 1 : -1);
+        num = num * signo;
+        if (decimales === 0) //con 0 decimales
+            return signo * Math.round(num);
+        // round(x * 10 ^ decimales)
+        num = num.toString().split('e');
+        num = Math.round(+(num[0] + 'e' + (num[1] ? (+num[1] + decimales) : decimales)));
+        // x * 10 ^ (-decimales)
+        num = num.toString().split('e');
+        return signo * (num[0] + 'e' + (num[1] ? (+num[1] - decimales) : -decimales));
+    }
+    
     
     $("#botonAgregarInfo").click(function () {
 
@@ -3215,8 +3225,13 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                     if(myselects[i].value =='Exento' || myselects[i].value=='Tarifa de Cero' ){
                                             
                                            var valor_item=myinputs[i].value;
+                                           
+                                           arregloValor[i+1] = arregloValor[i+1].replace('.','');
+                                           arregloValor[i+1] = arregloValor[i+1].replace(',','.');
+
                                            var cantidad= parseFloat(arregloValor[i+1]);
-                               
+                                     
+                                           
                                            cotizacion_total+=cantidad * parseFloat(valor_item);
                                            iva_cotizacion_total+=(cantidad * parseFloat(valor_item));
                                         
@@ -3227,11 +3242,16 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                         
                                         
                                         var valor_item=myinputs[i].value;
+                                        
+                                         arregloValor[i+1] = arregloValor[i+1].replace('.','');
+                                         arregloValor[i+1] = arregloValor[i+1].replace(',','.');
+                                        
                                         var cantidad= parseFloat(arregloValor[i+1]);
                                         
                                         
                                         
                                         cotizacion_total+=(cantidad * parseFloat(valor_item));
+                                        
                                                                         
                                         iva_cotizacion_total+= (cantidad * parseFloat(valor_item)) + ((cantidad * parseFloat(valor_item)) * (parseFloat(myselects[i].value)/100));
                                         
@@ -3239,8 +3259,8 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                       
                                     
                                     }
-                                    
-                                    
+                           
+                               
                                 
                                 }
                                 
@@ -3287,12 +3307,12 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                  $("#<?php echo $this->campoSeguro('idsItemsProv') ?>").val(fullParamProv); 
                                  $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
                                  
-                                 $("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency(cotizacion_total, 0) + " pesos (COP)");
-                                 $("#<?php echo $this->campoSeguro('precioCotIva') ?>").val("$ " + currency(iva_cotizacion_total, 0) + " pesos (COP)");
-                                 $("#<?php echo $this->campoSeguro('precioIva') ?>").val("$ " + currency(iva_total, 0) + " pesos (COP)");
+                                 $("#<?php echo $this->campoSeguro('precioCot') ?>").val("$ " + currency(round(cotizacion_total), 0) + " pesos (COP)");
+                                 $("#<?php echo $this->campoSeguro('precioCotIva') ?>").val("$ " + currency(round(iva_cotizacion_total), 0) + " pesos (COP)");
+                                 $("#<?php echo $this->campoSeguro('precioIva') ?>").val("$ " + currency(round(iva_total), 0) + " pesos (COP)");
                             
-                                  
-                            
+                                 
+                                 $("#<?php echo $this->campoSeguro('validacion_modificar')?>").css('display','block');
                                  $("#<?php echo $this->campoSeguro('validacion_modificar')?>").css('display','block');
                                             
                                             

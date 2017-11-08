@@ -1412,7 +1412,12 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         $("#eliminarCDP").click(function () {
 			eliminarCDP();
         });
-
+        
+        
+       
+        
+        
+      
     });
     
     function alertCriterio() {
@@ -1984,22 +1989,36 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                     $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
                     
-                    sumadorBienes = sumadorBienes + 1;
+                    
+                    var sumadorBienes = $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val();
+                    var sumadorServicios = $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val();
+                    
+                  
+                    
+                    sumadorBienes = parseInt(sumadorBienes) + 1;
+                    $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val(sumadorBienes);
+                    
+                    
+                   
                     
                     if(sumadorBienes>0 && sumadorServicios>0){
                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                          
                     }
                     else{
                       if(sumadorBienes>0){
                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                       }
                       else{
                         if(sumadorServicios>0){
                             $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                         }
                         else{
                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                         }
                       }
                     }
@@ -2084,19 +2103,32 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
         $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
         $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
+        
+         var sumadorBienes = $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val();
+         var sumadorServicios = $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val();
+                    
+                  
+                    
+        sumadorServicios = parseInt(sumadorServicios) + 1;
+        $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val(sumadorServicios);
+        
 
-        sumadorServicios = sumadorServicios + 1;
+     
                     
                                     if(sumadorBienes>0 && sumadorServicios>0){
                                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
+                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                                     }
                                     else{
                                       if(sumadorBienes>0){
                                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
+                                        $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
                                       }
                                       else{
                                         if(sumadorServicios>0){
                                             $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2("enable", true);
+                                            
                                         }
                                         else{
                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
@@ -2109,8 +2141,12 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
     
     
      // Evento que selecciona la fila y la elimina 
+     
+     var validacionEliminar=0;
     $(document).on("click", ".eliminarItem", function () {
-
+    
+       
+    
         var parent = $(this).parents().get(0);
         var element = $(parent).text();
         var restaItemiva;
@@ -2148,15 +2184,29 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         var countF = $("#tablaFP2 tr").length - 1;
 
         $("#<?php echo $this->campoSeguro('countItems') ?>").val(countF);
-
+        
+        if(countF === 0){
+             validacionEliminar = validacionEliminar + 1;
+        }
+        
+        
+         var sumadorBienes = $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val();
+         var sumadorServicios = $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val();
+                    
+                  
+                    
+   
 
         if(tipo_item === '1 - BIEN'){
-            sumadorBienes = sumadorBienes -1;
+            sumadorBienes = parseInt(sumadorBienes) -1;
+            $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val(sumadorBienes);
         }
         if(tipo_item === '2 - SERVICIO')
             {
-                sumadorServicios = sumadorServicios - 1; 
+                sumadorServicios = parseInt(sumadorServicios) - 1; 
+                $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val(sumadorServicios);
             }
+
             if(sumadorBienes>0 && sumadorServicios>0){
                                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
                                     }
@@ -2169,7 +2219,16 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                                             $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
                                         }
                                         else{
-                                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                                        
+                                            if(validacionEliminar === 1){
+                                                   $("<option value='-1'>Seleccione .....</option>").prependTo("#<?php echo $this->campoSeguro('tipoNecesidad')?>");
+                                            }
+                                            
+                                         
+                                            $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', -1);
+                                            
+                                           
+                                  
                                         }
                                       }
                                     }
@@ -2177,6 +2236,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         
     });
     
+  
     
     var id_modificacion;
     var arreglo_modificados=[];
@@ -2341,7 +2401,11 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                             $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
                             
-                            sumadorBienes = sumadorBienes + 1;
+                              var sumadorBienes = $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val();
+                              var sumadorServicios = $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val();
+
+                                sumadorBienes = parseInt(sumadorBienes) + 1;
+                                $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val(sumadorBienes);
                     
                                     if(sumadorBienes>0 && sumadorServicios>0){
                                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
@@ -2406,7 +2470,13 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                             $("#<?php echo $this->campoSeguro('idsItems') ?>").val(fullParamIt);
 
                             $("#<?php echo $this->campoSeguro('countItems') ?>").val(nFilas);
-                                sumadorServicios = sumadorServicios + 1;
+                            var sumadorBienes = $("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val();
+                            var sumadorServicios = $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val();
+
+
+
+                           sumadorServicios = parseInt(sumadorServicios) + 1;
+                           $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val(sumadorServicios);
                     
                                     if(sumadorBienes>0 && sumadorServicios>0){
                                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
@@ -2466,23 +2536,27 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
     }
     ;
 
+    
     $("#<?php echo $this->campoSeguro('tipoNecesidad')?>").change(function() {
     
-       
-         if(sumadorBienes>0 && sumadorServicios>0){
+  
+    
+         if($("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val()>0 &&  $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val()>0){
                          $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 3);
                          
                     }
                     else{
-                      if(sumadorBienes>0){
+                      if($("#<?php echo $this->campoSeguro('cantidadBienes') ?>").val() > 0){
                         $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 1);
                       }
                       else{
-                        if(sumadorServicios>0){
+                        if( $("#<?php echo $this->campoSeguro('cantidadServicios') ?>").val() > 0){
+                       
                             $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', 2);
                         }
                         else{
-                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', null);
+                         
+                           $("#<?php echo $this->campoSeguro('tipoNecesidad') ?>").select2('val', -1);
                         }
                       }
                     }

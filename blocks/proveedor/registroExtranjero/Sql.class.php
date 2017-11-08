@@ -107,8 +107,8 @@ class Sql extends \Sql {
 							break;
 							
 							case "buscarCiiuPersona" :
-								$cadenaSql = " SELECT P.num_documento, P.id_subclase FROM agora.proveedor_actividad_ciiu P";
-								$cadenaSql.= " WHERE P.num_documento = $variable ";
+								$cadenaSql = " SELECT P.informacion_proveedor_id, P.id_subclase FROM agora.proveedor_actividad_ciiu P";
+								$cadenaSql.= " WHERE P.informacion_proveedor_id = $variable ";
 								break;
 								
 								case "eliminarActividad" :
@@ -376,13 +376,11 @@ class Sql extends \Sql {
 				$cadenaSql .= " agora.proveedor_actividad_ciiu ";
 				$cadenaSql .= " (";
 				$cadenaSql .= " informacion_proveedor_id,";
-				$cadenaSql .= " num_documento,";
 				$cadenaSql .= " id_subclase";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
 				$cadenaSql .= " (";
 				$cadenaSql .= " " . $variable ['fk_id_proveedor'] . ",";
-				$cadenaSql .= " '" . $variable ['num_documento'] . "',";
 				$cadenaSql .= " '" . $variable ['actividad'] . "'";
 				$cadenaSql .= " );";
 				break;

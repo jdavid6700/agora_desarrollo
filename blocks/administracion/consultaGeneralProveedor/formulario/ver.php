@@ -197,13 +197,13 @@ class Formulario {
 				$_REQUEST['personaNaturalContaCiudad'] = $_REQUEST['fki_idciudadContacto'];
 				
 				
-				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $resultadoPersonaNatural[0]['num_documento'] );
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $datosControl );
 				$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 				$_REQUEST['telefonoNat'] = $resultadoTel[0]['numero_tel'];
 				$_REQUEST['extensionNat'] = $resultadoTel[0]['extension'];
 			
 				
-				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoMovilProveedor', $resultadoPersonaNatural[0]['num_documento'] );
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoMovilProveedor', $datosControl );
 				$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 				$_REQUEST['movilNat'] = $resultadoMovil[0]['numero_tel'];
 				
@@ -618,7 +618,7 @@ class Formulario {
 				$_REQUEST['ciudad'] = $_REQUEST['fki_idciudadContactoJur'];
 				
 				
-				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $_REQUEST['nit']);
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $datosControl);
 				$resultadoTel = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 				$_REQUEST['telefono'] = $resultadoTel[0]['numero_tel'];
 				$_REQUEST['extension'] = $resultadoTel[0]['extension'];
@@ -627,13 +627,21 @@ class Formulario {
 				
 				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarInformacionProveedorXRepresentante', $_REQUEST['fki_idProveedorJur']);
 				$resultadoRepr = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-				$_REQUEST['correoPer'] =  $resultadoRepr[0]["correo_representante"];
-				$_REQUEST['numeroContacto'] =  $resultadoRepr[0]["telefono_contacto"];
+				//$_REQUEST['correoPer'] =  $resultadoRepr[0]["correo_representante"];
+				//$_REQUEST['numeroContacto'] =  $resultadoRepr[0]["telefono_contacto"];
 				
 				
 				
 				$cadenaSql = $this->miSql->getCadenaSql ( 'consultarProveedorNatural', $resultadoRepr[0]['id_representante'] );
 				$resultadoPersonaNaturalInfo = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				
+				$datosControlRep = array (
+				    'tipo_persona' => "NATURAL",
+				    'num_documento' => $resultadoPersonaNaturalInfo[0]["num_documento_persona"]
+				);
+				$cadena_sql = $this->miSql->getCadenaSql ( 'consultarContactoTelProveedor', $datosControlRep);
+				$resultadoTelRep = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+				$_REQUEST['numeroContacto'] =  $resultadoTelRep[0]['numero_tel'];
 				
 				$_REQUEST['numeroDocumento'] =  $resultadoPersonaNaturalInfo[0]["num_documento_persona"];
 				$_REQUEST['tipoDocumento'] =  $resultadoPersonaNaturalInfo[0]["tipo_documento"];
@@ -2083,7 +2091,7 @@ class Formulario {
 			$atributos ['marco'] = true;
 			$atributos ['estiloMarco'] = '';
 			$atributos ["etiquetaObligatorio"] = true;
-			$atributos ['columnas'] = 2;
+			$atributos ['columnas'] = 1;
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -2144,6 +2152,22 @@ class Formulario {
 		
 
 
+			
+			
+			
+			$arregloUnique = array (
+			    'num_documento' => $_REQUEST['numeroDocumento'],
+			    'tipo_persona' => 'NATURAL'
+			);
+			
+			$cadenaSql = $this->miSql->getCadenaSql ( "consultarProveedorNat", $arregloUnique);
+			$resultadoProveedorNat = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+			$_REQUEST['correoPer'] = $resultadoProveedorNat[0]['correo'];
+			
+			
+			
+			echo '<div align="center">';
+			
 			$esteCampo = "marcoRepresentante";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
@@ -2152,7 +2176,9 @@ class Formulario {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			
 				
-				
+			
+			echo '<div align="left">';
+			
 			// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
 			$esteCampo = 'primerApellido';
 			$atributos ['id'] = $esteCampo;
@@ -2456,11 +2482,12 @@ class Formulario {
 			$atributos['deshabilitado'] = true;
 			$atributos['limitar']= 50;
 			$atributos['tamanno']= 1;
-			$atributos['columnas']= 3;
+			$atributos['columnas']= 1;
 			
 			$atributos ['obligatorio'] = true;
 			$atributos ['etiquetaObligatorio'] = true;
 			$atributos ['validar'] = 'required';
+			$atributos ['anchoEtiqueta'] = 300;
 			
 			
 			$cadenaTest = $this->miSql->getCadenaSql ( "buscarCiudad", $_REQUEST['ciudadExpeRep']);
@@ -2499,11 +2526,12 @@ class Formulario {
 			$atributos['deshabilitado'] = true;
 			$atributos['limitar']= 50;
 			$atributos['tamanno']= 1;
-			$atributos['columnas']= 3;
+			$atributos['columnas']= 2;
 			
 			$atributos ['obligatorio'] = true;
 			$atributos ['etiquetaObligatorio'] = true;
 			$atributos ['validar'] = 'required';
+			
 			
 			
 			
@@ -2536,7 +2564,7 @@ class Formulario {
 			$atributos['deshabilitado'] = true;
 			$atributos['limitar']= 50;
 			$atributos['tamanno']= 1;
-			$atributos['columnas']= 3;
+			$atributos['columnas']= 2;
 			
 			$atributos ['obligatorio'] = true;
 			$atributos ['etiquetaObligatorio'] = true;
@@ -2634,7 +2662,7 @@ class Formulario {
 		
 			// Aplica atributos globales al control
 			$atributos = array_merge ( $atributos, $atributosGlobales );
-			echo $this->miFormulario->campoCuadroTexto ( $atributos );
+			//echo $this->miFormulario->campoCuadroTexto ( $atributos );
 			unset ( $atributos );
 			// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 		
@@ -2647,7 +2675,7 @@ class Formulario {
 			$atributos ['marco'] = true;
 			$atributos ['estiloMarco'] = '';
 			$atributos ["etiquetaObligatorio"] = true;
-			$atributos ['columnas'] = 2;
+			$atributos ['columnas'] = 1;
 			$atributos ['dobleLinea'] = 0;
 			$atributos ['tabIndex'] = $tab;
 			$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
@@ -2962,10 +2990,24 @@ class Formulario {
 			// ---------------- FIN CONTROL: Cuadro de Texto  NIT--------------------------------------------------------
 		
 		
-				
+			echo '</div>';
+			
+			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
-		
-		
+			
+			
+			echo '</div>';
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			$esteCampo = "marcoFinanciero";
 			$atributos ['id'] = $esteCampo;
 			$atributos ["estilo"] = "jqueryui";
@@ -3585,6 +3627,7 @@ class Formulario {
 			$atributos ['tamanno'] = 20;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 220;
+			$atributos ['textoEnriquecido'] = true;
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
 			} else {
@@ -6005,6 +6048,7 @@ class Formulario {
 				$atributos ['tamanno'] = 20;
 				$atributos ['maximoTamanno'] = '';
 				$atributos ['anchoEtiqueta'] = 220;
+				$atributos ['textoEnriquecido'] = true;
 				if (isset ( $_REQUEST [$esteCampo] )) {
 					$atributos ['valor'] = $_REQUEST [$esteCampo];
 				} else {
@@ -6274,7 +6318,7 @@ class Formulario {
 							
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						//echo $this->miFormulario->campoCuadroLista ( $atributos );
 						// --------------- FIN CONTROL : Select --------------------------------------------------
 							
 						// ---------------- CONTROL: Select --------------------------------------------------------
@@ -6308,7 +6352,7 @@ class Formulario {
 							
 						// Aplica atributos globales al control
 						$atributos = array_merge ( $atributos, $atributosGlobales );
-						echo $this->miFormulario->campoCuadroLista ( $atributos );
+						//echo $this->miFormulario->campoCuadroLista ( $atributos );
 				
 				
 					// ---------------- FIN CONTROL: Cuadro de Texto  PAIS--------------------------------------------------------
@@ -7426,6 +7470,18 @@ class Formulario {
 			unset ( $atributos );
 			// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 			
+			
+			echo "<br>";
+			echo "<br>";
+			echo "<br>";
+			
+			$atributos ["id"] = "infoBancos";
+			$atributos ["estilo"] = "";
+			echo $this->miFormulario->division ( "inicio", $atributos );
+			unset ( $atributos );
+			{
+			
+			
 			// ---------------- CONTROL: Cuadro de Texto NIT--------------------------------------------------------
 			$esteCampo = 'numeroCuenta';
 			$atributos ['id'] = $esteCampo;
@@ -7496,6 +7552,8 @@ class Formulario {
 			unset ( $atributos );
 			// ----------------FIN CONTROL: Lista TIPO DE PERSONA--------------------------------------------------------
 			
+			}
+			echo $this->miFormulario->division ( 'fin' );
 			
 			echo $this->miFormulario->marcoAgrupacion ( 'fin' );
 			
@@ -7587,6 +7645,7 @@ class Formulario {
 			$atributos ['tamanno'] = 20;
 			$atributos ['maximoTamanno'] = '';
 			$atributos ['anchoEtiqueta'] = 220;
+			$atributos ['textoEnriquecido'] = true;
 			if (isset ( $_REQUEST [$esteCampo] )) {
 				$atributos ['valor'] = $_REQUEST [$esteCampo];
 			} else {

@@ -77,41 +77,6 @@ class Registrar {
 		$host = $this->miConfigurador->getVariableConfiguracion ( "host" ) . $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/gestionCotizaciones/" . $esteBloque ['nombre'];
 
 		
-		//Guardar RUT adjuntado Persona Natural*********************************************************************
-		$_REQUEST ['destino'] = '';
-		// Guardar el archivo
-		if ($_FILES) {
-			$i = 0;
-			foreach ( $_FILES as $key => $values ) {
-				$archivoCarga[$i] = $_FILES [$key];
-				$i++;
-			}
-			$archivo = $archivoCarga[0];
-			// obtenemos los datos del archivo
-			$tamano = $archivo ['size'];
-			$tipo = $archivo ['type'];
-			$archivo1 = $archivo ['name'];
-			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
-			$nombreDoc = $prefijo . "-" . $archivo1;
-		
-			if ($archivo1 != "") {
-				// guardamos el archivo a la carpeta files
-				$destino = $rutaBloque . "/soportes/" . $nombreDoc;
-		
-				if (copy ( $archivo ['tmp_name'], $destino )) {
-					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $host . "/soportes/" . $prefijo . "-" . $archivo1;
-				} else {
-					$status = "<br>Error al subir el archivo1";
-				}
-			} else {
-				$status = "<br>Error al subir archivo2";
-			}
-		} else {
-			echo "<br>NO existe el archivo D:!!!";
-		}
-		//************************************************************************************************************
-		
 		
 		/*Variables Texto Enriquecido ----------------------------------------------------------*/
 		/*--------------------------------------------------------------------------------------*/
