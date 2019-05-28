@@ -1400,4 +1400,18 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
     }
     ;
+
+       function notFile() {
+    	
+    	swal({
+			                title: 'ATENCIÓN<br>ESPECIFICACIÓN TÉCNICA',
+			                type: 'info',
+			                html:
+			                        '<b>Módulo de Cotizaciones ÁGORA</b></b><br><br>'
+			                        +' La información <b>ADJUNTA</b></b> no fue relacionada por el Solicitante',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+    
+    };
      	                                              
