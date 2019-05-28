@@ -2955,4 +2955,38 @@ $("#<?php echo $this->campoSeguro('medioPago')?>").change(function() {
 		});
     	
     }
+
+
+
+$("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").change(function () {
+    var file = $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").val();
+    var ext = file.substring(file.lastIndexOf("."));
+    if (ext != ".pdf" && ext != ".xls" && ext != ".xlsx" && ext != ".doc" && ext != ".docx")
+    {
+        swal({
+            title: 'Problema con el Archivo de Soporte',
+            type: 'warning',
+            html:
+                    'Por favor cambie el archivo por otro en alguno de los formatos <i>(pdf, xls, xlsx, doc, docx)</i>',
+            confirmButtonText:
+                    'Ok'
+        })
+        $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").val(null);
+    }
+});
+
+
+   function notFile() {
+    	
+    	swal({
+			                title: 'ATENCIÓN<br>ESPECIFICACIÓN TÉCNICA',
+			                type: 'info',
+			                html:
+			                        '<b>Módulo de Cotizaciones ÁGORA</b></b><br><br>'
+			                        +' La información <b>ADJUNTA</b></b> no fue relacionada por el Solicitante',
+			                confirmButtonText:
+			                        'Aceptar'
+			            })
+    
+    };
      

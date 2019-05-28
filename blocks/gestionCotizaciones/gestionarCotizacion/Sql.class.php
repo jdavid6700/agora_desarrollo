@@ -31,7 +31,34 @@ class Sql extends \Sql {
 
         switch ($tipo) {
 
-             case "jefeDependenciaLast" :
+            case "actualizarAnexoEspTec" :
+                $cadenaSql = " UPDATE ";
+                $cadenaSql.= " agora.objeto_cotizacion_especificacion_tecnica ";
+                $cadenaSql.= " SET ";
+                $cadenaSql.= " anexo_tecnico = '" . $variable ['anexo'] . "'";
+                $cadenaSql.= " WHERE objeto = " . $variable ['objeto_cotizacion_id'] . ";";
+                break;
+
+            case "consultarEspTec" :
+                $cadenaSql = " SELECT anexo_tecnico ";
+                $cadenaSql.= " FROM agora.objeto_cotizacion_especificacion_tecnica ";
+                $cadenaSql.= " WHERE objeto = " . $variable ['idObjeto'] . ";";
+                break;
+
+            case "registrarAnexoEspTec" :
+                $cadenaSql = " INSERT INTO agora.objeto_cotizacion_especificacion_tecnica";
+                $cadenaSql .= " (";
+                $cadenaSql .= " objeto,";
+                $cadenaSql .= " anexo_tecnico";
+                $cadenaSql .= " )";
+                $cadenaSql .= " VALUES";
+                $cadenaSql .= " (";
+                $cadenaSql .= " " . $variable ['objeto_cotizacion_id'] . ",";
+                $cadenaSql .= " '" . $variable ['anexo'] . "'";
+                $cadenaSql .= " );";
+                break;
+
+            case "jefeDependenciaLast" :
                 $cadenaSql = " SELECT id, fecha_inicio, fecha_fin, tercero_id, dependencia_id, acta_aprobacion ";
                 $cadenaSql .= " FROM core.jefe_dependencia ";
                 $cadenaSql .= " WHERE dependencia_id = " . $variable . " ORDER BY fecha_fin DESC LIMIT 1;";

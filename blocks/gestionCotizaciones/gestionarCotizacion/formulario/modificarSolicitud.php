@@ -2657,50 +2657,15 @@ class FormularioRegistro {
 
 
 
-
-
-
-
-
-        $esteCampo = "marcoAnexo";
+        $esteCampo = "marcoAnexoSop";
         $atributos ['id'] = $esteCampo;
         $atributos ["estilo"] = "jqueryui";
         $atributos ['tipoEtiqueta'] = 'inicio';
         $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
-        //echo $this->miFormulario->marcoAgrupacion('inicio', $atributos); ---
-
-
-        //INICIO enlace boton descargar Soporte
-        //------------------Division para los botones-------------------------
-        $atributos["id"] = "botones";
-        $atributos["estilo"] = "marcoBotones widget";
-        //echo $this->miFormulario->division("inicio", $atributos); ---
-
-        if ($_REQUEST['cotizacionSoporte'] != null) {
-            $enlace = "<br><a href='" . $_REQUEST['cotizacionSoporte'] . "' target='_blank'>";
-            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Archivo Detalle Cotización";
-            $enlace.="</a>";
-            //echo $enlace; ---
-        } else {
-            $enlace = "<br><a href='#' onClick=\"
-				swal({
-					  title: 'Atención',
-					  type: 'info',
-					  html:
-					    'No se adjunto ningun documento de Soporte para Detalle de Cotización.',
-					  confirmButtonText:
-					    'Ok'
-					})
-				\">";
-            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Archivo Detalle Cotización";
-            $enlace.="</a>";
-            //echo $enlace; ---
-        }
-        //------------------Fin Division para los botones-------------------------
-        //echo $this->miFormulario->division("fin"); ---
-        //FIN enlace boton descargar Soporte
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
         // ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
-        $esteCampo = "cotizacionSoporte";
+        // ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+        $esteCampo = "cotizacionSoporteEspTec";
         $atributos ["id"] = $esteCampo; // No cambiar este nombre
         $atributos ["nombre"] = $esteCampo;
         $atributos ["tipo"] = "file";
@@ -2712,16 +2677,45 @@ class FormularioRegistro {
         $atributos ["anchoEtiqueta"] = 400;
         $atributos ["tamanno"] = 500000;
         $atributos ["validar"] = "";
-
-        $atributos ["etiqueta"] = $this->lenguaje->getCadena($esteCampo);
+        $atributos ["etiqueta"] = "Modificar " . $this->lenguaje->getCadena($esteCampo);
         // $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
         // $atributos ["valor"] = $valorCodificado;
         $atributos = array_merge($atributos, $atributosGlobales);
-        //echo $this->miFormulario->campoCuadroTexto($atributos); ---
-        unset($atributos);
-        // ----------------FIN CONTROL: DOCUMENTO--------------------------------------------------------
+        echo $this->miFormulario->campoCuadroTexto ( $atributos );
+      
 
-        //echo $this->miFormulario->marcoAgrupacion('fin'); ---
+        $atributos["id"] = "botones";
+        $atributos["estilo"] = "marcoBotones widget";
+        echo $this->miFormulario->division("inicio", $atributos);
+
+        $rutaFilesCotizacion = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesSolicitante" );
+
+        $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEspTec', $datosSolicitudNecesidad );
+        $resultadoAnexo= $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+        if($resultadoAnexo[0]['anexo_tecnico'] != null){
+            $_REQUEST['cotizacionSoporteEspTec'] =  $resultadoAnexo[0]['anexo_tecnico'];
+        }else{
+            $_REQUEST['cotizacionSoporteEspTec'] =  null;
+        }
+        
+        if($_REQUEST['cotizacionSoporteEspTec'] != null){
+            $enlace = "<br><a href='" . $rutaFilesCotizacion . $_REQUEST['cotizacionSoporteEspTec'] . "' target='_blank'>";
+            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Anexo Especificación Técnica";
+            $enlace.="</a>";
+            echo $enlace;
+        }else{
+            $enlace = "<br><a href='javascript:void(0);' onClick=\"notFile()\">";
+            $enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Anexo Especificación Técnica";
+            $enlace.="</a>";
+            echo $enlace;
+        }
+        
+        //------------------Fin Division para los botones-------------------------
+        echo $this->miFormulario->division("fin");
+        //FIN enlace boton descargar RUT
+
+        echo $this->miFormulario->marcoAgrupacion('fin');
 
 
 

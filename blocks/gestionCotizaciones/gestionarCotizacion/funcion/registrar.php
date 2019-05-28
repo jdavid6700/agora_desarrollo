@@ -83,60 +83,7 @@ class Registrar {
         $rutaBloque .= $esteBloque ['nombre'];
         $host = $this->miConfigurador->getVariableConfiguracion("host") . $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/asignacionPuntajes/salariales/" . $esteBloque ['nombre'];
 
-
-
-
-
-
-
-
-        //Guardar Soporte adjuntado *************************************************************************************
-        $_REQUEST ['destino'] = '';
-        // Guardar el archivo
-        if ($_FILES) {
-            $i = 0;
-            foreach ($_FILES as $key => $values) {
-                $archivoCarga[$i] = $_FILES [$key];
-                $i++;
-            }
-            $archivo = $archivoCarga[0];
-            // obtenemos los datos del archivo
-            $tamano = $archivo ['size'];
-            $tipo = $archivo ['type'];
-            $archivo1 = $archivo ['name'];
-            $prefijo = substr(md5(uniqid(rand())), 0, 6);
-            $nombreDoc = $prefijo . "-" . $archivo1;
-
-            if ($archivo1 != "") {
-                $CambioARCHIVO = true;
-                // guardamos el archivo a la carpeta files
-
-                $rutaBloqueChange = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/gestionCotizaciones/relacionarCotizacion";
-
-                $destino = $rutaBloqueChange . "/soportes/" . $nombreDoc;
-
-                if (copy($archivo ['tmp_name'], $destino)) {
-
-                    $hostChange = $this->miConfigurador->getVariableConfiguracion("host") . $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/gestionCotizaciones/relacionarCotizacion";
-
-                    $status = "Archivo subido: <b>" . $archivo1 . "</b>";
-                    $_REQUEST ['destino'] = $hostChange . "/soportes/" . $prefijo . "-" . $archivo1;
-
-                    //Actualizar Soporte
-                    $cadenaSql = $this->miSql->getCadenaSql("actualizarSoporte", $_REQUEST);
-                    //$resultado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, 'acceso' );
-                } else {
-                    $status = "<br>Error al subir el archivo1";
-                }
-            } else {
-                $CambioARCHIVO = false;
-                $status = "<br>Error al subir archivo2";
-            }
-        } else {
-            echo "<br>NO existe el archivo D:!!!";
-        }
-        //***************************************************************************************************************************
-
+        $rutaBloqueArchivo = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/gestionCotizaciones/relacionarCotizacion";
 
 
         $datosSolicitudNecesidad = array(
@@ -164,6 +111,7 @@ class Registrar {
         $criterio = $_POST[$this->campoSeguroCodificar('criterioSeleccion', $_REQUEST['tiempo'])];
         $plazo = $_POST[$this->campoSeguroCodificar('plazoEjecucion', $_REQUEST['tiempo'])];
 
+        $SQLs = [];
 
         $datosTextoEnriquecido = array(
             'objetivos' => str_replace("'", "\"", $objetivos), //Limpieza Comilla Simple para evitar Errores En Ejecución Base de Datos
@@ -178,6 +126,60 @@ class Registrar {
         /* -------------------------------------------------------------------------------------- */
 
 
+
+        //******************************** ANEXO ****************************************************************
+
+        if($_FILES[$this->campoSeguroCodificar('cotizacionSoporteEspTec', $_REQUEST['tiempo'])]){
+            $archivo = $_FILES[$this->campoSeguroCodificar('cotizacionSoporteEspTec', $_REQUEST['tiempo'])];
+            // Obtenemos los datos del archivo
+            $tamano = $archivo ['size'];
+            $tipo = $archivo ['type'];
+            $archivoName = $archivo ['name'];
+            $prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+            $nombreDoc = $prefijo . "-" . $archivoName;
+        
+            if ($archivoName != "") {
+                // Guardamos el archivo a la carpeta files
+                $destino = $rutaBloqueArchivo . "/soportes/" . $nombreDoc;
+        
+                if (copy ( $archivo ['tmp_name'], $destino )) {
+                    $status = "Archivo subido: <b>" . $archivoName . "</b>";
+                    $destino1 = $prefijo . "-" . $archivoName;
+                } else {
+                    $status = "<br>Error al subir el archivo";
+                }
+            } else {
+                $status = "<br>Error al subir archivo";
+            }
+        }else{
+            echo "<br>NO existe el archivo !!!";
+        }
+
+        
+        if(isset($archivo) && $archivo ['name'] != ""){
+
+            $datoAneXCot = array (
+                    'objeto_cotizacion_id' => $_REQUEST['idObjeto'],
+                    'idObjeto' => $_REQUEST['idObjeto'],
+                    'anexo' => $destino1
+            );
+
+            $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEspTec', $datoAneXCot );
+            $resultadoAnexo= $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+            if($resultadoAnexo){
+                $anexoEspTec = $this->miSql->getCadenaSql ( 'actualizarAnexoEspTec', $datoAneXCot );
+                array_push($SQLs, $anexoEspTec);  
+            }else{
+                $anexoEspTec = $this->miSql->getCadenaSql ( 'registrarAnexoEspTec', $datoAneXCot );
+                array_push($SQLs, $anexoEspTec); 
+            }
+
+              
+        }
+        //*******************************************************************************************************
+
+
         $fechaApertura = $this->cambiafecha_format($_REQUEST['fechaApertura']);
         $fechaCierre = $this->cambiafecha_format($_REQUEST['fechaCierre']);
 
@@ -186,9 +188,6 @@ class Registrar {
             'plan' => $plan,
             'fk_id_plan' => $datosFkCotizacion['plan_accion']
         );
-
-
-        $SQLs = [];
 
 
 

@@ -1,6 +1,9 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+$this->idioma["marcoAnexoSop"]="Anexo Cotización";
+$this->idioma["cotizacionSoporteEspTec"] = "Especificación Técnica : ";
+$this->idioma["cotizacionSoporteEspTecTitulo"]="Especificación Técnica";
 
 $this->idioma["numberPagosReplica"] = "(n) : ";
 $this->idioma["numberPagosReplicaTitulo"]="(n) Pagos";

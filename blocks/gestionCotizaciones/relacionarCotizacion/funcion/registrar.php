@@ -179,7 +179,7 @@ class Registrar {
 		
 			if ($archivoName != "") {
 				// Guardamos el archivo a la carpeta files
-				$destino = $rutaBloqueArchivo . "/soportes/" . $prefijo . "_" . $nombreDoc;
+				$destino = $rutaBloqueArchivo . "/soportes/" . $nombreDoc;
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivoName . "</b>";
