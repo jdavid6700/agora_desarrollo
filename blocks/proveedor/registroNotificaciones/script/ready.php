@@ -8,6 +8,10 @@ function detectarCarga(){
 		});
 	});
 
+	if (typeof pagTxt != "undefined") {
+		if (pagTxt === 550) { validacionCot(); }
+	}
+
 
 	$('#marcoGeneral').show('slow');
 	
@@ -31,6 +35,21 @@ function detectarCarga(){
 
 }
 
+function validacionCot(){
+	
+	var texto_info = 'A continuación podrá observar, consultar y realizar la gestión sobre las distintas cotizaciones en las cuales ha sido invitado a participar.';
+
+	swal({
+	  title: 'Módulo Cotizaciones',
+	  html: texto_info,
+	  type: 'info',
+	  allowOutsideClick: false,
+	  showCancelButton: false,
+	  confirmButtonColor: '#32CD32',
+	  confirmButtonText: 'Aceptar'
+	});
+	
+}
 
 $("#dialogo").modal({
   	fadeDuration: 1000,

@@ -93,6 +93,15 @@ class consultarForm {
                 $cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
                 $resultadoUsuarios = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
  
+                
+                echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+                
+                
             $esteCampo = "marcoDatosBasicos";
             $atributos ['id'] = $esteCampo;
             $atributos ["estilo"] = "jqueryui";

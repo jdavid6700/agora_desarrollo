@@ -3,6 +3,109 @@ window.onload = detectarCarga;
 function detectarCarga(){
 
 	$('#marcoGeneral').show('slow');
+
+	if (typeof pagTxt != "undefined") {
+
+		if (pagTxt) { validacionCons(); }
+
+		if (pagTxt === 500) { validacionReg(); }
+
+	}
+	
+}
+
+
+function validacionReg(){
+	
+	var texto_info = 'A continuación podrá generar el certificado de registro  en el Sistema de Registro Único de Personas y Banco de Proveedores - Ágora, con el fin de validar que su información esté disponible y pueda realizar los procesos pertinentes.';
+
+	swal({
+	  title: 'Certificaciones',
+	  html: texto_info,
+	  type: 'info',
+	  allowOutsideClick: false,
+	  showCancelButton: false,
+	  confirmButtonColor: '#32CD32',
+	  confirmButtonText: 'Aceptar'
+	});
+	
+}
+
+
+function validacionCons(){
+	
+	if('<?php echo $_REQUEST['pagina'] ?>' === 'registroProveedor' && pagTxt === 400){
+
+
+		var texto_info = '<font size=4><b>RESPETADO USUARIO</b></font> <p align="justify"><font size=2>Se solicita su autorización para que de manera voluntaria, previa, expresa, informada e inequívoca permita a la Universidad Francisco José de Caldas la recolección, almacenamiento, disposición y divulgación (de los datos que se consideren públicos) de los datos personales ingresados al sistema de información para fines institucionales, todo esto, siguiendo los principios de transparencia de la información.</font color="black"></p> <p align="justify"><font size=2>Su confidencialidad y seguridad se darán de acuerdo a lo establecido en la Ley 1581 de 2012 (Régimen General de Protección de Datos Personales) y la Ley 1712 de 2014 de Transparencia y del derecho al acceso a la información pública Nacional, lo cual podrá ser consultado en las <b><a id ="id_a"; href="https://www.udistrital.edu.co/politicas-de-privacidad" target="_blank">políticas de privacidad de la Universidad</a></b>. </font></p> <p align="justify"><font size=2>Cabe recordar que su cuenta en el Sistema es personal, por lo tanto, su usuario y contraseña son exclusivamente su responsabilidad. De igual manera, y siguiendo el principio de la buena fe establecido en el artículo 83 de la Constitución Política de Colombia, se presume que los datos y soportes suministrados son verídicos, y cualquier inconsistencia o dato falso que se identifique en el proceso de verificación de la información será responsabilidad del titular de la cuenta, quien asumirá de forma directa las consecuencias civiles, penales y administrativas que su actuación genere ante las autoridades públicas.</font></p>';
+
+		    swal({
+			  title: 'CONSENTIMIENTO INFORMADO',
+			  html: texto_info,
+			  type: 'info',
+			  width: '60%',
+			  allowOutsideClick: false,
+			  showCancelButton: true,
+			  confirmButtonColor: '#32CD32',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Si acepto',
+			  cancelButtonText: 'No acepto'
+			}).then(function (result) {
+
+			  if (result) {
+			    swal({
+			      title: 'Confirmado',
+			      html: 'Puede proceder con el registro de su información',
+			      type: 'success',
+			      confirmButtonText: 'Aceptar'
+			    })
+
+			    $("#<?php echo $this->campoSeguro('tipoPersona')?>").removeAttr('disabled');
+			    $('#<?php echo $this->campoSeguro('tipoPersona')?>').width(150);
+			    $("#<?php echo $this->campoSeguro('tipoPersona')?>").select2();
+			  }
+
+			}).catch(swal.noop);
+
+
+	}
+
+
+
+	if('<?php echo $_REQUEST['pagina'] ?>' === 'modificaProveedor' && pagTxt === 400){
+
+
+		var texto_info = '<font size=4><b>RESPETADO USUARIO</b></font> <p align="justify"><font size=2>Se solicita su autorización para que de manera voluntaria, previa, expresa, informada e inequívoca permita a la Universidad Francisco José de Caldas la recolección, almacenamiento, disposición y divulgación (de los datos que se consideren públicos) de los datos personales ingresados al sistema de información para fines institucionales, todo esto, siguiendo los principios de transparencia de la información.</font color="black"></p> <p align="justify"><font size=2>Su confidencialidad y seguridad se darán de acuerdo a lo establecido en la Ley 1581 de 2012 (Régimen General de Protección de Datos Personales) y la Ley 1712 de 2014 de Transparencia y del derecho al acceso a la información pública Nacional, lo cual podrá ser consultado en las <b><a id ="id_a"; href="https://www.udistrital.edu.co/politicas-de-privacidad" target="_blank">políticas de privacidad de la Universidad</a></b>. </font></p> <p align="justify"><font size=2>Cabe recordar que su cuenta en el Sistema es personal, por lo tanto, su usuario y contraseña son exclusivamente su responsabilidad. De igual manera, y siguiendo el principio de la buena fe establecido en el artículo 83 de la Constitución Política de Colombia, se presume que los datos y soportes suministrados son verídicos, y cualquier inconsistencia o dato falso que se identifique en el proceso de verificación de la información será responsabilidad del titular de la cuenta, quien asumirá de forma directa las consecuencias civiles, penales y administrativas que su actuación genere ante las autoridades públicas.</font></p>';
+
+		    swal({
+			  title: 'CONSENTIMIENTO INFORMADO',
+			  html: texto_info,
+			  type: 'info',
+			  width: '60%',
+			  allowOutsideClick: false,
+			  showCancelButton: true,
+			  confirmButtonColor: '#32CD32',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Si acepto',
+			  cancelButtonText: 'No acepto'
+			}).then(function (result) {
+
+			  if (result) {
+			    swal({
+			      title: 'Confirmado',
+			      html: 'Puede proceder con la actualización de su información',
+			      type: 'success',
+			      confirmButtonText: 'Aceptar'
+			    })
+
+			    $('#botonesMod').fadeIn(300);
+			  }
+
+			}).catch(swal.noop);
+
+	}
+
+
 }
 
 $('*').bind("cut copy paste",function(e) {
@@ -56,9 +159,44 @@ $('#<?php echo $this->campoSeguro('correoNatConfirm')?>').attr({
 $('#<?php echo $this->campoSeguro('correoConfirm')?>').attr({
         "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, custom[email], maxSize[320], correoEquals[<?php echo $this->campoSeguro('correo')?>]]"
 });
+
+
+$('#<?php echo $this->campoSeguro('confnit')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, minSize[1],maxSize[14], custom[onlyNumberSp], idtEquals[<?php echo $this->campoSeguro('nit')?>]]"
+});
+
+
+$('#<?php echo $this->campoSeguro('confdocumentoNat')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, minSize[1],maxSize[14], custom[onlyNumberSp], idtEquals[<?php echo $this->campoSeguro('documentoNat')?>]]"
+});
+
+
+$('#<?php echo $this->campoSeguro('conftipoDocumentoNat')?>').attr({
+        "class" : "ui-widget ui-widget-content ui-corner-all  validate[required, tidtEquals[<?php echo $this->campoSeguro('tipoDocumentoNat')?>]]"
+});
  
  
  
+
+//*******************************************************************
+//$('#marcoDatosLoad').fadeOut(1000, function (){
+//	$('#AgrupacionDisponibilidadNec').fadeIn(500);
+//});
+	
+$('#obligatorioCantidadPersonasACargoH').fadeOut(300);
+$('#obligatorioCantidadHijos').fadeOut(300);
+
+$("#obligatorioTipoDiscapacidadH").fadeOut(300);
+
+$("#marcoSoportesHijos").fadeOut(300);
+$("#marcoDeclaracionRenta").fadeOut(300);
+
+
+
+//********************************************************************
+
+
+
  
  
 
@@ -159,6 +297,18 @@ $('#<?php echo $this->campoSeguro('fechaExpeNat')?>').datepicker({
 });	
 
 
+$('#<?php echo $this->campoSeguro('fechaNacNat')?>').datepicker({
+		yearRange: '-99:+0',
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+		monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'],
+		dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+		dayNamesShort: ['Dom','Lun','Mar','Mie','Jue','Vie','Sab'],
+		dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','Sa']
+});	
+
+
 $('#<?php echo $this->campoSeguro('fechaExpeRep')?>').datepicker({
 		yearRange: '-99:+0',
         dateFormat: 'dd/mm/yy',
@@ -215,6 +365,8 @@ $('#<?php echo $this->campoSeguro('paisEmpresa')?>').width(150);
 $('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoDocumento')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoDocumentoNat')?>').width(250);
+
+$('#<?php echo $this->campoSeguro('conftipoDocumentoNat')?>').width(250);
 
 $('#<?php echo $this->campoSeguro('productoImportacion')?>').width(150);
 $('#<?php echo $this->campoSeguro('regimenContributivo')?>').width(150);
@@ -310,6 +462,8 @@ $('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoDocumento')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoDocumentoNat')?>').select2();
 
+$('#<?php echo $this->campoSeguro('conftipoDocumentoNat')?>').select2();
+
 $('#<?php echo $this->campoSeguro('productoImportacion')?>').select2();
 $('#<?php echo $this->campoSeguro('regimenContributivo')?>').select2();
 $('#<?php echo $this->campoSeguro('pyme')?>').select2();
@@ -318,7 +472,7 @@ $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
 $('#<?php echo $this->campoSeguro('grupoEtnico')?>').width(250);
 $("#<?php echo $this->campoSeguro('grupoEtnico')?>").select2();
-$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(150);
+$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(250);
 $("#<?php echo $this->campoSeguro('comunidadLGBT')?>").select2();
 $('#<?php echo $this->campoSeguro('cabezaFamilia')?>').width(150);
 $("#<?php echo $this->campoSeguro('cabezaFamilia')?>").select2();
@@ -356,7 +510,47 @@ $('#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>').width(150)
 $("#<?php echo $this->campoSeguro('padresHermanosDependienteNat')?>").select2();
 
 
+$('#<?php echo $this->campoSeguro('pensionadoNat')?>').width(150);
+$("#<?php echo $this->campoSeguro('pensionadoNat')?>").select2();
+
+$('#<?php echo $this->campoSeguro('hijosPersona')?>').width(150);
+$("#<?php echo $this->campoSeguro('hijosPersona')?>").select2();
+
+
+$('#<?php echo $this->campoSeguro('via')?>').width(250);
+$("#<?php echo $this->campoSeguro('via')?>").select2();
+$('#<?php echo $this->campoSeguro('interior1')?>').width(250);
+$("#<?php echo $this->campoSeguro('interior1')?>").select2();
+$('#<?php echo $this->campoSeguro('interior2')?>').width(250);
+$("#<?php echo $this->campoSeguro('interior2')?>").select2();
+
+$('#<?php echo $this->campoSeguro('viaNat')?>').width(250);
+$("#<?php echo $this->campoSeguro('viaNat')?>").select2();
+$('#<?php echo $this->campoSeguro('interior1Nat')?>').width(250);
+$("#<?php echo $this->campoSeguro('interior1Nat')?>").select2();
+$('#<?php echo $this->campoSeguro('interior2Nat')?>').width(250);
+$("#<?php echo $this->campoSeguro('interior2Nat')?>").select2();
+
+
+$("#modDirNat").fadeOut(300);
+$("#modDirJur").fadeOut(300);
+
 //////////////////Efectos Campos de Selección y Campos Dependientes///////////////////////////////////////
+
+if($('#<?php echo $this->campoSeguro('declaranteRentaNat') ?>').val() == 1){
+	$("#marcoDeclaracionRenta").fadeIn(300);
+}else{
+	$("#marcoDeclaracionRenta").fadeOut(300);
+}
+
+if($('#<?php echo $this->campoSeguro('hijosPersona') ?>').val() == 1){
+	$("#obligatorioCantidadHijos").fadeIn(300);
+	$("#marcoSoportesHijos").fadeIn(300);
+}else{
+	$("#obligatorioCantidadHijos").fadeOut(200);
+	$("#marcoSoportesHijos").fadeOut(300);
+	$('#<?php echo $this->campoSeguro('numeroHijosPersona') ?>').val('NULL');
+}
 
 
 if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 1){
@@ -367,7 +561,6 @@ if($('#<?php echo $this->campoSeguro('tipoPersona_Update') ?>').val() == 1){
 	$("#marcoDatosNatural").hide("fast");
 	$("#marcoDatosJuridica").hide("fast");
 }
-
 
 
 //$("#editarBotonesConcepto").show("slow");
@@ -390,17 +583,9 @@ if($('#<?php echo $this->campoSeguro('cuentaAFCNat') ?>').val() == 1){//AGREGADO
 
 
 if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
-	$("#obligatorioCantidadPersonasACargo").show("fast");
 	$("#marcoDetalleDependientes").show("fast");//AGREGADO Tributario
 }else{
-	$("#obligatorioCantidadPersonasACargo").hide("fast");
 	$("#marcoDetalleDependientes").hide("fast");//AGREGADO Tributario
-}
-
-if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
-	$("#obligatorioTipoDiscapacidad").show("fast");
-}else{
-	$("#obligatorioTipoDiscapacidad").hide("fast");
 }
 
 
@@ -418,14 +603,14 @@ if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4 || $('#<?php echo
 
 
 if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
-	$("#obligatorioProfesionNat").show("fast");
-	$("#obligatorioEspecialidadNat").show("fast");
+	$("#obligatorioProfesionNat").fadeIn("fast");
+	$("#obligatorioEspecialidadNat").fadeIn("fast");
 }else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
-	$("#obligatorioProfesionNat").show("fast");
-	$("#obligatorioEspecialidadNat").hide("fast");
+	$("#obligatorioProfesionNat").fadeIn("fast");
+	$("#obligatorioEspecialidadNat").fadeOut("fast");
 }else{
-	$("#obligatorioProfesionNat").hide("fast");
-	$("#obligatorioEspecialidadNat").hide("fast");
+	$("#obligatorioProfesionNat").fadeOut("fast");
+	$("#obligatorioEspecialidadNat").fadeOut("fast");
 }
 
 

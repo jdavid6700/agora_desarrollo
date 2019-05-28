@@ -17,14 +17,16 @@ class Registrar {
 	var $miFuncion;
 	var $miSql;
 	var $conexion;
+	var $miLogger;
 	
-	function __construct($lenguaje, $sql, $funcion) {
+	function __construct($lenguaje, $sql, $funcion, $miLogger) {
 		
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
 		$this->lenguaje = $lenguaje;
 		$this->miSql = $sql;
 		$this->miFuncion = $funcion;
+		$this->miLogger= $miLogger;
 	}
 	
 	function procesarFormulario() {
@@ -95,6 +97,39 @@ class Registrar {
 		$registroActividades = $esteRecursoDB->transaccion($SQLs);
 			
 		if ($registroActividades) {
+			
+			$parametro['id_usuario'] = $_REQUEST['usuario'];
+			$cadena_sql = $this->miSql->getCadenaSql("consultarUsuarios", $parametro);
+			$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+			$cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
+			$resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
+			
+			$c = 0;
+			while ($c < count($SQLs)){
+				$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+				$c++;
+			}
+			$query = json_encode($SQLsDec);
+				
+			$log = array('accion'=>"ACTUALIZACIÓN CIIU PERSONA ".$_REQUEST['tipo_persona'],
+					'id_registro'=>$resultadoPerfil[0]['id_usuario'],
+					'tipo_registro'=>"GESTION CIIU USUARIO ".$_REQUEST['tipo_persona'],
+					'nombre_registro'=>"id_usuario=>".$resultadoPerfil[0]['id_usuario'].
+					"|identificacion=>".$resultadoUsuario[0]['identificacion'].
+					"|tipo_identificacion=>".$resultadoUsuario[0]['tipo_identificacion'].
+					"|nombres=>".$resultadoUsuario[0]['nombre'].
+					"|apellidos=>".$resultadoUsuario[0]['apellido'].
+					"|correo=>".$resultadoUsuario[0]['correo'].
+					"|telefono=>".$resultadoUsuario[0]['telefono'].
+					"|subsistema=>".$resultadoPerfil[0]['id_subsistema'].
+					"|perfil=>".$resultadoPerfil[0]['rol_id'].
+					"|fechaIni=>".$resultadoPerfil[0]['fecha_registro'].
+					"|fechaFin=>".$resultadoPerfil[0]['fecha_caduca'],
+					'descripcion'=>"Modificación Actividades Económicas Usuario ".$resultadoPerfil[0]['id_usuario']." con perfil ".$resultadoPerfil[0]['rol_alias'],
+					'query'=> $query,
+			);
+			$this->miLogger->log_usuario($log);
+
 			redireccion::redireccionar ( 'registroActividad', $datos );
 			exit ();
 		} else {
@@ -114,7 +149,7 @@ class Registrar {
 	}
 }
 
-$miRegistrador = new Registrar ( $this->lenguaje, $this->sql, $this->funcion );
+$miRegistrador = new Registrar ( $this->lenguaje, $this->sql, $this->funcion, $this->miLogger );
 
 $resultado = $miRegistrador->procesarFormulario ();
 

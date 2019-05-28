@@ -71,6 +71,12 @@ class Registrar {
         $conexion = "estructura";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
+        $conexion = 'core_central';
+        $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
 
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/asignacionPuntajes/salariales/";
@@ -193,6 +199,21 @@ class Registrar {
         $valorCDP = str_replace(",", "", $_REQUEST['indices_cdps']);
 
 
+        /**********************************************/        
+        /*
+        JEFE DEPENDENCIA (Vigente)
+        */
+        $cadenaSql = $this->miSql->getCadenaSql ( "jefeDependenciaLast", $_REQUEST['dependencia'] );
+        $jefeOrigen = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $_REQUEST['dependencia'] = $jefeOrigen[0][0];
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "jefeDependenciaLast", $_REQUEST['dependenciaDestino'] );
+        $jefeDestino = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $_REQUEST['dependenciaDestino'] = $jefeDestino[0][0];
+
+        /**********************************************/
+
+
         $datosSolicitud = array(
             'idObjeto' => $_REQUEST['idObjeto'],
             'titulo_cotizacion' => $datosTextoEnriquecido['titulo'],
@@ -249,10 +270,17 @@ class Registrar {
             $limit = 0;
             while ($limit < $cantidadParametros) {
 
+            	if($subCount[$limit][0] == "2"){
+            		$paraCon = $subFP[$limit+1];
+            		$paraCon = str_replace("\\", " ", $paraCon);
+            		$paraCon = str_replace("'", "\"", $paraCon);
+            	}else{
+            		$paraCon = $subCount[$limit+1][0];
+            	}
 
                 $datoFP = array(
                     'tipo_condicion' => $subCount[$limit][0],
-                    'valor_condicion' => $subCount[$limit + 1][0],
+                    'valor_condicion' => $paraCon,
                     'porcentaje_pago' => $subCount[$limit + 2][0]
                 );
 
@@ -285,9 +313,8 @@ class Registrar {
         $countFPParam = $_REQUEST ['countItems'];
 
 
-        $subFP = explode("&", $_REQUEST ['idsItems']);
-
-
+        $subFP = explode("@$&$@", $_REQUEST ['idsItems']);
+        
 
         $cantidadParametros = ($countFPParam) * 6;
 
@@ -394,10 +421,80 @@ class Registrar {
             );
 
 
+            if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                $ip = $_SERVER['HTTP_CLIENT_IP'];
+            }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+            }else{
+                $ip = $_SERVER['REMOTE_ADDR'];
+            }
+            $c = 0;
+            while ($c < count($SQLs)){
+                $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                $c++;
+            }
+            $query = json_encode($SQLsDec);
+            $numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+
+            $dataBackDec = unserialize($this->miConfigurador->fabricaConexiones->crypto->decodificar($_REQUEST['dataSerCt']));
+            foreach($dataBackDec as $tabl => $param)
+            {
+                $dataBackCod[$tabl] = $this->miConfigurador->fabricaConexiones->crypto->codificar(json_encode($param[0]));
+            }
+            $data = json_encode($dataBackCod);
+                
+            $datosLog = array (
+                    'tipo_log' => 'MODIFICACION',
+                    'modulo' => 'MCOT',
+                    'numero_cotizacion' => $numberSolicitud,
+                    'vigencia' => $_REQUEST ['vigencia'],
+                    'query' => $query,
+                    'data' => $data,
+                    'host' => $ip,
+                    'fecha_log' => date("Y-m-d H:i:s"),
+                    'usuario' => $_REQUEST ['usuario']
+            );
+            $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacionUp", $datosLog);
+            $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+
+            
             redireccion::redireccionar('inserto', $datos);
             exit();
         } else {
-            redireccion::redireccionar('noInserto');
+
+                if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                    $ip = $_SERVER['HTTP_CLIENT_IP'];
+                }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                }else{
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                }
+                $c = 0;
+                while ($c < count($SQLs)){
+                    $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                    $c++;
+                }
+                $query = json_encode($SQLsDec);
+                $numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+                $error = json_encode(error_get_last());
+                
+                $datosLog = array (
+                        'tipo_log' => 'MODIFICACION',
+                        'modulo' => 'MCOT',
+                        'numero_cotizacion' => $numberSolicitud,
+                        'vigencia' => $_REQUEST ['vigencia'],
+                        'query' => $query,
+                        'error' => $error,
+                        'host' => $ip,
+                        'fecha_log' => date("Y-m-d H:i:s"),
+                        'usuario' => $_REQUEST ['usuario']
+                );
+                $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacionError", $datosLog);
+                $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+                    
+                $caso = "RCL-" . date("Y") . "-" . $resultadoLog[0][0];
+
+            redireccion::redireccionar('noInserto', $caso);
             exit();
         }
     }

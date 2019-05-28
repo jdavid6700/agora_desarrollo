@@ -1,3 +1,7 @@
+.ui-widget .ui-widget {
+    font-size: 15.5px !important;
+}
+
 .textCon{
 	padding:10px;
     text-align:center;
@@ -122,14 +126,6 @@ ul.semaforop li {
   background-color: #CCC;
 }
 
-
-
-
-.lefht{
-	text-align:left;
-	margin-left:10px;
-}
-
 div.clean-gray{
 	border:2px solid #ffffff;
 	border-radius: 10px;
@@ -161,7 +157,11 @@ div.clean-gray{
 
 .lefht{
 	text-align:left;
-	margin-left:10px;
+    position: relative;
+    padding: 20px;
+    top:10px; 
+    left: 10px;
+    width: 100%;
 }
 
 div.clean-gray{

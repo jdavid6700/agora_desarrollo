@@ -602,8 +602,14 @@
 					case "minSize":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._minSize);
 						break;
+					case "minSizeTiny":
+						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._minSizeTiny);
+						break;
 					case "maxSize":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._maxSize);
+						break;
+					case "maxSizeTiny":
+						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._maxSizeTiny);
 						break;
 					case "min":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._min);
@@ -656,6 +662,12 @@
 					case "correoEquals":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._correoEquals);
 						break;	
+					case "idtEquals":
+						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._idtEquals);
+						break;
+					case "tidtEquals":
+						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._tidtEquals);
+						break;		
 					case "funcCall":
 						errorMsg = methods._getErrorMessage(form, field, rules[i], rules, i, options, methods._funcCall);
 						break;
@@ -874,7 +886,9 @@
 			 "groupRequired": "value-missing",
 			 "ajax": "custom-error",
 			 "minSize": "range-underflow",
+			 "minSizeTiny": "range-underflow",
 			 "maxSize": "range-overflow",
+			 "maxSizeTiny": "range-overflow",
 			 "min": "range-underflow",
 			 "max": "range-overflow",
 			 "past": "type-mismatch",
@@ -885,6 +899,8 @@
 			 "minCheckbox": "range-underflow",
 			 "equals": "pattern-mismatch",
 			 "correoEquals": "pattern-mismatch",
+			 "idtEquals": "pattern-mismatch",
+			 "tidtEquals": "pattern-mismatch",
 			 "funcCall": "custom-error",
 			 "creditCard": "pattern-mismatch",
 			 "condRequired": "value-missing"
@@ -1062,6 +1078,20 @@
 			if (field.val() != $("#" + equalsField).val())
 				return options.allrules.correoEquals.alertText;
 		},
+
+		_idtEquals: function(field, rules, i, options) {
+			var equalsField = rules[i + 1];
+
+			if (field.val() != $("#" + equalsField).val())
+				return options.allrules.idtEquals.alertText;
+		},
+
+		_tidtEquals: function(field, rules, i, options) {
+			var equalsField = rules[i + 1];
+
+			if (field.val() != $("#" + equalsField).val())
+				return options.allrules.tidtEquals.alertText;
+		},
 		/**
 		* Check the maximum size (in characters)
 		*
@@ -1081,6 +1111,19 @@
 				return rule.alertText + max + rule.alertText2;
 			}
 		},
+
+		_maxSizeTiny: function(field, rules, i, options) {
+			var rmax = rules[i + 1];
+			var len = tinyMCE.get(field[0].id).getContent({format: 'text'}).length;
+			if(rmax.length > 2){
+				var max = parseInt(rmax) + Math.pow(10, (rmax.length-2));
+			}
+
+			if (len > max) {
+				var rule = options.allrules.maxSizeTiny;
+				return rule.alertText + rmax + rule.alertText2;
+			}
+		},
 		/**
 		* Check the minimum size (in characters)
 		*
@@ -1098,6 +1141,18 @@
 			if (len < min) {
 				var rule = options.allrules.minSize;
 				return rule.alertText + min + rule.alertText2;
+			}
+		},
+
+		_minSizeTiny: function(field, rules, i, options) {
+			var rmin = rules[i + 1];
+			var len = tinyMCE.get(field[0].id).getContent({format: 'text'}).length;
+
+			var min = parseInt(rmin) + 1;
+
+			if (len < min) {
+				var rule = options.allrules.minSizeTiny;
+				return rule.alertText + rmin + rule.alertText2;
 			}
 		},
 		/**

@@ -69,12 +69,7 @@ class Formulario {
 
         <div id="slider1_container" style="position: absolute; margin: 0 auto; top: 0px; left: 0px; width: 570px; height: 300px;">
             <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 570px;  height: 300px;
-                 overflow: hidden;">
-                 <?php
-//                for ($i = 2; $i < 20; $i++) {
-//                    echo " <div><img u='image' src='" . $rutaBloque . "/imagenes/slide_" . $i . ".jpg' /></div>";
-//                }
-                 ?>
+                 overflow: visible;">
 
                 <div><img u="image" src="<?php echo $rutaBloque ?>/imagenes/slide_14.jpg" /></div>
                 <div><img u="image" src="<?php echo $rutaBloque ?>/imagenes/slide_3.jpg" /></div>
@@ -88,11 +83,11 @@ class Formulario {
                 <div><img u="image" src="<?php echo $rutaBloque ?>/imagenes/slide_8.jpg" /></div>
             </div>
         </div>
+
         <header>
-            <div id = "fondo_base"></div>
-
-
+            <div id="fondo_base"></div>
         </header>
+
         <section>
             <article id = "fondo_login">
                 <?php
@@ -269,8 +264,9 @@ class Formulario {
             <div id="fondo_texto">
                 <div id="texto">
 
-                        <h2>¡Bienvenido al Sistema de Registro Único de Personas y Banco de Proveedores! </h2>
-                         <h2>ÁGORA</h2><br>     
+                        <h2>Bienvenido al Sistema de Registro Único de Personas y Banco de Proveedores </h2>
+                         <h2>ÁGORA</h2>
+                         <h5>Versión 2.0.0</h5><br>         
                         <p>La Vicerrectoría Administrativa y Financiera de la Universidad Distrital Francisco José de Caldas lo invita a participar en los procesos de contratación.</p>
                         <p>
                             <a class="btn btn-lg btn-warning" href="<?php echo $urlCodificada; ?>" role="button">Registro Persona</a>
@@ -288,12 +284,44 @@ class Formulario {
 				<div id="texto2" align="center">
 					<p>
 						<a class="btn btn-lg btn-primary"
-							href="<?php echo $rutaAyuda ?>" target="_blank" role="button">Ayuda e
-							Información Importante<br> Guías <span class="glyphicon glyphicon-tags"></span> </a>
-					</p>
-				</div>
+							href="<?php echo $rutaAyuda ?>" target="_blank" role="button">Instructivos e información importante <br> del aplicativo <span class="glyphicon glyphicon-tags"></span> </a>
+					
+                        <a class="btn btn-lg btn-primary"
+                            href="#" data-toggle="modal" data-target="#myModal"  data-backdrop="static" data-keyboard="false" role="button">Videos instructivos <br> tutoriales <span class="glyphicon glyphicon-film"></span> </a>
+                    </p>
+                </div>
 
-	</div>
+	   </div>
+
+
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+       <div class="container">
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Videos de Ayuda</h4>
+                </div>
+                <div class="modal-body">
+                  <p><b>Tutorial Gestión cotizaciones en Ágora Universidad Distrital</b></p>
+
+                  <div class="video-container"><iframe src="https://www.youtube.com/embed/NBLCEe3fKJE"></iframe></div>
+                  
+                </div>
+                <div class="modal-footer">
+                    <a class="close2 btn btn-lg btn-primary" href="#" data-dismiss="modal" role="button">Cerrar</a>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+          
+        </div>
             
 
                             

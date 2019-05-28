@@ -24,15 +24,19 @@ if(isset($_REQUEST['valor'])){
 	}
 }else{
 	
-	if(preg_match("/^[0-9]+$/", $_REQUEST ['documento']) || preg_match("/^[0-9a-zA-Z]+$/", $_REQUEST ['documento'])){
-		$secure = true;
-	}else{
-		$arregloUniqueFail = array (
-				'seguridad' => true,
-				'fallo' => "true"
-		);
-		$secure = false;
-		echo json_encode( $arregloUniqueFail );
+	if(isset($_REQUEST['documento'])){
+
+		if(preg_match("/^[0-9]+$/", $_REQUEST ['documento']) || preg_match("/^[0-9a-zA-Z]+$/", $_REQUEST ['documento'])){
+			$secure = true;
+		}else{
+			$arregloUniqueFail = array (
+					'seguridad' => true,
+					'fallo' => "true"
+			);
+			$secure = false;
+			echo json_encode( $arregloUniqueFail );
+		}
+
 	}
 	
 	

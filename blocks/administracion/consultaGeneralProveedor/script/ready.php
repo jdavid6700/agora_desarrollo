@@ -197,7 +197,7 @@ $('#<?php echo $this->campoSeguro('registroMercantil')?>').select2();
 
 $('#<?php echo $this->campoSeguro('grupoEtnico')?>').width(250);
 $("#<?php echo $this->campoSeguro('grupoEtnico')?>").select2();
-$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(150);
+$('#<?php echo $this->campoSeguro('comunidadLGBT')?>').width(250);
 $("#<?php echo $this->campoSeguro('comunidadLGBT')?>").select2();
 $('#<?php echo $this->campoSeguro('cabezaFamilia')?>').width(150);
 $("#<?php echo $this->campoSeguro('cabezaFamilia')?>").select2();
@@ -303,14 +303,14 @@ if($('#<?php echo $this->campoSeguro('perfil') ?>').val() == 4 || $('#<?php echo
 
 
 if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
-	$("#obligatorioProfesionNat").show("fast");
-	$("#obligatorioEspecialidadNat").show("fast");
+	$("#obligatorioProfesionNat").fadeIn("fast");
+	$("#obligatorioEspecialidadNat").fadeIn("fast");
 }else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
-	$("#obligatorioProfesionNat").show("fast");
-	$("#obligatorioEspecialidadNat").hide("fast");
+	$("#obligatorioProfesionNat").fadeIn("fast");
+	$("#obligatorioEspecialidadNat").fadeOut("fast");
 }else{
-	$("#obligatorioProfesionNat").hide("fast");
-	$("#obligatorioEspecialidadNat").hide("fast");
+	$("#obligatorioProfesionNat").fadeOut("fast");
+	$("#obligatorioEspecialidadNat").fadeOut("fast");
 }
 
 
@@ -335,15 +335,8 @@ if($('#<?php echo $this->campoSeguro('tipoIdentifiExtranjera') ?>').val() == 1){
 
 if($("#<?php echo $this->campoSeguro('tipoCuenta')?>").val() == 4){
 		$("#infoBancos").hide("fast");
-		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").attr('disabled','');
-		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
-		$("#<?php echo $this->campoSeguro('numeroCuenta')?>").attr('disabled','');
 }else{
 		$("#infoBancos").show("fast");
-		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").removeAttr('disabled');
-		$("#<?php echo $this->campoSeguro('entidadBancaria')?>").select2();
-		$("#<?php echo $this->campoSeguro('numeroCuenta')?>").removeAttr('disabled');
-		    			
 }
 
 

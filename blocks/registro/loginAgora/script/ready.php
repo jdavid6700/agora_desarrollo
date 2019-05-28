@@ -3,7 +3,16 @@
 $_REQUEST['tiempo']=time();
 
 
-?>            
+?>
+
+$(function(){
+    $('.close').click(function(){      
+        $('iframe').attr('src', $('iframe').attr('src'));
+    });
+    $('.close2').click(function(){      
+        $('iframe').attr('src', $('iframe').attr('src'));
+    });
+});       
             
 // Asociar el widget de validación al formulario
 $("#<?php echo sha1('login'.$_REQUEST['tiempo']);?>").validationEngine({

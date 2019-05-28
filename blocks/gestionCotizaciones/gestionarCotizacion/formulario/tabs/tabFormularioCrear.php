@@ -27,7 +27,8 @@ class registrarForm {
 	}
 	
 	function miForm() {
-		
+
+
 		// Rescatar los datos de este bloque
 		$esteBloque = $this->miConfigurador->getVariableConfiguracion ( "esteBloque" );
 		$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
@@ -148,7 +149,7 @@ class registrarForm {
 		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
-		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$resultadoOrdenador = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -197,6 +198,9 @@ class registrarForm {
 		echo $this->miFormulario->division("fin");
 		
 		
+		echo '<script> 
+			var pagTxt = 560;
+			 </script>';
 		
 		
 		echo "<span class='textoElegante textoEnorme textoAzul'>Título Cotización : </span>";
@@ -311,6 +315,11 @@ class registrarForm {
 		} else {
 
 
+			//Se da un tratamiento especial a la Cotización con NBC Nulo - Análogo a BIENES
+			if(isset($_REQUEST['objetoNBC']) && $_REQUEST['objetoNBC'] == '0'){
+				$service = false;
+			}
+			
 			// ------- FILTRAR POR ACTIVIDAD ECONOMICA
 			
 			if($service){
@@ -320,8 +329,97 @@ class registrarForm {
 				);
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConv', $datos );
-				$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConvNatural', $datos );
+				$resultadoProveedorNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConvJuridica', $datos );
+				$resultadoProveedorJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+
+				if($resultadoProveedorNatural && $resultadoProveedorJuridica){
+					$resultadoProveedor = array_merge($resultadoProveedorNatural,$resultadoProveedorJuridica);
+				}else if($resultadoProveedorNatural && !$resultadoProveedorJuridica){
+					$resultadoProveedor = $resultadoProveedorNatural;
+				}else if(!$resultadoProveedorNatural && $resultadoProveedorJuridica){
+					$resultadoProveedor = $resultadoProveedorJuridica;
+				}else{
+					$resultadoProveedor = false;
+				}
+
+
+
+				//************* SEGMENTAR **************************
+
+				?>
+					<center>
+					<style type="text/css">
+					.tg  { border: 2px solid #000000;border-collapse:collapse;border-spacing:0;border-color:#aaa;}
+					.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#aaa;color:#333;background-color:#fff;}
+					.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#aaa;color:#fff;background-color:#f38630;}
+					.tg .tg-x5q1{font-size:16px;text-align:left;vertical-align:top}
+					.tg .tg-13pz{font-size:18px;text-align:center;vertical-align:top}
+					.tg .tg-qggo{font-size:16px;background-color:#f38630;color:#ffffff;text-align:center;vertical-align:top}
+					.tg .tg-j1sc{font-size: 22px;
+								  font-weight: bold;
+								  color: #E6E6E6;
+								  background: #000000;
+								  background: -moz-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+								  background: -webkit-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+								  background: linear-gradient(to bottom, #404040 0%, #191919 66%, #000000 100%);
+								  border-top: 1px solid #4A4A4A;text-align:center;}
+					</style>
+					<table class="tg">
+					  <tr>
+					    <th class="tg-13pz" colspan="3"><span style="font-weight:bold">Consolidado de Proveedores (Criterios Atendidos)</span></th>
+					  </tr>
+					  <tr>
+					    <td class="tg-qggo"><span style="font-weight:bold">(Actividad Económica)</span></td>
+					    <td class="tg-qggo"><span style="font-weight:bold">(Núcleo de Conocimiento)</span></td>
+					    <td class="tg-qggo"><span style="font-weight:bold">(Número de Proveedores que Aplican)</span></td>
+					  </tr>
+
+				<?
+
+				foreach ($resultadoActividades as $dato):
+
+					$datosCn = array (
+							'actividadEconomica' => "'".$dato[0]."'",
+							'objetoNBC' => $datos['objetoNBC']
+					);
+
+					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConvNatural', $datosCn );
+					$resultadoConsolidadoNatural = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacionConvJuridica', $datosCn );
+					$resultadoConsolidadoJuridica = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+					
+
+					?>
+					<tr>
+					    <td class="tg-x5q1"><span style="color:rgb(49, 102, 255)">  <?   echo $dato[0] . " - " . $dato[1];    ?> </span></td>
+					    <td class="tg-x5q1"><span style="color:rgb(49, 102, 255)">   <?   echo $datos['objetoNBC'] . " - " . $resultadoNBC[0]['nombre'];    ?> </span></td>
+					    <td class="tg-j1sc"><span style="font-weight:bold"><?   if($resultadoConsolidadoNatural){echo count($resultadoConsolidadoNatural);}else{echo 0;}    ?></span></td>
+					</tr>
+					<tr>
+					    <td class="tg-x5q1"><span style="color:rgb(49, 102, 255)">  <?   echo $dato[0] . " - " . $dato[1];    ?> </span></td>
+					    <td class="tg-x5q1"><span style="color:rgb(49, 102, 255)">  NO APLICA PERSONA JURÍDICA </span></td>
+					    <td class="tg-j1sc"><span style="font-weight:bold"><?   if($resultadoConsolidadoJuridica){echo count($resultadoConsolidadoJuridica);}else{echo 0;}    ?></span></td>
+					</tr>
+					<?
+					
+				endforeach;
+
+				?>
+				</table>
+				</center>
+				<?
+
+				//************* SEGMENTAR **************************
+
+
+
 				
 			}else{
 				$datos = array (
@@ -331,6 +429,64 @@ class registrarForm {
 
 				$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datos );
 				$resultadoProveedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+
+				//************* SEGMENTAR **************************
+
+				?>
+					<center>
+					<style type="text/css">
+					.tg  { border: 2px solid #000000;border-collapse:collapse;border-spacing:0;border-color:#aaa;}
+					.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#aaa;color:#333;background-color:#fff;}
+					.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:0px;overflow:hidden;word-break:normal;border-top-width:1px;border-bottom-width:1px;border-color:#aaa;color:#fff;background-color:#f38630;}
+					.tg .tg-x5q1{font-size:16px;text-align:left;vertical-align:top}
+					.tg .tg-13pz{font-size:18px;text-align:center;vertical-align:top}
+					.tg .tg-qggo{font-size:16px;background-color:#f38630;color:#ffffff;text-align:center;vertical-align:top}
+					.tg .tg-j1sc{font-size: 22px;
+								  font-weight: bold;
+								  color: #E6E6E6;
+								  background: #000000;
+								  background: -moz-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+								  background: -webkit-linear-gradient(top, #404040 0%, #191919 66%, #000000 100%);
+								  background: linear-gradient(to bottom, #404040 0%, #191919 66%, #000000 100%);
+								  border-top: 1px solid #4A4A4A;text-align:center;}
+					</style>
+					<table class="tg">
+					  <tr>
+					    <th class="tg-13pz" colspan="2"><span style="font-weight:bold">Consolidado de Proveedores (Criterios Atendidos)</span></th>
+					  </tr>
+					  <tr>
+					    <td class="tg-qggo"><span style="font-weight:bold">(Actividad Económica)</span></td>
+					    <td class="tg-qggo"><span style="font-weight:bold">(Número de Proveedores que Aplican)</span></td>
+					  </tr>
+
+				<?
+
+				foreach ($resultadoActividades as $dato):
+
+					$datosCn = array (
+							'actividadEconomica' => "'".$dato[0]."'"
+					);
+
+					$cadenaSql = $this->miSql->getCadenaSql ( 'proveedoresByClasificacion', $datosCn );
+					$resultadoConsolidado = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+					?>
+					<tr>
+					    <td class="tg-x5q1"><span style="color:rgb(49, 102, 255)">  <?   echo $dato[0] . " - " . $dato[1];    ?> </span></td>
+					    <td class="tg-j1sc"><span style="font-weight:bold"><?   if($resultadoConsolidado){echo count($resultadoConsolidado);}else{echo 0;}    ?></span></td>
+					  </tr>
+					<?
+					
+				endforeach;
+
+				?>
+				</table>
+				</center>
+				<?
+
+				//************* SEGMENTAR **************************
+
 				
 			}
 			

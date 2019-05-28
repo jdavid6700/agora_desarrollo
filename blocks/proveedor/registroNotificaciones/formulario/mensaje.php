@@ -148,6 +148,7 @@ if (!isset($GLOBALS["autorizado"])) {
      if ($_REQUEST['mensaje'] == 'NoinsertoRespuesta') {
         $tipo = 'error';
         $mensaje = "No fue posible insertar respuesta. Inténte nuevamente por favor.<br >";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $mensaje .= "<strong><br >";
         $boton = "continuar";
 
@@ -171,90 +172,7 @@ if (!isset($GLOBALS["autorizado"])) {
         if (isset($_REQUEST['correo'])) {
             $_REQUEST['correo'] = str_replace('\\', "", $_REQUEST['correo']);
         }
-        /*
-          //**************************************************************************************
-          $usuario = $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'];
 
-          $cadenaSqlSend = $this->sql->getCadenaSql ( "verificarEnvio", $usuario);
-          $resultadoVerificar = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSqlSend, 'busqueda' );
-          //**************************************************************************************
-
-          if($resultadoVerificar[0]['informado'] == 'f'){
-
-          //INICIO ENVIO DE CORREO AL USUARIO
-          $rutaClases=$this->miConfigurador->getVariableConfiguracion("raizDocumento")."/classes";
-
-          include_once($rutaClases."/mail/class.phpmailer.php");
-          include_once($rutaClases."/mail/class.smtp.php");
-
-          $mail = new PHPMailer();
-
-          $mail->SMTPOptions = array (
-          'ssl' => array (
-          'verify_peer' => false,
-          'verify_peer_name' => false,
-          'allow_self_signed' => true
-          )
-          );
-
-          // configuracion de cuenta de envio
-          $mail->SMTPSecure = 'tls';
-          $mail->Host = "mail.udistrital.edu.co";
-          $mail->Port = 587;
-          $mail->Mailer = "smtp";
-          $mail->SMTPAuth = true;
-          $mail->Username = "agora@udistrital.edu.co";
-          $mail->Password = "CondorOAS2012";
-          $mail->Timeout = 1200;
-          $mail->Charset = "utf-8";
-          $mail->SMTPDebug = 1;
-          $mail->IsHTML ( true );
-
-          //remitente
-          $fecha = date("d-M-Y g:i:s A");
-          $to_mail=$_REQUEST ['correo'];
-
-          $mail->AddAddress($to_mail);
-          $mail->From='agora@udistrital.edu.co';
-          $mail->FromName='UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
-          $mail->Subject="Datos de Acceso - Registro de Personas";
-          $contenido="<p>Fecha de envio: " . $fecha . "</p>";
-          $contenido.= "<p>Señor usuario, Bienvenido al <b>Sistema de Registro Único de Personas ÁGORA</b> de la Universidad Distrital Francisco José de Caldas. </p>";
-          $contenido.= "<p>Sus datos de acceso son los siguientes:</p>";
-          $contenido.= "<b>Usuario:</b> " . $_REQUEST ['tipo_identificacion'].$_REQUEST ['nit'] . "<br>";
-          $contenido.= "<b>Clave de acceso:</b> " . $_REQUEST ['generada'];
-          $contenido.= "<p>Este es su usuario y clave para ingresar al Sistema ÁGORA de la Universidad Distrital. Al ingresar el sistema le solicitará cambiar su clave de acceso.</p>";
-          $contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder.</p>";
-
-          $mail->Body=$contenido;
-
-          if(!$mail->Send())
-          {
-          ?>
-          <script language='javascript'>
-          alert('Error! El mensaje no pudo ser enviado, es posible que la dirección de correo electrónico no sea válido.!');
-          </script>
-          <?
-          }
-          else
-          {
-
-          $cadenaSqlExitSend = $this->sql->getCadenaSql ( "actualizarEstadoInformado", $usuario );
-          $resultadoInformado = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSqlExitSend, 'acceso' );
-
-          ?>
-          <script language='javascript'>
-          alert('Se envió un correo con los datos de ingreso.');
-          </script>
-          <?php
-          }
-
-          $mail->ClearAllRecipients();
-          $mail->ClearAttachments();
-
-          //FIN ENVIO DE CORREO AL USUARIO
-
-          } */
 
         $valorCodificado = "pagina=" . $miPaginaActual;
         $valorCodificado.="&opcion=mostrar";

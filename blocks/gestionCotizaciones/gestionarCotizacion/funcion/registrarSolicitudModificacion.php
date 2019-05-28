@@ -39,6 +39,9 @@ class SolicitudModificacion {
         $conexion = "estructura";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
 
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/asignacionPuntajes/salariales/";
@@ -54,6 +57,7 @@ class SolicitudModificacion {
         );
 
         $SQLs = [];
+        $SQLDevs = [];
 
         $datosSolicitud = array(
             'idObjeto' => $_REQUEST['idObjeto'],
@@ -99,6 +103,9 @@ class SolicitudModificacion {
                 $cadenaSqlLogB = $this->miSql->getCadenaSql('insertarLogItemBase', $datosSolicitudLog);
                 array_push($SQLs, $cadenaSqlLogB);
 
+                array_push($SQLDevs, $cadenaSqlLogB);
+
+
                 $limitb++;
             }
         }
@@ -114,7 +121,7 @@ class SolicitudModificacion {
         array_push($SQLs, $cadenaSqlFechaCierre);
 
         $countFPParam = $_REQUEST ['countItems'];
-        $subFP = explode("&", $_REQUEST ['idsItems']);
+        $subFP = explode("@$&$@", $_REQUEST ['idsItems']);
 
         $cantidadParametros = ($countFPParam) * 7;
 
@@ -165,6 +172,7 @@ class SolicitudModificacion {
             $cadenaSqlLog = $this->miSql->getCadenaSql('insertarLogItem', $datosSolicitudLog);
             array_push($SQLs, $cadenaSqlLog);
 
+            array_push($SQLDevs, $cadenaSqlLog);
 
 
             $datosSolicitudJustificacionLog = array(
@@ -242,10 +250,80 @@ class SolicitudModificacion {
         );
 
         if ($insertoModificacionSolicitud) {
+
+                if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                    $ip = $_SERVER['HTTP_CLIENT_IP'];
+                }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                }else{
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                }
+                $c = 0;
+                while ($c < count($SQLs)){
+                    $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                    $c++;
+                }
+                $query = json_encode($SQLsDec);
+                $numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+                
+                $c = 0;
+                while ($c < count($SQLDevs)){
+                    $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLDevs[$c]);
+                    $c++;
+                }
+                $data = json_encode($SQLsDec);    
+
+                $datosLog = array (
+                        'tipo_log' => 'MODIFICACION',
+                        'modulo' => 'MCOTP',
+                        'numero_cotizacion' => $numberSolicitud,
+                        'vigencia' => date("Y"),
+                        'query' => $query,
+                        'data' => $data,
+                        'host' => $ip,
+                        'fecha_log' => date("Y-m-d H:i:s"),
+                        'usuario' => $_REQUEST ['usuario']
+                );
+                $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacionUp", $datosLog);
+                $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+
             redireccion::redireccionar('insertoModificacionSolicitudCotizacion', $datos);
             exit();
         } else {
-            redireccion::redireccionar('noInsertoModificacionSolicitudCotizacion');
+
+                    if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                        $ip = $_SERVER['HTTP_CLIENT_IP'];
+                    }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                    }else{
+                        $ip = $_SERVER['REMOTE_ADDR'];
+                    }
+                    $c = 0;
+                    while ($c < count($SQLs)){
+                        $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                        $c++;
+                    }
+                    $query = json_encode($SQLsDec);
+                    $numberSolicitud = "SMC-" . sprintf("%05d", $_REQUEST['idObjeto']);
+                    $error = json_encode(error_get_last());
+                    
+                    $datosLog = array (
+                            'tipo_log' => 'MODIFICACION',
+                            'modulo' => 'MCOTP',
+                            'numero_cotizacion' => $numberSolicitud,
+                            'vigencia' => date("Y"),
+                            'query' => $query,
+                            'error' => $error,
+                            'host' => $ip,
+                            'fecha_log' => date("Y-m-d H:i:s"),
+                            'usuario' => $_REQUEST ['usuario']
+                    );
+                    $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacionError", $datosLog);
+                    $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+                        
+                    $caso = "RCL-" . date("Y") . "-" . $resultadoLog[0][0];
+
+            redireccion::redireccionar('noInserto', $caso);
             exit();
         }
     }

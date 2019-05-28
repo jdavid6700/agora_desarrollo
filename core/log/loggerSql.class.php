@@ -42,6 +42,9 @@ class loggerSql {
                 $this->cadena_sql [$indice].= "nombre_registro,  ";
                 $this->cadena_sql [$indice].= "fecha_log,  ";
                 $this->cadena_sql [$indice].= "descripcion , ";
+                if(isset($parametro['query'])){ 
+                	$this->cadena_sql [$indice].= "query , ";
+                }                
                 $this->cadena_sql [$indice].= "host  ";
                 $this->cadena_sql [$indice].= ")  ";
                 $this->cadena_sql [$indice].= "VALUES  ";
@@ -53,6 +56,9 @@ class loggerSql {
                 $this->cadena_sql [$indice].= "'".$parametro['nombre_registro']."',  ";
                 $this->cadena_sql [$indice].= "'".$parametro['fecha_log']."',  ";
                 $this->cadena_sql [$indice].= "'".$parametro['descripcion']."',  ";
+                if(isset($parametro['query'])){
+                	$this->cadena_sql [$indice].= "'".$parametro['query']."',  ";
+                }
                 $this->cadena_sql [$indice].= "'".$parametro['host']."'  ";
                 $this->cadena_sql [$indice].= ")"; 
                  

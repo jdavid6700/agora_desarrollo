@@ -200,7 +200,7 @@ class FormularioRegistro {
 		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
-		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$resultadoOrdenador = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -291,7 +291,7 @@ class FormularioRegistro {
 							<br>
 							No se ha seleccionado a un <b>Proveedor</b> para la presente <b>Solicitud de Cotización (" . $_REQUEST ['idSolicitud'] . " - " . $solicitudCotizacion [0] ['vigencia'] . ") </b>:<br>" . 
 
-				"<br>Puede seleccionar un proveedor y registrar un mensaje que solo vera dicho proveedor, luego por favor registre un mensaje
+				"<br>Puede seleccionar un proveedor si es el caso y registrar un mensaje que solo vera dicho proveedor, por favor registre un mensaje
 							general para todos los proveedores que fueron relacionados en la solicitud. Todos veran el mismo mensaje, a continuación
 							indique la justificación de su decisión, la cual podrá ser observada por el Ordenador del Gasto responsable. Gracias
 							";
@@ -370,11 +370,26 @@ class FormularioRegistro {
 				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
-				
-				$matrizItems = array (
-						array ( 1, 'APROBAR - (PROVEEDOR SELECCIONADO)' ),
-						array ( 2, 'RECHAZAR - (GRACIAS)' )
-				);
+
+
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('buscarProveedoresInfoCotizacionMatRes' , $datos['idObjeto']);
+				$matrizItems = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+
+				$atributos ['cadena_sql'] = $cadenaSql = $this->miSql->getCadenaSql('buscarProveedoresInfoCotizacionMat' , $datos['idObjeto']);
+				$preVmatriz = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+					
+				if(!$matrizItems || !$preVmatriz){
+					$matrizItems = array (
+							array ( 2, 'RECHAZAR - (GRACIAS)' )
+					);
+					echo '<input type="hidden" id="setEstate" name="setEstate" value="true">';
+				}else{
+					$matrizItems = array (
+							array ( 1, 'APROBAR - (PROVEEDOR SELECCIONADO)' ),
+							array ( 2, 'RECHAZAR - (GRACIAS)' )
+					);
+					echo '<input type="hidden" id="setEstate" name="setEstate" value="false">';
+				}
 				
 				$atributos ['matrizItems'] = $matrizItems;
 				
@@ -429,7 +444,6 @@ class FormularioRegistro {
 								array ( 1, 'NO ES POSIBLE SELECCIONAR UN PROVEEDOR' )
 						);
 						$atributos ['deshabilitado'] = true;
-						echo "<script>alert('No es posible seleccionar ningun proveedor, pues no hay al menos una respuesta registrada por parte de los Proveedores. (IMPORTANTE) ');</script>";
 					}
 					
 					$atributos ['matrizItems'] = $matrizItems;
@@ -689,7 +703,7 @@ class FormularioRegistro {
 			
 				
 				// ------------------Division para los botones-------------------------
-				$atributos ["id"] = "botones";
+				$atributos ["id"] = "botonesResCot";
 				$atributos ["estilo"] = "marcoBotones";
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );

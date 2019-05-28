@@ -37,6 +37,9 @@ if (!isset($GLOBALS["autorizado"])) {
     //$conexion = "sicapital";
     //$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+    $conexion = 'core_central';
+    $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
 
     $tab = 1;
 //---------------Inicio Formulario (<form>)--------------------------------
@@ -254,11 +257,11 @@ if (!isset($GLOBALS["autorizado"])) {
 			$mail = new PHPMailer();     
 		
 			//configuracion de cuenta de envio
-			$mail->Host     = "200.69.103.49";
+			$mail->Host     = "";
 			$mail->Mailer   = "smtp";
 			$mail->SMTPAuth = true;
 			$mail->Username = "condor@udistrital.edu.co";
-			$mail->Password = "CondorOAS2012";
+			$mail->Password = "";
 			$mail->Timeout  = 1200;
 			$mail->Charset  = "utf-8";
 			$mail->IsHTML(true);
@@ -302,10 +305,15 @@ if (!isset($GLOBALS["autorizado"])) {
 		        $mail->Body=$contenido;
 
 				foreach ($resultadoProveedor as $dato):
-					//$to_mail=$dato ['correo'];
-				    $to_mail="jdavid.6700@gmail.com";//PRUEBAS**********************************************************************************
-					$mail->AddAddress($to_mail);
-					//$mail->Send();
+					$to_mail=$dato ['correo'];
+					
+					if($configSer['Disable']){
+	                    $mail->AddAddress($configSer['mail_dev']);
+	                    break;
+	                }else{
+	                    $mail->AddAddress($to_mail);
+	                }
+
 					if(!true){
 					//if(!$mail->Send()) {
 		    			echo "Error al enviar el mensaje a ". $to_mail .": " . $mail->ErrorInfo;
@@ -318,21 +326,6 @@ if (!isset($GLOBALS["autorizado"])) {
 				
 		        $mail->ClearAllRecipients();
 		        $mail->ClearAttachments();
-		        
-		        /*
-		        $name = "JOSE";
-		        $email_address = "davidencolr6700@hotmail.com";
-		        $phone = "4565845";
-		        $message = $contenido;
-		        
-		        // Create the email and send the message
-		        $to = 'jdavid.6700@gmail.com'; // Add your email address inbetween the '' replacing yourname@yourdomain.com - This is where the form will send a message to.
-		        $email_subject = "Formulario de contacto:  $name";
-		        $email_body = "Ha recibido un nuevo mensaje de su formulario de contacto.\n\n"."Aqui tienes los detalles:\n\nNombre: $name\n\nEmail: $email_address\n\nMensaje:\n$message";
-		        $headers = "From: agora@udistrital.edu.co"; // This is the email address the generated message will be from. We recommend using something like noreply@yourdomain.com.
-		        $headers .= "Reply-To: $email_address";
-		        mail($to,$email_subject,$email_body,$headers);
-		        */
 		        
 		        
 		//FIN ENVIO DE CORREO AL USUARIO    
@@ -353,7 +346,8 @@ if (!isset($GLOBALS["autorizado"])) {
 		        
     } else if($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje =  $this->lenguaje->getCadena('mensajeError');
+        $mensaje = "Error al Cargar los Datos. <br>La Informaciòn no se diligenció Correctamente, Por Favor Vuelva a Intertarlo";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $boton = "regresar";
 
         $valorCodificado = "pagina=".$miPaginaActual;

@@ -60,6 +60,18 @@
 					"regex" : "none",
 					"alertText" : "* Los correos no coinciden"
 				},
+				"correoEquals" : {
+					"regex" : "none",
+					"alertText" : "* Los correos no coinciden"
+				},
+				"idtEquals" : {
+					"regex" : "none",
+					"alertText" : "* Los números de identificación no coinciden"
+				},
+				"tidtEquals" : {
+					"regex" : "none",
+					"alertText" : "* Los tipos de identificación no coinciden"
+				},
 				"creditCard" : {
 					"regex" : "none",
 					"alertText" : "* La tarjeta de crédito no es válida"
@@ -80,10 +92,10 @@
 					"regex" : /^[\-\+]?((([0-9]{1,3})([,][0-9]{3})*)|([0-9]+))?([\.]([0-9]+))?$/,
 					"alertText" : "* No es un valor decimal válido"
 				},
-				"date" : {
-					"regex" : /^(20)\d{2}[\-\-](0?[1-9]|1[012])[\-\-](0?[1-9]|[12][0-9]|3[01])$/,
-					"alertText" : "* Fecha inválida"
-				},
+                "date": {
+                    "regex": /^(0?[1-9]|[12][0-9]|3[01])[\/\/](0?[1-9]|1[012])[\/\/]\d{4}$/,
+                    "alertText": "* Fecha inválida, por favor utilize el formato DD/MM/AAAA"
+                },
 				"ipv4" : {
 					"regex" : /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
 					"alertText" : "* Direccion IP inválida"
@@ -102,6 +114,10 @@
 				},
 				"onlyLetterNumber" : {
 					"regex" : /^[0-9a-zA-Z]+$/,
+					"alertText" : "* No se permiten caracteres especiales o espacios en blanco"
+				},
+				"onlyLetterNumberSp" : {
+					"regex" : /^[0-9a-zA-Z\ ]+$/,
 					"alertText" : "* No se permiten caracteres especiales"
 				},
 				"ajaxUserCall" : {

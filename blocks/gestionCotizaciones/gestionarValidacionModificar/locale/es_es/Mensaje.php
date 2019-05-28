@@ -4,7 +4,7 @@
 $this->idioma["marcoDescripcionProductoAdenda"]="Adendas de Modificación por parte del Solicitante Items de Producto (Valores Iniciales)";
 $this->idioma["marcoDetalleProAdenda"]="Adenda de Modificación a la Cotización N° ";
 
-$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["criterioSeleccion"] = "Criterios de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
 $this->idioma["marcoTipoContrato"]="Tipo de Contratación Asociada";
@@ -15,8 +15,8 @@ $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
 $this->idioma["numero_disponibilidadTitulo"]="Número de la Necesidad";
-$this->idioma["valor_acumulado"] = "($)Valor (CDP) : ";
-$this->idioma["valor_acumuladoTitulo"]="($)Valor (CDP)";
+$this->idioma["valor_acumulado"] = "Valor CDP ($) : ";
+$this->idioma["valor_acumuladoTitulo"]="Valor CDP ($)";
 $this->idioma["dependenciaDestino"] = "Dependencia Destino :";
 $this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
 
@@ -394,12 +394,12 @@ $this->idioma['crearDocenteModificar'] = '';
 $this->idioma["tituloCotizacion"] = "Título de la Cotización:";
 $this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotización";
 
-$this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudCotRes"]="Responsable Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
 
-$this->idioma["nombresResponsable"] = "Nombres: ";
+$this->idioma["nombresResponsable"] = "Nombre(s): ";
 $this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";
-$this->idioma["apellidosResponsable"] = "Apellidos: ";
+$this->idioma["apellidosResponsable"] = "Apellido(s): ";
 $this->idioma["apeliidosResponsableTitulo"] = "Apellidos persona responsable para la cotización";
 $this->idioma["identificacionResponsable"] = "Identificación: ";
 $this->idioma["identificacionResponsableTitulo"] = "Identificación persona responsable para la cotización";

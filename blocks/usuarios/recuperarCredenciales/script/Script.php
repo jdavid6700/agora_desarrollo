@@ -16,6 +16,7 @@ $funcion[$indice++]="jquery-te.js";
 /*$funcion[$indice++]="jqueryui.js";*/
 $funcion[$indice++]="datepicker_es.js";
 $funcion[$indice++]="combobox.js";
+$funcion [$indice++]  = "sweetalert2.min.js";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

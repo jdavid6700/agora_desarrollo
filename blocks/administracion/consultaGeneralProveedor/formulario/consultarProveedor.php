@@ -89,13 +89,13 @@ $nombreFormulario = $esteBloque ["nombre"];
 		unset ( $atributos );		
 }
 
+$regex = '#^[a-z]*[0-9][a-z0-9]*$#i';
 
 if (isset ( $_REQUEST ['nit_proveedor'] ) && $_REQUEST ['nit_proveedor'] != '') {
 	//-------------------------------------------------
 	//-------------------------------------------------
 	//Validación Petición POST Parametro SQL Injection
-	if(isset($_REQUEST ['id_proveedor']) && is_numeric($_REQUEST ['id_proveedor'])){
-		settype($_REQUEST ['id_proveedor'], 'integer');
+	if(isset($_REQUEST ['id_proveedor']) && preg_match($regex, $_REQUEST ['id_proveedor']) == 1){
 		$secure = true;
 	}else{
 		
@@ -304,9 +304,6 @@ else{
 
 $cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuario", $_REQUEST );
 $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
-//ECHO $cadena_sql;
-//var_dump($_REQUEST);
-//var_dump($resultadoPerfil);
 
 $i = 0;
 $consultor = false;
@@ -320,7 +317,7 @@ while($i < count($resultadoPerfil)){
 	}
 	$i++;
 }
-$consultor = true;
+
 if ($resultado && !$consultor) {
 		// -----------------Inicio de Conjunto de Controles----------------------------------------
 		$esteCampo = "marcoDatosResultadoParametrizar";
@@ -342,6 +339,7 @@ if ($resultado && !$consultor) {
 					<th><center>Clasificaciòn</center></th>
 					<th><center>Fecha Registro</center></th>
 					<th><center>Estado</center></th>
+					<th><center>Certificado</center></th>
 					<th><center>Detalle</center></th>
 					<th><center>Modificar</center></th>
 				</tr>
@@ -357,9 +355,9 @@ if ($resultado && !$consultor) {
 			
 			
 			
-			$variableEdit = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
-			$variableEdit .= "&opcion=modificarPro";
-			$variableEdit .= "&idProveedor=" . $dato['id_proveedor'];
+			$variableEdit = "pagina=modificaProveedor"; // pendiente la pagina para modificar parametro
+			$variableEdit .= "&opcion=modificar";
+			$variableEdit .= "&idProveedorAdm=" . $dato['id_proveedor'];
 			$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
 			$imagenEdit = 'editPro.png';
 			
@@ -379,6 +377,19 @@ if ($resultado && !$consultor) {
 					break;
 			}
 
+			$variableResumen = "pagina=certificadoRegistroProveedor";
+			$variableResumen.= "&action=registroProveedor";
+			$variableResumen.= "&bloque=8";
+			$variableResumen.= "&bloqueGrupo=proveedor";
+			$variableResumen.= "&opcion=certRegistro";
+			$variableResumen.= "&nomPersona=" . $dato['nom_proveedor'];
+			$variableResumen.= "&numDocumento=" . $dato['num_documento'];
+			$variableResumen.= "&tipoPersona=" . $dato['tipopersona'];
+			$variableResumen.= "&usuario=" . $_REQUEST ["usuario"];
+			$variableResumen.= "&idProveedor=" . $dato['id_proveedor'];
+			$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+			$variableCerti = $variableResumen;
+			$imagenCerti = "pdf.png";
 			
 			$arregloUnique = array (
 			    'num_documento' => $dato['num_documento'],
@@ -391,10 +402,13 @@ if ($resultado && !$consultor) {
 			$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $arregloUnique );
 			$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
-			
+
 			if($dato['tipopersona'] == 'EXTRANJERA'){
 				$variableEdit = "#";
 				$imagenEdit = "cancel.png";
+				
+				$variableCerti = "#";
+				$imagenCerti = "cancel.png";
 			}
 			
 			$mostrarHtml = "<tr>
@@ -408,6 +422,11 @@ if ($resultado && !$consultor) {
 						<td><center>" . $dato['clasificacion_evaluacion'] . "</center></td>
 						<td><center>" . $dato['fecha_registro'] . "</center></td>
 						<td><center>" . $estado . "</center></td>
+						<td><center>
+							<a href='" . $variableCerti . "'>                        
+								<img src='" . $rutaBloque . "/images/" . $imagenCerti . "' width='15px'> 
+							</a>
+						</center></td>
 						<td><center>
 							<a href='" . $variableView . "'>                        
 								<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'> 
@@ -454,6 +473,7 @@ if ($resultado && !$consultor) {
 						<th><center>Movil</center></th>
 						<th><center>Fecha Registro</center></th>
 						<th><center>Estado</center></th>
+						<th><center>Certificado</center></th>
 						<th><center>Detalle</center></th>
 					</tr>
 					</thead>
@@ -474,6 +494,20 @@ if ($resultado && !$consultor) {
 		$variableEdit = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableEdit, $directorio );
 		$imagenEdit = 'editPro.png';
 			
+		
+		$variableResumen = "pagina=certificadoRegistroProveedor";
+		$variableResumen.= "&action=registroProveedor";
+		$variableResumen.= "&bloque=8";
+		$variableResumen.= "&bloqueGrupo=proveedor";
+		$variableResumen.= "&opcion=certRegistro";
+		$variableResumen.= "&nomPersona=" . $dato['nom_proveedor'];
+		$variableResumen.= "&numDocumento=" . $dato['num_documento'];
+		$variableResumen.= "&tipoPersona=" . $dato['tipopersona'];
+		$variableResumen.= "&usuario=" . $_REQUEST ["usuario"];
+		$variableResumen.= "&idProveedor=" . $dato['id_proveedor'];
+		$variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
+		$variableCerti = $variableResumen;
+		$imagenCerti = "pdf.png";
 			
 		switch ($dato['estado']) {
 			case 1:
@@ -502,8 +536,10 @@ if ($resultado && !$consultor) {
 		$cadena_sql = $this->sql->getCadenaSql ( "consultarContactoMovilProveedor", $arregloUnique );
 		$resultadoMovil = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 			
-		//var_dump($resultadoTel);
-		//var_dump($resultadoMovil);
+		if($dato['tipopersona'] == 'EXTRANJERA'){
+				$variableCerti = "#";
+				$imagenCerti = "cancel.png";
+		}
 			
 		$mostrarHtml = "<tr>
 							<td><center>" . $dato['num_documento'] . "</center></td>
@@ -514,6 +550,11 @@ if ($resultado && !$consultor) {
 							<td><center>" . $resultadoMovil[0]['numero_tel'] . "</center></td>
 							<td><center>" . $dato['fecha_registro'] . "</center></td>
 							<td><center>" . $estado . "</center></td>
+							<td><center>
+							<a href='" . $variableCerti . "'>                        
+								<img src='" . $rutaBloque . "/images/" . $imagenCerti . "' width='15px'> 
+							</a>
+						</center></td>
 							<td><center>
 								<a href='" . $variableView . "'>
 									<img src='" . $rutaBloque . "/images/" . $imagenView . "' width='15px'>

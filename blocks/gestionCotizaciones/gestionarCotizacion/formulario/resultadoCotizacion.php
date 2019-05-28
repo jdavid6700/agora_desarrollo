@@ -447,7 +447,7 @@ class FormularioRegistro {
 			
 				
 				// ------------------Division para los botones-------------------------
-				$atributos ["id"] = "botones";
+				$atributos ["id"] = "botonesResCot";
 				$atributos ["estilo"] = "marcoBotones";
 				echo $this->miFormulario->division ( "inicio", $atributos );
 				unset ( $atributos );

@@ -116,8 +116,19 @@ class registrarForm {
 			$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$numeroDocumento = $resultadoDoc [0] ['identificacion'];
+
+			if($resultadoDoc [0] ['tipo_identificacion'] == 'NIT'){
+				$tipoPersona = 'JURIDICA';
+			}else{
+				$tipoPersona = 'NATURAL';
+			}
+
+			$datosConsultaSARAPer = array (
+					'numeroDocumento' => $numeroDocumento,
+					'tipoPersona' => $tipoPersona 
+			);
 			
-			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_DatosProveedor', $numeroDocumento );
+			$cadenaSql = $this->miSql->getCadenaSql ( 'consultar_DatosProveedor', $datosConsultaSARAPer );
 			$resultadoDats = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 			$idProveedor = $resultadoDats [0] ['id_proveedor'];
@@ -147,12 +158,11 @@ class registrarForm {
 				echo "<span class='textoElegante textoGrande textoGris'>" . $correo . "</span></br>";
 				// FIN INFORMACION
 				
-				?>
 
-			<div id="dialogo">
-				<span>MÓDULO COTIZACIONES </span><br><br><div align="justify">A continuación podrá observar las distintas cotizaciones en las cuales
-				ha recibido una invitación a participar.</div>
-			</div>
+		echo '<script> 
+			var pagTxt = 550;
+			 </script>';
+				?>
 
 <?php
 			}
@@ -165,7 +175,7 @@ class registrarForm {
 			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
 			</center>
 		  </div>';
-			
+
 			
 			$esteCampo = "marcoContratosTabla";
 			$atributos ['id'] = $esteCampo;
@@ -174,11 +184,30 @@ class registrarForm {
 			$atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			{
-				
-				$cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosParaCotizacionJoin", $numeroDocumento );
+				$datosConsultaJoinPer = array (
+						'numeroDocumento' => $numeroDocumento,
+						'tipoPersona' => $tipoPersona 
+				);
+
+				$cadena_sql = $this->miSql->getCadenaSql ( "listarObjetosParaCotizacionJoin", $datosConsultaJoinPer );
 				$resultado = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
 				
 				if ($resultado) {
+
+								$tipo = 'information';
+						        $mensaje = "<b>PLAZO COTIZACIÓN</b><br>
+													<br>
+													Los procesos de cotización estarán abiertos desde las 0:00 horas del día de apertura y serán finalizados a las 23:59 horas de la fecha de cierre, es decir que <b>usted tiene la posibilidad de participar hasta las 23:59 horas de dicha fecha</b>.
+													";
+						        // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+						        $esteCampo = 'mensaje';
+						        $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+						        $atributos["etiqueta"] = "";
+						        $atributos["estilo"] = "centrar";
+						        $atributos["tipo"] = $tipo;
+						        $atributos["mensaje"] = $mensaje;
+						        echo $this->miFormulario->cuadroMensaje($atributos);
+						        unset($atributos);
 					
 					// -----------------Inicio de Conjunto de Controles----------------------------------------
 					$esteCampo = "marcoDatosResultadoParametrizar";
@@ -264,9 +293,9 @@ class registrarForm {
 						$variableObservaciones .= "&id_proveedor=" . $idProveedor;
 						$variableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableObservaciones, $directorio );
 						$imagenObservaciones = 'iconObs.png';
-			
 						
-						if ($dato ['estado_cotizacion'] == 2 && $dato ['fecha_cierre'] > date ( 'Y-m-d' ) && $dato ['fecha_apertura'] <= date ( 'Y-m-d' ) ) { // Antes estaba ABIERTO revisar......
+						$opeCot = false;
+						if ($dato ['estado_cotizacion'] == 2 && date ( 'Y-m-d' ) <= $dato ['fecha_cierre'] && $dato ['fecha_apertura'] <= date ( 'Y-m-d' ) ) { // Antes estaba ABIERTO revisar......
 
 							$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 							$variableMod .= "&opcion=modificarSolicitudRelacionada";
@@ -279,11 +308,16 @@ class registrarForm {
 							$variableMod .= "&fecha_cierre=" . $this->cambiafecha_format ( $dato ['fecha_cierre'] );
 							$variableMod .= "&usuario=" . $_REQUEST ['usuario'];
 							$variableMod .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
+							$variableMod .= "&id_proveedor=" . $idProveedor;
 							$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
 							$imagenMod = 'resPro.png';
 							
 							$variableDetalle = "#";
 							$imagenDetalle = 'cancel.png';
+
+							$opeCot = true;
+
+
 						} else {
 							
 							$variableMod = "#";
@@ -316,6 +350,9 @@ class registrarForm {
 							$variableDetalle .= "&id_proveedor=" . $idProveedor;
 							$variableDetalle = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableDetalle, $directorio );
 							$imagenDetalle = 'verPro.png';
+
+							$opeCot = false;
+
 						} else {
 							
 							$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
@@ -329,6 +366,7 @@ class registrarForm {
 							$variableMod .= "&fecha_cierre=" . $this->cambiafecha_format ( $dato ['fecha_cierre'] );
 							$variableMod .= "&usuario=" . $_REQUEST ['usuario'];
 							$variableMod .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
+							$variableMod .= "&id_proveedor=" . $idProveedor;
 							$variableMod = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableMod, $directorio );
 							$imagenMod = 'resPro.png';
 							
@@ -362,7 +400,7 @@ class registrarForm {
 							$imagenRespuestaOrd = 'cancel.png';
 						}
 						
-						if ($dato ['fecha_cierre'] <= date ( 'Y-m-d' )) {
+						if ($dato ['fecha_cierre'] < date ( 'Y-m-d' )) {
 							
 							if ($dato ['estado_cotizacion'] == 3 || $dato ['estado_cotizacion'] == 8) {
 								$dato ['estado'] = 'FINALIZADA';
@@ -394,7 +432,7 @@ class registrarForm {
 						}
 						
 						$modCot = false;
-						if ($validacionResPro [0] ['estado'] == 'f' && date ( 'Y-m-d' ) < $dato ['fecha_cierre']) {
+						if ($validacionResPro [0] ['estado'] == 'f' && date ( 'Y-m-d' ) <= $dato ['fecha_cierre']) {
 							
 							$variableMod = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 							$variableMod .= "&opcion=modificarItemsSolMod";
@@ -414,11 +452,15 @@ class registrarForm {
 							$modCot = true;
 							
 						}
-                              
+
 						if($modCot){
 							$colorAlert = '<tr style="background-color:#FAAC58;">';
 						}else{
-							$colorAlert = '<tr>';
+							if($opeCot){
+							$colorAlert = '<tr style="background-color:#04B431;">';
+							}else{
+								$colorAlert = '<tr>';
+							}
 						}
 						
 						

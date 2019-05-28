@@ -75,12 +75,15 @@ class Registrar {
         $conexion = "estructura";
         $esteRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
 
+        $conexion = 'framework';
+        $frameworkRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
         $esteBloque = $this->miConfigurador->getVariableConfiguracion("esteBloque");
 
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/proveedor/";
         $rutaBloque .= $esteBloque ['nombre'];
         
-        $rutaBloqueArchivo = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/registroProveedor";
+        $rutaBloqueArchivo = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/proveedor/registroNotificaciones";
 	
         $host = $this->miConfigurador->getVariableConfiguracion("host") . $this->miConfigurador->getVariableConfiguracion("site") . "/blocks/proveedor/" . $esteBloque ['nombre'];
 
@@ -108,11 +111,11 @@ class Registrar {
 
             if ($archivo1 != "") {
                 // guardamos el archivo a la carpeta files
-                $destino1 = $rutaBloqueArchivo . "/files/" . $prefijo . "_" . $archivo1;
+                $destino1 = $rutaBloqueArchivo . "/soportes/" . $prefijo . "_" . $archivo1;
 
                 if (copy($archivo ['tmp_name'], $destino1)) {
                     $status = "Archivo subido: <b>" . $archivo1 . "</b>";
-                    $destino1 = $hostArchivo . "/files/" . $prefijo . "_" . $archivo1;
+                    $destino1 = $prefijo . "_" . $archivo1;
                 } else {
                     $status = "Error al subir el archivo";
                 }
@@ -201,9 +204,9 @@ class Registrar {
         $countFPParam = $_REQUEST ['countItems'];
         
      
-        $subFP = explode("&", $_REQUEST ['idsItems']);
+        $subFP = explode("@$&$@", $_REQUEST ['idsItems']);
         
-        $subFPValores = explode("&", $_REQUEST ['idsItemsProv']);
+        $subFPValores = explode("@$&$@", $_REQUEST ['idsItemsProv']);
         
    
         
@@ -276,7 +279,7 @@ class Registrar {
         //*************************************************************************************************************
 
         $registroRespuestaProveedorCotizacion = $esteRecursoDB->transaccion($SQLs);
-      
+       
        
         if ($registroRespuestaProveedorCotizacion) {
         	
@@ -300,12 +303,74 @@ class Registrar {
 					'fecha_cierre' => $_REQUEST ['fecha_cierre'] 
 			);
 
+
+                if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                    $ip = $_SERVER['HTTP_CLIENT_IP'];
+                }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                }else{
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                }
+                $c = 0;
+                while ($c < count($SQLs)){
+                    $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                    $c++;
+                }
+                $query = json_encode($SQLsDec);
+                $numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST ['solicitud']);
+                    
+                $datosLog = array (
+                        'tipo_log' => 'REGISTRO',
+                        'modulo' => 'RECOTP',
+                        'numero_cotizacion' => $numberSolicitud,
+                        'vigencia' => $_REQUEST ['vigencia'],
+                        'query' => $query,
+                        'data' => null,
+                        'host' => $ip,
+                        'fecha_log' => date("Y-m-d H:i:s"),
+                        'usuario' => $_REQUEST ['usuario']
+                );
+                $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacion", $datosLog);
+                $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+
             
             redireccion::redireccionar('inserto', $datos);
             exit();
         } else {
+
+                if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+                    $ip = $_SERVER['HTTP_CLIENT_IP'];
+                }elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+                    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                }else{
+                    $ip = $_SERVER['REMOTE_ADDR'];
+                }
+                $c = 0;
+                while ($c < count($SQLs)){
+                    $SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+                    $c++;
+                }
+                $query = json_encode($SQLsDec);
+                $error = json_encode(error_get_last());
+                $numberSolicitud = "SC-" . sprintf("%05d", $_REQUEST ['solicitud']);
+                
+                $datosLog = array (
+                        'tipo_log' => 'REGISTRO',
+                        'modulo' => 'RECOTP',
+                        'numero_cotizacion' => $numberSolicitud,
+                        'vigencia' => $_REQUEST ['vigencia'],
+                        'query' => $query,
+                        'error' => $error,
+                        'host' => $ip,
+                        'fecha_log' => date("Y-m-d H:i:s"),
+                        'usuario' => $_REQUEST ['usuario']
+                );
+                $cadenaSQL = $this->miSql->getCadenaSql("insertarLogCotizacionError", $datosLog);
+                $resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+                    
+                $caso = "RCLP-" . date("Y") . "-" . $resultadoLog[0][0];
            
-            redireccion::redireccionar('noInserto');
+            redireccion::redireccionar( 'noInserto', $caso );
             exit();
         }
     }

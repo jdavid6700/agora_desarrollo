@@ -83,21 +83,8 @@ class registrarForm {
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
-			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                        $esteCampo = 'botonRegresar';
-                        $atributos ['id'] = $esteCampo;
-                        $atributos ['enlace'] = $variable;
-                        $atributos ['tabIndex'] = 1;
-                        $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                        $atributos ['estilo'] = 'textoPequenno textoGris';
-                        $atributos ['enlaceImagen'] = $rutaBloque."/images/player_rew.png";
-                        $atributos ['posicionImagen'] = "atras";//"adelante";
-                        $atributos ['ancho'] = '30px';
-                        $atributos ['alto'] = '30px';
-                        $atributos ['redirLugar'] = true;
-                       // echo $this->miFormulario->enlace ( $atributos );
-                        unset ( $atributos );
+
+            
                         
 			$esteCampo = "mensajeCambiarClave";
 			$atributos ['id'] = $esteCampo;
@@ -107,6 +94,22 @@ class registrarForm {
 			echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 			unset ( $atributos );
 			{	
+				
+				
+				echo '<div align="right">';
+				$atributos["id"]="botonAyuTip";
+				$atributos["estilo"]="widget";
+				echo $this->miFormulario->division("inicio",$atributos);
+				{
+					$enlace = "<a href='#'>";
+					$enlace.="<img src='".$rutaBloque."/images/ayuda.png' width='55px'>";
+					$enlace.="</a>";
+					echo $enlace;
+				}
+				//------------------Fin Division para los botones-------------------------
+				echo $this->miFormulario->division("fin");
+				unset ( $atributos );
+				echo '</div>';
 				
 				
 				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -123,7 +126,7 @@ class registrarForm {
 						Es necesario invertir un poco de tiempo y esfuerzo en generar una contraseña segura.
 						<br>
 						<br>
-						Digite el usuario o número de identificación y haga click en 'Consultar':</b>";
+						Digite el usuario y haga click en 'Consultar':</b>";
 					
 				$atributos["mensaje"] = $mensajeLey;
 				echo $this->miFormulario->cuadroMensaje($atributos);

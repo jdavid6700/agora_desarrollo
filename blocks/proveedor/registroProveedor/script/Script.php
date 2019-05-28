@@ -17,6 +17,8 @@ $funcion [$indice++]  = "dataTables.jqueryui.js";
 $funcion [$indice++]  = "dataTables.jqueryui.min.js";
 // $funcion[$indice++]="jquery.formToWizard.js";
 
+$funcion [$indice++] = "jquery.validationEngine-es.js";
+
 //$funcion [$indice ++] = "miScript.js";
 
 $funcion [$indice++]  = "sweetalert2.min.js";

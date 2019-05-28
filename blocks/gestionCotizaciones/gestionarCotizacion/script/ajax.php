@@ -584,8 +584,16 @@ function consultarActividadExistente(elem, request, response){
 		    });                                    
 
 
+			$("#<?php echo $this->campoSeguro('replicarParcial')?>").change(function(){
+		        	if($("#<?php echo $this->campoSeguro('replicarParcial')?>").val() == 1){
+		            	$('#valorAvanceReplica').fadeIn(300);
+		    		}else{
+		    			$('#valorAvanceReplica').fadeOut(300);
+		    		}
+		    });
+			
 
-			 $("#botonAgregar").click(function(){
+			$("#botonAgregar").click(function(){
 			 
 		    		
 		    	if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '' &&
@@ -593,11 +601,8 @@ function consultarActividadExistente(elem, request, response){
 		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() != '' &&
 		    		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() > 0) {
 		    		
-		    		
-		    		if( $.isNumeric($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val()) ){
 		    			
-		    			if(($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 2 && 	
-		    				$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() <= 100) ||
+		    			if( $("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 2 ||
 		    				$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 1 || 
 		    				$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 3){
 		    			
@@ -607,31 +612,69 @@ function consultarActividadExistente(elem, request, response){
 		    			    $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() <= 100){
 		    			
 		    				$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").css('border-color','#DDDDDD');
-
-		   
-							
-							swal({
-							  title: 'Parámetro Forma de Pago',
-							  type: 'success',
-							  html:
-							    'El Parámetro fue agregado correctamente.</br> '+
-							    'Porcentaje Agregado: ' + $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() + '%' ,
-							  confirmButtonText:
-							    'Ok'
-							})
 							
 							
-							//-----------------------------------------------------------------------------
-							
-							
-							if(($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3 &&
-							$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val() > 0) ||
+							if($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3 ||
 							$("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 3){
 							
 								$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#DDDDDD');
 							
 								if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != '') {
-									consultarTipoFormaPagoPush();
+								
+								
+									if ($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() == 2 && 
+										$("#<?php echo $this->campoSeguro('replicarParcial') ?>").val() == 1 ){
+										
+										if($.isNumeric($("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val()) &&
+											$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val() != null &&
+											$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val() > 0){
+											
+											$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").css('border-color','#DDDDDD');
+											
+											
+											swal({
+											  title: 'Parámetro Forma de Pago',
+											  type: 'success',
+											  html:
+											    'El Parámetro fue agregado correctamente.</br> '+
+											    'Porcentaje Agregado: ' + ($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val()) + '%' ,
+											  confirmButtonText:
+											    'Ok'
+											})
+											
+											consultarTipoFormaPagoPush();
+											
+										}else{
+										
+											$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").css('border-color','#FF0000');
+						
+											swal({
+											  title: 'Ocurrio un problema...',
+											  type: 'error',
+											  html:
+											    'El Valor de <big>Forma de Pago</big>, es un valor Incorrecto. (ERROR) ',
+											  confirmButtonText:
+											    'Ok'
+											})
+										
+										}
+										
+									}else{
+									
+										swal({
+											  title: 'Parámetro Forma de Pago',
+											  type: 'success',
+											  html:
+											    'El Parámetro fue agregado correctamente.</br> '+
+											    'Porcentaje Agregado: ' + $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val() + '%' ,
+											  confirmButtonText:
+											    'Ok'
+											})
+									
+										consultarTipoFormaPagoPush();
+									}
+								
+									
 	
 	                   	 		}
 							
@@ -643,7 +686,7 @@ function consultarActividadExistente(elem, request, response){
 								  title: 'Ocurrio un problema...',
 								  type: 'error',
 								  html:
-								    'El Valor de <big>Forma de Pago</big>, es un valor Porcentual Incorrecto. (ERROR) ',
+								    'El Valor de <big>Forma de Pago</big>, es un valor Incorrecto. (ERROR) ',
 								  confirmButtonText:
 								    'Ok'
 								})
@@ -675,27 +718,14 @@ function consultarActividadExistente(elem, request, response){
 						  title: 'Ocurrio un problema...',
 						  type: 'error',
 						  html:
-						    'El Valor de <big>Forma de Pago</big>, es un valor Porcentual Incorrecto. (ERROR) ',
+						    'El Valor de <big>Forma de Pago</big>, es un valor Incorrecto. (ERROR) ',
 						  confirmButtonText:
 						    'Ok'
 						})
 		    			
 		    		}
 		    		
-		    	}else{
-		    			$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").css('border-color','#FF0000');
-						
-						swal({
-						  title: 'Ocurrio un problema...',
-						  type: 'error',
-						  html:
-						    'El Valor de <big>Forma de Pago</big>, no es Númerico. (ERROR) ',
-						  confirmButtonText:
-						    'Ok'
-						})
-						
-            			
-		    	}
+
 		    		
 
               }else{	
@@ -711,9 +741,33 @@ function consultarActividadExistente(elem, request, response){
 					})
             		
 			  }
-			});	   
+			});  
 			
 			
+			
+			function dotest(element,event)
+			{
+			   
+			   
+			   fullParam = "";
+               $('#tablaFP tr').each(function(){
+ 
+					/* Obtener todas las celdas */
+					var celdas = $(this).find('td');
+														 		
+					/* Mostrar el valor de cada celda */
+					celdas.each(function(){
+						fullParam += String($(this).html())+"&"; 
+					});
+														 
+														 
+			   });
+													   
+			   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
+			   
+			   $("#<?php echo $this->campoSeguro('changeFormaPago') ?>").val(true);
+			
+			}
 			
 			
 			
@@ -739,7 +793,12 @@ function consultarActividadExistente(elem, request, response){
                                                        var trs = 4;
 		        									   var tipoValor;	
 		        									   
-		        									   var preCarga = totalPago + parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+		        									   if($("#<?php echo $this->campoSeguro('replicarParcial') ?>").val() == 1){
+		        									   		var preCarga = totalPago + 
+		        									   		parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+		        									   }else{
+		        									   		var preCarga = totalPago + parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+		        									   }
 		        									   
 		        									   if(preCarga == 100){
 		        									   		$('#slideThree').prop("checked", true);
@@ -747,7 +806,7 @@ function consultarActividadExistente(elem, request, response){
 		        									   		$('#slideThree').prop("checked", false);
 		        									   }
 		        									   
-		        									   if(preCarga > 100){
+		        									   if(preCarga > 101){
 		        									   		
 		        									   		swal({
 															  title: 'Se excedio el 100%...',
@@ -761,60 +820,156 @@ function consultarActividadExistente(elem, request, response){
 															
 															$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
                                                        		$("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+                                                       		$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val('');
+                                                       		$("#<?php echo $this->campoSeguro('replicarParcial')?>").select2("val", "");
+                                                       		$('#valorAvanceReplica').fadeOut(300);
 															
 		        									   
 		        									   }else{	
 		        									   		
                                                              
-                                                            paramFP.push(data[0][0]); 
+                                                            
+                                                            if($("#<?php echo $this->campoSeguro('replicarParcial') ?>").val() == 1 &&
+                                                            	$("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val() > 0){
+                                                            	
+                                                            	var nRep = 1;
+                                                            	while(nRep <= $("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val()){
+                                                            	
+                                                            	
+                                                            		paramFP.push(data[0][0]); 
+		                                                             
+		                                                           	totalPago += parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val())/
+		                                                           				parseFloat($("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val());
+		                                                           	
+		                                                           	var nFilas = $("#tablaFP tr").length;
+		                                                           	var count = nFilas;
+		                                                           	if(totalPago > 99.5){
+		                                                           		totalPago = 100;
+		                                                           	}
+				        									   		$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
+				        									   		+' - ( Configurado el '+ totalPago +'% )')					
+				        																	
+					        										if(data[0][0] == 1){
+					        											tipoValor = " % Completado"
+					        										}else if(data[0][0] == 2){
+					        											tipoValor = $("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val();
+					        											tipoValor = tipoValor.replace(/{i}/g,nRep);
+					        										}else{
+					        											tipoValor = " - Sin Condición de Avance";
+					        										}
+					        										
+					        										PagoParcial = parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val())/
+		                                                           				parseFloat($("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val());
+					        										
+					        										if(PagoParcial % 1 != 0){
+					        											PagoParcial = PagoParcial.toFixed(2);
+					        										}
+					        																	
+			                                                       var nuevaFila="<tr id=\"nFilas\">";
+			                                                              nuevaFila+="<td>"+(data[0][0])+" - "+(data[0][1])+"</td>";
+			                                                              nuevaFila+="<td contenteditable='true' onkeyup='javascript:dotest(this,event);'>"+tipoValor+"</td>";
+			                                                              nuevaFila+="<td>"+PagoParcial+" %</td>";
+			                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
+			                                                              nuevaFila+="</tr>";
+			                                                                                        
+			                                                       
+			
+			                                                       $("#tablaFP").append(nuevaFila);
+			                                                       
+			                                                       
+			                                                       fullParam = "";
+			                                                       $('#tablaFP tr').each(function(){
+			 
+																	        /* Obtener todas las celdas */
+																	        var celdas = $(this).find('td');
+																	 		
+																	        /* Mostrar el valor de cada celda */
+																	        celdas.each(function(){
+																	        	fullParam += String($(this).html())+"&"; 
+																	        });
+																	 
+																	 
+																   });
+																   
+																   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
+																   
+																   $("#<?php echo $this->campoSeguro('changeFormaPago') ?>").val(true);
+                                                            		nRep++;
+                                                            	}
+                                                            	
+                                                            	if($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3){
+			                                                       		$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
+			                                                    }
+			                                                    $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+			                                                    $("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val('');
+			                                                    $("#<?php echo $this->campoSeguro('replicarParcial')?>").select2("val", "");
+			                                                    $('#valorAvanceReplica').fadeOut(300);
+                                                            	
+                                                            	
+                                                            }else{
                                                              
-                                                           	totalPago += parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
-                                                           	
-                                                           	var count = nFilas;
-		        									   		$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
-		        									   		+' - ( Configurado el '+ totalPago +'% )')					
-		        																	
-		        										if(data[0][0] == 1){
-		        											tipoValor = " % Completado"
-		        										}else if(data[0][0] == 2){
-		        											tipoValor = " % Completado del Total";
-		        										}else{
-		        											tipoValor = " - Sin Condición de Avance";
-		        										}
-		        										
-		        																	
-                                                       var nuevaFila="<tr id=\"nFilas\">";
-                                                              nuevaFila+="<td>"+(data[0][0])+" - "+(data[0][1])+"</td>";
-                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val())+tipoValor+"</td>";
-                                                              nuevaFila+="<td>"+($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val())+" %</td>";
-                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
-                                                              nuevaFila+="</tr>";
-                                                                                        
-                                                       
-
-                                                       $("#tablaFP").append(nuevaFila);
-                                                       
-                                                       
-                                                       $("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
-                                                       $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
-                                                       
-                                                       fullParam = "";
-                                                       $('#tablaFP tr').each(function(){
- 
-														        /* Obtener todas las celdas */
-														        var celdas = $(this).find('td');
-														 		
-														        /* Mostrar el valor de cada celda */
-														        celdas.each(function(){
-														        	fullParam += String($(this).html())+"&"; 
-														        });
-														 
-														 
-													   });
-													   
-													   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
-													   
-                                					   $("#<?php echo $this->campoSeguro('changeFormaPago') ?>").val(true);
+		                                                            paramFP.push(data[0][0]); 
+		                                                             
+		                                                           	totalPago += parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+		                                                           	
+		                                                           	var count = nFilas;
+		                                                           	if(totalPago > 99.5){
+		                                                           		totalPago = 100;
+		                                                           	}
+				        									   		$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
+				        									   		+' - ( Configurado el '+ totalPago +'% )')					
+				        																	
+					        										if(data[0][0] == 1){
+					        											tipoValor = " % Completado"
+					        										}else if(data[0][0] == 2){
+					        											tipoValor = "";
+					        										}else{
+					        											tipoValor = " - Sin Condición de Avance";
+					        										}
+					        										
+					        										Pago = parseFloat($("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val());
+					        										if(Pago % 1 != 0){
+					        											Pago = Pago.toFixed(2);
+					        										}
+					        																	
+			                                                       var nuevaFila="<tr id=\"nFilas\">";
+			                                                              nuevaFila+="<td>"+(data[0][0])+" - "+(data[0][1])+"</td>";
+			                                                              nuevaFila+="<td contenteditable='true' onkeyup='javascript:dotest(this,event);'>"+($("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val())+tipoValor+"</td>";
+			                                                              nuevaFila+="<td>"+Pago+" %</td>";
+			                                                              nuevaFila+="<th class=\"eliminarFP\" scope=\"row\"><div class = \"widget\">Eliminar</div></th>";	    
+			                                                              nuevaFila+="</tr>";
+			                                                                                        
+			                                                       
+			
+			                                                       $("#tablaFP").append(nuevaFila);
+			                                                       
+			                                                       if($("#<?php echo $this->campoSeguro('tipoFormaPago') ?>").val() != 3){
+			                                                       		$("#<?php echo $this->campoSeguro('valorFormaPago') ?>").val('');
+			                                                       }
+			                                                       $("#<?php echo $this->campoSeguro('porcentajePagoForma') ?>").val('');
+			                                                       $("#<?php echo $this->campoSeguro('numberPagosReplica') ?>").val('');
+			                                                       $("#<?php echo $this->campoSeguro('replicarParcial')?>").select2("val", "");
+			                                                       $('#valorAvanceReplica').fadeOut(300);
+			                                                       
+			                                                       fullParam = "";
+			                                                       $('#tablaFP tr').each(function(){
+			 
+																	        /* Obtener todas las celdas */
+																	        var celdas = $(this).find('td');
+																	 		
+																	        /* Mostrar el valor de cada celda */
+																	        celdas.each(function(){
+																	        	fullParam += String($(this).html())+"&"; 
+																	        });
+																	 
+																	 
+																   });
+																   
+																   $("#<?php echo $this->campoSeguro('idsFormaPago') ?>").val(fullParam);
+																   
+																   $("#<?php echo $this->campoSeguro('changeFormaPago') ?>").val(true);
+													   		}
+                                                            
                                 					   
                 									}
 
@@ -862,9 +1017,13 @@ function consultarActividadExistente(elem, request, response){
 									
 									var count = nFilas - 2;
 									
-									if(totalPago < 0){
+									if(totalPago < 0.5){
 										totalPago = 0;
 									}
+									
+									if(totalPago > 99.5){
+		                                totalPago = 100;
+		                            }
 									
 		        					$("#<?php echo $this->campoSeguro('countParam') ?>").val('( '+count+' ) Parámetro(s) Agregado(s)'
 		        					+' - ( Configurado el '+ totalPago +'% )');
@@ -873,6 +1032,17 @@ function consultarActividadExistente(elem, request, response){
 		        						$('#slideThree').prop("checked", true);
 		        					}else{
 		        						$('#slideThree').prop("checked", false);
+		        						
+		        						consultarPago();
+										$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").removeAttr('disabled');
+										$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").val(-1);
+										$("#<?php echo $this->campoSeguro('tipoFormaPago')?>").select2();
+										
+										$('#valorAvance').fadeOut(300);
+										$('#valoresForma').fadeOut(300);
+										
+										$('#valorAvanceReplica').fadeOut(300);
+										
 		        					}
 									
 									$(parent).remove();
@@ -977,37 +1147,55 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
 
     function consultarCdps(elem, request, response) {
 
-        $.ajax({
-            url: "<?php echo $urlFinalSolCdp ?>",
-            dataType: "json",
-            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
-                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
-                cdpseleccion: $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val()},
-            success: function (data) {
-
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
-
-                }
+	    swal({
+			  title: 'Cargando Información...',
+			  type: 'info',
+			  closeOnClickOutside: false,
+			  allowOutsideClick: false,
+			  showConfirmButton: false,
+			  onOpen: function () {
+			    swal.showLoading()
+			    // AJAX request
 
 
-            }
+			    //*************************************************
+			        $.ajax({
+			            url: "<?php echo $urlFinalSolCdp ?>",
+			            dataType: "json",
+			            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
+			                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
+			                cdpseleccion: $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val()},
+			            success: function (data) {
 
-        });
-    }
-    ;
+			                if (data[0] != " ") {
+
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").html('');
+			                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
+			                    $.each(data, function (indice, valor) {
+
+			                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
+
+			                    });
+
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").removeAttr('disabled');
+
+			                    $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
+
+			                    swal.close()
+
+			                }
+
+
+			            }
+
+			        });
+			    //*************************************************
+
+	  		}
+		})	
+			
+    };
 
     //--------------Fin JavaScript y Ajax SVigencia y Numero solicitud --------------------------------------------------------------------------------------------------  
     
@@ -1113,6 +1301,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         });
     };
     
+    var fecha = new Date();
+	var anno = fecha.getFullYear();
 
     function InfoCDP(elem, request, response) {
         $.ajax({
@@ -1203,7 +1393,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>200 SMLMV</b> '
 			                        + 'por tanto, no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
@@ -1225,7 +1415,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>100 SMLMV</b> '
 			                        + 'por tanto, se debe validar lo estipulado en el Artículo 16°.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                type: 'warning',
 						  },
 						  {
@@ -1255,7 +1445,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
 				                        + 'dado que se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
 				                        + 'no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>Debe ser realizado mediante (Acuerdo Marco de Precios, Bolsa de Productos o Subasta Inversa).<br><br>'
-				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 				                confirmButtonText:
 				                        'Aceptar'
 							        //JSON.stringify(result) +
@@ -1272,7 +1462,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
 				                        + 'dado que se no se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
 				                        + 'se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 				                confirmButtonText:
 				                        'Aceptar'
 							        //JSON.stringify(result) +
@@ -1294,7 +1484,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el Articulo 16°, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por debajo del Limite de los <b>100 SMLMV</b> '
 			                        + 'por tanto, se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
@@ -1391,9 +1581,6 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
                 
                 }else{
                 
-                	$(tinymce.get('<?php echo $this->campoSeguro('criterioSeleccion') ?>').getBody()).html('');
-                	$("#<?php echo $this->campoSeguro('criterioSeleccion') ?>").val('');
-                
                 	$("#criteriosEva").hover(function() {
 					  alertCriterio();
 					  $(this).unbind('mouseenter mouseleave');
@@ -1435,6 +1622,13 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
     }
     
     function eliminarCDP (){
+    
+    		$("<option value=''>Seleccione .....</option>").prependTo("#<?php echo $this->campoSeguro('ordenador')?>");
+    		$("#<?php echo $this->campoSeguro('ordenador') ?>").removeAttr('disabled');
+    		$("#<?php echo $this->campoSeguro('ordenador')?>").addClass("validate[required]");
+            $('#<?php echo $this->campoSeguro('ordenador') ?>').width(750);
+            $("#<?php echo $this->campoSeguro('ordenador') ?>").select2();
+            $("#<?php echo $this->campoSeguro('ordenador') ?>").val(null);
     
     	    var indice = parseFloat($("#<?php echo $this->campoSeguro('indice_tabla') ?>").val());
             var table = document.getElementById('tablacdpasociados');
@@ -1770,13 +1964,13 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
             {
                 
                 nFilas = nFilas + 1;
-                fullParamIt += tablaP.rows[i].cells[8].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[1].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[2].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[3].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[4].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[5].innerHTML + "&";
-                fullParamIt += tablaP.rows[i].cells[6].innerHTML + "&";
+                fullParamIt += tablaP.rows[i].cells[8].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[1].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[2].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[3].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[4].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[5].innerHTML + "@$&$@";
+                fullParamIt += tablaP.rows[i].cells[6].innerHTML + "@$&$@";
             }
             
          }
@@ -1976,7 +2170,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                         /* Mostrar el valor de cada celda */
                         celdas.each(function () {
-                            fullParamIt += String($(this).html()) + "&";
+                            fullParamIt += String($(this).html()) + "@$&$@";
                         });
 
                     });
@@ -2095,7 +2289,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
             /* Mostrar el valor de cada celda */
             celdas.each(function () {
-                fullParamIt += String($(this).html()) + "&";
+                fullParamIt += String($(this).html()) + "@$&$@";
             });
 
 
@@ -2170,7 +2364,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
             
             /* Mostrar el valor de cada celda */
             celdas.each(function () {
-                fullParamIt += String($(this).html()) + "&";
+                fullParamIt += String($(this).html()) + "@$&$@";
             });
             
             contNumeral = contNumeral+1;
@@ -2385,7 +2579,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -2455,7 +2649,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -2737,4 +2931,28 @@ $("#<?php echo $this->campoSeguro('medioPago')?>").change(function() {
 
     }
     ;
+
+
+
+
+   $("#botonesResCot").hover(function() {
+					  alertCriterioRes();
+					  $(this).unbind('mouseenter mouseleave');
+	});
+   
+   function alertCriterioRes() {
+    	
+    	var texto_info = 'Se recomienda tener en cuenta que una vez tomada la decisión no podrá ser modificada, dicha decisión podrá ser aceptada o rechazada por el ordenador, pero no modificada bajo ningún motivo.';
+
+		swal({
+		  title: 'Atención<br> Decisión Cotizaciones',
+		  html: texto_info,
+		  type: 'warning',
+		  allowOutsideClick: false,
+		  showCancelButton: false,
+		  confirmButtonColor: '#32CD32',
+		  confirmButtonText: 'Aceptar'
+		});
+    	
+    }
      

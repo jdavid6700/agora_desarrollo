@@ -30,6 +30,90 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion("id_sesion");
 
         switch ($tipo) {
+
+
+                        case "insertarLogCotizacion" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "log_cotizacion ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "tipo_log, ";
+                $cadenaSql .= "modulo, ";
+                $cadenaSql .= "numero_cotizacion, ";
+                $cadenaSql .= "vigencia, ";
+                $cadenaSql .= "query, ";
+                $cadenaSql .= "host, ";
+                $cadenaSql .= "fecha_log, ";
+                $cadenaSql .= "id_usuario ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['modulo'] . "', ";
+                $cadenaSql .= "'" . $variable ['numero_cotizacion'] . "', ";
+                $cadenaSql .= "'" . $variable ['vigencia'] . "', ";
+                $cadenaSql .= "'" . $variable ['query'] . "', ";
+                $cadenaSql .= "'" . $variable ['host'] . "', ";
+                $cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['usuario'] . "' ";
+                $cadenaSql .= ") RETURNING id;";
+                break;
+
+            case "insertarLogCotizacionUp" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "log_cotizacion ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "tipo_log, ";
+                $cadenaSql .= "modulo, ";
+                $cadenaSql .= "numero_cotizacion, ";
+                $cadenaSql .= "vigencia, ";
+                $cadenaSql .= "query, ";
+                $cadenaSql .= "data, ";
+                $cadenaSql .= "host, ";
+                $cadenaSql .= "fecha_log, ";
+                $cadenaSql .= "id_usuario ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['modulo'] . "', ";
+                $cadenaSql .= "'" . $variable ['numero_cotizacion'] . "', ";
+                $cadenaSql .= "'" . $variable ['vigencia'] . "', ";
+                $cadenaSql .= "'" . $variable ['query'] . "', ";
+                $cadenaSql .= "'" . $variable ['data'] . "', ";
+                $cadenaSql .= "'" . $variable ['host'] . "', ";
+                $cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['usuario'] . "' ";
+                $cadenaSql .= ") RETURNING id;";
+                break;
+
+
+            case "insertarLogCotizacionError" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "log_cotizacion_error ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "tipo_log, ";
+                $cadenaSql .= "modulo, ";
+                $cadenaSql .= "numero_cotizacion, ";
+                $cadenaSql .= "vigencia, ";
+                $cadenaSql .= "query, ";
+                $cadenaSql .= "error, ";
+                $cadenaSql .= "host, ";
+                $cadenaSql .= "fecha_log, ";
+                $cadenaSql .= "id_usuario ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['modulo'] . "', ";
+                $cadenaSql .= "'" . $variable ['numero_cotizacion'] . "', ";
+                $cadenaSql .= "'" . $variable ['vigencia'] . "', ";
+                $cadenaSql .= "'" . $variable ['query'] . "', ";
+                $cadenaSql .= "'" . $variable ['error'] . "', ";
+                $cadenaSql .= "'" . $variable ['host'] . "', ";
+                $cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['usuario'] . "' ";
+                $cadenaSql .= ") RETURNING id;";
+                break;
         	
         	case "adendasModificacionValuesEstRes" :
         		$cadenaSql = "SELECT ";
@@ -441,7 +525,7 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre)) as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
                 $cadenaSql .= " FROM oikos.dependencia D";
                 $cadenaSql .= " JOIN core.jefe_dependencia JD ON JD.dependencia_id = D.id";
-                $cadenaSql .= " WHERE D.id = " . $variable;
+                $cadenaSql .= " WHERE JD.id = " . $variable;
                 $cadenaSql .= " GROUP BY D.id, JD.tercero_id, D.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
                 $cadenaSql .= " ORDER BY D.id, D.nombre, JD.fecha_fin DESC";
                 break;
@@ -493,7 +577,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " FROM agora.objeto_cotizacion OC ";
                 $cadenaSql .= " LEFT JOIN agora.solicitud_cotizacion SC ON SC.objeto_cotizacion = OC.id ";
                 $cadenaSql .= " LEFT JOIN agora.informacion_proveedor IP ON IP.id_proveedor = SC.proveedor ";
-                $cadenaSql .= " WHERE IP.num_documento = '" . $variable . "'  ;";
+                $cadenaSql .= " WHERE IP.num_documento = '" . $variable['numeroDocumento'] . "' AND IP.tipopersona = '". $variable['tipoPersona'] ."';";
                 break;
             case "tipoNecesidadAdministrativa3" :
                 $cadenaSql = " SELECT id, nombre";
@@ -1260,7 +1344,7 @@ class Sql extends \Sql {
 
             case "consultar_DatosProveedor" :
                 $cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
-                $cadenaSql .= " WHERE num_documento = '" . $variable . "';";
+                $cadenaSql .= " WHERE num_documento = '" . $variable['numeroDocumento'] . "' AND tipopersona = '". $variable['tipoPersona'] ."';";
                 break;
 
             case "consultarConsorciosUniones" :

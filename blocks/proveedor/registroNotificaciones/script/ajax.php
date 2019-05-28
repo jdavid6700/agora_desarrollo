@@ -2374,7 +2374,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
                         /* Mostrar el valor de cada celda */
                         celdas.each(function () {
-                            fullParamIt += String($(this).html()) + "&";
+                            fullParamIt += String($(this).html()) + "@$&$@";
                         });
                     });
 
@@ -2489,7 +2489,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
             /* Mostrar el valor de cada celda */
             celdas.each(function () {
-                fullParamIt += String($(this).html()) + "&";
+                fullParamIt += String($(this).html()) + "@$&$@";
             });
 
 
@@ -2569,7 +2569,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
             /* Mostrar el valor de cada celda */
             celdas.each(function () {
-                fullParamIt += String($(this).html()) + "&";
+                fullParamIt += String($(this).html()) + "@$&$@";
             });
 
 
@@ -2730,7 +2730,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -2808,7 +2808,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -2883,7 +2883,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -2961,7 +2961,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
 
                                 /* Mostrar el valor de cada celda */
                                 celdas.each(function () {
-                                    fullParamIt += String($(this).html()) + "&";
+                                    fullParamIt += String($(this).html()) + "@$&$@";
                                 });
 
 
@@ -3193,7 +3193,7 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                                             var celdas = $(this).find('td');
 
                                            
-                                            fullParamId += String($(celdas[0]).html()) + "&";
+                                            fullParamId += String($(celdas[0]).html()) + "@$&$@";
                                             
                                             arregloValor.push(String($(celdas[7]).html()));
                                             
@@ -3214,9 +3214,9 @@ $urlFinalArchivo = $url . $cadenaArchivo;
                               
                                 
                                 for (var i = 0; i < myinputs.length; i++) {
-                                    fullParamProv += formatearNumero(myinputs[i].value) + "&";
-                                    fullParamProv += myselects[i].value + "&";
-                                    fullParamProv += mytextareas[i].value + "&";
+                                    fullParamProv += formatearNumero(myinputs[i].value) + "@$&$@";
+                                    fullParamProv += myselects[i].value + "@$&$@";
+                                    fullParamProv += mytextareas[i].value + "@$&$@";
                                 
                                      var combo = document.getElementById("producto");
  

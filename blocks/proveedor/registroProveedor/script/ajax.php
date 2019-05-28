@@ -43,6 +43,75 @@ $("#<?php echo $this->campoSeguro('docente') ?>").autocomplete({
 	}
 });
 
+
+$(function() {
+    $("#botonAyuTipDir").click(function(event) {
+    	var directorio = "<?php echo $rutaBloque ?>";
+    	swal({
+		                title: 'DIAN <br>DIRECCIONES',
+		                type: 'info',
+		                width: 800,
+		                html:
+		                        'Para hacer registro EXITOSO de las direcciones debe utilizar solamente los campos y RELACIONAR cada sección de la misma, la dirección se arma de manera automática,<br><br>'
+		                        +' (Ejemplo) <br><b>CALLE 138 C N° 88 B 74 TORRE 12 CASA 20</b><br><br>'
+		                        +' <img src="' + directorio + '/images/dirDIAN.png" border="1" width="100%">'
+		                        +' <br><br>Los campos de Interior son opcionales',
+		                confirmButtonText:
+		                        'Aceptar' 
+	});
+    });
+});
+
+
+
+$(function() {
+    $("#botonAyuTipDirNat").click(function(event) {
+    	var directorio = "<?php echo $rutaBloque ?>";
+    	swal({
+		                title: 'DIAN <br>DIRECCIONES',
+		                type: 'info',
+		                width: 800,
+		                html:
+		                        'Para hacer registro EXITOSO de las direcciones debe utilizar solamente los campos y RELACIONAR cada sección de la misma, la dirección se arma de manera automática,<br><br>'
+		                        +' (Ejemplo) <br><b>CALLE 138 C N° 88 B 74 TORRE 12 CASA 20</b><br><br>'
+		                        +' <img src="' + directorio + '/images/dirDIAN.png" border="1" width="100%">'
+		                        +' <br><br>Los campos de Interior son opcionales',
+		                confirmButtonText:
+		                        'Aceptar' 
+	});
+    });
+});
+
+
+function alertTipo() {
+	swal({
+		                title: 'Importante <br>PERSONA JURÍDICA',
+		                type: 'info',
+		                html:
+		                        'Recuerde, para poder hacer un registro exitoso de su EMPRESA,'
+		                        +' es requerido que previamente el REPRESENTANTE LEGAL, esté registrado en el Sistema como PERSONA NATURAL, usted solo deberá relacionar el número de documento del mismo.',
+		                confirmButtonText:
+		                        'Aceptar'
+		            })
+	
+}
+
+$(function() {
+    $("#botonAyuTip").click(function(event) {
+    	swal({
+		                title: 'Importante <br>REPRESENTANTES LEGALES',
+		                type: 'info',
+		                html:
+		                        'Para hacer registro EXITOSO del Representante Legal, debe hacer click en el botón RELACIONAR, usted no puede registrar el número de documento manualmente,'
+		                        +' deberá utilizar la ventana auxiliar que se abre al dar click en RELACIONAR, allí usted podrá digitar el número de documento,'
+		                        +' si la persona ya se registró previamente, se le deberá indicar el NOMBRE de dicha Persona y el número será relacionado automáticamente.',
+		                confirmButtonText:
+		                        'Aceptar' 
+	});
+    });
+});
+
+
 ////////////////////////Seleccion Procedencia Formulario Adicional//////////////////////////////////////////
 $( "#<?php echo $this->campoSeguro('paisEmpresa')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('paisEmpresa') ?>').val() == 2){
@@ -59,6 +128,7 @@ $( "#<?php echo $this->campoSeguro('tipoPersona')?>" ).change(function() {
 	}else if($('#<?php echo $this->campoSeguro('tipoPersona') ?>').val() == 2){
 		$("#marcoDatosNatural").hide("fast");
 		$("#marcoDatosJuridica").show("slow");
+		alertTipo();
 	}else{
 		$("#marcoDatosNatural").hide("fast");
 		$("#marcoDatosJuridica").hide("fast");
@@ -93,33 +163,56 @@ $( "#<?php echo $this->campoSeguro('perfil')?>" ).change(function() {
 
 $( "#<?php echo $this->campoSeguro('perfilNat')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
-		$("#obligatorioProfesionNat").show("fast");
-		$("#obligatorioEspecialidadNat").show("fast");
+		$("#obligatorioProfesionNat").fadeIn("fast");
+		$("#obligatorioEspecialidadNat").fadeIn("fast");
 	}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
-		$("#obligatorioProfesionNat").show("fast");
-		$("#obligatorioEspecialidadNat").hide("fast");
+		$("#obligatorioProfesionNat").fadeIn("fast");
+		$("#obligatorioEspecialidadNat").fadeOut("fast");
 	}else{
-		$("#obligatorioProfesionNat").hide("fast");
-		$("#obligatorioEspecialidadNat").hide("fast");
+		$("#obligatorioProfesionNat").fadeOut("fast");
+		$("#obligatorioEspecialidadNat").fadeOut("fast");
 	}
 });
 
 
 $( "#<?php echo $this->campoSeguro('personasCargo')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('personasCargo') ?>').val() == 1){
-		$("#obligatorioCantidadPersonasACargo").show("fast");
+		$("#obligatorioCantidadPersonasACargoH").fadeIn(300);
 		$("#marcoDetalleDependientes").show("fast");//AGREGADO Tributario
 	}else{
-		$("#obligatorioCantidadPersonasACargo").hide("fast");
+		$("#obligatorioCantidadPersonasACargoH").fadeOut(200);
 		$("#marcoDetalleDependientes").hide("fast");//AGREGADO Tributario
 	}
 });
 
+
+$( "#<?php echo $this->campoSeguro('declaranteRentaNat')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('declaranteRentaNat') ?>').val() == 1){
+		$("#marcoDeclaracionRenta").fadeIn(300);
+	}else{
+		$("#marcoDeclaracionRenta").fadeOut(300);
+	}
+});
+
+
+$( "#<?php echo $this->campoSeguro('hijosPersona')?>" ).change(function() {
+	if($('#<?php echo $this->campoSeguro('hijosPersona') ?>').val() == 1){
+		$("#obligatorioCantidadHijos").fadeIn(300);
+		$("#marcoSoportesHijos").fadeIn(300);
+		$('#<?php echo $this->campoSeguro('numeroHijosPersona') ?>').val('');
+	}else{
+		$("#obligatorioCantidadHijos").fadeOut(200);
+		$("#marcoSoportesHijos").fadeOut(300);
+		$('#<?php echo $this->campoSeguro('numeroHijosPersona') ?>').val('NULL');
+	}
+});
+
+
 $( "#<?php echo $this->campoSeguro('discapacidad')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('discapacidad') ?>').val() == 1){
-		$("#obligatorioTipoDiscapacidad").show("fast");
+		$("#obligatorioTipoDiscapacidadH").fadeIn(300);
 	}else{
-		$("#obligatorioTipoDiscapacidad").hide("fast");
+		$("#obligatorioTipoDiscapacidadH").fadeOut(200);
 	}
 });
 
@@ -1479,10 +1572,61 @@ $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
 		});
 		
 		
+
+		$( '#<?php echo $this->campoSeguro('soportesHijosNat')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('soportesHijosNat')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('soportesHijosNat')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+
+
+		$( '#<?php echo $this->campoSeguro('declaracionRentaNat')?>' ).change(function() {
+			var ext = $('#<?php echo $this->campoSeguro('declaracionRentaNat')?>').val().split('.').pop().toLowerCase();
+			$fileupload = $('#<?php echo $this->campoSeguro('declaracionRentaNat')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
+			if($.inArray(ext, ['pdf']) == -1) {
+			    alert('Extension de Archivo No Permitida!');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+		});
+
 		
 		$( '#<?php echo $this->campoSeguro('DocumentoRUTNat')?>' ).change(function() {
 			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUTNat')?>').val().split('.').pop().toLowerCase();
 			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUTNat')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
@@ -1496,6 +1640,15 @@ $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
 		$( '#<?php echo $this->campoSeguro('DocumentoRUT')?>' ).change(function() {
 			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUT')?>').val().split('.').pop().toLowerCase();
 			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUT')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
@@ -1508,6 +1661,15 @@ $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
 		$( '#<?php echo $this->campoSeguro('DocumentoRUPNat')?>' ).change(function() {
 			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>').val().split('.').pop().toLowerCase();
 			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUPNat')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
@@ -1521,6 +1683,15 @@ $("#<?php echo $this->campoSeguro('tipoDocumentoNat')?>").change(function(){
 		$( '#<?php echo $this->campoSeguro('DocumentoRUP')?>' ).change(function() {
 			var ext = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>').val().split('.').pop().toLowerCase();
 			$fileupload = $('#<?php echo $this->campoSeguro('DocumentoRUP')?>');
+
+			//Validation size 1000000 - 1MB
+			if(this.files[0].size > 1000000) {
+			    alert('El Tamaño de Archivo supera el permitido de 1MB');
+			    
+				clearFileInput($fileupload);
+				//$fileupload.replaceWith($fileupload.clone(true));
+			}
+
 			if($.inArray(ext, ['pdf']) == -1) {
 			    alert('Extension de Archivo No Permitida!');
 			    
@@ -2058,31 +2229,47 @@ function consultarActividadExistente(elem, request, response){
                                             data: {valor: $("#<?php echo $this->campoSeguro('claseCIIU') ?>").val()},
                                             success: function (data) {  
                                              if (data[0] != "") {
+
                                                               var nFilas = $("#tabla tr").length;
-                                                              var validacion=0;
-                                                              $('#tabla tr').each(function(){
-                                                                        var celdas = $(this).find('td');
+                                          
+                                                              if(nFilas > 5){
 
-                                                                        if(data[0][2]===$(celdas[0]).html()){
-                                                                            validacion=1;
-                                                                         }
-                                                               });
-                                                                if(validacion===0){
-                                                                var tds=4;
-                                                                var trs=4;
-                                                                actividades.push(data[0][2]);
-		        	
-                                                        var nuevaFila="<tr id=\"nFilas\">";
+                                                              		swal({
+																		  title: 'Problema con Actividad Económica CIIU ('+(data[0][2])+')',
+																		  type: 'error',
+																		  html:
+																		    'Solo se permite registrar un máximo de (4) cuatro actividades económicas en el sistema.',
+																		  confirmButtonText:
+																		    'Aceptar'
+																	 })
+																	 return;
+                                                          	  }
 
-                                                                                        nuevaFila+="<td>"+(data[0][2])+"</td>";
-                                                                                        nuevaFila+="<td>"+(data[0][1])+"</td>";
-                                                                                        nuevaFila+="<td>"+(data[0][0])+"</td>";
-                                                                                        nuevaFila+="<th class=\"eliminar\" scope=\"row\">Eliminar</th>";		    
-                                                                                        <!--nuevaFila+="<td><input type='button' value='Eliminar' /></td>";-->	
-                                                                                        nuevaFila+="</tr>";
-                                                          $("#<?php echo $this->campoSeguro('idActividades') ?>").val(actividades);
+		                                                              var validacion=0;
+		                                                              $('#tabla tr').each(function(){
+		                                                                        var celdas = $(this).find('td');
 
-                                                        $("#tabla").append(nuevaFila);
+		                                                                        if(data[0][2]===$(celdas[0]).html()){
+		                                                                            validacion=1;
+		                                                                         }
+		                                                               });
+		                                                                if(validacion===0){
+		                                                                var tds=4;
+		                                                                var trs=4;
+		                                                                actividades.push(data[0][2]);
+				        	
+		                                                        		var nuevaFila="<tr id=\"nFilas\">";
+
+		                                                                                        nuevaFila+="<td>"+(data[0][2])+"</td>";
+		                                                                                        nuevaFila+="<td>"+(data[0][1])+"</td>";
+		                                                                                        nuevaFila+="<td>"+(data[0][0])+"</td>";
+		                                                                                        nuevaFila+="<th class=\"eliminar\" scope=\"row\">Eliminar</th>";		    
+		                                                                                        <!--nuevaFila+="<td><input type='button' value='Eliminar' /></td>";-->	
+		                                                                                        nuevaFila+="</tr>";
+		                                                          $("#<?php echo $this->campoSeguro('idActividades') ?>").val(actividades);
+
+		                                                        $("#tabla").append(nuevaFila);
+
                                                     }
                                                      else{                                   
                                                         
@@ -2093,7 +2280,7 @@ function consultarActividadExistente(elem, request, response){
 																						    'La actividad ya se encuentra registrada</br> '+ '</br>' + 
 																						    'Actividad Económica: (' + (data[0][2])+') ' + (data[0][1]) ,
 																						  confirmButtonText:
-																						    'Ok'
+																						    'Aceptar'
 																						})
 
                                                      }
@@ -2156,7 +2343,7 @@ function consultarActividadExistente(elem, request, response){
 				    title: 'Atención',
 				    type: 'warning',
 				    html: 'Tenga en cuenta que el Representante Legal, debe estar registrado en el sistema como <b>Persona Natural</b>, esto con anterioridad, '
-							+'al registro de la <b>Persona Jurídica</b>, por ello en el presente modulo solo se le solicita relacionar el número de documento, para hacer '
+							+'al registro de la <b>Persona Jurídica</b>, por ello en el presente módulo solo se le solicita relacionar el número de documento, para hacer '
 							+'la relación de la información automáticamente.'
 				  },
 				  {
@@ -2184,8 +2371,7 @@ function consultarActividadExistente(elem, request, response){
 			                        'Aceptar'
 			            })
 				  
-				  }
-					console.log(result);				  				  
+				  }				  				  
 
 				}, function () {
 				  swal.resetDefaults()
@@ -2200,7 +2386,6 @@ function consultarActividadExistente(elem, request, response){
         });  
         
         
-        
         function consultarRepre(numDoc) {
 
 	        $.ajax({
@@ -2209,19 +2394,16 @@ function consultarActividadExistente(elem, request, response){
 				data: { documento: numDoc},
 				success: function(data){
 				
-				console.log(data);
-				console.log(data['seguridad']);
-				
 					if(data){
 					
 						if(!data['seguridad']){
-						
 							swal({
 				                title: 'REGISTRO SATISFACTORIO<br>PERSONA NATURAL',
 				                type: 'success',
 				                html:
-				                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>se encuentra registrada</b> en la <i>Base de Datos,'
-				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y puede ser relacionada,'
+				                        'La Persona Natural con Número de Documento <b>('+numDoc.toUpperCase()+')</b>, <b>se encuentra registrada</b> en la <i>Base de Datos,'
+				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i> como: <br><br><b>('
+				                        + data[0]['nom_proveedor']+' - PERSONA '+data[0]['tipopersona']+')</b><br><br> Por tanto, puede ser relacionada,'
 				                        +' como Representante Legal, por favor continue con el registro de información.',
 				                confirmButtonText:
 				                        'Aceptar'
@@ -2260,7 +2442,7 @@ function consultarActividadExistente(elem, request, response){
     	};
         
            	 
-         $("#changeRep").click(function () {
+         $("#botChan").click(function () {
          
          		$('#marcoRepresentante').fadeOut(800, function (){
          			$('#changeRepCancel').fadeIn(500);
@@ -2271,7 +2453,7 @@ function consultarActividadExistente(elem, request, response){
          
          }); 
          
-         $("#changeRepCancel").click(function () {
+         $("#botChanCan").click(function () {
          
          		$('#marcoRepresentanteMod').fadeOut(800, function (){
          			$('#changeRep').fadeIn(500);
@@ -2332,8 +2514,7 @@ function consultarActividadExistente(elem, request, response){
 			                        'Aceptar'
 			            })
 				  
-				  }
-					console.log(result);				  				  
+				  }			  				  
 
 				}, function () {
 				  swal.resetDefaults()
@@ -2357,19 +2538,16 @@ function consultarActividadExistente(elem, request, response){
 				data: { documento: numDoc},
 				success: function(data){
 				
-				console.log(data);
-				console.log(data['seguridad']);
-				
 					if(data){
 					
 						if(!data['seguridad']){
-						
 							swal({
 				                title: 'REGISTRO SATISFACTORIO<br>PERSONA NATURAL',
 				                type: 'success',
 				                html:
-				                        'La Persona Natural con Número de Documento ('+numDoc.toUpperCase()+'), <b>se encuentra registrada</b> en la <i>Base de Datos,'
-				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i>, y puede ser relacionada,'
+				                        'La Persona Natural con Número de Documento <b>('+numDoc.toUpperCase()+')</b>, <b>se encuentra registrada</b> en la <i>Base de Datos,'
+				                        +' del Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</i> como: <br><br><b>('
+				                        + data[0]['nom_proveedor']+' - PERSONA '+data[0]['tipopersona']+')</b><br><br> Por tanto, puede ser relacionada,'
 				                        +' como Representante Legal, por favor continue con el registro de información.',
 				                confirmButtonText:
 				                        'Aceptar'
@@ -2408,3 +2586,287 @@ function consultarActividadExistente(elem, request, response){
     	};
             	 
     	 
+    	 
+    	 
+   function deleteFile() {
+        	
+        	swal({
+				                title: 'ATENCIÓN<br>PROCESO DE ACTUALIZACIÓN DE INFORMACIÓN POR VIGENCIA',
+				                type: 'info',
+				                html:
+				                        '<b>Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</b></b><br><br>'
+				                        +' La información <b>ADJUNTA</b></b> de documentos RUT, RUP o ESAL debe ser actualizada,'
+				                        +' por motivos del cambio de vigencia para los nuevos procesos de contratación, por esta razón la información adjuntada ya no se encuentra disponible.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+        
+        };
+    	 
+
+
+
+var dirJur = "";
+var intJur1 = "";
+var intJur2 = "";
+
+
+
+function addDirJur(value){
+	$("#<?php echo $this->campoSeguro('direccion')?>").val(value);
+}
+
+function limpiarDirJur(){
+	$("#<?php echo $this->campoSeguro('direccion')?>").val('');
+}
+
+function dirFullJur(){
+	var via = $("#<?php echo $this->campoSeguro('via')?>").val();
+	var detalleVia = $("#<?php echo $this->campoSeguro('detalleVia')?>").val();
+	var num1 = $("#<?php echo $this->campoSeguro('numero1')?>").val();
+	var num2 = $("#<?php echo $this->campoSeguro('numero2')?>").val();
+	dirJur = via + " " + detalleVia + " " + num1 + " " + num2;
+
+	dirFull = dirJur + " " + intJur1 + " " + intJur2;
+	return dirFull;
+}
+
+function dirInt1J(){
+	var int1 = $("#<?php echo $this->campoSeguro('interior1')?>").val();
+	var detInt1 = $("#<?php echo $this->campoSeguro('detalleInterior1')?>").val();
+	intJur1 = int1 + " " + detInt1;
+
+	if($("#<?php echo $this->campoSeguro('interior1')?>").val()=='' || 
+			$("#<?php echo $this->campoSeguro('detalleInterior1')?>").val()==''){
+		intJur1 = "";	
+	}
+}
+
+function dirInt2J(){
+	var int2 = $("#<?php echo $this->campoSeguro('interior2')?>").val();
+	var detInt2 = $("#<?php echo $this->campoSeguro('detalleInterior2')?>").val();
+	intJur2 = int2 + " " + detInt2;
+
+	if($("#<?php echo $this->campoSeguro('interior2')?>").val()=='' || 
+			$("#<?php echo $this->campoSeguro('detalleInterior2')?>").val()==''){
+		intJur2 = "";	
+	}
+}
+
+
+$("#<?php echo $this->campoSeguro('via')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleVia')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('detalleVia')?>").val()!='' && $("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+$("#<?php echo $this->campoSeguro('numero1')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('numero1')?>").val()!='' && $("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+$("#<?php echo $this->campoSeguro('numero2')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('numero2')?>").val()!='' && $("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('interior1')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		dirInt1J();
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleInterior1')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		dirInt1J();
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('interior2')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		dirInt2J();
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleInterior2')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('via')?>").val()!=''){
+		dirInt2J();
+		addDirJur(dirFullJur());
+	}else{
+		limpiarDirJur();
+	}
+});
+
+
+
+
+
+
+
+var dirNat = "";
+var intNat1 = "";
+var intNat2 = "";
+
+
+
+function addDirNat(value){
+	$("#<?php echo $this->campoSeguro('direccionNat')?>").val(value);
+}
+
+function limpiarDirNat(){
+	$("#<?php echo $this->campoSeguro('direccionNat')?>").val('');
+}
+
+function dirFullNat(){
+	var via = $("#<?php echo $this->campoSeguro('viaNat')?>").val();
+	var detalleVia = $("#<?php echo $this->campoSeguro('detalleViaNat')?>").val();
+	var num1 = $("#<?php echo $this->campoSeguro('numero1Nat')?>").val();
+	var num2 = $("#<?php echo $this->campoSeguro('numero2Nat')?>").val();
+	dirNat = via + " " + detalleVia + " " + num1 + " " + num2;
+
+	dirFull = dirNat + " " + intNat1 + " " + intNat2;
+	return dirFull;
+}
+
+function dirInt1(){
+	var int1 = $("#<?php echo $this->campoSeguro('interior1Nat')?>").val();
+	var detInt1 = $("#<?php echo $this->campoSeguro('detalleInterior1Nat')?>").val();
+	intNat1 = int1 + " " + detInt1;
+
+	if($("#<?php echo $this->campoSeguro('interior1Nat')?>").val()=='' || 
+			$("#<?php echo $this->campoSeguro('detalleInterior1Nat')?>").val()==''){
+		intNat1 = "";	
+	}
+}
+
+function dirInt2(){
+	var int2 = $("#<?php echo $this->campoSeguro('interior2Nat')?>").val();
+	var detInt2 = $("#<?php echo $this->campoSeguro('detalleInterior2Nat')?>").val();
+	intNat2 = int2 + " " + detInt2;
+
+	if($("#<?php echo $this->campoSeguro('interior2Nat')?>").val()=='' || 
+			$("#<?php echo $this->campoSeguro('detalleInterior2Nat')?>").val()==''){
+		intNat2 = "";	
+	}
+}
+
+
+$("#<?php echo $this->campoSeguro('viaNat')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleViaNat')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('detalleViaNat')?>").val()!='' && $("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+$("#<?php echo $this->campoSeguro('numero1Nat')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('numero1Nat')?>").val()!='' && $("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+$("#<?php echo $this->campoSeguro('numero2Nat')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('numero2Nat')?>").val()!='' && $("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('interior1Nat')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		dirInt1();
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleInterior1Nat')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		dirInt1();
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('interior2Nat')?>").change(function(){
+	if($("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		dirInt2();
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+$("#<?php echo $this->campoSeguro('detalleInterior2Nat')?>").keyup(function(){
+	if($("#<?php echo $this->campoSeguro('viaNat')?>").val()!=''){
+		dirInt2();
+		addDirNat(dirFullNat());
+	}else{
+		limpiarDirNat();
+	}
+});
+
+
+
+
+$("#editDirJur").click(function () {
+	limpiarDirJur();
+ 	$("#modDirJur").fadeIn(300);
+ 	$("#editDirJur").fadeOut(100);
+});
+
+
+
+$("#editDirNat").click(function () {
+	limpiarDirNat();
+ 	$("#modDirNat").fadeIn(300);
+ 	$("#editDirNat").fadeOut(100);
+});

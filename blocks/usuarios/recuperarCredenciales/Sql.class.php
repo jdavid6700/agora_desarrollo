@@ -74,43 +74,52 @@ class Sql extends \Sql {
 				 $cadenaSql .= "id_usuario = '".$variable['id_usuario']."' ";
 				break;
 				
+			case "consultarUsuario" :
+				$cadenaSql = "SELECT * FROM ";
+				$cadenaSql .= $prefijo . "usuario ";
+				$cadenaSql .= "WHERE ";
+				$cadenaSql .= "id_usuario = '" . $variable . "'";
+				break;
+			
+			case "datosPersonas" :
+				$cadenaSql = "SELECT IP.num_documento, ";
+				$cadenaSql .= "IP.nom_proveedor, ";
+				$cadenaSql .= "IP.direccion, ";
+				$cadenaSql .= "T.numero_tel, ";
+				$cadenaSql .= "IP.id_entidad_bancaria, ";
+				$cadenaSql .= "IP.tipo_cuenta_bancaria, ";
+				$cadenaSql .= "IP.correo, ";
+				$cadenaSql .= "IP.num_cuenta_bancaria ";
+				$cadenaSql .= "FROM agora.informacion_proveedor IP ";
+				$cadenaSql .= "JOIN agora.proveedor_telefono PT ON PT.id_proveedor = IP.id_proveedor ";
+				$cadenaSql .= "JOIN agora.telefono T ON T.id_telefono = PT.id_telefono ";
+				$cadenaSql .= "WHERE ";
+				$cadenaSql .= "IP.num_documento = '" . $variable['num_documento'] . "' AND ";
+				$cadenaSql .= "IP.tipopersona = '" . $variable['tipo_persona'] . "';";
+				break;
+			
+			case "datosPersonasNotTel" :
+				$cadenaSql = "SELECT IP.num_documento, ";
+				$cadenaSql .= "IP.nom_proveedor, ";
+				$cadenaSql .= "IP.direccion, ";
+				$cadenaSql .= "IP.num_cuenta_bancaria as numero_tel, ";
+				$cadenaSql .= "IP.id_entidad_bancaria, ";
+				$cadenaSql .= "IP.tipo_cuenta_bancaria, ";
+				$cadenaSql .= "IP.correo, ";
+				$cadenaSql .= "IP.num_cuenta_bancaria ";
+				$cadenaSql .= "FROM agora.informacion_proveedor IP ";
+				$cadenaSql .= "WHERE ";
+				$cadenaSql .= "IP.num_documento = '" . $variable['num_documento'] . "' AND ";
+				$cadenaSql .= "IP.tipopersona = '" . $variable['tipo_persona'] . "';";
+				break;
 				
-				case "consultarUsuario" :
-					$cadenaSql = "SELECT * FROM ";
-					$cadenaSql .= $prefijo."usuario ";
-					$cadenaSql .= "WHERE ";
-					if(is_numeric($variable)){
-						$cadenaSql .= "id_usuario = '".$variable."' OR identificacion = ".$variable;
-					}else{
-						$cadenaSql .= "id_usuario = '".$variable."'";
-					}
-					break;
-					
-					
-					case "datosPersonas":
-						$cadenaSql="SELECT IP.num_documento, ";
-						$cadenaSql.="IP.nom_proveedor, ";
-						$cadenaSql.="IP.direccion, ";
-						$cadenaSql.="T.numero_tel, ";
-						$cadenaSql.="IP.id_entidad_bancaria, ";
-						$cadenaSql.="IP.tipo_cuenta_bancaria, ";
-						$cadenaSql.="IP.correo, ";
-						$cadenaSql.="IP.num_cuenta_bancaria ";
-						$cadenaSql.="FROM agora.informacion_proveedor IP ";
-						$cadenaSql.="JOIN agora.proveedor_telefono PT ON PT.id_proveedor = IP.id_proveedor ";
-						$cadenaSql.="JOIN agora.telefono T ON T.id_telefono = PT.id_telefono ";
-						$cadenaSql.="WHERE ";
-						$cadenaSql.="IP.num_documento IN ('".$variable."') LIMIT 1";
-						break;
-						
-						
-						case "datosAleatorios":
-							$cadenaSql="SELECT * FROM ";
-							$cadenaSql.="( SELECT * FROM mntac.acdocente ";
-							$cadenaSql.="ORDER BY dbms_random.value ) ";
-							$cadenaSql.="WHERE rownum <= 1 ";
-							$cadenaSql.="AND ";
-							$cadenaSql.="doc_estado='A'";
+			case "datosAleatorios" :
+				$cadenaSql = "SELECT * FROM ";
+				$cadenaSql .= "( SELECT * FROM mntac.acdocente ";
+				$cadenaSql .= "ORDER BY dbms_random.value ) ";
+				$cadenaSql .= "WHERE rownum <= 1 ";
+				$cadenaSql .= "AND ";
+				$cadenaSql .= "doc_estado='A'";
                             			
 			case "rescatarValorSesion" :
 				 $cadenaSql = "SELECT sesionid, variable, valor, expiracion FROM ".$prefijo."valor_sesion";

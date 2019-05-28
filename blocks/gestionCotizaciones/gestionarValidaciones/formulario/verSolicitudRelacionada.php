@@ -653,7 +653,7 @@ class FormularioRegistro {
 								<th><center>Vigencia</center></th>
 								<th><center>Solicitud de Necesidad</center></th>
 								<th><center>Número de Disponibilidad</center></th>
-								<th><center>$ Valor (En pesos)</center></th>
+								<th><center>Valor en pesos ($)</center></th>
 								<th><center>Dependencia</center></th>
 								<th><center>Rubro</center></th>
 								<th><center>Estado</center></th>
@@ -684,7 +684,7 @@ class FormularioRegistro {
                     $atributos ['enlace'] = "#";
                     $atributos ['tabIndex'] = 1;
                     $atributos ['estilo'] = 'textoSubtitulo';
-                    $atributos ['enlaceTexto'] = "Eliminar (Necesidad)";
+                    $atributos ['enlaceTexto'] = "Eliminar Necesidad";
                     $atributos ['ancho'] = '10%';
                     $atributos ['alto'] = '10%';
                     $atributos ['redirLugar'] = false;
@@ -1020,6 +1020,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab ++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia'] = $dep[0][0];
+
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia'];
         } else {
@@ -1051,6 +1056,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab ++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] = $dep[0][0];
+        
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'];
         } else {
@@ -1433,11 +1443,10 @@ class FormularioRegistro {
         						  <?php 
         						  
         						  $tipo = 'information';
-        						  $mensaje = "<b>INFORMACIÓN INICIAL # (" . $resultadoNecesidadRelacionada[0]['numero_solicitud'] . ")</b><br>
+        						  $mensaje = "<b>INFORMACIÓN COTIZACIÓN # (" . $resultadoNecesidadRelacionada[0]['numero_solicitud'] . ")</b><br>
         							<br>
-        							<i>A continuación se presenta la información registrada incialmente en la Cotización sobre los Productos y/o Servicios</i>.<br>
-        	       						<center>
-        	       						La información que se presenta a continuación es el estado inicial de la información antes de hacer los Cambios APROBADO.</center>
+        							A continuación se presenta la información que se registró inicialmente en la Cotización sobre los 
+                                    Productos y/o Servicios antes de realizar los cambios aprobados
         						  
         							";
         						  // ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -1466,7 +1475,7 @@ class FormularioRegistro {
         	       				                <!-- Cabecera de la tabla -->
         	       				                <thead>
         	       				                    <tr>
-        	       				                        <th width="5%" >#</th>
+        	       				                        <th width="5%" >Número</th>
         	       				                        <th width="10%" >Nombre</th>
         	       				                        <th width="20%" >Descripción</th>
         	       				                        <th width="10%" >Tipo</th>
@@ -1624,16 +1633,16 @@ class FormularioRegistro {
         	       				$tipo = 'warning';
         	       				$mensaje = "<b>DETALLE SOLICITUD DE MODIFICACIÓN (".$titulo.")</b><br>
         							<br>
-        							<i>A continuación se presenta la información de justificación de los Cambios Realizados, en la parte Inferior se presenta una tabla Con los Valores
-        	       						del Cambio</i>.<br>
+        							<i>A continuación se presenta la información de justificación de los cambios realizados, en la parte inferior se presenta una tabla con los valores
+        	       						del cambio</i>.<br>
         	       						<br>
         	       						<b>FECHA SOLICITUD DE MODIFICACIÓN:</b> ".$titulo2." <br>
-        	       						<b>JUSTIFICACIÓN SOLICITUD:</b> ".$titulo3." <br> 
+        	       						<b>JUSTIFICACIÓN DE SOLICITUD:</b> ".$titulo3." <br> 
         	       						<b>FECHA APROBACIÓN DE MODIFICACIÓN:</b> ".$titulo4." <br>
-        	       						<b>JUSTIFICACIÓN APROBACIÓN:</b> ".$titulo5." <br>
+        	       						<b>JUSTIFICACIÓN DE APROBACIÓN:</b> ".$titulo5." <br>
         	       						<br>
         	       						<center>
-        	       						La información que se presenta a continuación es la información que se Cambio con la APROBACIÓN correspondiente.</center>
+        	       						La información que se presenta a continuación es la que ya tuvo modificaciones y su aprobación correspondiente.</center>
         	       						
         							";
         	       				// ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -1656,7 +1665,7 @@ class FormularioRegistro {
         	       				                <!-- Cabecera de la tabla -->
         	       				                <thead>
         	       				                    <tr>
-        	       				                        <th width="5%" >#</th>
+        	       				                        <th width="5%" >Número</th>
         	       				                        <th width="10%" >Nombre</th>
         	       				                        <th width="20%" >Descripción</th>
         	       				                        <th width="10%" >Tipo</th>
@@ -1783,10 +1792,7 @@ class FormularioRegistro {
                			       			$tipo = 'information';
                			       			$mensaje = "<b>IMPORTANTE</b><br>
         							<br>
-        							<i>La Información actual de los Productos y Servicios, relacionados en la Cotización, son los que se presentan en la sección<br>
-        	       							<b>Información Productos o Servicios</b>, que se encuentra en la parte inferior de está sección.	<br>
-        	       						<center>
-        	       						La información que se presenta allí es la actual y es la que debe tenerse en cuenta para responder y/o atender la COTIZACIÓN.</center></i>
+        							Tenga en cuenta que la información que se presentan en la sección Información Productos o Servicios es la actual. Esta es la que debe tenerse en cuenta para responder y/o atender la cotización.
                			       			
         							";
                			       			
@@ -1837,7 +1843,7 @@ class FormularioRegistro {
                 <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
-                        <th width="5%" >#</th>
+                        <th width="5%" >Número</th>
                         <th width="10%" >Nombre</th>
                         <th width="30%" >Descripción</th>
                         <th width="15%" >Tipo</th>
@@ -2166,22 +2172,27 @@ class FormularioRegistro {
             $i = 0;
 
             while ($i < $count) {
-
-                if ($resultadoFP[$i][0] == 1) {
-                    $tipoValor = " % Completado";
-                } else {
-                    $tipoValor = " % Completado del Total";
-                }
-                ?>
-                        <tr id="nFilas" >
-                            <td><?php echo $resultadoFP[$i][0] . " - " . $resultadoFP[$i][1] ?></td>
-                            <td><?php echo round($resultadoFP[$i][2], 2) . $tipoValor ?></td>
-                            <td><?php echo round($resultadoFP[$i][3], 2) . " %" ?></td>
-                            <th><?php echo $i + 1 ?></th>
-                        </tr>
-                        <?php
-                        $i++;
-                    }
+            
+            	if ($resultadoFP[$i][0] == 1) {
+            		$tipoValor = " % Completado";
+            		$valueTip = round($resultadoFP[$i][2], 2);
+            	} else if ($resultadoFP[$i][0] == 2) {
+            		$tipoValor = "";
+            		$valueTip = $resultadoFP[$i][2];
+            	} else {
+            		$tipoValor = " - Sin Condición de Avance";
+            		$valueTip = round($resultadoFP[$i][2], 2);
+            	}
+            	?>
+                                    <tr id="nFilas" >
+                                        <td><?php echo $resultadoFP[$i][0] . " - " . $resultadoFP[$i][1] ?></td>
+                                        <td><?php echo $valueTip . $tipoValor ?></td>
+                                        <td><?php echo round($resultadoFP[$i][3], 2) . " %" ?></td>
+                                        <th><?php echo $i + 1 ?></th>
+                                    </tr>
+                                    <?php
+                                    $i++;
+                                }
                 }
                 ?>
 

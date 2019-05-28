@@ -11,6 +11,7 @@ class Formulario {
 	var $lenguaje;
 	var $miFormulario;
 	var $miSql;
+	
 	function __construct($lenguaje, $formulario, $sql) {
 		$this->miConfigurador = \Configurador::singleton ();
 		$this->miConfigurador->fabricaConexiones->setRecursoDB ( 'principal' );
@@ -18,6 +19,47 @@ class Formulario {
 		$this->miFormulario = $formulario;
 		$this->miSql = $sql;
 	}
+	
+	function urlExists($url=NULL){
+	
+		//Hacer ENCODE del Enlace como URL
+		$urlDiv = explode("files/", $url);
+		$url = $urlDiv[0]. "files/" . rawurlencode($urlDiv[1]);
+	
+		if($url == NULL) return false;
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$data = curl_exec($ch);
+		$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		curl_close($ch);
+		if($httpcode>=200 && $httpcode<300){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	function is_url_exist($url){
+	
+		//Hacer ENCODE del Enlace como URL
+		$urlDiv = explode("files/", $url);
+		$url = $urlDiv[0]. "files/" . rawurlencode($urlDiv[1]);
+	
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_NOBODY, true);
+		curl_exec($ch);
+		$code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		if($code == 200){
+			$status = true;
+		}else{
+			$status = false;
+		}
+		curl_close($ch);
+		return $status;
+	}
+	
 	function formulario() {
 
 		// Rescatar los datos de este bloque
@@ -98,7 +140,7 @@ class Formulario {
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
-			
+			$rutaFilesProveedor = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesProveedor" );
 			
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
 
@@ -184,8 +226,18 @@ class Formulario {
 				$_REQUEST['asesorComercialNat'] =  $resultadoPersonaNatural[0]['nom_asesor'];
 				$_REQUEST['telAsesorNat'] =  $resultadoPersonaNatural[0]["tel_asesor"];
 				$_REQUEST['descripcionNat'] =  $resultadoPersonaNatural[0]["descripcion"];
-				$_REQUEST['DocumentoRUTNat'] =  $resultadoPersonaNatural[0]['anexorut'];
-				$_REQUEST['DocumentoRUPNat'] =  $resultadoPersonaNatural[0]['anexorup'];
+				
+				
+				
+				$_REQUEST['DocumentoRUTNat'] =  $rutaFilesProveedor . $resultadoPersonaNatural[0]['anexorut'];
+				if($resultadoPersonaNatural[0]['anexorup'] != null){
+					$_REQUEST['DocumentoRUPNat'] =  $rutaFilesProveedor . $resultadoPersonaNatural[0]['anexorup'];
+				}else{
+					$_REQUEST['DocumentoRUPNat'] =  $resultadoPersonaNatural[0]['anexorup'];
+				}
+				
+				
+				
 				$_REQUEST['tipoCuentaNat'] =  $resultadoPersonaNatural[0]["tipo_cuenta_bancaria"];
 				$_REQUEST['numeroCuentaNat'] =  $resultadoPersonaNatural[0]["num_cuenta_bancaria"];
 				$_REQUEST['entidadBancariaNat'] =  $resultadoPersonaNatural[0]["id_entidad_bancaria"];
@@ -255,6 +307,16 @@ class Formulario {
 				$_REQUEST ['afiliacionCajaNat'] = $resultadoPersonaNaturalInfo[0]["id_caja_compensacion"];
 				
 				
+				if($resultadoPersonaNaturalInfo[0]["fecha_nacimiento"] != null){
+					$dateNacNat = $resultadoPersonaNaturalInfo[0]["fecha_nacimiento"];
+					//CAST****************************************************************
+					$dateNac = explode("-", $dateNacNat);
+					$cadena_fecha = $dateNac[2]."/".$dateNac[1]."/".$dateNac[0];
+					$_REQUEST ['fechaNacNat'] = $cadena_fecha;
+					//********************************************************************
+				}
+
+
 				$dateExpCarg = $resultadoPersonaNaturalInfo[0]["fecha_expedicion_documento"];
 				//CAST****************************************************************
 				$dateExp = explode("-", $dateExpCarg);
@@ -327,10 +389,16 @@ class Formulario {
 						case 'f' :
 							$_REQUEST ['comunidadLGBT'] = 2;
 							break;
+						case '' :
+							$_REQUEST ['comunidadLGBT'] = 3;
+							break;
 						default:
 							$_REQUEST ['comunidadLGBT'] = -1;
 							break;
 					}
+				}
+				if($_REQUEST['comunidadLGBT'] === null){
+					$_REQUEST ['comunidadLGBT'] = 3;
 				}
 				
 				if(isset($_REQUEST['personasCargo'])){
@@ -388,6 +456,9 @@ class Formulario {
 							break;
 						case 'ROM' :
 							$_REQUEST['grupoEtnico'] = 26;
+							break;
+						case 'NO APLICA' :
+							$_REQUEST ['grupoEtnico'] = 40;
 							break;
 					}
 				}
@@ -604,8 +675,18 @@ class Formulario {
 				$_REQUEST['asesorComercial'] =  $resultadoPersonaJuridica[0]['nom_asesor'];
 				$_REQUEST['telAsesor'] =  $resultadoPersonaJuridica[0]["tel_asesor"];
 				$_REQUEST['descripcion'] =  $resultadoPersonaJuridica[0]["descripcion"];
-				$_REQUEST['DocumentoRUT'] =  $resultadoPersonaJuridica[0]['anexorut'];
-				$_REQUEST['DocumentoRUP'] =  $resultadoPersonaJuridica[0]['anexorup'];
+				
+				
+				
+				$_REQUEST['DocumentoRUT'] =  $rutaFilesProveedor . $resultadoPersonaJuridica[0]['anexorut'];
+				if($resultadoPersonaJuridica[0]['anexorup'] != null){
+					$_REQUEST['DocumentoRUP'] =  $rutaFilesProveedor . $resultadoPersonaJuridica[0]['anexorup'];
+				}else{
+					$_REQUEST['DocumentoRUP'] =  $resultadoPersonaJuridica[0]['anexorup'];
+				}
+				
+				
+				
 				$_REQUEST['tipoCuenta'] =  $resultadoPersonaJuridica[0]["tipo_cuenta_bancaria"];
 				$_REQUEST['numeroCuenta'] =  $resultadoPersonaJuridica[0]["num_cuenta_bancaria"];
 				$_REQUEST['entidadBancaria'] =  $resultadoPersonaJuridica[0]["id_entidad_bancaria"];
@@ -3548,15 +3629,21 @@ class Formulario {
 			$atributos["id"]="botones";
 			$atributos["estilo"]="marcoBotones widget";
 			echo $this->miFormulario->division("inicio",$atributos);
-			
-			
-			
+
 			
 			if($_REQUEST['DocumentoRUT'] != null){
-				$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
-				$enlace.="</a>";
-				echo $enlace;
+				$url = $_REQUEST['DocumentoRUT'];
+				if($this->urlExists($url) && $this->is_url_exist($url)){
+					$enlace = "<br><a href='".$_REQUEST['DocumentoRUT']."' target='_blank'>";
+					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+					$enlace.="</a>";
+					echo $enlace;
+				}else{
+					$enlace = "<br><a href='javascript:void(0);' onClick=\"deleteFile()\">";
+					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+					$enlace.="</a>";
+					echo $enlace;
+				}
 			}else{
 				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
 				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
@@ -3587,16 +3674,25 @@ class Formulario {
 			echo $this->miFormulario->division("inicio",$atributos);
 			
 			if($_REQUEST['DocumentoRUP'] != null){
-				$enlace = "<br><a href='".$_REQUEST['DocumentoRUP']."' target='_blank'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL)";
-				$enlace.="</a>";
-				echo $enlace;
+				$url = $_REQUEST['DocumentoRUP'];
+				if($this->urlExists($url) && $this->is_url_exist($url)){
+					$enlace = "<br><a href='".$_REQUEST['DocumentoRUP']."' target='_blank'>";
+					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
+					$enlace.="</a>";
+					echo $enlace;
+				}else{
+					$enlace = "<br><a href='javascript:void(0);' onClick=\"deleteFile()\">";
+					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
+					$enlace.="</a>";
+					echo $enlace;
+				}
 			}else{
-				$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado Registro (RUP) o (ESAL)')\">";
+				$enlace = "<br><a href='javascript:void(0);' onClick=\"alert('No se ha relacionado Registro (RUP) o (ESAL)')\">";
 				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro (RUP) o (ESAL) ";
 				$enlace.="</a>";
 				echo $enlace;
 			}
+			
 			//------------------Fin Division para los botones-------------------------
 			echo $this->miFormulario->division("fin");
 			//FIN enlace boton descargar RUT
@@ -4127,7 +4223,42 @@ class Formulario {
 				
 				
 				
+				// ---------------- CONTROL: Cuadro de Texto  DIGITO DE VERIFICACION--------------------------------------------------------
+				$esteCampo = 'fechaNacNat';
+				$atributos ['id'] = $esteCampo;
+				$atributos ['nombre'] = $esteCampo;
+				$atributos ['tipo'] = 'text';
+				$atributos ['estilo'] = 'jqueryui';
+				$atributos ['marco'] = true;
+				$atributos ['estiloMarco'] = '';
+				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ['columnas'] = 1;
+				$atributos ['dobleLinea'] = 0;
+				$atributos ['tabIndex'] = $tab;
+				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
+				$atributos ['validar'] = '';
+					
+				if (isset ( $_REQUEST [$esteCampo] )) {
+					$atributos ['valor'] = $_REQUEST [$esteCampo];
+				} else {
+					$atributos ['valor'] = '';
+				}
+				$atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+				$atributos ['deshabilitado'] = true;
+				$atributos ['tamanno'] = 15;
+				$atributos ['maximoTamanno'] = '';
+				$atributos ['anchoEtiqueta'] = 300;
+				$tab ++;
+					
+				// Aplica atributos globales al control
+				$atributos = array_merge ( $atributos, $atributosGlobales );
+				echo $this->miFormulario->campoCuadroTexto ( $atributos );
+				unset ( $atributos );
+				// ---------------- FIN CONTROL: Cuadro de Texto  NUMERO CONTRATO--------------------------------------------------------
 				
+
+
+
 		
 				// ---------------- CONTROL: Lista TIPO DE PERSONA --------------------------------------------------------
 				$esteCampo = "generoNat";
@@ -4478,7 +4609,7 @@ class Formulario {
 				$atributos ['nombre'] = $esteCampo;
 				$atributos ['id'] = $esteCampo;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
-				$atributos ["etiquetaObligatorio"] = true;
+				$atributos ["etiquetaObligatorio"] = false;
 				$atributos ['tab'] = $tab ++;
 				$atributos ['anchoEtiqueta'] = 350;
 				$atributos ['evento'] = '';
@@ -4491,7 +4622,7 @@ class Formulario {
 				$atributos ['columnas'] = 1;
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = "jqueryui";
-				$atributos ['validar'] = "required";
+				$atributos ['validar'] = "";
 				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
@@ -4499,7 +4630,8 @@ class Formulario {
 				
 				$matrizItems=array(
 						array(1,'Si'),
-						array(2,'No')
+						array(2,'No'),
+						array(3,'No sabe/No responde')
 				);
 				$atributos['matrizItems'] = $matrizItems;
 					
@@ -5978,10 +6110,18 @@ class Formulario {
 					echo $this->miFormulario->division("inicio",$atributos);
 						
 						if($_REQUEST['DocumentoRUTNat'] != null){
-							$enlace = "<br><a href='".$_REQUEST['DocumentoRUTNat']."' target='_blank'>";
-							$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
-							$enlace.="</a>";
-							echo $enlace;
+							$url = $_REQUEST['DocumentoRUTNat'];
+							if($this->urlExists($url) && $this->is_url_exist($url)){
+								$enlace = "<br><a href='".$_REQUEST['DocumentoRUTNat']."' target='_blank'>";
+								$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+								$enlace.="</a>";
+								echo $enlace;
+							}else{
+								$enlace = "<br><a href='javascript:void(0);' onClick=\"deleteFile()\">";
+								$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
+								$enlace.="</a>";
+								echo $enlace;
+							}
 						}else{
 							$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUT')\">";
 							$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único Tributario ";
@@ -6011,16 +6151,25 @@ class Formulario {
 				echo $this->miFormulario->division("inicio",$atributos);
 					
 				if($_REQUEST['DocumentoRUPNat'] != null){
-					$enlace = "<br><a href='".$_REQUEST['DocumentoRUPNat']."' target='_blank'>";
-					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
-					$enlace.="</a>";
-					echo $enlace;
+					$url = $_REQUEST['DocumentoRUPNat'];
+					if($this->urlExists($url) && $this->is_url_exist($url)){
+						$enlace = "<br><a href='".$_REQUEST['DocumentoRUPNat']."' target='_blank'>";
+						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+						$enlace.="</a>";
+						echo $enlace;
+					}else{
+						$enlace = "<br><a href='javascript:void(0);' onClick=\"deleteFile()\">";
+						$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
+						$enlace.="</a>";
+						echo $enlace;
+					}
 				}else{
-					$enlace = "<br><a href='#' onClick=\"alert('No se ha relacionado RUP')\">";
+					$enlace = "<br><a href='javascript:void(0);' onClick=\"alert('No se ha relacionado RUP')\">";
 					$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Registro Único de Proponentes ";
 					$enlace.="</a>";
 					echo $enlace;
 				}
+				
 				//------------------Fin Division para los botones-------------------------
 				echo $this->miFormulario->division("fin");
 				//FIN enlace boton descargar RUT

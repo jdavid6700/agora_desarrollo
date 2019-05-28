@@ -245,11 +245,11 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail = new PHPMailer();
 
         //configuracion de cuenta de envio
-        $mail->Host = "200.69.103.49";
+        $mail->Host = "";
         $mail->Mailer = "smtp";
         $mail->SMTPAuth = true;
         $mail->Username = "condor@udistrital.edu.co";
-        $mail->Password = "CondorOAS2012";
+        $mail->Password = "";
         $mail->Timeout = 1200;
         $mail->Charset = "utf-8";
         $mail->IsHTML(true);
@@ -316,9 +316,14 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail->Body = $contenido;
 
         foreach ($resultadoProveedor as $dato):
-            //$to_mail=$dato ['correo'];
-            $to_mail = "jdavid.6700@gmail.com"; //PRUEBAS**********************************************************************************
-            $mail->AddAddress($to_mail);
+            $to_mail=$dato ['correo'];
+            
+            if($configSer['Disable']){
+                $mail->AddAddress($configSer['mail_dev']);
+                break;
+            }else{
+                $mail->AddAddress($to_mail);
+            }
 
             if (!$mail->Send()) {
                 echo "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
@@ -355,7 +360,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     } else if ($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = $this->lenguaje->getCadena('mensajeError');
+        $mensaje = "Error al Cargar los Datos. <br>La Informaciòn no se diligenció Correctamente, Por Favor Vuelva a Intertarlo";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $boton = "regresar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;

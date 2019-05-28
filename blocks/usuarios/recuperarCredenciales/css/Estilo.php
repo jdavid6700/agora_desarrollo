@@ -24,6 +24,7 @@ $estilo[$indice++]="jquery.dataTables.css";
 $estilo[$indice++]="jquery.dataTables_themeroller.css";
 //$estilo[$indice++]="dataTables.tableTools.css";
 //$estilo[$indice++]="dataTables.tableTools.min.css";
+$estilo[$indice++]="sweetalert2.min.css";
 
 $rutaBloque=$this->miConfigurador->getVariableConfiguracion("host");
 $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site");

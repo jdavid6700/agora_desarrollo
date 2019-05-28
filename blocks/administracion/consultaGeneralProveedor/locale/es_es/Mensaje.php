@@ -440,5 +440,8 @@ $this->idioma["padresHermanosDependienteNat"] = "Entre las personas a Cargo (Dep
 $this->idioma["padresHermanosDependienteNatTitulo"]="Indique para padres y/o hermanos dependientes";
 
 
+$this->idioma["fechaNacNat"]="Fecha de Nacimiento :";
+$this->idioma["fechaNacNatTitulo"]="Digite Fecha de Nacimiento";
+
 
 ?>

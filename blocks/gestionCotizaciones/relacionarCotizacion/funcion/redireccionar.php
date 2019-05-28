@@ -38,6 +38,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&caso=".$valor;
 				break;
 			
 			case "noItems" :

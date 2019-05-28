@@ -266,7 +266,7 @@ class FormularioRegistro {
 						<!-- Cabecera de la tabla -->
 						<thead>
 							<tr>
-								<th width="10%" >Codigo</th>
+								<th width="10%" >Código</th>
 								<th width="50%" >Descripción</th>
 								<th width="25%" >Clase</th>
 								<th width="15%" >&nbsp;</th>
@@ -411,6 +411,7 @@ class FormularioRegistro {
 				$valorCodificado .= "&bloque=" . $esteBloque ['nombre'];
 				$valorCodificado .= "&bloqueGrupo=" . $esteBloque ["grupo"];
 				$valorCodificado .= "&opcion=registrarActividad";
+				$valorCodificado .= "&usuario=".$_REQUEST['usuario'];
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.

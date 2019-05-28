@@ -199,7 +199,7 @@ class registrarForm {
 				$atributos ['ajax_control'] = $esteCampo;
 				$atributos ['estilo'] = "jqueryui";
 				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = true;
+				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "tipoIdentificacion" );

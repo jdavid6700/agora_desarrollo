@@ -282,7 +282,7 @@ if ($secure) {
                         $datos [$i] ['Tipo'] = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
                         if (is_null($datos [$i] ['Tipo']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna A - Fila Pestaña Bien ' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna A - ' . $i . ',  Pestaña Bien';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
@@ -290,21 +290,21 @@ if ($secure) {
                         $datos [$i] ['Nombre'] = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
                         if (is_null($datos [$i] ['Nombre']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna B - Fila Pestaña Bien ' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna B - ' . $i . ',  Pestaña Bien';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
                         $datos [$i] ['Descripcion'] = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
                         if (is_null($datos [$i] ['Descripcion']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna C - Fila Pestaña Bien ' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna C - ' . $i . ',  Pestaña Bien';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
                         $datos [$i] ['Unidad'] = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
                         if (is_null($datos [$i] ['Unidad']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna D - Fila Pestaña Bien ' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna D - ' . $i . ',  Pestaña Bien';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
@@ -312,7 +312,7 @@ if ($secure) {
                         $datos [$i] ['Cantidad'] = $objPHPExcel->getActiveSheet()->getCell('E' . $i)->getCalculatedValue();
                         if (is_null($datos [$i] ['Cantidad']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna E - Fila Pestaña Bien ' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna E - ' . $i . ',  Pestaña Bien';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
@@ -346,7 +346,7 @@ if ($secure) {
                         $datosServicio [$i] ['Tipo'] = $objPHPExcel->getActiveSheet()->getCell('A' . $i)->getCalculatedValue();
                         if (is_null($datosServicio [$i] ['Tipo']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna A - Fila Pestaña Servicios' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna A - Fila ' . $i . ',  Pestaña Servicios';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
@@ -354,21 +354,21 @@ if ($secure) {
                         $datosServicio [$i] ['Nombre'] = $objPHPExcel->getActiveSheet()->getCell('B' . $i)->getCalculatedValue();
                         if (is_null($datosServicio [$i] ['Nombre']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna B - Fila Pestaña Servicios' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna B - Fila ' . $i . ',  Pestaña Servicios';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
                         $datosServicio [$i] ['Descripcion'] = $objPHPExcel->getActiveSheet()->getCell('C' . $i)->getCalculatedValue();
                         if (is_null($datosServicio [$i] ['Descripcion']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna C - Fila Pestaña Servicios' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna C - Fila ' . $i . ',  Pestaña Servicios';
                             echo json_encode($tipo_validacion);
                             exit();
                         }
                         $datosServicio [$i] ['Cantidad'] = $objPHPExcel->getActiveSheet()->getCell('D' . $i)->getCalculatedValue();
                         if (is_null($datosServicio [$i] ['Cantidad']) == true) {
 
-                            $tipo_validacion = ' Datos vacios en Columna D - Fila Pestaña Servicios' . $i;
+                            $tipo_validacion = ' Datos vacios en Columna D - Fila ' . $i . ',  Pestaña Servicios';
                             echo json_encode($tipo_validacion);
                             exit();
                         }

@@ -170,7 +170,7 @@ class registrarForm {
 				$atributos ['ajax_control'] = $esteCampo;
 				$atributos ['estilo'] = "jqueryui";
 				$atributos ['validar'] = "required";
-				$atributos ['limitar'] = true;
+				$atributos ['limitar'] = false;
 				$atributos ['anchoCaja'] = 60;
 				$atributos ['miEvento'] = '';
 				$atributos ['cadena_sql'] = $this->miSql->getCadenaSql ( "tipoIdentificacion" );
@@ -301,7 +301,7 @@ class registrarForm {
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['validar'] = 'required';
-				$atributos ['limitar'] = true;
+				$atributos ['limitar'] = false;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 				$atributos ['anchoEtiqueta'] = 150;
                                 $atributos ['anchoCaja'] = 60;
@@ -331,7 +331,7 @@ class registrarForm {
 				$atributos ['tamanno'] = 1;
 				$atributos ['estilo'] = 'jqueryui';
 				$atributos ['validar'] = 'required';
-				$atributos ['limitar'] = true;
+				$atributos ['limitar'] = false;
 				$atributos ['etiqueta'] = $this->lenguaje->getCadena ( $esteCampo );
 				$atributos ['anchoEtiqueta'] = 150;
                                 $atributos ['anchoCaja'] = 60;

@@ -152,7 +152,7 @@ class Formulario {
 				
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					$_REQUEST ['destino'] = $prefijo . "-" . $archivo1;
 				} else {
 					$status = "<br>Error al subir el archivo1";
 				}
@@ -188,7 +188,7 @@ class Formulario {
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
 					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					$_REQUEST ['destino2'] = $prefijo . "-" . $archivo1;
 				} else {
 					$status = "<br>Error al subir el archivo1";
 				}
@@ -335,13 +335,13 @@ class Formulario {
 				);
 				
 				
-				$cadenaSql = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
-				$id_TelefonoFijo = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda", $datosTelefonoFijoPersonaProveedor, "insertarInformacionProveedorTelefono");
+				$cadenaSqlTelFijo = $this->miSql->getCadenaSql("insertarInformacionProveedorTelefono",$datosTelefonoFijoPersonaProveedor);
+				array_push($SQLs, $cadenaSqlTelFijo);
 				
 				
 				
 				$datosTelefonoProveedorTipoA = array (
-						'fki_id_tel' => $id_TelefonoFijo[0][0],
+						'fki_id_tel' => "currval('agora.prov_proveedor_telefono')",
 						'fki_id_Proveedor' => "currval('agora.prov_proveedor_info_id_proveedor_seq')"
 				);
 				
@@ -381,6 +381,13 @@ class Formulario {
 					array_push($SQLs, $cadenaSqlProveedorXRepresentante);
 						
 					
+					$datosProCar = array (
+							'representante' => $_REQUEST['numeroDocumento'],
+							'cargo' => $_REQUEST['cargo']
+					);
+						
+					$cadenaSqlProCar = $this->miSql->getCadenaSql("updateCargoPJ",$datosProCar);
+					array_push($SQLs, $cadenaSqlProCar);
 					
 
 					if(isset($_REQUEST['paisEmpresa'])){//CAST
@@ -902,21 +909,29 @@ class Formulario {
 					$cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
 					$resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
 				
+					$c = 0;
+					while ($c < count($SQLs)){
+						$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+						$c++;
+					}
+					$query = json_encode($SQLsDec);
+					
 					$log = array('accion'=>"REGISTRO PERSONA JURIDICA",
 							'id_registro'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],
 							'tipo_registro'=>"GESTION USUARIO JURIDICA",
 							'nombre_registro'=>"id_usuario=>".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'].
-							"|identificacion=>".$_REQUEST['identificacion'].
-							"|tipo_identificacion=>".$_REQUEST['tipo_identificacion'].
-							"|nombres=>".$_REQUEST['nombres'].
-							"|apellidos=>".$_REQUEST['apellidos'].
-							"|correo=>".$_REQUEST['correo'].
-							"|telefono=>".$_REQUEST['telefono'].
-							"|subsistema=>".$_REQUEST['subsistema'].
-							"|perfil=>".$_REQUEST['perfil'].
-							"|fechaIni=>".$hoy.
-							"|fechaFin=>".$_REQUEST['fechaFin'],
+												"|identificacion=>".$_REQUEST['identificacion'].
+												"|tipo_identificacion=>".$_REQUEST['tipo_identificacion'].
+												"|nombres=>".$_REQUEST['nombres'].
+												"|apellidos=>".$_REQUEST['apellidos'].
+												"|correo=>".$_REQUEST['correo'].
+												"|telefono=>".$_REQUEST['telefono'].
+												"|subsistema=>".$_REQUEST['subsistema'].
+												"|perfil=>".$_REQUEST['perfil'].
+												"|fechaIni=>".$hoy.
+												"|fechaFin=>".$_REQUEST['fechaFin'],
 							'descripcion'=>"Registro de nuevo Usuario ".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion']." con perfil ".$resultadoPerfil[0]['rol_alias'],
+							'query'=> $query,
 					);
 				
 				
@@ -940,7 +955,37 @@ class Formulario {
 							'telefono' => $_REQUEST['telefono'],
 							'id_usuario' => $arregloDatos['id_usuario']
 					);
-					
+
+
+
+					if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
+					}elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					}else{
+						$ip = $_SERVER['REMOTE_ADDR'];
+					}
+					$c = 0;
+					while ($c < count($SQLs)){
+						$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+						$c++;
+					}
+					$query = json_encode($SQLsDec);
+					$error = json_encode(error_get_last());
+						
+					$datosLog = array (
+							'tipo_log' => 'REGISTRO',
+							'tipo_persona' => 'JURIDICA',
+							'documento' => $_REQUEST ['nit'],
+							'query' => $query,
+							'data' => null,
+							'host' => $ip,
+							'fecha_log' => date("Y-m-d H:i:s"),
+							'usuario' => 'REG777'
+					);
+					$cadenaSQL = $this->miSql->getCadenaSql("insertarLogProveedorBnRg", $datosLog);
+					$resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+		
 					
 				
 				
@@ -957,7 +1002,38 @@ class Formulario {
 					}
 				
 				} else {
-					redireccion::redireccionar ( 'noregistro',  $_REQUEST['usuario']);
+					
+					if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
+					}elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					}else{
+						$ip = $_SERVER['REMOTE_ADDR'];
+					}
+					$c = 0;
+					while ($c < count($SQLs)){
+						$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+						$c++;
+					}
+					$query = json_encode($SQLsDec);
+					$error = json_encode(error_get_last());
+					
+					$datosLog = array (
+							'tipo_log' => 'REGISTRO',
+							'tipo_persona' => 'JURIDICA',
+							'documento' => $_REQUEST ['nit'],
+							'query' => $query,
+							'error' => $error,
+							'host' => $ip,
+							'fecha_log' => date("Y-m-d H:i:s"),
+							'usuario' => 'REG777'
+					);
+					$cadenaSQL = $this->miSql->getCadenaSql("insertarLogProveedor", $datosLog);
+					$resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+						
+					$caso = "RC-" . date("Y") . "-" . $resultadoLog[0][0];
+					
+					redireccion::redireccionar ( 'noregistro',  $caso);
 					exit();
 				}
 		

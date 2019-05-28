@@ -1,3 +1,13 @@
+
+window.onload = detectarCarga;
+function detectarCarga(){
+
+	$('#marcoDatosLoad').fadeOut(1000, function (){
+		$('#marcoDatosBasicos').fadeIn(500);		
+	});
+}
+
+
 <?php 
 //Se coloca esta condición para evitar cargar algunos scripts en el formulario de confirmación de entrada de datos.
 //if(!isset($_REQUEST["opcion"])||(isset($_REQUEST["opcion"]) && $_REQUEST["opcion"]!="confirmar")){
@@ -92,11 +102,11 @@ $('#<?php echo $this->campoSeguro('fechaFin')?>').datepicker({
                     event.preventDefault();
             });
         });
-$('#<?php echo $this->campoSeguro('tipo_identificacion')?>').width(210);
+$('#<?php echo $this->campoSeguro('tipo_identificacion')?>').width(350);
 $("#<?php echo $this->campoSeguro('tipo_identificacion')?>").select2(); 
-$('#<?php echo $this->campoSeguro('subsistema')?>').width(210);
+$('#<?php echo $this->campoSeguro('subsistema')?>').width(350);
 $("#<?php echo $this->campoSeguro('subsistema')?>").select2(); 
-$('#<?php echo $this->campoSeguro('perfil')?>').width(210);
+$('#<?php echo $this->campoSeguro('perfil')?>').width(350);
 $("#<?php echo $this->campoSeguro('perfil')?>").select2(); 
 
 <?php 

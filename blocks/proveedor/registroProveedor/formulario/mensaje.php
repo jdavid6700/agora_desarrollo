@@ -251,8 +251,10 @@ if (!isset($GLOBALS["autorizado"])) {
 		$valorCodificado.="&nit=" . $_REQUEST['nit'];
        
     }else if($_REQUEST['mensaje'] == 'error') {
+    	
         $tipo = 'error';
         $mensaje = "Error al Cargar los Datos. <br>La Informaciòn no se diligenció Correctamente, Por Favor Vuelva a Intertarlo";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -287,6 +289,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $tipo = 'success';
         $mensaje = "</span>Se realizó la modificación a la(s) Actividad(es) Económica(s)<br><br>";
         $mensaje .= $listAc;
+        $mensaje .= "<br>Fecha: <b>".date ( 'Y-m-d' . ' - ' .'h:i:s A')."</b><br>";
         $boton = "regresar";
 
         $valorCodificado = "pagina=". $miPaginaActual;
@@ -299,25 +302,54 @@ if (!isset($GLOBALS["autorizado"])) {
 		
        
     }else if($_REQUEST['mensaje'] == 'actualizo') {
-        $tipo = 'success';
-        $mensaje = "Se guardaron los datos de la Persona.<br >";
-        $boton = "regresar";
+    	
+    	$cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuarioAdm", $_REQUEST );
+    	$resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    	
+    	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor_adm', $_REQUEST['idPersona'] );
+		$resultadoProv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-        $valorCodificado = "pagina=". $miPaginaActual;
-        $valorCodificado.="&opcion=modificar";
-        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        $tipo = 'success';
+        $mensaje = "</span>Se realizó la modificación de la Información de la Persona, mediante usuario: <b>".$_REQUEST['usuario']. " (".$resultadoPerfil[0]['rol_alias']. ")</b><br>";
+        $mensaje .= "Acción: <b>MODIFICACIÓN</b><br>";
+        $mensaje .= "Persona: <b>(".$resultadoProv[0]['num_documento'].") ".$resultadoProv[0]['nom_proveedor']."</b><br>";
+        $mensaje .= "<br>Fecha: <b>".date ( 'Y-m-d' . ' - ' .'h:i:s A')."</b><br>";
+        $boton = "regresar";
+        
+        if($resultadoPerfil[0]['rol_id'] == 8){
+        	$valorCodificado = "pagina=consultaGeneralProveedor";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        }else{
+        	$valorCodificado = "pagina=indexAgora";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        }
+ 
        
     }else if($_REQUEST['mensaje'] == 'noActualizo') {
+    	
+    	$cadena_sql = $this->sql->getCadenaSql ( "consultarPerfilUsuarioAdm", $_REQUEST );
+    	$resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+    	 
+    	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor_adm', $_REQUEST['idPersona'] );
+    	$resultadoProv = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+    	
         $tipo = 'error';
         $mensaje = "Error en el cargue. <br>No se Actualizaron los Datos.";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $boton = "regresar";
 
-        $valorCodificado = "pagina=". $miPaginaActual;
-        $valorCodificado.="&opcion=modificar";
-        $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
-        $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
-       
+        if($resultadoPerfil[0]['rol_id'] == 8){
+        	$valorCodificado = "pagina=consultaGeneralProveedor";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        }else{
+        	$valorCodificado = "pagina=". $miPaginaActual;
+        	$valorCodificado.="&opcion=modificar";
+        	$valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
+        	$valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+        }
     }
 
 

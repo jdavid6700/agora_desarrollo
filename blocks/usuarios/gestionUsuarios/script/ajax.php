@@ -64,7 +64,7 @@ function consultarPerfil(elem, request, response){
 	            	$("<option value='"+data[ indice ].rol_id+"'>"+data[ indice ].rol_alias+"</option>").appendTo("#<?php echo $this->campoSeguro('perfil')?>");
 	            });
 	            $("#<?php echo $this->campoSeguro('perfil')?>").removeAttr('disabled');
-	            $('#<?php echo $this->campoSeguro('perfil')?>').width(210);
+	            $('#<?php echo $this->campoSeguro('perfil')?>').width(350);
 	            $("#<?php echo $this->campoSeguro('perfil')?>").select2();
 		        }
 	    }

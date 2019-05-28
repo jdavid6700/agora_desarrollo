@@ -61,6 +61,13 @@ class ArmadorPagina {
         $htmlPagina = "<head>\n";
         $htmlPagina .= "<title>" . $this->miConfigurador->getVariableConfiguracion("nombreAplicativo") . "</title>\n";
         $htmlPagina .= "<meta http-equiv='Content-Type' content='text/html; charset=utf-8' >\n";
+        
+        $htmlPagina .= "<meta http-equiv='Expires' content='0' />\n";
+        $htmlPagina .= "<meta http-equiv='Pragma' content='no-cache' />\n";
+        $htmlPagina .= "<script type='text/javascript'>\n";
+        $htmlPagina .= "if(history.forward(1)){";
+        $htmlPagina .= "location.replace( history.forward(1) );} </script>";
+        
         $htmlPagina .= "<link rel='shortcut icon' href='" . $this->host . $this->sitio . "/" . "favicon.ico' >\n";
         echo $htmlPagina;
 

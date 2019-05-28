@@ -418,7 +418,7 @@ class FormularioRegistro {
                 <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
-                        <th width="2%" >#</th>
+                        <th width="2%" >Número</th>
                         <th width="10%" >Nombre</th>
                         <th width="18%" >Descripción</th>
                         <th width="8%" >Tipo</th>
@@ -488,13 +488,13 @@ class FormularioRegistro {
 
 
                             <?php
-                            $valoresItem .= ($resultadoItems[$i][0]) . "&";
-                            $valoresItem .= ($i + 1) . "&";
-                            $valoresItem .= ( $resultadoItems[$i][1]) . "&";
-                            $valoresItem .= ($resultadoItems[$i][2]) . "&";
-                            $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "&";
-                            $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "&";
-                            $valoresItem .= ($numero_cantidad) . "&";
+                            $valoresItem .= ($resultadoItems[$i][0]) . "@$&$@";
+                            $valoresItem .= ($i + 1) . "@$&$@";
+                            $valoresItem .= ( $resultadoItems[$i][1]) . "@$&$@";
+                            $valoresItem .= ($resultadoItems[$i][2]) . "@$&$@";
+                            $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "@$&$@";
+                            $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "@$&$@";
+                            $valoresItem .= ($numero_cantidad) . "@$&$@";
 
                             $i++;
                         }
@@ -684,7 +684,7 @@ class FormularioRegistro {
                             $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                             $atributos ['deshabilitado'] = false;
                             $atributos ['tamanno'] = 80;
-                            $atributos ['maximoTamanno'] = '100';
+                            $atributos ['maximoTamanno'] = '5000';
                             $atributos ['anchoEtiqueta'] = 200;
                             $tab++;
 

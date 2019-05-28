@@ -147,7 +147,7 @@ class FormularioRegistro {
         $resultadoDependenciaDes = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
          
         $cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $datosSolicitud[0]['ordenador_gasto'] );
-        $resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+        $resultadoOrdenador = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
         
         
         //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

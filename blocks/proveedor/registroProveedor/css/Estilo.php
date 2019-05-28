@@ -5,7 +5,7 @@ if(isset($_REQUEST['pagina'])){
 	if(($_REQUEST['pagina'] == "modificaProveedor" || $_REQUEST['pagina'] == "registroProveedor") && (!isset($_REQUEST['opcion']) || $_REQUEST['opcion'] != 'actividad') ){
 		$estilo[$indice++]="miestilo.css";
 		
-		$estilo[$indice++]="bootstrap.min.css";
+		//$estilo[$indice++]="bootstrap.min.css";
 		$estilo[$indice++]="miestiloInput.css";
 		
 		
@@ -14,7 +14,6 @@ if(isset($_REQUEST['pagina'])){
 
 $estilo[$indice++]="estiloActividades.css";
 $estilo[$indice++]="timepicker.css";
-$estilo[$indice++]="validationEngine.jquery.css";
 $estilo[$indice++]="jquery.auto-complete.css";
 $estilo[$indice++]="select2.css";
 

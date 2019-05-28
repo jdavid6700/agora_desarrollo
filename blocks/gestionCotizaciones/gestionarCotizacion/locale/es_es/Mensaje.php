@@ -1,6 +1,13 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
+
+$this->idioma["numberPagosReplica"] = "(n) : ";
+$this->idioma["numberPagosReplicaTitulo"]="(n) Pagos";
+$this->idioma["replicarParcial"] = "Replicar (n) Pagos : ";
+$this->idioma["replicarParcialTitulo"]="Replicar (n) Pagos";
+
+
 $this->idioma["marcoDescripcionProductoAdendaRes"]="Modificación por parte del Proveedor (Valores Anteriores)";
 $this->idioma["marcoDetalleProAdendaRes"]="Información Nueva por Modificación a la Cotización N° ";
 
@@ -15,7 +22,7 @@ $this->idioma["marcoObservacionView"]="Observaciones Registradas";
 
 
 
-$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["criterioSeleccion"] = "Criterios de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
 $this->idioma["marcoTipoContrato"]="Tipo de Contratación Asociada";
@@ -26,8 +33,8 @@ $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
 $this->idioma["numero_disponibilidadTitulo"]="Número de la Necesidad";
-$this->idioma["valor_acumulado"] = "($)Valor (CDP) : ";
-$this->idioma["valor_acumuladoTitulo"]="($)Valor (CDP)";
+$this->idioma["valor_acumulado"] = "Valor CDP ($) : ";
+$this->idioma["valor_acumuladoTitulo"]="Valor CDP ($)";
 $this->idioma["dependenciaDestino"] = "Dependencia Destino :";
 $this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
 
@@ -90,8 +97,8 @@ $this->idioma["marcoObjetoAct"]="Solicitud de Cotización - Información General
 $this->idioma["marcoTipoNecesidad"]="Tipología de la Necesidad";
 
 
-$this->idioma["marcoSeleccion"]="Criterio de Selección Cotización";
-$this->idioma["formaSeleccion"] = "Criterio de Selección : ";
+$this->idioma["marcoSeleccion"]="Criterios de Selección Cotización";
+$this->idioma["formaSeleccion"] = "Criterios de Selección : ";
 $this->idioma["formaSeleccionTitulo"]="Forma de Selección";
 
 
@@ -188,7 +195,7 @@ $this->idioma["marcoFormaPago"] = "Detalle Formas de Pago Agregadas";
 $this->idioma["tipoFormaPago"] = "Tipo Forma de Pago :";
 $this->idioma["porcentajePagoForma"] = "Porcentaje de Pago :";
 $this->idioma["porcentajePagoFormaTitulo"]="Ingresar Porcentaje Parte del 100% de la Forma de Pago";
-$this->idioma["valorFormaPago"] = "Valor del Parámetro :";
+$this->idioma["valorFormaPago"] = "Condición del Pago :";
 $this->idioma["valorFormaPagoTitulo"]="Ingresar valor de Parámetro (En Días -> Tiempo) o (Decimal -> Porcentaje)";
 
 $this->idioma["numCDP"] = "No. CDP :";
@@ -423,13 +430,13 @@ $this->idioma['crearDocenteModificar'] = '';
 $this->idioma["tituloCotizacion"] = "Título de la Cotización:";
 $this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotización";
 
-$this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudCotRes"]="Responsable Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudModCot"]="Histórico Solicitudes de Modificación";
 
-$this->idioma["nombresResponsable"] = "Nombres: ";
+$this->idioma["nombresResponsable"] = "Nombre(s): ";
 $this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";
-$this->idioma["apellidosResponsable"] = "Apellidos: ";
+$this->idioma["apellidosResponsable"] = "Apellido(s): ";
 $this->idioma["apeliidosResponsableTitulo"] = "Apellidos persona responsable para la cotización";
 $this->idioma["identificacionResponsable"] = "Identificación: ";
 $this->idioma["identificacionResponsableTitulo"] = "Identificación persona responsable para la cotización";
@@ -514,7 +521,7 @@ $this->idioma["cantidadItem"] = "Cantidad: ";
 $this->idioma["cantidadItemTitulo"]="Cantidad Item";
 
 $this->idioma["botonAgregarItem"] = "Agregar";
-$this->idioma ["documentos_elementos"] = "Archivo de Items";
+$this->idioma ["documentos_elementos"] = "Cargue de archivo Excel";
 
 $this->idioma["botonCargarArchivo"] ="Cargar Items";
 

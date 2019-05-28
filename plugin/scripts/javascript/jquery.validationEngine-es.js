@@ -31,11 +31,21 @@
                     "alertText": "* Mínimo de ",
                     "alertText2": " caracteres autorizados"
                 },
+                "minSizeTiny": {
+                    "regex": "none",
+                    "alertText": "* Mínimo de ",
+                    "alertText2": " caracteres autorizados"
+                },
 				"groupRequired": {
                     "regex": "none",
                     "alertText": "* Debe de rellenar al menos uno de los siguientes campos"
                 },
                 "maxSize": {
+                    "regex": "none",
+                    "alertText": "* Máximo de ",
+                    "alertText2": " caracteres autorizados"
+                },
+                "maxSizeTiny": {
                     "regex": "none",
                     "alertText": "* Máximo de ",
                     "alertText2": " caracteres autorizados"

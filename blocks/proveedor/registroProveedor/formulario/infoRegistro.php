@@ -89,19 +89,35 @@ unset ( $resultado );
 //****************************************************************************************
 //****************************************************************************************
 
-$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
-$resultadoDoc = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
-$numeroDocumento = $resultadoDoc[0]['identificacion'];
+if(isset($_REQUEST['tipo_persona'])){
 
-$cadenaSql = $this->sql->getCadenaSql ( 'consultar_DatosProveedor', $numeroDocumento );
-$resultadoDats = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+	$datosControl = array (
+			'tipo_persona'=>$_REQUEST['tipo_persona'],
+			'num_documento'=>$_REQUEST['num_documento']
+	);
 
-$idProveedor = $resultadoDats[0]['id_proveedor'];
-$tipoPersona = $resultadoDats[0]['tipopersona'];
-$nombrePersona = $resultadoDats[0]['nom_proveedor'];
-$correo = $resultadoDats[0]['correo'];
-$direccion = $resultadoDats[0]['direccion'];
+}else{
+
+	$cadenaSql = $this->sql->getCadenaSql ( 'consultar_proveedor', $_REQUEST ["usuario"] );
+	$resultadoUser = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		
+	if($resultadoUser[0]['tipo_identificacion'] != 'NIT'){
+		$_REQUEST['tipo_persona'] = "NATURAL";
+	}else{
+		$_REQUEST['tipo_persona'] = "JURIDICA";
+	}
+		
+	$datosControl = array (
+			'tipo_persona'=>$_REQUEST['tipo_persona'],
+			'num_documento'=>$resultadoUser[0]['identificacion']
+	);
+
+
+}
+
+$cadenaSql = $this->sql->getCadenaSql ( 'buscarProveedorByUnique', $datosControl );
+$datosProvedor = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 
 $esteCampo = "marcoInfoCont";
 $atributos ['id'] = $esteCampo;
@@ -110,28 +126,23 @@ $atributos ['tipoEtiqueta'] = 'inicio';
 $atributos ["leyenda"] = $this->lenguaje->getCadena ( $esteCampo );
 echo $this->miFormulario->marcoAgrupacion ( 'inicio', $atributos );
 {
+	//INICIO INFORMACION
+	echo "<span class='textoElegante textoGrande textoAzul'>Nombre de la Persona: </span>";
+	echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['nom_proveedor'] . "</span></br>";
+	echo "<span class='textoElegante textoGrande textoAzul'>Documento : </span>";
+	echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['num_documento'] . "</span></br>";
+	echo "<span class='textoElegante textoGrande textoAzul'>Tipo Persona : </span>";
+	echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['tipopersona'] . "</span></br>";
+	echo "<span class='textoElegante textoGrande textoAzul'>Dirección : </span>";
+	echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['direccion'] . "</span></br>";
+	echo "<span class='textoElegante textoGrande textoAzul'>Correo : </span>";
+	echo "<span class='textoElegante textoGrande textoGris'>". $datosProvedor[0]['correo'] . "</span></br>";
+	//FIN INFORMACION
 
-
-		//INICIO INFORMACION
-		echo "<span class='textoElegante textoGrande textoAzul'>Nombre de la Persona: </span>";
-		echo "<span class='textoElegante textoGrande textoGris'>". $nombrePersona . "</span></br>";
-		echo "<span class='textoElegante textoGrande textoAzul'>Documento : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'>". $numeroDocumento . "</span></br>";
-		echo "<span class='textoElegante textoGrande textoAzul'>Tipo Persona : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'>". $tipoPersona . "</span></br>";
-		echo "<span class='textoElegante textoGrande textoAzul'>Dirección : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'>". $direccion . "</span></br>";
-		echo "<span class='textoElegante textoGrande textoAzul'>Correo : </span>";
-		echo "<span class='textoElegante textoGrande textoGris'>". $correo . "</span></br>";
-		//FIN INFORMACION
-
+echo '<script> 
+			var pagTxt = 500;
+			 </script>';
 ?>
-
-<div id="dialogo">
-	<p>A continuación podra generar el certificado de registro en el Sistema, para
-	validar que su información esta disponible para los procesos que así lo requieran.</p>
-</div>
-
 
 <?php
 	
@@ -149,11 +160,11 @@ $variableResumen.= "&action=".$esteBloque["nombre"];
 $variableResumen.= "&bloque=" . $esteBloque["id_bloque"];
 $variableResumen.= "&bloqueGrupo=" . $esteBloque["grupo"];
 $variableResumen.= "&opcion=certRegistro";
-$variableResumen.= "&nomPersona=" . $nombrePersona;
-$variableResumen.= "&numDocumento=" . $numeroDocumento;
-$variableResumen.= "&tipoPersona=" . $tipoPersona;
+$variableResumen.= "&nomPersona=" . $datosProvedor[0]['nom_proveedor'];
+$variableResumen.= "&numDocumento=" . $datosProvedor[0]['num_documento'];
+$variableResumen.= "&tipoPersona=" . $datosProvedor[0]['tipopersona'];
 $variableResumen.= "&usuario=" . $_REQUEST ["usuario"];
-$variableResumen.= "&idProveedor=" . $idProveedor;
+$variableResumen.= "&idProveedor=" . $datosProvedor[0]['id_proveedor'];
 $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_url($variableResumen, $directorio);
 
 
@@ -174,7 +185,7 @@ $variableResumen = $this->miConfigurador->fabricaConexiones->crypto->codificar_u
 				echo $this->miFormulario->division("inicio",$atributos);
 			
 				$enlace = "<a href='".$variableResumen."'>";
-				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Certificado de Registro ";
+				$enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Generar certificado de registro ";
 				$enlace.="</a><br><br>";       
 				echo $enlace;
 				//------------------Fin Division para los botones-------------------------

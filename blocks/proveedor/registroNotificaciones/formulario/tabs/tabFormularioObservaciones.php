@@ -88,6 +88,7 @@ class FormularioRegistro {
     }
     
     public function to_word($number, $miMoneda = null) {
+        $number = round($number, 0);
     	if (strpos($number, $this->decimal_mark) === FALSE) {
     		$convertedNumber = array(
     				$this->convertNumber($number, $miMoneda, 'entero')
@@ -341,7 +342,18 @@ class FormularioRegistro {
 
         $numeroDocumento = $resultadoDoc[0]['identificacion'];
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $numeroDocumento);
+        if($resultadoDoc [0] ['tipo_identificacion'] == 'NIT'){
+            $tipoPersona = 'JURIDICA';
+        }else{
+            $tipoPersona = 'NATURAL';
+        }
+
+        $datosConsultaSARAPer = array (
+                'numeroDocumento' => $numeroDocumento,
+                'tipoPersona' => $tipoPersona 
+        );
+
+        $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $datosConsultaSARAPer);
         $resultadoDats = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $idProveedor = $resultadoDats[0]['id_proveedor'];

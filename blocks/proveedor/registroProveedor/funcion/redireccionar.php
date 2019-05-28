@@ -60,6 +60,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=error";
+				$variable .= "&caso=".$valor;
 				break;
 
 			case "noregistroUsuario" :
@@ -90,12 +91,15 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=actualizo";
+				$variable .= "&idPersona=".$valor;
 				break;
 			
 			case "noActualizo" :
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=noActualizo";
+				$variable .= "&caso=".$valor;
+				$variable .= "&idPersona=".$valor;
 				break;
 			
 			case "registrar" :

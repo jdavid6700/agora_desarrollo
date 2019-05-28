@@ -93,6 +93,14 @@ class registrarForm {
 			echo $this->miFormulario->division("fin");
 			unset ( $atributos );
 			
+			
+			echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+			<div style='width: 100%;height: 100px'>
+			</div>
+			<center><img src='" . $rutaBloque . "/images/loading.gif'".' width=20% height=20% vspace=15 hspace=3 >
+			</center>
+		  </div>';
+			
 			// ---------------- SECCION: Controles del Formulario -----------------------------------------------
 			
 			$esteCampo = "marcoDatosBasicos";

@@ -30,6 +30,67 @@ class Sql extends \Sql {
         $idSesion = $this->miConfigurador->getVariableConfiguracion("id_sesion");
 
         switch ($tipo) {
+
+            case "jefeDependenciaLast" :
+                $cadenaSql = " SELECT id, fecha_inicio, fecha_fin, tercero_id, dependencia_id, acta_aprobacion ";
+                $cadenaSql .= " FROM core.jefe_dependencia ";
+                $cadenaSql .= " WHERE dependencia_id = " . $variable . " ORDER BY fecha_fin DESC LIMIT 1;";
+                break;
+
+            case "insertarLogCotizacion" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "log_cotizacion ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "tipo_log, ";
+                $cadenaSql .= "modulo, ";
+                $cadenaSql .= "numero_cotizacion, ";
+                $cadenaSql .= "vigencia, ";
+                $cadenaSql .= "query, ";
+                $cadenaSql .= "host, ";
+                $cadenaSql .= "fecha_log, ";
+                $cadenaSql .= "id_usuario ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['modulo'] . "', ";
+                $cadenaSql .= "'" . $variable ['numero_cotizacion'] . "', ";
+                $cadenaSql .= "'" . $variable ['vigencia'] . "', ";
+                $cadenaSql .= "'" . $variable ['query'] . "', ";
+                $cadenaSql .= "'" . $variable ['host'] . "', ";
+                $cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['usuario'] . "' ";
+                $cadenaSql .= ") RETURNING id;";
+                break;
+
+
+            case "insertarLogCotizacionError" :
+                $cadenaSql = "INSERT INTO ";
+                $cadenaSql .= $prefijo . "log_cotizacion_error ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "tipo_log, ";
+                $cadenaSql .= "modulo, ";
+                $cadenaSql .= "numero_cotizacion, ";
+                $cadenaSql .= "vigencia, ";
+                $cadenaSql .= "query, ";
+                $cadenaSql .= "error, ";
+                $cadenaSql .= "host, ";
+                $cadenaSql .= "fecha_log, ";
+                $cadenaSql .= "id_usuario ";
+                $cadenaSql .= ") ";
+                $cadenaSql .= "VALUES ";
+                $cadenaSql .= "( ";
+                $cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['modulo'] . "', ";
+                $cadenaSql .= "'" . $variable ['numero_cotizacion'] . "', ";
+                $cadenaSql .= "'" . $variable ['vigencia'] . "', ";
+                $cadenaSql .= "'" . $variable ['query'] . "', ";
+                $cadenaSql .= "'" . $variable ['error'] . "', ";
+                $cadenaSql .= "'" . $variable ['host'] . "', ";
+                $cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+                $cadenaSql .= "'" . $variable ['usuario'] . "' ";
+                $cadenaSql .= ") RETURNING id;";
+                break;
         	
         	case "criteriosNecesidad" :
         		$cadenaSql = "SELECT * FROM CO.CO_SOL_ADQ_FACTOR WHERE VIGENCIA=" . $variable ['vigencia'] . " and ";
@@ -115,7 +176,7 @@ class Sql extends \Sql {
                 break;
 
             case "obtener_necesidades_vigencia" :
-                $cadenaSql = " SELECT SN.NUM_SOL_ADQ as valor, SN.NUM_SOL_ADQ as informacion ";
+                $cadenaSql = " SELECT DISTINCT SN.NUM_SOL_ADQ as valor, SN.NUM_SOL_ADQ as informacion ";
                 $cadenaSql .= " FROM CO.CO_SOLICITUD_ADQ SN, CO.CO_SOL_CDP SCDP, PR.PR_DISPONIBILIDADES CDP  ";
                 $cadenaSql .= " WHERE SN.NUM_SOL_ADQ = SCDP.NUM_SOL_ADQ and SN.VIGENCIA = SCDP.VIGENCIA ";
                 $cadenaSql .= " and CDP.VIGENCIA = SCDP.VIGENCIA and CDP.NUM_SOL_ADQ = SCDP.ID_SOL_CDP and CDP.CODIGO_COMPANIA = SCDP.CODIGO_COMPANIA  ";
@@ -201,7 +262,7 @@ class Sql extends \Sql {
                 $cadenaSql = " SELECT DISTINCT ON (D.id) D.id, (UPPER(D.nombre)) as jefe, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
                 $cadenaSql.=" FROM oikos.dependencia D";
                 $cadenaSql.=" JOIN core.jefe_dependencia JD ON JD.dependencia_id = D.id";
-                $cadenaSql.=" WHERE D.id = " . $variable;
+                $cadenaSql.=" WHERE JD.id = " . $variable;
                 $cadenaSql.=" GROUP BY D.id, JD.tercero_id, D.nombre, JD.tercero_id, JD.fecha_inicio, JD.fecha_fin";
                 $cadenaSql.=" ORDER BY D.id, D.nombre, JD.fecha_fin DESC";
                 break;
@@ -247,8 +308,8 @@ class Sql extends \Sql {
                 $cadenaSql .= " id_area,";
                 $cadenaSql .= " nombre";
                 $cadenaSql .= " FROM ";
-                $cadenaSql .= " core.snies_area ";
-                $cadenaSql .= " WHERE estado != 'INACTIVO';";
+                $cadenaSql .= " core.snies_area; ";
+                //$cadenaSql .= " WHERE estado != 'INACTIVO';";
                 break;
 
             case "buscarAreaConocimientoXNBC" :
@@ -768,6 +829,42 @@ class Sql extends \Sql {
                 $cadenaSql .= " AND P.estado = '1'";
                 break;
 
+             case "proveedoresByClasificacionConvNatural" :
+                $cadenaSql = "SELECT DISTINCT";
+                $cadenaSql .= " id_proveedor,";
+                $cadenaSql .= " P.num_documento,";
+                $cadenaSql .= " nom_proveedor,";
+                $cadenaSql .= " puntaje_evaluacion,";
+                $cadenaSql .= " tipopersona,";
+                $cadenaSql .= " correo,";
+                $cadenaSql .= " clasificacion_evaluacion";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " agora.informacion_proveedor P";
+                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.informacion_proveedor_id = P.id_proveedor";
+                $cadenaSql .= " JOIN agora.informacion_persona_natural PN ON PN.num_documento_persona = P.num_documento";
+                $cadenaSql .= " WHERE  A.id_subclase IN (" . $variable ['actividadEconomica'] . ")";
+                $cadenaSql .= " AND PN.id_nucleo_basico = " . $variable ['objetoNBC'];
+                $cadenaSql .= " AND P.estado = '1'";
+                break;
+
+
+            case "proveedoresByClasificacionConvJuridica" :
+                $cadenaSql = "SELECT DISTINCT";
+                $cadenaSql .= " id_proveedor,";
+                $cadenaSql .= " P.num_documento,";
+                $cadenaSql .= " P.nom_proveedor,";
+                $cadenaSql .= " puntaje_evaluacion,";
+                $cadenaSql .= " tipopersona,";
+                $cadenaSql .= " correo,";
+                $cadenaSql .= " clasificacion_evaluacion";
+                $cadenaSql .= " FROM ";
+                $cadenaSql .= " agora.informacion_proveedor P";
+                $cadenaSql .= " JOIN agora.proveedor_actividad_ciiu A ON A.informacion_proveedor_id = P.id_proveedor";
+                $cadenaSql .= " JOIN agora.informacion_persona_juridica PJ ON PJ.num_nit_empresa = P.num_documento";
+                $cadenaSql .= " WHERE  A.id_subclase IN (" . $variable ['actividadEconomica'] . ")";
+                $cadenaSql .= " AND P.estado = '1'";
+                break;     
+
 
             /* ULTIMO NUMERO DE SECUENCIA */
             case "lastIdObjeto" :
@@ -965,7 +1062,7 @@ class Sql extends \Sql {
                 $cadenaSql .= " VALUES";
                 $cadenaSql .= " (";
                 $cadenaSql .= " " . $variable ['tipo_condicion'] . ",";
-                $cadenaSql .= " " . $variable ['valor_condicion'] . ",";
+                $cadenaSql .= " '" . $variable ['valor_condicion'] . "',";
                 $cadenaSql .= " " . $variable ['porcentaje_pago'] . "";
                 $cadenaSql .= " )";
                 $cadenaSql .= " RETURNING  id; ";

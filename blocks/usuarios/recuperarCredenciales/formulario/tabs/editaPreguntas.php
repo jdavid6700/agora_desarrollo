@@ -79,47 +79,44 @@ class registrarForm {
 			
 			$miPaginaActual = $this->miConfigurador->getVariableConfiguracion ( 'pagina' );
 			
-                        $rutaBloque = $this->miConfigurador->getVariableConfiguracion("host");
-                        $rutaBloque.=$this->miConfigurador->getVariableConfiguracion("site") . "/blocks/";
-                        $rutaBloque.= $esteBloque['grupo'] . "/" . $esteBloque['nombre'];
-                        
+			$rutaBloque = $this->miConfigurador->getVariableConfiguracion ( "host" );
+			$rutaBloque .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/blocks/";
+			$rutaBloque .= $esteBloque ['grupo'] . "/" . $esteBloque ['nombre'];
+			
 			$directorio = $this->miConfigurador->getVariableConfiguracion ( "host" );
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "site" ) . "/index.php?";
 			$directorio .= $this->miConfigurador->getVariableConfiguracion ( "enlace" );
 			
 			$variable = "pagina=" . $miPaginaActual;
 			$variable = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variable, $directorio );
-			
+				
 			// ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
-                        $esteCampo = 'botonRegresar';
-                        $atributos ['id'] = $esteCampo;
-                        $atributos ['enlace'] = $variable;
-                        $atributos ['tabIndex'] = 1;
-                        $atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
-                        $atributos ['estilo'] = 'textoPequenno textoGris';
-                        $atributos ['enlaceImagen'] = $rutaBloque."/images/player_rew.png";
-                        $atributos ['posicionImagen'] = "atras";//"adelante";
-                        $atributos ['ancho'] = '30px';
-                        $atributos ['alto'] = '30px';
-                        $atributos ['redirLugar'] = true;
-                       // echo $this->miFormulario->enlace ( $atributos );
-                        unset ( $atributos );
-                        
-                        
-                        
-            //var_dump($_REQUEST);   
+			$esteCampo = 'botonRegresar';
+			$atributos ['id'] = $esteCampo;
+			$atributos ['enlace'] = $variable;
+			$atributos ['tabIndex'] = 1;
+			$atributos ['enlaceTexto'] = $this->lenguaje->getCadena ( $esteCampo );
+			$atributos ['estilo'] = 'textoPequenno textoGris';
+			$atributos ['enlaceImagen'] = $rutaBloque . "/images/player_rew.png";
+			$atributos ['posicionImagen'] = "atras"; // "adelante";
+			$atributos ['ancho'] = '30px';
+			$atributos ['alto'] = '30px';
+			$atributos ['redirLugar'] = true;
+			// echo $this->miFormulario->enlace ( $atributos );
+			unset ( $atributos );
             
             
             $cadena_sql = $this->miSql->getCadenaSql("consultarUsuario", $_REQUEST['id_usuario']);
             $resultadoUs = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
             
             
-            //echo $cadena_sql;
-            //var_dump($resultadoUs);
-            
-            
             if($resultadoUs){
             	
+            	if($resultadoUs[0]['tipo_identificacion'] == 'NIT'){
+            		$tipo = "JURIDICA";
+            	}else{
+            		$tipo = "NATURAL";
+            	}
             	
             	$esteCampo = 'id_usuario';
             	$atributos ["id"] = $esteCampo; // No cambiar este nombre
@@ -184,16 +181,37 @@ class registrarForm {
             		$cierto=0;
             		
             		
-					$cadena_sql = $this->miSql->getCadenaSql ( "datosPersonas", $resultadoUs [0] ['identificacion'] );
+            		
+            		$arregloUnique = array (
+            				'num_documento' => $resultadoUs [0] ['identificacion'],
+            				'tipo_persona' => $tipo
+            		);
+					
+            		$cadena_sql = $this->miSql->getCadenaSql ( "datosPersonas", $arregloUnique );
 					$datos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+					
+					
+					if(!$datos){
+						$cadena_sql = $this->miSql->getCadenaSql ( "datosPersonasNotTel", $arregloUnique );
+						$datos = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+						
+						if($datos){
+							$datos[0][3] = '';
+							$datos[0]['numero_tel'] = '';
+						}
+					}
+					
+					
+					if($tipo == 'NATURAL' && count($datos) > 1){
+						$aleatorio = rand(0,1);
+						array_splice($datos, $aleatorio, 1);
+					}
+					
 					
 					if ($datos) {
 						$cierto = 1;
 					}
-            			
-
-            		
-            		
+          
             		
             		if($cierto==1)
             		{
@@ -306,9 +324,15 @@ class registrarForm {
             			}
             			 
             			//Cedulas
-            			$cedula1=$datos[0][0];
-            			$cedula2=$datos[0][0]+rand(0,1000);
-            			$cedula3=$datos[0][0]+rand(1001,10000);
+            			if(is_numeric($datos[0][0])){
+            				$cedula1=$datos[0][0];
+            				$cedula2=$datos[0][0]+rand(0,1000);
+            				$cedula3=$datos[0][0]+rand(1001,10000);
+            			}else{
+            				$cedula1=$datos[0][0];
+            				$cedula2=str_shuffle($datos[0][0]);
+            				$cedula3=str_shuffle($datos[0][0]);
+            			}
             			 
             			$html="<table>";
             			 
@@ -513,7 +537,7 @@ class registrarForm {
             				$atributos["estilo"] = "centrar";
             				$atributos["tipo"] = $tipo;
             				 
-            				$mensajeLey = "El Usuario o Número de Identificación: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> se encuentra Registrado en el Sistema
+            				$mensajeLey = "El Usuario: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> se encuentra Registrado en el Sistema
             				de Registro Único de Personas y Banco de Proveedores ÁGORA. Pero ha ocurrido un Error de Procedimiento(1180) por favor comuníquese con el Administrador del Sistema.";
             				 
             				$atributos["mensaje"] = $mensajeLey;
@@ -588,7 +612,7 @@ class registrarForm {
             		$atributos["estilo"] = "centrar";
             		$atributos["tipo"] = $tipo;
             		 
-            		$mensajeLey = "El Usuario o Número de Identificación: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> No se encuentra Registrado en el Sistema
+            		$mensajeLey = "El Usuario: <br> <br> <center><b>".$_REQUEST['id_usuario']."</b></center> <br> <br> No se encuentra Registrado en el Sistema
             				de Registro Único de Personas y Banco de Proveedores ÁGORA. Si considera que es un Error por favor comuníquese con el Administrador del Sistema.";
             		 
             		$atributos["mensaje"] = $mensajeLey;

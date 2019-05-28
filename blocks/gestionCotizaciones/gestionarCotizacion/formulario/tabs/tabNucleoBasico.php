@@ -123,6 +123,9 @@ class FormularioRegistro {
 		$cadenaSql = $this->miSql->getCadenaSql ( 'consultarNBCImp', $_REQUEST['idObjeto']  );
 		$resultadoNBC = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
+		$datosBack = array (
+                'dt_nbc' => $resultadoNBC
+        );
 		
 		if($resultadoNBC){
 			$modificar = true;
@@ -150,7 +153,7 @@ class FormularioRegistro {
 		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 			
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
-		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$resultadoOrdenador = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -434,6 +437,7 @@ class FormularioRegistro {
 				$valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
 				$valorCodificado .= "&idObjeto=" . $_REQUEST['idObjeto'];
 				$valorCodificado .= "&tipoNecesidad=" . $_REQUEST['tipoNecesidad'];
+				$valorCodificado .= "&dataSerNb=" . $this->miConfigurador->fabricaConexiones->crypto->codificar(serialize($datosBack));
 				
 				/**
 				 * SARA permite que los nombres de los campos sean dinámicos.

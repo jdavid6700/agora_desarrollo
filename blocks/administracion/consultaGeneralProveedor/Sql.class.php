@@ -243,7 +243,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" fecha_registro,";
 				$cadenaSql.=" estado";
 				$cadenaSql.=" FROM agora.informacion_proveedor p";
-				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.num_documento = ac.num_documento";
+				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.id_proveedor = ac.informacion_proveedor_id";
 				$cadenaSql.=" JOIN agora.informacion_persona_natural pn ON p.num_documento = pn.num_documento_persona";
 				$cadenaSql.=" WHERE 1=1 ";
 				$cadenaSql.=" AND (ac.id_subclase = '".$variable [0]."' OR pn.id_nucleo_basico = ".$variable [1].") ";
@@ -273,7 +273,7 @@ class Sql extends \Sql {
 				$cadenaSql.=" ac.id_subclase, ";
 				$cadenaSql.=" estado";
 				$cadenaSql.=" FROM agora.informacion_proveedor p";
-				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.num_documento = ac.num_documento";
+				$cadenaSql.=" JOIN agora.proveedor_actividad_ciiu ac ON p.id_proveedor = ac.informacion_proveedor_id";
 				$cadenaSql.=" WHERE 1=1 ";
 				$cadenaSql.=" AND ac.id_subclase = '".$variable."'";
 				$cadenaSql.=" AND tipopersona != 'UNION TEMPORAL' ";
@@ -687,6 +687,7 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_fondo_pension,";
 					$cadenaSql .= " id_caja_compensacion,";
 					$cadenaSql .= " fecha_expedicion_documento,";
+					$cadenaSql .= " fecha_nacimiento,";
 					$cadenaSql .= " id_ciudad_expedicion_documento,";
 					$cadenaSql .= " declarante_renta";
 					$cadenaSql .= " FROM ";

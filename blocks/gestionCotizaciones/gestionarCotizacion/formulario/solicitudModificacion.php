@@ -377,7 +377,7 @@ class FormularioRegistro {
                 <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
-                        <th width="5%" >#</th>
+                        <th width="5%" >Número</th>
                         <th width="7%" >Fecha <br> Solicitud</th>
                         <th width="39%" >Justificación <br> Solicitud</th>
                         <th width="39%" >Justificación <br> Respuesta</th>
@@ -749,6 +749,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia'] = $dep[0][0];
+
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia'];
         } else {
@@ -780,6 +785,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] = $dep[0][0];
+        
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'];
         } else {

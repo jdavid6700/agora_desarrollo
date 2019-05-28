@@ -6,6 +6,11 @@ function detectarCarga(){
 		$('#AgrupacionDisponibilidadNec').fadeIn(500);
 	});
 	
+	$('#valorAvance').fadeOut(300);
+	$('#valoresForma').fadeOut(300);
+	
+	$('#valorAvanceReplica').fadeOut(300);
+	
 	tinyMCE.get('<?php echo $this->campoSeguro('criterioSeleccion')?>').theme.resizeTo("100%", 150);
 	tinyMCE.get('<?php echo $this->campoSeguro('plazoEjecucion')?>').theme.resizeTo("100%", 50);
 	
@@ -233,6 +238,7 @@ $('#<?php echo $this->campoSeguro('medioPago')?>').width(250);
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').width(350);
 $('#<?php echo $this->campoSeguro('tipoContrato')?>').width(450);
+$('#<?php echo $this->campoSeguro('replicarParcial')?>').width(150);
 
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
@@ -261,6 +267,7 @@ $('#<?php echo $this->campoSeguro('medioPago')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoContrato')?>').select2();
+$('#<?php echo $this->campoSeguro('replicarParcial')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

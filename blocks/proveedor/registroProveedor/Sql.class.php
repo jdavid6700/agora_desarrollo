@@ -27,8 +27,55 @@ class Sql extends \Sql {
 		$idSesion = $this->miConfigurador->getVariableConfiguracion ( "id_sesion" );
 		
 		switch ($tipo) {
+
+			case "updateCargoPJ" :
+				$cadenaSql = "UPDATE agora.informacion_persona_natural SET ";
+				$cadenaSql .= "cargo = '" . $variable ['cargo'] . "'";
+				$cadenaSql .= " WHERE num_documento_persona = ";
+				$cadenaSql .= "'" . $variable ['representante'] . "' ";
+				break;
+
+			case 'buscarNomenclaturasByVia' :
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'abreviatura as ID_NOMENCLATURA, ';
+				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
+				$cadenaSql .= 'WHERE tipo = 1 ';
+				$cadenaSql .= 'ORDER BY NOMENCLATURA;';
+				break;
+
+			case 'buscarNomenclaturasByNotVia' :
+				$cadenaSql = 'SELECT ';
+				$cadenaSql .= 'abreviatura as ID_NOMENCLATURA, ';
+				$cadenaSql .= 'nomenclatura as NOMENCLATURA ';
+				$cadenaSql .= 'FROM ';
+				$cadenaSql .= 'agora.parametro_nomenclatura_dian ';
+				$cadenaSql .= 'WHERE tipo IS NULL ';
+				$cadenaSql .= 'ORDER BY NOMENCLATURA;';
+				break;
+			
+			case "consultar_param_esp" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " agora.parametro_estandar ";
+				$cadenaSql .= " WHERE id_parametro = '" . $variable ."';";
+				break;
+			
+			case "consultar_proveedor_user" :
+				$cadenaSql = " SELECT U.id_usuario, U.identificacion, U.tipo_identificacion FROM prov_usuario U";
+				$cadenaSql .= " WHERE U.tipo_identificacion != 'NIT' AND U.identificacion = '" . $variable . "';";
+				break;
 			
 			/* VERIFICAR NUMERO DE DOCUMENTO Y TIPO PERSONA */
+			case "consultar_sigl_doc" :
+				$cadenaSql = " SELECT";
+				$cadenaSql .= " * ";
+				$cadenaSql .= " FROM ";
+				$cadenaSql .= " public.prov_tipo_identificacion ";
+				$cadenaSql .= " WHERE tipo_identificacion = '" . $variable ."';";
+				break;
 			case "consultarProveedorNat" :
 				$cadenaSql = " SELECT";
 				$cadenaSql .= " * ";
@@ -570,7 +617,15 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_caja_compensacion,";
 				}
 				$cadenaSql .= " fecha_expedicion_documento,";
+				$cadenaSql .= " fecha_nacimiento,";
 				$cadenaSql .= " id_ciudad_expedicion_documento,";
+
+				$cadenaSql .= " hijos,";
+				$cadenaSql .= " numero_hijos,";
+				$cadenaSql .= " pensionado,";
+				$cadenaSql .= " anexohijos,";
+				$cadenaSql .= " anexodeclaracion,";
+
 				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " )";
 				$cadenaSql .= " VALUES";
@@ -634,7 +689,16 @@ class Sql extends \Sql {
 					$cadenaSql .= " " . $variable ['id_caja_compensacion'] . ",";
 				}
 				$cadenaSql .= " '" . $variable ['fecha_expedicion_doc'] . "',";
+				$cadenaSql .= " '" . $variable ['fecha_nacimiento'] . "',";
 				$cadenaSql .= " " . $variable ['id_lugar_expedicion_doc'] . ",";
+
+				$cadenaSql .= " " . $variable ['hijos'] . ",";
+				$cadenaSql .= " " . $variable ['numero_hijos'] . ",";
+				$cadenaSql .= " " . $variable ['pensionado'] . ",";
+				$cadenaSql .= " '" . $variable ['anexo_hijos'] . "',";
+				$cadenaSql .= " '" . $variable ['anexo_declaracion'] . "',";
+
+
 				$cadenaSql .= " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " ); ";
 				break;
@@ -642,6 +706,11 @@ class Sql extends \Sql {
 			case "consultar_proveedor" :
 				$cadenaSql = " SELECT U.identificacion, U.tipo_identificacion FROM prov_usuario U";
 				$cadenaSql .= " WHERE U.id_usuario = '" . $variable . "'";
+				break;
+				
+			case "consultar_proveedor_adm" :
+				$cadenaSql = " SELECT * FROM agora.informacion_proveedor ";
+				$cadenaSql .= " WHERE id_proveedor = '" . $variable . "';";
 				break;
 			
 			case "consultar_DatosProveedor" :
@@ -746,7 +815,15 @@ class Sql extends \Sql {
 				$cadenaSql .= " id_fondo_pension,";
 				$cadenaSql .= " id_caja_compensacion,";
 				$cadenaSql .= " fecha_expedicion_documento,";
+				$cadenaSql .= " fecha_nacimiento,";
 				$cadenaSql .= " id_ciudad_expedicion_documento,";
+
+				$cadenaSql .= " hijos,";
+				$cadenaSql .= " numero_hijos,";
+				$cadenaSql .= " pensionado,";
+				$cadenaSql .= " anexohijos,";
+				$cadenaSql .= " anexodeclaracion,";
+
 				$cadenaSql .= " declarante_renta";
 				$cadenaSql .= " FROM ";
 				$cadenaSql .= " agora.informacion_persona_natural";
@@ -770,6 +847,7 @@ class Sql extends \Sql {
 				$cadenaSql .= " tipo_cuenta_bancaria = " . " '" . $variable ['tipo_cuenta_bancaria'] . "', ";
 				$cadenaSql .= " num_cuenta_bancaria = '" . $variable ['num_cuenta_bancaria'] . "', ";
 				$cadenaSql .= " id_entidad_bancaria = " . $variable ['id_entidad_bancaria'] . ", ";
+				$cadenaSql .= " consentimiento = 'TRUE', ";
 				$cadenaSql .= " fecha_ultima_modificacion = " . " '" . $variable ['fecha_modificación'] . "' ";
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
@@ -882,7 +960,13 @@ class Sql extends \Sql {
 					$cadenaSql .= " id_caja_compensacion = null,";
 				}
 				$cadenaSql .= " fecha_expedicion_documento = " . " '" . $variable ['fecha_expedicion_doc'] . "',";
+				$cadenaSql .= " fecha_nacimiento = " . " '" . $variable ['fecha_nacimiento'] . "',";
 				$cadenaSql .= " id_ciudad_expedicion_documento = " . " " . $variable ['id_lugar_expedicion_doc'] . ",";
+
+				$cadenaSql .= " hijos =" . " " . $variable ['hijos'] . ",";
+				$cadenaSql .= " numero_hijos =" . " " . $variable ['numero_hijos'] . ",";
+				$cadenaSql .= " pensionado =" . " " . $variable ['pensionado'] . ",";
+
 				$cadenaSql .= " declarante_renta =" . " " . $variable ['declarante_renta'] . "";
 				$cadenaSql .= " WHERE num_documento_persona = ";
 				$cadenaSql .= "'" . $variable ['fki_numero_documento'] . "' ";
@@ -1040,10 +1124,16 @@ class Sql extends \Sql {
 				$cadenaSql = " UPDATE ";
 				$cadenaSql .= " agora.informacion_persona_juridica ";
 				$cadenaSql .= " SET";
-				$cadenaSql .= " num_nit_empresa = " . " " . $variable ['fki_numero_documento'] . ",";
+				$cadenaSql .= " num_nit_empresa = " . " '" . $variable ['fki_numero_documento'] . "',";
 				$cadenaSql .= " digito_verificacion = " . " " . $variable ['digito_verificacion'] . ",";
 				if ($variable ['procedencia_empresa'] == 'NACIONAL') {
 					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
+					$cadenaSql .= " id_ciudad_origen = null,";
+					$cadenaSql .= " codigo_pais_dian = null,";
+					$cadenaSql .= " codigo_postal = null,";
+					$cadenaSql .= " tipo_identificacion_extranjera = null,";
+					$cadenaSql .= " num_pasaporte = null,";
+					$cadenaSql .= " num_cedula_extranjeria = null,";
 				} else {
 					$cadenaSql .= " procedencia_empresa = " . " '" . $variable ['procedencia_empresa'] . "',";
 					$cadenaSql .= " id_ciudad_origen = " . " " . $variable ['id_ciudad_origen'] . ",";
@@ -1054,7 +1144,9 @@ class Sql extends \Sql {
 					$cadenaSql .= " tipo_identificacion_extranjera = " . " '" . $variable ['tipo_identificacion_extranjera'] . "',";
 					if ($variable ['tipo_identificacion_extranjera'] == 'PASAPORTE') {
 						$cadenaSql .= " num_pasaporte = " . " '" . $variable ['num_pasaporte'] . "',";
+						$cadenaSql .= " num_cedula_extranjeria = null,";
 					} else {
+						$cadenaSql .= " num_pasaporte = null,";
 						$cadenaSql .= " num_cedula_extranjeria = " . " '" . $variable ['num_cedula_extranjeria'] . "',";
 					}
 				}
@@ -1089,6 +1181,46 @@ class Sql extends \Sql {
 				$cadenaSql .= " WHERE id_proveedor = ";
 				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
 				break;
+
+
+
+
+
+
+			case 'actualizarSoporHijos' :
+				$cadenaSql = "UPDATE agora.informacion_persona_natural SET ";
+				$cadenaSql .= "anexohijos='" . $variable ['destino1'] . "'";
+				$cadenaSql .= " WHERE num_documento_persona = ";
+				$cadenaSql .= "'" . $variable ['documentoNat'] . "' ";
+				break;
+				
+				/* ACTUALIZAR - PROVEEEDOR DATOS */
+			case 'actualizarDeclaracion' :
+				$cadenaSql = "UPDATE agora.informacion_persona_natural SET ";
+				$cadenaSql .= "anexodeclaracion='" . $variable ['destino2'] . "'";
+				$cadenaSql .= " WHERE num_documento_persona = ";
+				$cadenaSql .= "'" . $variable ['documentoNat'] . "' ";
+				break;
+
+			case 'actualizarSopRUT' :
+				$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
+				$cadenaSql .= "anexorut='" . $variable ['destino3'] . "'";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
+				break;
+				
+				/* ACTUALIZAR - PROVEEEDOR DATOS */
+			case 'actualizarSopRUP' :
+				$cadenaSql = "UPDATE agora.informacion_proveedor SET ";
+				$cadenaSql .= "anexorup='" . $variable ['destino4'] . "'";
+				$cadenaSql .= " WHERE id_proveedor = ";
+				$cadenaSql .= "'" . $variable ['id_Proveedor'] . "' ";
+				break;
+
+
+
+
+
 				
 			/* VERIFICAR NUMERO DE NIT */
 			case "verificarNIT" : // ******************************************************************************
@@ -1611,6 +1743,42 @@ class Sql extends \Sql {
 				$cadenaSql .= " ORDER BY rol.rol_alias";
 				break;
 			
+				case "consultarPerfilUsuarioAdm" :
+						
+					$cadenaSql = "SELECT DISTINCT ";
+					$cadenaSql .= " sist.id_usuario,  ";
+					if (! isset ( $variable ['tipo'] )) {
+						$cadenaSql .= "sist.id_subsistema, ";
+						$cadenaSql .= "mod.etiketa subsistema, ";
+						$cadenaSql .= "sist.fecha_registro,  ";
+						$cadenaSql .= "sist.fecha_caduca,  ";
+					}
+					// $cadenaSql .= "sist.id_subsistema, ";
+					// $cadenaSql .= "mod.etiketa subsistema, ";
+					$cadenaSql .= "sist.rol_id, ";
+					$cadenaSql .= "rol.rol_alias , ";
+					// $cadenaSql .= "sist.fecha_registro, ";
+					// $cadenaSql .= "sist.fecha_caduca, ";
+					$cadenaSql .= "est.estado_registro_alias estado  ";
+					$cadenaSql .= "FROM " . $prefijo . "usuario_subsistema sist ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "subsistema mod ON mod.id_subsistema=sist.id_subsistema ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "rol rol ON rol.rol_id=sist.rol_id ";
+					$cadenaSql .= "INNER JOIN " . $prefijo . "estado_registro est ";
+					$cadenaSql .= "ON est.estado_registro_id=sist.estado ";
+					$cadenaSql .= "WHERE sist.id_usuario='" . $variable ['usuario'] . "'";
+					if (isset ( $variable ['subsistema'] ) && $variable ['subsistema'] > 0) {
+						$cadenaSql .= " AND ";
+						$cadenaSql .= " sist.id_subsistema='" . $variable ['subsistema'] . "' ";
+					}
+					if (isset ( $variable ['rol_id'] )) {
+						$cadenaSql .= " AND rol.rol_id ='" . $variable ['rol_id'] . "'";
+					}
+					if (isset ( $variable ['tipo'] ) && $variable ['tipo'] == 'unico') {
+						$cadenaSql .= " AND sist.estado=1 ";
+					}
+					$cadenaSql .= " ORDER BY rol.rol_alias";
+					break;
+				
 			case "consultarUsuariosEditar" :
 				
 				$cadenaSql = "SELECT id_usuario, nombre, apellido, correo, telefono, tipo, identificacion ";
@@ -1760,9 +1928,82 @@ class Sql extends \Sql {
 				$cadenaSql = "DELETE FROM " . $prefijo . "usuario ";
 				$cadenaSql .= " WHERE id_usuario = '" . $variable ['id_usuario'] . "' ";
 				break;
-		
 				
-				
+			case "insertarLogProveedor" :
+				$cadenaSql = "INSERT INTO ";
+				$cadenaSql .= $prefijo . "log_proveedor_error ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "tipo_log, ";
+				$cadenaSql .= "tipo_persona, ";
+				$cadenaSql .= "documento, ";
+				$cadenaSql .= "query, ";
+				$cadenaSql .= "error, ";
+				$cadenaSql .= "host, ";
+				$cadenaSql .= "fecha_log, ";
+				$cadenaSql .= "id_usuario ";
+				$cadenaSql .= ") ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['tipo_persona'] . "', ";
+				$cadenaSql .= "'" . $variable ['documento'] . "', ";
+				$cadenaSql .= "'" . $variable ['query'] . "', ";
+				$cadenaSql .= "'" . $variable ['error'] . "', ";
+				$cadenaSql .= "'" . $variable ['host'] . "', ";
+				$cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['usuario'] . "' ";
+				$cadenaSql .= ") RETURNING id;";
+				break;
+
+			case "insertarLogProveedorBnRg" :
+				$cadenaSql = "INSERT INTO ";
+				$cadenaSql .= $prefijo . "log_proveedor ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "tipo_log, ";
+				$cadenaSql .= "tipo_persona, ";
+				$cadenaSql .= "documento, ";
+				$cadenaSql .= "query, ";
+				$cadenaSql .= "host, ";
+				$cadenaSql .= "fecha_log, ";
+				$cadenaSql .= "id_usuario ";
+				$cadenaSql .= ") ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['tipo_persona'] . "', ";
+				$cadenaSql .= "'" . $variable ['documento'] . "', ";
+				$cadenaSql .= "'" . $variable ['query'] . "', ";
+				$cadenaSql .= "'" . $variable ['host'] . "', ";
+				$cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['usuario'] . "' ";
+				$cadenaSql .= ") RETURNING id;";
+				break;
+
+			case "insertarLogProveedorBnUp" :
+				$cadenaSql = "INSERT INTO ";
+				$cadenaSql .= $prefijo . "log_proveedor ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "tipo_log, ";
+				$cadenaSql .= "tipo_persona, ";
+				$cadenaSql .= "documento, ";
+				$cadenaSql .= "query, ";
+				$cadenaSql .= "data, ";
+				$cadenaSql .= "host, ";
+				$cadenaSql .= "fecha_log, ";
+				$cadenaSql .= "id_usuario ";
+				$cadenaSql .= ") ";
+				$cadenaSql .= "VALUES ";
+				$cadenaSql .= "( ";
+				$cadenaSql .= "'" . $variable ['tipo_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['tipo_persona'] . "', ";
+				$cadenaSql .= "'" . $variable ['documento'] . "', ";
+				$cadenaSql .= "'" . $variable ['query'] . "', ";
+				$cadenaSql .= "'" . $variable ['data'] . "', ";
+				$cadenaSql .= "'" . $variable ['host'] . "', ";
+				$cadenaSql .= "'" . $variable ['fecha_log'] . "', ";
+				$cadenaSql .= "'" . $variable ['usuario'] . "' ";
+				$cadenaSql .= ") RETURNING id;";
+				break;		
 				
 		     /**
              * Clausulas genéricas.

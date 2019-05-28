@@ -58,7 +58,7 @@ $this->idioma["apellidosTitulo"]="Digite los apellidos del usuario";
 
 $this->idioma["apellidos"]="Apellidos: "; 
 
-$this->idioma["id_usuario"]="Usuario o Número de Identificación: ";
+$this->idioma["id_usuario"]="Usuario de Acceso: ";
 
 $this->idioma["id_usuarioT"]="Usuario de Acceso: ";
 

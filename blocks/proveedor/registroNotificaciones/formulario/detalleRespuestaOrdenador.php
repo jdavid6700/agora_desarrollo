@@ -177,10 +177,19 @@ class FormularioRegistro {
             $numeroDocumento = $resultadoDoc[0]['identificacion'];
             
             
-            
+            if($resultadoDoc [0] ['tipo_identificacion'] == 'NIT'){
+                $tipoPersona = 'JURIDICA';
+            }else{
+                $tipoPersona = 'NATURAL';
+            }
+
+            $datosConsultaSARAPer = array (
+                    'numeroDocumento' => $numeroDocumento,
+                    'tipoPersona' => $tipoPersona 
+            );
             
 
-            $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $numeroDocumento);
+            $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $datosConsultaSARAPer);
             $resultadoDats = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
             $idProveedor = $resultadoDats[0]['id_proveedor'];
@@ -269,6 +278,11 @@ class FormularioRegistro {
             
             $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosRespuestaOrdenadorResultado', $resultadoDatosRes[0]['resultado']);
             $resultadoDatosResCas = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+            
+            if ($solicitudCotizacion[0]['estado_cotizacion']==8 && $resultadoDatosRes[0]['resultado'] == 1){
+                     $resultadoDatosResCas[0]['nombre']='RECHAZADO';
+                     $resultadoDatosRes[0]['respuesta']='Su Cotización no ha sido Aprobada.';
+            }
           
 
             $esteCampo = "marcoDatosSolicitudCot";

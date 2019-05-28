@@ -6,6 +6,10 @@
         Purpose of the stylesheet follows.
 */
 
+#marcoDatosBasicos{
+	display: none;
+}
+
 #pie {
      width: 95%;
 }

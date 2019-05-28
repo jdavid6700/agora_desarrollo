@@ -1,7 +1,12 @@
 <?php
 //Formulario OBJETO A CONTRATAR
 
-$this->idioma["criterioSeleccion"] = "Criterio de Selección : ";
+$this->idioma["numberPagosReplica"] = "(n) : ";
+$this->idioma["numberPagosReplicaTitulo"]="(n) Pagos";
+$this->idioma["replicarParcial"] = "Replicar (n) Pagos : ";
+$this->idioma["replicarParcialTitulo"]="Replicar (n) Pagos";
+
+$this->idioma["criterioSeleccion"] = "Criterios de Selección : ";
 $this->idioma["plazoEjecucion"] = "Plazo Ejecución : ";
 
 
@@ -13,8 +18,8 @@ $this->idioma["vigencia_solicitud_consulta"] = "Vigencia : ";
 $this->idioma["vigencia_solicitud_consultaTitulo"]="Vigencia";
 $this->idioma["numero_disponibilidad"] = "Número de la Necesidad : ";
 $this->idioma["numero_disponibilidadTitulo"]="Número de la Necesidad";
-$this->idioma["valor_acumulado"] = "($)Valor (CDP) : ";
-$this->idioma["valor_acumuladoTitulo"]="($)Valor (CDP)";
+$this->idioma["valor_acumulado"] = "Valor CDP ($) : ";
+$this->idioma["valor_acumuladoTitulo"]="Valor CDP ($)";
 $this->idioma["dependenciaDestino"] = "Dependencia Destino :";
 $this->idioma["dependenciaDestinoTitulo"]="Seleccionar Dependencia destino";
 
@@ -70,7 +75,7 @@ $this->idioma["valorItem"] = "Valor Unitario: ";
 $this->idioma["valorItemTitulo"]="Valor Unitario Item";
 $this->idioma ["IvaItem"] = "IVA : ";
 $this->idioma ["IvaItemTitulo"] = "Seleccione IVA";
-$this->idioma ["documentos_elementos"] = "Archivo de Items";
+$this->idioma ["documentos_elementos"] = "Cargue de archivo Excel";
 
 $this->idioma["precioCot"] = "PRECIO COTIZACIÓN : ";
 $this->idioma["precioCotTitulo"]="Precio Cotización";
@@ -83,8 +88,8 @@ $this->idioma["precioCotIvaTitulo"]="Precio Cotización con iva";
 
 $this->idioma["marcoDetallePro"]="Detalle Productos o Servicios";
 
-$this->idioma["marcoSeleccion"]="Criterio de Selección Cotización";
-$this->idioma["formaSeleccion"] = "Criterio de Selección : ";
+$this->idioma["marcoSeleccion"]="Criterios de Selección Cotización";
+$this->idioma["formaSeleccion"] = "Criterios de Selección : ";
 $this->idioma["formaSeleccionTitulo"]="Forma de Selección";
 
 
@@ -160,7 +165,7 @@ $this->idioma["marcoFormaPago"] = "Detalle Formas de Pago Agregadas";
 $this->idioma["tipoFormaPago"] = "Tipo Forma de Pago :";
 $this->idioma["porcentajePagoForma"] = "Porcentaje de Pago :";
 $this->idioma["porcentajePagoFormaTitulo"]="Ingresar Porcentaje Parte del 100% de la Forma de Pago";
-$this->idioma["valorFormaPago"] = "Valor del Parámetro :";
+$this->idioma["valorFormaPago"] = "Condición del Pago :";
 $this->idioma["valorFormaPagoTitulo"]="Ingresar valor de Parámetro (En Días -> Tiempo) o (Decimal -> Porcentaje)";
 
 
@@ -379,12 +384,12 @@ $this->idioma['crearDocenteModificar'] = '';
 $this->idioma["tituloCotizacion"] = "Título de la Cotización:";
 $this->idioma["tituloCotizacionTitulo"] = "Ingrese un título para la cotización";
 
-$this->idioma["marcoDatosSolicitudCotRes"]="(RESPONSABLE) Solicitud de Cotización";
+$this->idioma["marcoDatosSolicitudCotRes"]="Responsable Solicitud de Cotización";
 $this->idioma["marcoDatosSolicitudCotCar"]="Características Solicitud de Cotización";
 
-$this->idioma["nombresResponsable"] = "Nombres: ";
+$this->idioma["nombresResponsable"] = "Nombre(s): ";
 $this->idioma["nombresResponsableTitulo"] = "Nombres persona responsable para la cotización";
-$this->idioma["apellidosResponsable"] = "Apellidos: ";
+$this->idioma["apellidosResponsable"] = "Apellido(s): ";
 $this->idioma["apeliidosResponsableTitulo"] = "Apellidos persona responsable para la cotización";
 $this->idioma["identificacionResponsable"] = "Identificación: ";
 $this->idioma["identificacionResponsableTitulo"] = "Identificación persona responsable para la cotización";

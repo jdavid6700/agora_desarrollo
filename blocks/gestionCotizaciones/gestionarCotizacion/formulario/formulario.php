@@ -159,10 +159,11 @@ class Formulario {
 								<th><center>Detalle</center></th>
 								<th><center>Modificar</center></th>
 								<th><center>Procesar</center></th>
+								<th><center>Reporte</center></th>
 								<th><center>Observaciones</center></th>			
 								<th><center>Cotizaciones</center></th>
 								<th><center>Cancelar</center></th>
-                                                                <th><center>Gestión de<br>Modificaciónes</center></th>
+								<th><center>Gestión de<br>Modificaciónes</center></th>
                                                                 
 							</tr>
 							</thead>
@@ -237,6 +238,9 @@ class Formulario {
 			
 			if($estadoCotizacionArq == "COTIZACION" || $estadoCotizacionArq == "SELECCIONADO" || $estadoCotizacionArq == "RECHAZADO"){
 				
+				 //INICIO enlace boton descargar resumen
+ 		      
+
 				
 				$variableObservaciones = "pagina=" . $miPaginaActual; // pendiente la pagina para modificar parametro
 				$variableObservaciones .= "&opcion=observaciones";
@@ -247,6 +251,27 @@ class Formulario {
 				$variableObservaciones .= "&tipoCotizacion=" . $dato ['tipo_necesidad'];
 				$variableObservaciones = $this->miConfigurador->fabricaConexiones->crypto->codificar_url ( $variableObservaciones, $directorio );
 				$imagenObservaciones = 'iconObs.png';
+
+
+
+                $cadena_sql = $this->miSql->getCadenaSql ( "consultarCodigo",$dato['id']);
+			    $resultadoIDCodigo = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+
+				$variablePDF = "pagina=" . $miPaginaActual;
+  		        $variablePDF.= "&action=" . $esteBloque["nombre"];
+        	    $variablePDF.= "&bloque=" . $esteBloque["id_bloque"];
+                $variablePDF.= "&bloqueGrupo=" . $esteBloque["grupo"];
+                $variablePDF.= "&opcion=resumen";
+                $variablePDF.= "&idObjeto=" . $dato['id'];
+                $variablePDF.= "&idCodigo=" . $resultadoIDCodigo[0][0];
+                if($estadoCotizacionArq == "COTIZACION"){
+                	$variablePDF.= "&proveedoresView=false";
+                }else{
+                	$variablePDF.= "&proveedoresView=true";
+                }
+                
+				$imagenPDF = 'pdf.png';
 				
 				
 				/* VALIDAR FECHA DE CIERRE ++++++++++++++++++++++++++++++++++++*/
@@ -332,6 +357,19 @@ class Formulario {
 				
 				$variableObservaciones = "#";
 				$imagenObservaciones = 'cancel.png';
+
+			    $cadena_sql = $this->miSql->getCadenaSql ( "consultarCodigo",$dato['id']);
+			    $resultadoIDCodigo = $esteRecursoDB->ejecutarAcceso ( $cadena_sql, "busqueda" );
+
+				$variablePDF = "pagina=" . $miPaginaActual;
+  		        $variablePDF.= "&action=" . $esteBloque["nombre"];
+        	    $variablePDF.= "&bloque=" . $esteBloque["id_bloque"];
+                $variablePDF.= "&bloqueGrupo=" . $esteBloque["grupo"];
+                $variablePDF.= "&opcion=resumen";
+                $variablePDF.= "&idObjeto=" . $dato['id'];
+                $variablePDF.= "&idCodigo=" . $resultadoIDCodigo[0][0];
+                $variablePDF.= "&proveedoresView=true";
+				$imagenPDF = 'pdf.png';
 				
 			}else{
 				
@@ -376,6 +414,9 @@ class Formulario {
 				
 				$variableObservaciones = "#";
 				$imagenObservaciones = 'cancel.png';
+
+				$variablePDF = "#";
+				$imagenPDF = 'cancel.png';
 				
 				
 			}
@@ -424,7 +465,11 @@ class Formulario {
 											<img src='" . $rutaBloque . "/images/" . $imagenCal . "' width='15px'>
 										</a>
 									</center></td>
-													
+									<td><center>
+										<a href='javascript:void(0);'  onclick='GenerarDocumentoCotizacion(" . json_encode($variablePDF) . ");'>
+											<img src='" . $rutaBloque . "/images/" . $imagenPDF . "' width='15px'>
+										</a>
+									</center></td>				
 									<td><center>
 										<a href='" . $variableObservaciones . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenObservaciones . "' width='15px'>
@@ -441,7 +486,8 @@ class Formulario {
 										<a href='" . $variableCan . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenCan . "' width='15px'>
 										</a>
-									</center></td>	
+									</center></td>
+										
                                                                         <td><center>
 										<a href='" . $variableSolMod . "'>
 											<img src='" . $rutaBloque . "/images/" . $imagenSolMod . "' width='15px'>

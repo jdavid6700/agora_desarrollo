@@ -103,14 +103,14 @@ $( "#<?php echo $this->campoSeguro('perfil')?>" ).change(function() {
 
 $( "#<?php echo $this->campoSeguro('perfilNat')?>" ).change(function() {
 	if($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 4 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 6 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 7){
-		$("#obligatorioProfesionNat").show("fast");
-		$("#obligatorioEspecialidadNat").show("fast");
+		$("#obligatorioProfesionNat").fadeIn("fast");
+		$("#obligatorioEspecialidadNat").fadeIn("fast");
 	}else if ($('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 3 || $('#<?php echo $this->campoSeguro('perfilNat') ?>').val() == 2){
-		$("#obligatorioProfesionNat").show("fast");
-		$("#obligatorioEspecialidadNat").hide("fast");
+		$("#obligatorioProfesionNat").fadeIn("fast");
+		$("#obligatorioEspecialidadNat").fadeOut("fast");
 	}else{
-		$("#obligatorioProfesionNat").hide("fast");
-		$("#obligatorioEspecialidadNat").hide("fast");
+		$("#obligatorioProfesionNat").fadeOut("fast");
+		$("#obligatorioEspecialidadNat").fadeOut("fast");
 	}
 });
 
@@ -1886,4 +1886,19 @@ function consultarDepartamentoLug(elem, request, response){
 				$('#<?php echo $this->campoSeguro('direccionNat')?>').val(post);
 			}
 		});
-    	 
+    	
+    	
+    	function deleteFile() {
+        	
+        	swal({
+				                title: 'ATENCIÓN<br>PROCESO DE ACTUALIZACIÓN DE INFORMACIÓN POR VIGENCIA',
+				                type: 'info',
+				                html:
+				                        '<b>Sistema de Registro Único de Personas Y Banco de Proveedores ÁGORA</b></b><br><br>'
+				                        +' La información <b>ADJUNTA</b></b> de documentos RUT, RUP o ESAL debe ser actualizada,'
+				                        +' por motivos del cambio de vigencia para los nuevos procesos de contratación, por esta razón la información adjuntada ya no se encuentra disponible.',
+				                confirmButtonText:
+				                        'Aceptar'
+				            })
+        
+        };

@@ -1,6 +1,24 @@
 
 window.onload = detectarCarga;
 function detectarCarga(){
+	
+	if (typeof pagTxt != "undefined") {
+  		if (pagTxt === 560) { validacionCotPro(); }
+	}
+	
+
+	if($('#setEstate').val() === 'true'){
+		
+		swal({
+		  title: 'IMPORTANTE',
+		  type: 'warning',
+		  html:
+		    'No es posible SELECCIONAR ningún proveedor, ya sea porque no hay al menos una respuesta registrada por parte de los mismos, o porque ya rechazó o aprobó de forma individual a quienes respondieron.' ,
+		  confirmButtonText:
+		    'Aceptar'
+		})
+
+	}
 
 	$('#marcoDatosLoad').fadeOut(1000, function (){
 		$('#marcoDatosSolicitudCot').fadeIn(500);
@@ -9,6 +27,11 @@ function detectarCarga(){
 		$('#marcoContratos').fadeIn(500);
 		$('#AgrupacionDisponibilidadNec').fadeIn(500);
 		$('#limitObs').fadeOut(100);
+		
+		$('#valorAvance').fadeOut(300);
+		$('#valoresForma').fadeOut(300);
+		
+		$('#valorAvanceReplica').fadeOut(300);
 		
 	});
 	
@@ -235,6 +258,24 @@ $( '#<?php echo $this->campoSeguro('fechaCierre')?>' ).datepicker()
 	    
 	});
 
+
+function validacionCotPro(){
+	
+	var texto_info = 'Se recomienda verificar la información consignada en la cotización a través de la opción (Detalle) antes de procesarla, después de esta acción solo se podrá modificar la información relacionada solamente con los nombres y cantidades en los elementos, sin embargo, dicho cambio solo se podrá hacer con la autorización del ordenador del gasto, tenga presente que ningún otro dato podra ser modificado.';
+
+	swal({
+	  title: 'Atención<br> Procesamiento Cotizaciones',
+	  html: texto_info,
+	  type: 'warning',
+	  allowOutsideClick: false,
+	  showCancelButton: false,
+	  confirmButtonColor: '#32CD32',
+	  confirmButtonText: 'Aceptar'
+	});
+	
+}
+
+
 $("#gestionarCotizacionRegistrar").validationEngine({
 	validateNonVisibleFields: true,
 	promptPosition : "inline", 
@@ -317,6 +358,7 @@ $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').width(350);
 $('#<?php echo $this->campoSeguro('decisionPro')?>').width(750);
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').width(350);
 $('#<?php echo $this->campoSeguro('tipoContrato')?>').width(450);
+$('#<?php echo $this->campoSeguro('replicarParcial')?>').width(150);
 
 //////////////////**********Se definen los campos que requieren campos de select2**********////////////////
 $('#<?php echo $this->campoSeguro('divisionCIIU')?>').select2();
@@ -346,6 +388,7 @@ $('#<?php echo $this->campoSeguro('tipoFormaPago')?>').select2();
 $('#<?php echo $this->campoSeguro('decisionPro')?>').select2();
 $('#<?php echo $this->campoSeguro('formaSeleccion')?>').select2();
 $('#<?php echo $this->campoSeguro('tipoContrato')?>').select2();
+$('#<?php echo $this->campoSeguro('replicarParcial')?>').select2();
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

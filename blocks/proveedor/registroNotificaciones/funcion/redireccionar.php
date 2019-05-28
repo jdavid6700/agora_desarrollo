@@ -92,6 +92,7 @@ class redireccion {
 				$variable = "pagina=" . $miPaginaActual;
 				$variable .= "&opcion=mensaje";
 				$variable .= "&mensaje=NoinsertoRespuesta";
+				$variable .= "&caso=".$valor;
 				break;    
                             
 			case "noregistroUsuario" :

@@ -148,8 +148,12 @@ ul.semaforop li {
 
 
 .lefht{
-	text-align:left;
-	margin-left:10px;
+    text-align:left;
+    position: relative;
+    padding: 20px;
+    top:10px; 
+    left: 10px;
+    width: 100%;
 }
 
 div.clean-gray{

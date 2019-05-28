@@ -323,7 +323,7 @@ class FormularioRegistro {
 
             $esteCampo = "AgrupacionDisponibilidadNec";
             $atributos ['id'] = $esteCampo;
-            $atributos ['leyenda'] = "Información Necesidad Presupuesto";
+            $atributos ['leyenda'] = "Información Necesidad Presupuestal";
             $atributos ['estilo'] = 'jqueryui';
             echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
             {
@@ -667,7 +667,7 @@ class FormularioRegistro {
 								<th><center>Vigencia</center></th>
 								<th><center>Solicitud de Necesidad</center></th>
 								<th><center>Número de Disponibilidad</center></th>
-								<th><center>$ Valor (En pesos)</center></th>
+								<th><center>Valor en pesos ($)</center></th>
 								<th><center>Dependencia</center></th>
 								<th><center>Rubro</center></th>
 								<th><center>Estado</center></th>
@@ -699,7 +699,7 @@ class FormularioRegistro {
                     $atributos ['enlace'] = "#";
                     $atributos ['tabIndex'] = 1;
                     $atributos ['estilo'] = 'textoSubtitulo';
-                    $atributos ['enlaceTexto'] = "Eliminar (Necesidad)";
+                    $atributos ['enlaceTexto'] = "Eliminar Necesidad";
                     $atributos ['ancho'] = '10%';
                     $atributos ['alto'] = '10%';
                     $atributos ['redirLugar'] = false;
@@ -779,7 +779,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[20]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = true;
         $atributos ['tamanno'] = 20;
@@ -1012,6 +1012,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab ++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia'] = $dep[0][0];
+
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia'];
         } else {
@@ -1043,6 +1048,11 @@ class FormularioRegistro {
         $atributos ['tab'] = $tab ++;
         $atributos ['anchoEtiqueta'] = 200;
         $atributos ['evento'] = '';
+
+        $cadenaSql = $this->miSql->getCadenaSql ( "dependenciaJefeLast", $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] );
+        $dep = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, 'busqueda' );
+        $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'] = $dep[0][0];
+        
         if (isset($resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'])) {
             $atributos ['seleccion'] = $resultadoNecesidadRelacionada[0]['jefe_dependencia_destino'];
         } else {
@@ -1164,7 +1174,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[20]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = true;
         $atributos ['tamanno'] = 20;
@@ -1201,7 +1211,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[20]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = true;
         $atributos ['tamanno'] = 20;
@@ -1236,7 +1246,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'maxSize[5000]';
+        $atributos ['validar'] = '';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = true;
         $atributos ['tamanno'] = 20;
@@ -1277,7 +1287,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[15], maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[15], maxSizeTiny[25000]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = false;
         $atributos ['tamanno'] = 20;
@@ -1315,7 +1325,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[15], maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[3]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = true;
         $atributos ['tamanno'] = 20;
@@ -1360,7 +1370,7 @@ class FormularioRegistro {
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'required,minSize[20],maxSize[5000]';
+        $atributos ['validar'] = 'required,minSizeTiny[20],maxSizeTiny[25000]';
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = false;
         $atributos ['tamanno'] = 20;
@@ -1541,7 +1551,7 @@ class FormularioRegistro {
                                 $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                                 $atributos ['deshabilitado'] = false;
                                 $atributos ['tamanno'] = 80;
-                                $atributos ['maximoTamanno'] = '100';
+                                $atributos ['maximoTamanno'] = '5000';
                                 $atributos ['anchoEtiqueta'] = 200;
                                 $tab++;
 
@@ -1770,14 +1780,14 @@ class FormularioRegistro {
             {
                 $esteCampo = "AgrupacionInformacion";
                 $atributos ['id'] = $esteCampo;
-                $atributos ['leyenda'] = "Cargue Masivo de Elementos";
+                $atributos ['leyenda'] = "Cargue Masivo Elementos";
                 echo $this->miFormulario->agrupacion('inicio', $atributos);
                 {
 
 
-                    $mensaje = "- El Archivo Tiene que Ser Tipo Excel.
-								<br>- Solo Se Cargaran de forma Correcta de Acuerdo al Plantilla Preedeterminada.
-								<br>- Enlace de Archivo Plantilla : <A HREF=" . $host . "> Archivo Plantilla </A>";
+                    $mensaje = "- El archivo tiene que ser tipo Excel.
+                                <br>- Solo se cargarán de forma correcta de acuerdo a la plantilla predeterminada.
+                                <br>- Enlace del archivo plantilla : <A HREF=" . $host . "> Archivo Excel (clic aquí) </A>";
 
                     // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                     $esteCampo = 'mensajeRegistro';
@@ -1857,7 +1867,7 @@ class FormularioRegistro {
                 <!-- Cabecera de la tabla -->
                 <thead>
                     <tr>
-                        <th width="5%" >#</th>
+                        <th width="5%" >Número</th>
                         <th width="10%" >Nombre</th>
                         <th width="20%" >Descripción</th>
                         <th width="10%" >Tipo</th>
@@ -1957,12 +1967,12 @@ class FormularioRegistro {
 
 
                     <?php
-                     $valoresItem .= ($i + 1) ."&";
-                     $valoresItem .= ( $resultadoItems[$i][1]) ."&";
-                     $valoresItem .= ($resultadoItems[$i][2]) ."&";
-                     $valoresItem .= ($matrizItemsTipoItem[0][0] . " - ".$matrizItemsTipoItem[0][1]) ."&";
-                     $valoresItem .= ($matrizItemsUnidad[0][0] . " - ".$matrizItemsUnidad[0][1]) ."&";
-                     $valoresItem .= ($numero_cantidad) ."&";
+                     $valoresItem .= ($i + 1) ."@$&$@";
+                     $valoresItem .= ( $resultadoItems[$i][1]) ."@$&$@";
+                     $valoresItem .= ($resultadoItems[$i][2]) ."@$&$@";
+                     $valoresItem .= ($matrizItemsTipoItem[0][0] . " - ".$matrizItemsTipoItem[0][1]) ."@$&$@";
+                     $valoresItem .= ($matrizItemsUnidad[0][0] . " - ".$matrizItemsUnidad[0][1]) ."@$&$@";
+                     $valoresItem .= ($numero_cantidad) ."@$&$@";
                      
                     $i++;
                 }
@@ -2268,18 +2278,18 @@ class FormularioRegistro {
         $atributos ['marco'] = true;
         $atributos ['estiloMarco'] = '';
         $atributos ["etiquetaObligatorio"] = true;
-        $atributos ['columnas'] = 2;
+        $atributos ['columnas'] = 1;
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-        $atributos ['validar'] = 'custom[number]';
+        $atributos ['validar'] = '';
 
         $atributos ['valor'] = '';
 
         $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
         $atributos ['deshabilitado'] = false;
-        $atributos ['tamanno'] = 20;
-        $atributos ['maximoTamanno'] = '20';
+        $atributos ['tamanno'] = 100;
+        $atributos ['maximoTamanno'] = '150';
         $atributos ['anchoEtiqueta'] = 200;
         $tab ++;
 
@@ -2299,7 +2309,7 @@ class FormularioRegistro {
         $atributos ['marco'] = true;
         $atributos ['estiloMarco'] = '';
         $atributos ["etiquetaObligatorio"] = true;
-        $atributos ['columnas'] = 2;
+        $atributos ['columnas'] = 1;
         $atributos ['dobleLinea'] = 0;
         $atributos ['tabIndex'] = $tab;
         $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
@@ -2320,6 +2330,84 @@ class FormularioRegistro {
         unset($atributos);
         // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
 
+        
+        
+        // ---------------- CONTROL: Tipo Forma Pago--------------------------------------------------------
+        $esteCampo = "replicarParcial";
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['id'] = $esteCampo;
+        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+        $atributos ["etiquetaObligatorio"] = false;
+        $atributos ['tab'] = $tab ++;
+        $atributos ['anchoEtiqueta'] = 200;
+        $atributos ['evento'] = '';
+        if (isset($_REQUEST [$esteCampo])) {
+        	$atributos ['seleccion'] = $_REQUEST [$esteCampo];
+        } else {
+        	$atributos ['seleccion'] = - 1;
+        }
+        $atributos ['deshabilitado'] = false;
+        $atributos ['columnas'] = 3;
+        $atributos ['tamanno'] = 1;
+        $atributos ['ajax_function'] = "";
+        $atributos ['ajax_control'] = $esteCampo;
+        $atributos ['estilo'] = "jqueryui";
+        $atributos ['validar'] = "";
+        $atributos ['limitar'] = false;
+        $atributos ['anchoCaja'] = 60;
+        $atributos ['miEvento'] = '';
+        
+        $matrizItems = array(
+        		array(1, 'SI')
+        );
+        
+        $atributos ['matrizItems'] = $matrizItems;
+        
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroLista($atributos);
+        unset($atributos);
+        // ----------------FIN CONTROL: Tipo Forma Pago--------------------------------------------------------
+        
+        
+        $atributos ["id"] = "valorAvanceReplica";
+        $atributos ["estilo"] = "";
+        echo $this->miFormulario->division("inicio", $atributos);
+        
+        // ----------------INICIO CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+        $esteCampo = 'numberPagosReplica';
+        $atributos ['id'] = $esteCampo;
+        $atributos ['nombre'] = $esteCampo;
+        $atributos ['tipo'] = 'text';
+        $atributos ['estilo'] = 'jqueryui';
+        $atributos ['marco'] = true;
+        $atributos ['estiloMarco'] = '';
+        $atributos ["etiquetaObligatorio"] = true;
+        $atributos ['columnas'] = 3;
+        $atributos ['dobleLinea'] = 0;
+        $atributos ['tabIndex'] = $tab;
+        $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
+        $atributos ['validar'] = 'custom[number]';
+        
+        $atributos ['valor'] = '';
+        
+        $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
+        $atributos ['deshabilitado'] = false;
+        $atributos ['tamanno'] = 20;
+        $atributos ['maximoTamanno'] = '20';
+        $atributos ['anchoEtiqueta'] = 200;
+        $tab ++;
+        
+        // Aplica atributos globales al control
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto($atributos);
+        unset($atributos);
+        // ----------------FIN CONTROL: Campo de Texto VIGENCIA--------------------------------------------------------
+        
+        echo $this->miFormulario->division("fin");
+        
+        
+        
+        
         echo $this->miFormulario->division("fin");
 
 
@@ -2419,15 +2507,18 @@ class FormularioRegistro {
 
                 if ($resultadoFP[$i][0] == 1) {
                     $tipoValor = " % Completado";
+                    $valueTip = round($resultadoFP[$i][2], 2);
                 } else if ($resultadoFP[$i][0] == 2) {
-                    $tipoValor = " % Completado del Total";
+                    $tipoValor = "";
+                    $valueTip = $resultadoFP[$i][2];
                 } else {
                     $tipoValor = " - Sin Condición de Avance";
+                    $valueTip = round($resultadoFP[$i][2], 2);
                 }
                 ?>
                         <tr id="nFilas" >
                             <td><?php echo $resultadoFP[$i][0] . " - " . $resultadoFP[$i][1] ?></td>
-                            <td><?php echo round($resultadoFP[$i][2], 2) . $tipoValor ?></td>
+                            <td contenteditable='true' onkeyup='javascript:dotest(this,event);'><?php echo $valueTip . $tipoValor ?></td>
                             <td><?php echo round($resultadoFP[$i][3], 2) . " %" ?></td>
                             <th class="eliminarFP" scope="row"><div class = "widget">Eliminar</div></th>
                         </tr>
@@ -2686,7 +2777,11 @@ class FormularioRegistro {
         echo $this->miFormulario->marcoAgrupacion('fin');
 
 
-
+        $datosBack = array (
+                'dt_cot' => $resultadoNecesidadRelacionada,
+                'dt_forma_pago' => $resultadoFP,
+                'dt_items' => $resultadoItems
+        );
 
 
         // ------------------Division para los botones-------------------------
@@ -2751,6 +2846,7 @@ class FormularioRegistro {
         $valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
         $valorCodificado .= "&idObjeto=" . $_REQUEST['idSolicitud'];
         $valorCodificado .= "&tipoNecesidad=" . $resultadoNecesidadRelacionada[0]['tipo_necesidad'];
+        $valorCodificado .= "&dataSerCt=" . $this->miConfigurador->fabricaConexiones->crypto->codificar(serialize($datosBack));
 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.

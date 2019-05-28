@@ -120,79 +120,121 @@ class Formulario {
 		if(isset($_REQUEST['especialidadNat'])){$_REQUEST['especialidadNat']=mb_strtoupper($_REQUEST['especialidadNat'],'utf-8');}
 		if(isset($_REQUEST['asesorComercialNat'])){$_REQUEST['asesorComercialNat']=mb_strtoupper($_REQUEST['asesorComercialNat'],'utf-8');}
 		if(isset($_REQUEST['descripcionNat'])){$_REQUEST['descripcionNat']=mb_strtoupper($_REQUEST['descripcionNat'],'utf-8');}
-		
 
-		//Guardar RUT adjuntado Persona Natural*********************************************************************
-		$_REQUEST ['destino'] = '';
-		// Guardar el archivo
-		if ($_FILES) {
-			$i = 0;
-			foreach ( $_FILES as $key => $values ) {
-				$archivoCarga[$i] = $_FILES [$key];
-				$i++;
-			}
-			$archivo = $archivoCarga[2];
-			// obtenemos los datos del archivo
+
+		$_REQUEST ['destino1'] = '';//soportesHijosNat
+		$_REQUEST ['destino2'] = '';//declaracionRentaNat
+		$_REQUEST ['destino3'] = '';//DocumentoRUTNat
+		$_REQUEST ['destino4'] = '';//DocumentoRUPNat
+
+
+		// Gestión Carga de Archivos PN
+		//*******************************************************************************
+		if($_FILES[$this->campoSeguroCodificar('soportesHijosNat', $_REQUEST['tiempo'])]){
+			$archivo = $_FILES[$this->campoSeguroCodificar('soportesHijosNat', $_REQUEST['tiempo'])];
+			// Obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
-			$archivo1 = $archivo ['name'];
+			$archivoName = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
-			$nombreDoc = $prefijo . "-" . $archivo1;
+			$nombreDoc = $prefijo . "-" . $archivoName;
 		
-			if ($archivo1 != "") {
-				// guardamos el archivo a la carpeta files
+			if ($archivoName != "") {
+				// Guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
-					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					$status = "Archivo subido: <b>" . $archivoName . "</b>";
+					$_REQUEST ['destino1'] = $prefijo . "-" . $archivoName;
 				} else {
-					$status = "<br>Error al subir el archivo1";
+					$status = "<br>Error al subir el archivo";
 				}
 			} else {
-				$status = "<br>Error al subir archivo2";
+				$status = "<br>Error al subir archivo";
 			}
-		} else {
-			echo "<br>NO existe el archivo D:!!!";
+		}else{
+			echo "<br>NO existe el archivo !!!";
 		}
-		//************************************************************************************************************		
-
-		
-		
-		//Guardar RUP adjuntado Persona Natural*********************************************************************
-		$_REQUEST ['destino2'] = '';
-		// Guardar el archivo
-		if ($_FILES) {
-			$i = 0;
-			foreach ( $_FILES as $key => $values ) {
-				$archivoCarga[$i] = $_FILES [$key];
-				$i++;
-			}
-			$archivo = $archivoCarga[3];
-			// obtenemos los datos del archivo
+		//*******************************************************************************
+		if($_FILES[$this->campoSeguroCodificar('declaracionRentaNat', $_REQUEST['tiempo'])]){
+			$archivo = $_FILES[$this->campoSeguroCodificar('declaracionRentaNat', $_REQUEST['tiempo'])];
+			// Obtenemos los datos del archivo
 			$tamano = $archivo ['size'];
 			$tipo = $archivo ['type'];
-			$archivo1 = $archivo ['name'];
+			$archivoName = $archivo ['name'];
 			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
-			$nombreDoc = $prefijo . "-" . $archivo1;
+			$nombreDoc = $prefijo . "-" . $archivoName;
 		
-			if ($archivo1 != "") {
-				// guardamos el archivo a la carpeta files
+			if ($archivoName != "") {
+				// Guardamos el archivo a la carpeta files
 				$destino = $rutaBloque . "/files/" . $nombreDoc;
 		
 				if (copy ( $archivo ['tmp_name'], $destino )) {
-					$status = "Archivo subido: <b>" . $archivo1 . "</b>";
-					$_REQUEST ['destino2'] = $host . "/files/" . $prefijo . "-" . $archivo1;
+					$status = "Archivo subido: <b>" . $archivoName . "</b>";
+					$_REQUEST ['destino2'] = $prefijo . "-" . $archivoName;
 				} else {
-					$status = "<br>Error al subir el archivo1";
+					$status = "<br>Error al subir el archivo";
 				}
 			} else {
-				$status = "<br>Error al subir archivo2";
+				$status = "<br>Error al subir archivo";
 			}
-		} else {
-			echo "<br>NO existe el archivo D:!!!";
+		}else{
+			echo "<br>NO existe el archivo !!!";
 		}
-		//************************************************************************************************************
+		//*******************************************************************************
+		if($_FILES[$this->campoSeguroCodificar('DocumentoRUTNat', $_REQUEST['tiempo'])]){
+			$archivo = $_FILES[$this->campoSeguroCodificar('DocumentoRUTNat', $_REQUEST['tiempo'])];
+			// Obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivoName = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivoName;
+		
+			if ($archivoName != "") {
+				// Guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivoName . "</b>";
+					$_REQUEST ['destino3'] = $prefijo . "-" . $archivoName;
+				} else {
+					$status = "<br>Error al subir el archivo";
+				}
+			} else {
+				$status = "<br>Error al subir archivo";
+			}
+		}else{
+			echo "<br>NO existe el archivo !!!";
+		}
+		//*******************************************************************************
+		if($_FILES[$this->campoSeguroCodificar('DocumentoRUPNat', $_REQUEST['tiempo'])]){
+			$archivo = $_FILES[$this->campoSeguroCodificar('DocumentoRUPNat', $_REQUEST['tiempo'])];
+			// Obtenemos los datos del archivo
+			$tamano = $archivo ['size'];
+			$tipo = $archivo ['type'];
+			$archivoName = $archivo ['name'];
+			$prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+			$nombreDoc = $prefijo . "-" . $archivoName;
+		
+			if ($archivoName != "") {
+				// Guardamos el archivo a la carpeta files
+				$destino = $rutaBloque . "/files/" . $nombreDoc;
+		
+				if (copy ( $archivo ['tmp_name'], $destino )) {
+					$status = "Archivo subido: <b>" . $archivoName . "</b>";
+					$_REQUEST ['destino4'] = $prefijo . "-" . $archivoName;
+				} else {
+					$status = "<br>Error al subir el archivo";
+				}
+			} else {
+				$status = "<br>Error al subir archivo";
+			}
+		}else{
+			echo "<br>NO existe el archivo !!!";
+		}
+		//*******************************************************************************
+
 
 		
 		if(isset($_REQUEST['tipoPersona'])){//CAST
@@ -211,6 +253,7 @@ class Formulario {
 				'num_documento' => $_REQUEST['documentoNat'],
 				'tipo_persona' => $_REQUEST ['tipoPersona']
 		);
+
 
 		unset($resultado);
 		//VERIFICAR SI EL PROVEEDOR YA SE ENCUENTRA REGISTRADO
@@ -290,7 +333,7 @@ class Formulario {
 							$_REQUEST['grupoEtnico']='ROM';
 							break;
 						case 40 :
-							$_REQUEST ['grupoEtnico']=null;
+							$_REQUEST ['grupoEtnico']='NO APLICA';
 							break;
 						}
 				}
@@ -501,6 +544,33 @@ class Formulario {
 							break;
 					}
 				}
+
+				if(isset($_REQUEST['hijosPersona'])){
+					switch($_REQUEST ['hijosPersona']){
+						case 1 :
+							$_REQUEST ['hijosPersona']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['hijosPersona']='FALSE';
+							break;
+						default:
+							$_REQUEST ['hijosPersona']='NULL';
+							break;
+					}
+				}
+				if(isset($_REQUEST['pensionadoNat'])){
+					switch($_REQUEST ['pensionadoNat']){
+						case 1 :
+							$_REQUEST ['pensionadoNat']='TRUE';
+							break;
+						case 2 :
+							$_REQUEST ['pensionadoNat']='FALSE';
+							break;
+						default:
+							$_REQUEST ['pensionadoNat']='NULL';
+							break;
+					}
+				}
 				
 				//***********************************************************************************************
 				
@@ -510,8 +580,12 @@ class Formulario {
 				$cadena_fecha = $dateExp[2]."-".$dateExp[1]."-".$dateExp[0];
 				$_REQUEST ['fechaExpeNat'] = $cadena_fecha;
 				//********************************************************************
-				
-				
+
+				//CAST****************************************************************
+				$dateNac = explode("/", $_REQUEST ['fechaNacNat']);
+				$cadena_fecha = $dateNac[2]."-".$dateNac[1]."-".$dateNac[0];
+				$_REQUEST ['fechaNacNat'] = $cadena_fecha;
+				//********************************************************************
 
 				$nombrePersona = $_REQUEST['primerNombreNat'] . ' ' . $_REQUEST['segundoNombreNat'] . ' ' . $_REQUEST['primerApellidoNat'] . ' ' . $_REQUEST['segundoApellidoNat'];
 				
@@ -530,8 +604,8 @@ class Formulario {
 						'tipo_cuenta_bancaria' => $_REQUEST['tipoCuentaNat'],
 						'num_cuenta_bancaria' => $_REQUEST['numeroCuentaNat'],
 						'id_entidad_bancaria' => $_REQUEST['entidadBancariaNat'],
-						'anexo_rut' => $_REQUEST ['destino'],
-						'anexo_rup' => $_REQUEST ['destino2'],
+						'anexo_rut' => $_REQUEST ['destino3'],
+						'anexo_rup' => $_REQUEST ['destino4'],
 						'descripcion_proveedor' => $_REQUEST['descripcionNat'],
 						'fecha_registro' => $fechaActual,
 						'fecha_modificación' => $fechaActual,
@@ -579,11 +653,7 @@ class Formulario {
 				array_push($SQLs, $cadenaSqlTelMovil);
 				
 				
-				
-				
-				
-				
-				
+
 				
 				$datosTelefonoProveedorTipoB = array (
 						'fki_id_tel' => "currval('agora.prov_proveedor_telefono')",
@@ -635,17 +705,19 @@ class Formulario {
 						'id_fondo_pension' => $_REQUEST ['afiliacionPensionNat'],
 						'id_caja_compensacion' => $_REQUEST ['afiliacionCajaNat'],
 						'fecha_expedicion_doc' => $_REQUEST ['fechaExpeNat'],
-						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat']
+						'id_lugar_expedicion_doc' => $_REQUEST ['ciudadExpeNat'],
+						'anexo_hijos' => $_REQUEST ['destino1'],
+						'anexo_declaracion' => $_REQUEST ['destino2'],
+						'hijos' => $_REQUEST ['hijosPersona'],
+						'numero_hijos' => $_REQUEST ['numeroHijosPersona'],
+						'pensionado' => $_REQUEST ['pensionadoNat'],
+						'fecha_nacimiento' => $_REQUEST ['fechaNacNat']
 				);
-				
 				
 				
 				//Guardar datos PROVEEDOR NATURAL
 				$cadenaSqlPerNatural = $this->miSql->getCadenaSql ( "registrarProveedorNatural", $datosInformacionPersonaNatural );
 				array_push($SQLs, $cadenaSqlPerNatural);
-				
-				
-				
 				
 				
 				// REGISTRO LA ACTIVIDAD
@@ -783,23 +855,31 @@ class Formulario {
 						        $parametro['id_usuario'] = $arregloDatos['id_usuario'];
 						        $cadena_sql = $this->miSql->getCadenaSql("consultarPerfilUsuario", $parametro);
 						        $resultadoPerfil = $frameworkRecursoDB->ejecutarAcceso($cadena_sql, "busqueda");
-						                
-						                $log = array('accion'=>"REGISTRO PERSONA NATURAL",
-						                            'id_registro'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],
-						                            'tipo_registro'=>"GESTION USUARIO NATURAL",
-						                            'nombre_registro'=>"id_usuario=>".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'].
-						                                               "|identificacion=>".$_REQUEST['identificacion'].
-						                                               "|tipo_identificacion=>".$_REQUEST['tipo_identificacion'].
-						                                               "|nombres=>".$_REQUEST['nombres'].
-						                                               "|apellidos=>".$_REQUEST['apellidos'].
-						                                               "|correo=>".$_REQUEST['correo'].
-						                                               "|telefono=>".$_REQUEST['telefono'].
-						                                               "|subsistema=>".$_REQUEST['subsistema'].
-						                                               "|perfil=>".$_REQUEST['perfil'].
-						                                               "|fechaIni=>".$hoy.
-						                                               "|fechaFin=>".$_REQUEST['fechaFin'],
-						                            'descripcion'=>"Registro de nuevo Usuario ".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion']." con perfil ".$resultadoPerfil[0]['rol_alias'],
-						                           );
+						        
+						        $c = 0;
+						        while ($c < count($SQLs)){
+						        	$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+						        	$c++;
+						        }
+						        $query = json_encode($SQLsDec);
+						        
+				                $log = array('accion'=>"REGISTRO PERSONA NATURAL",
+				                            'id_registro'=>$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'],
+				                            'tipo_registro'=>"GESTION USUARIO NATURAL",
+				                            'nombre_registro'=>"id_usuario=>".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion'].
+				                                               "|identificacion=>".$_REQUEST['identificacion'].
+				                                               "|tipo_identificacion=>".$_REQUEST['tipo_identificacion'].
+				                                               "|nombres=>".$_REQUEST['nombres'].
+				                                               "|apellidos=>".$_REQUEST['apellidos'].
+				                                               "|correo=>".$_REQUEST['correo'].
+				                                               "|telefono=>".$_REQUEST['telefono'].
+				                                               "|subsistema=>".$_REQUEST['subsistema'].
+				                                               "|perfil=>".$_REQUEST['perfil'].
+				                                               "|fechaIni=>".$hoy.
+				                                               "|fechaFin=>".$_REQUEST['fechaFin'],
+				                            'descripcion'=>"Registro de nuevo Usuario ".$_REQUEST['tipo_identificacion'].$_REQUEST['identificacion']." con perfil ".$resultadoPerfil[0]['rol_alias'],
+				                		    'query'=> $query,
+				                           );
 								
 								
 
@@ -824,6 +904,38 @@ class Formulario {
 										'id_usuario' => $arregloDatos['id_usuario']
 								);	
 
+
+
+
+						        if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+									$ip = $_SERVER['HTTP_CLIENT_IP'];
+								}elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+									$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+								}else{
+									$ip = $_SERVER['REMOTE_ADDR'];
+								}
+								$c = 0;
+								while ($c < count($SQLs)){
+									$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+									$c++;
+								}
+								$query = json_encode($SQLsDec);
+								$error = json_encode(error_get_last());
+									
+								$datosLog = array (
+										'tipo_log' => 'REGISTRO',
+										'tipo_persona' => 'NATURAL',
+										'documento' => $_REQUEST['documentoNat'],
+										'query' => $query,
+										'data' => null,
+										'host' => $ip,
+										'fecha_log' => date("Y-m-d H:i:s"),
+										'usuario' => 'REG777'
+								);
+								$cadenaSQL = $this->miSql->getCadenaSql("insertarLogProveedorBnRg", $datosLog);
+								$resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+
+
 								if($resultadoEstado && $resultadoPerfil){
 
 									redireccion::redireccionar ( 'registroProveedor',  $datosRegistroUsuario);
@@ -839,7 +951,38 @@ class Formulario {
 		
 								
 				} else {
-								redireccion::redireccionar ( 'noregistro',  $_REQUEST['usuario']);
+					
+					if (!empty($_SERVER['HTTP_CLIENT_IP'])){
+						$ip = $_SERVER['HTTP_CLIENT_IP'];
+					}elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+						$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+					}else{
+						$ip = $_SERVER['REMOTE_ADDR'];
+					}
+					$c = 0;
+					while ($c < count($SQLs)){
+						$SQLsDec[$c] = $this->miConfigurador->fabricaConexiones->crypto->codificar($SQLs[$c]);
+						$c++;
+					}
+					$query = json_encode($SQLsDec);
+					$error = json_encode(error_get_last());
+						
+					$datosLog = array (
+							'tipo_log' => 'REGISTRO',
+							'tipo_persona' => 'NATURAL',
+							'documento' => $_REQUEST['documentoNat'],
+							'query' => $query,
+							'error' => $error,
+							'host' => $ip,
+							'fecha_log' => date("Y-m-d H:i:s"),
+							'usuario' => 'REG777'
+					);
+					$cadenaSQL = $this->miSql->getCadenaSql("insertarLogProveedor", $datosLog);
+					$resultadoLog = $frameworkRecursoDB->ejecutarAcceso($cadenaSQL, 'busqueda');
+					
+					$caso = "RC-" . date("Y") . "-" . $resultadoLog[0][0];
+					
+								redireccion::redireccionar ( 'noregistro',  $caso);
 								exit();
 				}
 		

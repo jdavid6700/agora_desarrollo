@@ -81,6 +81,7 @@ class FormularioRegistro {
 	}
 	
 	public function to_word($number, $miMoneda = null) {
+		$number = round($number, 0);
 		if (strpos($number, $this->decimal_mark) === FALSE) {
 			$convertedNumber = array(
 					$this->convertNumber($number, $miMoneda, 'entero')
@@ -1006,7 +1007,9 @@ class FormularioRegistro {
 			            $atributos["estilo"] = "marcoBotones widget";
 			            echo $this->miFormulario->division("inicio", $atributos);
 			
-			            $enlace = "<br><a href='" .$resultadoRespuesta[0]['soporte_cotizacion'] . "' target='_blank'>";
+			            $rutaFilesCotizacion = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesCotizacion" );
+			            
+			            $enlace = "<br><a href='" . $rutaFilesCotizacion . $resultadoRespuesta[0]['soporte_cotizacion'] . "' target='_blank'>";
 			            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Anexo Cotización Detallada ";
 			            $enlace.="</a>";
 			            echo $enlace;

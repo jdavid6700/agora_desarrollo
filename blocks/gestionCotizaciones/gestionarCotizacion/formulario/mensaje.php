@@ -37,6 +37,9 @@ if (!isset($GLOBALS["autorizado"])) {
     //$conexion = "sicapital";
     //$siCapitalRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB ( $conexion );
 
+    $conexion = 'core_central';
+    $coreRecursoDB = $this->miConfigurador->fabricaConexiones->getRecursoDB($conexion);
+
 
     $tab = 1;
 //---------------Inicio Formulario (<form>)--------------------------------
@@ -88,7 +91,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $resultadoDependenciaDes = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalById', $_REQUEST['ordenador']);
-        $resultadoOrdenador = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $resultadoOrdenador = $coreRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         if (isset($_REQUEST['estadoSolicitud']) && $_REQUEST['estadoSolicitud'] == "RELACIONADO") {
 
@@ -151,6 +154,17 @@ if (!isset($GLOBALS["autorizado"])) {
         $boton = "continuar";
     } else if ($_REQUEST['mensaje'] == 'confirmaCotizacion') {
 
+
+
+        echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+            <div style='width: 100%;height: 100px'>
+            </div>
+            <center><img src='" . $rutaBloque . "/images/loading.gif'" . ' width=20% height=20% vspace=15 hspace=3 >
+            </center>
+          </div>';
+
+
+
         $hoy = date("d/m/Y");
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
@@ -168,7 +182,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalByIdCast', $objetoEspecifico[0]['ordenador_gasto']);
-        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $resultadoOrdenadorDef = $coreRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $objetoEspecifico[0]['usuario_creo']);
         $resultadoUsuarioCot = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
@@ -298,48 +312,119 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail->From = 'agora@udistrital.edu.co';
         $mail->FromName = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
         $mail->Subject = "Solicitud de Cotización N° (" . $objetoEspecifico[0]['numero_solicitud'] . ") BANCO ÁGORA UDISTRITAL";
+        
+
+        $rutaAddSrc = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesMail" );
+        
+        $escudo = $rutaAddSrc . "Escudo_UD.png";
+        $banner = $rutaAddSrc . "bannerAgora.jpg";
+
+        $stl = $rutaAddSrc . "shadow-top-left.png";
+        $stc = $rutaAddSrc . "shadow-top-center.png";
+        $str = $rutaAddSrc . "shadow-top-right.png";
+
+        $slt = $rutaAddSrc . "shadow-left-top.png";
+
+        $fa = $rutaAddSrc . "facebook.png";
+        $tw = $rutaAddSrc . "twitter.png";
+        $yout = $rutaAddSrc . "youtube.png";
+        $inst = $rutaAddSrc . "instagram.png";
+
+        $srt = $rutaAddSrc . "shadow-right-top.png";
+
+        $slc = $rutaAddSrc . "shadow-left-center.png";
+        $src = $rutaAddSrc . "shadow-right-center.png";
+
+        $slb = $rutaAddSrc . "shadow-left-bottom.png";
+        $srb = $rutaAddSrc . "shadow-right-bottom.png";
+
+        $sbcl = $rutaAddSrc . "shadow-bottom-corner-left.png";
+        $sbl = $rutaAddSrc . "shadow-bottom-left.png";
+        $sbc = $rutaAddSrc . "shadow-bottom-center.png";
+        $sbr = $rutaAddSrc . "shadow-bottom-right.png";
+        $sbcr = $rutaAddSrc . "shadow-bottom-corner-right.png";
+
+        $contenido = '
+
+            <body style="font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; background-color:#f0f2ea; margin:0; padding:0; color:#333333;">
+
+                <table width="100%" bgcolor="#f0f2ea" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="padding:40px 0;">
+                                <!-- begin main block -->
+                                <table cellpadding="0" cellspacing="0" width="700" border="0" align="center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="http://www.udistrital.edu.co/" style="display:block; height:100px; margin:0 0 10px;">
+                                                    <img src="'. $escudo .'" height="100" alt="udistrital" style="display:block; border:0; margin-left: auto; margin-right: auto;">
+                                                </a>
+                                                <!-- begin wrapper -->
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="8" height="4" colspan="2" style="background:url('. $stl .') no-repeat 100% 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td height="4" style="background:url('. $stc .') repeat-x 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="8" height="4" colspan="2" style="background:url('. $str .') no-repeat 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                            <td width="4" height="4" style="background:url('. $slt .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td colspan="3" rowspan="3" bgcolor="#FFFFFF" style="padding:0 0 30px;">
+                                                                <!-- begin content -->
+                                                                <img src="'. $banner .'" width="100%" alt="agora" style="display:block; border:0; margin:0 0 44px; background:#eeeeee;">
+                                                                <p style="margin:0 30px 33px;; text-align:center; font-size:20px; line-height:30px; font-weight:bold; color:#484a42;">
+                                                                    Solicitud de Cotización N° (' . $objetoEspecifico[0]['numero_solicitud'] . ') <br> Banco ÁGORA Udistrital
+                                                                </p>
+
+                                                                <div style="margin:0 30px 35px; font-size:12px; line-height:18px; color:#333333;">
 
 
+        Señor(a) <b>%castusername% - %castdocument% (%castperson%)</b>, registrado(a) en el Sistema ÁGORA con usuario <b>(%castusersystem%)</b>, la <i>Universidad Distrital Francisco José de Caldas</i> se encuentra interesada en poder contar con sus servicios para la adquisición de: <br><br>';
 
-        $contenido = "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas se encuentra interesada en poder contar con sus servicios para la adquisición de: </p>";
-
         $contenido.= "<br>";
-        $contenido.= "<b>Número Cotización : </b>" . $objetoEspecifico[0]['numero_solicitud'] . "<br>";
-        $contenido.= "<b>Título Cotización : </b>" . $objetoEspecifico[0]['titulo_cotizacion'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Número Cotización </b></font>" . $objetoEspecifico[0]['numero_solicitud'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Título Cotización : </b></font>" . $objetoEspecifico[0]['titulo_cotizacion'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Objeto/Tema Solicitud de Cotización : </b><br>" . $objetoEspecifico[0]['objetivo'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Objeto/Tema Solicitud de Cotización : </b></font><br>" . $objetoEspecifico[0]['objetivo'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Requisitos : </b><br>" . $objetoEspecifico[0]['requisitos'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Requisitos : </b></font><br>" . $objetoEspecifico[0]['requisitos'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Observaciones Adicionales : </b><br>" . $objetoEspecifico[0]['observaciones'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Observaciones Adicionales : </b></font><br>" . $objetoEspecifico[0]['observaciones'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Fecha Apertura : </b><u>" . $stringDateInit . "</u><br>";
+        $contenido.= "<font color='#2271B3'><b>Fecha Apertura : </b></font><u>" . $stringDateInit . "</u><br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Fecha Cierre : </b><u>" . $stringDateEnd . "</u><br>";
+        $contenido.= "<font color='#2271B3'><b>Fecha Cierre : </b></font><u>" . $stringDateEnd . "</u><br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b></font><br>" . $contenidoAct . "<br>";
         $contenido.= "<br>";
 
         if ($convocatoria) {
-            $contenido.= "<b>Profesión Relacionada en la Cotización (Núcleo Básico de Conocimiento SNIES): </b><br>" . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
+            $contenido.= "<font color='#2271B3'><b>Profesión Relacionada en la Cotización (Núcleo Básico de Conocimiento SNIES): </b></font><br>" . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
             $contenido.= "<br>";
         }
 
-        $contenido.= "<b>Solicitante : </b>" . $resultadoOrdenador . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Solicitante : </b></font>" . $resultadoOrdenador . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Dependencia Solicitante : </b>" . $resultadoDependencia[0][1] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Dependencia Solicitante : </b></font>" . $resultadoDependencia[0][1] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Responsable : </b>" . $resultadoOrdenadorDef[0][1];
-        $contenido.= "<br>";
-        $contenido.= "<br>";
+        $contenido.= "<font color='#2271B3'><b>Responsable : </b></font>" . $resultadoOrdenadorDef[0][1];
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<p>Por lo tanto, lo invitamos a presentar su cotización en las fechas indicadas como se relaciona en este presente comunicado (<b>Fecha Apertura y Fecha de Cierre</b>), recuerde que este
-    			proceso debe ser realizado ingresando al Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA (<a href='https://funcionarios.portaloas.udistrital.edu.co/agora/'>Click Aquí</a>).</p>";
         $contenido.= "<br>";
-        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
+        $contenido.='<br>
+                    <b>Nota Aclaratoria:</b> Los procesos de cotización estarán abiertos desde las 0:00 horas del día de apertura y serán finalizados a las 23:59 horas de la fecha de cierre, es decir que <i>usted tiene la posibilidad de participar hasta las 23:59 horas de dicha fecha.</i>
+                    <br>';
+        $contenido.= "<br>";
+        $contenido.= "Por lo tanto, lo invitamos a presentar su cotización en las fechas indicadas como se relaciona en este presente comunicado (<b>Fecha Apertura y Fecha de Cierre</b>), recuerde que este
+    			proceso debe ser realizado <b>únicamente</b> ingresando al Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA (<a href='https://funcionarios.portaloas.udistrital.edu.co/agora/'>Click Aquí</a>).";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "Agradeciendo su gentil atención.";
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "Cordialmente,<br>";
@@ -350,12 +435,92 @@ if (!isset($GLOBALS["autorizado"])) {
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
+        $contenido.= "Este mensaje ha sido generado automáticamente, favor no responder.";
         $contenido.= "<br>";
         $contenido.= "<br>";
 
-        $mail->Body = $contenido;
 
+        $contenido.= '
+
+
+                        </div>
+                                                                <p style="margin:0; border-top:2px solid #e5e5e5; font-size:5px; line-height:5px; margin:0 30px 29px;">&nbsp;</p>
+                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                    <tbody>
+                                                                        <tr valign="top">
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                            <td>
+                                                                                <p style="margin:0 0 0; font-weight:bold; color:#333333; font-size:11px; line-height:22px;">UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</p>
+                                                                                <p style="margin:0; color:#333333; font-size:9px; line-height:18px;">
+                                                                                    Carrera 7 No. 40-53<br>
+                                                                                    PBX (3239300)<br>
+                                                                                    Website: <a href="http://www.udistrital.edu.co/" style="color:#6d7e44; text-decoration:none; font-weight:bold;">www.udistrital.edu.co</a>
+                                                                                </p>
+                                                                            </td>
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                            <td width="120">
+                                                                                <a href="https://www.facebook.com/UniversidadDistrital" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                                    <img src="'. $fa .'" width="24" height="24" alt="facebook" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://twitter.com/udistrital" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                                    <img src="'. $tw .'" width="24" height="24" alt="twitter" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://www.youtube.com/user/udistritaltv" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;;">
+                                                                                    <img src="'. $yout .'" width="24" height="24" alt="tumblr" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://www.instagram.com/universidaddistrital/" style="float:left; width:24px; height:24px; margin:6px 0 10px 0;">
+                                                                                    <img src="'. $inst .'" width="24" height="24" alt="rss" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <p style="margin:0; font-weight:bold; clear:both; font-size:12px; line-height:22px;">
+                                                                                    <a href="http://www.udistrital.edu.co/" style="color:#6d7e44; text-decoration:none;">Oficial website</a><br>
+                                                                                </p>
+                                                                            </td>
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <!-- end content --> 
+                                                            </td>
+                                                            <td width="4" height="4" style="background:url('. $srt .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        
+                                                        <tr>
+                                                            <td width="4" style="background:url('. $slc .') repeat-y 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" style="background:url('. $src .') repeat-y 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        <tr> 
+                                                            <td width="4" height="4" style="background:url('. $slb .') repeat-y 100% 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $srb .') repeat-y 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                 
+                                                        <tr>
+                                                            <td width="4" height="4" style="background:url('. $sbcl .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbl .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td height="4" style="background:url('. $sbc .') repeat-x 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbr .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbcr .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- end wrapper-->
+                                                <p style="margin:0; padding:34px 0 0; text-align:center; font-size:11px; line-height:13px; color:#333333;">
+                                                    Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- end main block -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </body>
+
+
+        ';
         
         
         $mensajeEnvio = "ya han sido informados mediante correo.";
@@ -372,11 +537,42 @@ if (!isset($GLOBALS["autorizado"])) {
         		$activeSend = true;
         		$datoActRespuestaCotizacionInfoSend = $this->sql->getCadenaSql('buscarInfoProveedorSendMail', $resultadoInformado[$i]['proveedor']);
         		$resultadoInfoProveedorSend = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfoSend, "busqueda");
-        		//$correo = $resultadoInfoProveedorSend[0]['correo'];
-        		$correo = "jdavid.6700@gmail.com";
+        		$correo = $resultadoInfoProveedorSend[0]['correo'];
         
+                $username = $resultadoInfoProveedorSend[0]['nom_proveedor'];
+                $document = $resultadoInfoProveedorSend[0]['num_documento'];
+                $tperson = "PERSONA " . $resultadoInfoProveedorSend[0]['tipopersona'];
+                if($resultadoInfoProveedorSend[0]['tipopersona'] != 'NATURAL'){
+                    $usersis = "NIT".$resultadoInfoProveedorSend[0]['num_documento'];
+                }else{
+                    $datoUserSend = $this->sql->getCadenaSql('buscarUsuarioMail', $resultadoInfoProveedorSend[0]['num_documento']);
+                    $resultadoUserSend = $esteRecursoDBE->ejecutarAcceso($datoUserSend, "busqueda");
+                    
+                    if($resultadoUserSend){
+                        $usersis = $resultadoUserSend[0]['id_usuario'];
+                    }else{
+                        $usersis = $resultadoInfoProveedorSend[0]['num_documento'];
+                    }
+                    
+                }
+
+                $contenidoMail = $contenido;
+                $contenidoMail = str_replace('%castusername%', $username, $contenidoMail); 
+                $contenidoMail = str_replace('%castdocument%', $document, $contenidoMail);
+                $contenidoMail = str_replace('%castusersystem%', $usersis, $contenidoMail);
+                $contenidoMail = str_replace('%castperson%', $tperson, $contenidoMail);
+                $mail->Body = $contenidoMail;
+
+
         		$to_mail = $correo;
-        		$mail->AddAddress($to_mail);
+        		
+                if($configSer['Disable']){
+                    $mail->AddAddress($configSer['mail_dev']);
+                    $caseDev = true;
+                }else{
+                    $mail->AddAddress($to_mail);
+                    $caseDev = false;
+                }
         
         		if(!$mail->Send())
         		{
@@ -393,37 +589,18 @@ if (!isset($GLOBALS["autorizado"])) {
         			$mensajeEnvio = "ya han sido informados mediante correo.";
                 	$tipo = 'success';
         		}
+
+                if($caseDev){
+                    break;
+                }
         		 
         	}
         	$i++;
         
-        	 
+        	$mail->ClearAllRecipients();
+            $mail->ClearAttachments();
+
         }
-        
-        $mail->ClearAllRecipients();
-        $mail->ClearAttachments();
-        
-        
-        /*
-        foreach ($resultadoProveedor as $dato):
-            //$to_mail=$dato ['correo'];
-            $to_mail = "jdavid.6700@gmail.com"; //PRUEBAS**********************************************************************************
-            $mail->AddAddress($to_mail);
-
-            if (!$mail->Send()) {
-                $_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
-                $mensajeEnvio = "<b>no</b> han sido informados mediante correo, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
-                $tipo = 'warning';
-            } else {
-                $mensajeEnvio = "ya han sido informados mediante correo.";
-                $tipo = 'success';
-            }
-
-        endforeach;
-
-        $mail->ClearAllRecipients();
-        $mail->ClearAttachments();
-        */
 
         //FIN ENVIO DE CORREO AL USUARIO
 
@@ -444,6 +621,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&opcion=nuevo";
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
+
     } else if ($_REQUEST['mensaje'] == 'confirmaSolicitudModificacion') {
         $hoy = date("d/m/Y");
 
@@ -473,6 +651,16 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloque=" . $esteBloque["id_bloque"];
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     } else if ($_REQUEST['mensaje'] == 'confirmaModificacionSolicitud') {
+
+
+        echo "<div id='marcoDatosLoad' style='width: 100%;height: 900px'>
+            <div style='width: 100%;height: 100px'>
+            </div>
+            <center><img src='" . $rutaBloque . "/images/loading.gif'" . ' width=20% height=20% vspace=15 hspace=3 >
+            </center>
+          </div>';
+
+
         $hoy = date("d/m/Y");        
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $_REQUEST['usuario']);
@@ -491,7 +679,7 @@ if (!isset($GLOBALS["autorizado"])) {
         $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         
         $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalByIdCast', $objetoEspecifico[0]['ordenador_gasto']);
-        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $resultadoOrdenadorDef = $coreRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
         
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $objetoEspecifico[0]['usuario_creo']);
         $resultadoUsuarioCot = $esteRecursoDBE->ejecutarAcceso($cadenaSql, "busqueda");
@@ -569,54 +757,126 @@ if (!isset($GLOBALS["autorizado"])) {
         $mail->IsHTML ( true );
         
         
+
         //remitente
         $fecha = date("d-M-Y g:i:s A");
-        
-        
+
         $mail->From = 'agora@udistrital.edu.co';
         $mail->FromName = 'UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS';
         $mail->Subject = "Modificación  Adenda Solicitud de Cotización N° (" . $objetoEspecifico[0]['numero_solicitud'] . ") BANCO ÁGORA UDISTRITAL";
+        
 
+        $rutaAddSrc = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesMail" );
         
-        $contenido = "<p>Señor proveedor, la Universidad Distrital Francisco José de Caldas le informa que la solicitud de cotización, con las siguientes caracteristicas: </p>";
-        
+        $escudo = $rutaAddSrc . "Escudo_UD.png";
+        $banner = $rutaAddSrc . "bannerAgora.jpg";
+
+        $stl = $rutaAddSrc . "shadow-top-left.png";
+        $stc = $rutaAddSrc . "shadow-top-center.png";
+        $str = $rutaAddSrc . "shadow-top-right.png";
+
+        $slt = $rutaAddSrc . "shadow-left-top.png";
+
+        $fa = $rutaAddSrc . "facebook.png";
+        $tw = $rutaAddSrc . "twitter.png";
+        $yout = $rutaAddSrc . "youtube.png";
+        $inst = $rutaAddSrc . "instagram.png";
+
+        $srt = $rutaAddSrc . "shadow-right-top.png";
+
+        $slc = $rutaAddSrc . "shadow-left-center.png";
+        $src = $rutaAddSrc . "shadow-right-center.png";
+
+        $slb = $rutaAddSrc . "shadow-left-bottom.png";
+        $srb = $rutaAddSrc . "shadow-right-bottom.png";
+
+        $sbcl = $rutaAddSrc . "shadow-bottom-corner-left.png";
+        $sbl = $rutaAddSrc . "shadow-bottom-left.png";
+        $sbc = $rutaAddSrc . "shadow-bottom-center.png";
+        $sbr = $rutaAddSrc . "shadow-bottom-right.png";
+        $sbcr = $rutaAddSrc . "shadow-bottom-corner-right.png";
+
+        $contenido = '
+
+            <body style="font-family:Gotham, "Helvetica Neue", Helvetica, Arial, sans-serif; background-color:#f0f2ea; margin:0; padding:0; color:#333333;">
+
+                <table width="100%" bgcolor="#f0f2ea" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="padding:40px 0;">
+                                <!-- begin main block -->
+                                <table cellpadding="0" cellspacing="0" width="700" border="0" align="center">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <a href="http://www.udistrital.edu.co/" style="display:block; height:100px; margin:0 0 10px;">
+                                                    <img src="'. $escudo .'" height="100" alt="udistrital" style="display:block; border:0; margin-left: auto; margin-right: auto;">
+                                                </a>
+                                                <!-- begin wrapper -->
+                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="8" height="4" colspan="2" style="background:url('. $stl .') no-repeat 100% 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td height="4" style="background:url('. $stc .') repeat-x 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="8" height="4" colspan="2" style="background:url('. $str .') no-repeat 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        <tr>
+                                                            <td width="4" height="4" style="background:url('. $slt .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td colspan="3" rowspan="3" bgcolor="#FFFFFF" style="padding:0 0 30px;">
+                                                                <!-- begin content -->
+                                                                <img src="'. $banner .'" width="100%" alt="agora" style="display:block; border:0; margin:0 0 44px; background:#eeeeee;">
+                                                                <p style="margin:0 30px 33px;; text-align:center; font-size:20px; line-height:30px; font-weight:bold; color:#484a42;">
+                                                                    Solicitud de Cotización N° (' . $objetoEspecifico[0]['numero_solicitud'] . ') <br> Banco ÁGORA Udistrital
+                                                                </p>
+
+                                                                <div style="margin:0 30px 35px; font-size:12px; line-height:18px; color:#333333;">
+
+
+        Señor(a) <b>%castusername% - %castdocument% (%castperson%)</b>, registrado(a) en el Sistema ÁGORA con usuario <b>(%castusersystem%)</b>, la <i>Universidad Distrital Francisco José de Caldas</i> le informa que la solicitud de cotización, con las siguientes caracteristicas: <br><br>';
+
         $contenido.= "<br>";
-        $contenido.= "<b>Número Cotización : </b>" . $objetoEspecifico[0]['numero_solicitud'] . "<br>";
-        $contenido.= "<b>Título Cotización : </b>" . $objetoEspecifico[0]['titulo_cotizacion'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Número Cotización </b></font>" . $objetoEspecifico[0]['numero_solicitud'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Título Cotización : </b></font>" . $objetoEspecifico[0]['titulo_cotizacion'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Objeto/Tema Solicitud de Cotización : </b><br>" . $objetoEspecifico[0]['objetivo'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Objeto/Tema Solicitud de Cotización : </b></font><br>" . $objetoEspecifico[0]['objetivo'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Requisitos : </b><br>" . $objetoEspecifico[0]['requisitos'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Requisitos : </b></font><br>" . $objetoEspecifico[0]['requisitos'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Observaciones Adicionales : </b><br>" . $objetoEspecifico[0]['observaciones'] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Observaciones Adicionales : </b></font><br>" . $objetoEspecifico[0]['observaciones'] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Fecha Apertura : </b><u>" . $stringDateInit . "</u><br>";
+        $contenido.= "<font color='#2271B3'><b>Fecha Apertura : </b></font><u>" . $stringDateInit . "</u><br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Fecha Cierre : </b><u>" . $stringDateEnd . "</u><br>";
+        $contenido.= "<font color='#2271B3'><b>Fecha Cierre : </b></font><u>" . $stringDateEnd . "</u><br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b><br>" . $contenidoAct . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Actividad(es) econ&oacute;mica(s) (CIIU) : </b></font><br>" . $contenidoAct . "<br>";
         $contenido.= "<br>";
-        
+
         if ($convocatoria) {
-        	$contenido.= "<b>Profesión Relacionada en la Cotización (Núcleo Básico de Conocimiento SNIES): </b><br>" . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
-        	$contenido.= "<br>";
+            $contenido.= "<font color='#2271B3'><b>Profesión Relacionada en la Cotización (Núcleo Básico de Conocimiento SNIES): </b></font><br>" . $resultadoNBC[0]['nucleo'] . ' - ' . $resultadoNBC[0]['nombre'] . "<br>";
+            $contenido.= "<br>";
         }
-        
-        $contenido.= "<b>Solicitante : </b>" . $resultadoOrdenador . "<br>";
+
+        $contenido.= "<font color='#2271B3'><b>Solicitante : </b></font>" . $resultadoOrdenador . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Dependencia Solicitante : </b>" . $resultadoDependencia[0][1] . "<br>";
+        $contenido.= "<font color='#2271B3'><b>Dependencia Solicitante : </b></font>" . $resultadoDependencia[0][1] . "<br>";
         $contenido.= "<br>";
-        $contenido.= "<b>Responsable : </b>" . $resultadoOrdenadorDef[0][1];
-        $contenido.= "<br>";
-        $contenido.= "<br>";
+        $contenido.= "<font color='#2271B3'><b>Responsable : </b></font>" . $resultadoOrdenadorDef[0][1];
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<p>Ha presentado una novedad de modificación (adenda), por tanto lo invitamos a ingresar al Sistema, se ha habilitado la modificación de su respuesta, si esta ya fue hecha, de lo contrario lo invitamos a presentar su cotización en las fechas indicadas como se relaciona en este presente comunicado (<b>Fecha Apertura y Fecha de Cierre</b>), recuerde que este
-    			proceso debe ser realizado ingresando al Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA (<a href='https://funcionarios.portaloas.udistrital.edu.co/agora/'>Click Aquí</a>).</p>";
         $contenido.= "<br>";
-        $contenido.= "<p>Agradeciendo su gentil atención.</p>";
+        $contenido.='<br>
+                    <b>Nota Aclaratoria:</b> Los procesos de cotización estarán abiertos desde las 0:00 horas del día de apertura y serán finalizados a las 23:59 horas de la fecha de cierre, es decir que <i>usted tiene la posibilidad de participar hasta las 23:59 horas de dicha fecha.</i>
+                    <br>';
+        $contenido.= "<br>";
+        $contenido.= "Ha presentado una novedad de modificación (adenda), por tanto lo invitamos a ingresar al Sistema, se ha habilitado la modificación de su respuesta, si esta ya fue hecha, de lo contrario lo invitamos a presentar su cotización en las fechas indicadas como se relaciona en este presente comunicado (<b>Fecha Apertura y Fecha de Cierre</b>), recuerde que este
+                proceso debe ser realizado <b>únicamente</b> ingresando al Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA (<a href='https://funcionarios.portaloas.udistrital.edu.co/agora/'>Click Aquí</a>).";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "<br>";
+        $contenido.= "Agradeciendo su gentil atención.";
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "Cordialmente,<br>";
@@ -627,14 +887,95 @@ if (!isset($GLOBALS["autorizado"])) {
         $contenido.= "<br>";
         $contenido.= "<br>";
         $contenido.= "<br>";
-        $contenido.= "<p>Este mensaje ha sido generado automáticamente, favor no responder..</p>";
+        $contenido.= "Este mensaje ha sido generado automáticamente, favor no responder.";
         $contenido.= "<br>";
         $contenido.= "<br>";
-         
-        $mail->Body=$contenido;
+
+
+        $contenido.= '
+
+
+                        </div>
+                                                                <p style="margin:0; border-top:2px solid #e5e5e5; font-size:5px; line-height:5px; margin:0 30px 29px;">&nbsp;</p>
+                                                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                                                    <tbody>
+                                                                        <tr valign="top">
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                            <td>
+                                                                                <p style="margin:0 0 0; font-weight:bold; color:#333333; font-size:11px; line-height:22px;">UNIVERSIDAD DISTRITAL FRANCISCO JOSÉ DE CALDAS</p>
+                                                                                <p style="margin:0; color:#333333; font-size:9px; line-height:18px;">
+                                                                                    Carrera 7 No. 40-53<br>
+                                                                                    PBX (3239300)<br>
+                                                                                    Website: <a href="http://www.udistrital.edu.co/" style="color:#6d7e44; text-decoration:none; font-weight:bold;">www.udistrital.edu.co</a>
+                                                                                </p>
+                                                                            </td>
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                            <td width="120">
+                                                                                <a href="https://www.facebook.com/UniversidadDistrital" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                                    <img src="'. $fa .'" width="24" height="24" alt="facebook" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://twitter.com/udistrital" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;">
+                                                                                    <img src="'. $tw .'" width="24" height="24" alt="twitter" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://www.youtube.com/user/udistritaltv" style="float:left; width:24px; height:24px; margin:6px 8px 10px 0;;">
+                                                                                    <img src="'. $yout .'" width="24" height="24" alt="tumblr" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <a href="https://www.instagram.com/universidaddistrital/" style="float:left; width:24px; height:24px; margin:6px 0 10px 0;">
+                                                                                    <img src="'. $inst .'" width="24" height="24" alt="rss" style="display:block; margin:0; border:0; background:#eeeeee;">
+                                                                                </a>
+                                                                                <p style="margin:0; font-weight:bold; clear:both; font-size:12px; line-height:22px;">
+                                                                                    <a href="http://www.udistrital.edu.co/" style="color:#6d7e44; text-decoration:none;">Oficial website</a><br>
+                                                                                </p>
+                                                                            </td>
+                                                                            <td width="30"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <!-- end content --> 
+                                                            </td>
+                                                            <td width="4" height="4" style="background:url('. $srt .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        
+                                                        <tr>
+                                                            <td width="4" style="background:url('. $slc .') repeat-y 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" style="background:url('. $src .') repeat-y 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                        
+                                                        <tr> 
+                                                            <td width="4" height="4" style="background:url('. $slb .') repeat-y 100% 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $srb .') repeat-y 0 100%;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                 
+                                                        <tr>
+                                                            <td width="4" height="4" style="background:url('. $sbcl .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbl .') no-repeat 100% 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td height="4" style="background:url('. $sbc .') repeat-x 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbr .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                            <td width="4" height="4" style="background:url('. $sbcr .') no-repeat 0 0;"><p style="margin:0; font-size:1px; line-height:1px;">&nbsp;</p></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- end wrapper-->
+                                                <p style="margin:0; padding:34px 0 0; text-align:center; font-size:11px; line-height:13px; color:#333333;">
+                                                    Sistema de Registro Único de Personas y Banco de Proveedores ÁGORA
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <!-- end main block -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </body>
+
+
+        ';
         
         
-        $mensajeEnvio = "ya han sido informados mediante correo sobre la modificación.";
+        $mensajeEnvio = "ya han sido informados mediante correo.";
         $tipo = 'success';
         $limit = count($resultadoInformado);
         $controlSend = 0;
@@ -642,43 +983,78 @@ if (!isset($GLOBALS["autorizado"])) {
         $activeSend = false;
         $i = 0;
         while($i < $limit){
-        	
-        	if($resultadoInformado[$i]['informado'] == 'f'){
-        		 
-        		$activeSend = true;
-        		$datoActRespuestaCotizacionInfoSend = $this->sql->getCadenaSql('buscarInfoProveedorSendMail', $resultadoInformado[$i]['proveedor']);
-        		$resultadoInfoProveedorSend = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfoSend, "busqueda");
-        		//$correo = $resultadoInfoProveedorSend[0]['correo'];
-        		$correo = "jdavid.6700@gmail.com";
+             
+            if($resultadoInformado[$i]['informado'] == 'f'){
+                 
+                $activeSend = true;
+                $datoActRespuestaCotizacionInfoSend = $this->sql->getCadenaSql('buscarInfoProveedorSendMail', $resultadoInformado[$i]['proveedor']);
+                $resultadoInfoProveedorSend = $esteRecursoDB->ejecutarAcceso($datoActRespuestaCotizacionInfoSend, "busqueda");
+                $correo = $resultadoInfoProveedorSend[0]['correo'];
+        
+                $username = $resultadoInfoProveedorSend[0]['nom_proveedor'];
+                $document = $resultadoInfoProveedorSend[0]['num_documento'];
+                $tperson = "PERSONA " . $resultadoInfoProveedorSend[0]['tipopersona'];
+                if($resultadoInfoProveedorSend[0]['tipopersona'] != 'NATURAL'){
+                    $usersis = "NIT".$resultadoInfoProveedorSend[0]['num_documento'];
+                }else{
+                    $datoUserSend = $this->sql->getCadenaSql('buscarUsuarioMail', $resultadoInfoProveedorSend[0]['num_documento']);
+                    $resultadoUserSend = $esteRecursoDBE->ejecutarAcceso($datoUserSend, "busqueda");
+                    
+                    if($resultadoUserSend){
+                        $usersis = $resultadoUserSend[0]['id_usuario'];
+                    }else{
+                        $usersis = $resultadoInfoProveedorSend[0]['num_documento'];
+                    }
+                    
+                }
 
-        		$to_mail = $correo;
-        		$mail->AddAddress($to_mail);
+                $contenidoMail = $contenido;
+                $contenidoMail = str_replace('%castusername%', $username, $contenidoMail); 
+                $contenidoMail = str_replace('%castdocument%', $document, $contenidoMail);
+                $contenidoMail = str_replace('%castusersystem%', $usersis, $contenidoMail);
+                $contenidoMail = str_replace('%castperson%', $tperson, $contenidoMail);
+                $mail->Body = $contenidoMail;
 
-        		if(!$mail->Send())
-        		{
-        			$controlFail++;
-        			$_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
-        			$mensajeEnvio = "<b>no</b> han sido informados mediante correo sobre la modificación, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
-        			$tipo = 'warning';
-        	    }
-        	    else
-        	    {
-        	    	$controlSend++;
-        	        $cadenaSqlExitSend = $this->sql->getCadenaSql ( "actualizarEstadoInformadoConfirm", $resultadoInformado[$i]['id'] );
-        	        $resultadoSendUp = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlExitSend, 'acceso' );
-        	        $mensajeEnvio = "ya han sido informados mediante correo sobre la modificación.";
-        	        $tipo = 'success';
-        	    }    
-        	        	
 
-        	 }
-        	 $i++;
-        	 
-        	
+                $to_mail = $correo;
+                
+                if($configSer['Disable']){
+                    $mail->AddAddress($configSer['mail_dev']);
+                    $caseDev = true;
+                }else{
+                    $mail->AddAddress($to_mail);
+                    $caseDev = false;
+                }
+        
+                if(!$mail->Send())
+                {
+                    $controlFail++;
+                    $_REQUEST ['errorMail'] = "<h3>Error al enviar el mensaje a " . $to_mail . ": " . $mail->ErrorInfo . "</h3>";
+                    $mensajeEnvio = "<b>no</b> han sido informados mediante correo, ocurrió un problema con el envió de correos, por favor comuníquese con el Administrador del Sistema <b>(ERROR 1271)</b>.";
+                    $tipo = 'warning';
+                }
+                else
+                {
+                    $controlSend++;
+                    $cadenaSqlExitSend = $this->sql->getCadenaSql ( "actualizarEstadoInformadoConfirm", $resultadoInformado[$i]['id'] );
+                    $resultadoSendUp = $esteRecursoDB->ejecutarAcceso ( $cadenaSqlExitSend, 'acceso' );
+                    $mensajeEnvio = "ya han sido informados mediante correo.";
+                    $tipo = 'success';
+                }
+
+                if($caseDev){
+                    break;
+                }
+                 
+            }
+            $i++;
+        
+            $mail->ClearAllRecipients();
+            $mail->ClearAttachments();
+
         }
         
-        $mail->ClearAllRecipients();
-        $mail->ClearAttachments();
+        
         
         //FIN ENVIO DE CORREO AL USUARIO
 		
@@ -715,7 +1091,8 @@ if (!isset($GLOBALS["autorizado"])) {
         $valorCodificado.="&bloqueGrupo=" . $esteBloque["grupo"];
     } else if ($_REQUEST['mensaje'] == 'error') {
         $tipo = 'error';
-        $mensaje = $this->lenguaje->getCadena('mensajeError');
+        $mensaje = "Error al Cargar los Datos. <br>La Informaciòn no se diligenció Correctamente, Por Favor Vuelva a Intertarlo";
+        $mensaje .= "<br><br>Puede comunicarse con el Administrador del Sistema y reportar el caso <br> (" . $_REQUEST['caso'] . ")";
         $boton = "regresar";
 
         $valorCodificado = "pagina=" . $miPaginaActual;

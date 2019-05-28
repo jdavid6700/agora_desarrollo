@@ -81,6 +81,7 @@ class FormularioRegistro {
 	}
 	
 	public function to_word($number, $miMoneda = null) {
+		$number = round($number, 0);
 		if (strpos($number, $this->decimal_mark) === FALSE) {
 			$convertedNumber = array(
 					$this->convertNumber($number, $miMoneda, 'entero')
@@ -558,9 +559,7 @@ class FormularioRegistro {
 				            						  $tipo = 'information';
 				            						  $mensaje = "<b>INFORMACIÓN INICIAL COTIZACIÓN</b><br>
 				            							<br>
-				            							<i>A continuación se presenta la información registrada incialmente en la Cotización sobre los <b>Valores Unitarios, IVA y Ficha Técnica</b> de Productos y/o Servicios</i>.<br>
-				            	       						<center>
-				            	       						La información que se presenta a continuación es el estado inicial de la información antes de hacer los Cambios por parte del PROVEEDOR.</center>
+				            							A continuación se presenta la información registrada inicialmente en la Cotización sobre los Valores Unitarios, IVA y Ficha Técnica de Productos y/o Servicios, antes de que el PROVEEDOR realizara cambios.
 				            						  
 				            							";
 				            						  // ---------------- SECCION: Controles del Formulario -----------------------------------------------
@@ -1161,12 +1160,9 @@ class FormularioRegistro {
 				                   			
 				                   			       			
 				                   			       			$tipo = 'information';
-				                   			       			$mensaje = "<b>IMPORTANTE</b><br>
+				                   			       			$mensaje = "<b>MODIFICACIONES A LA COTIZACIÓN</b><br>
 				            							<br>
-				            							<i>La Información actual de los <b>Valores Unitarios, IVA y Ficha Técnica</b> de Productos y Servicios, relacionados en la Cotización por parte del PROVEEDOR, son los que se presentan en la sección<br>
-				            	       							<b>Información Productos o Servicios</b>, que se encuentra en la parte inferior de está sección.	<br>
-				            	       						<center>
-				            	       						La información que se presenta allí es la actual y es la que debe tenerse en cuenta para aprobar o rechazar la COTIZACIÓN.</center></i>
+				            							En la sección “Información Productos o Servicios” se presenta la Información actual de los Valores Unitarios, IVA y Ficha Técnica de Productos y Servicios, relacionados en la cotización por parte del PROVEEDOR y la que debe tenerse en cuenta para aprobar o rechazar la Cotización.
 				                   			       			
 				            							";
 				                   			       			
@@ -1702,7 +1698,9 @@ class FormularioRegistro {
 			            $atributos["estilo"] = "marcoBotones widget";
 			            echo $this->miFormulario->division("inicio", $atributos);
 			
-			            $enlace = "<br><a href='" .$resultadoRespuesta[0]['soporte_cotizacion'] . "' target='_blank'>";
+			            $rutaFilesCotizacion = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesCotizacion" );
+			            
+			            $enlace = "<br><a href='" . $rutaFilesCotizacion . $resultadoRespuesta[0]['soporte_cotizacion'] . "' target='_blank'>";
 			            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Anexo Cotización Detallada ";
 			            $enlace.="</a>";
 			            echo $enlace;

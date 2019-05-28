@@ -78,7 +78,7 @@ class RegistradorOrden {
         $resultadoDependencia = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('ordenadorUdistritalByIdCast', $resultadoObjeto[0]['ordenador_gasto']);
-        $resultadoOrdenadorDef = $argoRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
+        $resultadoOrdenadorDef = $coreRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $cadenaSql = $this->sql->getCadenaSql('buscarUsuario', $resultadoObjeto[0]['usuario_creo']);
         $resultadoUsuarioCot = $frameworkRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
@@ -278,8 +278,12 @@ class RegistradorOrden {
                             </tr>
                             </tbody>";
 
-
-                        $promedio = ($totalCotizacion/$countTotal);
+                        if($countTotal > 0){
+                            $promedio = ($totalCotizacion/$countTotal);
+                        }else{
+                            $promedio = 0;
+                        }
+                        
                         if($promedio > 999999999 && $promedio <= 999999999999){
 
                                 $restCast = substr((int)$promedio, -9);

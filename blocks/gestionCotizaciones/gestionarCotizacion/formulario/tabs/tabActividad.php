@@ -137,7 +137,7 @@ class FormularioRegistro {
 		$resultadoDependencia = $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		 
 		$cadenaSql = $this->miSql->getCadenaSql ( 'ordenadorUdistritalById', $solicitudCotizacion[0]['ordenador_gasto'] );
-		$resultadoOrdenador = $argoRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+		$resultadoOrdenador = $coreRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
 		
 		$cadenaSql = $this->miSql->getCadenaSql ( 'buscarUsuario', $solicitudCotizacion[0]['usuario_creo'] );
 		$resultadoUsuario = $frameworkRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
@@ -378,6 +378,10 @@ class FormularioRegistro {
         // 			------------------Fin Division para los botones-------------------------
         echo $this->miFormulario->division("fin");
 
+        $datosBack = array (
+                'dt_ciiu' => $resultadoActividades
+        );
+
         echo $this->miFormulario->marcoAgrupacion('fin');
 
         // ------------------- SECCION: Paso de variables ------------------------------------------------
@@ -403,6 +407,7 @@ class FormularioRegistro {
         $valorCodificado .= "&usuario=" . $_REQUEST['usuario'];
         $valorCodificado .= "&idObjeto=" . $_REQUEST['idObjeto'];
         $valorCodificado .= "&tipoNecesidad=" . $_REQUEST['tipoNecesidad'];
+        $valorCodificado .= "&dataSerCi=" . $this->miConfigurador->fabricaConexiones->crypto->codificar(serialize($datosBack));
 
         /**
          * SARA permite que los nombres de los campos sean dinámicos.

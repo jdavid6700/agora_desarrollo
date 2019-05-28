@@ -876,35 +876,56 @@ $urlFinalSolCdp = $url . $cadenaACodificarSolCdp;
 
     function consultarCdps(elem, request, response) {
 
-        $.ajax({
-            url: "<?php echo $urlFinalSolCdp ?>",
-            dataType: "json",
-            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
-                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
-                cdpseleccion: $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val()},
-            success: function (data) {
 
-                if (data[0] != " ") {
-
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").html('');
-                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
-                    $.each(data, function (indice, valor) {
-
-                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
-
-                    });
-
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").removeAttr('disabled');
-
-                    $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
-                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
-
-                }
+	    swal({
+			  title: 'Cargando Información...',
+			  type: 'info',
+			  closeOnClickOutside: false,
+			  allowOutsideClick: false,
+			  showConfirmButton: false,
+			  onOpen: function () {
+			    swal.showLoading()
+			    // AJAX request
 
 
-            }
+			    //*************************************************
+			        $.ajax({
+			            url: "<?php echo $urlFinalSolCdp ?>",
+			            dataType: "json",
+			            data: {vigencia: $("#<?php echo $this->campoSeguro('vigencia_solicitud_consulta') ?>").val(),
+			                unidad: $("#<?php echo $this->campoSeguro('unidad_ejecutora_hidden') ?>").val(),
+			                cdpseleccion: $("#<?php echo $this->campoSeguro('indices_cdps_vigencias') ?>").val()},
+			            success: function (data) {
 
-        });
+			                if (data[0] != " ") {
+
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").html('');
+			                    $("<option value=''>Seleccione  ....</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
+			                    $.each(data, function (indice, valor) {
+
+			                        $("<option value='" + data[ indice ].VALOR + "'>" + data[ indice ].INFORMACION + "</option>").appendTo("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>");
+
+			                    });
+
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").removeAttr('disabled');
+
+			                    $('#<?php echo $this->campoSeguro('numero_disponibilidad') ?>').width(200);
+			                    $("#<?php echo $this->campoSeguro('numero_disponibilidad') ?>").select2();
+
+			                    swal.close()
+
+			                }
+
+
+			            }
+
+			        });
+
+				//*************************************************
+
+	  		}
+		})	
+			
     }
     ;
 
@@ -1005,6 +1026,8 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
         });
     };
     
+    var fecha = new Date();
+	var anno = fecha.getFullYear();
 
     function InfoCDP(elem, request, response) {
         $.ajax({
@@ -1090,7 +1113,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>200 SMLMV</b> '
 			                        + 'por tanto, no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })
@@ -1112,7 +1135,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el ACUERDO 03, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por encima del Limite de los <b>100 SMLMV</b> '
 			                        + 'por tanto, se debe validar lo estipulado en el Artículo 16°.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                type: 'warning',
 						  },
 						  {
@@ -1142,7 +1165,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
 				                        + 'dado que se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
 				                        + 'no se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>Debe ser realizado mediante (Acuerdo Marco de Precios, Bolsa de Productos o Subasta Inversa).<br><br>'
-				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 				                confirmButtonText:
 				                        'Aceptar'
 							        //JSON.stringify(result) +
@@ -1159,7 +1182,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 				                        'De acuerdo con lo estipulado en el Articulo 16° del ACUERDO 03 y '
 				                        + 'dado que se no se categorizó como Productos de Bienes y Servicios de Caracteristicas Técnicas Uniformes y de Común Utilización '
 				                        + 'se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-				                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+				                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 				                confirmButtonText:
 				                        'Aceptar'
 							        //JSON.stringify(result) +
@@ -1181,7 +1204,7 @@ $urlInfoCDP = $url . $cadenaACodificarInfoCDP;
 			                        'De acuerdo con lo estipulado en el Articulo 16°, se valida que el valor del presente CDP es:<br><br><b>'
 			                        + new Intl.NumberFormat(["ban", "id"]).format(valorCDP) + ' pesos Colombianos.</b><br><br>El valor esta por debajo del Limite de los <b>100 SMLMV</b> '
 			                        + 'por tanto, se puede realizar la Cotización mediante el Sistema ÁGORA para la compra correspondiente.<br><br>'
-			                        + 'Parámetros de la Vigencia,<br><br> Año: 2017 <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
+			                        + 'Parámetros de la Vigencia,<br><br> Año: '+ anno +' <br> SMLMV: '+ new Intl.NumberFormat(["ban", "id"]).format(salario) +' pesos Colombianos',
 			                confirmButtonText:
 			                        'Aceptar'
 			            })

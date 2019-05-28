@@ -140,7 +140,20 @@ class FormularioRegistro {
 
         $numeroDocumento = $resultadoDoc[0]['identificacion'];
 
-        $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $numeroDocumento);
+
+        if($resultadoDoc [0] ['tipo_identificacion'] == 'NIT'){
+            $tipoPersona = 'JURIDICA';
+        }else{
+            $tipoPersona = 'NATURAL';
+        }
+
+        $datosConsultaSARAPer = array (
+                'numeroDocumento' => $numeroDocumento,
+                'tipoPersona' => $tipoPersona 
+        );
+        
+
+        $cadenaSql = $this->miSql->getCadenaSql('consultar_DatosProveedor', $datosConsultaSARAPer);
         $resultadoDats = $esteRecursoDB->ejecutarAcceso($cadenaSql, "busqueda");
 
         $idProveedor = $resultadoDats[0]['id_proveedor'];
@@ -406,7 +419,7 @@ class FormularioRegistro {
                         <thead>
                             <tr>
                                 <th width="0%" style="display:none;">id</th>
-                                <th width="3%" >#</th>
+                                <th width="3%" >Número</th>
                                 <th width="8%" >Nombre</th>
                                 <th width="14%" >Descripción</th>
                                 <th width="6%" >Tipo</th>
@@ -492,13 +505,13 @@ class FormularioRegistro {
 
 
                             <?php
-                            $valoresItem .= ($i + 1) . "&";
-                            $valoresItem .= ( $resultadoItems[$i][1]) . "&";
-                            $valoresItem .= ($resultadoItems[$i][2]) . "&";
-                            $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "&";
-                            $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "&";
-                            $valoresItem .= ($ejecucion) . "&";
-                            $valoresItem .= ($numero_cantidad) . "&";
+                            $valoresItem .= ($i + 1) . "@$&$@";
+                            $valoresItem .= ( $resultadoItems[$i][1]) . "@$&$@";
+                            $valoresItem .= ($resultadoItems[$i][2]) . "@$&$@";
+                            $valoresItem .= ($matrizItemsTipoItem[0][0] . " - " . $matrizItemsTipoItem[0][1]) . "@$&$@";
+                            $valoresItem .= ($matrizItemsUnidad[0][0] . " - " . $matrizItemsUnidad[0][1]) . "@$&$@";
+                            $valoresItem .= ($ejecucion) . "@$&$@";
+                            $valoresItem .= ($numero_cantidad) . "@$&$@";
 
                             $i++;
                         }
@@ -763,8 +776,20 @@ class FormularioRegistro {
                 $atributos = array_merge($atributos, $atributosGlobales);
                 echo $this->miFormulario->campoCuadroTexto($atributos);
                 unset($atributos);
-                // ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
-                // ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
+                   // ----------------FIN CONTROL: Campo de Texto FECHA SOLICITUD--------------------------------------------------------
+                $tipo = 'warning';
+                $mensaje = "<b>A TENER EN CUENTA</b><br>
+                                <br>
+                                Para el registro de los campos <b>Descuentos Ofrecidos</b> y <b>Observaciones Adicionales</b> no se permite el ingreso de caracteres especiales tales como :  <b> " . " ' & @ % $ : / | ° ( ) = { } ¡ ? < # !</b> ,etc. ";
+                // ---------------- SECCION: Controles del Formulario -----------------------------------------------
+                $esteCampo = 'mensaje';
+                $atributos["id"] = $esteCampo; //Cambiar este nombre y el estilo si no se desea mostrar los mensajes animados
+                $atributos["etiqueta"] = "";
+                $atributos["estilo"] = "centrar";
+                $atributos["tipo"] = $tipo;
+                $atributos["mensaje"] = $mensaje;
+                echo $this->miFormulario->cuadroMensaje($atributos);
+                unset($atributos);
                 // ---------------- CONTROL: Cuadro de Texto --------------------------------------------------------
                 $esteCampo = 'descuentos';
                 $atributos ['id'] = $esteCampo;
@@ -779,7 +804,7 @@ class FormularioRegistro {
                 $atributos ['dobleLinea'] = 0;
                 $atributos ['tabIndex'] = $tab;
                 $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-                $atributos ['validar'] = '';
+                $atributos ['validar'] = 'maxSize[1000]';
                 $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
                 $atributos ['deshabilitado'] = false;
                 $atributos ['tamanno'] = 20;
@@ -846,7 +871,7 @@ class FormularioRegistro {
             $atributos ['dobleLinea'] = 0;
             $atributos ['tabIndex'] = $tab;
             $atributos ['etiqueta'] = $this->lenguaje->getCadena($esteCampo);
-            $atributos ['validar'] = '';
+            $atributos ['validar'] = 'maxSize[1000]';
             $atributos ['titulo'] = $this->lenguaje->getCadena($esteCampo . 'Titulo');
             $atributos ['deshabilitado'] = false;
             $atributos ['tamanno'] = 20;
