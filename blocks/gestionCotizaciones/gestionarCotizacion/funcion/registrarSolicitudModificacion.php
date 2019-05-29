@@ -34,6 +34,39 @@ class SolicitudModificacion {
         return $fechana;
     }
 
+    function campoSeguroCodificar($cadena, $tiempoRequest) {
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Codificar) +++++++++++++++++++++++++++++++++++++++++++ */
+
+        $tiempo = (int) substr($tiempoRequest, 0, -2);
+        $tiempo = $tiempo * pow(10, 2);
+
+        $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->codificar($cadena . $tiempo);
+
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        return $campoSeguro;
+    }
+
+    function campoSeguroDecodificar($campoSeguroRequest, $tiempoRequest) {
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* ++++++++++++++++++++++++++++++++++++++++++++ OBTENER CAMPO POST (Decodificar) +++++++++++++++++++++++++++++++++++++++++ */
+
+        $tiempo = (int) substr($tiempoRequest, 0, -2);
+        $tiempo = $tiempo * pow(10, 2);
+
+        $campoSeguro = $this->miConfigurador->fabricaConexiones->crypto->decodificar($campoSeguroRequest);
+
+        $campo = str_replace($tiempo, "", $campoSeguro);
+
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+        return $campo;
+    }
+
+
     function procesarFormulario() {
 
         $conexion = "estructura";
@@ -46,6 +79,8 @@ class SolicitudModificacion {
 
         $rutaBloque = $this->miConfigurador->getVariableConfiguracion("raizDocumento") . "/blocks/asignacionPuntajes/salariales/";
         $rutaBloque .= $esteBloque ['nombre'];
+
+        $rutaBloqueArchivo = $this->miConfigurador->getVariableConfiguracion ( "raizDocumento" ) . "/blocks/gestionCotizaciones/relacionarCotizacion";
 
 
 
@@ -238,8 +273,61 @@ class SolicitudModificacion {
 
         $datoActRespuestaCotizacionInfo = $this->miSql->getCadenaSql('actualizarEstadoInformadoProveedor', $datosSolicitud['idObjeto']);
         array_push($SQLs, $datoActRespuestaCotizacionInfo);
-        
 
+
+        //******************************** ANEXO ****************************************************************
+
+        if($_FILES[$this->campoSeguroCodificar('cotizacionSoporteEspTec', $_REQUEST['tiempo'])]){
+            $archivo = $_FILES[$this->campoSeguroCodificar('cotizacionSoporteEspTec', $_REQUEST['tiempo'])];
+            // Obtenemos los datos del archivo
+            $tamano = $archivo ['size'];
+            $tipo = $archivo ['type'];
+            $archivoName = $archivo ['name'];
+            $prefijo = substr ( md5 ( uniqid ( rand () ) ), 0, 6 );
+            $nombreDoc = $prefijo . "-" . $archivoName;
+        
+            if ($archivoName != "") {
+                // Guardamos el archivo a la carpeta files
+                $destino = $rutaBloqueArchivo . "/soportes/" . $nombreDoc;
+        
+                if (copy ( $archivo ['tmp_name'], $destino )) {
+                    $status = "Archivo subido: <b>" . $archivoName . "</b>";
+                    $destino1 = $prefijo . "-" . $archivoName;
+                } else {
+                    $status = "<br>Error al subir el archivo";
+                }
+            } else {
+                $status = "<br>Error al subir archivo";
+            }
+        }else{
+            echo "<br>NO existe el archivo !!!";
+        }
+
+        
+        if(isset($archivo) && $archivo ['name'] != ""){
+
+            $datoAneXCot = array (
+                    'objeto_cotizacion_id' => $_REQUEST['idObjeto'],
+                    'idObjeto' => $_REQUEST['idObjeto'],
+                    'anexo' => $destino1
+            );
+
+            $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEspTec', $datoAneXCot );
+            $resultadoAnexo= $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+            if($resultadoAnexo){
+                $anexoEspTec = $this->miSql->getCadenaSql ( 'actualizarAnexoEspTec', $datoAneXCot );
+                array_push($SQLs, $anexoEspTec);  
+            }else{
+                $anexoEspTec = $this->miSql->getCadenaSql ( 'registrarAnexoEspTec', $datoAneXCot );
+                array_push($SQLs, $anexoEspTec); 
+            }
+
+              
+        }
+        //*******************************************************************************************************
+
+        
         $insertoModificacionSolicitud = $esteRecursoDB->transaccion($SQLs);
 
 

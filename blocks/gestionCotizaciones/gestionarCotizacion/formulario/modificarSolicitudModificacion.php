@@ -571,6 +571,70 @@ class FormularioRegistro {
 
 
 
+        $esteCampo = "marcoAnexoSop";
+        $atributos ['id'] = $esteCampo;
+        $atributos ["estilo"] = "jqueryui";
+        $atributos ['tipoEtiqueta'] = 'inicio';
+        $atributos ["leyenda"] = $this->lenguaje->getCadena($esteCampo);
+        echo $this->miFormulario->marcoAgrupacion('inicio', $atributos);
+        // ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+        // ----------------INICIO CONTROL: DOCUMENTO--------------------------------------------------------
+        $esteCampo = "cotizacionSoporteEspTec";
+        $atributos ["id"] = $esteCampo; // No cambiar este nombre
+        $atributos ["nombre"] = $esteCampo;
+        $atributos ["tipo"] = "file";
+        // $atributos ["obligatorio"] = true;
+        $atributos ["etiquetaObligatorio"] = false;
+        $atributos ["tabIndex"] = $tab ++;
+        $atributos ["columnas"] = 1;
+        $atributos ["estilo"] = "textoIzquierda";
+        $atributos ["anchoEtiqueta"] = 400;
+        $atributos ["tamanno"] = 500000;
+        $atributos ["validar"] = "";
+        $atributos ["etiqueta"] = "Modificar " . $this->lenguaje->getCadena($esteCampo);
+        // $atributos ['titulo'] = $this->lenguaje->getCadena ( $esteCampo . 'Titulo' );
+        // $atributos ["valor"] = $valorCodificado;
+        $atributos = array_merge($atributos, $atributosGlobales);
+        echo $this->miFormulario->campoCuadroTexto ( $atributos );
+      
+
+        $atributos["id"] = "botones";
+        $atributos["estilo"] = "marcoBotones widget";
+        echo $this->miFormulario->division("inicio", $atributos);
+
+        $rutaFilesCotizacion = $this->miConfigurador->getVariableConfiguracion ( "rutaFilesSolicitante" );
+
+        $cadenaSql = $this->miSql->getCadenaSql ( 'consultarEspTec', $datosSolicitudNecesidad );
+        $resultadoAnexo= $esteRecursoDB->ejecutarAcceso ( $cadenaSql, "busqueda" );
+
+        if($resultadoAnexo[0]['anexo_tecnico'] != null){
+            $_REQUEST['cotizacionSoporteEspTec'] =  $resultadoAnexo[0]['anexo_tecnico'];
+        }else{
+            $_REQUEST['cotizacionSoporteEspTec'] =  null;
+        }
+        
+        if($_REQUEST['cotizacionSoporteEspTec'] != null){
+            $enlace = "<br><a href='" . $rutaFilesCotizacion . $_REQUEST['cotizacionSoporteEspTec'] . "' target='_blank'>";
+            $enlace.="<img src='" . $rutaBloque . "/images/pdf.png' width='35px'><br>Anexo Especificación Técnica";
+            $enlace.="</a>";
+            echo $enlace;
+        }else{
+            $enlace = "<br><a href='javascript:void(0);' onClick=\"notFile()\">";
+            $enlace.="<img src='".$rutaBloque."/images/pdf.png' width='35px'><br>Anexo Especificación Técnica";
+            $enlace.="</a>";
+            echo $enlace;
+        }
+        
+        //------------------Fin Division para los botones-------------------------
+        echo $this->miFormulario->division("fin");
+        //FIN enlace boton descargar RUT
+
+        echo $this->miFormulario->marcoAgrupacion('fin');
+
+
+
+
+
         $atributos ["id"] = "cargar_elemento";
         $atributos ["estiloEnLinea"] = "display:none";
         $atributos = array_merge($atributos, $atributosGlobales);
