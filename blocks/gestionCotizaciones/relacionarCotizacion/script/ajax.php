@@ -2419,4 +2419,17 @@ $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").change(functio
             })
             $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").val(null);
         }
+        var size = $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>")[0].files[0].size;
+	    if (size > 25000000)
+	    {
+	        swal({
+	            title: 'Problema con el Tamaño del Archivo de Soporte',
+	            type: 'warning',
+	            html:
+	                    'Por favor tenga en cuenta que el tamaño límite de carga son <i>(25 MB)</i>',
+	            confirmButtonText:
+	                    'Ok'
+	        })
+	        $("#<?php echo $this->campoSeguro('cotizacionSoporteEspTec') ?>").val(null);
+	    }
     });
